@@ -1,0 +1,109 @@
+---
+title: SICK LMS-111
+sidebar_position: 3
+---
+
+import Support from "/components/support.mdx";
+import Safety from "/components/safety_sensor_laser.mdx";
+
+<center>
+  <img
+    src="/img/sensor_sick_lms111_1.jpg"
+    width="400"
+  />
+</center>
+
+<Safety />
+
+## Item Numbers
+
+| Description                        | CPR item | Manufacturer item |
+| :--------------------------------- | :------: | :---------------- |
+| SICK LMS111-10100 sensor           |  006387  | 1041114           |
+| SICK LMS111-10100 sensor, PACS kit |  027656  |                   |
+
+## Specifications
+
+### Overview
+
+| Description                | Value                |
+| :------------------------- | :------------------- |
+| Mass                       | 1.1 kg               |
+| Voltage, Minimum           | 10.8 V               |
+| Voltage, Maximum           | 30 V                 |
+| Voltage, Sensor            | 24 V                 |
+| Power, Average             | 8 W                  |
+| Data                       | Ethernet, 100 Mbit/s |
+| Range, Minimum             | 0.5 m                |
+| Range, Maximum             | 20 m                 |
+| Range, Accuracy            | ±3 cm                |
+| View, Horizontal           | 270°                 |
+| View, Vertical             |                      |
+| Resolution, Horizontal     |                      |
+| Resolution, Vertical       |                      |
+| Operating Temperature, Min | -30 °C               |
+| Operating Temperature, Max | 50 °C                |
+
+### IP addresses
+
+| Description               | IP address          |
+| :------------------------ | :------------------ |
+| Primary / Front           | 192.168.131.20      |
+| Secondary / Rear          | 192.168.131.21      |
+| Additional LiDAR          | 192.168.131.22 - 29 |
+| Default from Manufacturer | 192.168.0.1         |
+
+### Pinout, Power
+
+### Pinout, Power
+
+| Pin, M12-5-A, Male on Sensor | Description     |
+| :--------------------------: | :-------------- |
+|              1               | V+              |
+|              2               | V+, for heater  |
+|              3               | V-              |
+|              4               | Do Not Populate |
+|              5               | V-, for heater  |
+
+### Pinout, Ethernet
+
+| Pin, M12-4-D, Female on Sensor | Pin, RJ45 | Description | Wire colour (typical) |
+| :----------------------------: | :-------: | :---------- | :-------------------- |
+|               1                |     1     | TX+         | Orange / White        |
+|               2                |     3     | RX+         | Green / White         |
+|               3                |     2     | TX-         | Orange                |
+|               4                |     6     | RX-         | Green                 |
+
+---
+
+## Hardware Build
+
+### Parts List
+
+The PACS kit for this sensor includes:
+
+| ID  | Description                                         |                       CPR item                       | Quantity |
+| :-: | :-------------------------------------------------- | :--------------------------------------------------: | :------: |
+|  1  | Bracket—Sick LMS1xx                                 |   [008966](/assets/clearpath_robotics_008966.pdf)    |    1     |
+|  2  | Sensor, 2D LiDAR—Sick LMS111-10100                  | [006387](/assets/clearpath_robotics_006387-TDS1.pdf) |    1     |
+|  3  | Screw, Cap, Round Head—M5×0.8 X 8, Stainless Steel  |                        023316                        |    4     |
+|  4  | Screw, Cap, Round Head—M5×0.8 X 12, Stainless Steel |                        023318                        |    4     |
+
+### Instructions
+
+1.  Fasten the bracket (ID 1) to the robot using M5 screws (ID 3)
+    There is white painted lettering on the robot's top plate.
+    This lettering designates sensor locations on the robot.
+    Take note of the location that you have mounted this sensor.
+    You will need this sensor location during software installation, to make sure your robot's URDF is configured correctly.
+2.  Mount the sensor (ID 2) to the bracket (ID 1) using four M5 screws (ID 4).
+3.  Connect a M12-4-D to RJ45 network cable to the sensor and robot's computer or network switch.
+4.  Connect a M12-5-A power cable to the sensor, and robot's User Power breakouts. Ensure that the cable pinout is correct, and can supply 12 V or 24 V to the sensor.
+
+## Further Reading
+
+1.  [Clearpath Robotics Store](https://store.clearpathrobotics.com/collections/2dlidar/products/lms111)
+2.  [Datasheet](/assets/clearpath_robotics_006387-TDS1.pdf)
+3.  [User Manual](/assets/clearpath_robotics_006387-TDS2.pdf)
+4.  [SICK website](https://www.sick.com/ca/en/detection-and-ranging-solutions/2d-lidar-sensors/lms1xx/lms111-10100/p/p109842)
+5.  [ROS webpage](http://wiki.ros.org/LMS1xx)

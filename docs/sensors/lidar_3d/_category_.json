@@ -1,0 +1,8 @@
+{
+  "label": "3D Lidar",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "description": "Documentation for 3D Lidar Sensors"
+  }
+}

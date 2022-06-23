@@ -1,0 +1,118 @@
+---
+title: TODO
+sidebar_position: 1
+---
+
+import Safety from "/components/safety_sensor_laser.mdx";
+import SoftwareBringup from "/components/software_sensor_yperio_supported.mdx";
+import Support from "/components/support.mdx";
+
+TODO: update with a path to the sensor's image
+
+<center>
+  <img
+    src="/img/sensor_velodyne_puck_1.jpg"
+    width="400"
+  />
+</center>
+
+---
+
+## Safety
+
+## Item Numbers
+
+| Description           |                      CPR item                      | Manufacturer item |
+| :-------------------- | :------------------------------------------------: | :---------------- |
+| TODO sensor           | [TODO](/assets/clearpath_robotics_011703-TDS2.pdf) | TODO              |
+| TODO sensor, PACS kit |                        TODO                        |                   |
+
+---
+
+## Specifications
+
+### Overview
+
+| Description                 | Value |
+| :-------------------------- | :---- |
+| Mass                        |       |
+| Voltage, Minimum            |       |
+| Voltage, Maximum            |       |
+| Voltage, Sensor             |       |
+| Power, Average              |       |
+| Data                        |       |
+| Range, Minimum              |       |
+| Range, Maximum              |       |
+| Range, Accuracy             |       |
+| View, Horizontal            |       |
+| View, Vertical              |       |
+| Resolution, Horizontal      |       |
+| Resolution, Vertical        |       |
+| Ingress Protection, Solids  |       |
+| Ingress Protection, Liquids |       |
+| Operating Temperature, Min  |       |
+| Operating Temperature, Max  |       |
+
+### IP addresses
+
+| Description               | IP address              |
+| :------------------------ | :---------------------- |
+| Primary / Front           | 192.168.131.TODO        |
+| Secondary / Rear          | 192.168.131.TODO        |
+| Additional Sensors        | 192.168.131.TODO - TODO |
+| Default from Manufacturer | TODO                    |
+
+### Pinout
+
+| Pin | Description | Wire colour |
+| :-: | :---------- | :---------- |
+|  1  |             |             |
+
+---
+
+## Hardware Build
+
+### Parts List
+
+The PACS kit for this sensor includes:
+
+| ID  | Description                         |                    CPR item                     | Quantity |
+| :-: | :---------------------------------- | :---------------------------------------------: | :------: |
+|  1  | Plate—80 X 80, Attachment Interface | [026914](/assets/clearpath_robotics_026914.pdf) |    1     |
+
+---
+
+### Instructions
+
+1.  TODO
+
+---
+
+## Software Bringup
+
+<SoftwareBringup />
+
+---
+
+## Troubleshooting
+
+**Sensor is not turning on**
+
+1.  Turn the robot off
+2.  Check that connectors are fully seated
+3.  Turn on the robot and see if the sensor is turning on
+4.  If it does not turn on, unplug the rectangular power connector
+5.  With a multimeter, measure the voltage across positions 2 and 6 on the robot's connector
+6.  If the measurement is 12 V, then there is likely an issue with the sensor, and you should contact Clearpath Robotics
+7.  If the measurement is 0 V, then the 12 V fuse on your robot has likely failed. Shut off the robot, replace the fuse, and then replace the sensor's rectangular connector.
+
+### If the issue persists
+
+<Support />
+
+---
+
+## Further Reading
+
+1. [Clearpath Robotics Store](https://store.clearpathrobotics.com)
+2. [ROS webpage](http://wiki.ros.org)

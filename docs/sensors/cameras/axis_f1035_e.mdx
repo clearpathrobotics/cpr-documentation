@@ -1,0 +1,103 @@
+---
+title: Axis F1035-E
+sidebar_position: 1
+---
+
+import Support from "/components/support.mdx";
+import Safety from "/components/safety_sensor_none.mdx";
+
+<center>
+  <img
+    src="/img/sensor_axis_f1035_e_1.jpg"
+    width="250"
+  />
+  <img
+    src="/img/sensor_axis_f34_1.png"
+    width="400"
+  />
+</center>
+
+<Safety />
+
+## Item Numbers
+
+| Description                        |                       CPR item                       | Manufacturer item |
+| :--------------------------------- | :--------------------------------------------------: | :---------------- |
+| Axis F1035-E sensor                | [020068](/assets/clearpath_robotics_020068-TDS1.pdf) | 0736-001          |
+| Axis F1035-E sensor, PACS kit      |                        027212                        |                   |
+| Axis F34 controller hub            | [020442](/assets/clearpath_robotics_020442-TDS1.pdf) | 0778-001          |
+| Axis F34 controller hub , PACS kit |                        027633                        |                   |
+
+---
+
+## Specifications
+
+### Overview
+
+| Description                         | Value                |
+| :---------------------------------- | :------------------- |
+| Mass, Camera                        | 96 g                 |
+| Mass, Hub                           | 238 g                |
+| Voltage, Minimum                    | PoE, 8 V             |
+| Voltage, Maximum                    | PoE, 28 V            |
+| Voltage, Sensor                     | PoE, 24 V            |
+| Power, Average                      | 12.6 W               |
+| Data                                | Ethernet, 100 Mbit/s |
+| View, Horizontal                    | 194°                 |
+| View, Vertical                      | 113°                 |
+| Ingress Protection, Solids, Camera  | 6                    |
+| Ingress Protection, Liquids, Camera | 7                    |
+| Ingress Protection, Solids, Hub     | 2                    |
+| Ingress Protection, Liquids, Hub    | 0                    |
+| Operating Temperature, Min          | 0°C                  |
+| Operating Temperature, Max          | 40°C                 |
+
+### IP addresses
+
+| Description               | IP address                                                  |
+| :------------------------ | :---------------------------------------------------------- |
+| Hub                       | 192.168.131.10                                              |
+| Additional Camera Sensors | 192.168.131.11 - 19                                         |
+| Default from Manufacturer | [Axis IP utility](https://help.axis.com/access-your-device) |
+
+### Pinout, Camera, RJ12
+
+| Pin | Description   | Wire colour |
+| :-: | :------------ | :---------- |
+|  1  | Signal 1, -ve | Brown       |
+|  2  | Signal 1, +ve | White-Brown |
+|  3  |               | No Wire     |
+|  4  |               | No Wire     |
+|  5  | Signal 2, +ve | White-Blue  |
+|  6  | Signal 2, -ve | Blue        |
+
+Refer to [021955](/assets/clearpath_robotics_021955.pdf) as an example of a reterminated camera cable.
+The off-the-shelf camera comes from Axis with either a 3 metre, or 10 metre cable.
+
+---
+
+## Hardware Build
+
+### Parts List
+
+The PACS kit for a camera includes:
+
+| ID  | Description                                              |                       CPR item                       | Quantity |
+| :-: | :------------------------------------------------------- | :--------------------------------------------------: | :------: |
+|  1  | Plate—80 X 80, Attachment Interface                      |   [026914](/assets/clearpath_robotics_026914.pdf)    |    1     |
+|  2  | Bracket—AXIS Camera F1035-E                              | [021043](/assets/clearpath_robotics_021043-TDS1.pdf) |    1     |
+|  3  | Camera, Optical—Axis F1035-E, 194°, 1080p                | [020068](/assets/clearpath_robotics_020068-TDS1.pdf) |    1     |
+|  4  | Screw, Cap, Hex Head—#0.25-20 UNC X 9.5, Stainless Steel |                        019974                        |    1     |
+|  5  | Spacer, Round—Ø5.3 X Ø8 X 7, Aluminum Alloy              |                        026612                        |    4     |
+|  6  | Screw, Cap, Round Head—M5×0.8 X 16, Stainless Steel      |                        023257                        |    4     |
+
+The PACS kit for a camera hub includes:
+
+| ID  | Description                                        |                       CPR item                       | Quantity |
+| :-: | :------------------------------------------------- | :--------------------------------------------------: | :------: |
+|  1  | Plate—80 X 80, Attachment Interface, Large         |   [027110](/assets/clearpath_robotics_027110.pdf)    |    1     |
+|  2  | Camera Controller—Axis F34 Main Unit               | [020442](/assets/clearpath_robotics_020442-TDS1.pdf) |    1     |
+|  3  | Bracket—AXIS Camera F1035-E                        | [021043](/assets/clearpath_robotics_021043-TDS1.pdf) |    1     |
+|  4  | Camera, Optical—Axis F1035-E, 194°, 1080p          | [020068](/assets/clearpath_robotics_020068-TDS1.pdf) |    1     |
+|  5  | Screw, Cap, Round Head—M4×0.7 X 8, Stainless Steel |                        023308                        |    4     |
+|  6  | Screw, Cap, Flat Head—M5×0.8 X 12, Stainless Steel |                        023471                        |    4     |

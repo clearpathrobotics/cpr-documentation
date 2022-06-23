@@ -1,0 +1,671 @@
+---
+title: User Manual
+sidebar_position: 2
+---
+
+import ComponentIntroductionHusky from "/components/introduction_husky.mdx";
+import ComponentTableHuskyOne from "/components/table_husky_1.mdx";
+import Support from "/components/support.mdx";
+
+<ComponentIntroductionHusky />
+
+## Introduction
+
+Husky is a rugged and easy-to-use unmanned ground vehicle for rapid prototyping and research applications.
+
+### What's included
+
+Contained in your Husky shipment are the following items:
+
+- Clearpath Robotics Husky
+- 24V Sealed Lead-Acid Battery Pack
+- Battery Door Cover
+- Battery Charger
+- Lockout Keys (2X)
+- Power Connectors (3X)
+
+### What's required
+
+To use Husky, you will require a PC capable of running Robot Operating System (ROS).
+If a computer option was purchased from Clearpath Robotics with Husky, then the included laptop or minicomputer has
+already been configured with Ubuntu 20.04 and ROS Noetic, plus appropriate ROS packages and other configuration for use with Husky.
+
+### Expansions
+
+To expand the capabilities of Husky, consider the following accessories offered by Clearpath Robotics:
+
+- Spare Battery
+- IMU
+- LIDAR
+- Network Camera
+- GPS
+
+Each sensor package ships from Clearpath Robotics with a custom mounting bracket and cabling for easy attachment to Husky's extruded aluminum payload mounting rail.
+
+## The basics
+
+This section provides an overview of the key specifications of the Husky platform.
+The figure below gives a tour of key Husky components.
+
+<center>
+  <img
+    src="/img/robot_husky_1.png"
+    width="600"
+  />
+</center>
+
+<center>
+  <img
+    src="/img/robot_husky_2.png"
+    width="600"
+  />
+</center>
+
+### Status panel
+
+The status panel is a display of LED indicators located on the rear of the chassis which provide information about the current status of Husky.
+The indicators are described in the table below.
+
+|                      Icon                      | Description                                                                                                                                                                                                                                                                                   |
+| :--------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <img src="/img/robot_husky_3.png" width="50"/> | **Battery Status** The four LED segments provide an approximate indication of the relative lifetime remaining in the battery.                                                                                                                                                                 |
+| <img src="/img/robot_husky_4.png" width="50"/> | **Communication Status** When green, Husky is receiving a stream of correctly-formatted motion commands, and is ready to drive. When yellow, Husky is receiving commands, but will not drive due to emergency stop or another error. When red, serial communications are currently timed-out. |
+| <img src="/img/robot_husky_5.png" width="50"/> | **General Error Status** Illuminates red when Husky will not drive due to an error state. Such states include emergency stop, insufficient battery power, or an unspecified software error.                                                                                                   |
+| <img src="/img/robot_husky_6.png" width="50"/> | **Emergency Stop Status** Illuminates red when Husky will not drive due to the emergency stop being activated, either onboard or wireless (if available).                                                                                                                                     |
+| <img src="/img/robot_husky_7.png" width="50"/> | **Charge Indicator** Illuminates red when Husky user power is being supplied externally.                                                                                                                                                                                                      |
+
+### Orientation references
+
+The reference frame used by all Clearpath Robotics ground vehicles is based on ISO 8855, and is shown in the figure below.
+Husky's front is shown.
+When commanded with a positive translational velocity (forward), wheels travel in the positive x-direction.
+The direction of the axes differs from those used for roll, pitch, and yaw in aircraft, and care should be taken to ensure that data is interpreted correctly.
+
+<center>
+  <img
+    src="/img/robot_husky_8.png"
+    width="600"
+  />
+</center>
+
+### Pinout
+
+Husky provides a female DE-9 connector for communication with a host device.
+The pinout of this connector is shown below.
+
+|                                                 |                            |
+| :---------------------------------------------: | :------------------------: |
+| <img src="/img/robot_husky_9.png" width="200"/> | <ComponentTableHuskyOne /> |
+
+The connectors used in the Husky's user bay are Weidmüller's 6 Position Terminal Blocks, to connect your own bare wires, you may use Digi-key part number 281-1856-ND.
+
+## System specifications
+
+| Specification                  | Measurement                                                              |
+| :----------------------------- | :----------------------------------------------------------------------- |
+| Dimension, Length              | 990 mm                                                                   |
+| Dimension, Width               | 670 mm                                                                   |
+| Dimension, Height              | 390 mm                                                                   |
+| Track Width                    | 550 mm                                                                   |
+| Wheelbase Length               | 512 mm                                                                   |
+| Ground Clearance               | 130 mm                                                                   |
+| Mass                           | 50 kg                                                                    |
+| Maximum Payload¹               | 75 kg                                                                    |
+| All-terrain Payload²           | 20 kg                                                                    |
+| Speed, Maximum                 | 1 m/s                                                                    |
+| Climb Grade                    | 45°                                                                      |
+| Traversal Grade / Sideslope    | 30°                                                                      |
+| Operating Temperature, Minimum | -10°C                                                                    |
+| Operating Temperature, Maximum | 30°C                                                                     |
+| Operating Time, Average        | 3 hours                                                                  |
+| Operating Time, Standstill     | 8 hours                                                                  |
+| Battery                        | 20 Ah @ 24 V, sealed lead acid                                           |
+| Battery Charger                | Short-circuit, over-current, over-voltage and reverse voltage protection |
+| Charge Time                    | 10 hours                                                                 |
+| User Power, 2021 and older     | 5 V, 12 V, V-battery, each fused at 5 A                                  |
+| User Power, 2022 and newer     | 12 V @ 7.5 A, 24 V @ 3 A, VBAT @ 5 A                                     |
+| Communication                  | RS-232, 115200 baud                                                      |
+| Wheel Encoders                 | 78,000 ticks/m                                                           |
+| Internal Sensing               | Battery Status, Wheel Odometry, Motor Currents                           |
+
+_¹Continuous operation on relatively flat terrain with wide turns._ <br />
+_²Vehicle climbing 30° grade with high-mounted payload, or turning in place in high-friction conditions._
+
+### Vehicle Equations
+
+As a starting point, Clearpath Robotics recommends using the following relationship between wheel velocity and platform velocity:
+
+$$
+v=\cfrac{v_{r}+v_{l}}{2}
+$$
+
+$$
+\omega=\cfrac{v_{r}-v_{l}}{w}
+$$
+
+$v$ represents the instantaneous translational speed of the platform and $\omega$ the instantaneous rotational speed. <br />
+$v_{r}$ and $v_{l}$ are the right and left wheel velocities, respectively. <br />
+$w$ is the effective track of the vehicle, 0.555 m.
+
+## Safety
+
+Clearpath Robotics is committed to high standards of safety.
+Husky contains several features to protect the safety of users and the integrity of the vehicle.
+
+### General warnings
+
+Husky is a rugged and high-performance vehicle.
+For the safety of yourself and others, always conduct initial experiments and software development with the vehicle raised off the ground.
+Place a wooden crate, a set of sawhorses, a sturdy storage tub, or any other solid flat structure having a height greater than 150 mm under Husky to keep the wheels clear of the ground (“up on blocks”).
+
+When starting out, favour slower wheel speeds.
+Husky's control loops can accurately maintain velocities as low as 0.1 m/s.
+Operating at such speeds will give you more time to react if things don't go quite as you expect.
+
+When Husky is operating, keep clear of the wheels, paying particular attention to the pinch hazard which exists between each wheel and the end of the corresponding bumper bar.
+
+## E-stop and Lockout
+
+The red emergency stop button (e-stop) and lockout are located on the back of Husky, opposite the status panel.
+Power supply to Husky's motor drivers is enabled by a normally-open relay, which is closed in series with the e-stop switch.
+When in e-stop mode, the status panel e-stop light will illuminate red, and Husky will not drive.
+The commands received during e-stop are not buffered; Husky will always act on the latest commands received.
+This means that if the commands are stopped before the e-stop is released, the Husky will not move.
+If the commands are continued, Husky will move at the speed commanded once the e-stop is released.
+
+<center>
+  <img
+    src="/img/robot_husky_10.png"
+    width="600"
+  />
+</center>
+
+Always ensure the e-stop button is accessible at all times.
+Avoid mounting payloads that extend over the rear of Husky and would occlude the e-stop.
+
+The lockout provides a way to secure Husky from performing any type of motion.
+When in lockout mode, the robot will still power on, but the motors will not drive.
+
+### Electrical
+
+Husky is powered by a single 24V sealed lead-acid battery, similar to the type found in electric wheelchairs, golf carts, and other devices.
+Husky's battery is capable of delivering 1800W, similar to wall mains.
+This gives Husky's motors their great performance, however, it is also enough power to cause severe bodily harm.
+Please observe the following precautions:
+
+- Do not tamper with the plug attached to the battery.
+- Do not tamper with the fuse panel, except to check and change the fuses, and to connect and disconnect the battery plug.
+- Do not operate Husky without the battery door in place. The battery is not restrained without the door, and will come loose, damaging the fuse panel.
+- Charge the battery only with the charger provided by Clearpath Robotics.
+- Please dispose of the batteries properly.
+
+### Lifting and Transport
+
+For the safety of users and to maximize the lifetime of Husky, please observe the following when manually transporting the robot:
+
+- Husky should be lifted by two persons, firmly gripping the front and rear bumper-bars.
+  The battery can be removed to lighten the load of a manual transport.
+- Ensure that Husky is e-stopped when transporting short distances and powered off when transporting longer distances.
+- Note: It is not advised to push Husky, as this can cause damage to the motors.
+
+### Performance recomendations
+
+Included in Husky are native software checks and limits to protect the vehicle.
+However, it is recommended to monitor the system's status during usage with the `/status` and `/diagnostics` topics.
+These topics provides useful information regarding voltages, currents, temperatures and general health of the system.
+
+The total current draw does not include the motors drivers; it is the current consumed by the MCU and user power ports.
+Husky's motors are rated to draw 8A continuous, but they will spike to several times this, particularly when traversing rough terrain and when turning on the spot.
+To reduce current draw, consider commanding wider-radius turns from your control software.
+
+The temperature is measured in the motor drivers and on the motor casings; the coils inside the motor casings cannot be measured.
+Therefore, it is important to note that the temperature measured on the motor casings is a lagging indicator of the temperature of the coils inside the casing.
+Be aware of the delay in heat propagation on the motors during heavy use.
+The thermal limit of the system is 50°C, and the system will shut down if this limit is reached.
+Monitoring these fields over longer periods of operation will allow you to ensure that you are not putting excessive wear on Husky's motors.
+
+## Getting started
+
+You are ready to go!
+This section details how to get Husky into action.
+To begin, place Husky “up on blocks” as described in the Safety section, making sure that the wheels are clear of the ground.
+
+For most Husky setups, there will be an Onboard PC which is directly connected to the Husky and a Remote PC which is used to control Husky and gather data.
+These two PCs must be set up to communicate with each other.
+
+### Onboard PC setup
+
+If you purchased an Onboard PC from Clearpath Robotics with Husky, it is already installed, connected, and powered.
+Provided on this machine is the officially-supported ROS software for Husky, joystick teleoperation, and any sensor payloads purchased.
+
+If not, or to set up your own Onboard PC, please visit <http://wiki.ros.org/Robots/Husky>
+
+### Connecting to the Onboard PC
+
+Husky's serial port is located in the user power panel accessible from the user area.
+
+<center>
+  <img
+    src="/img/robot_husky_11.png"
+    width="600"
+  />
+</center>
+
+The connector is a female DE9, suitable for connection directly to a USB-serial adaptor, or to a PC serial port via a straight-through modem cable (not a null modem cable).
+How you connect the Onboard PC to Husky depends on whether the Onboard PC has a dedicated serial port.
+Husky is delivered with a USB-serial adaptor.
+
+### Wireless access
+
+To get Husky connected to your local Wi-Fi, you must first access the internal computer using a wired connection.
+Open the chassis lower the computer tray, and connect to the network port labeled _STATIC_ with a standard RJ45 network cable.
+
+### Static IP configuration
+
+Set your laptop's Ethernet port to a static IP such as _192.168.131.250_.  
+In Ubuntu:
+
+- Click on the Wi-Fi icon in the upper-right corner of your screen, and select **Edit Connections**
+- In the **Network Connections** window, under **Ethernet**, select your wired connection and then click **Edit**
+- Select the **IPv4 Settings** tab and then change the **Method** to _Manual_
+- Click the \textbf{Add} button to add a new address
+- Enter a _192.168.131.101_ as the static IP under the **Address** column, and enter _255.255.255.0_ under the **NetMask** column, and then select **Save**
+
+<center>
+  <img
+    src="/img/robot_husky_12.png"
+    width="400"
+  />
+</center>
+
+### Connect to Husky via SSH over Ethernet
+
+The next step is to connect to Husky via SSH.
+In a terminal window, enter `ssh administrator@192.168.131.1`.
+You will be promoted to enter a password.
+The default password is `clearpath`.
+
+### Connect Husky to a Wireless Network
+
+Now that you're connected via SSH over a wired connection, you can setup Husky to connect to a local Wi-Fi network.
+To do this, you will need to use Netplan, a preinstalled network configuration tool.
+
+In a terminal window, enter `sudo nano /etc/netplan/60-wireless.yaml`
+This will create an empty YAML file called \textbf{60-wireless.yaml} which you will populate to configure Husky's wireless networking via Netplan.
+
+Copy and paste the following into the empty file you just created:
+
+    network:
+      wifis:
+        WIRELESS_INTERFACE:
+          optional: true
+          access-points:
+            SSID_GOES_HERE:
+              password: PASSWORD_GOES_HERE
+          dhcp4: true
+          dhcp4-overrides:
+            send-hostname: true
+
+Modify the following variables in the file.
+Replace `WIRELESS_INTERFACE` with the name of Husky's Wi-Fi interface (e.g. wlan0, wlp2s0, or wlp3s0).
+Replace `SSID_GOES_HERE` with the name of the local Wi-Fi network.
+Replace `PASSWORD_GOES_HERE` with the password of the local Wi-Fi network.
+
+Once you are done modifying the file, save it by pressing **CTRL + O**, then **ENTER**.
+Close the file by pressing **CTRL + X**.
+
+Apply your new Netplan configuration and bring up the Wi-Fi connection.
+In a terminal window, enter `sudo netplan apply`.
+
+While you're still wired to Husky, you'll need to identify the IP address of Husky's wireless connection.
+In a terminal window, enter `ip a`
+
+A list of network connections will be displayed within the terminal.
+Locate the wireless network and make note of its IP address.
+Now that you know Husky's wireless IP address, you may now exit the ethernet SSH session by entering `exit`.
+
+Remove the network cable and close the Husky.
+Now you can SSH into Husky over the wireless network.
+To do so, enter `ssh administrator@<IP_OF_HUSKY>`, such as `ssh administrator@192.168.0.21`
+
+SSH sessions allow you to control Husky's internal computer.
+You can do various things such as download packages, run updates, add and remove files, and transfer files.
+
+### Remote ROS Connectivity
+
+To use ROS desktop tools, you'll need your computer to be able to connect to Husky's ROS master.
+This will allow you to run ROS commands like `rostopic list`, `rostopic echo`, `rosnode list`, and others, from a remote PC and the output will reflect the activity on Husky's ROS master, rather than on your own machine.
+This can be a tricky process, but we've tried to make it as simple as possible.
+
+In order for the ROS tools on your computer to talk to Husky, they need to know two things:
+
+- How to find the ROS master, which is set in the `ROS_MASTER_URI` environment variable, and
+- How processes on the other computer can find your computer, which is the `ROS_IP` environment variable.
+
+The suggested pattern is to create a file in your home directory called `remote-husky.sh` with the following contents:
+
+    export ROS_MASTER_URI=http://cpr-husky-0001:11311  # Husky's hostname
+    export ROS_IP=10.25.0.102       # Your laptop's wireless IP address
+
+If your network doesn't already resolve Husky's hostname to its wireless IP address, you may need to add a corresponding line to your computer's _/etc/hosts_ file:
+
+    10.25.0.101 cpr-husky-0001
+
+:::note
+
+You can verify the hostname and IP address of Husky using the following commands during an SSH session with the onboard PC.
+
+:::
+
+    hostname
+    hostname -i
+
+Then, when you're ready to communicate remotely with Husky, you can source that script like so, thus defining those two key environment variables in the present context.
+
+    source remote-husky.sh
+
+To verify that everything is set up propelry, try running a few ROS commands, such as the standard visual ROS tools:
+
+    roslaunch husky_viz view_robot.launch
+    rosrun rqt_robot_monitor rqt_robot_monitor
+    rosrun rqt_console rqt_console
+
+If the tools launch, then everything is setup properly.
+
+Please contact Clearpath Support if you need assistance in configuring remote access.
+For more general details on how ROS works over TCP with multiple machines, please see <http://wiki.ros.org/ROS/Tutorials/MultipleMachines>.
+For help troubleshooting multiple machines connectivity issue, see <http://wiki.ros.org/ROS/NetworkSetup>.
+
+### Husky Desktop Packages
+
+To command or observe Husky from your desktop computer, first set up a basic ROS installation.
+Go to <http://wiki.ros.org/noetic/Installation/Ubuntu> for details:
+
+When your ROS install is set up, install the Husky desktop packages:
+sudo apt-get install ros-noetic-husky-desktop
+
+Once your remote access to Husky's ROS master is configured, you can launch rviz, the standard ROS robot visualization tool:
+
+    roslaunch husky_viz view_robot.launch
+
+From within rviz, you can use interactive markers to drive Husky, you can visualize its published localization estimate, and you can visualize any attached sensors which have been added to its robot description XML _URDF_.
+
+Additionally from the desktop, you can launch the standard RQT Robot Monitor, which watches the diagnostic output from Husky's self-montoring capabilities:
+
+    rosrun rqt_robot_monitor rqt_robot_monitor
+
+### Connecting Power
+
+Husky comes with the battery fully charged and installed, but disconnected for safety during shipping.
+To reconnect the battery:
+
+- Ensure Husky's main power button is in the outer “off” position and the e-stop is activated.
+- Using curled index fingers to grip the battery door latches, press with thumbs on the latch buttons and lift the battery door free of the chassis.
+- Carefully connect the battery plug to the mating connector in the fuse panel.
+  Ensure that it is firmly seated and clicks into place.
+  It will be difficult to connect it in the incorrect polarity.
+- Replace the battery door cover, ensuring that it clicks into place and is flush with the rear panel.
+
+<center>
+  <img
+    src="/img/robot_husky_13.png"
+    width="600"
+  />
+</center>
+
+To power on Husky, firmly press the power button located above the status panel.
+It will illuminate blue, and the status panel lights will show a brief test pattern.
+The _Comm Status_ light will turn red, as the PC is not yet communicating with Husky.
+
+The _Stop Status_ light will be red if the e-stop is pressed.
+If it is not, press the e-stop button and verify that the _Stop Status_ light illuminates.
+Leave the platform in an e-stop state until it is successfully receiving commands, indicated by the _Comm Status_ light turning green.
+
+### User Bay Power Connections
+
+The user area power terminals are capable of supplying VBAT (approximately 24-29 V, unregulated) fused at 5 A, 12 V fused at 7.5 A,
+and 24 V fused at 3 A.
+282 W of power is available from these User Power breakouts.
+You can order a upgrade for your Husky, that will add 480 W of power (VBAT fused at 20 A). Each terminal comes equipped with a
+removable connector into which your payload power leads may connect.
+
+Husky UGVs with serial numbers lower than A200-0802 have different user power connections.  
+These older robots have 5V, 12V, and 24V supplies, all fused at 5A.
+Your Husky's serial number is shown on a sticker, attached to the right side of the robot.
+
+1.  Expose about 5 mm of bare wire from the payload power leads and twist the exposed wire on both leads.
+2.  Take 2 molex terminals from the spare parts kit provided and insert the exposed wire and crimp the terminals, ensuring the wires are well secured inside the terminal, as shown below.
+3.  Take 1 connector housing from the spare parts kit provided and insert the positive payload power lead (red) into position 4, 5, or 6 of the connector until it locks into place. The positions numbers are visible on the back of the plastic housing.
+4.  Insert the negative payload power lead (black) into position 1, 2, or 3 of the connector until it locks into place.
+
+<center>
+  <img
+    src="/img/robot_husky_16.jpg"
+    width="300"
+  />
+</center>
+
+<center>
+  <img
+    src="/img/robot_husky_17.jpg"
+    width="300"
+  />
+</center>
+
+When connecting payloads, be sure to observe correct polarity as marked on the inside of the user bay.
+Do not exceed the specified maximum current limit of each power rail; failure to do so may result in damage to Husky or your payload.
+
+For more technical information on the power connectors, as well as their corresponding mating connectors, please visit the [Product Page](https://www.digikey.ca/en/products/detail/molex/0039012065/930272?s=N4IgTCBcDaIOoFkwGYDsAGMBaAcgERAF0BfIA).
+
+### Verification
+
+If a computer was purchased with Husky, it will be setup to interface automatically upon startup.
+60-90 seconds after booting up, the Husky _Comm Status_ light will change from red to green (or yellow, depending on e-stop status), indicating that ROS is up and has established communications with Husky.
+
+To teleoperate Husky, plug a USB joystick into the included Onboard PC, and release the e-stop.
+After a few seconds, ROS should recognize the joystick and begin passing commands through to the mobile platform.
+Press the enable button (typically button 1), and use the main joystick axis or left thumbstick to drive Husky.
+
+Direct control using the Python or C++ interfaces is also possible, the API is available at <http://www.clearpathrobotics.com/husky/downloads>.
+Please note that Clearpath Robotics no longer provides support for these packages, and are they supplied "as is".
+
+## Using ROS
+
+Robot Operating System (ROS) is an extensible framework for controlling and working with robotic systems.
+Clearpath Robotics recommends using ROS with Husky.
+If this is your first time using ROS, it is strongly recommended to run through our series of [ROS 101 tutorials](http://support.clearpathrobotics.com) to learn the basics of ROS.
+If you did not purchase a PC from Clearpath Robotics, please visit <http://wiki.ros.org/Robots/Husky> to set up your own Onboard PC.
+
+### Nodes
+
+You can use `rosnode list` to see all the nodes running by default on a Husky computer.
+The baseline set of these is presented with commentary in the following table.
+
+| Node                     | Description                                                                                                                                |
+| :----------------------- | :----------------------------------------------------------------------------------------------------------------------------------------- |
+| `/husky_node`            | Provides control and communication between the Husky platform and ROS. Accepts velocity commands and provides system feedback on `/status` |
+| `/robot_state_publisher` | Subscribes to `/joint_states` and publishes the robot's state to `tf`                                                                      |
+| `/bluetooth_teleop`      | Publishes velocity commands from a joystick to `/twist_mux`                                                                                |
+| `/twist_mux`             | Takes in multiple sources of velocity commands, and prioritizes what actually gets sent to the controller                                  |
+| `/ekf_localization`      | Part of the robot localization package, more information regarding this package can be found at <http://wiki.ros.org/robot_localization>   |
+
+### Topics
+
+You can view all topics that are active using `rostopc list`.
+Some of the base topics are listed in 2 tables below.
+
+| Topic                   | Message type             | Description                                                                                                                        |
+| :---------------------- | :----------------------- | :--------------------------------------------------------------------------------------------------------------------------------- |
+| `/bluetooth_teleop/joy` | `sensor_msgs/Joy`        | Receives joystick commands, echo this topic to verify your controller is publishing                                                |
+| `/tf`                   | `tf2_msgs/TFMessage`     | Transforms between coordinate frames, this should always be publishing, and hence a good topic to echo to test your ROS connection |
+| `/status`               | `husky_msgs/HuskyStatus` | Displays system status information                                                                                                 |
+| `/estop`                | `std_msgs/Bool`          | Displays the estop status                                                                                                          |
+| `/odometry/filtered`    | `nav_msgs/Odometry`      | The odometry estimate of the robot from \lstinline!/ekf_localization                                                               |
+
+| Motion Topics                       | `twist_mux` Priority | Description                                                        |
+| :---------------------------------- | :------------------- | :----------------------------------------------------------------- |
+| `husky_velocity_controller/cmd_vel` | -                    | Receives motion commands from `twist_mux` based off their priority |
+| `joy_teleop/cmd_vel`                | 10                   | Joystick teleop input                                              |
+| `twist_marker_server/cmd_vel`       | 8                    | Interactive marker teleop input                                    |
+| `move_base/cmd_vel`                 | 2                    | Autonomous movement input, for the Husky navigation packages       |
+| `cmd_vel`                           | 1                    | Miscellaneous external input                                       |
+
+### Workspace
+
+The expected model for extending Husky is to create a new ROS Workspace in the user's home directory, and add packages there.
+You can roslaunch additional nodes against the ROS Master already running on Husky without needing to stop or start anything else.
+See the Overlays page on the ROS wiki for more details: <http://wiki.ros.org/catkin/Tutorials/workspace_overlaying>
+
+When it comes time for some of your own code to be launched on startup of Husky, edit the default workspace setup file, located in `/etc/ros/setup.bash`.
+Change the final line from the default to instead source your own workspace.
+When this is done, copy the launch file for your software into the `robot_upstart` folder, which is located at `/etc/ros/noetic/ros.d`.
+Now restart the Husky background service and your nodes should come up with the rest of Husky:
+
+    sudo systemctl restart ros
+
+For more details on this process, please see the ROS wiki page about upstart, located at: <http://wiki.ros.org/robot_upstart>.
+
+## Payloads
+
+You can find a list of supported packages and related documentation for payloads in this documention portal, under the Sensors and Accessories sections.
+
+## Maintenance
+
+Husky A200 is built for rugged, long-term use.
+Here are some steps that can be taken to maintain and extend the life of the platform even further.
+
+### Charging
+
+The battery shipped with Husky A200 may be charged off-board, or while still inside of Husky.
+If charging while installed, you will need to open the access door to the battery area, and disconnect the battery from its connector in the fuse panel.
+From there:
+
+1.  Connect the DC output cable from the charger to the battery terminal connector.
+2.  Plug the charger power cord into the charger and then into a wall receptacle.
+3.  The POWER LED and CHARGING LED lights on the charger will illuminate.
+4.  When battery is fully charged, the CHARGING LED light will turn off.
+5.  Unplug the charger from the wall, and then disconnect it from the battery.
+
+The battery charger shipped with Clearpath Robotics's lead-acid battery-powered products uses a three-state charge cycle.
+
+1.  A fast, high current initial charge, until the battery voltage reaches 29.6V.
+2.  A topping charge, during which the battery charges at 29.6V constant voltage until the current decreases to 500 mA.
+3.  A precision float charge, during which the battery voltage is held at 27.6V.
+    This mode allows the charger to remain connected to the battery during periods of non-use, keeping it in a state of full charge.
+    When in this mode, the CHARGING LED will be off.
+
+### Battery Care
+
+Husky's power supply is a sealed 24 V lead acid battery pack (VRLA), providing 20 Ah of charge.
+These tips are intended to help keep your Husky Lead-Acid Battery in tip-top shape.
+With proper maintenance, the battery should maintain the majority of its capacity for hundreds of cycles.
+
+The most damaging thing to a lead-acid battery is a phenomenon called sulfation.
+When a lead-acid battery is left in an uncharged state for long periods of time, sulfate crystals solidify on the electrodes of the battery.
+This effect can be permanent, and it causes premature reduction in capacity.
+Therefore, it is important to fully charge the battery as soon as you are finished using it, regardless of how much capacity remains.
+
+Your Husky ships with a three-stage battery charger that completely charges a Husky battery.
+Charging occurs in three stages: Constant current, topping charge, and float charge.
+The bulk of the capacity (70%) is regained during the first stage.
+
+It is important to let the charger complete all three stages whenever possible, to help maintain the life of the battery.
+The initial stage will take 5-7 hours, and a complete charge may take up to 14 hours.
+
+<center>
+  <img
+    src="/img/robot_husky_18.png"
+    width="600"
+  />
+</center>
+
+In general, following these tips will help maximize the life of the battery:
+
+- Always fully charge the battery as soon as you are finished using it.
+- Charge batteries at room temperature. Never charge lead-acid batteries at temperatures above 35 degrees Celcius.
+- Charge batteries in a well-ventilated area.
+- Do not allow the battery to freeze. A low battery will freeze sooner than a fully charged one. Never charge a frozen battery.
+- Stored batteries should be topped up every month. Completely cycle batteries every 4-6 months.
+- At a discharge rate of 50% DOD (depth of discharge), the lifecycle of the Husky battery is 450-550 cycles.
+  After this point, reduced capacity will be apparent.
+- Regularly discharging the battery below 50% DOD will reduce the lifecycle of the battery, sometimes to less than 300 cycles.
+
+### Wheels
+
+Tire pressure may change with temperature and should be checked periodically with a pressure gauge.
+Inspecting tires, releasing pressure, and inflating tires are completed through the tire's inflation stem.
+Tire pressure should not exceed 137 kPa (20 psi), and lower pressure may be desired based on terrain requirements.
+
+If a tire must be removed, first unfasten the four M5 Socket Head Cap Screws that join the wheel to the axle hub, and slide it off the axle.
+When replacing the wheel, screws should be tightened to 5 N·m (3.7 ft-lb) of torque.
+
+### Chassis
+
+Husky is an all-terrain robot, but it is not waterproof.
+Care should be taken that no part of the main chassis is ever submerged in water.
+When the chassis becomes wet or dirty, wipe it down with a damp cloth and dry with a towel.
+
+If water is suspected to have entered the Husky A200 chassis, remove the battery and allow Husky to fully dry for a minimum of 24 hours.
+
+:::note
+
+Clearpath Robotics offers a Waterproofing Kit for Husky.
+This includes a top cover for the user bay, sealed drivetrain bearings, and rubber foam tape on all the panel seams.
+
+:::
+
+:::tip
+
+Husky's wheels can handle a range of different terrains, but work best when inflated to the proper pressure.
+Lower tire pressures, for example 68.5 kPa (10 psi), ensure better traction in rough and varied terrain, where rocks or other obstacles may be encountered.
+This has the adverse effect of lowering drivetrain efficiency and decreasing battery charge, so high pressures up to a maximum of 137 kPa (20 psi) should be used when driving on flat surfaces.
+
+Lower tire pressuses also reduce the effective diameter of the wheel, and will impact your odometry readings.
+Odometry is calculated using the average diameter of a tire inflated to 137 kPa (20 psi ).
+
+:::
+
+## Troubleshooting
+
+**The blue light around the power button does not display when pressing the power button.**
+
+1.  Ensure that the battery is charged and correctly connected.
+2.  Use a multi-meter to verify the voltage on the battery terminals.
+
+**_Comm Status_ light stays red or flickers.**
+
+1.  Your program may not be sending motion commands faster than 10 Hz.
+2.  If there is a poor quality connection, some commands may be lost, so it may be necessary to increase the frequency of commands sent.
+3.  The maximum frequency commands can be sent is 50 Hz.
+
+**_E-stop Status_ light illuminated**
+
+1.  Twist the red e-stop to release it
+2.  Confirm that the robot is not locked out.
+
+**_Battery Status_ indicator flashing**
+
+1.  Battery voltage is too low for Husky to drive the motors.
+2.  Charge the battery and try again.
+
+**A ROS package isn't starting**
+
+1.  Verify the upstart logs, `/var/log/upstart/husky_core.log` to see if there are any error during upstart.
+
+**Husky experiences momentary drops in communication**
+
+1.  It's possible the robot has reached the thermal limit, or current limit.
+2.  The maximum current limits are set to 18.3 A, however, as the motors are only rated for 8A continuous, anything above that will trigger the current limit eventually, the higher above this limit, the more quickly it will trigger. If you are unsure whether this is the case, feel free to contact support@clearpathrobotics.com with a rosbag of your system. Clearpath robotics also offers a high torque upgrade if more torque is required for your project.
+
+### If the Issue Persists
+
+<Support />
+
+## Product Dimensions
+
+<center>
+  <img
+    src="/img/robot_husky_19.png"
+    width="600"
+  />
+</center>

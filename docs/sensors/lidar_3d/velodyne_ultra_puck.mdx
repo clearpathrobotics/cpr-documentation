@@ -1,0 +1,152 @@
+---
+title: Velodyne Ultra Puck
+sidebar_position: 2
+---
+
+import Safety from "/components/safety_sensor_laser.mdx";
+import SoftwareBringup from "/components/software_sensor_yperio_supported.mdx";
+import Support from "/components/support.mdx";
+
+<center>
+  <img
+    src="/img/sensor_velodyne_ultra_puck_1.jpg"
+    width="700"
+  />
+</center>
+
+---
+
+## Safety
+
+<Safety />
+
+## Item Numbers
+
+| Description                          |                       CPR item                       | Manufacturer item |
+| :----------------------------------- | :--------------------------------------------------: | :---------------- |
+| Velodyne Ultra Puck sensor           | [016901](/assets/clearpath_robotics_016901-TDS2.pdf) | VLP-32C           |
+| Velodyne Ultra Puck sensor, PACS kit |                                                      |                   |
+
+## Specifications
+
+### Overview
+
+| Description                 | Value                |
+| :-------------------------- | :------------------- |
+| Mass                        | 925 g                |
+| Voltage, Minimum            | 10.5 V               |
+| Voltage, Maximum            | 18 V                 |
+| Voltage, Sensor             | 12 V                 |
+| Power, Average              | 10 W                 |
+| Data                        | Ethernet, 100 Mbit/s |
+| Range, Minimum              |                      |
+| Range, Maximum              | 200 m                |
+| Range, Accuracy             | ±3 cm                |
+| View, Horizontal            | 360°                 |
+| View, Vertical              | -25° to +15°         |
+| Resolution, Horizontal      | 0.4°                 |
+| Resolution, Vertical        | 0.33°                |
+| Ingress Protection, Solids  | 6                    |
+| Ingress Protection, Liquids | 7                    |
+| Operating Temperature, Min  | -20 °C               |
+| Operating Temperature, Max  | 60 °C                |
+
+### IP addresses
+
+| Description               | IP address          |
+| :------------------------ | :------------------ |
+| Primary / Front           | 192.168.131.20      |
+| Secondary / Rear          | 192.168.131.21      |
+| Additional LiDAR          | 192.168.131.22 - 29 |
+| Default from Manufacturer | 192.168.1.201       |
+
+### Pinout
+
+| Pin | Description  | Wire colour  |
+| :-: | :----------- | :----------- |
+|  1  | ethernet rx- | Blue         |
+|  2  | ethernet rx+ | Light blue   |
+|  3  | ethernet tx- | Orange       |
+|  4  | ethernet tx+ | Light orange |
+|  5  | GPS receive  | White        |
+|  6  | GPS pulse    | Yellow       |
+|  7  | +12 V        | Red          |
+|  8  | Ground       | Black        |
+
+---
+
+## Hardware Build
+
+### Parts List
+
+The PACS kit for this sensor includes:
+
+| ID  | Description                                              |                       CPR item                       | Quantity |
+| :-: | :------------------------------------------------------- | :--------------------------------------------------: | :------: |
+|  1  | Plate—80 X 80, Attachment Interface                      |   [026914](/assets/clearpath_robotics_026914.pdf)    |    1     |
+|  2  | Sensor, 3D LiDAR—Velodyne Ultra Puck                     | [016901](/assets/clearpath_robotics_016901-TDS2.pdf) |    1     |
+|  3  | Screw, Cap, Hex Head—#0.25-20 UNC X 9.5, Stainless Steel |                        019974                        |    1     |
+|  4  | Spacer, Round—Ø5.3 X Ø8 X 7, Aluminum Alloy              |                        026612                        |    4     |
+|  5  | Screw, Cap, Round Head—M5×0.8 X 16, Stainless Steel      |                        023257                        |    4     |
+|  6  | Cable—Barrel Jack, Molex mini-fit-jr                     |                                                      |    1     |
+|  7  | Cable, Network—RJ45                                      |                        022861                        |    1     |
+
+### Instructions
+
+1.  Mount the sensor (ID 2) to the attachment-plate (ID 1) using a #1/4-20 screw (ID 3).
+    Use the centre hole in the attachment-plate for mounting the sensor.
+2.  Mount this assembly onto your robot, using the included spacers (ID 4) and screws (ID 5).
+3.  Connect the power cable (ID 6) to a robot's User Power connector, and to the Velodyne's hub.
+4.  Connect the network cable (ID 7) to the robot's computer or network switch, and to the Velodyne's hub.
+5.  There is white painted lettering on the robot's top plate.
+    This lettering designates sensor locations on the robot.
+    Take note of the location that you have mounted this sensor.
+    You will need this sensor location during software installation, to make sure your robot's URDF is confured correctly.
+
+---
+
+## Software Bringup
+
+<SoftwareBringup />
+
+---
+
+## Troubleshooting
+
+**Sensor is not turning on**
+
+1.  Turn the robot off
+2.  Check that connectors are fully seated
+3.  Turn on the robot and see if the sensor is turning on
+4.  If it does not turn on, unplug the rectangular power connector
+5.  With a multimeter, measure the voltage across positions 2 and 6 on the robot's connector
+6.  If the measurement is 12 V, then there is likely an issue with the sensor, and you should contact Clearpath Robotics
+7.  If the measurement is 0 V, then the 12 V fuse on your robot has likely failed. Shut off the robot, replace the fuse, and then replace the sensor’s rectangular connector.
+
+**Cannot ping the sensor on the robot's computer**
+
+1.  Turn the robot on
+2.  Connect your laptop to a spare RJ45 Ethernet port on the robot
+3.  Configure your laptop's Ethernet port to a static address of _192.168.131.250_, and a subnet of _255.255.255.0_
+4.  In a new terminal session, enter `ping 192.168.131.20`
+5.  The sensor if working properly if you receive reply messages
+6.  If you do not get reply messages, then the issue is likely:
+    1.  Your Ethernet cable has an issue
+    2.  Your laptop's Ethernet port is not configured properly
+    3.  The sensor's IP address is not the same as what you entered into the terminal
+    4.  The sensor is not on
+
+---
+
+### If the Issue Persists
+
+<Support />
+
+---
+
+## Further Reading
+
+1. [Clearpath Robotics Store](https://store.clearpathrobotics.com/collections/3d-lidar/products/puck)
+2. [Velodyne website](https://store.clearpathrobotics.com/collections/3d-lidar/products/puck)
+3. [ROS webpage](http://wiki.ros.org/velodyne)
+4. [ROS tutorial](http://wiki.ros.org/velodyne/Tutorials/Getting%20Started%20with%20the%20Velodyne%20VLP16)
