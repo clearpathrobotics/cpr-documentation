@@ -2,7 +2,7 @@
 
 ## Links to the deployed website:
 
-- [production branch](https://production.d3qemm8ks0m3ss.amplifyapp.com/docs/index_documentation)
+- [production branch](https://docs.clearpathrobotics.com)
 
 ## Tools used:
 
