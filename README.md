@@ -56,6 +56,8 @@
 
 9.  When ready, publish your branch on GitHub, and submit a Pull Request to merge your changes into the _development_ branch.
     Pull Requests to the _production_ branch will not merged.
+    Also note that this GitHub repository has branch protection rules, that prevent you from committing directly to _production_ and _development_.
+    <img src="/static/img/readme_images/readme_github_1.png" width="467"/>
 10. The administrators of this documentation will review the website for any functional issues,
     and will periodically merge the latest commits in the _development_ branch into the _production_ branch.
 
