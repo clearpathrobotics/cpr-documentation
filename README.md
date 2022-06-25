@@ -48,14 +48,16 @@
     - _Code style issues found in the above file(s). Forgot to run Prettier?_
       You can fix the errors by running the command `npm run format-write`.
 8.  You will need to confirm that `npm run format-write` code formatting did not make any functionality changes to your _.mdx_ documentation.
-    You may see files that claim to be updated in Source Control, but don't have any visible changes. 
+    You may see files that claim to be updated in Source Control, but don't have any visible changes.
     You should run these commands in your terminal to prevent Git from noting these types of changes:
-    
+
             git config --global core.filemode false
             git config --global core.autocrlf false
 
 9.  When ready, publish your branch on GitHub, and submit a Pull Request to merge your changes into the _development_ branch.
     Pull Requests to the _production_ branch will not merged.
+    Also note that this GitHub repository has branch protection rules, that prevent you from committing directly to _production_ and _development_.
+    <img src="/static/img/readme_images/readme_github_1.png" width="467"/>
 10. The administrators of this documentation will review the website for any functional issues,
     and will periodically merge the latest commits in the _development_ branch into the _production_ branch.
 
@@ -116,3 +118,26 @@ $$
 $$
 
 You can test equation syntax using [this tool](https://katex.org/) from KaTex.
+
+## Image formatting
+
+We want images to convey information.
+The best way to do this is to have a consistent method notating images, and removing unnecessary content.
+The list below are not strict rules, but are considered good practice to keep images throughout the site looking consistent,
+
+1.  Highlight colours should be:
+    1.  Primary
+        - #BB0000
+        - RGB (187, 0, 0)
+    2.  Secondary
+        - #00C7A6
+        - RGB (0, 199, 166)
+    3.  Tertiary
+        - #4E7FFF
+        - RGB (78, 127, 255)
+2.  Remove background colours when possible.
+    This helps Users that have set the site to Dark Mode. <br />
+3.  Avoid embedding text in images.
+    This prevents Users from translating the webpage. <br />
+    Consider using arrows and circles to notate images, with the text included in your Markdown file. <br />
+    Note: icons, logos, and symbols that are part of the physical product are exempt from this suggestion.
