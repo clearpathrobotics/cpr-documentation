@@ -5,6 +5,7 @@ sidebar_position: 2
 
 import Safety from "/components/safety_sensor_laser.mdx";
 import SoftwareBringup from "/components/software_sensor_yperio_supported.mdx";
+import SoftwareIpConfiguration from "/components/software_sensor_hokuyo_ip_configure.mdx";
 import Support from "/components/support.mdx";
 
 <center>
@@ -94,7 +95,19 @@ The PACS kit for this sensor includes:
 
 ### Instructions
 
-1.  TODO
+1.  Mount the sensor (ID 2) to the attachment-plate (ID 1) using two M3 screws (ID 3).
+    Refer to the [attachment-plate's drawing](/assets/pdf/clearpath_robotics_026914.pdf) for details of what holes to use.
+2.  Mount this assembly onto your robot, using the included spacers (ID 4) and screws (ID 5).
+3.  Connect the sensor's RJ45 network cable to the robot's computer or network switch.
+4.  Add a connector to the sensor's power cable, so it can interface with your robot's User Power breakouts. 
+    Ensure that the cable pinout is correct, and can supply 12 V or 24 V to the sensor.
+5.  Connect the sensor's power cable to the robot's User Power breakouts.
+
+---
+
+## IP configuration
+
+<SoftwareIpConfiguration />
 
 ---
 
