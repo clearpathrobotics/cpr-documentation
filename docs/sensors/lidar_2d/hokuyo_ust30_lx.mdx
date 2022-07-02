@@ -1,0 +1,130 @@
+---
+title: Hokuyo UST30-LX
+sidebar_position: 3
+---
+
+import Safety from "/components/safety_sensor_laser.mdx";
+import SoftwareBringup from "/components/software_sensor_yperio_supported.mdx";
+import SoftwareIpConfiguration from "/components/software_sensor_hokuyo_ip_configure.mdx";
+import Support from "/components/support.mdx";
+
+<center>
+  <img
+    src="/img/sensor_images/sensor_hokuyo_ust30lx_1.jpg"
+    width="350"
+  />
+</center>
+
+<Safety />
+
+## Item Numbers
+
+| Description                      |                         CPR item                         | Manufacturer item |
+| :------------------------------- | :------------------------------------------------------: | :---------------- |
+| Hokuyo UST20-LX sensor           | [027584](/assets/pdf/clearpath_robotics_027584-TDS1.pdf) | UST30-LX          |
+| Hokuyo UST20-LX sensor, PACS kit |                                                          |                   |
+
+---
+
+## Specifications
+
+### Overview
+
+| Description                 | Value                |
+| :-------------------------- | :------------------- |
+| Mass                        | 0.13 kg              |
+| Voltage, Minimum            | 10 V                 |
+| Voltage, Maximum            | 30 V                 |
+| Voltage, Sensor             | 12 V or 24 V         |
+| Power, Average              | 3.6 W                |
+| Data                        | Ethernet, 100 Mbit/s |
+| Range, Minimum              | 0.06 m               |
+| Range, Maximum              | 30 m                 |
+| Range, Accuracy             | ± 40 mm              |
+| View, Horizontal            | 270°                 |
+| Resolution, Horizontal      | 0.25°                |
+| Ingress Protection, Solids  | 6                    |
+| Ingress Protection, Liquids | 7                    |
+| Operating Temperature, Min  | -30°C                |
+| Operating Temperature, Max  | 50°C                 |
+
+### IP addresses
+
+| Description               | IP address          |
+| :------------------------ | :------------------ |
+| Primary / Front           | 192.168.131.20      |
+| Secondary / Rear          | 192.168.131.21      |
+| Additional Sensors        | 192.168.131.22 - 29 |
+| Default from Manufacturer | 192.168.0.10        |
+
+### Pinout, Power
+
+| Pin, Hirose DF62B-6EP-2.2C | Wire, flying lead on Sensor | Description        |
+| :------------------------: | :-------------------------: | :----------------- |
+|             1              |        Orange / Red         | V+                 |
+|             2              |       Orange / Black        | V-                 |
+|             3              |        White / Black        | Malfunction Output |
+|             4              |        Yellow / Red         | Synchronous Output |
+|             5              |       Yellow / Black        | COM Output -       |
+|             6              |        Not Connected        |                    |
+
+### Pinout, Ethernet
+
+| Pin, RJ45 | Description | Wire colour (typical) |
+| :-------: | :---------- | :-------------------- |
+|     1     | TX+         | White / Orange        |
+|     2     | TX-         | Orange                |
+|     3     | RX+         | White / Green         |
+|     6     | RX-         | Green                 |
+
+---
+
+## Hardware Build
+
+### Parts List
+
+The PACS kit for this sensor includes:
+
+| ID  | Description                                         |                         CPR item                         | Quantity |
+| :-: | :-------------------------------------------------- | :------------------------------------------------------: | :------: |
+|  1  | Plate—80 X 80, Attachment Interface                 |   [026914](/assets/pdf/clearpath_robotics_026914.pdf)    |    1     |
+|  2  | Sensor, 2D LiDAR—Hokuyo UST-30LX                    | [027584](/assets/pdf/clearpath_robotics_027584-TDS1.pdf) |    1     |
+|  3  | Screw, Cap, Round Head—M3×0.5 X 8, Stainless Steel  |                          023300                          |    2     |
+|  4  | Spacer, Round—Ø5.3 X Ø8 X 7, Aluminum Alloy         |                          026612                          |    4     |
+|  5  | Screw, Cap, Round Head—M5×0.8 X 16, Stainless Steel |                          023257                          |    4     |
+
+---
+
+### Instructions
+
+1.  Mount the sensor (ID 2) to the attachment-plate (ID 1) using two M3 screws (ID 3).
+    Refer to the [attachment-plate's drawing](/assets/pdf/clearpath_robotics_026914.pdf) for details of what holes to use.
+2.  Mount this assembly onto your robot, using the included spacers (ID 4) and screws (ID 5).
+3.  Connect the sensor's RJ45 network cable to the robot's computer or network switch.
+4.  Make an adaptor cable to interface between the:
+    - sensor's power cable, and
+    - your robot's User Power breakouts.
+      Ensure that the adaptor cable pinout is correct, and can supply 12 V or 24 V to the sensor.
+5.  Connect the adaptor cable to the sensor, and to the robot's User Power breakouts.
+
+---
+
+## IP configuration
+
+<SoftwareIpConfiguration />
+
+---
+
+## Software Bringup
+
+<SoftwareBringup />
+
+---
+
+## Further Reading
+
+1.  [Clearpath Robotics Store](https://store.clearpathrobotics.com/collections/2dlidar)
+2.  [Datasheet](/assets/pdf/clearpath_robotics_027584-TDS1.pdf)
+3.  [User Manual](/assets/pdf/clearpath_robotics_027584-TDS2.pdf)
+4.  [Hokuyo Website](https://www.hokuyo-aut.jp/search/single.php?serial=233#download)
+5.  [ROS webpage](http://wiki.ros.org/urg_node)
