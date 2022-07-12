@@ -1,10 +1,423 @@
 ---
-title: User Manual
+title: Dingo, User Manual
 sidebar_position: 2
 ---
 
-import ComponentIntroductionDingo from "/components/introduction_dingo.mdx";
+import ComponentIntroductionDingo from '/components/introduction_dingo.mdx'
+
 
 <ComponentIntroductionDingo />
 
+### What is Included
+
+Contained in your Dingo shipment are the following items:
+
+-   Dingo UGV (Dingo-D or Dingo-O variant)
+-   One or more 12V sealed lead acid (SLA) or 14.4V Lithium-ion batteries
+-   One or more 110/220V universal chargers for your batteries
+-   One Sony PS4 Bluetooth controller
+-   One Dingo quick start guide
+
+If you elected to purchase standard payload modules or custom integration services with Dingo, 
+then additional equipment will be included per your specific configuration, plus further documentation as required.
+
+### Hardware Overview
+
+#### Exterior Features
+
+The exteriors of Dingo-D and Dingo-O are shown below and include:
+
+-   external payload mounts on the top trough cover;
+-   98.4 mm diameter wheels (Dingo-D) or 101.6 mm diameter mechanum wheels (Dingo-O);
+-   human machine interface panel (HMI);
+-   top (yellow) fairings;
+-   side access panels.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/dingo_images/dingo-d-ext.pdf"
+      width="400"
+    />
+    <figcaption>Dingo-D exterior</figcaption>
+  </figure>
+</center>
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/dingo_images/dingo-o-ext.pdf"
+      width="400"
+    />
+    <figcaption>Dingo-O exterior</figcaption>
+  </figure>
+</center>
+
+#### HMI Details
+
+The human-machine-interface (HMI) panel is shown below and includes from left:
+-   motor stop button: LED is solid green when Dingo is able to drive and flashing green when the Dingo's
+    motors are disengaged; pressing button toggles the motors between engaged and disengaged mode (further
+    details in [Motor Stop Buttons](#dingo-stop-buttons)); 
+-   comms indictor: LED is solid green when communication between the MCU and computer has been established
+    and LED is off otherwise;
+-   wifi indicator: LED is solid green when wifi is connected and LED is off otherwise;
+-   battery indicator: LED is solid green when the battery level is ok (above 30% ?), solid red when the battery
+    level is getting low (between 10-30%(?) -- start charging soon), and flashing red when the battery level is
+    critical (below 10%(?) -- begin charging immediately);
+-   system power button: LED is solid blue when the system powered on and running and the LED is flashing blue during
+    the shutdown process; when the system is powered off, pressing the power button begins the power on process;
+    when the system is powered on, a quick press of the power button begins a graceful shutdown and a prolonged
+    press of the power button triggers and immediate power off of the system.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/dingo_images/hmi.pdf"
+      width="200"
+    />
+    <figcaption>HMI Panel</figcaption>
+  </figure>
+</center>
+
+
+#### Payload Details
+
+The interiors of Dingo-D and Dingo-O are shown below along with example payload modules.
+
+To access Dingo's payload modules (computers or batteries), simply slide and remove the top (yellow) fairings. To
+access Dingo's MCU PCBA (for user power), remove the four M5 flathead screws from the top trough cover, and then
+remove the trough cover.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/dingo_images/dingo-d-int.pdf"
+      width="200"
+    />
+    <figcaption>Area inside Dingo-D, with example modules</figcaption>
+  </figure>
+</center>
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/dingo_images/dingo-o-int.pdf"
+      width="200"
+    />
+    <figcaption>Area inside Dingo-O, with example modules</figcaption>
+  </figure>
+</center>
+
+#### Corner LEDs and System State
+
+Dingo is equipped with LEDs at the four corners of the robot, which indicate the state of the system:
+
+| System State                      | Corner LED Output       |
+| :-------------------------------- | :---------------------- |
+| Normal mode                       | Front LEDs solid white, rear LEDs solid red |
+| Low battery                       | Flashing yellow LEDs    |
+| System fault                      | Solid red LEDs          |
+| TODO: Others?                     | TODO                    |
+
+#### Optional Shore Power
+
+Dingo does provide an optional shore power connection to allow the system to be powered without requiring batteries
+to be present. Note that when shore power is connected, the motors are disabled and it is not possible to drive the
+Dingo; however, all other electronics (computers, sensors, etc) will remain enabled.
+
+To connect the shore power, remove the top trough cover (to access the MCU) and then attach the shore power cable
+to the 2-port connector labelled "SHORE" on the MCU (see [Electrical Integration](#dingo-payload-electrical-integration)
+for details).
+
+### System Architecture
+
+Dingo is built around a computer running Ubuntu (Intel-based computer or Jetson developer kit), paired with a 32-bit MCU.
+The MCU handles I/O, power supply monitoring, and motor control, as well as supplying data from the integrated IMU.
+The communication channel between the MCU and computer is a Gigabit Ethernet connection.
+
+The key topics which comprise Dingo's ROS API are outlined in the table below.
+
+| Topic                             | Message Type            | Purpose                                                                          |
+| :-------------------------------- | :---------------------- | :------------------------------------------------------------------------------- |
+| `/cmd_vel`                        | `geometry_msgs/Twist`   | Input to Dingo's kinematic controller. Publish here to make Dingo go.            |
+| `/odom`                           | `nav_msgs/Odometry`     | Published by `robot_localization`, a filtered localization estimate based on wheel odometry (encoders) and integrated IMU. |
+| `/imu/data`                       | `sensor_msgs/IMU`       | Published by `imu_filter_madgwick`, an orientation estimated based on the Dingo's internal IMU. |
+| `/mcu/status`                     | `dingo_msgs/Status`     | Low-frequency status data for Dingo's systems. This information is republished in human readable form on the `diagnostics` topic and is best consumed with the Robot Monitor. |
+| `/mcu/aux_input`                  | `dingo_msgs/TODO`       | User can publish to this topic to provide inputs to the MCU. See details in TODO. |
+| `/mcu/aux_output`                 | `dingo_msgs/TODO`       | User can publish to this topic to enable and disable the AUX1, AUX2, and AUX3 outputs as well as control relays on the MCU. See details in TODO. |
+| `/mcu/fans`                       | `dingo_msgs/Fans`       | User can publish to this topic to control an optionally installed fan. See details in TODO. |
+| `/mcu/power`                      | `dingo_msgs/Power`      | TODO: always enabled??? User can publish to this topic to disable/enable the 12V user power. See details in TODO. |
+| `/mcu/lights`                     | `dingo_msgs/Lights`     | User can publish to this topic to override the default behavior of the Dingo corner LEDs. |
+
+---
+
+## Getting Started
+
+### Powering Up
+The first step is to power up your Dingo and have some fun driving it around! If you've just unpacked Dingo from its
+packaging, you may need to open it up and connect the battery.
+
+Press the power button (TODO: inline image) on Dingo's HMI panel. The LEDs should show a test pattern, after which
+you will wait about 30 seconds for the internal computer to finish booting up.
+
+### Connecting the Bluetooth Controller
+When the comms LED (TODO: inline image) is green, this signals that the computer is finished booting up, and that the
+computer and MCU are in communication. At this point, press the PS button on the Sony Bluetooth controller to sync the
+controller to Dingo. Once the blue LED on the top of the controller goes solid, you are paired and ready to drive.
+Hold the L1 trigger button (deadman switch), and push the left thumbstick forward to drive the Dingo. For full speed
+mode, hold the R1 trigger. See the figure below for the Sony PS4 controls layout. If you are not seeing any action,
+refer to (TODO: Contact on page 19) to get in touch with support.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/dingo_images/dingo-sony-ps4-controller-labelled.pdf"
+      width="400"
+    />
+    <figcaption>PS4 Controls Layout</figcaption>
+  </figure>
+</center>
+
+### Configuring Wireless Access
+
+#### Wired Access to Dingo
+
+To get Dingo connected to your local wifi network, you must first access the internal computer using a wired connection.
+Remove the top trough cover and the appropriate yellow fairing to access the computer module, then connect to one of
+the network ports with a standard ethernet cable.
+
+Set your laptop's ethernet port to a static IP such as 192.168.131.201. To do this in Ubuntu, follow the steps below:
+
+1.  Click on the Wifi icon in the upper-right corner of your screen, and select Edit Connections.
+2.  In the Network Connections window, under Ethernet, select your wired connection and then click Edit.
+3.  Select the IPv4 Settings tab and then change the Method to Manual.
+4.  Click the Add button to add a new address.
+5.  Enter a 192.168.131.201 as the static IP under the Address column, and enter 255.255.255.0 under the NetMask
+    column, and then select Save.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/dingo_images/wired_connection.png"
+      width="400"
+    />
+    <figcaption>Static IP Configuration (Ubuntu)</figcaption>
+  </figure>
+</center>
+
+The next step is to connect to Dingo via SSH. To do so execute the following in a terminal window:
+
+`ssh administrator@192.168.131.1`
+
+You will be promoted to enter a password. The default password is provided in the Quick Start guide that shipped
+with your system.
+
+#### Dingo Wifi Setup
+
+Now that you are connected via SSH over a wired connection using the steps above, you can set up  the Dingo computer
+(running Ubuntu 20.04) to connect to a local wifi network. (For legacy Dingo systems running Ubuntu 18.04, use
+`wicd-curses` instead.)
+
+TODO: netplan details.
+
+While you are still connected via SSH over a wired connection to Dingo, you willl need to identify the IP address
+of Dingo's wireless connection. In a terminal window, execute:
+
+`ip a`
+
+A list of network connections will be displayed within the terminal. Locate the wireless network and make note of its
+IP address. Now that you know Dingo's wireless IP address, you may now exit the ethernet SSH session by executing
+`exit`.
+
+Remove the ethernet cable and close up Dingo. Now you can SSH into Dingo over the wireless network. To do so,
+execute:
+
+`ssh administrator@<IP_OF_DINGO>`
+
+SSH sessions allow you to control Dingo's internal computer. You can do various things such as download packages,
+run updates, add/remove files, transfer files etc.
+
+### Remote ROS Connectivity
+
+To use ROS desktop tools, you will need your computer to be able to connect to Dingo's ROS master. This will allow
+you to run ROS commands like `rostopic list`, `rostopic echo`, `rosnode list`, and others, from a remote PC and the
+output will reflect the activity on Dingo's ROS master, rather than on your own machine. This can be a tricky
+process, but we have tried to make it as simple as possible.
+
+In order for the ROS tools on your computer to talk to Dingo, they need to know two things:
+
+-   How to find the ROS master, which is set in the `ROS_MASTER_URI` environment variable, and
+-   How processes on the other computer can find your computer, which is the `ROS_IP` environment variable.
+
+The suggested pattern is to create a file in your home directory called `remote-dingo.sh` with the following contents:
+
+`export ROS_MASTER_URI=http://cpr-dingo -0001:11311 # Dingo's hostname`
+`export ROS_IP=10.25.0.102 # Your laptop's wireless IP address`
+
+If your network does not already resolve Dingo's hostname to its wireless IP address, you may need to add a
+corresponding line to your computer's `/etc/hosts` file:
+
+`10.25.0.101 cpr-dingo-0001`
+
+NOTE: You can verify the hostname and IP address of Dingo using the following commands during an SSH session
+with the onboard PC.
+
+`hostname`
+`hostname -i`
+
+Then, when you are ready to communicate remotely with Dingo, you can source that script like so, thus defining
+those two key environment variables in the present context.
+
+`source remote-dingo.sh`
+
+To verify that everything is set up propelry, try running a few ROS commands, such as the standard visual ROS tools:
+
+`roslaunch dingo_viz view_robot.launch`
+`rosrun rqt_robot_monitor rqt_robot_monitor`
+`rosrun rqt_console rqt_console`
+
+If the tools launch, then everything is setup properly.
+
+Please contact Clearpath Support if you need assistance in configuring remote access. For more general details on
+how ROS works over TCP with multiple machines, please see:
+http://wiki.ros.org/ROS/Tutorials/MultipleMachines.
+
+For help troubleshooting a multiple machines connectivity issue, see:
+http://wiki.ros.org/ROS/NetworkSetup
+
+### Dingo Desktop Packages
+
+To command or observe Dingo from your desktop computer, first set up a basic ROS installation. See the following
+page for details:
+http://wiki.ros.org/noetic/installation/ubuntu
+
+When your ROS install is set up, install the Dingo desktop packages:
+
+`sudo apt-get install ros-noetic-dingo-desktop`
+
+Once your remote access to Dingo's ROS master is configured (see options in subsection TODO), you can launch rviz,
+the standard ROS robot visualization tool:
+
+`roslaunch dingo_viz view_robot.launch`
+
+From within rviz, you can use interactive markers to drive Dingo, you can visualize its published localization
+estimate, and you can visualize any attached sensors which have been added to its robot description XML (URDF).
+
+Additionally from the desktop, you can launch the standard RQT Robot Monitor, which watches the diagnostic output
+from Dingo's self-montoring capabilities:
+
+`rosrun rqt_robot_monitor rqt_robot_monitor`
+
+---
+
+## Apps
+
+When equipped with a laser scanner as is available in the Gazebo simulation, Dingo works with the standard ROS
+navigation stack. See http://wiki.ros.org/dingo_navigation.
+
+---
+
+## Charging and Battery Maintenance
+
+When finished with the Dingo, press and release the power button (TODO: image) to power it off. Then remove the
+batteries for charging.
+
+Dingo's batteries are charged outside the Dingo using the charger(s) provided.
+
+Alternatively, if you have multiple batteries, you can hot-swap them one at a time. The system will remain operational
+while hot-swapping as long as there is at least one battery in the system or the system is connected to shore power
+prior to removing the batteries. Note that plugging in shore power will engage a motor stop and it is not possible to
+drive Dingo while connected to shore power.
+
+The Sealed Lead Acid batteries have overcurrent protection in the form of an ATO fuse. The Lithium-Ion batteries include
+integrated protections against fault due to overcurrent, overdischarge, and short circuit. The batteries are rugged and
+designed for the demanding environments into which Dingo may be deployed.
+
+However, please take note of the following:
+
+-   SLA batteries must be charged while in a 0 to +45 ◦C range and discharged while in a -30 to +60 ◦C range.
+-   Li-Ion batteries must be charged while in a 0 to +50 ◦C range and discharged while in a -20 to +60 ◦C range.
+-   The batteries must not be punctured or disassembled.
+-   The batteries should be dropped off or delivered to your local hazardous waste authority for disposal.
+-   When traveling with Dingo, consult your airline's restrictions regarding lithium batteries (if applicable). If
+possible, bring the batteries in your carry on luggage, where they will be subject to normal cabin temperatures and
+pressures.
+
+Please contact Clearpath Robotics for additional information about Dingo's batteries or for information about purchasing
+additional batteries.
+
+---
+
+## Safety Considerations
+
+Dingo is a fast moving robotic platform. Please read the following notices carefully.
+
+### General warnings
+
+Dingo is a rugged and high-performance vehicle. For the safety of yourself and others, always conduct initial
+experiments and software development with the vehicle raised off the ground. Place a wooden crate, a set of
+sawhorses, a sturdy storage tub, or any other solid flat structure having a height greater than 6 inches under
+Dingo to keep the wheels clear of the ground ("up on blocks").
+
+When starting out, favor slower wheel speeds. Dingo's control loops can accurately maintain velocities as low
+as 0.1 m/s. Operating at such speeds will give you more time to react if things don't go quite as you expect.
+
+### Motor Stop Buttons  {#dingo-stop-buttons}
+
+The motor stop button (TODO: image) is located on the HMI Panel at the back of Dingo. To engage Stop Mode,
+press the motor stop button once; you should see that the green LED by the motor stop button is flashing and
+that all four corner LEDs are flashing red. To disengage Stop Mode, press the motor stop button again; all
+LEDs should return to their original values.
+
+When in Stop Mode, the Dingo will not drive. The commands received while in Stop Mode are not buffered; Dingo will
+always act on the latest commands received. This means that if the commands are stopped before the motor stop
+button is pressed to disengage Stop Mode, the Dingo will not move. If the commands are continued, Dingo will move
+at the speed commanded once the motor stop button is pressed to disengage Stop Mode.
+
+Ensure that the motor stop button is accessible at all times. Avoid mounting payloads that extend over the rear of
+Dingo and would block access to the motor stop button.
+
+Note that the Dingo MCU board does provide a breakout to allow an external stop button/switch to be integrated by
+the end user, which could be used to engage/disengage Stop Mode. Please inquire with Clearpath Robotics for details
+on adding an external stop button/switch. See section TODO for information.
+
+### Electrical System
+
+Dingo is powered by batteries capable of delivering over 2000W for short durations. This gives Dingo's motors their
+great performance; however, it is also enough power to cause severe bodily harm. Always use caution when operating
+Dingo to avoid personal injury or property damage. To ensure safety, please observe the following precautions:
+
+-   Do not tamper with the battery terminals or wiring.
+-   Do not tamper with the fuses, except to check and change the fuses.
+-   Always replace fuses with the same type and rating to ensure continued protection against risk of fires.
+-   Consult Clearpath Robotics support if you need to service the batteries.
+-   Do not lay tools or other objects on top of the batteries.
+-   Charge the battery only with the charger provided by Clearpath Robotics.
+-   Please dispose of the batteries properly or return them to Clearpath Robotics to do so.
+
+### Lifting and Transport
+
+-   Ensure that Dingo's Stop Mode is engaged when transporting short distances and powered off when transporting
+longer distances.
+-   Do not push the robot at more than 0.5 m/s (1.6 ft/s) or damage to the motor controls may occur.
+
+---
+
+## Payload Integration guide
+
+If you are wanting to attach custom hardware to Dingo, you will have to take care of mechanical mounting, electrical
+supply, and software integration. This section aims to equip you with respect to these challenges.
+
+### Mechanical Mounting
+
+
+### Electrical Integration        {#dingo-payload-electrical-integration}
+
+
+### Software Integration
 TODO
+
+---
+
+<ComponentSupport />
