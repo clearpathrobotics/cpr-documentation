@@ -200,7 +200,7 @@ Set your laptop's ethernet port to a static IP such as 192.168.131.101. To do th
 2.  In the Network Connections window, under Ethernet, select your wired connection and then click Edit.
 3.  Select the IPv4 Settings tab and then change the Method to Manual.
 4.  Click the Add button to add a new address.
-5.  Enter a 192.168.131.101 as the static IP under the Address column, and enter 255.255.255.0 under the NetMask
+5.  Enter a 192.168.131.101 as the static IP under the Address column, and enter 255.255.255.0 under the Netmask
     column, and then select Save.
 
 <center>
@@ -217,8 +217,8 @@ The next step is to connect to Dingo via SSH. To do so execute the following in 
 
 `ssh administrator@192.168.131.1`
 
-You will be promoted to enter a password. The default password is provided in the Quick Start guide that shipped
-with your system.
+You will be promoted to enter a password. The default password is `clearpath` and you set a new password
+on first connection.
 
 #### Dingo Wifi Setup
 
@@ -397,8 +397,8 @@ Ensure that the motor stop button is accessible at all times. Avoid mounting pay
 Dingo and would block access to the motor stop button.
 
 Note that the Dingo MCU board does provide a breakout to allow an external stop button/switch to be integrated by
-the end user, which could be used to engage/disengage Stop Mode. Please inquire with Clearpath Robotics for details
-on adding an external stop button/switch. Contact [Support](#dingo-support) for more information.
+the end user, which could be used to engage/disengage Stop Mode. See [Optional External E-Stop](#dingo-external-estop)
+for details on adding an external stop button/switch.
 
 ### Electrical System
 
@@ -422,7 +422,7 @@ longer distances.
 
 ---
 
-## Payload Integration guide
+## Payload Integration Guide
 
 If you are wanting to attach custom hardware to Dingo, you will have to take care of mechanical mounting, electrical
 supply, and software integration. This section aims to equip you with respect to these challenges.
@@ -573,6 +573,7 @@ Each of the AUX outputs is a 4-pin connector with pin mapping as outlined below.
 -    4: GND
 
 **Relays**
+
 In addition to the AUX output connectors, publishing to `/mcu/aux_outputs` also
 controls the AUX relays. These relays are available through the 10-pin
 connector on the MCU labelled `RELAY` with pin mapping:
@@ -594,7 +595,7 @@ using a mating connector. The pins should be connected as follows:
 
 Then, the use can publish a ROS message to the `/mcu/fans` topic to control the fan.
 
-#### Optional External E-Stop
+#### Optional External E-Stop    {#dingo-external-estop}
 
 In addition to the built-in Motor Stop button, an external e-stop button can be added that has Similar
 functionality. Electrically, the external e-stop button can be connected to the 6-pin MCU connector
