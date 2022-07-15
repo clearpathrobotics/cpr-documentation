@@ -444,20 +444,37 @@ Except for bus-powered USB cameras, most payloads have separate leads for power 
 Data connections may be brought through the openings in the trough cover and connected directly to
 the internal computer.
 
-#### User Power Connections
-
 Dingo's internal computer options support USB3 and Ethernet connectivity. In addition,
 the PCIe Gen3 x16 slot may be used to supply a GPU or other attachements, as necessary.
 Additionally, the internal mounting area may be used for an Ethernet switch, when attaching multiple
 Ethernet payloads, or for a PoE power injector as required.
 
-Similar to the data connections, the power lead may be brought through the trough cover and connected
-to the user power: unregulated battery power, regulated 12V power, or regulated 5V power.
+#### Connector Summary
 
-Remove the front trough cover by removing four flathead screws and locate the appropriate power
+The Dingo MCU board provides a number of connections for power, relays, auxiliary inputs and
+auxiliary outputs. These are summarized in the following table and described in more detail in
+the following sections.
+
+| MCU board label   | MCU board connector     | Mating connector | Crimp terminals         | Crimping tool |
+| :---------------- | :---------------------- | :--------------- | :---------------------- | :------------ |
+| PWR1, PWR2        | Molex 0039301040        | Molex 0039012040 | Molex 0507528200 (AWG 20-22) or Molex 0503518100 (AWG 22-28) | Molex 2002184900 |
+| VBAT              | Molex 768250002         | Molex 1700010102 | Molex 0507528200 (AWG 20-22) or Molex 0503518100 (AWG 22-28) | Molex 2002184900 |
+| INPUTS            | TE 3-794682-8           | TE 794617-8      | TE 1-794610-1 (AWG 20-24) or TE 1-794611-1 (AWG 26-30) | TE 91391-1 |
+| SW_IN             | TE 2-1445094-2          | TE 1445022-2     | TE 1-794610-1 (AWG 20-24) or TE 1-794611-1 (AWG 26-30) | TE 91391-1 |
+| AUX1, AUX2, AUX3  | TE 3-794682-4           | TE 794617-4      | TE 1-794610-1 (AWG 20-24) or TE 1-794611-1 (AWG 26-30) | TE 91391-1 |
+| RELAY             | TE 4-794682-0           | TE 1-794616-0    | TE 1-794610-1 (AWG 20-24) or TE 1-794611-1 (AWG 26-30) | TE 91391-1 |
+| FAN               | Molex 0533750210        | Molex 0511630200 | Molex 0507528200 (AWG 20-22) or Molex 0503518100 (AWG 22-28) | Molex 2002184900 |
+| ESTOP             | Molex 053370610         | Molex 0511630600 | Molex 0507528200 (AWG 20-22) or Molex 0503518100 (AWG 22-28) | Molex 2002184900 |
+
+#### User Power Connections
+
+The following are available as user power: unregulated battery power (see VBAT), regulated 12V power
+(see PWR1 and PWR2), and regulated 5V power (see PWR1 and PWR2).
+
+Similar to the data connections, the power leads may be brought through the trough cover and connected
+to the user power. Remove the front trough cover by removing four flathead screws and locate the appropriate power
 connector on the MCU board. Refer to the figure below for the location of the user power connectors.
-Use DigiKey part WM3701-ND for connecting to 12V/5V power and DigiKey part WM10378-ND for connecting
-to VBAT power. Route the power from the MCU board to the appropriate location, either to the internal
+Route the power from the MCU board to the appropriate location, either to the internal
 payload modules or through the openings in the trough cover to the topside payload.
 
 <center>
@@ -481,8 +498,7 @@ are mapped to the ROS message bits as follows:
 -   IN2: bit 1
 -   IN3: bit 2
 
-Electrically, the `INPUTS` connector (TODO: part number; mating connector TODO)
-is used for IN1 and IN2, with pin mapping as
+Electrically, the `INPUTS` connector is used for IN1 and IN2, with pin mapping as
 outlined below. Note that each of the two inputs can be 12V or 24V inputs, with a
 shared return path. The inputs have opto-electrical isolation.
 
@@ -495,8 +511,7 @@ shared return path. The inputs have opto-electrical isolation.
 -    7: IN2 12V input
 -    8: IN2 24V input
 
-Electrically, the `SW_IN` connector (TODO: part number; mating connector TODO)
-is used for IN3, with pin mapping as outlined
+Electrically, the `SW_IN` connector is used for IN3, with pin mapping as outlined
 below. This is intended to be a 'switch' input and it generates a 100 ms pulse
 to the microcontroller when asserted.
 
@@ -534,8 +549,7 @@ For example, to enable just the AUX3 output:
 rostopic pub /mcu/aux_output std_msgs/UInt8 "data: 4"
 ```
 
-Each of the AUX outputs is a 4-pin connector (TODO: part number; mating connector TODO)
-with pin mapping as outlined below. 
+Each of the AUX outputs is a 4-pin connector with pin mapping as outlined below. 
 
 **AUX1 Pin Mapping**
 
@@ -558,10 +572,10 @@ with pin mapping as outlined below.
 -    3: GND
 -    4: GND
 
+**Relays**
 In addition to the AUX output connectors, publishing to `/mcu/aux_outputs` also
 controls the AUX relays. These relays are available through the 10-pin
-connector on the MCU labelled `RELAY` (TODO: part number; mating connector TODO)
-with pin mapping:
+connector on the MCU labelled `RELAY` with pin mapping:
 
 -    1 and 6: 12V with 2A fuse
 -    5 and 10: GND
@@ -572,8 +586,8 @@ with pin mapping:
 #### Optional Fan     {#dingo-fan}
 
 While a fan is not included by default with Dingo, a fan may be integrated into the system.
-Electrically, connect a 12V 2-pin fan to the MCU connector (TODO: mfg part number) labelled `FAN`
-using a TODO mating connector. The pins should be connected as follows:
+Electrically, connect a 12V 2-pin fan to the MCU connector labelled `FAN`
+using a mating connector. The pins should be connected as follows:
 
 -   1: 12V
 -   2: GND
@@ -583,8 +597,8 @@ Then, the use can publish a ROS message to the `/mcu/fans` topic to control the 
 #### Optional External E-Stop
 
 In addition to the built-in Motor Stop button, an external e-stop button can be added that has Similar
-functionality. Electrically, the external e-stop button can be connected to the 6-pin MCU connector (TODO: mfg part number)
-labelled `ESTOP` using a TODO mating connector.
+functionality. Electrically, the external e-stop button can be connected to the 6-pin MCU connector
+labelled `ESTOP` using a mating connector.
 
 The six pins should be connected as follows:
 -   1-2: to external e-stop breakout: press and release external button (3.3V) to engage estop; press and release
