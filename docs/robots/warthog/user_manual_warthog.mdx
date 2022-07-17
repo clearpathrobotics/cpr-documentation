@@ -5,6 +5,258 @@ sidebar_position: 2
 
 import ComponentIntroductionWarthog from "/components/introduction_warthog.mdx";
 
+## Introduction
+
 <ComponentIntroductionWarthog />
+
+### What's Included
+
+Each Warthog includes:
+
+- 1X Warthog UGV
+  - Onboard computer
+  - User Panel with power, Ethernet, Serial(RS232) and USB connectivity
+  - 48V Lead Acid Battery Pack
+  - Battery Charger
+- 1X Futaba Remote Control (R/C)
+- 1X Warthog User Manual
+- 1X Wireless Stop Remote
+
+### Hardware Overview
+
+<center>
+  <img
+    src="/img/robot_images/warthog_images/robot_warthog_1.png"
+    width="600"
+  />
+</center>
+
+#### Battery Charger
+
+Please see the Appendix for information about the provided charger.
+
+#### Bilge Pumps
+
+The Warthog has two bilge pumps, with one situated in each of the drive units underneath the motor.
+The bilge pumps are used to remove water from the main chassis and drive units during operation in water.
+At initial startup, an audible sound can be heard from the bilge pumps being initiated.
+These pumps are an automatic pumping system that check for water levels inside the drive units.
+The pumps automatically come on every two minutes and check for water levels.
+If the water level inside the drive unit exceeds a predetermined level, the pumps will remain on, otherwise they will shut off.
+During prolonged use in water, some water may appear in the drive unit.
+This is normal and acceptable.
+This outlet leads from the pump to the exterior of the Warthog.
+It is used to remove excess water from the chassis and drive units.
+No obstructions should be placed in front of or around this area.
+Obstruction of water flow may result in damage to the internal electrical components and loss of function in the Warthog.
+
+#### User Panel
+
+The User Panel provides access to the user power panel, as well as USB, serial, and ethernet ports.
+The power panel can be used to power your payloads.
+The USB 3.0 and Ethernet ports are connected directly to the onboard PC.
+To connect a device to the onboard network, it's suggested to give it a static IP in the _192.168.131.xxx_ subnet, avoiding IPs in use by the following pre-existing devices:
+
+|  IP address   | Description                                   |
+| :-----------: | :-------------------------------------------- |
+| 192.168.131.1 | Onboard PC (all ports, br0 network interface) |
+| 192.168.131.2 | Ethernet-connected MCU                        |
+
+Typically addresses numbered 192.168.131.100 and above will not collide with any of Warthog's payloads.
+Please see the [Electrical Integration](#warthog-electrical-integration) subsection for more information.
+
+#### Payload Integration Area
+
+All payloads should be mounted to the central chassis when traversing through water to prevent rolling.
+The primary payload of the unit should be placed on the central chassis.
+If necessary loading can be placed on the drive units however payloads should not exceed 23 kg (50 lbs) on each drive unit.
+
+For more information and guidance on mounting payload structures on top of Warthog, please refer to subsection [Mechanical Mounting](#warthog-mechanical-mounting)
+
+### Technical Specifications
+
+| Specification                   | Value                                                                                      |
+| :------------------------------ | :----------------------------------------------------------------------------------------- |
+| External Dimensions (L x W x H) | 1.52 X 1.38 X 0.83 metres (4.9' X 4.5' X 2.72')                                            |
+| Base Weight                     | 280 kg (551 lbs)                                                                           |
+| Ground Clearance                | 254 mm (10 in)                                                                             |
+| Max Payload                     | 272 kg (600 lbs)                                                                           |
+| Max Incline                     | 35 - 45°                                                                                   |
+| Max Speed                       | 18 km/h (11 mph)                                                                           |
+| Suspension                      | Geometric Passive Articulation                                                             |
+| Drive Configuration             | 4 X 4 Skid Steer                                                                           |
+| Operating Environment           | Outdoor                                                                                    |
+| Traction                        | Ø610 mm (24") Argo tire (Turf tire or 300 mm (12") wide Quad Track System optional)        |
+| Battery Chemistry               | AGM sealed lead acid (Li-ion optional)                                                     |
+| Capacity                        | 105 Ah at 48 V, expandable to 200 Ah with Li-ion option                                    |
+| Nominal Run Time                | Lead acid: 2.5 hrs, Li-ion: 6 hrs                                                          |
+| Charge Time                     | 4 Hours approx                                                                             |
+| User Power                      | 12 V, 24 V and 48 V Fused at 10A                                                           |
+| Control Modes                   | Remote control, computer controlled velocity commands, indoor/outdoor autonomy packages    |
+| Feedback Battery                | voltage, motor currents, wheel odometry, control system status, temperature, safety status |
+| Communication                   | Ethernet, USB, Remote Control, Wi-Fi                                                       |
+| Drivers                         | and APIs Packaged with ROS Noetic (includes RViz, Gazebo support), Matlab API available    |
+
+---
+
+## Getting Started
+
+TODO
+
+---
+
+## Safety Considerations
+
+TODO
+
+---
+
+## Payload Integration Guide
+
+If you want to attach custom hardware to Warthog, you will have to take care of mechnical mounting, electrical supply, and software integration.
+This section aims to equip you with respect to these challenges.
+
+### System Architecture
+
+Like most robotic systems, Warthog has an onboard PC coupled to a custom microcontroller board.
+The microcontroller board handles IO, system and battery monitoring, and provides an interface to the CAN-controlled motor drivers.
+
+<center>
+  <img
+    src="/img/robot_images/warthog_images/robot_warthog_7.png"
+    width="900"
+  />
+</center>
+
+The ROS API described below can be used to interface with Warthog.
+
+| Topic                          | Message             | Type Purpose                                                                                                                                                                  |
+| :----------------------------- | :------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| /cmd_vel                       | geometry_msgs/Twist | Input to Warthog’s kinematic controller. Publish here to make Warthog go.                                                                                                     |
+| /odometry/filtered             | nav_msgs/Odometry   | Published by robot_localization, a filtered localization estimate based on wheel odometry (encoders) and integrated IMU.                                                      |
+| /imu/data                      | sensor_msgs/IMU     | Published by imu_filter_madgwick, an orientation estimate based on Warthog’s internal gyroscope, accelerometer, and magnetometer.                                             |
+| /status                        | warthog_msgs/Status | Low-frequency status data for Warthog’s systems. This information is republished in human readable form on the diagnostics topic and is best consumed with the Robot Monitor. |
+| /cmd_lights                    | warthog_msgs/Lights | Input to controlling the Warthog’s body lights when not in an error state.                                                                                                    |
+| /SIDE/speed                    | std_msgs/Float64    | Input velocity for each motor where SIDE is either left or right. This should not be published to directly, commands from /cmd_vel will be converted to this.                 |
+| /SIDE/status/speed             | std_msgs/Float64    | Reported velocity from each motor’s encoder where SIDE is either left or right.                                                                                               |
+| /SIDE/status/fault             | std_msgs/Bool       | Reported state from each motor controller where SIDE is either left or right.                                                                                                 |
+| /SIDE/status/motor_temperature | std_msgs/Int32      | Reported temperature from each motor controller where SIDE is either left or right.                                                                                           |
+
+<center>
+  <img
+    src="/img/robot_images/warthog_images/robot_warthog_8.png"
+    width="700"
+  />
+</center>
+
+### Mechanical Mounting {#warthog-mechanical-mounting}
+
+The payload integration area can be used to mount external payloads on top of the Warthog.
+
+#### Payload Integration Guidelines
+
+- 705 mm (27.75") is the maximum allowed width of any installed payload (this assumes that the payload is also centered across the width of the UGV chassis.
+- No part of the payload may extend over the sheet metal housings of the drive units or into the small 50 mm (2") gaps between the chassis and drive units.
+  Damage to both the UGV and the payload will result.
+- The chassis has a removable access cover measuring 1175 mm X 667 mm (46.25" X 26.25").
+  This access cover is supported underneath by two adjustable cross members.
+  Regardless of payload, it is imperative that both cross members remain installed (approximately evenly spaced) to provided required support to the access cover.
+  Consider that any payload installed above the top deck will prevent access to the chassis through the access cover, without first removing the installed payload.
+- The rotation of the suspension differential link in the horizontal plane will allow the payload to extend beyond the chassis top deck in both fore and aft locations.
+  The amount of this payload extension (overhang) is dependent on several factors, including the weight and method of attachment of the payload as well as the terrain in which the UGV will operate.
+  Ensure that the amount of overhanging payload allows the UGV to operate safely and does not contact the terrain, especially when crossing steep and/or deep gullies.
+- The available internal chassis volume is:
+  - Length of 445 mm (17.5")
+  - Width of 660 mm (26")
+  - Height of 241 mm (9.5").
+    This space is located at the center of the chassis between two battery packs.
+    Consider that anything placed inside the chassis mush be secured as to not move or shift during UGV operation.
+    Any payload secured ins
+
+:::note
+
+Permanent damage resulting from custom modifications to the mounting plate is not covered under warranty and may not be supported by Clearpath Support.
+Please contact our Support team if you require assistance or have any questions relating to custom modifications.
+
+:::
+
+### Electrical Integration {#warthog-electrical-integration}
+
+:::danger
+
+For continued protection against risk of fire, always replace fuses only with those of the same type and rating.
+
+:::
+
+The user power receptacles located in the User Panel are capable of supplying 12 VDC, 24VDC, and unregulated battery voltage (48 - 60 VDC) for powering Warthog's payloads.
+See the figures below for connector locations and pinouts.
+Ensure you select a contact that's appropriate for the gauge of wire used.
+The mating connector for "USER POWER" is [USBFirewire RR-153274-23050](https://www.usbfirewire.com/parts/rr-153274-23050.html#RR-153274-23050) and the mating connector for "SERIAL" is [USBFirewire RR-153274-23040](https://www.usbfirewire.com/parts/rr-153274-23040.html#RR-153274-23040).
+
+<center>
+  <img
+    src="/img/robot_images/warthog_images/robot_warthog_2.png"
+    width="600"
+  />
+</center>
+
+<center>
+  <img
+    src="/img/robot_images/warthog_images/robot_warthog_3.png"
+    width="600"
+  />
+</center>
+
+The electrical system for the chassis can be seen below.
+
+<center>
+  <img
+    src="/img/robot_images/warthog_images/robot_warthog_4.png"
+    width="400"
+  />
+</center>
+
+The left and right drive units electrical system is decribed in the following figures.
+
+<center>
+  <img
+    src="/img/robot_images/warthog_images/robot_warthog_5.png"
+    width="400"
+  />
+</center>
+
+<center>
+  <img
+    src="/img/robot_images/warthog_images/robot_warthog_6.png"
+    width="400"
+  />
+</center>
+
+### Software Integration
+
+ROS has a large ecosystem of sensor drivers, some of which include pre-made URDF description and even
+simulation configurations. Please see the following page on the ROS wiki for a partial list:
+
+<http://wiki.ros.org/Sensors>
+
+For the best experience, consider purchasing supported accessories from Clearpath Robotics for your Warthog.
+This will include simulation, visualization, and driver support for those accessories.
+However, we will happily help you get started with integrating your own devices as well.
+
+---
+
+## Maintenance
+
+TODO
+
+---
+
+## Contact
+
+TODO
+
+---
+
+## Appendix
 
 TODO
