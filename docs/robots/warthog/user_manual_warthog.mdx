@@ -6,7 +6,6 @@ sidebar_position: 2
 import ComponentIntroductionWarthog from "/components/introduction_warthog.mdx";
 import Support from "/components/support.mdx";
 
-
 ## Introduction
 
 <ComponentIntroductionWarthog />
@@ -191,7 +190,7 @@ In the absence of one of the low-level conditions, they can be commanded from RO
 
 ### Wireless access
 
-To get Warthog connected to your local Wi-Fi, you must first access the internal computer using a wired connection. 
+To get Warthog connected to your local Wi-Fi, you must first access the internal computer using a wired connection.
 Open the chassis, lower the computer tray, and connect to the network port labeled STATIC with a standard ethernet cable (or connect to the Ethernet port on the exterior connector panel).
 
 #### Static IP Configuration
@@ -214,14 +213,14 @@ below:
 
 #### Connect to Warthog via SSH over Ethernet
 
-The next step is to connect to Warthog via SSH. 
+The next step is to connect to Warthog via SSH.
 To do so, execute the following in a terminal window:
 
     ssh administrator@192.168.131.1
 
 You will be promoted to enter a password. The default password is `clearpath`.
 
-Now that you're connected via SSH over a wired connection, you can setup Warthog to connect to a local Wi-Fi network. 
+Now that you're connected via SSH over a wired connection, you can setup Warthog to connect to a local Wi-Fi network.
 To do this, you will need to use Netplan—a preinstalled network configuration tool.
 In a terminal window, execute the following command:
 
@@ -242,56 +241,56 @@ Copy and paste the following into the empty file you just created:
           dhcp4‐overrides:
             send‐hostname: true
 
-Modify the following variables in the file: 
+Modify the following variables in the file:
 
-1.  Replace `WIRELESS_INTERFACE` with the name of Warthog's wifi interface (e.g. wlan0, wlp2s0, or wlp3s0). 
-2.  Replace `SSID_GOES_HERE` with the name of the local Wi-Fi network. 
+1.  Replace `WIRELESS_INTERFACE` with the name of Warthog's wifi interface (e.g. wlan0, wlp2s0, or wlp3s0).
+2.  Replace `SSID_GOES_HERE` with the name of the local Wi-Fi network.
 3.  Replace `PASSWORD_GOES_HERE` with the password of the local Wi-Fi network.
 
-Once you are done modifying the file, save it by pressing `CTRL + O`, then `ENTER`. 
+Once you are done modifying the file, save it by pressing `CTRL + O`, then `ENTER`.
 Close the file by pressing `CTRL + X`.
 
 Apply your new Netplan configuration and bring up the wifi connection. In a terminal window, execute the following command:
 
     sudo netplan apply
 
-While you’re still wired to Warthog, you'll need to identify the IP address of Warthog's wireless connection.
+While you're still wired to Warthog, you'll need to identify the IP address of Warthog's wireless connection.
 In a terminal window, execute:
 
     ip a
 
-A list of network connections will be displayed within the terminal. 
-Locate the wireless network and make note of its IP address. 
+A list of network connections will be displayed within the terminal.
+Locate the wireless network and make note of its IP address.
 Now that you know Warthog's wireless IP address, you may now exit the Ethernet SSH session by executing `exit`.
-Remove the Ethernet cord and close up Warthog. 
+Remove the Ethernet cord and close up Warthog.
 Now you can SSH into Warthog over the wireless network.
 To do so, execute:
 
-  ssh administrator@ <IP_OF_WARTHOG >
+ssh administrator@ <IP_OF_WARTHOG >
 
 For example:
-  ssh administrator@192.168.0.201
+ssh administrator@192.168.0.201
 
-SSH sessions allow you to control Warthog's internal computer. 
+SSH sessions allow you to control Warthog's internal computer.
 You can do various things such as download packages, run updates, add/remove files, transfer files etc.
 
 ### Remote ROS Connectivity
 
-Now that Warthog is on the wireless network, you can access it via SSH or as a remote ROS master. 
+Now that Warthog is on the wireless network, you can access it via SSH or as a remote ROS master.
 Note that in the default configuration, the background ROS process running on Warthog launches with the robot_upstart package.
 This is configured to set the `ROS_HOSTNAME` environment variable to the Warthog PC's hostname.
 If your network resolves hostnames properly, connecting should be a matter of executing the following two lines from your laptop (or sourcing a script containing these lines):
 
-    export ROS_MASTER_URI=http://cpr‐warthog:11311 # Your robot’s hostname
-    export ROS_IP=192.168.12.123 # Your computer’s wireless IP address
+    export ROS_MASTER_URI=http://cpr‐warthog:11311 # Your robot's hostname
+    export ROS_IP=192.168.12.123 # Your computer's wireless IP address
 
-If your network doesn’t resolve hostnames, you may need to add the following line to your `/etc/hosts` file:
+If your network doesn't resolve hostnames, you may need to add the following line to your `/etc/hosts` file:
 
-    192.168.131.1 cpr‐warthog # The robot’s wireless IP address and hostname
+    192.168.131.1 cpr‐warthog # The robot's wireless IP address and hostname
 
-Once everything is set up correctly, try running `rostopic` list. 
-This will verify that your machine can see the robot's ROS master. 
-Then try running rostopic echo `/mcu/status`. 
+Once everything is set up correctly, try running `rostopic` list.
+This will verify that your machine can see the robot's ROS master.
+Then try running rostopic echo `/mcu/status`.
 This will verify that the robot PC can see your machine in order to stream topics to it.
 
 Please contact Clearpath Support if guidance is required in selecting and executing a remote access strategy.
@@ -305,7 +304,7 @@ For help troubleshooting a multiple machines connectivity issue, see:
 
 ### Visualizing Warthog
 
-To command or observe Warthog from your desktop computer, first set up a basic ROS installation. 
+To command or observe Warthog from your desktop computer, first set up a basic ROS installation.
 See the following page for details:
 
 <http://wiki.ros.org/noetic/Installation/Ubuntu>
@@ -314,11 +313,11 @@ When your ROS install is set up, install the Warthog desktop packages:
 
     sudo apt‐get install ros‐noetic‐warthog‐desktop
 
-Once your remote access to Warthog’s ROS master is configured (as above), you can launch rviz, the standard ROS robot visualization tool:
+Once your remote access to Warthog's ROS master is configured (as above), you can launch rviz, the standard ROS robot visualization tool:
 
     roslaunch warthog_viz view_robot.launch
 
-From within rviz, you can use interactive markers to drive Warthog. 
+From within rviz, you can use interactive markers to drive Warthog.
 You can visualize its published localization estimate, and you can visualize any attached sensors which have been added to its robot description XML (URDF).
 
 From your laptop, you can also launch the standard RQT Robot Monitor. This will report the diagnostic output from Warthog's self-monitoring capabilities, as shown in the figure below:
@@ -335,7 +334,7 @@ From your laptop, you can also launch the standard RQT Robot Monitor. This will 
 ### Drivetrain
 
 The Warthog has the ability to be put into neutral which is controlled be the four levers (two per side) in the
-rockers. 
+rockers.
 
 <center>
   <img
@@ -344,7 +343,7 @@ rockers.
   />
 </center>
 
-Use the bolts to restrict the lever from moving as down when the drivetrain is in neutral. 
+Use the bolts to restrict the lever from moving as down when the drivetrain is in neutral.
 The grove for the neutral position is marked with white and the bolt is also marked.
 This is shown below.
 
@@ -355,10 +354,10 @@ This is shown below.
   />
 </center>
 
-Pull the handle on the lever to move it into gear which can be seen below. 
+Pull the handle on the lever to move it into gear which can be seen below.
 Ensure the lever is in
-the green grove. 
-If the lever is difficult to move, rock the Warthog back and forth. 
+the green grove.
+If the lever is difficult to move, rock the Warthog back and forth.
 Do not try to force the lever
 to move.
 
@@ -369,28 +368,27 @@ to move.
   />
 </center>
 
-
 ---
 
 ## Safety Considerations
 
 :::danger
 
-Warthog is a powerful, heavy, fast moving robotic platform. 
+Warthog is a powerful, heavy, fast moving robotic platform.
 Please read the following safety information carefully.
 
 :::
 
 ### General Warnings
 
-For the safety of yourself and others, always conduct initial experiments and software development with the motors not engaged. 
-Whenever the robot is not being operated and the motors are engaged, keep it in a stop state. 
+For the safety of yourself and others, always conduct initial experiments and software development with the motors not engaged.
+Whenever the robot is not being operated and the motors are engaged, keep it in a stop state.
 Do not ride on the vehicle, it can accelerate and brake quickly.
-When starting out, favour slower wheel speeds. 
-Warthog's control loops can accurately maintain velocities as low as 0.1 m/s. 
+When starting out, favour slower wheel speeds.
+Warthog's control loops can accurately maintain velocities as low as 0.1 m/s.
 Operating at such speeds will give you more time to react if things don't go quite as you expect.
-When enabling the system using the GO button on the wireless remote, be sure to stand well back from the Warthog. 
-User code running on the Warthog may still be trying to command the motors, and this can result in sudden and unexpected movement of the vehicle. 
+When enabling the system using the GO button on the wireless remote, be sure to stand well back from the Warthog.
+User code running on the Warthog may still be trying to command the motors, and this can result in sudden and unexpected movement of the vehicle.
 Be prepared to stop the system again using the wireless remote.
 
 ### Maneuverability in Water
@@ -403,8 +401,8 @@ Before entering the water it is important to ensure that:
 
 ### Pinch Points
 
-When operating the Warthog it is important to maintain a safe distance away from the unit. 
-The suspension has the ability to pivot. 
+When operating the Warthog it is important to maintain a safe distance away from the unit.
+The suspension has the ability to pivot.
 Do not place fingers anywhere along the suspension link as it can result in injury.
 
 <center>
@@ -421,31 +419,31 @@ stop remote.
 
 #### Hardwired Stop
 
-Pressing down one of the 4 red mushroom Stop buttons around the Warthog will disable power to the motor controller SEVCON devices (Key switch input on PIN 1). 
-This disables the large contactors and also enables the brakes (passive, spring activated when not powered). 
+Pressing down one of the 4 red mushroom Stop buttons around the Warthog will disable power to the motor controller SEVCON devices (Key switch input on PIN 1).
+This disables the large contactors and also enables the brakes (passive, spring activated when not powered).
 The status indicator lights around the Warthog will flash red.
-To reset a Stop button, the top of the button should be twisted until the button pops out again. 
-The GO button on Wireless remote must then pressed. 
+To reset a Stop button, the top of the button should be twisted until the button pops out again.
+The GO button on Wireless remote must then pressed.
 The Warthog is fully enabled once a relay click is heard, and the front lights change to white.
 
 #### Wireless Remote Stop
 
-To operate the Warthog, the wireless remote stop also has to be powered on (by holding the Power button for at least 1 second). 
-The remote Stop button toggles the Stop status. 
-It must be pressed once to enable Stop, and pressed again to return to an Stop reset ready state. 
-The GO button on the remote will then reset the stop condition. 
-Always ensure the Stop button is accessible at all times. 
+To operate the Warthog, the wireless remote stop also has to be powered on (by holding the Power button for at least 1 second).
+The remote Stop button toggles the Stop status.
+It must be pressed once to enable Stop, and pressed again to return to an Stop reset ready state.
+The GO button on the remote will then reset the stop condition.
+Always ensure the Stop button is accessible at all times.
 Avoid mounting payloads that extend over the rear of Warthog and would occlude the Stop buttons.
 
 ### Electrical System
 
-The largest electrical safety consideration with the Warthog system is the VBAT connection. 
-As it is pulled straight from the batteries, it may have a voltage of 48V (depleted) - 62V (Charging) and can be used to power large external devices. 
-This voltage can cause electrical shock if directly contacted, and is fused internally with an inline fuse at 10 A. 
+The largest electrical safety consideration with the Warthog system is the VBAT connection.
+As it is pulled straight from the batteries, it may have a voltage of 48V (depleted) - 62V (Charging) and can be used to power large external devices.
+This voltage can cause electrical shock if directly contacted, and is fused internally with an inline fuse at 10 A.
 In general, take care to connect or disconnect devices preferably only when the entire system is powered off via the external switch on the rear (main power switch).
 Take note that triggering a Stop condition only disables voltage to the motor controller SEVCON drivers and motors, not the rest of the system which includes the connectors.
-The labelled status LEDs on the user panels indicate status of the system voltages. 
-If a LED is not lit, then it's most likely that a system fuse has blown. 
+The labelled status LEDs on the user panels indicate status of the system voltages.
+If a LED is not lit, then it's most likely that a system fuse has blown.
 Contacting Clearpath support is the best option.
 To ensure safety, please also observe the following precautions:
 
@@ -487,7 +485,6 @@ Clearpath Robotics recommends the following procedures be followed to reduce the
 - Do not attempt to move or operate the vehicle while charging the batteries
 - Check the functionality of stop systems on a regular basis and before and after each use
 
-
 ---
 
 ## Payload Integration Guide
@@ -511,13 +508,13 @@ The ROS API described below can be used to interface with Warthog.
 
 | Topic                          | Message             | Type Purpose                                                                                                                                                                  |
 | :----------------------------- | :------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| /cmd_vel                       | geometry_msgs/Twist | Input to Warthog’s kinematic controller. Publish here to make Warthog go.                                                                                                     |
+| /cmd_vel                       | geometry_msgs/Twist | Input to Warthog's kinematic controller. Publish here to make Warthog go.                                                                                                     |
 | /odometry/filtered             | nav_msgs/Odometry   | Published by robot_localization, a filtered localization estimate based on wheel odometry (encoders) and integrated IMU.                                                      |
-| /imu/data                      | sensor_msgs/IMU     | Published by imu_filter_madgwick, an orientation estimate based on Warthog’s internal gyroscope, accelerometer, and magnetometer.                                             |
-| /status                        | warthog_msgs/Status | Low-frequency status data for Warthog’s systems. This information is republished in human readable form on the diagnostics topic and is best consumed with the Robot Monitor. |
-| /cmd_lights                    | warthog_msgs/Lights | Input to controlling the Warthog’s body lights when not in an error state.                                                                                                    |
+| /imu/data                      | sensor_msgs/IMU     | Published by imu_filter_madgwick, an orientation estimate based on Warthog's internal gyroscope, accelerometer, and magnetometer.                                             |
+| /status                        | warthog_msgs/Status | Low-frequency status data for Warthog's systems. This information is republished in human readable form on the diagnostics topic and is best consumed with the Robot Monitor. |
+| /cmd_lights                    | warthog_msgs/Lights | Input to controlling the Warthog's body lights when not in an error state.                                                                                                    |
 | /SIDE/speed                    | std_msgs/Float64    | Input velocity for each motor where SIDE is either left or right. This should not be published to directly, commands from /cmd_vel will be converted to this.                 |
-| /SIDE/status/speed             | std_msgs/Float64    | Reported velocity from each motor’s encoder where SIDE is either left or right.                                                                                               |
+| /SIDE/status/speed             | std_msgs/Float64    | Reported velocity from each motor's encoder where SIDE is either left or right.                                                                                               |
 | /SIDE/status/fault             | std_msgs/Bool       | Reported state from each motor controller where SIDE is either left or right.                                                                                                 |
 | /SIDE/status/motor_temperature | std_msgs/Int32      | Reported temperature from each motor controller where SIDE is either left or right.                                                                                           |
 
@@ -630,29 +627,30 @@ However, we will happily help you get started with integrating your own devices 
 
 #### General
 
-Warthog contains 48 V lead-acid or lithium-ion battery packs. 
+Warthog contains 48 V lead-acid or lithium-ion battery packs.
 Each battery pack consists of four 12 V lead-acid or lithium-ion batteries.
-Battery configuration may vary with each unit. 
-In order to maximize performance, it's important to ensure that the battery level across each set of lead-acid or lithium-ion batteries is within 0.1 - 0.2 V of each other. 
-If the battery packs exceed this tolerance, it's advised to charge them to within tolerance before wiring these packs in parallel. 
+Battery configuration may vary with each unit.
+In order to maximize performance, it's important to ensure that the battery level across each set of lead-acid or lithium-ion batteries is within 0.1 - 0.2 V of each other.
+If the battery packs exceed this tolerance, it's advised to charge them to within tolerance before wiring these packs in parallel.
 The overall battery life will vary depending upon the usage of the unit.
 Always exercise caution and observe the following safety practices when connecting, disconnecting or handling batteries:
+
 - Batteries are high voltage, high current
 - Battery packs must be properly fastened down to ensure they do not move when the Warthog is in operation.
 - Ensure that the battery packs are evenly distributed throughout the Warthog to maximize stability.
-- Battery levels on the unit should be checked on a regular basis. 
+- Battery levels on the unit should be checked on a regular basis.
   It's important to maintain the battery voltage at a suitable level for proper operation.
 - When additional battery packs are added to the system, it's important to connect the positive terminal first to the main power of the Warthog before connecting ground.
 - When installing additional battery packs, disconnect the ground on all battery packs presently in the unit before connecting the positive terminal of the new battery packs.
 
 #### Long-term Storage
 
-When storing Warthog for long periods of time, it's important to properly maintain the batteries to fully maximize their life. 
+When storing Warthog for long periods of time, it's important to properly maintain the batteries to fully maximize their life.
 Consider one of the following two procedures when placing Warthog in long-term storage:
 
-- Fully charge Warthog, turn it off and put it into storage. 
+- Fully charge Warthog, turn it off and put it into storage.
   Once a week, connect power to the charger and allow the charger to top up the battery for an hour or so.
-- Fully charge Warthog, turn it off and put it into storage, but leave the charger connected and powered the entire time Warthog is in storage. 
+- Fully charge Warthog, turn it off and put it into storage, but leave the charger connected and powered the entire time Warthog is in storage.
   The charger will monitor the battery and will automatically charge it up as needed.
 
 Please contact Clearpath Robotics for additional information about Warthog's battery pack.
@@ -661,12 +659,12 @@ Please contact Clearpath Robotics for additional information about Warthog's bat
 
 If your unit came equipped with the tread upgrade, please keep the following considerations in mind:
 
-- The tread drive units pull considerably more current to operate. 
+- The tread drive units pull considerably more current to operate.
   It is advised to operate a tread Warthog at reduced speeds, either through ROS commands or by reducing the speed scale when operating with the Futaba controller.
-- Due to the increased drive current, expect lower battery life than a wheeled Warthog. 
+- Due to the increased drive current, expect lower battery life than a wheeled Warthog.
   It is recommend to drive at reduced speeds to increase battery life.
-- It is possible to trigger an over current error in the motor controller by increasing speed drastically shortly after resetting a stop condition. 
-  The system's body lights will seem as if the unit is ready to drive, however it will not respond to drive commands. 
+- It is possible to trigger an over current error in the motor controller by increasing speed drastically shortly after resetting a stop condition.
+  The system's body lights will seem as if the unit is ready to drive, however it will not respond to drive commands.
   To clear this state, simply cycle another stop condition, and ramp up speeds slower.
 
 ---
