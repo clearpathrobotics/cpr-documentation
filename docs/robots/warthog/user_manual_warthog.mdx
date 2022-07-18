@@ -273,6 +273,101 @@ For example:
 SSH sessions allow you to control Warthog's internal computer. 
 You can do various things such as download packages, run updates, add/remove files, transfer files etc.
 
+### Remote ROS Connectivity
+
+Now that Warthog is on the wireless network, you can access it via SSH or as a remote ROS master. 
+Note that in the default configuration, the background ROS process running on Warthog launches with the robot_upstart package.
+This is configured to set the `ROS_HOSTNAME` environment variable to the Warthog PC's hostname.
+If your network resolves hostnames properly, connecting should be a matter of executing the following two lines from your laptop (or sourcing a script containing these lines):
+
+    export ROS_MASTER_URI=http://cpr‐warthog:11311 # Your robot’s hostname
+    export ROS_IP=192.168.12.123 # Your computer’s wireless IP address
+
+If your network doesn’t resolve hostnames, you may need to add the following line to your `/etc/hosts` file:
+
+    192.168.131.1 cpr‐warthog # The robot’s wireless IP address and hostname
+
+Once everything is set up correctly, try running `rostopic` list. 
+This will verify that your machine can see the robot's ROS master. 
+Then try running rostopic echo `/mcu/status`. 
+This will verify that the robot PC can see your machine in order to stream topics to it.
+
+Please contact Clearpath Support if guidance is required in selecting and executing a remote access strategy.
+For more general details on how ROS works over TCP with multiple machines, please see:
+
+<http://wiki.ros.org/ROS/Tutorials/MultipleMachines>
+
+For help troubleshooting a multiple machines connectivity issue, see:
+
+<http://wiki.ros.org/ROS/NetworkSetup>
+
+### Visualizing Warthog
+
+To command or observe Warthog from your desktop computer, first set up a basic ROS installation. 
+See the following page for details:
+
+<http://wiki.ros.org/noetic/Installation/Ubuntu>
+
+When your ROS install is set up, install the Warthog desktop packages:
+
+    sudo apt‐get install ros‐noetic‐warthog‐desktop
+
+Once your remote access to Warthog’s ROS master is configured (as above), you can launch rviz, the standard ROS robot visualization tool:
+
+    roslaunch warthog_viz view_robot.launch
+
+From within rviz, you can use interactive markers to drive Warthog. 
+You can visualize its published localization estimate, and you can visualize any attached sensors which have been added to its robot description XML (URDF).
+
+From your laptop, you can also launch the standard RQT Robot Monitor. This will report the diagnostic output from Warthog's self-monitoring capabilities, as shown in the figure below:
+
+    rosrun rqt_robot_monitor rqt_robot_monitor
+
+<center>
+  <img
+    src="/img/robot_images/warthog_images/robot_warthog_13.png"
+    width="600"
+  />
+</center>
+
+### Drivetrain
+
+The Warthog has the ability to be put into neutral which is controlled be the four levers (two per side) in the
+rockers. 
+
+<center>
+  <img
+    src="/img/robot_images/warthog_images/robot_warthog_14.png"
+    width="200"
+  />
+</center>
+
+Use the bolts to restrict the lever from moving as down when the drivetrain is in neutral. 
+The grove for the neutral position is marked with white and the bolt is also marked.
+This is shown below.
+
+<center>
+  <img
+    src="/img/robot_images/warthog_images/robot_warthog_15.png"
+    width="600"
+  />
+</center>
+
+Pull the handle on the lever to move it into gear which can be seen below. 
+Ensure the lever is in
+the green grove. 
+If the lever is difficult to move, rock the Warthog back and forth. 
+Do not try to force the lever
+to move.
+
+<center>
+  <img
+    src="/img/robot_images/warthog_images/robot_warthog_16.png"
+    width="600"
+  />
+</center>
+
+
 ---
 
 ## Safety Considerations
