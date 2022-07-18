@@ -101,7 +101,177 @@ For more information and guidance on mounting payload structures on top of Warth
 
 ## Getting Started
 
-TODO
+The first step is to read this manual and safety warnings.
+The next step is to power up your Warthog and have some fun driving it around!
+Twist the red power button on the back of Warthog.
+Once the body lights are flashing red, twist (to reset) all four stop buttons (if necessary), and press go on the Wireless Stop Remote (next section).
+In a moment, Warthog should go to solid red lights in back, and solid white in front.
+
+### Wireless Stop Remote
+
+Included with the Warthog is a wireless stop remote.
+
+<center>
+  <img
+    src="/img/robot_images/warthog_images/robot_warthog_9.png"
+    width="300"
+  />
+</center>
+
+It's capable of engaging a safety stop remotely.
+The system is designed to enter a stopped state when the remote is not communicating or loses communication with the base.
+The wireless e-stop remote operates as follows:
+
+1.  Pull the red stop button outwards to disengage it from an e-stop condition.
+2.  Press and hold the green start button on the right side of the unit until the battery LED indicator above the buttons turns green.
+    If the battery light is red, this means the e-stop button is still engaged.
+3.  Press the button labeled “RELEASE” within three seconds followed by the start button again.
+4.  The battery LED should be blinking green quickly, this indicates the remote is paired with the receiver.
+    To disengage the stop, press start once again.
+
+The battery LED should now be blinking slower, this indicates the remote stop has been disengaged.
+The corner status lights of the Warthog will change from blinking red to solid red at the rear and white at the front assuming all other safety stop sources have been disengaged.
+The Warthog is now ready to drive.
+
+:::note
+
+If you're not seeing any change in behaviour, please contact our support team.
+
+:::
+
+### Futaba controller
+
+The long range remote control (RC) Futaba radio transmitter can be used to tele-operate the Warthog.
+To begin, slide the power switch to the ON position which is labelled in the figure below.
+
+:::caution
+
+The speed adjustment knob should be turned initially all the way to the left while familiarizing yourself with the transmitter and slowly increasing it to get it moving.
+
+:::
+
+The position of the speed adjustment scale is shown in the figure as _CH4_.
+The transmitter needs to be enabled which is done using the _Deadman Switch_.
+The _Deadman Switch_ is a two position spring loaded switch.
+To enable the RC tele-operation, the switch needs to be held down.
+If released, the switch returns to the up position to disable the robot.
+The left joy stick is used for the forward and reverse motion of the robot and the right joystick is used for turning.
+
+<center>
+  <img
+    src="/img/robot_images/warthog_images/robot_warthog_10.png"
+    width="600"
+  />
+</center>
+
+<center>
+  <img
+    src="/img/robot_images/warthog_images/robot_warthog_11.png"
+    width="600"
+  />
+</center>
+
+If the Clearpath Robotics Outdoor Navigation software is installed on the Warthog, the Futaba remote controller (RC) must be turned OFF for autonomous missions to be properly executed by the navigation software.
+The Futaba RC will always publish messages to the `/rc_teleop/cmd_vel` topic when it is ON, and since it has higher priority than the navigation's `/cmd_vel`, the Warthog will not move if autonomous missions are sent and the RC is still ON.
+
+### Body Lights
+
+Warthog includes four RGB body lights, stacked in a pair on each corner of the chassis.
+These lights express system status according to the table below.
+In the absence of one of the low-level conditions, they can be commanded from ROS to display indications from autonomy or other higher-level software.
+
+| Light Pattern                    | Status                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| :------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Solid Red                        | The MCU is not in contact with the computer. That is, the rosserial connection is not active. This condition will be seen briefly on startup while Warthog's computer is booting up. If it persists, or is seen after initialization, either the base node on the PC has crashed, the network switch has failed, or a serious MCU error has occurred. If you suspect one of these conditions, please contact our support team. |
+| Flashing Red                     | Stop circuit is broken. Twist the mushroom buttons to ensure that they're unlatched, and check any external stop hardware, if present.                                                                                                                                                                                                                                                                                         |
+| Flashing Yellow                  | Motor drivers not yet ready to drive. The motors have a brief initialization sequence which must complete after a stop condition clears before they are ready to drive. If this condition persists, please contact our support team.                                                                                                                                                                                           |
+| White Headlights, Red Taillights | When Warthog is ready to drive, the front will change from red to white. The intensity of the head and tail lights will increase slightly when actually in motion. This is the status which may be overridden by publishing your own light patterns to the `cmd_lights` ROS topic.                                                                                                                                             |
+
+### Wireless access
+
+To get Warthog connected to your local Wi-Fi, you must first access the internal computer using a wired connection. 
+Open the chassis, lower the computer tray, and connect to the network port labeled STATIC with a standard ethernet cable (or connect to the Ethernet port on the exterior connector panel).
+
+#### Static IP Configuration
+
+Set your laptop's ethernet port to a static IP such as 192.168.131.101. To do this in Ubuntu, follow the steps
+below:
+
+1.  Click on the Wifi icon in the upper-right corner of your screen, and select Edit Connections
+2.  In the Network Connections window, under Ethernet, select your wired connection and then click Edit
+3.  Select the IPv4 Settings tab and then change the Method to Manual
+4.  Click the Add button to add a new address
+5.  Enter a 192.168.131.101 as the static IP under the Address column, and enter 255.255.255.0 under the NetMask column, and then select Save
+
+<center>
+  <img
+    src="/img/robot_images/warthog_images/robot_warthog_12.png"
+    width="400"
+  />
+</center>
+
+#### Connect to Warthog via SSH over Ethernet
+
+The next step is to connect to Warthog via SSH. 
+To do so, execute the following in a terminal window:
+
+    ssh administrator@192.168.131.1
+
+You will be promoted to enter a password. The default password is `clearpath`.
+
+Now that you're connected via SSH over a wired connection, you can setup Warthog to connect to a local Wi-Fi network. 
+To do this, you will need to use Netplan—a preinstalled network configuration tool.
+In a terminal window, execute the following command:
+
+    sudo nano /etc/netplan/60‐wireless.yaml
+
+This will create an empty YAML file called `60-wireless.yaml` which you will populate to configure Warthog's wireless networking via Netplan.
+
+Copy and paste the following into the empty file you just created:
+
+    network:
+      wifis:
+        WIRELESS_INTERFACE:
+          optional: true
+          access‐points:
+            SSID_GOES_HERE:
+            password: PASSWORD_GOES_HERE
+          dhcp4: true
+          dhcp4‐overrides:
+            send‐hostname: true
+
+Modify the following variables in the file: 
+
+1.  Replace `WIRELESS_INTERFACE` with the name of Warthog's wifi interface (e.g. wlan0, wlp2s0, or wlp3s0). 
+2.  Replace `SSID_GOES_HERE` with the name of the local Wi-Fi network. 
+3.  Replace `PASSWORD_GOES_HERE` with the password of the local Wi-Fi network.
+
+Once you are done modifying the file, save it by pressing `CTRL + O`, then `ENTER`. 
+Close the file by pressing `CTRL + X`.
+
+Apply your new Netplan configuration and bring up the wifi connection. In a terminal window, execute the following command:
+
+    sudo netplan apply
+
+While you’re still wired to Warthog, you'll need to identify the IP address of Warthog's wireless connection.
+In a terminal window, execute:
+
+    ip a
+
+A list of network connections will be displayed within the terminal. 
+Locate the wireless network and make note of its IP address. 
+Now that you know Warthog's wireless IP address, you may now exit the Ethernet SSH session by executing `exit`.
+Remove the Ethernet cord and close up Warthog. 
+Now you can SSH into Warthog over the wireless network.
+To do so, execute:
+
+  ssh administrator@ <IP_OF_WARTHOG >
+
+For example:
+  ssh administrator@192.168.0.201
+
+SSH sessions allow you to control Warthog's internal computer. 
+You can do various things such as download packages, run updates, add/remove files, transfer files etc.
 
 ---
 
