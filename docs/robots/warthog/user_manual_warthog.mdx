@@ -372,7 +372,119 @@ to move.
 
 ## Safety Considerations
 
-TODO
+:::danger
+
+Warthog is a powerful, heavy, fast moving robotic platform. 
+Please read the following safety information carefully.
+
+:::
+
+### General Warnings
+
+For the safety of yourself and others, always conduct initial experiments and software development with the motors not engaged. 
+Whenever the robot is not being operated and the motors are engaged, keep it in a stop state. 
+Do not ride on the vehicle, it can accelerate and brake quickly.
+When starting out, favour slower wheel speeds. 
+Warthog's control loops can accurately maintain velocities as low as 0.1 m/s. 
+Operating at such speeds will give you more time to react if things don't go quite as you expect.
+When enabling the system using the GO button on the wireless remote, be sure to stand well back from the Warthog. 
+User code running on the Warthog may still be trying to command the motors, and this can result in sudden and unexpected movement of the vehicle. 
+Be prepared to stop the system again using the wireless remote.
+
+### Maneuverability in Water
+
+Before entering the water it is important to ensure that:
+
+- Bilge pumps are functioning properly
+- The side panels and top cover are properly fastened down
+- All access panels are fastened down
+
+### Pinch Points
+
+When operating the Warthog it is important to maintain a safe distance away from the unit. 
+The suspension has the ability to pivot. 
+Do not place fingers anywhere along the suspension link as it can result in injury.
+
+<center>
+  <img
+    src="/img/robot_images/warthog_images/robot_warthog_17.png"
+    width="600"
+  />
+</center>
+
+### Stop buttons
+
+The Stop system on the Warthog has two major components: The hardwired Stop switches and the wireless
+stop remote.
+
+#### Hardwired Stop
+
+Pressing down one of the 4 red mushroom Stop buttons around the Warthog will disable power to the motor controller SEVCON devices (Key switch input on PIN 1). 
+This disables the large contactors and also enables the brakes (passive, spring activated when not powered). 
+The status indicator lights around the Warthog will flash red.
+To reset a Stop button, the top of the button should be twisted until the button pops out again. 
+The GO button on Wireless remote must then pressed. 
+The Warthog is fully enabled once a relay click is heard, and the front lights change to white.
+
+#### Wireless Remote Stop
+
+To operate the Warthog, the wireless remote stop also has to be powered on (by holding the Power button for at least 1 second). 
+The remote Stop button toggles the Stop status. 
+It must be pressed once to enable Stop, and pressed again to return to an Stop reset ready state. 
+The GO button on the remote will then reset the stop condition. 
+Always ensure the Stop button is accessible at all times. 
+Avoid mounting payloads that extend over the rear of Warthog and would occlude the Stop buttons.
+
+### Electrical System
+
+The largest electrical safety consideration with the Warthog system is the VBAT connection. 
+As it is pulled straight from the batteries, it may have a voltage of 48V (depleted) - 62V (Charging) and can be used to power large external devices. 
+This voltage can cause electrical shock if directly contacted, and is fused internally with an inline fuse at 10 A. 
+In general, take care to connect or disconnect devices preferably only when the entire system is powered off via the external switch on the rear (main power switch).
+Take note that triggering a Stop condition only disables voltage to the motor controller SEVCON drivers and motors, not the rest of the system which includes the connectors.
+The labelled status LEDs on the user panels indicate status of the system voltages. 
+If a LED is not lit, then it's most likely that a system fuse has blown. 
+Contacting Clearpath support is the best option.
+To ensure safety, please also observe the following precautions:
+
+- Do not tamper with the battery terminals or wiring.
+- Consult Clearpath Robotics support if you need to service the battery pack.
+- Do not lay tools or other objects on top of the battery.
+- Do not move the robot while charging the battery.
+- Charge the battery only with the charger provided by Clearpath Robotics.
+- Please dispose of the batteries properly, or return the batteries to Clearpath Robotics to do so.
+
+### Recommended Safe Work Procedures
+
+Clearpath Robotics recommends the following procedures be followed to reduce the likelihood of harm:
+
+- Maintain a safe distance of at least ten meters from the robot whenever possible
+- Never assume that the vehicle can be reliably stopped on command
+- Assert a stop using the remote pendant before approaching the vehicle
+- Always be vigilant around the vehicle, even when a stop is asserted
+- Keep hands and fingers away from the suspension linkage components at the rear of the vehicle
+- Perform no maintenance or troubleshooting on the vehicle without training and familiarisation
+- Follow electrical safety best practices when working with electrical systems and components
+- Disconnect battery using main disconnect at rear of vehicle before working inside vehicle
+- Wear personal protective equipment including high-visibility clothing, head and eye protection while operating, observing or working on the vehicle
+- Never climb on or ride the vehicle
+- Never lie on the ground under or near the vehicle
+- Never approach the vehicle while it is operating in water
+- Avoid operating the vehicle on slopes and grades
+- Never stand down-hill of the vehicle
+- Never place the wireless remote stop pendant on or inside the vehicle
+- Operate the vehicle at the lowest speed possible
+- Never attempt to defeat a safety function for any reason
+- When working on or around the vehicle always disconnect the motors using the drivetrain levers as described in the user manual
+- Chock the vehicle wheels when the robot will be stationary for more than a few seconds
+- Never disconnect the vehicle motors using drivetrain levers when on a slope
+- Never work on the vehicle on a slope
+- Replace fuses only with identical product from specified manufacturer
+- Discontinue use and contact Clearpath Robotics support at the first sign of strange vehicle behaviour
+- Keep tools and loose parts away from electrical components and out of the robot's bays
+- Do not attempt to move or operate the vehicle while charging the batteries
+- Check the functionality of stop systems on a regular basis and before and after each use
+
 
 ---
 
