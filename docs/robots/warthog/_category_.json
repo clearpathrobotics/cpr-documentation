@@ -1,8 +1,4 @@
 {
   "label": "Warthog",
-  "position": 7,
-  "link": {
-    "type": "generated-index",
-    "description": "Documentation for the Warthog"
-  }
+  "position": 7
 }

@@ -1,8 +1,4 @@
 {
   "label": "Sensors",
-  "position": 3,
-  "link": {
-    "type": "generated-index",
-    "description": "Documentation for Sensors"
-  }
+  "position": 3
 }
