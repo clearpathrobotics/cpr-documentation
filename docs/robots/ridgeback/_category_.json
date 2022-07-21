@@ -1,8 +1,4 @@
 {
   "label": "Ridgeback",
-  "position": 5,
-  "link": {
-    "type": "generated-index",
-    "description": "Documentation for the Ridgeback"
-  }
+  "position": 6
 }
