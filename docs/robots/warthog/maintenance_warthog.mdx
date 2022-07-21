@@ -4,7 +4,62 @@ sidebar_position: 5
 ---
 
 import ComponentIntroductionWarthog from "/components/introduction_warthog.mdx";
+import Support from "/components/support.mdx";
+
+## Introduction
 
 <ComponentIntroductionWarthog />
 
-TODO
+---
+
+## Battery and Charging
+
+### General
+
+Warthog contains 48 V lead-acid or lithium-ion battery packs.
+Each battery pack consists of four 12 V lead-acid or lithium-ion batteries.
+Battery configuration may vary with each unit.
+In order to maximize performance, it's important to ensure that the battery level across each set of lead-acid or lithium-ion batteries is within 0.1 - 0.2 V of each other.
+If the battery packs exceed this tolerance, it's advised to charge them to within tolerance before wiring these packs in parallel.
+The overall battery life will vary depending upon the usage of the unit.
+Always exercise caution and observe the following safety practices when connecting, disconnecting or handling batteries:
+
+- Batteries are high voltage, high current
+- Battery packs must be properly fastened down to ensure they do not move when the Warthog is in operation.
+- Ensure that the battery packs are evenly distributed throughout the Warthog to maximize stability.
+- Battery levels on the unit should be checked on a regular basis.
+  It's important to maintain the battery voltage at a suitable level for proper operation.
+- When additional battery packs are added to the system, it's important to connect the positive terminal first to the main power of the Warthog before connecting ground.
+- When installing additional battery packs, disconnect the ground on all battery packs presently in the unit before connecting the positive terminal of the new battery packs.
+
+### Long-term Storage
+
+When storing Warthog for long periods of time, it's important to properly maintain the batteries to fully maximize their life.
+Consider one of the following two procedures when placing Warthog in long-term storage:
+
+- Fully charge Warthog, turn it off and put it into storage.
+  Once a week, connect power to the charger and allow the charger to top up the battery for an hour or so.
+- Fully charge Warthog, turn it off and put it into storage, but leave the charger connected and powered the entire time Warthog is in storage.
+  The charger will monitor the battery and will automatically charge it up as needed.
+
+Please contact Clearpath Robotics for additional information about Warthog's battery pack.
+
+---
+
+## Tread Upgrade
+
+If your unit came equipped with the tread upgrade, please keep the following considerations in mind:
+
+- The tread drive units pull considerably more current to operate.
+  It is advised to operate a tread Warthog at reduced speeds, either through ROS commands or by reducing the speed scale when operating with the Futaba controller.
+- Due to the increased drive current, expect lower battery life than a wheeled Warthog.
+  It is recommend to drive at reduced speeds to increase battery life.
+- It is possible to trigger an over current error in the motor controller by increasing speed drastically shortly after resetting a stop condition.
+  The system's body lights will seem as if the unit is ready to drive, however it will not respond to drive commands.
+  To clear this state, simply cycle another stop condition, and ramp up speeds slower.
+
+---
+
+## Contact
+
+<Support />
