@@ -49,15 +49,24 @@ const config = {
         },
         items: [
           {
-            label: 'Documentation',
-            position: 'left',
-            type: 'doc',
-            docId: 'index_documentation',
+            to: '/docs/robots/index_robots',
+            label: 'Robots',
+            position: 'left'
+          },
+          {
+            to: '/docs/sensors/index_sensors',
+            label: 'Sensors',
+            position: 'left'
+          },
+          {
+            to: '/docs/accessories/index_accessories',
+            label: 'Accessories',
+            position: 'left'
           },
           {
             to: 'about',
             label: 'About',
-            position: 'left'
+            position: 'right'
           },
           {
             to: 'https://github.com/clearpathrobotics/cpr-documentation',
@@ -65,13 +74,18 @@ const config = {
             position: 'right',
           },
           {
-            to: 'https://clearpathrobotics.com/',
-            label: 'Home',
+            to: 'https://build.clearpathrobotics.com/',
+            label: 'Build',
             position: 'right'
           },
           {
             to: 'https://store.clearpathrobotics.com/',
             label: 'Store',
+            position: 'right'
+          },
+          {
+            to: 'https://clearpathrobotics.com/',
+            label: 'Home',
             position: 'right'
           }
         ],
