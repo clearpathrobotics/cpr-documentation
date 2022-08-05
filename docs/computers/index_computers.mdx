@@ -14,7 +14,7 @@ sidebar_position: 1
 <br />
 
 Clearpath's robots use ROS or ROS2, which require the robot to have a computer running an Operating System like Ubuntu.
-We mostly use mini-ITX computers with Intel x86 processors, but we can run ROS on the major architectures including 
+We mostly use mini-ITX computers with Intel x86 processors, but we can run ROS on the major architectures including
 
 - x86 Intel
 - x86 AMD
@@ -43,10 +43,10 @@ The things to consider when specifying a custom computer for your robot are:
 ## Process
 
 1.  Choose between a consumer-computer and an industrial computer.
-    1.  Operating environment's temperature range. 
-    Consumer computers are intended for an environment between 0°C - 30°C.
-    Most outdoor robots operate in summer envronments with hotter ambient air, and have extra heat added to the computer through solar radiation.
-    The type of computer and cooling strategy can allow you to use the full compute capability of the computer in these environments.
+    1.  Operating environment's temperature range.
+        Consumer computers are intended for an environment between 0°C - 30°C.
+        Most outdoor robots operate in summer envronments with hotter ambient air, and have extra heat added to the computer through solar radiation.
+        The type of computer and cooling strategy can allow you to use the full compute capability of the computer in these environments.
     2.  Mechanical shock & vibration in your application.
 2.  Choose between a x86 or arm64 architecture.
     1.  Amount of compute required for sensor data.
@@ -59,8 +59,8 @@ The things to consider when specifying a custom computer for your robot are:
         - Ethernet (100 Mbit/s, 1 Gbit/s, 10 Gbit/s)
         - CAN, and other industrial protocols
         - Serial (RS-232, RS-422, RS-485)
-        Some devices may be connected to the computer through Network Switches, Hubs, or USB-converters.
-        Some devices like cameras can have a large amount of data, and require a dedicated bus on the computer, so it is best to consider the whole application when choosing the computer.
-3.  Amount of hard storage required, and how fast you need to write to this storage. 
-    Consider what data you are collecting from sensors, and want to store for later use. 
+          Some devices may be connected to the computer through Network Switches, Hubs, or USB-converters.
+          Some devices like cameras can have a large amount of data, and require a dedicated bus on the computer, so it is best to consider the whole application when choosing the computer.
+3.  Amount of hard storage required, and how fast you need to write to this storage.
+    Consider what data you are collecting from sensors, and want to store for later use.
     There can be a considerable amount of data from sensors like cameras, so write speeds may be a limiting factor depending on your computer configuration.
