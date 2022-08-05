@@ -64,6 +64,11 @@ const config = {
             position: 'left'
           },
           {
+            to: '/docs/computers/index_computers',
+            label: 'Computers',
+            position: 'left'
+          },
+          {
             to: 'about',
             label: 'About',
             position: 'right'
