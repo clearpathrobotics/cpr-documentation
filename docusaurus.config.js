@@ -74,6 +74,11 @@ const config = {
             position: 'left'
           },
           {
+            to: '/docs/tools/index_tools',
+            label: 'Tools',
+            position: 'left'
+          },
+          {
             to: 'about',
             label: 'About',
             position: 'right'
