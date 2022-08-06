@@ -69,6 +69,11 @@ const config = {
             position: 'left'
           },
           {
+            to: '/docs/components/index_components',
+            label: 'Components',
+            position: 'left'
+          },
+          {
             to: 'about',
             label: 'About',
             position: 'right'
