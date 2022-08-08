@@ -2,3 +2,41 @@
 title: Base Station
 sidebar_position: 2
 ---
+
+<center>
+  <figure>
+    <img
+      src="/img/accessories_images/base_station_1.png"
+      width="400"
+    />
+    <figcaption>Base Station with GPS</figcaption>
+  </figure>
+</center>
+
+Our Base Station is a Network Access Point inside a weatherproof enclosure.
+
+It includes:
+
+- A weatherproof enclosure mounted to a tripod
+- A [Microhard Access Point](/docs/accessories/network_access_point/#ap_microhard_px2_enc) and antenna, to create a Wi-Fi network
+- An AC-DC power supply
+- A battery and charger, so you can use the Base Station remotely
+
+Our robots are configured to automatically connect to the Base Station's Wi-Fi network.
+You can then connect your development computer to the Base Station through Wi-Fi or a network cable, and then share data with the robot over Wi-Fi.
+Our standard Base Station can send data at 100 Mbit/s at up to 100 metres range.
+
+We also have a GPS variant of the Base Station where we add a [Swift Navigation Duro](/docs/sensors/gps/swift_navigation_duro) to the system, connecting it to the Access Point with a network cable.
+This GPS sensor allows the robot to apply an RTK (Real-Time Kinematic) correction for more accurate localization.
+
+:::note
+
+Clearpath uses this RTK correction in its OutdoorNav autonomy software, but we do not use this data in the standard _/odometry_ rostopic.
+
+:::
+
+:::note
+
+Refer to the [Network IP Addresses page](/docs/tools/network_ip_addresses) for the commonly used IPs of devices like Microhards and Swift Navigation Duros.
+
+:::
