@@ -75,6 +75,17 @@
 3.  For advanced users, refer to [Markdown MDX](https://mdxjs.com/) for adding React Components to a Markdown file
 4.  for advanced users, you may create React pages using _.js_ or _.ts_ file types
 
+## How should I name files?
+
+All files should use lowercase letters for their names and file extensions. 
+Our website's server is case sensitive, so it requires files case to match how it is called in your Markdown files.
+Your Windows build commands may not catch these issues since Windows is not case sensitive.
+Using lowercase letters minimizes the number of build issues.
+
+- Good: `controller_1.png`
+- Bad: `Controller_1.png`
+- Bad: `controller_1.PNG`
+
 ## Where should I place files?
 
 1.  Markdown page
