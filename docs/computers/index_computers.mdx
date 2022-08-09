@@ -14,16 +14,15 @@ sidebar_position: 1
 <br />
 
 Clearpath's robots use ROS or ROS2, which require the robot to have a computer running an Operating System like Ubuntu.
-We mostly use mini-ITX computers with Intel x86 processors, but we can run ROS on the major architectures including
+We mostly use mini-ITX computers with Intel Core i3 and i7 processors, but we can run ROS on the major architectures including:
 
-- x86 Intel
-- x86 AMD
+- Intel Core i series
+- AMD Ryzen series
 - arm64 (Nvidia Jetson, and Raspberry Pi)
 
-Clearpath Robotics has preconfigured _Standard_ and _Performance_ computer kits for our robots, but we can configure a custom computer to meet your project's requirements.
-The things to consider when specifying a custom computer for your robot are:
+Clearpath Robotics has preconfigured _Standard_ and _Performance_ computer kits for our robots, but we can make a custom computer to meet your project's requirements.
 
-## Considerations
+## Computer Selection Considerations
 
 1.  Operating conditions, air temperature
 2.  Operating conditions, shock & vibration
@@ -40,15 +39,15 @@ The things to consider when specifying a custom computer for your robot are:
     - Does this software require a specific processor architecture?
 10. Can the selected robot power all these devices, and what will the runtime be?
 
-## Process
+## Computer Selection Process
 
-1.  Choose between a consumer-computer and an industrial computer.
+1.  Choose between a consumer-computer and an industrial-computer.
     1.  Operating environment's temperature range.
         Consumer computers are intended for an environment between 0°C - 30°C.
         Most outdoor robots operate in summer envronments with hotter ambient air, and have extra heat added to the computer through solar radiation.
         The type of computer and cooling strategy can allow you to use the full compute capability of the computer in these environments.
     2.  Mechanical shock & vibration in your application.
-2.  Choose between a x86 or arm64 architecture.
+2.  Choose between a Intel, AMD, or arm64 architecture.
     1.  Amount of compute required for sensor data.
     2.  Amount of compute required for software, such as Autonomy.
     3.  Are you planning to run any software specific to arm64, such as tools in [Nvidia JetPack SDK](https://developer.nvidia.com/embedded/jetpack)?
