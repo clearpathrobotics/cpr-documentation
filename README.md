@@ -77,7 +77,7 @@
 
 ## How should I name files?
 
-All files should use lowercase letters for their names and file extensions. 
+All files should use lowercase letters for their names and file extensions.
 Our website's server is case sensitive, so it requires files case to match how it is called in your Markdown files.
 Your Windows build commands may not catch these issues since Windows is not case sensitive.
 Using lowercase letters minimizes the number of build issues.
