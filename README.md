@@ -86,7 +86,7 @@ Using lowercase letters minimizes the number of build issues.
 - Bad: `Controller_1.png`
 - Bad: `controller_1.PNG`
 
-Downloadable assets like PDFs should say _clearpath_robotics__ at the start of the name.
+Downloadable assets like PDFs should say _clearpath_robotics_ at the start of the name.
 This helps User's know where they downloaded the file from later, as the asset is saved to their _Downloads_ folder.
 
 ## Where should I place files?
