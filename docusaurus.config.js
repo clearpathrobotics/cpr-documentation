@@ -54,6 +54,11 @@ const config = {
             position: 'left'
           },
           {
+            to: '/docs/computers/index_computers',
+            label: 'Computers',
+            position: 'left'
+          },
+          {
             to: '/docs/sensors/index_sensors',
             label: 'Sensors',
             position: 'left'
@@ -61,6 +66,16 @@ const config = {
           {
             to: '/docs/accessories/index_accessories',
             label: 'Accessories',
+            position: 'left'
+          },
+          {
+            to: '/docs/components/index_components',
+            label: 'Components',
+            position: 'left'
+          },
+          {
+            to: '/docs/tools/index_tools',
+            label: 'Tools',
             position: 'left'
           },
           {

@@ -2,7 +2,8 @@
 
 ## Links to the deployed website:
 
-- [production branch](https://docs.clearpathrobotics.com)
+- [_production_ branch](https://docs.clearpathrobotics.com)
+- [_development_ branch](https://development.dfy90wyu8dics.amplifyapp.com/)
 
 ## Tools used:
 
@@ -42,22 +43,28 @@
 4.  Test using your local server, using the steps mentioned [Steps to run this on your computer locally](##-steps-to-run-this-on-your-computer-locally)
 5.  When ready, enter `ctrl-c` in your terminal to stop the server. Then run `npm run build` to test that the site builds corretly.
 6.  Resolve any errors that the terminal reports, and rerun the command `npm run build`.
-7.  Finally, check that your updates adhere to our conde formatting standard, by running the command `npm run format-check`.
+7.  Finally, check that your updates adhere to our code formatting standard, by running the command `npm run format-check`.
     The terminal will either report:
     - _All matched files use Prettier code style!_
     - _Code style issues found in the above file(s). Forgot to run Prettier?_
       You can fix the errors by running the command `npm run format-write`.
+      This format all the files in the repository, and save them automatically.
+      - Refer to the _package.json_ to understand what this script calls.
+      - Refer to the _.prettierrc.json_ to understand the rules Prettier is using when checking files.
+      - Alternativaly, you can format a single file by running `npx prettier --write <FILE PATH>`, such as `npx prettier --write README.md`
 8.  You will need to confirm that `npm run format-write` code formatting did not make any functionality changes to your _.mdx_ documentation.
     You may see files that claim to be updated in Source Control, but don't have any visible changes.
     You should run these commands in your terminal to prevent Git from noting these types of changes:
 
-            git config --global core.filemode false
-            git config --global core.autocrlf false
+        git config --global core.filemode false
+        git config --global core.autocrlf false
 
 9.  When ready, publish your branch on GitHub, and submit a Pull Request to merge your changes into the _development_ branch.
     Pull Requests to the _production_ branch will not merged.
     Also note that this GitHub repository has branch protection rules, that prevent you from committing directly to _production_ and _development_.
+
     <img src="/static/img/readme_images/readme_github_1.png" width="467"/>
+
 10. The administrators of this documentation will review the website for any functional issues,
     and will periodically merge the latest commits in the _development_ branch into the _production_ branch.
 
@@ -67,6 +74,20 @@
 2.  Refer to [Docusaurus's guide](https://docusaurus.io/docs/next/markdown-features) for supported Markdown features
 3.  For advanced users, refer to [Markdown MDX](https://mdxjs.com/) for adding React Components to a Markdown file
 4.  for advanced users, you may create React pages using _.js_ or _.ts_ file types
+
+## How should I name files?
+
+All files should use lowercase letters for their names and file extensions.
+Our website's server is case sensitive, so it requires files case to match how it is called in your Markdown files.
+Your Windows build commands may not catch these issues since Windows is not case sensitive.
+Using lowercase letters minimizes the number of build issues.
+
+- Good: `controller_1.png`
+- Bad: `Controller_1.png`
+- Bad: `controller_1.PNG`
+
+Downloadable assets like PDFs should say _clearpath_robotics_ at the start of the name.
+This helps User's know where they downloaded the file from later, as the asset is saved to their _Downloads_ folder.
 
 ## Where should I place files?
 
@@ -136,8 +157,9 @@ The list below are not strict rules, but are considered good practice to keep im
         - #4E7FFF
         - RGB (78, 127, 255)
 2.  Remove background colours when possible.
-    This helps Users that have set the site to Dark Mode. <br />
+    This helps Users that have set the site to Dark Mode.
 3.  Avoid embedding text in images.
-    This prevents Users from translating the webpage. <br />
-    Consider using arrows and circles to notate images, with the text included in your Markdown file. <br />
+    This prevents Users from translating the webpage.
+    Consider using arrows and circles to notate images, with the text included in your Markdown file.
+
     Note: icons, logos, and symbols that are part of the physical product are exempt from this suggestion.
