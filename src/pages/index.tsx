@@ -12,7 +12,7 @@ function HomepageHeader() {
           src="/img/website_images/logo_yellow_fullsize.png"
           width={500}
         ></img>
-        <p className={styles.titleText}>documentation and tutorials for robots, sensors, and autonomy</p>
+        <p className={styles.titleText}>Documentation and Tutorials for Robotics Development</p>
       </div>
     </header>
   );
