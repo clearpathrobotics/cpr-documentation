@@ -105,6 +105,15 @@ const config = {
           }
         ],
       },
+      docs: {
+        sidebar: {
+          autoCollapseCategories: true,
+          hideable: true
+        },
+      },
+      footer: {
+        copyright: `Copyright © 2022 Clearpath Robotics Inc. All rights reserved.`
+      },
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
