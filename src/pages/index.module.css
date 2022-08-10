@@ -4,20 +4,35 @@
  */
 
 .heroBanner {
-  padding: 4rem 0;
+  padding-top: 1.5rem;
   text-align: center;
   position: relative;
   overflow: hidden;
+  background-color: #4c4c4c;
 }
 
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
+.secondaryBanner {
+  padding: 1rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background-color: #d0cfcc;
 }
 
 .buttons {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+@font-face {
+  font-family: "Raleway", sans-serif;
+  src: url(https://fonts.googleapis.com/css2?family=Raleway&display=swap);
+}
+
+.titleText {
+  color: white;
+  padding-top: 15px;
+  font-size: 25px;
+  font-family: "Raleway", sans-serif;
 }
