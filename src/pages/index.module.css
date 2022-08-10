@@ -4,7 +4,7 @@
  */
 
 .heroBanner {
-  padding: 1em;
+  padding-top: 1.5rem;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -35,5 +35,4 @@
   padding-top: 15px;
   font-size: 25px;
   font-family: "Raleway", sans-serif;
-  text-transform: uppercase;
 }
