@@ -49,32 +49,32 @@ const config = {
         },
         items: [
           {
-            to: '/docs/robots/index_robots',
+            to: '/docs/robots',
             label: 'Robots',
             position: 'left'
           },
           {
-            to: '/docs/computers/index_computers',
+            to: '/docs/computers',
             label: 'Computers',
             position: 'left'
           },
           {
-            to: '/docs/sensors/index_sensors',
+            to: '/docs/sensors',
             label: 'Sensors',
             position: 'left'
           },
           {
-            to: '/docs/accessories/index_accessories',
+            to: '/docs/accessories',
             label: 'Accessories',
             position: 'left'
           },
           {
-            to: '/docs/components/index_components',
+            to: '/docs/components',
             label: 'Components',
             position: 'left'
           },
           {
-            to: '/docs/tools/index_tools',
+            to: '/docs/tools',
             label: 'Tools',
             position: 'left'
           },
