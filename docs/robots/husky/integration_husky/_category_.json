@@ -1,8 +1,4 @@
 {
   "label": "Integration",
-  "position": 2,
-  "link": {
-    "type": "generated-index",
-    "description": "Integration Instructions, Husky"
-  }
+  "position": 2
 }
