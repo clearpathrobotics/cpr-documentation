@@ -74,6 +74,11 @@ const config = {
             position: 'left'
           },
           {
+            to: '/docs/software',
+            label: 'Software',
+            position: 'left'
+          },
+          {
             to: '/docs/tools',
             label: 'Tools',
             position: 'left'
