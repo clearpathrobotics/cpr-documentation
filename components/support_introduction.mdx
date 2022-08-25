@@ -1,0 +1,21 @@
+Robots are complex.
+Common issues are listed below.
+Contact our support team at <support@clearpathrobotics.com> if the issue persists.
+
+:::info
+
+Our Support team may ask you to create a _rosbag_.
+This is a tool that saves ROS data to a file, so we can review it after the robot has been turned off.
+
+For example, we may ask you to record the _/status_ topic so we can review motor temperatures, and other diagnostic data.
+To create this rosbag, you would:
+
+1.  Log into the robot's computer
+2.  Run the command `rosbag record /status`
+3.  User your robot as you typically would, trying to recreate the issue you have been experiencing.
+4.  Once done, in the terminal, press `ctrl+c` to stop the command.
+5.  Enter `ls`, and find the new file that was created. It will have a file extension of _.bag_
+6.  Copy this file to your development computer, using a command like [`scp`](https://help.ubuntu.com/community/SSH/TransferFiles).
+    Send this _.bag_ file to Clearpath Robotics in your Support email request.
+
+:::
