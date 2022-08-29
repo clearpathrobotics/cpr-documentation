@@ -64,6 +64,11 @@ const config = {
             position: 'left'
           },
           {
+            to: '/docs/manipulators',
+            label: 'Manipulators',
+            position: 'left'
+          },
+          {
             to: '/docs/accessories',
             label: 'Accessories',
             position: 'left'
