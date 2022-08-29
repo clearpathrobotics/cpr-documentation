@@ -4,6 +4,8 @@ sidebar_position: 2
 ---
 
 import Support from "/components/support.mdx";
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 <center>
   <img
@@ -47,13 +49,7 @@ import Support from "/components/support.mdx";
 
 | Description                           | IP address |
 | :------------------------------------ | :--------- |
-| Default from Manufacturer, Actuator 1 | 10.10 0.10 |
-| Default from Manufacturer, Actuator 2 | 10.10 0.11 |
-| Default from Manufacturer, Actuator 3 | 10.10 0.12 |
-| Default from Manufacturer, Actuator 4 | 10.10 0.13 |
-| Default from Manufacturer, Actuator 5 | 10.10 0.14 |
-| Default from Manufacturer, Actuator 6 | 10.10 0.15 |
-| Default from Manufacturer, Gripper    | 10.10 0.18 |
+| Default from Manufacturer, USB - USB | 192.168.1.10 |
 
 ### Pinout, Power
 
@@ -116,7 +112,114 @@ The PACS kit for this sensor includes:
 
 ## Software Bringup
 
-TODO
+### Installing packages
+
+<Tabs groupId="ros_versions">
+  <TabItem value="husky" label="Husky" default>
+    <p>1. Download packages:</p>
+    <code>cd ~/catkin_ws/src</code><br />
+    <code>git clone --single-branch --branch noetic-devel https://github.com/Kinovarobotics/ros_kortex.git</code><br />
+    <code>git clone --single-branch --branch noetic-devel https://github.com/husky/husky_manipulation.git</code><br />
+    <code>rosdep install --from-paths . --ignore-src -r -y</code><br />
+    <br /><p>Rosdep may give warnings about unsatisfied dependencies. This is okay if you are only trying to install a single Kinova Gen3 lite on the robot.</p><br />
+    <p>2. Install dependencies per Kinova's github instructions:</p>
+    <code>sudo apt install python3 python3-pip</code><br />
+    <code>sudo python3 -m pip install conan</code><br />
+    <br /><p>3. Build the workspace</p>
+    <code>cd ~/catkin_ws/</code><br />
+    <code>catkin_make</code><br />
+    <code>source devel/setup.bash</code><br />
+  </TabItem>
+  <TabItem value="dingo" label="Dingo">
+    <p>1. Download packages:</p>
+    <code>cd ~/catkin_ws/src</code><br />
+    <code>git clone --single-branch --branch noetic-devel https://github.com/Kinovarobotics/ros_kortex.git</code><br />
+    <code>git clone https://github.com/dingo-cpr/dingo_manipulation.git --recursive</code><br />
+    <code>rosdep install --from-paths . --ignore-src -r -y</code><br />
+    <br /><p>Rosdep may give warnings about unsatisfied dependencies. This is okay if you are only trying to install a single Kinova Gen3 lite on the robot.</p><br />
+    <p>2. Install dependencies per Kinova's github instructions:</p>
+    <code>sudo apt install python3 python3-pip</code><br />
+    <code>sudo python3 -m pip install conan</code><br />
+    <br /><p>3. Build the workspace</p>
+    <code>cd ~/catkin_ws/</code><br />
+    <code>catkin_make</code><br />
+    <code>source devel/setup.bash</code><br />
+  </TabItem>
+</Tabs>
+
+### Networking, with netplan
+
+The _Kinova Gen3 lite_ does not let you change its static IP address. 
+Its address is always _192.168.1.10._ when you connect using a USB - USB cable.
+
+You will need to extend the network bridge to the _192.168.1.x_ subnet to interface with the _Kinova Gen3 lite_ arm.
+
+Open the netplan configuration file with `/etc/netplan/50-clearpath-bridge.yaml`.
+You will be adding a bridge_usb section to the file, and an additional _192.168.1.1/24_ address to the network bridge. 
+Your file should look like this:
+
+```
+
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    bridge_en:
+      dhcp4: no
+      dhcp6: no
+      match:
+        name: en*
+    bridge_eth:
+      dhcp4: no
+      dhcp6: no
+      match:
+        name: eth*
+    bridge_usb:
+      dhcp4: no
+      dhcp6: no
+      match:
+        name: usb*
+  bridges:
+    br0:
+      dhcp4: yes
+      dhcp6: no
+      interfaces: [bridge_en, bridge_eth, bridge_usb]
+      addresses:
+        - 192.168.131.1/24
+        - 192.168.1.1/24
+```
+
+Close and save the file be pressing `ctrl + x`, then typing `y`, and pressing `Enter`.
+
+Now apply your new netplan changes by running `sudo netplan apply`.
+
+You can test the netplan settings by pinging the robot's computer, and pinging the Kinova arm:
+
+```
+ping 192.168.131.1
+ping 192.168.1.10
+```
+
+:::tip
+
+If you cannot ping the computer or arm, try rebooting and replugging the Kinoca Gen3 lite arm before reviewing your installation steps.
+
+:::
+
+### Launching the ROS Driver
+
+<Tabs groupId="ros_versions">
+  <TabItem value="husky" label="Husky" default>
+    <code>roslaunch husky_kinova_bringup husky_gen3_lite_bringup.launch</code><br />
+    <code>roslaunch husky_gen3_lite_moveit_config husky_gen3_lite_moveit_planning_execution.launch</code><br />
+  </TabItem>
+  <TabItem value="dingo" label="Dingo">
+    <p>TODO</p>
+  </TabItem>
+</Tabs>
+
+
+
 
 ---
 
