@@ -214,11 +214,36 @@ If you cannot ping the computer or arm, try rebooting and replugging the Kinoca 
     <code>roslaunch husky_gen3_lite_moveit_config husky_gen3_lite_moveit_planning_execution.launch</code><br />
   </TabItem>
   <TabItem value="dingo" label="Dingo">
-    <p>TODO</p>
+    <code>roslaunch dingo_kinova_bringup dingo_gen3_lite_bringup.launch</code><br />
+    <code> roslaunch dingo_gen3_lite_moveit_config dingo _gen3_lite_moveit_planning_execution.launch</code><br />
   </TabItem>
 </Tabs>
 
+### URDF
 
+<Tabs groupId="ros_versions">
+  <TabItem value="husky" label="Husky" default>
+    <p>Refer to Clearpath's GitHub repository for Husky Manipulation, <a href="https://github.com/husky/husky_manipulation">https://github.com/husky/husky_manipulation</a>.</p>
+  </TabItem>
+  <TabItem value="dingo" label="Dingo">
+    <p>Refer to Clearpath's GitHub repository for Dingo Manipulation, <a href="https://github.com/dingo-cpr/dingo_manipulation">https://github.com/dingo-cpr/dingo_manipulation</a>.</p>
+  </TabItem>
+</Tabs>
+
+### MoveIt!
+
+MoveIt! should be used on the robot whenever possible.
+MoveIt! tracks arm movements with regards to the Robot's _base_link_. 
+MoveIt! will prevent the arm from colliding with te robot's base, assuming you have a detailed URDF that includes all the surfaces of the robot.
+
+<Tabs groupId="ros_versions">
+  <TabItem value="husky" label="Husky" default>
+    <p>Refer to Clearpath's GitHub repository for Husky Manipulation, <a href="https://github.com/husky/husky_manipulation">https://github.com/husky/husky_manipulation</a>.</p>
+  </TabItem>
+  <TabItem value="dingo" label="Dingo">
+    <p>Refer to Clearpath's GitHub repository for Dingo Manipulation, <a href="https://github.com/dingo-cpr/dingo_manipulation">https://github.com/dingo-cpr/dingo_manipulation</a>.</p>
+  </TabItem>
+</Tabs>
 
 
 ---
