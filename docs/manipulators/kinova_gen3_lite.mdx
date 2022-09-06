@@ -4,8 +4,8 @@ sidebar_position: 2
 ---
 
 import Support from "/components/support.mdx";
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 <center>
   <img
@@ -47,8 +47,8 @@ import TabItem from '@theme/TabItem';
 
 ### IP addresses
 
-| Description                           | IP address |
-| :------------------------------------ | :--------- |
+| Description                          | IP address   |
+| :----------------------------------- | :----------- |
 | Default from Manufacturer, USB - USB | 192.168.1.10 |
 
 ### Pinout, Power
@@ -115,47 +115,78 @@ The PACS kit for this sensor includes:
 ### Installing packages
 
 <Tabs groupId="ros_versions">
-  <TabItem value="husky" label="Husky" default>
+  <TabItem
+    value="husky"
+    label="Husky"
+    default
+  >
     <p>1. Download packages:</p>
-    <code>cd ~/catkin_ws/src</code><br />
-    <code>git clone --single-branch --branch noetic-devel https://github.com/Kinovarobotics/ros_kortex.git</code><br />
-    <code>git clone --single-branch --branch noetic-devel https://github.com/husky/husky_manipulation.git</code><br />
-    <code>rosdep install --from-paths . --ignore-src -r -y</code><br />
-    <br /><p>Rosdep may give warnings about unsatisfied dependencies. This is okay if you are only trying to install a single Kinova Gen3 lite on the robot.</p><br />
+    <code>cd ~/catkin_ws/src</code>
+    <br />
+    <code>git clone --single-branch --branch noetic-devel https://github.com/Kinovarobotics/ros_kortex.git</code>
+    <br />
+    <code>git clone --single-branch --branch noetic-devel https://github.com/husky/husky_manipulation.git</code>
+    <br />
+    <code>rosdep install --from-paths . --ignore-src -r -y</code>
+    <br />
+    <br />
+    <p>Rosdep may give warnings about unsatisfied dependencies. This is okay if you are only trying to install a single Kinova Gen3 lite on the robot.</p>
+    <br />
     <p>2. Install dependencies per Kinova's github instructions:</p>
-    <code>sudo apt install python3 python3-pip</code><br />
-    <code>sudo python3 -m pip install conan</code><br />
-    <br /><p>3. Build the workspace</p>
-    <code>cd ~/catkin_ws/</code><br />
-    <code>catkin_make</code><br />
-    <code>source devel/setup.bash</code><br />
+    <code>sudo apt install python3 python3-pip</code>
+    <br />
+    <code>sudo python3 -m pip install conan</code>
+    <br />
+    <br />
+    <p>3. Build the workspace</p>
+    <code>cd ~/catkin_ws/</code>
+    <br />
+    <code>catkin_make</code>
+    <br />
+    <code>source devel/setup.bash</code>
+    <br />
   </TabItem>
-  <TabItem value="dingo" label="Dingo">
+  <TabItem
+    value="dingo"
+    label="Dingo"
+  >
     <p>1. Download packages:</p>
-    <code>cd ~/catkin_ws/src</code><br />
-    <code>git clone --single-branch --branch noetic-devel https://github.com/Kinovarobotics/ros_kortex.git</code><br />
-    <code>git clone https://github.com/dingo-cpr/dingo_manipulation.git --recursive</code><br />
-    <code>rosdep install --from-paths . --ignore-src -r -y</code><br />
-    <br /><p>Rosdep may give warnings about unsatisfied dependencies. This is okay if you are only trying to install a single Kinova Gen3 lite on the robot.</p><br />
+    <code>cd ~/catkin_ws/src</code>
+    <br />
+    <code>git clone --single-branch --branch noetic-devel https://github.com/Kinovarobotics/ros_kortex.git</code>
+    <br />
+    <code>git clone https://github.com/dingo-cpr/dingo_manipulation.git --recursive</code>
+    <br />
+    <code>rosdep install --from-paths . --ignore-src -r -y</code>
+    <br />
+    <br />
+    <p>Rosdep may give warnings about unsatisfied dependencies. This is okay if you are only trying to install a single Kinova Gen3 lite on the robot.</p>
+    <br />
     <p>2. Install dependencies per Kinova's github instructions:</p>
-    <code>sudo apt install python3 python3-pip</code><br />
-    <code>sudo python3 -m pip install conan</code><br />
-    <br /><p>3. Build the workspace</p>
-    <code>cd ~/catkin_ws/</code><br />
-    <code>catkin_make</code><br />
-    <code>source devel/setup.bash</code><br />
+    <code>sudo apt install python3 python3-pip</code>
+    <br />
+    <code>sudo python3 -m pip install conan</code>
+    <br />
+    <br />
+    <p>3. Build the workspace</p>
+    <code>cd ~/catkin_ws/</code>
+    <br />
+    <code>catkin_make</code>
+    <br />
+    <code>source devel/setup.bash</code>
+    <br />
   </TabItem>
 </Tabs>
 
 ### Networking, with netplan
 
-The _Kinova Gen3 lite_ does not let you change its static IP address. 
+The _Kinova Gen3 lite_ does not let you change its static IP address.
 Its address is always _192.168.1.10._ when you connect using a USB - USB cable.
 
 You will need to extend the network bridge to the _192.168.1.x_ subnet to interface with the _Kinova Gen3 lite_ arm.
 
 Open the netplan configuration file with `/etc/netplan/50-clearpath-bridge.yaml`.
-You will be adding a bridge_usb section to the file, and an additional _192.168.1.1/24_ address to the network bridge. 
+You will be adding a bridge*usb section to the file, and an additional \_192.168.1.1/24* address to the network bridge.
 Your file should look like this:
 
 ```
@@ -206,51 +237,119 @@ If you cannot ping the computer or arm, try rebooting and replugging the Kinoca 
 
 :::
 
-### Launching the ROS Driver
+### Launching the ROS Driver {#kinova_gen3_lite_launch}
 
 <Tabs groupId="ros_versions">
-  <TabItem value="husky" label="Husky" default>
-    <code>roslaunch husky_kinova_bringup husky_gen3_lite_bringup.launch</code><br />
-    <code>roslaunch husky_gen3_lite_moveit_config husky_gen3_lite_moveit_planning_execution.launch</code><br />
+  <TabItem
+    value="husky"
+    label="Husky"
+    default
+  >
+    <code>roslaunch husky_kinova_bringup husky_gen3_lite_bringup.launch</code>
+    <br />
+    <code>roslaunch husky_gen3_lite_moveit_config husky_gen3_lite_moveit_planning_execution.launch</code>
+    <br />
   </TabItem>
-  <TabItem value="dingo" label="Dingo">
-    <code>roslaunch dingo_kinova_bringup dingo_gen3_lite_bringup.launch</code><br />
-    <code> roslaunch dingo_gen3_lite_moveit_config dingo _gen3_lite_moveit_planning_execution.launch</code><br />
+  <TabItem
+    value="dingo"
+    label="Dingo"
+  >
+    <code>roslaunch dingo_kinova_bringup dingo_gen3_lite_bringup.launch</code>
+    <br />
+    <code> roslaunch dingo_gen3_lite_moveit_config dingo _gen3_lite_moveit_planning_execution.launch</code>
+    <br />
   </TabItem>
 </Tabs>
 
 ### URDF
 
 <Tabs groupId="ros_versions">
-  <TabItem value="husky" label="Husky" default>
-    <p>Refer to Clearpath's GitHub repository for Husky Manipulation, <a href="https://github.com/husky/husky_manipulation">https://github.com/husky/husky_manipulation</a>.</p>
+  <TabItem
+    value="husky"
+    label="Husky"
+    default
+  >
+    <p>
+      Refer to Clearpath's GitHub repository for Husky Manipulation,{" "}
+      <a href="https://github.com/husky/husky_manipulation">https://github.com/husky/husky_manipulation</a>.
+    </p>
   </TabItem>
-  <TabItem value="dingo" label="Dingo">
-    <p>Refer to Clearpath's GitHub repository for Dingo Manipulation, <a href="https://github.com/dingo-cpr/dingo_manipulation">https://github.com/dingo-cpr/dingo_manipulation</a>.</p>
+  <TabItem
+    value="dingo"
+    label="Dingo"
+  >
+    <p>
+      Refer to Clearpath's GitHub repository for Dingo Manipulation,{" "}
+      <a href="https://github.com/dingo-cpr/dingo_manipulation">https://github.com/dingo-cpr/dingo_manipulation</a>.
+    </p>
   </TabItem>
 </Tabs>
 
 ### MoveIt!
 
 MoveIt! should be used on the robot whenever possible.
-MoveIt! tracks arm movements with regards to the Robot's _base_link_. 
+MoveIt! tracks arm movements with regards to the Robot's _base_link_.
 MoveIt! will prevent the arm from colliding with the robot's base, assuming you have a detailed URDF that includes all the surfaces of the robot.
 
 <Tabs groupId="ros_versions">
-  <TabItem value="husky" label="Husky" default>
-    <p>Refer to Clearpath's GitHub repository for Husky Manipulation, <a href="https://github.com/husky/husky_manipulation">https://github.com/husky/husky_manipulation</a>.</p>
+  <TabItem
+    value="husky"
+    label="Husky"
+    default
+  >
+    <p>
+      Refer to Clearpath's GitHub repository for Husky Manipulation,{" "}
+      <a href="https://github.com/husky/husky_manipulation">https://github.com/husky/husky_manipulation</a>.
+    </p>
   </TabItem>
-  <TabItem value="dingo" label="Dingo">
-    <p>Refer to Clearpath's GitHub repository for Dingo Manipulation, <a href="https://github.com/dingo-cpr/dingo_manipulation">https://github.com/dingo-cpr/dingo_manipulation</a>.</p>
+  <TabItem
+    value="dingo"
+    label="Dingo"
+  >
+    <p>
+      Refer to Clearpath's GitHub repository for Dingo Manipulation,{" "}
+      <a href="https://github.com/dingo-cpr/dingo_manipulation">https://github.com/dingo-cpr/dingo_manipulation</a>.
+    </p>
   </TabItem>
 </Tabs>
-
 
 ---
 
 ## Troubleshooting
 
-TODO
+#### Arm is not turning on
+
+1.  Turn off the robot.
+2.  Remove the Kinova's circular power connector.
+3.  Turn the robot back on.
+4.  Use a multimeter to check that the voltage is 24 V between:
+    - Position 2 and Position 3
+    - Position 5 and Position 8
+5.  If you are not reading 24 V, then:
+    - An upstream connector may not be fully seated.
+    - A fuse may be blown.
+    - A power supply may have failed.
+
+#### ROS driver wont starting
+
+1.  Restart the robot, or run the command `sudo systemctl restart ros`.
+2.  Make sure your _catkin_ws_ is sourced.
+
+    :::note
+
+    You can source your _catkin_ws_ in every terminal shell by adding a line to the file `~/.bashrc`.
+
+    :::
+
+3.  Run the commands mentioned in the [Launch section](#kinova_gen3_lite_launch) of this page.
+
+#### Cannot see the Kinova in Rviz
+
+1.  Make sure the Kinova node is running.
+    You can check this with RQT, `rosnode list`, or reviewing the rostopics\
+2.  Start Rviz.
+3.  Add in the robot's models.
+4.  Add the arm's rostopics.
 
 ### If the Issue Persists
 
