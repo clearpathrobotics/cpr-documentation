@@ -145,8 +145,8 @@ Clearpath Robotics also offers a high torque motor upgrade if more torque is req
 ### Husky rolls on a slope
 
 Husky's wheels are always connected to the motors.
-When you send a motion command with `/cmd-vel`, the Husky's MCU subscribes to that message, and relays a CAN command to the Husky's motor controllers.
-These motor controllers change the voltage across the DC brushed motors, causing a mechamical torque at the wheel.
+When you send a motion command with `/cmd_vel`, the Husky's MCU subscribes to that message, and relays a CAN command to the Husky's motor controllers.
+These motor controllers change the voltage across the DC brushed motors, causing a mechanical torque at the wheel.
 
 When you stop publishing to `/cmd_vel`, ROS starts publishing a default value to `/cmd_vel` or zero velocity.
 The motor controllers will attempt to achieve zero velocity by monitoring the motor encoders, and increasing voltage to the motor till the encoder stops moving.
