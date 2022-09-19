@@ -147,11 +147,13 @@ Clearpath Robotics also offers a high torque motor upgrade if more torque is req
 ### Husky rolls on a slope
 
 Husky's wheels are always connected to the motors.
-When you send a motion command with `/cmd_vel`, the Husky's MCU subscribes to that message, and relays a CAN command to the Husky's motor controllers.
+When you send a motion command with `/cmd_vel`, the Husky's MCU subscribes to that message, and relays a command to the Husky's motor controllers.
 These motor controllers change the voltage across the DC brushed motors, causing a mechanical torque at the wheel.
 
 When you stop publishing to `/cmd_vel`, ROS starts publishing a default value to `/cmd_vel` or zero velocity.
-The motor controllers will attempt to achieve zero velocity by monitoring the motor encoders, and increasing voltage to the motor till the encoder stops moving.
+At this point, the motor controllers are not attempting to change the Husky's velocity using electrical power.
+When the Husky's velocity is near 0 m/s, the motor controllers will use the motor's copper windings as a resistor.
+This is why your Husky will roll on a slope, since it is just the resistive power of the windings that applying a small torque.
 
 :::note
 
@@ -159,10 +161,17 @@ The `/twist_mux` topic controls to priority of `/cmd_vel` messages.
 
 :::
 
+:::tip
+
+If this amount of rolling is unacceptable, you can update the motor controller's firmware to a version that applies holding torque.
+The process to update the firmware is detailed on our [Husky Maintenance page](maintenance_husky/#maintenance_husky_motor_controller_firmware).
+
+:::
+
 Your Husky will roll if:
 
 - The Husky's motion-stop button is pressed.
-  Motion-stops disconnect the motor-controllers.
+- Husky's motor controllers are receiving a zero velocity command, rather than a small value like 0.005 m/s.
 - The MCU is not functioning.
   This will appear as other issues, such as the status lights not illuminating.
 - The computer is not communicating with the MCU.
