@@ -8,3 +8,72 @@ import ComponentIntroductionHusky from "/components/introduction_husky.mdx";
 <ComponentIntroductionHusky />
 
 TODO
+
+
+### Husky Desktop Packages
+
+To command or observe Husky from your desktop computer, first set up a basic ROS installation.
+Go to <http://wiki.ros.org/noetic/Installation/Ubuntu> for details:
+
+When your ROS install is set up, install the Husky desktop packages:
+sudo apt-get install ros-noetic-husky-desktop
+
+Once your remote access to Husky's ROS master is configured, you can launch rviz, the standard ROS robot visualization tool:
+
+    roslaunch husky_viz view_robot.launch
+
+From within rviz, you can use interactive markers to drive Husky, you can visualize its published localization estimate, and you can visualize any attached sensors which have been added to its robot description XML _URDF_.
+
+Additionally from the desktop, you can launch the standard RQT Robot Monitor, which watches the diagnostic output from Husky's self-montoring capabilities:
+
+    rosrun rqt_robot_monitor rqt_robot_monitor
+
+
+### Nodes
+
+You can use `rosnode list` to see all the nodes running by default on a Husky computer.
+The baseline set of these is presented with commentary in the following table.
+
+| Node                     | Description                                                                                                                                |
+| :----------------------- | :----------------------------------------------------------------------------------------------------------------------------------------- |
+| `/husky_node`            | Provides control and communication between the Husky platform and ROS. Accepts velocity commands and provides system feedback on `/status` |
+| `/robot_state_publisher` | Subscribes to `/joint_states` and publishes the robot's state to `tf`                                                                      |
+| `/bluetooth_teleop`      | Publishes velocity commands from a joystick to `/twist_mux`                                                                                |
+| `/twist_mux`             | Takes in multiple sources of velocity commands, and prioritizes what actually gets sent to the controller                                  |
+| `/ekf_localization`      | Part of the robot localization package, more information regarding this package can be found at <http://wiki.ros.org/robot_localization>   |
+
+### Topics
+
+You can view all topics that are active using `rostopc list`.
+Some of the base topics are listed in 2 tables below.
+
+| Topic                   | Message type             | Description                                                                                                                        |
+| :---------------------- | :----------------------- | :--------------------------------------------------------------------------------------------------------------------------------- |
+| `/bluetooth_teleop/joy` | `sensor_msgs/Joy`        | Receives joystick commands, echo this topic to verify your controller is publishing                                                |
+| `/tf`                   | `tf2_msgs/TFMessage`     | Transforms between coordinate frames, this should always be publishing, and hence a good topic to echo to test your ROS connection |
+| `/status`               | `husky_msgs/HuskyStatus` | Displays system status information                                                                                                 |
+| `/estop`                | `std_msgs/Bool`          | Displays the estop status                                                                                                          |
+| `/odometry/filtered`    | `nav_msgs/Odometry`      | The odometry estimate of the robot from \lstinline!/ekf_localization                                                               |
+
+| Motion Topics                       | `twist_mux` Priority | Description                                                        |
+| :---------------------------------- | :------------------- | :----------------------------------------------------------------- |
+| `husky_velocity_controller/cmd_vel` | -                    | Receives motion commands from `twist_mux` based off their priority |
+| `joy_teleop/cmd_vel`                | 10                   | Joystick teleop input                                              |
+| `twist_marker_server/cmd_vel`       | 8                    | Interactive marker teleop input                                    |
+| `move_base/cmd_vel`                 | 2                    | Autonomous movement input, for the Husky navigation packages       |
+| `cmd_vel`                           | 1                    | Miscellaneous external input                                       |
+
+### Workspace
+
+The expected model for extending Husky is to create a new ROS Workspace in the user's home directory, and add packages there.
+You can roslaunch additional nodes against the ROS Master already running on Husky without needing to stop or start anything else.
+See the Overlays page on the ROS wiki for more details: <http://wiki.ros.org/catkin/Tutorials/workspace_overlaying>
+
+When it comes time for some of your own code to be launched on startup of Husky, edit the default workspace setup file, located in `/etc/ros/setup.bash`.
+Change the final line from the default to instead source your own workspace.
+When this is done, copy the launch file for your software into the `robot_upstart` folder, which is located at `/etc/ros/noetic/ros.d`.
+Now restart the Husky background service and your nodes should come up with the rest of Husky:
+
+    sudo systemctl restart ros
+
+For more details on this process, please see the ROS wiki page about upstart, located at: <http://wiki.ros.org/robot_upstart>.

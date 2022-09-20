@@ -5,7 +5,9 @@ sidebar_position: 2
 
 import ComponentIntroductionDingo from "/components/introduction_dingo.mdx";
 import ComponentSupport from "/components/support.mdx";
-import ComponentNetplanSetup from "/components/netplan_setup.mdx";
+import ComponentWiredRobotConnection from "/components/wired_robot_connection.mdx";
+import ComponentWifiRobotConnection from "/components/wifi_robot_connection.mdx";
+import ComponentRemoteRosConnectivity from "/components/remote_ros_connectivity.mdx";
 
 <ComponentIntroductionDingo />
 
@@ -187,7 +189,7 @@ refer to [Support](#dingo-support) to get in touch with support.
   </figure>
 </center>
 
-### Configuring Wireless Access
+### Network Configuration
 
 #### Wired Access to Dingo
 
@@ -195,109 +197,21 @@ To get Dingo connected to your local wifi network, you must first access the int
 Remove the top trough cover and the appropriate yellow fairing to access the computer module, then connect to one of
 the network ports with a standard ethernet cable.
 
-Set your laptop's ethernet port to a static IP such as 192.168.131.101. To do this in Ubuntu, follow the steps below:
-
-1.  Click on the Wifi icon in the upper-right corner of your screen, and select Edit Connections.
-2.  In the Network Connections window, under Ethernet, select your wired connection and then click Edit.
-3.  Select the IPv4 Settings tab and then change the Method to Manual.
-4.  Click the Add button to add a new address.
-5.  Enter a 192.168.131.101 as the static IP under the Address column, and enter 255.255.255.0 under the Netmask
-    column, and then select Save.
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/dingo_images/wired_connection.png"
-      width="400"
-    />
-    <figcaption>Static IP Configuration (Ubuntu)</figcaption>
-  </figure>
-</center>
-
-The next step is to connect to Dingo via SSH. To do so execute the following in a terminal window:
-
-`ssh administrator@192.168.131.1`
-
-You will be promoted to enter a password. The default password is `clearpath` and you set a new password
-on first connection.
+<ComponentWiredRobotConnection />
 
 #### Dingo Wifi Setup
 
-Now that you are connected via SSH over a wired connection using the steps above, you can set up the Dingo computer
-(running Ubuntu 20.04) to connect to a local wifi network. (For legacy Dingo systems running Ubuntu 18.04, use
-`wicd-curses` instead.)
+<ComponentWifiRobotConnection />
 
-<ComponentNetplanSetup />
+#### Remote ROS Connectivity
 
-Now that you know robot's wireless IP address, you may now exit the ethernet SSH session by executing
-`exit`.
+<ComponentRemoteRosConnectivity />
 
-Remove the ethernet cable and close up Dingo. Now you can SSH into Dingo over the wireless network. To do so,
-execute:
+### Using ROS
 
-`ssh administrator@<IP_OF_DINGO>`
+<ComponentUsingRos />
 
-SSH sessions allow you to control Dingo's internal computer. You can do various things such as download packages,
-run updates, add/remove files, transfer files etc.
-
-### Remote ROS Connectivity
-
-To use ROS desktop tools, you will need your computer to be able to connect to Dingo's ROS master. This will allow
-you to run ROS commands like `rostopic list`, `rostopic echo`, `rosnode list`, and others, from a remote PC and the
-output will reflect the activity on Dingo's ROS master, rather than on your own machine. This can be a tricky
-process, but we have tried to make it as simple as possible.
-
-In order for the ROS tools on your computer to talk to Dingo, they need to know two things:
-
-- How to find the ROS master, which is set in the `ROS_MASTER_URI` environment variable, and
-- How processes on the other computer can find your computer, which is the `ROS_IP` environment variable.
-
-The suggested pattern is to create a file in your home directory called `remote-dingo.sh` with the following contents:
-
-```
-export ROS_MASTER_URI=http://cpr-dingo -0001:11311 # Dingo's hostname
-export ROS_IP=10.25.0.102 # Your laptop's wireless IP address
-```
-
-If your network does not already resolve Dingo's hostname to its wireless IP address, you may need to add a
-corresponding line to your computer's `/etc/hosts` file:
-
-```
-10.25.0.101 cpr-dingo-0001
-```
-
-NOTE: You can verify the hostname and IP address of Dingo using the following commands during an SSH session
-with the onboard PC.
-
-```
-hostname
-hostname -i
-```
-
-Then, when you are ready to communicate remotely with Dingo, you can source that script like so, thus defining
-those two key environment variables in the present context.
-
-```
-source remote-dingo.sh
-```
-
-To verify that everything is set up propelry, try running a few ROS commands, such as the standard visual ROS tools:
-
-```
-roslaunch dingo_viz view_robot.launch
-rosrun rqt_robot_monitor rqt_robot_monitor
-rosrun rqt_console rqt_console
-```
-
-If the tools launch, then everything is setup properly.
-
-Please contact Clearpath Support if you need assistance in configuring remote access. For more general details on
-how ROS works over TCP with multiple machines, please see:
-<http://wiki.ros.org/ROS/Tutorials/MultipleMachines>.
-
-For help troubleshooting a multiple machines connectivity issue, see:
-<http://wiki.ros.org/ROS/NetworkSetup>
-
+<!-- TODO: move the desktop packages to the tutorials -->
 ### Dingo Desktop Packages
 
 To command or observe Dingo from your desktop computer, first set up a basic ROS installation. See the following
@@ -629,6 +543,20 @@ even simulation configurations. Please see the following page on the ROS wiki fo
 For the best experience, consider purchasing supported accessories from Clearpath Robotics for your
 Dingo, which will include simulation, visualization, and driver support. However, we will happily
 assist you in integrating your own devices as well.
+
+---
+
+## Advanced Topics
+
+### Backing Up Robot Configuration
+
+### Installing and Configuring Robot Software
+
+### Customizing Robot Configuration
+
+### Configuring the Network Bridge
+
+<ComponentConfiguringNetworkBridge />
 
 ---
 

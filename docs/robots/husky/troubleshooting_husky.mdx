@@ -7,4 +7,36 @@ import ComponentIntroductionHusky from "/components/introduction_husky.mdx";
 
 <ComponentIntroductionHusky />
 
-TODO
+**The blue light around the power button does not display when pressing the power button.**
+
+1.  Ensure that the battery is charged and correctly connected.
+2.  Use a multi-meter to verify the voltage on the battery terminals.
+
+**_Comm Status_ light stays red or flickers.**
+
+1.  Your program may not be sending motion commands faster than 10 Hz.
+2.  If there is a poor quality connection, some commands may be lost, so it may be necessary to increase the frequency of commands sent.
+3.  The maximum frequency commands can be sent is 50 Hz.
+
+**_E-stop Status_ light illuminated**
+
+1.  Twist the red e-stop to release it
+2.  Confirm that the robot is not locked out.
+
+**_Battery Status_ indicator flashing**
+
+1.  Battery voltage is too low for Husky to drive the motors.
+2.  Charge the battery and try again.
+
+**A ROS package isn't starting**
+
+1.  Verify the upstart logs, `/var/log/upstart/husky_core.log` to see if there are any error during upstart.
+
+**Husky experiences momentary drops in communication**
+
+1.  It's possible the robot has reached the thermal limit, or current limit.
+2.  The maximum current limits are set to 18.3 A, however, as the motors are only rated for 8A continuous, anything above that will trigger the current limit eventually, the higher above this limit, the more quickly it will trigger. If you are unsure whether this is the case, feel free to contact support@clearpathrobotics.com with a rosbag of your system. Clearpath robotics also offers a high torque upgrade if more torque is required for your project.
+
+### If the Issue Persists
+
+<Support />
