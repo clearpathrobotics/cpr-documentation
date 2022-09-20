@@ -1,0 +1,65 @@
+---
+title: Mini ITX
+sidebar_label: Mini ITX
+sidebar_position: 2
+---
+
+## Troubleshooting
+
+#### Computer will not turn on automatically
+
+We configure the BIOS on our robots computers to boot automatically when they receive power.
+This is typically used for servers and similar industrial computers were they need to automatically restart after a blackout.
+
+To update the BIOS:
+
+1.  Connect a monitor and keyboard to the robot's computer.
+2.  Turn the computer on, and immediately start pressing the _delete_ key on the robot's keyboard.
+    You should be pressing it at least 4 times per second.
+
+    :::note
+
+    _delete_ is the most common key to enter BIOS, but your computer's motherboard may require a different key to be pressed.
+    The startup screen has a note stating what key needs to be pressed, but it passes by quickly, and starts loading the Operating System.
+    You can take a video of the monitor to review the information slowly.
+
+    :::
+
+3.  The monitor should show the BIOS landing page.
+    There is a setting that will start the computer automatically.
+    Unfortunately, this setting seems to change names with every motherboard.
+    It is often in the Power or CPU areas of the BIOS settings.
+4.  Save and Reboot after your change the setting to have the computer start with automatic power on.
+
+#### Computer keeps reverting to old BIOS settings
+
+This is often due to a low voltage CMOS battery.
+This is a battery on the computer's motherboard that powers firmware devices, like the computer's clock when the OS is not running.
+The location will change depending on the motherboard, but the battery will look like a silver coin.
+
+To replace it:
+
+1. Shut off the robot.
+2. Use a static grounding strap, so you do not damage the computer.
+3. Use hand tools to disassemble your robot, to get access to the computer.
+4. Open the computer, so you can see the motherboard.
+5. Remove the CMOS battery from the motherboard.
+   It is usually held in a spring clip that also makes the electrical connection to the motherboard.
+   Some motherboards use a CMOS battery with a pigtail lead, but this is uncommon.
+6. Purchase and install a replacement battery that matches the manufacturer information on the old battery.
+   You may find the battery on sites like [Amazon](https://www.amazon.com/), [Digi-Key](https://www.digikey.com/), and [Octopart](https://octopart.com/).
+   Contact our Support team if you cannot find a replacement.
+7. Turn on the computer, and reenter your BIOS settings.
+
+:::danger TODO—under construction
+
+1.  describe computer components
+2.  explain how computers are powered in robots
+3.  upgrading computer hardware
+4.  adding the Clearpath OS to the computer
+5.  Setting up ROS (to be covered on a different page)
+6.  troubleshooting
+7.  Contact sales
+8.  further reading
+
+:::
