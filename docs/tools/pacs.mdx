@@ -1,0 +1,116 @@
+---
+title: PACS
+sidebar_label: PACS
+sidebar_position: 5
+---
+
+<figure>
+  <center>
+    <img
+      src="/img/robot_images/dingo_images/dingo_omni_pacs_1.jpg"
+      width="800"
+    />
+    <figcaption>
+      A Dingo-O with many M5×0.8 threaded holes on its full-riser. <br /> These holes are aligned with M5×0.8 mounting holes on the lower plate.
+    </figcaption>
+  </center>
+</figure>
+
+## Overview
+
+PACS is a Clearpath Robotics standard for adding components to a robot.
+Our robots have mounting plates with a 80 mm X 80 mm grid of M5×0.8 threaded holes.
+This allows us to add sensors and attachments using adapter plates.
+The _Parts Lists_ in our [Sensors pages](/docs/sensors) include these 80 mm X 80 mm brackets.
+Some example brakets are also detailed in the [Common PACS Items section](#pacs_common_pacs_items_for_all_robots) below.
+
+<figure>
+  <center>
+    <img
+      src="/img/robot_images/husky_images/robot_husky_31.png"
+      width="600"
+    />
+    <figcaption>A Husky configured with many sensors and accessories using PACS brackets.</figcaption>
+  </center>
+</figure>
+
+<figure>
+  <center>
+    <img
+      src="/img/robot_images/husky_images/robot_husky_30.png"
+      width="600"
+    />
+    <figcaption>
+      A Husky top plate, with PACS hardpoint <em>A01</em> in the front-left of the robot, and <em>G08</em> in the back-right
+    </figcaption>
+  </center>
+</figure>
+
+Once a sensor has been mounted onto the robot, we let ROS know where it is located using our PACS script.
+This script will ask you questions like:
+
+- What sensor is this?
+- Where is the sensor on the robot?
+  - Column ( _A_, _B_, _C_, _..._ )
+  - Height ( [Top plate](/docs/robots/husky/integration_husky/top_plate_husky), [Riser](/docs/robots/husky/integration_husky/riser_partial_husky) )
+  - Row ( _1_, _2_, _3_, _..._ )
+  - Is it on a [Tower](/docs/accessories/tower)
+- Have you turned the sensor relative to the standard facing forward direction?
+
+You can see these same configuration options when you build a robot on [build.clearpathrobotics.com](https://build.clearpathrobotics.com/).
+The number of rows and columns is dependent on the robot platform.
+Refer to the integration pages for our robots for more details:
+
+- [Dingo](/docs/robots/dingo/integration_dingo)
+- [Husky](/docs/robots/husky/integration_husky)
+- [Jackal](/docs/robots/jackal/integration_jackal)
+
+## Common PACS Items, For All Robots {#pacs_common_pacs_items_for_all_robots}
+
+| Description                                                    |                      CPR Item                       |
+| :------------------------------------------------------------- | :-------------------------------------------------: |
+| Plate—80 X 80, Attachment Interface (Blank)                    | [027627](/assets/pdf/clearpath_robotics_027627.pdf) |
+| Plate—80 X 80, Attachment Interface                            | [026914](/assets/pdf/clearpath_robotics_026914.pdf) |
+| Plate—80 X 80, Attachment Interface                            | [027303](/assets/pdf/clearpath_robotics_027303.pdf) |
+| Plate—80 X 80, Attachment Interface, Vertical                  | [026964](/assets/pdf/clearpath_robotics_026964.pdf) |
+| Plate—80 X 80, Attachment Interface, Large                     | [027110](/assets/pdf/clearpath_robotics_027110.pdf) |
+| Plate—80 X 80, Attachment Interface, Manipulator (UR3 and UR5) | [027269](/assets/pdf/clearpath_robotics_027269.pdf) |
+| Screw, Round Head, M5×0.8                                      | [Many](/docs/components/fasteners/screw_round_head) |
+
+## Sensor and Attachment Kits
+
+| Category    | Description                    | CPR Item | Supported with Bringup Script? |
+| :---------- | :----------------------------- | :------: | :----------------------------: |
+| Camera      | Axis F1035-E                   |  027212  |                                |
+| Camera      | Axis F34                       |  027633  |                                |
+| Camera      | Axis M5525-E                   |  027225  |                                |
+| Camera      | FLIR Blackfly S                |  027218  |                                |
+| Camera      | Intel RealSense D435           |  027208  |                                |
+| Camera      | Occam Omni 60 Colour           |  027211  |                                |
+| Camera      | Stereolabs ZED 2i              |  027210  |                                |
+|             |                                |          |                                |
+| Computer    | Mini-ITX Indoor                |  027667  |                                |
+|             |                                |          |                                |
+| GPS         | Swift Navigation Duro          |  027213  |                                |
+| GPS         | Swift Navigation Duro Inertial |  027214  |                                |
+|             |                                |          |                                |
+| IMU         | Microstrain 3DM-GX5-15         |  027215  |                                |
+| IMU         | Microstrain 3DM-GX5-25         |  027217  |                                |
+|             |                                |          |                                |
+| Lidar 2D    | Hokuyo UST10-LX                |  026611  |                                |
+| Lidar 2D    | Hokuyo UST10-LX Vertical       |  027224  |                                |
+| Lidar 2D    | SICK LMS111                    |  027656  |                                |
+|             |                                |          |                                |
+| Lidar 3D    | Velodyne Puck                  |  027206  |                                |
+| Lidar 3D    | Velodyne Puck Vertical         |  027222  |                                |
+|             |                                |          |                                |
+| Lights      | Stack Light, Controls Base     |  027220  |                                |
+|             |                                |          |                                |
+| Manipulator | Kinova Gen 3 Lite              |  027219  |                                |
+|             |                                |          |                                |
+| Motion-Stop | Kar-Tech                       |  027297  |                                |
+| Motion-Stop | FORT Robotics Joystick         |  027216  |                                |
+|             |                                |          |                                |
+| Network     | Network Switch, 5 Port         |  027638  |                                |
+| Network     | Network Switch, 8 Port         |  027640  |                                |
+| Network     | USB Hub, 7 Port                |  027642  |                                |
