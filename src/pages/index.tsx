@@ -25,7 +25,7 @@ function HomepageSubheader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/robots/index_robots"
+            to="/docs/robots"
           >
             Get Started
           </Link>
