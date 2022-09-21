@@ -1,29 +1,29 @@
-To use ROS desktop tools, you will need your computer to be able to connect to your robot's ROS master. This will allow
-you to run ROS commands like `rostopic list`, `rostopic echo`, `rosnode list`, and others, from a remote PC and the
-output will reflect the activity on your robot's ROS master, rather than on your own machine. This can be a tricky
+To use ROS desktop tools, you will need the Remote PC to be able to connect to your robot's ROS master. This will allow
+you to run ROS commands like `rostopic list`, `rostopic echo`, `rosnode list`, and others, from the Remote PC and the
+output will reflect the activity on your robot's ROS master, rather than on the Remote PC. This can be a tricky
 process, but we have tried to make it as simple as possible.
 
-In order for the ROS tools on your computer to talk to your robot, they need to know two things:
+In order for the ROS tools on the Remote PC to talk to your robot, they need to know two things:
 
 - How to find the ROS master, which is set in the `ROS_MASTER_URI` environment variable, and
-- How processes on the other computer can find your computer, which is the `ROS_IP` environment variable.
+- How processes on the ROS master can find the Remote PC, which is the `ROS_IP` environment variable.
 
 The suggested pattern is to create a file in your home directory called `remote-robot.sh` with the following contents:
 
 ```
 export ROS_MASTER_URI=http://cpr-robot-0001:11311 # Your robot's hostname
-export ROS_IP=10.25.0.102 # Your laptop's wireless IP address
+export ROS_IP=10.25.0.102 # Your Remote PC's wireless IP address
 ```
 
 If your network does not already resolve your robot's hostname to its wireless IP address, you may need to add a
-corresponding line to your computer's `/etc/hosts` file:
+corresponding line to the Remote PC's `/etc/hosts` file:
 
 ```
 10.25.0.101 cpr-robot-0001
 ```
 
 NOTE: You can verify the hostname and IP address of your robot using the following commands during an SSH session
-with the onboard PC.
+with the Onboard PC.
 
 ```
 hostname
@@ -44,7 +44,7 @@ rosrun rqt_robot_monitor rqt_robot_monitor
 rosrun rqt_console rqt_console
 ```
 
-You can also run the RViz commands outlined in the Desktop Packages section.
+You can also run the RViz commands outlined in the Tutorials.
 
 If the tools launch, then everything is setup properly. If you still need assistance
 in configuring remote access, please contact Clearpath Support. For more general details on how ROS works over TCP with
