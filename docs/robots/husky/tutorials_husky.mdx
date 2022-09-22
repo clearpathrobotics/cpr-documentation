@@ -4,137 +4,88 @@ sidebar_position: 4
 ---
 
 import ComponentIntroductionHusky from "/components/introduction_husky.mdx";
+import ComponentPs4ControllerPairing from "/components/ps4_controller_pairing.mdx";
+import ComponentChangingDefaultPassword from "/components/changing_default_password.mdx";
+import ComponentWiredRobotConnection from "/components/wired_robot_connection.mdx";
+import ComponentWifiRobotConnection from "/components/wifi_robot_connection.mdx";
+import ComponentRemoteRosConnectivity from "/components/remote_ros_connectivity.mdx";
+
 
 <ComponentIntroductionHusky />
 
-## Introduction
+## Husky Overview
 
-### Husky ROS Packages
+### Introduction
 
-Robot-specific
+Husky is a rugged, outdoor-ready unmanned ground vehicle (UGV), suitable for research and rapid prototyping applications.
+These tutorials will assist you with setting up and operating your Husky. The tutorial topics are listed in
+the right column and presented in the suggested reading order.
 
-### Key ROS Topics
+For more information or to receive a quote, please [visit us online](http://clearpathrobotics.com/husky).
 
-Robot-specific
+:::note
+  These tutorials assume that you are comfortable working with ROS.  We recommend starting with our
+  [ROS tutorial](https://www.clearpathrobotics.com/assets/guides/noetic/ros/index.html) if you are not familiar with ROS already.
 
+:::
 
----
+:::note
+  These tutorials specifically target Husky robots running Ubuntu 20.04 with ROS Noetic, as it is the standard
+  OS environment for Husky. If instead you have an older Husky robot running Ubuntu 18.04 with ROS Melodic,
+  please follow [this tutorial](https://www.clearpathrobotics.com/assets/guides/melodic/melodic-to-noetic/index.html)
+  to upgrade the robot OS environment to Ubuntu 20.04 with ROS Noetic.
 
-## Robot Software Setup
+:::
 
-### Backing Up Robot Configuration
+[Husky ROS Packages](#husky-ros-packages) provides the references for the software packages and key ROS topics.
 
-### Installing and Configuring Robot Software
+[Husky Software Setup](#husky-software-setup) outlines the steps for setting up the software on
+your Husky robot and optionally on a remote PC.
 
-#### Installing Husky Software
+[Using Husky](#using-husky) describes how to simulation and drive your Husky. [Simuation](#simulating-husky)
+is a great way for most users to learn more about their Husky; understanding how to effectively operate Husky
+in simulation is valuable whether you are in the testing phase with software you intend to ultimately deploy on a
+physical Husky or you do not have one and are simply exploring the platform's capabilities. 
+[Driving Husky](#driving-husky) covers how to teleoperate Husky using the remote control, a well as safety
+procedures for operating the physical robot. Anyone working with a physical robot should be familiar with this section.
 
-#### Software Updates???
+[Navigating Husky](#navigating-husky) is a follow-on to what is learned in the [Simuation](#simulating-husky)
+tutorial, as navigation and map-making may be run in the simulated environment. However, this content is applicable
+to both the simulator and the real platform, if your Husky is equipped with a laser scanner.
 
-#### Testing Base Configuration
+[Testing Husky](#testing-husky) outlines how to validate that your physical Husky is working correctly.
 
-#### Pairing the Controller
-
-### Setting up Husky's Network Configuration
-
-#### First Connection
-
-#### Changing the Default Password
-
-#### Wifi Setup
-
-Wifi already set up (see robot-specific information)
-
-#### Remote ROS Connectivity
-
-##### Desktop Software Setup
-
-##### Installing Desktop Packages
-
-
-
-### Customizing Husky Configuration
-
-#### Environment variables
-
-#### Adding a Source Workspace
-
-#### Robot Description
-
-#### Network Configuration
-
+[Advanced Topics](#advanced-topics) covers items that are only required in atypical situations.
 
 ---
 
-## Using Husky
+## Husky ROS Packages   {#husky-ros-packages}
 
-### Simulating Husky
+Husky fully supports ROS; all of the packages are available in [Husky Github](https://github.com/husky).
 
-#### Additional Simulation Worlds
+### Description Package
 
+The [husky_description](https://github.com/husky/husky/tree/noetic-devel/husky_description) repository
+provides a [URDF](http://wiki.ros.org/urdf) model of Husky.
 
-TODO
+Husky's URDF model can be visualized in rviz. Once you have installed the desktop software in an upcoming tutorial,
+you will be able to run:
 
-### Interfacing with Husky
+```bash
+roslaunch husky_viz view_model.launch
+```
 
-#### Visualization
+TODO: RViz image of Husky
 
-#### Control
+Husky can be customized and extended through the use of several environment variables. These are summarized in the
+[README](https://github.com/husky/husky/blob/noetic-devel/husky_description/README.md) file.
 
-#### Odometry
+### Key ROS Nodes and Topics
 
-#### Diagnostics
-
-### Driving a Simulated Husky
-controller + ROS messages; see Dingo
-
-### Driving a Physical Husky
-
-
----
-
-## Navigating Husky
-
----
-
-## Testing Husky
-
-
-
----
-
-## Advanced Topics
-
-### Calibrating the Magnetometer
-
-### Configuring the Network Bridge
-
-<ComponentConfiguringNetworkBridge />
-
---------------------------------------
-
-### Husky Desktop Packages
-
-To command or observe Husky from your desktop computer, first set up a basic ROS installation.
-Go to <http://wiki.ros.org/noetic/Installation/Ubuntu> for details:
-
-When your ROS install is set up, install the Husky desktop packages:
-sudo apt-get install ros-noetic-husky-desktop
-
-Once your remote access to Husky's ROS master is configured, you can launch rviz, the standard ROS robot visualization tool:
-
-    roslaunch husky_viz view_robot.launch
-
-From within rviz, you can use interactive markers to drive Husky, you can visualize its published localization estimate, and you can visualize any attached sensors which have been added to its robot description XML _URDF_.
-
-Additionally from the desktop, you can launch the standard RQT Robot Monitor, which watches the diagnostic output from Husky's self-montoring capabilities:
-
-    rosrun rqt_robot_monitor rqt_robot_monitor
-
-
-### Nodes
+#### Nodes
 
 You can use `rosnode list` to see all the nodes running by default on a Husky computer.
-The baseline set of these is presented with commentary in the following table.
+The most important nodes are summarized in the following table.
 
 | Node                     | Description                                                                                                                                |
 | :----------------------- | :----------------------------------------------------------------------------------------------------------------------------------------- |
@@ -144,10 +95,10 @@ The baseline set of these is presented with commentary in the following table.
 | `/twist_mux`             | Takes in multiple sources of velocity commands, and prioritizes what actually gets sent to the controller                                  |
 | `/ekf_localization`      | Part of the robot localization package, more information regarding this package can be found at <http://wiki.ros.org/robot_localization>   |
 
-### Topics
+#### Topics
 
-You can view all topics that are active using `rostopc list`.
-Some of the base topics are listed in 2 tables below.
+You can view all topics that are active using `rostopic list`.
+The most important topics are summarized in the two tables below.
 
 | Topic                   | Message type             | Description                                                                                                                        |
 | :---------------------- | :----------------------- | :--------------------------------------------------------------------------------------------------------------------------------- |
@@ -165,17 +116,837 @@ Some of the base topics are listed in 2 tables below.
 | `move_base/cmd_vel`                 | 2                    | Autonomous movement input, for the Husky navigation packages       |
 | `cmd_vel`                           | 1                    | Miscellaneous external input                                       |
 
-### Workspace
+---
 
-The expected model for extending Husky is to create a new ROS Workspace in the user's home directory, and add packages there.
-You can roslaunch additional nodes against the ROS Master already running on Husky without needing to stop or start anything else.
-See the Overlays page on the ROS wiki for more details: <http://wiki.ros.org/catkin/Tutorials/workspace_overlaying>
+## Husky Software Setup   {#husky-software-setup}
 
-When it comes time for some of your own code to be launched on startup of Husky, edit the default workspace setup file, located in `/etc/ros/setup.bash`.
-Change the final line from the default to instead source your own workspace.
-When this is done, copy the launch file for your software into the `robot_upstart` folder, which is located at `/etc/ros/noetic/ros.d`.
-Now restart the Husky background service and your nodes should come up with the rest of Husky:
+### Backing Up Robot Configuration
 
-    sudo systemctl restart ros
+Upgrading your Clearpath Husky to ROS Noetic from older ROS distributions is a straightforward process;
+however it's important to understand that each Husky is different, having undergone customization to your
+specifications.  For more complete upgrade instructions see
+[this guide](https://clearpathrobotics.com/assets/guides/melodic/melodic-to-noetic/index.html).
 
-For more details on this process, please see the ROS wiki page about upstart, located at: <http://wiki.ros.org/robot_upstart>.
+Please take the time to understand what these modifications are, and how to recreate them on your fresh install of
+Ubuntu Focal/ROS Noetic.
+
+#### Performing a Backup    {#performing-a-backup}
+
+1.  As a fail-safe, please make an image of your robot's hard drive. You should always be able to restore this image
+    if you need to revert back to your previous configuration.
+
+   -  The easiest approach may be to either connect a removable (USB or similar) hard drive to the robot PC, or to unplug
+   the robot hard drive and nsert it into a PC or workstation.
+   -  You can then use a tool such as CloneZilla or dd to write a backup image of your robot's hard drive onto another
+   hard drive.
+   -  Alternatively, you can simply replace the robot computer's hard-drive, reserving the drive and installing a new one
+   to use with Noetic.
+
+2.  There are several places in the filesystem you should specifically look for customizations for your Husky:
+
+|                 Location                      | Description                                                                                                                                                                                                                                                                                   |
+| :-------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/etc/network/interfaces` or `/etc/netplan/*` | Your robot may have a custom network configuration configured in this file.                                                                                    |
+| `/etc/ros/*/husky-core.d/*.launch`            | Will contain `base.launch` and `description.launch`, may contain custom launch files for your robot configuration.  Replaced by `ros.d` in newer versions.     |
+| `/etc/ros/*/ros.d/*.launch`                   | Will contain `base.launch` and `description.launch`, may contain custom launch files for your robot configuration.  Replaces `husky-core.d` in newer versions. |
+| `/etc/ros/setup.bash`                         | May contain environment variables for your configuration.                                                                                                      |
+
+
+3.   Please save all the files listed above and use them as a reference during Noetic configuration.
+
+### Installing and Configuring Robot Software
+
+:::note
+
+If you are upgrading your Husky from an older version of ROS, please refer to
+our upgrade instructions [here](https://clearpathrobotics.com/assets/guides/kinetic/kinetic-to-melodic/index.html)
+and [here](https://clearpathrobotics.com/assets/guides/melodic/melodic-to-noetic/index.html).
+
+:::
+
+#### Installing Husky Software
+
+Clearpath provides a lightly customized installation image of Ubuntu 20.04 "Focal" that automatically
+pulls in all necessary dependencies for Husky software.
+
+1. Download the appropriate [Noetic Husky ISO image](https://packages.clearpathrobotics.com/stable/images/latest/noetic-focal/)
+   for your platform (32 bit - i386, 64 bit - amd64).
+
+2. Copy the image to a USB drive using `unetbootin`, `rufus`, `balena etcher`, or a similar program. For example:
+
+```bash
+sudo unetbootin isofile="clearpath-universal-noetic-amd64-0.4.17.iso"
+```
+
+3. Connect your robot PC to internet access (via wired Ethernet), a keyboard, and a monitor. Make sure that the
+   PC is connected to shore power or that the Husky battery is fully charged.
+
+:::warning
+
+The next step wipe your robot's hard drive, so make sure you have that image
+[backed up](#performing-a-backup).
+
+:::
+
+4. Boot your robot PC from the USB drive and let the installer work its magic.  If asked for a partitioning method
+   choose `Guided - use entire disk and set up LVM`.
+5. The setup process will be automated and may take a long time depending on the speed of your internet connection.
+6. Once the setup process is complete, the PC will turn off. Please unplug the USB drive and turn the PC back on.
+7. On first boot, the username will be `administrator` and the password will be `clearpath`. You should use the
+   `passwd` utility to change the `administrator` account password.
+8. To set up a factory-standard Husky robot, ensure all your peripherals are plugged in, and run the following command:
+
+```bash
+rosrun husky_bringup install
+```
+
+The install script will configure a ros upstart service, that will bring up the base Husky launch files on boot.
+The script will also detect any standard peripherals (IMU, GPS, etc.) you have installed and add them to the service.
+
+#### Testing Base Configuration
+
+1. To test your configuration, start the background service with the following command:
+
+```bash
+sudo systemctl start ros
+```
+
+2. The `COMM` light on your Husky should go from red to green. You can check that the service has started correctly
+   by checking the logs:
+
+```bash
+sudo journalctl -u ros
+```
+
+3. Your Husky should now be accepting commands from your joystick. The service will automatically start each time you
+   boot your Husky's PC.
+
+#### Pairing the Controller    {#pairing-the-controller}
+
+##### PS4 Controller
+
+<ComponentPs4ControllerPairing />
+
+##### Logitech F710 Controller
+
+Some Husky robots ship with a Logitech F710 controller instead of a PS4 controller.  Pairing these controllers
+is very easy: simply plug the USB dongle into one of robot's USB ports and turn the controller on.
+
+By default Husky will use the PS4 controller for teleoperation and ignore the F710.  To enable the F710 to control
+the robot, run `sudo nano /etc/ros/setup.bash` and add the following line to the middle of the file, under the six
+`#` characters:
+
+```bash
+######
+export HUSKY_LOGITECH=1
+```
+
+Save the file and quit nano.  Then restart ROS by running `sudo systemctl restart ros` or rebooting the robot.
+When ROS restarts it will now use the Logitech controller as its teleoperation input device.
+
+### Setting up Husky's Network Configuration    {#husky-networking}
+
+Husky is normally equipped with a combination Wifi + Bluetooth module.
+If this is your first unboxing, ensure that Husky's wireless antennas are firmly screwed on to the chassis.
+Some Husky robots may only be equipped with a single antenna, depending on the exact model of PC installed in the robot.
+
+#### First Connection
+
+By default, Husky's wifi is in client mode, looking for the wireless network at the Clearpath factory.
+
+<ComponentWiredRobotConnection />
+
+#### Changing the Default Password
+
+<ComponentChangingDefaultPassword />
+
+#### Wifi Setup
+
+<ComponentWifiRobotConnection />
+
+### Installing Remote PC Software    {#remote-pc-software}
+
+:::note
+This step is optional.
+:::
+
+It is often convenient to use a Remote PC (eg. laptop) to command and observe your robot. To do this, your
+Remote PC must be configured correctly.
+
+1. Perform a basic ROS installation. See [here](http://wiki.ros.org/noetic/Installation/Ubuntu) for details.
+
+2. Install the Husky desktop packages:
+```bash
+sudo apt-get install ros-noetic-husky-desktop
+```
+
+3. Configure Remote ROS Connectivity.
+
+<details><summary>Click to expand</summary><p>
+<ComponentRemoteRosConnectivity />
+</p></details>
+
+4. From your Remote PC, try launching rviz, the standard ROS robot visualization tool:
+
+```bash
+roslaunch husky_viz view_robot.launch
+```
+
+From within rviz, you can use interactive markers to drive Husky, you can visualize its published
+localization estimate and you can visualize any attached sensors which have been added to its robot
+description XML _URDF_.
+
+### Customizing Husky Configuration
+
+.. Note:: These tutorials assume that you are familiar with ROS and the catkin build system.
+Please familiarize yourself using the [ROS](http://wiki.ros.org/ROS/Tutorials) and
+[catkin](http://wiki.ros.org/catkin/Tutorials) tutorials.
+
+If upgrading from a prior ROS release, you should now re-examine your backed-up files from
+[Performing a Backup](#performing-a-backup) to determine if there's any customizations that
+need to be configured on your platform.
+
+#### Environment Variables    {#environment-variables}
+
+Husky can be customized and extended through the use of several environment variables. These are summarized in the
+[README](https://github.com/husky/husky/blob/noetic-devel/husky_description/README.md) file.
+
+#### Adding a Source Workspace
+
+Configuring non-standard peripherals requires a source workspace on the robot PC.
+
+1. Create a new workspace:
+
+```bash
+mkdir -p ~/husky_noetic_ws/src
+```
+
+2. Add any custom source packages to the `~/husky_noetic_ws/src` directory.
+
+3. After adding your packages, make sure any necessary dependencies are installed:
+
+```bash
+cd ~/husky_noetic_ws/
+rosdep install --from-paths src --ignore-src --rosdistro noetic -y
+```
+
+4. Build the workspace:
+
+```bash
+cd ~/husky_noetic_ws/
+catkin_make
+```
+
+5. Modify your robot-wide setup file (`/etc/ros/setup.bash`) to source your new workspace instead
+   of the base noetic install:
+
+```bash
+source /home/administrator/husky_noetic_ws/devel/setup.bash
+```
+
+6. Reinitialize your environment so that it picks up your new workspace:
+
+```bash
+source /etc/ros/setup.bash
+```
+
+---
+
+## Using Husky   {#using-husky}
+
+### Simulating Husky     {#simulating-husky}
+
+Whether you actually have a Husky robot or not, the Husky simulator is a great way to get started with ROS
+robot development. In this tutorial, we will go through the basics of starting Gazebo and RViz and how to drive
+your Husky around.
+
+#### Installation
+
+To get started with the Husky simulation, make sure you have a [working ROS installation](#remote-pc-software)
+set up on your Ubuntu desktop, and install the Husky-specific metapackages for desktop and simulation:
+
+```bash
+sudo apt-get install ros-noetic-husky-simulator ros-noetic-husky-desktop
+```
+
+#### Launch Gazebo
+
+[Gazebo](https://gazebosim.org/home) is the most common simulation tool used in ROS. Husky's model in
+Gazebo include reasonable approximations of its dynamics, including wheel slippage, skidding, and
+inertia. To launch simulated Husky in a simple example world, run the following command:
+
+```bash
+roslaunch husky_gazebo husky_playpen.launch
+```
+
+You should see the following window appear, or something like it.
+
+:::note
+You can adjust the camera angle by clicking and dragging while holding CTRL, ALT,
+or the shift key.
+:::
+
+TODO: need image
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/gazebo-husky-race.png"
+      width="400"
+    />
+    <figcaption>Simulated Husky in the Race World</figcaption>
+  </figure>
+</center>
+
+:::note
+To stop the simulation, close the Gazebo window, and then CTRL-C out of the terminal
+process.
+:::
+
+The window which you are looking at is the Gazebo Client. This window shows you the "true" state of the
+simulated world which the robot exists in. It communicates on the backend with the Gazebo Server, which
+is doing the heavy lifting of actually maintaining the simulated world. At the moment, you're running
+both the client and server locally on your own machine, but some advanced users may choose to run heavy
+duty simulations on separate hardware and connect to them over the network.
+
+Note that like Husky itself, Husky can be customized for simulations. For example, to add a front laser,
+stop the previous simulation, enable the appropriate environment variable (see
+[here]([README](https://github.com/husky/husky/blob/noetic-devel/husky_description/README.md)) for options)
+and re-launch the simulation.
+
+```bash
+export HUSKY_LMS1XX_ENABLED='1'
+roslaunch husky_gazebo husky_playpen.launch
+```
+
+You should now see the simulator running with the simulated SICK LMS-111 laser present:
+
+TODO: need image
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/gazebo-husky-race-laser.png"
+      width="400"
+    />
+    <figcaption>Simulated Husky in the Race World with SICK LMS-111</figcaption>
+  </figure>
+</center>
+
+Gazebo not only simulates the physical presence of the laser scanner, it also provides simulated data
+which reflects the robot's surroundings in its simulated world. We will visualize the simulated laser
+scanner data shortly.
+
+#### Additional Simulation Worlds
+
+In addtion to the default `husky_playpen.launch` file, `husky_gazebo` contains two additional launch files of use:
+
+* `husky_empty_world.launch`, which spawns Husky in a featureless, infinite plane; and
+* `spawn_husky.launch`, which is intended to be included in any custom world to add a Husky simulation to it.
+
+To add a Husky to any of your own worlds, simply include the `spawn_husky.launch` file in your own world's launch:
+
+```markup
+<include file="$(find husky_gazebo)/launch/spawn_husky.launch">
+  <!-- Optionally configure the spawn position -->
+  <arg name="x" value="$(arg x)"/>
+  <arg name="y" value="$(arg y)"/>
+  <arg name="z" value="$(arg z)"/>
+  <arg name="yaw" value="$(arg yaw)"/>
+</include>
+```
+
+Finally, Clearpath provides an additional suite of simulation environments that can be downloaded separately and used
+with Husky, as described below.
+
+##### Clearpath Gazebo Worlds
+
+The Clearpath Gazebo Worlds collection contains four different simulation worlds, representative of different
+environments our robots are designed to operate in:
+
+* Inspection World: a hilly outdoor world with water and a cave
+* Agriculture World: a flat outdoor world with a barn, fences, and solar farm
+* Office World: a flat indoor world with enclosed rooms and furniture
+* Construction World: office world, under construction with small piles of debris and partial walls
+
+Husky is supported in all four environments.
+
+##### Installation
+
+To download the Clearpath Gazebo Worlds, clone the repository from GitHub into the same workspace as your Husky:
+
+```bash
+cd ~/catkin_ws/src
+git clone https://github.com/clearpathrobotics/cpr_gazebo.git
+```
+
+Before you can build the package, make sure to install dependencies.  Because Clearpath Gazebo Worlds depends on
+all of our robots' simulation packages, and some of these are currently only available as source code, installing
+dependencies with `rosdep install --from-paths [...]` will likely fail.
+
+All four simulation environments need the `gazebo_ros` package.  The Inspection World also needs the
+`uuv_gazebo_worlds` package, which can be installed by running:
+
+```bash
+sudo apt-get install ros-$ROS_DISTRO-uuv-gazebo-worlds
+```
+
+Once the dependencies are installed, you can build the package:
+
+```bash
+cd ~/catkin_ws
+catkin_make
+source devel/setup.bash
+```
+
+##### Running the Inspection Simulation
+
+Inspection World is a hilly, outdoor world that includes a water feature, bridge, pipeline, small cave/mine,
+and a small solar farm.  It is intended to simulate a variety of missions, including pipeline inspection,
+cave/underground navigation, and localization on non-planar terrain.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/husky_inspection_bridge.png"
+      width="800"
+    />
+    <figcaption>Husky driving over the bridge in the inspection world</figcaption>
+  </figure>
+</center>
+
+To launch the inspection simulation, run
+
+```bash
+roslaunch cpr_inspection_gazebo inspection_world.launch platform:=husky
+```
+
+To customize Husky's payload, for example to add additional sensors, see
+[here](#husky-custom-payload).
+
+Once the simulation is running you can use RViz and other tools as described in
+the [Gmapping](#gmapping-demo) and [AMCL](#amcl-demo) demos
+to control and monitor the robot.
+
+For example, below we can see Husky exploring the cave:
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/husky_inspection_cave.png"
+      width="800"
+    />
+    <figcaption>Husky exploring the cave</figcaption>
+  </figure>
+</center>
+
+Husky's perception of the inside of the cave as a 3D pointcloud in RViz:
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/husky_rviz_inspection_cave.png"
+      width="800"
+    />
+    <figcaption>Husky in RViz exploring the cave</figcaption>
+  </figure>
+</center>
+
+You can see the complete layout of the Inspection World below:
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/common_images/inspection_world.png"
+      width="800"
+    />
+    <figcaption>Inspection World</figcaption>
+  </figure>
+</center>
+
+##### Running the Agriculture Simulation
+
+Agriculture World is a flat, mixed indoor/outdoor world that include a large barn, open fields surrounded by fences,
+and a large solar farm.  It is intended to simulate missions such as solar panel inspection and area coverage.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/husky_agriculture_world.png"
+      width="800"
+    />
+    <figcaption>Husky in the Agriculture World</figcaption>
+  </figure>
+</center>
+
+To launch the agriculture simulation, run
+
+```bash
+roslaunch cpr_agriculture_gazebo agriculture_world.launch platform:=husky
+```
+
+To customize Husky's payload, for example to add additional sensors, see
+[here](#husky-custom-payload).
+
+Once the simulation is running you can use RViz and other tools as described in
+the [Gmapping](#gmapping-demo) and [AMCL](#amcl-demo) demos
+to control and monitor the robot.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/common_images/agriculture_world.png"
+      width="800"
+    />
+    <figcaption>Agriculture World</figcaption>
+  </figure>
+</center>
+
+##### Running the Office Simulation
+
+Office World is a small indoor environment representing a commercial office space.  It features several large, open
+areas with furniture, as well as a narrow hallway with smaller offices and meeting rooms.  It is intended to simulate
+missions in commercial spaces, such as facilitating deliveries, security monitoring, and inspecting equipment.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/husky_office_world.png"
+      width="800"
+    />
+    <figcaption>Husky in the Office World</figcaption>
+  </figure>
+</center>
+
+To launch Office World with a Husky, run the following command:
+
+```bash
+roslaunch cpr_office_gazebo office_world.launch platform:=husky
+```
+
+To customize Husky's payload, for example to add additional sensors, see
+[here](#husky-custom-payload).
+
+Once the simulation is running you can use RViz and other tools as described in
+the [Gmapping](#gmapping-demo) and [AMCL](#amcl-demo) demos
+to control and monitor the robot. For example, below we can see the ``gmapping_demo`` from ``husky_navigation`` being
+used to build a map of the Office World:
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/husky_rviz_office_gmap.png"
+      width="800"
+    />
+    <figcaption>Husky building a map of the office with Gmapping</figcaption>
+  </figure>
+</center>
+
+You can see the complete layout of the office world below:
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/common_images/office_world.png"
+      width="800"
+    />
+    <figcaption>Office World</figcaption>
+  </figure>
+</center>
+
+##### Running the Construction Simulation
+
+Construction World is the same basic layout as Office World, representing the same office space under construction/rennovation.
+It is an indoor environment with small hills of debris/rubble, partial walls, and piles of construction supplies.  It
+is designed to simulate missions in any sort of construction site.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/husky_construction_world.png"
+      width="800"
+    />
+    <figcaption>Husky in the Construction World</figcaption>
+  </figure>
+</center>
+
+To launch Construction World with a Husky, run the following command:
+
+```bash
+roslaunch cpr_office_gazebo office_construction_world.launch platform:=husky
+```
+
+To customize Husky's payload, for example to add additional sensors, see
+[here](#husky-custom-payload).
+
+Once the simulation is running you can use RViz and other tools as described in
+the [Gmapping](#gmapping-demo) and [AMCL](#amcl-demo) demos
+to control and monitor the robot.
+
+You can see the complete layout of the office below:
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/common_images/construction_world.png"
+      width="800"
+    />
+    <figcaption>The layout of Construction World</figcaption>
+  </figure>
+</center>
+
+##### Customizing Husky's Payload    {#husky-custom-payload}
+
+To customize Husky's payload you must use the environment variables described in [here](#environment-variables).
+For example, to equip Husky with a Sick LMS-1xx lidar, as pictured in several of the images above, run
+
+```bash
+export HUSKY_LMS1XX_ENABLED=1
+```
+
+before launching the simulation world.
+
+You can also add additional sensors by creating a customized URDF and setting the `HUSKY_URDF_EXTRAS` environment
+variable to point to it.
+
+For example, let's suppose you want to equip Husky with an Intel RealSense D435 camera.
+First, install the `realsense2_camera` and `realsense2_description` packages, along with the gazebo plugins:
+
+```bash
+sudo apt-get install ros-$ROS_DISTRO-realsense2-camera ros-$ROS_DISTRO-realsense2-description ros-$ROS_DISTRO-gazebo-plugins
+```
+
+Then create your customized URDF file, for example `$HOME/Desktop/realsense.urdf.xacro`.  Put the following in it:
+
+```markup
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <link name="front_realsense" />
+
+  <!--
+    The gazebo plugin aligns the depth data with the Z axis, with X=left and Y=up
+    ROS expects the depth data along the X axis, with Y=left and Z=up
+    This link only exists to give the gazebo plugin the correctly-oriented frame
+  -->
+  <link name="front_realsense_gazebo" />
+  <joint name="front_realsense_gazebo_joint" type="fixed">
+    <parent link="front_realsense"/>
+    <child link="front_realsense_gazebo"/>
+    <origin xyz="0.0 0 0" rpy="-1.5707963267948966 0 -1.5707963267948966"/>
+  </joint>
+
+  <gazebo reference="front_realsense">
+    <turnGravityOff>true</turnGravityOff>
+    <sensor type="depth" name="front_realsense_depth">
+      <update_rate>30</update_rate>
+      <camera>
+        <!-- 75x65 degree FOV for the depth sensor -->
+        <horizontal_fov>1.5184351666666667</horizontal_fov>
+        <vertical_fov>1.0122901111111111</vertical_fov>
+
+        <image>
+          <width>640</width>
+          <height>480</height>
+          <format>RGB8</format>
+        </image>
+        <clip>
+          <!-- give the color sensor a maximum range of 50m so that the simulation renders nicely -->
+          <near>0.01</near>
+          <far>50.0</far>
+        </clip>
+      </camera>
+      <plugin name="kinect_controller" filename="libgazebo_ros_openni_kinect.so">
+        <baseline>0.2</baseline>
+        <alwaysOn>true</alwaysOn>
+        <updateRate>30</updateRate>
+        <cameraName>realsense</cameraName>
+        <imageTopicName>color/image_raw</imageTopicName>
+        <cameraInfoTopicName>color/camera_info</cameraInfoTopicName>
+        <depthImageTopicName>depth/image_rect_raw</depthImageTopicName>
+        <depthImageInfoTopicName>depth/camera_info</depthImageInfoTopicName>
+        <pointCloudTopicName>depth/color/points</pointCloudTopicName>
+        <frameName>front_realsense_gazebo</frameName>
+        <pointCloudCutoff>0.105</pointCloudCutoff>
+        <pointCloudCutoffMax>8.0</pointCloudCutoffMax>
+        <distortionK1>0.00000001</distortionK1>
+        <distortionK2>0.00000001</distortionK2>
+        <distortionK3>0.00000001</distortionK3>
+        <distortionT1>0.00000001</distortionT1>
+        <distortionT2>0.00000001</distortionT2>
+        <CxPrime>0</CxPrime>
+        <Cx>0</Cx>
+        <Cy>0</Cy>
+        <focalLength>0</focalLength>
+        <hackBaseline>0</hackBaseline>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <link name="front_realsense_lens">
+    <visual>
+      <origin xyz="0.02 0 0" rpy="${pi/2} 0 ${pi/2}" />
+      <geometry>
+        <mesh filename="package://realsense2_description/meshes/d435.dae" />
+      </geometry>
+      <material name="white" />
+    </visual>
+  </link>
+
+  <joint type="fixed" name="front_realsense_lens_joint">
+    <!-- Offset the camera 2cm backwards and 1cm up -->
+    <origin xyz="-0.02 0 0.01" rpy="0 0 0" />
+    <parent link="top_plate_front_link" />
+    <child link="front_realsense_lens" />
+  </joint>
+  <joint type="fixed" name="front_realsense_joint">
+    <origin xyz="0.025 0 0" rpy="0 0 0" />
+    <parent link="front_realsense_lens" />
+    <child link="front_realsense" />
+  </joint>
+</robot>
+```
+
+This file defines the additional links for adding a RealSense camera to the robot, as well as
+configuring the `openni_kinect` plugin for Gazebo to simulate data from a depth camera.  The
+camera itself will be connected to the Husky's `top_plate_front_link` link.  This places the
+camera at the very front edge of the robot's top cover-plate.
+
+Now, set the `HUSKY_URDF_EXTRAS` environment variable and try viewing the Husky model:
+
+```bash
+export HUSKY_URDF_EXTRAS=$HOME/Desktop/realsense.urdf.xacro
+roslaunch husky_viz view_model.launch
+```
+
+You should see the Husky model in RViz, with the RealSense camera mounted to it:
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/husky_realsense.png"
+      width="800"
+    />
+    <figcaption>Husky with a RealSense D435 connected to it</figcaption>
+  </figure>
+</center>
+
+To launch the customized Husky in any of the new simulation environments, similarly run:
+
+```bash
+export HUSKY_URDF_EXTRAS=$HOME/Desktop/realsense.urdf.xacro
+roslaunch cpr_office_gazebo office_world.launch platform:=husky
+```
+
+You should see Husky spawn in the office world with the RealSense camera:
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/husky_office_realsense.png"
+      width="800"
+    />
+    <figcaption>Husky with a RealSense D435 connected to it in Office World</figcaption>
+  </figure>
+</center>
+
+You can view the sensor data from the RealSense camera by running
+
+```bash
+roslaunch husky_viz view_robot.launch
+```
+
+and adding the camera and pointcloud from the `/realsense/color/image_raw` and
+`/realsense/depth/color/points` topics:
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/husky_rviz_realsense.png"
+      width="800"
+    />
+    <figcaption>Husky with a RealSense in RViz showing pointcloud and RGB topics</figcaption>
+  </figure>
+</center>
+
+### Interfacing with Husky
+
+#### Visualization
+
+#### Control
+
+#### Odometry
+
+#### Diagnostics
+
+### Driving a Simulated Husky
+controller + ROS messages; see Dingo
+
+### Driving a Physical Husky     {#driving-husky}
+
+### Keeping Husky Updated
+
+---
+
+## Navigating Husky     {#navigating-husky}
+
+### Husky Move Base Demo
+
+### Husky AMCL Demo    {#amcl-demo}
+
+### Husky Gmapping Demo     {#gmapping-demo}
+
+### Husky Frontier Exploration Demo
+
+
+---
+
+## Testing Husky     {#testing-husky}
+
+
+
+---
+
+## Advanced Topics     {#advanced-topics}
+
+### Calibrating the Magnetometer (UM6 IMU only)
+
+:::warning
+
+Husky will rotate autonomously during calibration. Make sure all external cables are unplugged,
+and Husky has unobstructed room to move in a 1 metre radius.
+
+:::
+
+If your Husky has a UM6 IMU installed, you must calibrate the magnetometer for magnetic deviation before
+it will be used for pose estimation.
+
+1. Make sure the ros service is running.
+2. Execute the calibration script on the Husky computer remotely via ssh:
+
+```bash
+rosrun husky_bringup calibrate_compass
+```
+
+3. Follow the onscreen instructions. To drive Husky using the included game controller, you must hold
+   down either the left or right shoulder buttons (L1 or R2 on a PS4 controller, LB or RB on the
+   Logitech F710).  Holding the left button will enable normal operation while holding the right button
+   will enable turbo speed.
+
+:::warning
+
+When familiarizing yourself with Husky operation, always hold the left button (L1). Once you are
+comfortable with how Husky operates, and you are in a large area with plenty of open room, then you
+can use the right button (R1) to enable turbo mode.
+
+:::
+
+With either shoulder button held down, and the controller turned on and properly paired, you can use the left joystick
+on the controller to drive the robot.  The vertical axis controls the robot's forward/backward speed and the horizontal
+axis controls the robot's rotation.
+
+### Configuring the Network Bridge
+
+<ComponentConfiguringNetworkBridge />
+
+### Jetson Installation
+
+TODO: link to "Computers" section

@@ -8,9 +8,6 @@ toc_max_heading_level: 4
 import ComponentIntroductionHusky from "/components/introduction_husky.mdx";
 import ComponentTableHuskyOne from "/components/table_husky_1.mdx";
 import Support from "/components/support.mdx";
-import ComponentWiredRobotConnection from "/components/wired_robot_connection.mdx";
-import ComponentWifiRobotConnection from "/components/wifi_robot_connection.mdx";
-import ComponentRemoteRosConnectivity from "/components/remote_ros_connectivity.mdx";
 import ComponentConfiguringNetworkBridge from "/components/configuring_network_bridge.mdx";
 import ComponentUsingRos from "/components/using_ros.mdx"
 import ComponentCommonSafeWorkProcedures from "/components/common_safe_work_procedures.mdx"
@@ -243,27 +240,16 @@ communications with the Husky base.
 
 ### Network Configuration
 
-#### Husky Wired Network Setup
-
-To get Husky connected to your local wifi network, you must first access the Onboard PC using a wired connection
-and then connect to one of the network ports with a standard ethernet cable.
-
-<ComponentWiredRobotConnection />
-
-#### Husky Wifi Network Setup
-
-<ComponentWifiRobotConnection />
-
-#### Remote ROS Connectivity
-
-<ComponentRemoteRosConnectivity />
+To get Husky connected to your local wifi network, you must first access the Onboard PC using
+a wired connection to the robot. See the
+[Husky Tutorials](/docs/robots/husky/tutorials_husky#husky-networking) for details.
 
 ### Connecting and Using the Controller
 
 To use your controller, it must be paired with your Husky and powered on. If your purchased the Onboard PC from
 Clearpath Robotics, your controller is already paired with your Husky. If your controller has become
 unpaired or if you wish to pair a new controller, following the instructions in the
-[Husky Tutorials](/docs/robots/husky/tutorials_husky).
+[Husky Tutorials](/docs/robots/husky/tutorials_husky#pairing-the-controller).
 
 To teleoperate Husky, first release the motion stop. Then, referring to the following images, press the enable
 button (either slow or fast mode) and use the left thumbstick to drive Husky.
