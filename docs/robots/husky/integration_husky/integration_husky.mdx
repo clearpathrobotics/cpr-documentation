@@ -68,44 +68,61 @@ Ethernet payloads, or for a PoE power injector as required.
 
 #### User Bay Power Connections
 
-:::caution
-TODO: Need to check if this needs to be updated for new MCU PCBAs
-:::
+The user bay power connections are capable of supplying:
 
-The user area power terminals are capable of supplying VBAT (approximately 24-29 V, unregulated) fused at 5 A, 12 V fused at 7.5 A,
-and 24 V fused at 3 A.
-282 W of power is available from these User Power breakouts.
+- VBAT (approximately 24-29 V, unregulated) fused at 5 A
+- 12 V fused at 7.5 A
+- 24 V fused at 3 A.
+
+In total, 282 W of power is available from these User Power breakouts.
+
+:::note
 You can order a upgrade for your Husky, that will add 480 W of power (VBAT fused at 20 A). Each terminal comes equipped with a
 removable connector into which your payload power leads may connect.
+:::
 
+:::note
 Husky UGVs with serial numbers lower than A200-0802 have different user power connections.  
 These older robots have 5V, 12V, and 24V supplies, all fused at 5A.
 Your Husky's serial number is shown on a sticker, attached to the right side of the robot.
+:::
 
+To connect to user power:
 1.  Expose about 5 mm of bare wire from the payload power leads and twist the exposed wire on both leads.
-2.  Take 2 molex terminals from the spare parts kit provided and insert the exposed wire and crimp the terminals, ensuring the wires are well secured inside the terminal, as shown below.
-3.  Take 1 connector housing from the spare parts kit provided and insert the positive payload power lead (red) into position 4, 5, or 6 of the connector until it locks into place. The positions numbers are visible on the back of the plastic housing.
-4.  Insert the negative payload power lead (black) into position 1, 2, or 3 of the connector until it locks into place.
+2.  Take 2 Molex terminals from the spare parts kit provided and insert the exposed wire and crimp the
+    terminals, ensuring the wires are well secured inside the terminal, as shown below.
+3.  Take 1 connector housing from the spare parts kit provided and insert the positive payload power lead
+    (red) into position 4, 5, or 6 of the connector until it locks into place. The positions numbers are
+    visible on the back of the plastic housing.
+4.  Insert the negative payload power lead (black) into position 1, 2, or 3 of the connector until it locks
+    into place.
 
 <center>
-  <img
-    src="/img/robot_images/husky_images/robot_husky_16.jpg"
-    width="300"
-  />
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/robot_husky_16.jpg"
+      width="300"
+    />
+    <figcaption>Crimping a wire</figcaption>
+  </figure>
 </center>
-
 <center>
-  <img
-    src="/img/robot_images/husky_images/robot_husky_17.jpg"
-    width="300"
-  />
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/robot_husky_17.jpg"
+      width="300"
+    />
+    <figcaption>Inserting the crimped wires into the Molex connector</figcaption>
+  </figure>
 </center>
 
 When connecting payloads, be sure to observe correct polarity as marked on the inside of the user bay.
-Do not exceed the specified maximum current limit of each power rail; failure to do so may result in damage to Husky or your payload.
+Do not exceed the specified maximum current limit of each power rail; failure to do so may result in
+damage to Husky or your payload.
 
-The connectors used in the Husky's user bay are Weidmüller's 6 Position Terminal Blocks, to connect your own bare wires, you may use Digi-key part number 281-1856-ND.
-For more technical information on the power connectors, as well as their corresponding mating connectors, please visit the [Product Page](https://www.digikey.ca/en/products/detail/molex/0039012065/930272?s=N4IgTCBcDaIOoFkwGYDsAGMBaAcgERAF0BfIA).
+For more technical information on the Molex power connectors, as well as their corresponding mating connectors,
+please visit the
+[DigiKey WM23702-ND Product Page](https://www.digikey.ca/en/products/detail/molex/0039012065/930272?s=N4IgTCBcDaIOoFkwGYDsAGMBaAcgERAF0BfIA).
 
 #### Serial Connection
 
@@ -115,6 +132,7 @@ The pinout of the DE-9 connector is shown below.
 | :-----------------------------------------------------------------------: | :------------------------: |
 | <img src="/img/robot_images/husky_images/robot_husky_9.png" width="200"/> | <ComponentTableHuskyOne /> |
 
+<!--
 #### Optional External E-Stop
 
 :::caution
@@ -126,14 +144,18 @@ TODO: does Husky support an external e-stop?
 :::caution
 TODO: any LEDs we want to call out?
 :::
+-->
 
 ### Software Integration
 
 ROS has a large ecosystem of sensor drivers, some of which include pre-made URDF descriptions and
-even simulation configurations. Please see the following page on the ROS wiki for a partial list:
-
-<http://wiki.ros.org/Sensors>
+even simulation configurations. Refer to [Sensors supported by ROS](http://wiki.ros.org/Sensors).
 
 For the best experience, consider purchasing supported accessories from Clearpath Robotics for your
-Husky, which will include simulation, visualization, and driver support. However, we will happily
-assist you in integrating your own devices as well.
+Husky, which will include simulation, visualization, and driver support. Refer to the following
+for more details:
+
+- [Computers](/docs/computers)
+- [Sensors](/docs/sensors)
+- [Manipulators](/docs/manipulators)
+- [Accessories](/docs/accessories)

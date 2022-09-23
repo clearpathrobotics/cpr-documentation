@@ -9,7 +9,8 @@ import ComponentChangingDefaultPassword from "/components/changing_default_passw
 import ComponentWiredRobotConnection from "/components/wired_robot_connection.mdx";
 import ComponentWifiRobotConnection from "/components/wifi_robot_connection.mdx";
 import ComponentRemoteRosConnectivity from "/components/remote_ros_connectivity.mdx";
-
+import ComponentConfiguringNetworkBridge from "/components/configuring_network_bridge.mdx";
+import Support from "/components/support.mdx";
 
 <ComponentIntroductionHusky />
 
@@ -26,7 +27,6 @@ For more information or to receive a quote, please [visit us online](http://clea
 :::note
   These tutorials assume that you are comfortable working with ROS.  We recommend starting with our
   [ROS tutorial](https://www.clearpathrobotics.com/assets/guides/noetic/ros/index.html) if you are not familiar with ROS already.
-
 :::
 
 :::note
@@ -34,7 +34,6 @@ For more information or to receive a quote, please [visit us online](http://clea
   OS environment for Husky. If instead you have an older Husky robot running Ubuntu 18.04 with ROS Melodic,
   please follow [this tutorial](https://www.clearpathrobotics.com/assets/guides/melodic/melodic-to-noetic/index.html)
   to upgrade the robot OS environment to Ubuntu 20.04 with ROS Noetic.
-
 :::
 
 [Husky ROS Packages](#husky-ros-packages) provides the references for the software packages and key ROS topics.
@@ -75,7 +74,15 @@ you will be able to run:
 roslaunch husky_viz view_model.launch
 ```
 
-TODO: RViz image of Husky
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/husky_view_model.png"
+      width="600"
+    />
+    <figcaption>Husky model</figcaption>
+  </figure>
+</center>
 
 Husky can be customized and extended through the use of several environment variables. These are summarized in the
 [README](https://github.com/husky/husky/blob/noetic-devel/husky_description/README.md) file.
@@ -148,8 +155,8 @@ Ubuntu Focal/ROS Noetic.
 
 2.  There are several places in the filesystem you should specifically look for customizations for your Husky:
 
-    |                 Location                      | Description                                                                                                                                                                                                                                                                                   |
-    | :-------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+    | Location                                      | Description                                                                                                                                                                                                                                                                                   |
+    | :-------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
     | `/etc/network/interfaces` or `/etc/netplan/*` | Your robot may have a custom network configuration configured in this file.                                                                                    |
     | `/etc/ros/*/husky-core.d/*.launch`            | Will contain `base.launch` and `description.launch`, may contain custom launch files for your robot configuration.  Replaced by `ros.d` in newer versions.     |
     | `/etc/ros/*/ros.d/*.launch`                   | Will contain `base.launch` and `description.launch`, may contain custom launch files for your robot configuration.  Replaces `husky-core.d` in newer versions. |
@@ -387,14 +394,13 @@ You can adjust the camera angle by clicking and dragging while holding CTRL, ALT
 or the shift key.
 :::
 
-TODO: need image
 <center>
   <figure>
     <img
-      src="/img/robot_images/husky_images/gazebo-husky-race.png"
-      width="400"
+      src="/img/robot_images/husky_images/husky_gazebo_playpen.png"
+      width="800"
     />
-    <figcaption>Simulated Husky in the Race World</figcaption>
+    <figcaption>Simulated Husky in the Play Pen</figcaption>
   </figure>
 </center>
 
@@ -421,12 +427,11 @@ roslaunch husky_gazebo husky_playpen.launch
 
 You should now see the simulator running with the simulated SICK LMS-111 laser present:
 
-TODO: need image
 <center>
   <figure>
     <img
-      src="/img/robot_images/husky_images/gazebo-husky-race-laser.png"
-      width="400"
+      src="/img/robot_images/husky_images/husky_gazebo_playpen_lms111.png"
+      width="800"
     />
     <figcaption>Simulated Husky in the Race World with SICK LMS-111</figcaption>
   </figure>
@@ -944,7 +949,7 @@ The same information is also published as a
 
 ### Driving Husky     {#driving-husky}
 
-There are four ways to drive Dingo, and each way will work on a physical Dingo robot as well as on a simulated Dingo.
+There are four ways to drive Husky, and each way will work on a physical Husky robot as well as on a simulated Husky.
 
 1. Using the interactive remote controller in RViz. See [Simulation](#simulating-husky).
 2. Using autonomous navigation. See [Navigation](#navigating-husky).
@@ -969,7 +974,7 @@ with how Husky operates, and you are in a large area with plenty of open room, t
 turbo mode.
 :::
 
-To drive the Dingo-D, Axis 0 controls the robot's steering, Axis 1 controls the forward/backward velocity,
+To drive the Husky, Axis 0 controls the robot's steering, Axis 1 controls the forward/backward velocity,
 and buttons 4 and 5 act as enable and enable-turbo respectively. On common controllers these correspond to
 the following physical controls:
 
@@ -1004,7 +1009,7 @@ You can manually publish `geometry_msgs/Twist ROS` messages to either the
 For example, in terminal, run:
 
 ```bash
-rostopic pub /dingo_velocity_controller/cmd_vel geometry_msgs/Twist '{linear: {x: 0.5, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}'
+rostopic pub /husky_velocity_controller/cmd_vel geometry_msgs/Twist '{linear: {x: 0.5, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}'
 ```
 
 The command above makes Husky drive forward momentarily at 0.5 m/s without any rotation. To
@@ -1098,9 +1103,8 @@ sudo apt-get dist-upgrade
 
 #### MCU Firmware Update
 
-:::caution
-TODO: Under construction
-:::
+Customer updates of Husky firmware are not supported at this time. Contact [Support](#support) if
+Husky firmware updates are needed.
 
 ---
 
@@ -1410,9 +1414,9 @@ Husky robots come preinstalled with a set of test scripts as part of the ``husky
 
 If your Husky does not have the ``husky_tests`` ROS package installed already, you can manually install it by opening terminal and running:
 
-.. code-block:: bash
-
-  sudo apt-get install ros-noetic-husky-tests
+```bash
+sudo apt-get install ros-noetic-husky-tests
+```
 
 ### Running ROS Tests
 
@@ -1422,9 +1426,9 @@ identifying the root cause of problems, or at the very least, narrowing down on 
 
 To run `ros_tests` on a Husky robot, open terminal and run:
 
-    ```bash
-    rosrun husky_tests ros_tests
-    ```
+```bash
+rosrun husky_tests ros_tests
+```
 
 Upon running `ros_tests`, a list of available tests will be shown in a menu. From the menu, you can choose
 individual tests to run, or simply choose the option to automatically run all the tests.
@@ -1528,3 +1532,7 @@ axis controls the robot's rotation.
 ### Jetson Installation
 
 Refer to the [Jetson](/docs/computers/jetson) page for details on installing a Jetson in Husky.
+
+## Support  {#support}
+
+<Support />

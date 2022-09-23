@@ -8,16 +8,17 @@ toc_max_heading_level: 4
 import ComponentIntroductionHusky from "/components/introduction_husky.mdx";
 import ComponentTableHuskyOne from "/components/table_husky_1.mdx";
 import Support from "/components/support.mdx";
-import ComponentConfiguringNetworkBridge from "/components/configuring_network_bridge.mdx";
 import ComponentUsingRos from "/components/using_ros.mdx"
 import ComponentCommonSafeWorkProcedures from "/components/common_safe_work_procedures.mdx"
-
+import ComponentSafetyWarning from "/components/safety_warning.mdx"
 
 <ComponentIntroductionHusky />
 
 ## Introduction
 
 Husky is a rugged and easy-to-use unmanned ground robot for rapid prototyping and research applications.
+
+<ComponentSafetyWarning />
 
 ### Shipment Contents
 
@@ -174,7 +175,7 @@ _²robot climbing 30° grade with high-mounted payload, or turning in place in h
 ## Getting Started
 
 You are ready to go! This section details how to get Husky into action.
-To begin, place Husky "up on blocks" as described in the [Safety](#husky-safety) section,
+To begin, place Husky "up on blocks" as described in the [Safety](#safety) section,
 making sure that the wheels are clear of the ground.
 
 For most Husky setups, there will be an Onboard PC which is directly connected to the Husky
@@ -298,7 +299,7 @@ charge cycle.
 
 ---
 
-## Safety Considerations       {#husky-safety}
+## Safety Considerations       {#safety}
 
 Clearpath Robotics is committed to high standards of safety.
 Husky contains several features to protect the safety of users and the integrity of the robot.
@@ -404,18 +405,6 @@ excessive wear on Husky's motors.
 ### Recommended Safe Work Procedures
 
 <ComponentCommonSafeWorkProcedures />
-
----
-
-## Maintenance
-
-See [Maintenance](/docs/robots/husky/maintenance_husky).
-
----
-
-## Troubleshooting
-
-See [Troubleshooting](/docs/robots/husky/troubleshooting_husky).
 
 ---
 
