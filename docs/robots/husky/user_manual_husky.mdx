@@ -36,6 +36,12 @@ equipment will be included per your specific configuration, plus further documen
 
 ### Hardware Overview
 
+#### System Architecture
+
+Dingo is built around a computer running Ubuntu (Intel-based computer or Jetson developer kit), paired
+with a 32-bit MCU. The MCU handles I/O, power supply monitoring, and motor control, as well as supplying
+data from the integrated IMU. The communication channel between the MCU and computer is a serial connection.
+
 #### Exterior Features
 
 The Husky exterior is shown below and includes:
@@ -100,7 +106,7 @@ sections. In addition, refer to [Husky Integration](/docs/robots/husky/integrati
 how to integrate your own payload or how to integrate a payload kit from Clearpath Robotics. Each payload kit that
 ships from Clearpath Robotics comes with a custom mounting bracket and cabling for easy attachment to Husky.
 
-#### Orientation references
+#### Orientation References
 
 The reference frame used by all Clearpath Robotics ground robots is based on ISO 8855, and is shown in the figure below.
 Husky's front is shown.
@@ -178,17 +184,17 @@ You are ready to go! This section details how to get Husky into action.
 To begin, place Husky "up on blocks" as described in the [Safety](#safety) section,
 making sure that the wheels are clear of the ground.
 
-For most Husky setups, there will be an Onboard PC which is directly connected to the Husky
-and a Remote PC which is used to control Husky and gather data. These two PCs must be set up
+For most Husky setups, there will be an Onboard Computer which is directly connected to the Husky
+and a Remote Computer which is used to control Husky and gather data. These two computers must be set up
 to communicate with each other.
 
-### Onboard PC setup
+### Onboard Computer Setup
 
-If you purchased an Onboard PC from Clearpath Robotics with Husky, it is already installed,
-connected, and powered. If not, or to set up your own Onboard PC, see the
+If you purchased an Onboard Computer from Clearpath Robotics with Husky, it is already installed,
+connected, and powered. If not, or to set up your own Onboard Computer, see the
 [Husky Tutorials](/docs/robots/husky/tutorials_husky).
 
-Note that the Onboard PC must be connected to Husky's serial port, which is located in the
+Note that the Onboard Computer must be connected to Husky's serial port, which is located in the
 user power panel accessible from the User Bay.
 
 <center>
@@ -201,9 +207,9 @@ user power panel accessible from the User Bay.
   </figure>
 </center>
 
-The connector is a female DE-9, suitable for connection directly to a USB-serial adaptor or to a PC
+The connector is a female DE-9, suitable for connection directly to a USB-serial adaptor or to a computer
 serial port via a straight-through modem cable (not a null modem cable). How you connect the Onboard
-PC to Husky depends on whether the Onboard PC has a dedicated serial port. Husky is delivered with a
+Computer to Husky depends on whether the Onboard Computer has a dedicated serial port. Husky is delivered with a
 USB-serial adaptor.
 
 ### Powering Up
@@ -241,13 +247,13 @@ communications with the Husky base.
 
 ### Network Configuration
 
-To get Husky connected to your local wifi network, you must first access the Onboard PC using
+To get Husky connected to your local wifi network, you must first access the Onboard Computer using
 a wired connection to the robot. See the
 [Husky Tutorials](/docs/robots/husky/tutorials_husky#husky-networking) for details.
 
 ### Connecting and Using the Controller     {#controller}
 
-To use your controller, it must be paired with your Husky and powered on. If your purchased the Onboard PC from
+To use your controller, it must be paired with your Husky and powered on. If your purchased the Onboard Computer from
 Clearpath Robotics, your controller is already paired with your Husky. If your controller has become
 unpaired or if you wish to pair a new controller, following the instructions in the
 [Husky Tutorials](/docs/robots/husky/tutorials_husky#pairing-the-controller).
@@ -322,10 +328,8 @@ exists between each wheel and the end of the corresponding bumper bar.
 ### Stop Button and Lockout     {#husky-stop-button-and-lockout}
 
 :::warning
-
 Ensure the stop button is accessible at all times.
 Avoid mounting payloads that extend over the rear of Husky and would occlude the stop button.
-
 :::
 
 The motion-stop function that allows a person in the physical vicinity of the robot

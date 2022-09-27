@@ -1,0 +1,161 @@
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+There are three ways to install software on the physical robot.
+
+The preferred way is using the Clearpath Robotics ISO image, which is covered in this section.
+The other two ways are using Debian (.deb) packages and installing from source by directly
+cloning Clearpath Robotics Github repositories and building them in your ROS (catkin) workspace;
+however, these ways are not not be covered in this section.
+
+##### Install from ISO Image
+
+:::caution
+Installing with the Clearpath Robotics ISO image will completely wipe data on the robot's computer,
+since the ISO image will install Ubuntu 20.04 (Focal), ROS Noetic, and robot-specific packages.
+:::
+
+:::note
+The Clearpath Robotics ISO image only targets Intel-family computers (`amd64` architecture).
+If your robot runs on an Nvidia Jetson computer, see
+[Jetson Software](/docs/computers/jetson/jetson_software) for software installation details.
+:::
+
+Clearpath provides a lightly customized installation image of Ubuntu 20.04 "Focal" that automatically
+pulls in all necessary dependencies for the robot software. To install the software on a
+physical robot through the Clearpath Robotics ISO image, you will first need a USB drive of at least
+2GB to create the installation media, an ethernet cable, a monitor, and a keyboard.
+
+1. Download the appropriate [Noetic ISO image](https://packages.clearpathrobotics.com/stable/images/latest/noetic-focal/)
+   for your platform.
+
+2. Copy the image to a USB drive using `unetbootin`, `rufus`, `balena etcher`, or a similar program. For example:
+
+    ```bash
+    sudo unetbootin isofile="clearpath-universal-noetic-amd64-0.4.17.iso"
+    ```
+
+3. Connect your robot computer to internet access (via wired Ethernet), a keyboard, and a monitor. Make sure that the
+    robot is connected to shore power (where applicable) or that the robot's battery is fully charged.
+
+    :::warning
+    The next step wipe your robot's hard drive, so make sure you have that image
+    [backed up](#performing-a-backup).
+    :::
+
+4. Boot your robot computer from the USB drive and let the installer work its magic.  If asked for a partitioning method
+    choose `Guided - use entire disk and set up LVM`.
+    :::note
+    You may need to configure the computer's BIOS to prioritize booting from the USB drive. On most common
+    motherboards, pressing `Delete` during the initial startup will open the BIOS for configuration.
+    :::
+5. The setup process will be automated and may take a long time depending on the speed of your internet connection.
+6. Once the setup process is complete, the computer will turn off. Please unplug the USB drive and turn the computer back on.
+7. On first boot, the username will be `administrator` and the password will be `clearpath`. You should use the
+   `passwd` utility to change the `administrator` account password.
+8. To set up a factory-standard robot, ensure all your peripherals are plugged in, and run the following command,
+    which will configure a ros upstart service, that will bring up the base robot launch files on boot.
+    The script will also detect any standard peripherals (IMU, GPS, etc.) you have installed and add them to
+    the service.
+
+    <Tabs groupId="ros_versions">
+      <TabItem
+        value="husky"
+        label="Husky"
+        default
+      >
+        <code>rosrun husky_bringup install<br />sudo systemctl daemon-reload</code>
+      </TabItem>
+      <TabItem
+        value="jackal"
+        label="Jackal"
+      >
+        <code>rosrun jackal_bringup install<br />sudo systemctl daemon-reload</code>
+      </TabItem>
+      <TabItem
+        value="dingo"
+        label="Dingo"
+      >
+        <code>rosrun dingo_bringup install<br />sudo systemctl daemon-reload</code>
+      </TabItem>
+    </Tabs>
+
+9. Finally, start ROS for the first time. In terminal, run:
+
+    ```bash
+    sudo systemctl start ros
+    ```
+
+<!-- The ros-noetic-*-robot packages don't seem to exist, so commenting out this section for now.
+
+##### Installing from Debian Packages
+
+If you are installing software on a physical robot through Debian packages, you will first
+need to ensure that the robot's computer is running Ubuntu 20.04 (Focal) and ROS Noetic.
+
+1. Before you can install the Dingo packages, you need to configure Ubuntu's APT package
+    manager to add Clearpath's package server.
+
+    1. Install the authentication key for the packages.clearpathrobotics.com repository. In terminal, run:
+
+        ```bash
+        wget https://packages.clearpathrobotics.com/public.key -O - | sudo apt-key add -
+        ```
+
+    2. Add the debian sources for the repository. In terminal, run:
+
+       ```bash
+       sudo sh -c 'echo "deb https://packages.clearpathrobotics.com/stable/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/clearpath-latest.list'
+       ```
+
+    3. Update your computer's package cache. In terminal, run:
+    
+        ```bash
+        sudo apt-get update
+        ```
+
+  2. After the robot's computer is configured to use Clearpath's debian package repository,
+     you can install the robot-specific packages.
+
+      1. On a physical robot, you should only need the robot packages. In terminal, run:
+
+          <Tabs groupId="ros_versions">
+            <TabItem
+              value="husky"
+              label="Husky"
+              default
+            >
+              <code>sudo apt-get install ros-noetic-husky-robot</code>
+            </TabItem>
+            <TabItem
+              value="dingo"
+              label="Dingo"
+            >
+              <code>sudo apt-get install ros-noetic-dingo-robot</code>
+            </TabItem>
+          </Tabs>      
+
+      2. Install the `robot_upstart` job and configure the bringup service so that ROS will launch each time the robot starts. In terminal, run:
+
+          <Tabs groupId="ros_versions">
+            <TabItem
+              value="husky"
+              label="Husky"
+              default
+            >
+              <code>rosrun husky_bringup install<br />sudo systemctl daemon-reload</code>
+            </TabItem>
+            <TabItem
+              value="dingo"
+              label="Dingo"
+            >
+              <code>rosrun dingo_bringup install<br />sudo systemctl daemon-reload</code>
+            </TabItem>
+          </Tabs>
+
+      3. Finally, start ROS for the first time. In terminal, run:
+
+            ```bash
+            sudo systemctl start ros
+            ```
+-->
