@@ -1,6 +1,6 @@
 ---
 title: User Manual
-sidebar_position: 2
+sidebar_position: 1
 toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
@@ -15,11 +15,34 @@ import ComponentSafetyWarning from "/components/safety_warning.mdx"
 
 <ComponentIntroductionDingo />
 
+## Introduction
+
+Dingo is a lightweight and easy-to-use unmanned indoor ground vehicle for ROS.
+
+There are two Dingo variants:
+
+- **Dingo-D** uses differential drive and has two module bays, one of which must
+  be a battery module; the second module is typically a computer module.
+- **Dingo-O** uses omnidirectional drive and has four module bays, at least two of
+  which are typically battery modules; the other modules may be computer modules or
+
+<center>
+  <iframe
+    width="560"
+    height="315"
+    src="https://www.youtube.com/embed/NnXYX3Y2KIk"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  />
+</center>
+
 <ComponentSafetyWarning />
 
-### What is Included
+### Shipment Contents
 
-Contained in your Dingo shipment are the following items:
+Your Dingo shipment contains the following:
 
 - Dingo UGV (Dingo-D or Dingo-O variant)
 - One or more 12V sealed lead acid (SLA) or 14.4V Lithium-ion batteries
@@ -31,6 +54,12 @@ If you elected to purchase standard payload modules or custom integration servic
 then additional equipment will be included per your specific configuration, plus further documentation as required.
 
 ### Hardware Overview
+
+#### System Architecture
+
+Dingo is built around a computer running Ubuntu (Intel-based computer or Jetson developer kit), paired with a 32-bit MCU.
+The MCU handles I/O, power supply monitoring, and motor control, as well as supplying data from the integrated IMU.
+The communication channel between the MCU and computer is a Gigabit Ethernet connection.
 
 #### Exterior Features {#dingo-exterior-features}
 
@@ -62,23 +91,18 @@ The exteriors of Dingo-D and Dingo-O are shown below and include:
   </figure>
 </center>
 
-#### HMI Details
+#### Human-Machine Interface (HMI) Details
 
 The human-machine-interface (HMI) panel is shown below and includes from left:
 
-- **motor stop button**: LED is solid green when Dingo is able to drive and flashing green when the Dingo's
-  motors are disengaged; pressing button toggles the motors between engaged and disengaged mode (further
-  details in [Motor Stop Buttons](#dingo-stop-buttons));
-- **comms indictor**: LED is solid green when communication between the MCU and computer has been established
-  and LED is off otherwise;
-- **wifi indicator**: LED is solid green when wifi is connected and LED is off otherwise;
-- **battery indicator**: LED is solid green when the battery level is ok,
-  solid yellow when the battery level is getting low (should be charged soon),
-  and solid red when the battery level is critical (should be charged immediately);
-- **system power button**: LED is solid blue when the system powered on and running and the LED is flashing blue during
-  the shutdown process; when the system is powered off, pressing the power button begins the power on process;
-  when the system is powered on, a quick press of the power button begins a graceful shutdown and a prolonged
-  press of the power button triggers and immediate power off of the system.
+|                                   Icon                                   | Description                                                                                                                                                                                                                                                                                   |
+| :----------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <img src="/img/robot_images/dingo_images/icon-motor.png" width="50"/> | **Motor Stop button**: LED is solid green when Dingo is able to drive and flashing green when the Dingo's motors are disengaged; pressing button toggles the motors between engaged and disengaged mode (further details in [Motor Stop Buttons](#dingo-stop-buttons)) |
+| <img src="/img/robot_images/dingo_images/icon-comms.png" width="50"/> | **Comms indictor**: LED is solid green when communication between the MCU and computer has been established and LED is off otherwise |
+| <img src="/img/robot_images/dingo_images/icon-wifi.png" width="50"/> | **Wifi indicator**: LED is solid green when wifi is connected and LED is off otherwise |
+| <img src="/img/robot_images/dingo_images/icon-battery.png" width="50"/> | **Battery indicator**: LED is solid green when the battery level is ok, solid yellow when the battery level is getting low (should be charged soon), and solid red when the battery level is critical (should be charged immediately) |
+| <img src="/img/robot_images/dingo_images/icon-power.png" width="50"/> | **System Power button**: LED is solid blue when the system powered on and running and the LED is flashing blue during the shutdown process; when the system is powered off, pressing the power button begins the power on process; when the system is powered on, a quick press of the power button begins a graceful shutdown and a prolonged press of the power button triggers and immediate power off of the system |
+
 
 <center>
   <figure>
@@ -143,45 +167,93 @@ To connect the shore power, remove the top trough cover (to access the MCU) and 
 to the 2-port connector labelled "SHORE" on the MCU (see [Electrical Integration](#dingo-payload-electrical-integration)
 for details).
 
-### System Architecture
+#### Orientation References
 
-Dingo is built around a computer running Ubuntu (Intel-based computer or Jetson developer kit), paired with a 32-bit MCU.
-The MCU handles I/O, power supply monitoring, and motor control, as well as supplying data from the integrated IMU.
-The communication channel between the MCU and computer is a Gigabit Ethernet connection.
+The reference frame used by all Clearpath Robotics ground robots is based on ISO 8855, and is shown in the figure below.
+Husky's front is shown. When commanded with a positive translational velocity (forward), wheels travel in the positive
+x-direction. The direction of the axes differs from those used for roll, pitch, and yaw in aircraft, and care should be
+taken to ensure that data is interpreted correctly.
 
-The key topics which comprise Dingo's ROS API are outlined in the table below.
+<!-- TODO: need image -->
 
-| Topic             | Message Type          | Purpose                                                                                                                                                                       |
-| :---------------- | :-------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/cmd_vel`        | `geometry_msgs/Twist` | Input to Dingo's kinematic controller. Publish here to make Dingo go.                                                                                                         |
-| `/odom`           | `nav_msgs/Odometry`   | Published by `robot_localization`, a filtered localization estimate based on wheel odometry (encoders) and integrated IMU.                                                    |
-| `/imu/data`       | `sensor_msgs/IMU`     | Published by `imu_filter_madgwick`, an orientation estimated based on the Dingo's internal IMU.                                                                               |
-| `/mcu/status`     | `dingo_msgs/Status`   | Low-frequency status data for Dingo's systems. This information is republished in human readable form on the `diagnostics` topic and is best consumed with the Robot Monitor. |
-| `/mcu/aux_input`  | `dingo_msgs/UInt8`    | User can subscribe to this topic to monitor the MCU user inputs. See [AUX Inputs](#dingo-aux-inputs).                                                                         |
-| `/mcu/aux_output` | `std_msgs/UInt8`      | User can publish to this topic to enable and disable the AUX outputs as well as control relays on the MCU. See [AUX Outputs and Relays](#dingo-aux-outputs).                  |
-| `/mcu/fans`       | `dingo_msgs/Fans`     | User can publish to this topic to control an optionally installed fan. See details [Optional Fan](#dingo-fan).                                                                |
-| `/mcu/lights`     | `dingo_msgs/Lights`   | User can publish to this topic to override the default behavior of the Dingo corner LEDs.                                                                                     |
+### System Specifications
+
+| Specification                  | Dingo-D (Differential Drive)     | Dingo-O (Omnidirectional Drive)          |
+| :----------------------------- | :------------------------------- | :--------------------------------------- |
+| Dimension, Length              | 551 mm                           | 686 mm                                   |
+| Dimension, Width               | 517 mm                           | 517 mm                                   |
+| Dimension, Height              | 110 mm                           | 114 mm                                   |
+| Ground Clearance               | 14 mm                            | 16 mm                                    |
+| Maximum Modules                | 2                                | 4                                        |
+| Maximum Payload                | 20 kg                            | 20 kg                                    |
+| Speed, Maximum                 | 1.3 m/s                          | 1.3 m/s                                  |
+| Operating Environment          | Indoor                           | Same as Dingo-D                          |
+| Operating Time                 | 2 hours (SLA), 4 hours (Lithium) | 2 hours (2x SLA), 4 hours (2x Lithium)   |
+| Battery Chemistry              | Lithium Ion or Sealed Lead Acid  | Same as Dingo-D                          |
+| Charge Time                    | 4 hours                          | Same as Dingo-D                          |
+| User Power                     | 20A @ VBAT (11-16.8V), 7A @ 12V, 5A @ 5V | Same as Dingo-D                  |
+| Communication                  | Ethernet, USB 3.0                | Same as Dingo-D                          |
+| Internal Sensing               | Battery Status, Wheel Odometry, Motor Currents, Onboard IMU  | Same as Dingo-D |
+
+<center>
+  <img
+    src="/img/robot_images/dingo_images/dingo_dimensions.png"
+    width="800"
+  />
+</center>
 
 ---
 
 ## Getting Started
 
+You are ready to go! This section details how to get Dingo into action.
+To begin, place Dingo "up on blocks" as described in the [Safety](#safety) section,
+making sure that the wheels are clear of the ground.
+
+For most Dingo setups, there will be an Onboard Computer which is directly connected to the Dingo
+and a Remote Computer which is used to control Dingo and gather data. These two computers must be set up
+to communicate with each other.
+
+### Onboard Computer Setup
+
+If you purchased an Onboard Computer from Clearpath Robotics with Dingo, it is already installed,
+connected, and powered. If not, or to set up your own Onboard Computer, see the
+[Dingo Tutorials](/docs/robots/dingo/tutorials_dingo).
+
+Note that the Onboard Computer must be connected to Dingo's Ethernet port, which is accessible in the
+center channel.
+
 ### Powering Up
 
-The first step is to power up your Dingo and have some fun driving it around! If you've just unpacked Dingo from its
-packaging, you may need to open it up and connect the battery.
+If you've just unpacked Dingo from its packaging, you may need to open it up and connect the battery.
 
 Press the power button <img src="/img/robot_images/dingo_images/icon-power.png" width="20" /> on
 Dingo's HMI panel. The LEDs should show a test pattern, after which you will wait about 30 seconds for the
-internal computer to finish booting up.
+internal computer to finish booting up. Once it has finished booting, the Comms
+indicator <img src="/img/robot_images/dingo_images/icon-comms.png" width="20" /> should turn green.
+This indicates that ROS is up on the computer and has established communications with the Dingo base.
 
-### Connecting the Bluetooth Controller
+### Network Configuration
 
-When the comms LED <img src="/img/robot_images/dingo_images/icon-comms.png" width="20" />
-is green, this signals that the computer is finished booting up, and that the
-computer and MCU are in communication. At this point, press the PS button on the Sony Bluetooth controller to sync the
+To get Dingo connected to your local wifi network, you must first access the Onboard Computer using
+a wired connection to the robot. Remove the top trough cover and the appropriate yellow fairing to
+access the computer module, then connect to one of the network ports with a standard ethernet cable.
+See the [Dingo Tutorials](/docs/robots/dingo/tutorials_dingo#dingo-networking) for details.
+
+### Connecting and Using the Controller     {#controller}
+
+To use your controller, it must be paired with your Dingo and powered on. If your purchased
+the Onboard Computer from Clearpath Robotics, your controller is already paired with your Dingo.
+If your controller has become unpaired or if you wish to pair a new controller, following the
+instructions in the [Dingo Tutorials](/docs/robots/dingo/tutorials_dingo#pairing-the-controller).
+
+To teleoperate Dingo, first clear the motion stop. Then, power on the controller by pressing the `PS`
+button on the controller. Once the blue LED on the top of the controller goes solid, you are paired and
+ready to drive.
+
+Press the PS button on the Sony Bluetooth controller to sync the
 controller to Dingo. Once the blue LED on the top of the controller goes solid, you are paired and ready to drive.
-Hold the L1 trigger button (deadman switch), and push the left thumbstick forward to drive the Dingo. For full speed
+Hold the L1 trigger button (deadman switch) and push the left thumbstick forward to drive the Dingo. For full speed
 mode, hold the R1 trigger. See the figure below for the Sony PS4 controls layout. If you are not seeing any action,
 refer to [Support](#dingo-support) to get in touch with support.
 
@@ -195,68 +267,11 @@ refer to [Support](#dingo-support) to get in touch with support.
   </figure>
 </center>
 
-### Network Configuration
-
-#### Wired Access to Dingo
-
-To get Dingo connected to your local wifi network, you must first access the internal computer using a wired connection.
-Remove the top trough cover and the appropriate yellow fairing to access the computer module, then connect to one of
-the network ports with a standard ethernet cable.
-
-<ComponentWiredRobotConnection />
-
-#### Dingo Wifi Setup
-
-<ComponentWifiRobotConnection />
-
-#### Remote ROS Connectivity
-
-<ComponentRemoteRosConnectivity />
-
 ### Using ROS
 
 <ComponentUsingRos />
 
-<!-- TODO: move the desktop packages to the tutorials -->
-### Dingo Desktop Packages
-
-To command or observe Dingo from your desktop computer, first set up a basic ROS installation. See the following
-page for details:
-<http://wiki.ros.org/noetic/installation/ubuntu>
-
-When your ROS install is set up, install the Dingo desktop packages:
-
-```
-sudo apt-get install ros-noetic-dingo-desktop
-```
-
-Once your remote access to Dingo's ROS master is configured (see above), you can launch RViz,
-the standard ROS robot visualization tool:
-
-```
-roslaunch dingo_viz view_robot.launch
-```
-
-From within RViz, you can use interactive markers to drive Dingo, you can visualize its published localization
-estimate, and you can visualize any attached sensors which have been added to its robot description XML (URDF).
-
-Additionally from the desktop, you can launch the standard RQT Robot Monitor, which watches the diagnostic output
-from Dingo's self-montoring capabilities:
-
-```
-rosrun rqt_robot_monitor rqt_robot_monitor
-```
-
----
-
-## Apps
-
-When equipped with a laser scanner as is available in the Gazebo simulation, Dingo works with the standard ROS
-navigation stack. See <http://wiki.ros.org/dingo_navigation>.
-
----
-
-## Charging and Battery Maintenance
+### Battery Charging
 
 When finished with the Dingo, press and release the power button <img src="/img/robot_images/dingo_images/icon-power.png" width="20" />
 to power it off. Then remove the batteries for charging.
@@ -287,9 +302,14 @@ additional batteries.
 
 ---
 
-## Safety Considerations
+## Safety Considerations   {#safety}
 
+Clearpath Robotics is committed to high standards of safety.
+Dingo contains several features to protect the safety of users and the integrity of the robot.
+
+:::caution
 Dingo is a fast moving robotic platform. Please read the following notices carefully.
+:::
 
 ### General warnings
 
@@ -341,232 +361,15 @@ Dingo to avoid personal injury or property damage. To ensure safety, please obse
   longer distances.
 - Do not push the robot at more than 0.5 m/s (1.6 ft/s) or damage to the motor controls may occur.
 
+### Performance Considerations
+
+Included in Dingo are native software checks and limits to protect the robot.
+However, it is recommended to monitor the system's status during usage with the `/status` and `/diagnostics` topics.
+These topics provides useful information regarding voltages, currents, temperatures and general health of the system.
+
 ### Recommended Safe Work Procedures
 
 <ComponentCommonSafeWorkProcedures />
-
----
-
-## Payload Integration Guide
-
-If you are wanting to attach custom hardware to Dingo, you will have to take care of mechanical mounting, electrical
-supply, and software integration. This section aims to equip you with respect to these challenges.
-
-### Mechanical Mounting
-
-External payloads can be attached to the 80 mm square mounting holes on Dingo's
-trough cover as shown in [Exterior Features](#dingo-exterior-features).
-The mounting holes come with M5 screws pre-installed. You may mount your hardware directly
-onto the trough cover or you may design and mount a new plate to the trough cover and
-secure it to the trough cover using M5 screws.
-
-### Electrical Integration {#dingo-payload-electrical-integration}
-
-Except for bus-powered USB cameras, most payloads have separate leads for power and data.
-
-#### Data Connections
-
-Data connections may be brought through the openings in the trough cover and connected directly to
-the internal computer.
-
-Dingo's internal computer options support USB3 and Ethernet connectivity. In addition,
-the PCIe Gen3 x16 slot may be used to supply a GPU or other attachements, as necessary.
-Additionally, the internal mounting area may be used for an Ethernet switch, when attaching multiple
-Ethernet payloads, or for a PoE power injector as required.
-
-#### Connector Summary
-
-The Dingo MCU board provides a number of connections for power, relays, auxiliary inputs and
-auxiliary outputs. These are summarized in the following table and described in more detail in
-the following sections.
-
-| MCU board label  | MCU board connector | Mating connector | Crimp terminals                                              | Crimping tool    |
-| :--------------- | :------------------ | :--------------- | :----------------------------------------------------------- | :--------------- |
-| PWR1, PWR2       | Molex 0039301040    | Molex 0039012040 | Molex 0507528200 (AWG 20-22) or Molex 0503518100 (AWG 22-28) | Molex 2002184900 |
-| VBAT             | Molex 768250002     | Molex 1700010102 | Molex 0507528200 (AWG 20-22) or Molex 0503518100 (AWG 22-28) | Molex 2002184900 |
-| INPUTS           | TE 3-794682-8       | TE 794617-8      | TE 1-794610-1 (AWG 20-24) or TE 1-794611-1 (AWG 26-30)       | TE 91391-1       |
-| SW_IN            | TE 2-1445094-2      | TE 1445022-2     | TE 1-794610-1 (AWG 20-24) or TE 1-794611-1 (AWG 26-30)       | TE 91391-1       |
-| AUX1, AUX2, AUX3 | TE 3-794682-4       | TE 794617-4      | TE 1-794610-1 (AWG 20-24) or TE 1-794611-1 (AWG 26-30)       | TE 91391-1       |
-| RELAY            | TE 4-794682-0       | TE 1-794616-0    | TE 1-794610-1 (AWG 20-24) or TE 1-794611-1 (AWG 26-30)       | TE 91391-1       |
-| FAN              | Molex 0533750210    | Molex 0511630200 | Molex 0507528200 (AWG 20-22) or Molex 0503518100 (AWG 22-28) | Molex 2002184900 |
-| ESTOP            | Molex 053370610     | Molex 0511630600 | Molex 0507528200 (AWG 20-22) or Molex 0503518100 (AWG 22-28) | Molex 2002184900 |
-
-#### User Power Connections
-
-The following are available as user power: unregulated battery power (see VBAT), regulated 12V power
-(see PWR1 and PWR2), and regulated 5V power (see PWR1 and PWR2).
-
-Similar to the data connections, the power leads may be brought through the trough cover and connected
-to the user power. Remove the front trough cover by removing four flathead screws and locate the appropriate power
-connector on the MCU board. Refer to the figure below for the location of the user power connectors.
-Route the power from the MCU board to the appropriate location, either to the internal
-payload modules or through the openings in the trough cover to the topside payload.
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/dingo_images/dingo-mcu.png"
-      width="1000"
-    />
-    <figcaption>Dingo MCU and User Power</figcaption>
-  </figure>
-</center>
-
-#### AUX Inputs {#dingo-aux-inputs}
-
-The Dingo MCU includes an 8-pin `INPUTS` connector and a 2-pin `SW_IN` connector
-that allow the user to provide inputs to the system. The user can then subscribe to
-these inputs on the `/mcu/aux_inputs` ROS topic. The AUX inputs
-are mapped to the ROS message bits as follows:
-
-- IN1: bit 0
-- IN2: bit 1
-- IN3: bit 2
-
-Electrically, the `INPUTS` connector is used for IN1 and IN2, with pin mapping as
-outlined below. Note that each of the two inputs can be 12V or 24V inputs, with a
-shared return path. The inputs have opto-electrical isolation.
-
-- 1: 12V power (for external input circuit, if needed)
-- 2: IN1 return
-- 3: GND (for external input circuit, if needed)
-- 4: IN2 return
-- 5: IN1 12V input
-- 6: IN1 24V input
-- 7: IN2 12V input
-- 8: IN2 24V input
-
-Electrically, the `SW_IN` connector is used for IN3, with pin mapping as outlined
-below. This is intended to be a 'switch' input and it generates a 100 ms pulse
-to the microcontroller when asserted.
-
-- 1: 3.3V input (IN3)
-- 2: GND
-
-#### AUX Outputs and Relay {#dingo-aux-outputs}
-
-The Dingo MCU includes three user-controlled outputs (AUX1, AUX2, AUX3), that
-can be controlled by publishing to the `/mcu/aux_outputs` ROS topic. To enable
-the AUX outputs, simply publish a single message with the appropriate bits set
-to 1 to turn the output on and 0 to turn it off. The state does not persist
-meaning new commands will need to keep the bit enabled as well. The AUX outputs
-are mapped to the ROS message bits as follows:
-
-- AUX1: bit 0
-- AUX2: bit 1
-- AUX3: bit 2
-
-For example, to disable all AUX outputs:
-
-```
-rostopic pub /mcu/aux_output std_msgs/UInt8 "data: 0"
-```
-
-For example, to enable all AUX outputs:
-
-```
-rostopic pub /mcu/aux_output std_msgs/UInt8 "data: 7"
-```
-
-For example, to enable just the AUX3 output:
-
-```
-rostopic pub /mcu/aux_output std_msgs/UInt8 "data: 4"
-```
-
-Each of the AUX outputs is a 4-pin connector with pin mapping as outlined below.
-
-**AUX1 Pin Mapping**
-
-- 1: VSYS (shore power or battery power) with 5A fuse
-- 2: VSYS (shore power or battery power) with 5A fuse
-- 3: GND
-- 4: GND
-
-**AUX2 Pin Mapping**
-
-- 1: 12V with 5A fuse
-- 2: 12V with 5A fuse
-- 3: GND
-- 4: GND
-
-**AUX3 Pin Mapping**
-
-- 1: 5V with 5A fuse
-- 2: 5V with 5A fuse
-- 3: GND
-- 4: GND
-
-**Relays**
-
-In addition to the AUX output connectors, publishing to `/mcu/aux_outputs` also
-controls the AUX relays. These relays are available through the 10-pin
-connector on the MCU labelled `RELAY` with pin mapping:
-
-- 1 and 6: 12V with 2A fuse
-- 5 and 10: GND
-- 2 and 7: AUX1 relay closed with aux_outputs bit 0 is '1'
-- 3 and 8: AUX2 relay closed with aux_outputs bit 1 is '1'
-- 4 and 9: AUX3 relay closed with aux_outputs bit 2 is '1'
-
-#### Optional Fan {#dingo-fan}
-
-While a fan is not included by default with Dingo, a fan may be integrated into the system.
-Electrically, connect a 12V 2-pin fan to the MCU connector labelled `FAN`
-using a mating connector. The pins should be connected as follows:
-
-- 1: 12V
-- 2: GND
-
-Then, the use can publish a ROS message to the `/mcu/fans` topic to control the fan.
-
-#### Optional External E-Stop {#dingo-external-estop}
-
-In addition to the built-in Motor Stop button, an external e-stop button can be added that has Similar
-functionality. Electrically, the external e-stop button can be connected to the 6-pin MCU connector
-labelled `ESTOP` using a mating connector.
-
-The six pins should be connected as follows:
-
-- 1-2: to external e-stop breakout: press and release external button (3.3V) to engage estop; press and release
-  external button or motor stop button to clear the e-stop
-- 3-4: short these pins to indicate that external estop is selected
-- 5-6: short these pins to indicate that external estop is present
-
-#### MCU Debug LEDs
-
-The Dingo MCU PCBA comes equipped with four LEDs controlled by Dingo firmware for debugging.
-If the system is working properly, these LEDs functions as follows:
-
-- **DBG1**: toggles every 500ms when main loop on MCU is running
-- **DBG2**: on if MCU connected to ROS on computer; else false (same as COMMS LED on HMI)
-- **DBG3**: toggles when MCU is relaying messages from CAN bus to computer
-- **DBG4**: toggles when MCU is relaying messages from computer to CAN bus
-
-### Software Integration
-
-ROS has a large ecosystem of sensor drivers, some of which include pre-made URDF descriptions and
-even simulation configurations. Please see the following page on the ROS wiki for a partial list:
-
-<http://wiki.ros.org/Sensors>
-
-For the best experience, consider purchasing supported accessories from Clearpath Robotics for your
-Dingo, which will include simulation, visualization, and driver support. However, we will happily
-assist you in integrating your own devices as well.
-
----
-
-## Advanced Topics
-
-### Backing Up Robot Configuration
-
-### Installing and Configuring Robot Software
-
-### Customizing Robot Configuration
-
-### Configuring the Network Bridge
-
-<ComponentConfiguringNetworkBridge />
 
 ---
 
