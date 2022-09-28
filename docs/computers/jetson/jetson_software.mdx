@@ -7,8 +7,8 @@ sidebar_position: 3
 ## Software Installation
 
 :::caution
-This page is a copy of the corresponding instructions from ROS Melodic.  At the time of writing Nvidia has not
-yet released support for Ubuntu 20.04 on Jetson platforms.  This means you cannot currently run ROS Noetic on
+This page is a copy of the corresponding instructions from ROS Melodic. At the time of writing Nvidia has not
+yet released support for Ubuntu 20.04 on Jetson platforms. This means you cannot currently run ROS Noetic on
 a Jetson Xavier AGX, Nano, or TX2.
 
 When Nvidia has released support for Ubuntu 20.04 we will remove this warning and update the instructions below
@@ -17,18 +17,20 @@ as-necessary.
 
 :::note
 This page outlines the steps for installing the Jetson software for a Husky, Jackal, or Dingo. See also
-the instructions for installing the Jetson hardware:
+the instructions for installing the Jetson hardware.
+
 - Xavier AGX
-    - [Husky](/docs/computers/jetson/jetson_hardware/jetson_xavier_agx_hardware/jetson_xavier_agx_hardware_husky)
-    - [Jackal](/docs/computers/jetson/jetson_hardware/jetson_xavier_agx_hardware/jetson_xavier_agx_hardware_jackal)
-    - [Dingo](/docs/computers/jetson/jetson_hardware/jetson_xavier_agx_hardware/jetson_xavier_agx_hardware_dingo)
+  - [Husky](/docs/computers/jetson/jetson_hardware/jetson_xavier_agx_hardware/jetson_xavier_agx_hardware_husky)
+  - [Jackal](/docs/computers/jetson/jetson_hardware/jetson_xavier_agx_hardware/jetson_xavier_agx_hardware_jackal)
+  - [Dingo](/docs/computers/jetson/jetson_hardware/jetson_xavier_agx_hardware/jetson_xavier_agx_hardware_dingo)
 - Nano
-    - [Husky](/docs/computers/jetson/jetson_hardware/jetson_nano_hardware/jetson_nano_hardware_husky)
-    - [Jackal](/docs/computers/jetson/jetson_hardware/jetson_nano_hardware/jetson_nano_hardware_jackal)
-    - [Dingo](/docs/computers/jetson/jetson_hardware/jetson_nano_hardware/jetson_nano_hardware_dingo)
+  - [Husky](/docs/computers/jetson/jetson_hardware/jetson_nano_hardware/jetson_nano_hardware_husky)
+  - [Jackal](/docs/computers/jetson/jetson_hardware/jetson_nano_hardware/jetson_nano_hardware_jackal)
+  - [Dingo](/docs/computers/jetson/jetson_hardware/jetson_nano_hardware/jetson_nano_hardware_dingo)
 - TX2
-    - [Husky](/docs/computers/jetson/jetson_hardware/jetson_tx2_hardware/jetson_tx2_hardware_husky)
-    - [Jackal](/docs/computers/jetson/jetson_hardware/jetson_tx2_hardware/jetson_tx2_hardware_jackal)
+  - [Husky](/docs/computers/jetson/jetson_hardware/jetson_tx2_hardware/jetson_tx2_hardware_husky)
+  - [Jackal](/docs/computers/jetson/jetson_hardware/jetson_tx2_hardware/jetson_tx2_hardware_jackal)
+
 :::
 
 ### Step 1: Put Jetson in Recovery Mode (TX2 and Xavier AGX only)
@@ -41,7 +43,7 @@ Put the Jetson into recovery mode by following these steps:
 
 1.  Connect the Jetson to a PC running Ubuntu 20.04 using the provided microUSB cable.
 2.  Make sure the Jetson is powered off.
-3.  Connect a monitor, mouse, and keyboard to the Jetson.  (The mouse is optional, but recommended.
+3.  Connect a monitor, mouse, and keyboard to the Jetson. (The mouse is optional, but recommended.
     If you do not have an all-in-one mouse+keyboard you will need to use a small USB hub, as the
     Jetson Jetson only has a single USB port.)
 4.  Press and hold the REC button.
@@ -58,77 +60,77 @@ This step is not required for Jetson Nano
 
 2. Install the SDK Manager by running the following commands:
 
-    ```bash
-    cd <folder where you downloaded SDK manager>
-    sudo dpkg -i sdkmanager_<version>_amd64.deb
-    ```
+   ```bash
+   cd <folder where you downloaded SDK manager>
+   sudo dpkg -i sdkmanager_<version>_amd64.deb
+   ```
 
-    :::note
-    If your system is missing dependencies you may see error messages in the output of the `dpkg` command.
-    To resolve these, run `sudo apt-get -f install`.
-    :::
+   :::note
+   If your system is missing dependencies you may see error messages in the output of the `dpkg` command.
+   To resolve these, run `sudo apt-get -f install`.
+   :::
 
 3. Login the the SDK Manager using your Nvidia developer credentials.
 
-    <center>
-      <figure>
-        <img
-          src="/img/computer_images/jetson/software/tx2/1.png"
-          width="800"
-        />
-        <figcaption>Nvidia developer login</figcaption>
-      </figure>
-    </center>
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/software/tx2/1.png"
+         width="800"
+       />
+       <figcaption>Nvidia developer login</figcaption>
+     </figure>
+   </center>
 
 4. Specify the Hardware Configuration. You do not need to setup your Host Machine unless you are planning on
-   doing Cuda work on your local computer. This can usually be disabled.  Under the Target Hardware, make sure
+   doing Cuda work on your local computer. This can usually be disabled. Under the Target Hardware, make sure
    to choose TX2 or Xavier AGX to match your hardware. Once complete, click "Continue to Step 02".
 
-    <center>
-      <figure>
-        <img
-          src="/img/computer_images/jetson/software/tx2/2.png"
-          width="800"
-        />
-        <figcaption>Selecting Target Hardware (TX2 shown)</figcaption>
-      </figure>
-    </center>
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/software/tx2/2.png"
+         width="800"
+       />
+       <figcaption>Selecting Target Hardware (TX2 shown)</figcaption>
+     </figure>
+   </center>
 
 5. Accept the terms. Make sure the Download and Target directories are in locations that you have write-access
    to and that your hard drive has enough space for the files. Click "Continue to Step 03".
 
-    <center>
-      <figure>
-        <img
-          src="/img/computer_images/jetson/software/tx2/3.png"
-          width="800"
-        />
-        <figcaption>Selecting Target Hardware</figcaption>
-      </figure>
-    </center>
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/software/tx2/3.png"
+         width="800"
+       />
+       <figcaption>Selecting Target Hardware</figcaption>
+     </figure>
+   </center>
 
 6. Enter your sudo password and wait for the SDK manager will download the necessary files and install the image
    on the Jetson.
 
-    <center>
-      <figure>
-        <img
-          src="/img/computer_images/jetson/software/tx2/4.png"
-          width="800"
-        />
-        <figcaption>Entering sudo password</figcaption>
-      </figure>
-    </center>
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/software/tx2/4.png"
+         width="800"
+       />
+       <figcaption>Entering sudo password</figcaption>
+     </figure>
+   </center>
 
-    <center>
-      <figure>
-        <img
-          src="/img/computer_images/jetson/software/tx2/5.png"
-          width="800"
-        />
-        <figcaption>Download in progress</figcaption>
-      </figure>
-    </center>
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/software/tx2/5.png"
+         width="800"
+       />
+       <figcaption>Download in progress</figcaption>
+     </figure>
+   </center>
 
 ### Step 2B: Install Image on SD Card (Nano only)
 
@@ -141,15 +143,15 @@ This step is not required for Jetson Xavier AGX or TX2
 
 2. Download the latest version of [Balena Etcher](https://www.balena.io/etcher/).
 
-    <center>
-      <figure>
-        <img
-          src="/img/computer_images/jetson/software/nano/1.png"
-          width="800"
-        />
-        <figcaption>Download in progress</figcaption>
-      </figure>
-    </center>
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/software/nano/1.png"
+         width="800"
+       />
+       <figcaption>Download in progress</figcaption>
+     </figure>
+   </center>
 
 3. Use Etcher to flash the image onto your SD card.
 
@@ -158,123 +160,122 @@ This step is not required for Jetson Xavier AGX or TX2
 ### Step 3: Configure the Installation
 
 1. Make sure to plug a keyboard and monitor into the Jetson. On first boot,
-   it will go through the usual Ubuntu setup steps.  Accept the Licenses.
+   it will go through the usual Ubuntu setup steps. Accept the Licenses.
 
-    <center>
-      <figure>
-        <img
-          src="/img/computer_images/jetson/software/tx2/6.png"
-          width="800"
-        />
-        <figcaption>Accepting licenses</figcaption>
-      </figure>
-    </center>
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/software/tx2/6.png"
+         width="800"
+       />
+       <figcaption>Accepting licenses</figcaption>
+     </figure>
+   </center>
 
 2. Choose your language.
 
-    <center>
-      <figure>
-        <img
-          src="/img/computer_images/jetson/software/tx2/7.png"
-          width="800"
-        />
-        <figcaption>Choosing your language</figcaption>
-      </figure>
-    </center>
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/software/tx2/7.png"
+         width="800"
+       />
+       <figcaption>Choosing your language</figcaption>
+     </figure>
+   </center>
 
 3. Choose your keyboard layout.
 
-    <center>
-      <figure>
-        <img
-          src="/img/computer_images/jetson/software/tx2/8.png"
-          width="800"
-        />
-        <figcaption>Choosing your keyboard layout</figcaption>
-      </figure>
-    </center>
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/software/tx2/8.png"
+         width="800"
+       />
+       <figcaption>Choosing your keyboard layout</figcaption>
+     </figure>
+   </center>
 
 4. Set your location.
 
-    <center>
-      <figure>
-        <img
-          src="/img/computer_images/jetson/software/tx2/9.png"
-          width="800"
-        />
-        <figcaption>Setting your location</figcaption>
-      </figure>
-    </center>
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/software/tx2/9.png"
+         width="800"
+       />
+       <figcaption>Setting your location</figcaption>
+     </figure>
+   </center>
 
 5. Specify a hostname, username, and password for the machine.
 
-    :::note
-    For compatibility with older versions of the Jetson software, set the username and
-    password to `nvidia`. To standardize with other Clearpath Robotics products, set the
-    username to `administrator` and the password to `clearpath`.
-    :::
+   :::note
+   For compatibility with older versions of the Jetson software, set the username and
+   password to `nvidia`. To standardize with other Clearpath Robotics products, set the
+   username to `administrator` and the password to `clearpath`.
+   :::
 
-    <center>
-      <figure>
-        <img
-          src="/img/computer_images/jetson/software/tx2/10.png"
-          width="800"
-        />
-        <figcaption>Specifying your hostname, username, and password</figcaption>
-      </figure>
-    </center>
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/software/tx2/10.png"
+         width="800"
+       />
+       <figcaption>Specifying your hostname, username, and password</figcaption>
+     </figure>
+   </center>
 
 6. (**Nano only**): If prompted for a partition size, use the default size, which should fill the
-   whole SD card.  Make sure it matches the maximum possible size, unless you have other plans
+   whole SD card. Make sure it matches the maximum possible size, unless you have other plans
    for that space.
 
-    <center>
-      <figure>
-        <img
-          src="/img/computer_images/jetson/software/nano/7.png"
-          width="800"
-        />
-        <figcaption>Specifying partition size (Nano only)</figcaption>
-      </figure>
-    </center>
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/software/nano/7.png"
+         width="800"
+       />
+       <figcaption>Specifying partition size (Nano only)</figcaption>
+     </figure>
+   </center>
 
 7. Wait for the installation to install the remaining standard packages.
 
-    <center>
-      <figure>
-        <img
-          src="/img/computer_images/jetson/software/tx2/11.png"
-          width="800"
-        />
-        <figcaption>Waiting for remaining packages</figcaption>
-      </figure>
-    </center>
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/software/tx2/11.png"
+         width="800"
+       />
+       <figcaption>Waiting for remaining packages</figcaption>
+     </figure>
+   </center>
 
 8. Once the OS is setup, you will be brought to the desktop.
 
-    <center>
-      <figure>
-        <img
-          src="/img/computer_images/jetson/software/tx2/12.png"
-          width="800"
-        />
-        <figcaption>Post-install desktop</figcaption>
-      </figure>
-    </center>
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/software/tx2/12.png"
+         width="800"
+       />
+       <figcaption>Post-install desktop</figcaption>
+     </figure>
+   </center>
 
-9. Open a terminal and run `ifconfig` or `ip a` to see the IP address it is using.  You will
-    need to connect it to network through wireless or ethernet.
+9. Open a terminal and run `ifconfig` or `ip a` to see the IP address it is using. You will
+   need to connect it to network through wireless or ethernet.
 
-    <center>
-      <figure>
-        <img
-          src="/img/computer_images/jetson/software/tx2/13.png"
-          width="800"
-        />
-        <figcaption>Finding the IP address</figcaption>
-      </figure>
-    </center>
-
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/software/tx2/13.png"
+         width="800"
+       />
+       <figcaption>Finding the IP address</figcaption>
+     </figure>
+   </center>
 
 ### Step 4: Install Extra SDK Components (TX2 and Xavier AGX only)
 
@@ -283,88 +284,88 @@ This step is not required for Jetson Nano
 :::
 
 1. Back in your host PC, it will be waiting to install the extra SDK components on your Jetson.
-    Enter the username, password, and IP address you found above.
+   Enter the username, password, and IP address you found above.
 
-    <center>
-      <figure>
-        <img
-          src="/img/computer_images/jetson/software/tx2/14.png"
-          width="800"
-        />
-        <figcaption>Installing SDK components</figcaption>
-      </figure>
-    </center>
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/software/tx2/14.png"
+         width="800"
+       />
+       <figcaption>Installing SDK components</figcaption>
+     </figure>
+   </center>
 
-2. The install will connenct to the remote Jetson over the network.  It will continue the install
-    by transferring the files and install them.
+2. The install will connenct to the remote Jetson over the network. It will continue the install
+   by transferring the files and install them.
 
-    <center>
-      <figure>
-        <img
-          src="/img/computer_images/jetson/software/tx2/15.png"
-          width="800"
-        />
-        <figcaption>Waiting for SDK component installation</figcaption>
-      </figure>
-    </center>
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/software/tx2/15.png"
+         width="800"
+       />
+       <figcaption>Waiting for SDK component installation</figcaption>
+     </figure>
+   </center>
 
-3. You can check the terminal window to see the progress of individual commands.  This process will
-    take a while, so it can be nice to verify that the process isn't stalled.
+3. You can check the terminal window to see the progress of individual commands. This process will
+   take a while, so it can be nice to verify that the process isn't stalled.
 
-    <center>
-      <figure>
-        <img
-          src="/img/computer_images/jetson/software/tx2/16.png"
-          width="800"
-        />
-        <figcaption>Installation terminal view</figcaption>
-      </figure>
-    </center>
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/software/tx2/16.png"
+         width="800"
+       />
+       <figcaption>Installation terminal view</figcaption>
+     </figure>
+   </center>
 
 4. Once the process is done, you can click FINISH to close the window.
 
-    <center>
-      <figure>
-        <img
-          src="/img/computer_images/jetson/software/tx2/17.png"
-          width="800"
-        />
-        <figcaption>Installation complete</figcaption>
-      </figure>
-    </center>
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/software/tx2/17.png"
+         width="800"
+       />
+       <figcaption>Installation complete</figcaption>
+     </figure>
+   </center>
 
 ### Step 5: Configure for Use with your Clearpath Robot
 
 1. Once the OS has been written to the Jetson, log into it and run the following commands to configure
-    it for use with your Clearpath robot:
+   it for use with your Clearpath robot:
 
-    ```bash
-    wget -c https://raw.githubusercontent.com/clearpathrobotics/ros_computer_setup/main/install.sh && bash install.sh
-    ```
+   ```bash
+   wget -c https://raw.githubusercontent.com/clearpathrobotics/ros_computer_setup/main/install.sh && bash install.sh
+   ```
 
-    :::note
-    If `curl` is not installed on your Jetson by default you can install it by running `sudo apt-get install curl`.
-    :::
+   :::note
+   If `curl` is not installed on your Jetson by default you can install it by running `sudo apt-get install curl`.
+   :::
 
-    <center>
-      <figure>
-        <img
-          src="/img/computer_images/jetson/software/tx2/18.png"
-          width="800"
-        />
-        <figcaption>ROS Computer Setup</figcaption>
-      </figure>
-    </center>
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/software/tx2/18.png"
+         width="800"
+       />
+       <figcaption>ROS Computer Setup</figcaption>
+     </figure>
+   </center>
 
-    These commands will download and install ROS along with the necessary `apt` packages to get your robot up and running.
-    Depending on your network speed it may take a long time for everything to install.  Reboot the Jetson after these commands
-    are done to complete the configuration.
+   These commands will download and install ROS along with the necessary `apt` packages to get your robot up and running.
+   Depending on your network speed it may take a long time for everything to install. Reboot the Jetson after these commands
+   are done to complete the configuration.
 
 2. When the Jetson starts up again, it should be connected to the robot. To see that the robot is connected by opening a
-    terminal and executing `rostopic echo /status`. You should see a 1 Hz message containing the robot's diagnostic
-    information.
+   terminal and executing `rostopic echo /status`. You should see a 1 Hz message containing the robot's diagnostic
+   information.
 
-    Your Jetson should now be configured to operate as the robot's main PC.
+   Your Jetson should now be configured to operate as the robot's main PC.
 
 ### Step 6: Pair a PS4 Controller with your Clearpath Robot (Optional)
 

@@ -7,63 +7,68 @@ Remote Computer must be configured correctly.
 1. Perform a basic ROS installation. See [here](http://wiki.ros.org/noetic/Installation/Ubuntu) for details.
 
 2. Install the desktop packages:
-    ```bash
-    sudo apt-get install ros-noetic-husky-desktop
-    ```
-    <Tabs groupId="ros_versions">
-      <TabItem
-        value="husky"
-        label="Husky"
-        default
-      >
-        <code>sudo apt-get install ros-noetic-husky-desktop</code>
-      </TabItem>
-      <TabItem
-        value="jackal"
-        label="Jackal"
-      >
-        <code>sudo apt-get install ros-noetic-jackal-desktop</code>
-      </TabItem>
-      <TabItem
-        value="dingo"
-        label="Dingo"
-      >
-        <code>sudo apt-get install ros-noetic-dingo-desktop</code>
-      </TabItem>
-    </Tabs>    
+
+   ```bash
+   sudo apt-get install ros-noetic-husky-desktop
+   ```
+
+   <Tabs groupId="ros_versions">
+     <TabItem
+       value="husky"
+       label="Husky"
+       default
+     >
+       <code>sudo apt-get install ros-noetic-husky-desktop</code>
+     </TabItem>
+     <TabItem
+       value="jackal"
+       label="Jackal"
+     >
+       <code>sudo apt-get install ros-noetic-jackal-desktop</code>
+     </TabItem>
+     <TabItem
+       value="dingo"
+       label="Dingo"
+     >
+       <code>sudo apt-get install ros-noetic-dingo-desktop</code>
+     </TabItem>
+   </Tabs>
 
 3. Configure Remote ROS Connectivity.
 
-    <details><summary>Click to expand</summary><p>
-    <ComponentRemoteRosConnectivity />
-    </p></details>
+   <details>
+     <summary>Click to expand</summary>
+     <p>
+       <ComponentRemoteRosConnectivity />
+     </p>
+   </details>
 
 4. From your Remote Computer, try launching rviz, the standard ROS robot visualization tool:
 
-    ```bash
-    roslaunch husky_viz view_robot.launch
-    ```
-    <Tabs groupId="ros_versions">
-      <TabItem
-        value="husky"
-        label="Husky"
-        default
-      >
-        <code>roslaunch husky_viz view_robot.launch</code>
-      </TabItem>
-      <TabItem
-        value="jackal"
-        label="Jackal"
-      >
-        <code>roslaunch jackal_viz view_robot.launch</code>
-      </TabItem>
-      <TabItem
-        value="dingo"
-        label="Dingo"
-      >
-        <code>roslaunch dingo_viz view_robot.launch</code>
-      </TabItem>
-    </Tabs> 
-    From within rviz, you can use interactive markers to drive your robot, you can visualize its published
-    localization estimate and you can visualize any attached sensors which have been added to its robot
-    description XML _URDF_.
+   ```bash
+   roslaunch husky_viz view_robot.launch
+   ```
+
+   <Tabs groupId="ros_versions">
+     <TabItem
+       value="husky"
+       label="Husky"
+       default
+     >
+       <code>roslaunch husky_viz view_robot.launch</code>
+     </TabItem>
+     <TabItem
+       value="jackal"
+       label="Jackal"
+     >
+       <code>roslaunch jackal_viz view_robot.launch</code>
+     </TabItem>
+     <TabItem
+       value="dingo"
+       label="Dingo"
+     >
+       <code>roslaunch dingo_viz view_robot.launch</code>
+     </TabItem>
+   </Tabs>
+   From within rviz, you can use interactive markers to drive your robot, you can visualize its published localization estimate and you can visualize any attached
+   sensors which have been added to its robot description XML _URDF_.
