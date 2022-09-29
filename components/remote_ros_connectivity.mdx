@@ -1,22 +1,22 @@
-To use ROS desktop tools, you will need the Remote PC to be able to connect to your robot's ROS master. This will allow
-you to run ROS commands like `rostopic list`, `rostopic echo`, `rosnode list`, and others, from the Remote PC and the
-output will reflect the activity on your robot's ROS master, rather than on the Remote PC. This can be a tricky
+To use ROS desktop tools, you will need the Remote Computer to be able to connect to your robot's ROS master. This will allow
+you to run ROS commands like `rostopic list`, `rostopic echo`, `rosnode list`, and others, from the Remote Computer and the
+output will reflect the activity on your robot's ROS master, rather than on the Remote Computer. This can be a tricky
 process, but we have tried to make it as simple as possible.
 
-In order for the ROS tools on the Remote PC to talk to your robot, they need to know two things:
+In order for the ROS tools on the Remote Computer to talk to your robot, they need to know two things:
 
 - How to find the ROS master, which is set in the `ROS_MASTER_URI` environment variable, and
-- How processes on the ROS master can find the Remote PC, which is the `ROS_IP` environment variable.
+- How processes on the ROS master can find the Remote Computer, which is the `ROS_IP` environment variable.
 
 The suggested pattern is to create a file in your home directory called `remote-robot.sh` with the following contents:
 
 ```
 export ROS_MASTER_URI=http://cpr-robot-0001:11311 # Your robot's hostname
-export ROS_IP=10.25.0.102 # Your Remote PC's wireless IP address
+export ROS_IP=10.25.0.102 # Your Remote Computer's wireless IP address
 ```
 
 If your network does not already resolve your robot's hostname to its wireless IP address, you may need to add a
-corresponding line to the Remote PC's `/etc/hosts` file:
+corresponding line to the Remote Computer's `/etc/hosts` file:
 
 ```
 10.25.0.101 cpr-robot-0001

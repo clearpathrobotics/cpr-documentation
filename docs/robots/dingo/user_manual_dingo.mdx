@@ -97,7 +97,7 @@ The human-machine-interface (HMI) panel is shown below and includes from left:
 
 |                                  Icon                                   | Description                                                                                                                                                                                                                                                                                                                                                                                                             |
 | :---------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|  <img src="/img/robot_images/dingo_images/icon-motor.png" width="50"/>  | **Motor Stop button**: LED is solid green when Dingo is able to drive and flashing green when the Dingo's motors are disengaged; pressing button toggles the motors between engaged and disengaged mode (further details in [Motor Stop Buttons](#dingo-stop-buttons))                                                                                                                                                  |
+|  <img src="/img/robot_images/dingo_images/icon-motor.png" width="50"/>  | **Motion Stop button**: LED is solid green when Dingo is able to drive and flashing green when the Dingo's motors are disengaged; pressing button toggles the motors between engaged and disengaged mode (further details in [Motion Stop Buttons](#dingo-stop-buttons))                                                                                                                                                  |
 |  <img src="/img/robot_images/dingo_images/icon-comms.png" width="50"/>  | **Comms indictor**: LED is solid green when communication between the MCU and computer has been established and LED is off otherwise                                                                                                                                                                                                                                                                                    |
 |  <img src="/img/robot_images/dingo_images/icon-wifi.png" width="50"/>   | **Wi-Fi indicator**: LED is solid green when Wi-Fi is connected and LED is off otherwise                                                                                                                                                                                                                                                                                                                                  |
 | <img src="/img/robot_images/dingo_images/icon-battery.png" width="50"/> | **Battery indicator**: LED is solid green when the battery level is ok, solid yellow when the battery level is getting low (should be charged soon), and solid red when the battery level is critical (should be charged immediately)                                                                                                                                                                                   |
@@ -145,14 +145,14 @@ remove the trough cover.
 
 Dingo is equipped with LEDs at the four corners of the robot, which indicate the state of the system:
 
-| System State       | Corner LED Output                                                                 |
-| :----------------- | :-------------------------------------------------------------------------------- |
-| Idle               | Front LEDs solid white (low intensity), rear LEDs solid red (low intensity)       |
-| Driving            | Front LEDs solid white (medium intensity), rear LEDs solid red (medium intensity) |
-| Motor stop engaged | Flashing red LEDs                                                                 |
-| Low battery        | Pulsing orange LEDs                                                               |
-| Needs reset        | Adjacent corners alternating between red and off                                  |
-| System fault       | Flashing orange LEDs                                                              |
+| System State        | Corner LED Output                                                                 |
+| :------------------ | :-------------------------------------------------------------------------------- |
+| Idle                | Front LEDs solid white (low intensity), rear LEDs solid red (low intensity)       |
+| Driving             | Front LEDs solid white (medium intensity), rear LEDs solid red (medium intensity) |
+| Motion stop engaged | Flashing red LEDs                                                                 |
+| Low battery         | Pulsing orange LEDs                                                               |
+| Needs reset         | Adjacent corners alternating between red and off                                  |
+| System fault        | Flashing orange LEDs                                                              |
 
 While in "Idle" and "Driving" states, the user can override the LEDs by publishing to the `/mcu/lights` topic.
 
@@ -246,7 +246,7 @@ the Onboard Computer from Clearpath Robotics, your controller is already paired 
 If your controller has become unpaired or if you wish to pair a new controller, following the
 instructions in the [Dingo Tutorials](/docs/robots/dingo/tutorials_dingo#pairing-the-controller).
 
-To teleoperate Dingo, first clear the motion stop. Then, power on the controller by pressing the `PS`
+To teleoperate Dingo, first clear the motion-stop. Then, power on the controller by pressing the `PS`
 button on the controller. Once the blue LED on the top of the controller goes solid, you are paired and
 ready to drive.
 
@@ -279,7 +279,7 @@ Dingo's batteries are charged outside the Dingo using the charger(s) provided.
 
 Alternatively, if you have multiple batteries, you can hot-swap them one at a time. The system will remain operational
 while hot-swapping as long as there is at least one battery in the system or the system is connected to shore power
-prior to removing the batteries. Note that plugging in shore power will engage a motor stop and it is not possible to
+prior to removing the batteries. Note that plugging in shore power will engage a motion-stop and it is not possible to
 drive Dingo while connected to shore power.
 
 The Sealed Lead-Acid batteries have overcurrent protection in the form of an ATO fuse. The Lithium-Ion batteries include
@@ -322,25 +322,26 @@ Dingo to keep the wheels clear of the ground ("up on blocks").
 When starting out, favor slower wheel speeds. Dingo's control loops can accurately maintain velocities as low
 as 0.1 m/s. Operating at such speeds will give you more time to react if things don't go quite as you expect.
 
-### Motor Stop Buttons {#dingo-stop-buttons}
+### Motion Stop Buttons {#dingo-stop-buttons}
 
-The motor stop button <img src="/img/robot_images/dingo_images/icon-motor.png" width="20" />
+The Motion Stop button <img src="/img/robot_images/dingo_images/icon-motor.png" width="20" />
 is located on the HMI Panel at the back of Dingo. To engage Stop Mode,
-press the motor stop button once; you should see that the green LED by the motor stop button is flashing and
-that all four corner LEDs are flashing red. To disengage Stop Mode, press the motor stop button again; all
+press the Motion Stop button once; you should see that the green LED by the Motion Stop button is flashing and
+that all four corner LEDs are flashing red. To disengage Stop Mode, press the Motion Stop button again; all
 LEDs should return to their original values.
 
 When in Stop Mode, the Dingo will not drive. The commands received while in Stop Mode are not buffered; Dingo will
-always act on the latest commands received. This means that if the commands are stopped before the motor stop
+always act on the latest commands received. This means that if the commands are stopped before the Motion Stop
 button is pressed to disengage Stop Mode, the Dingo will not move. If the commands are continued, Dingo will move
-at the speed commanded once the motor stop button is pressed to disengage Stop Mode.
+at the speed commanded once the Motion Stop button is pressed to disengage Stop Mode.
 
-Ensure that the motor stop button is accessible at all times. Avoid mounting payloads that extend over the rear of
-Dingo and would block access to the motor stop button.
+Ensure that the Motion Stop button is accessible at all times. Avoid mounting payloads that extend over the rear of
+Dingo and would block access to the Motion Stop button.
 
-Note that the Dingo MCU board does provide a breakout to allow an external stop button/switch to be integrated by
-the end user, which could be used to engage/disengage Stop Mode. See [Optional External E-Stop](#dingo-external-estop)
-for details on adding an external stop button/switch.
+Note that the Dingo MCU board does provide a breakout to allow an external motion-stop button/switch to be integrated by
+the end user, which could be used to engage/disengage Stop Mode. See
+[Optional External Motion Stop](/docs/robots/dingo/integration_dingo#dingo-external-motion-stop)
+for details on adding an external motion-stop button/switch.
 
 ### Electrical System
 

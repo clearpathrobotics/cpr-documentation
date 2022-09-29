@@ -101,14 +101,14 @@ Dingo can be customized and extended through the use of several environment vari
 [README](https://github.com/dingo-cpr/dingo/blob/melodic-devel/dingo_description/README.md) file. Some of the
 most important ones are listed below.
 
-| Variable                | Default | Description                                                                       |
-| :---------------------- | :------ | :-------------------------------------------------------------------------------- |
-| `DINGO_OMNI`            | `0`     | Set to 1 to switch from Dingo-D to Dingo-O (with omni-directional mecanum wheels) |
-| `DINGO_LASER`           | `0`     | Set to 1 to equip Dingo with a primary lidar unit, normally front-facing          |
-| `DINGO_LASER_SECONDARY` | `0`     | Set to 1 to equip Dingo with a secondary lidar unit, normally rear-facing         |
-| `DINGO_LASER_3D`        | `0`     | Set to 1 to equip Dingo with a primary 3D lidar unit, normally front-facing       |
-| `DINGO_REALSENSE`       | `0`     | Set to 1 to equip Dingo with a RealSense depth camera                             |
-| `DINGO_IMU_MICROSTRAIN` | `0`     | Set to 1 to equip Dingo with a Microstrain IMU                                    |
+| Variable                | Default | Description                                                                 |
+| :---------------------- | :------ | :-------------------------------------------------------------------------- |
+| `DINGO_OMNI`            | `0`     | Set to 1 to switch from Dingo-D to Dingo-O (with omnidirectional wheels)    |
+| `DINGO_LASER`           | `0`     | Set to 1 to equip Dingo with a primary lidar unit, normally front-facing    |
+| `DINGO_LASER_SECONDARY` | `0`     | Set to 1 to equip Dingo with a secondary lidar unit, normally rear-facing   |
+| `DINGO_LASER_3D`        | `0`     | Set to 1 to equip Dingo with a primary 3D lidar unit, normally front-facing |
+| `DINGO_REALSENSE`       | `0`     | Set to 1 to equip Dingo with a RealSense depth camera                       |
+| `DINGO_IMU_MICROSTRAIN` | `0`     | Set to 1 to equip Dingo with a Microstrain IMU                              |
 
 ### Mounting points
 
@@ -427,9 +427,9 @@ RViz will also show Dingo's interactive markers around your Dingo's model. These
 and red arrows. Depending on your robot, there will also be green arrows. If you don't see them in your RViz
 display, select the Interact tool from the top toolbar and they should appear.
 
-Drag the red arrows in RViz to move in the linear x direction, and the blue circle to move in the angular z
+Drag the red arrows in RViz to move in the linear X direction, and the blue circle to move in the angular Z
 direction. If your robot supports lateral/sideways movement, you can drag the green arrows to move in the
-linear y direction. RViz shows you Dingo moving relative to its odometric frame, but it is also moving relative
+linear Y direction. RViz shows you Dingo moving relative to its odometric frame, but it is also moving relative
 to the simulated world supplied by Gazebo. If you click over to the Gazebo window, you will see Dingo moving
 within its simulated world. Or, if you drive real Dingo using this method, it will have moved in the real world.
 
