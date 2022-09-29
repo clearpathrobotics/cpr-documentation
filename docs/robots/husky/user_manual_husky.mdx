@@ -155,7 +155,7 @@ $w$ is the effective track of the robot, 0.555 m.
 | Operating Temperature, Maximum | 40°C (not in direct sunlight)                                            |
 | Operating Time, Average        | 3 hours                                                                  |
 | Operating Time, Standby        | 8 hours                                                                  |
-| Battery                        | 20 Ah @ 24 V, sealed lead acid                                           |
+| Battery                        | 20 Ah @ 24 V, sealed lead-acid                                           |
 | Battery Charger                | Short-circuit, over-current, over-voltage and reverse voltage protection |
 | Charge Time                    | 10 hours                                                                 |
 | User Power, 2021 and older     | 5 V, 12 V, V-battery, each fused at 5 A                                  |
@@ -238,15 +238,15 @@ The `COMM` status light will turn red, as the PC is not yet communicating with H
 The `STOP` status light will be red if the stop button is pressed.
 If the stop button is not pressed, press it and verify that the `STOP` light illuminates.
 Leave the platform in stop mode until it is successfully receiving commands, indicated
-by the `COMM` Status light turning green or yellow. If a computer was purchased with Husky, it
+by the `COMM` status light turning green or yellow. If a computer was purchased with Husky, it
 will be setup to interface automatically upon startup; 60-90 seconds after booting up,
-`COMM` Status light will change from red to green (or yellow, depending on the stop
+`COMM` status light will change from red to green (or yellow, depending on the stop
 mode status). This indicates that ROS is up on the computer and has established
 communications with the Husky base.
 
 ### Network Configuration
 
-To get Husky connected to your local wifi network, you must first access the Onboard Computer using
+To get Husky connected to your local Wi-Fi network, you must first access the Onboard Computer using
 a wired connection to the robot. See the
 [Husky Tutorials](/docs/robots/husky/tutorials_husky#husky-networking) for details.
 
@@ -327,8 +327,10 @@ exists between each wheel and the end of the corresponding bumper bar.
 ### Stop Button and Lockout {#husky-stop-button-and-lockout}
 
 :::warning
+
 Ensure the stop button is accessible at all times.
 Avoid mounting payloads that extend over the rear of Husky and would occlude the stop button.
+
 :::
 
 The motion-stop function that allows a person in the physical vicinity of the robot

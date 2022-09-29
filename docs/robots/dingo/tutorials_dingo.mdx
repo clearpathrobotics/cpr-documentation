@@ -30,16 +30,20 @@ presented in the suggested reading order.
 For more information or to receive a quote, please [visit us online](http://clearpathrobotics.com/dingo).
 
 :::note
+
 These tutorials assume that you are comfortable working with ROS. We recommend starting with our
 [ROS tutorial](https://www.clearpathrobotics.com/assets/guides/noetic/ros/index.html) if you are not
 familiar with ROS already.
+
 :::
 
 :::note
+
 These tutorials specifically target Dingo robots running Ubuntu 20.04 with ROS Noetic, as it is the standard
 OS environment for Dingo. If instead you have an older Dingo robot running Ubuntu 18.04 with ROS Melodic,
 please follow [this tutorial](https://www.clearpathrobotics.com/assets/guides/melodic/melodic-to-noetic/index.html)
 to upgrade the robot OS environment to Ubuntu 20.04 with ROS Noetic.
+
 :::
 
 [Dingo ROS Packages](#dingo-ros-packages) provides the references for the software packages and key ROS topics.
@@ -74,10 +78,10 @@ Dingo fully supports ROS; all of the packages are available in [Dingo Github](ht
 The [dingo_description](https://github.com/dingo-cpr/dingo/tree/melodic-devel/dingo_description) repository
 provides a [URDF](http://wiki.ros.org/urdf) model of Dingo.
 
-Dingo's URDF model can be visualized in rviz. Once you have installed the desktop software in an upcoming tutorial,
+Dingo's URDF model can be visualized in RViz. Once you have installed the desktop software in an upcoming tutorial,
 you will be able to run:
 
-```bash
+```
 roslaunch dingo_viz view_model.launch
 ```
 
@@ -168,7 +172,9 @@ for simulation launch.
 | `front_laser` | Adds a SICK LMS1xx lidar to the Dingo's front mount |
 
 :::note
+
 Additional configurations coming soon
+
 :::
 
 ### Key ROS Topics
@@ -208,16 +214,20 @@ Ubuntu Focal/ROS Noetic.
 ### Installing and Configuring Robot Software
 
 :::note
+
 If you are upgrading your Dingo from an older version of ROS, please refer to
 our upgrade instructions [here](https://clearpathrobotics.com/assets/guides/kinetic/kinetic-to-melodic/index.html)
 and [here](https://clearpathrobotics.com/assets/guides/melodic/melodic-to-noetic/index.html).
+
 :::
 
 #### Installing Dingo Software
 
 :::note
+
 The physical Dingo robot comes pre-configured with ROS and the necessary Dingo packages already installed;
 therefore, you will only need to follow the instructions below if you are re-installing software on the Dingo.
+
 :::
 
 <ComponentInstallingRobotSoftware />
@@ -226,14 +236,14 @@ therefore, you will only need to follow the instructions below if you are re-ins
 
 1. To test your configuration, start the background service with the following command:
 
-   ```bash
+   ```
    sudo systemctl start ros
    ```
 
 2. The Comms indicator <img src="/img/robot_images/dingo_images/icon-comms.png" width="20" />
    should turn green. You can check that the service has started correctly by checking the logs:
 
-   ```bash
+   ```
    sudo journalctl -u ros
    ```
 
@@ -248,12 +258,12 @@ therefore, you will only need to follow the instructions below if you are re-ins
 
 ### Setting up Dingo's Network Configuration {#dingo-networking}
 
-Dingo is normally equipped with a combination Wifi + Bluetooth module.
-If this is your first unboxing, ensure that Dingo's wireless antennas are firmly screwed on to the chassis.
+Dingo is normally equipped with a combination Wi-Fi + Bluetooth module.
+If this is your first unboxing, ensure that Dingo's wireless antennae are firmly screwed on to the chassis.
 
 #### First Connection
 
-By default, Dingo's wifi is in client mode, looking for the wireless network at the Clearpath factory.
+By default, Dingo's Wi-Fi is in client mode, looking for the wireless network at the Clearpath factory.
 
 <ComponentWiredRobotConnection />
 
@@ -261,14 +271,16 @@ By default, Dingo's wifi is in client mode, looking for the wireless network at 
 
 <ComponentChangingDefaultPassword />
 
-#### Wifi Setup
+#### Wi-Fi Setup
 
 <ComponentWifiRobotConnection />
 
 ### Installing Remote Computer Software {#remote-computer-software}
 
 :::note
+
 This step is optional.
+
 :::
 
 <ComponentInstallingRemoteComputerSoftware />
@@ -292,7 +304,7 @@ your Dingo around.
 To get started with the Dingo simulation, make sure you have a [working ROS installation](#remote-computer-software)
 set up on your Ubuntu desktop, and install the Dingo-specific metapackages for desktop and simulation:
 
-```bash
+```
 sudo apt-get install ros-noetic-dingo-simulator ros-noetic-dingo-desktop
 ```
 
@@ -302,7 +314,7 @@ sudo apt-get install ros-noetic-dingo-simulator ros-noetic-dingo-desktop
 Gazebo include reasonable approximations of its dynamics, including wheel slippage, skidding, and
 inertia. To launch simulated Dingo in a simple example world, run the following command:
 
-```bash
+```
 roslaunch dingo_gazebo dingo_world.launch
 ```
 
@@ -327,12 +339,16 @@ both the client and server locally on your own machine, but some advanced users 
 duty simulations on separate hardware and connect to them over the network.
 
 :::note
+
 When simulating, you must leave Gazebo running. Closing Gazebo will prevent other tools, such as
 RViz (see below) from working correctly.
+
 :::
 
 :::note
+
 See also [Additional Simulation Worlds](#additional-sim).
+
 :::
 
 ##### Simulation Configs
@@ -341,7 +357,7 @@ Note that like Dingo itself, Dingo's simulator comes in multiple flavours called
 one which you will need often is the `front_laser` config. If you close the Gazebo window, and then
 CTRL-C out of the terminal process, you can re-launch the simulator with a specific config.
 
-```bash
+```
 roslaunch dingo_gazebo dingo_world.launch config:=front_laser
 ```
 
@@ -367,9 +383,10 @@ Both simulated and real Dingo robots expose the same ROS interface and can be in
 in the same way.
 
 :::note
+
 Please make sure that the desktop packages for Dingo are installed:
 
-```bash
+```
 sudo apt-get install ros-noetic-dingo-desktop
 ```
 
@@ -379,13 +396,13 @@ sudo apt-get install ros-noetic-dingo-desktop
 
 The next tool we will encounter is [RViz](http://wiki.ros.org/rviz). Although superficially similar in
 appearance to Gazebo, RViz has a very different purpose. Unlike Gazebo, which shows the reality of the
-simulated world, rviz shows the robot's _perception_ of its world, whether real or simulated. So while
+simulated world, RViz shows the robot's _perception_ of its world, whether real or simulated. So while
 Gazebo won't be used with your real Dingo, RViz is used with both.
 
 You can use the following launch invocation to start RViz with a predefined configuration suitable for
 visualizing any standard Dingo config.
 
-```bash
+```
 roslaunch dingo_viz view_robot.launch
 ```
 
@@ -410,7 +427,7 @@ RViz will also show Dingo's interactive markers around your Dingo's model. These
 and red arrows. Depending on your robot, there will also be green arrows. If you don't see them in your RViz
 display, select the Interact tool from the top toolbar and they should appear.
 
-Drag the red arrows in rviz to move in the linear x direction, and the blue circle to move in the angular z
+Drag the red arrows in RViz to move in the linear x direction, and the blue circle to move in the angular z
 direction. If your robot supports lateral/sideways movement, you can drag the green arrows to move in the
 linear y direction. RViz shows you Dingo moving relative to its odometric frame, but it is also moving relative
 to the simulated world supplied by Gazebo. If you click over to the Gazebo window, you will see Dingo moving
@@ -461,7 +478,7 @@ There are three ways to send your Dingo control commands:
    marker will appear around the Dingo and can be used to control speed.
 
 3. The [rqt_robot_steering plugin](http://wiki.ros.org/rqt_robot_steering).
-   Run the `rqt` command, and select **Plugins->Robot Tools->Robot Steering** from the top menu.
+   Run the `rqt` command, and select **Plugins→Robot Tools→Robot Steering** from the top menu.
 
 Dingo uses [twist_mux](http://wiki.ros.org/twist_mux) to mix separate
 [geometry_msgs\Twist](http://docs.ros.org/api/geometry_msgs/html/msg/Twist.html) control channels
@@ -485,13 +502,15 @@ Additional odometry information sources can be added to the EKF in
 #### Diagnostics
 
 :::note
+
 Diagnostics are only applicable to real Dingo robots, not simulation.
+
 :::
 
 Dingo provides hardware and software system [diagnostics](http://wiki.ros.org/diagnostics) on the ROS standard
 `/diagnostics` topic. The best way to view these messages is using the
 [rqt_runtime_monitor](http://wiki.ros.org/rqt_runtime_monitor) plugin. Run the `rqt` command, and select
-**Plugins->Robot Tools->Runtime Monitor** from the top menu.
+**Plugins→Robot Tools→Runtime Monitor** from the top menu.
 
 The same information is also published as a
 [dingo_msgs\Status](https://docs.ros.org/en/api/dingo_msgs/html/msg/Status.html) message on the `Status` topic.
@@ -506,17 +525,21 @@ There are four ways to drive Dingo and each way will work on a physical Dingo ro
 4. Publishing ROS messages. See below.
 
 :::warning
+
 Dingo is capable of reaching high speeds. Careless driving can cause harm to the operator,
 bystanders, the robot, or other property. Always remain vigilant, ensure you have a clear
 line of sight to the robot, and operate the robot at safe speeds. We strongly recommend
 driving in normal (slow) mode first, and only enabling turbo in large, open areas that are
 free of people and obstacles.
+
 :::
 
 #### Driving with Remote Controller
 
 :::note
+
 For instructions on controller pairing, [Pairing the Controller](#pairing-the-controller).
+
 :::
 
 <ComponentDrivingWithRemoteController />
@@ -528,7 +551,7 @@ You can manually publish `geometry_msgs/Twist` ROS messages to either the
 
 For example, in terminal, run:
 
-```bash
+```
 rostopic pub /dingo_velocity_controller/cmd_vel geometry_msgs/Twist '{linear: {x: 0.5, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}'
 ```
 
@@ -547,7 +570,7 @@ variables such as `PATH`, `PYTHONPATH`, and `CMAKE_PREFIX_PATH`.
 
 The standard system-wide setup file is in `opt`:
 
-```bash
+```
 source /opt/ros/noetic/setup.bash
 ```
 
@@ -557,7 +580,7 @@ your system from Debian packages.
 However, sometimes you want to add additional system-specific environment variables, or perhaps packages built from source.
 For this reason, Clearpath platforms use a wrapper setup file, located in `/etc/ros`:
 
-```bash
+```
 source /etc/ros/setup.bash
 ```
 
@@ -588,9 +611,11 @@ URDF which wraps the one provided by [dingo_description](https://github.com/ding
 ### Keeping Dingo Updated
 
 :::note
+
 If you are upgrading your Dingo from an older version of ROS, please refer to
 our upgrade instructions [here](https://clearpathrobotics.com/assets/guides/kinetic/kinetic-to-melodic/index.html)
 and [here](https://clearpathrobotics.com/assets/guides/melodic/melodic-to-noetic/index.html).
+
 :::
 
 #### Getting New Packages
@@ -601,7 +626,7 @@ You can use the `apt` package management system to receive new versions all soft
 Each Dingo leaves the factory already configured to pull packages from http://packages.ros.org as well as
 http://packages.clearpathrobotics.com. To update your package and download new package versions, simply run:
 
-```bash
+```
 sudo apt-get update
 sudo apt-get dist-upgrade
 ```
@@ -617,7 +642,7 @@ Dingo firmware updates are needed.
 
 To get all Navigation related files for Dingo, run:
 
-```bash
+```
 sudo apt-get install ros-noetic-dingo-navigation
 ```
 
@@ -630,7 +655,7 @@ Below are the example launch files for three different configurations for naviga
 Referring to the [Simulating Dingo](#simulating-dingo) instructions, bring up Dingo with the
 front laser enabled for the following demos:
 
-```bash
+```
 roslaunch dingo_gazebo dingo_world.launch config:=front_laser
 ```
 
@@ -648,13 +673,13 @@ without a map in an odometric frame (that is, without reference to a map).
 
 To launch the navigation demo, run:
 
-```bash
+```
 roslaunch dingo_navigation odom_navigation_demo.launch
 ```
 
 To visualize with the suggested RViz configuration launch:
 
-```bash
+```
 roslaunch dingo_viz view_robot.launch config:=navigation
 ```
 
@@ -679,13 +704,13 @@ into your own workspace and modify the corresponding files in the `params` subfo
 
 In this demonstration, Dingo generates a map using gmapping. Begin by launch the gmapping launch file on the robot:
 
-```bash
+```
 roslaunch dingo_navigation gmapping_demo.launch
 ```
 
 And on your workstation, launch RViz with the suggested configuration:
 
-```bash
+```
 roslaunch dingo_viz view_robot.launch config:=gmapping
 ```
 
@@ -705,7 +730,7 @@ semi-autonomously by sending navigation goals (as above).
 
 When you're satisfied, you can save the produced map using [map_saver](http://wiki.ros.org/map_server#map_saver):
 
-```bash
+```
 rosrun map_server map_saver -f mymap
 ```
 
@@ -718,7 +743,7 @@ map. AMCL takes in information from odometry, laser scanner and an existing map 
 
 To start the AMCL demo:
 
-```bash
+```
 roslaunch dingo_navigation amcl_demo.launch map_file:=/path/to/my/map.yaml
 ```
 
@@ -730,7 +755,7 @@ Before navigating, you need to initialize the localization system by setting the
 This can be done using 2D Pose Estimate in RViz or by setting the amcl `initial_pose` parameters. To visualize
 with the suggested RViz configuration launch:
 
-```bash
+```
 roslaunch dingo_viz view_robot.launch config:=localization
 ```
 
@@ -746,7 +771,7 @@ functionality at the component and system levels.
 
 If your Dingo does not have the `dingo_tests` ROS package installed already, you can manually install it by opening terminal and running:
 
-```bash
+```
 sudo apt-get install ros-noetic-dingo-tests
 ```
 
@@ -759,7 +784,7 @@ via ROS topics, and serve as a useful robot-level diagnostic tool for identifyin
 
 To run `ros_tests` on a Dingo robot, open terminal and run:
 
-```bash
+```
 rosrun dingo_tests ros_tests
 ```
 
@@ -804,18 +829,20 @@ The details of each test are shown below.
   - The user will be asked to verify that the robot rotates 2 full revolutions.
 
   :::note
+
   The **Rotate Test** rotates the robot using the IMU's Gyroscope data, which inherently will not be 100% accurate. Therefore, some
   undershoot/overshoot is to be expected.
+
   :::
 
 - **Drive Test**
 
-  The **Drive Test** drives the robot forward 1 meter and checks that the motors, encoders, and encoder-fused odometry are working properly.
+  The **Drive Test** drives the robot forward 1 metre and checks that the motors, encoders, and encoder-fused odometry are working properly.
 
   This test:
 
   - Subscribes to the `/dingo_velocity_controller/odom` ROS topic to receive linear displacement estimations from the encoder-fused odometry.
-    The robot will drive forward until 1 meter is estimated.
+    The robot will drive forward until 1 metre is estimated.
   - Subscribes to the `/feedback` ROS topic to receive linear displacement measurements from the individual encoders. These measurements are
     output as comparison to the linear displacement estimations from the encoder-fused odometry.
   - Subscribes to the `/joint_state` ROS topic to receive linear displacement measurements from individual the encoders. These measurements
@@ -824,8 +851,10 @@ The details of each test are shown below.
   - The user will be asked to verify that the robot drives forward 1 meter.
 
   :::note
+
   The **Drive Test** drives the robot using the Odometry data, which inherently will not be 100% accurate. Therefore, some undershoot/overshoot
   is to be expected.
+  
   :::
 
 - **Cooling Test**
@@ -849,7 +878,7 @@ packets from 2 or 4 encoders, respectively.
 
 To run the `check_can_bus_interface` script on a Dingo robot, open terminal and run:
 
-```bash
+```
 rosrun dingo_tests check_can_bus_interface
 ```
 
@@ -913,7 +942,7 @@ Dingo is supported in the Office and Construction worlds.
 
 To download the Clearpath Gazebo Worlds, clone the repository from github into the same workspace as your Dingo:
 
-```bash
+```
 cd ~/catkin_ws/src
 git clone https://github.com/clearpathrobotics/cpr_gazebo.git
 ```
@@ -926,7 +955,7 @@ To simulate Dingo in the Office and Construction worlds the only additional depe
 
 Once the dependencies are installed, you can build the package:
 
-```bash
+```
 cd ~/catkin_ws
 catkin_make
 source devel/setup.bash
@@ -946,7 +975,7 @@ source devel/setup.bash
 
 To launch Office World with a Dingo, run the following command:
 
-```bash
+```
 roslaunch cpr_office_gazebo office_world.launch platform:=dingo
 ```
 
@@ -965,7 +994,7 @@ You should see Dingo spawn in the office world, as pictured. You can see the com
 To add sensors to Dingo, use the environment variables described in [Description Package](#description-package).
 For example, to simulate Dingo with a Sick LMS-1xx lidar, run:
 
-```bash
+```
 export DINGO_LASER=1
 roslaunch cpr_office_gazebo office_world.launch platform:=dingo
 ```
@@ -997,7 +1026,7 @@ You will see Dingo spawn with a lidar sensor mounted to it, which can be used fo
 
 To launch Construction World with a Dingo, run the following command:
 
-```bash
+```
 roslaunch cpr_office_gazebo office_construction_world.launch platform:=dingo
 ```
 
@@ -1016,7 +1045,7 @@ You should see Dingo spawn in the construction world, as pictured. You can see t
 To add sensors to Dingo, use the environment variables described in [Description Package](#description-package).
 For example, to simulate Dingo with a Sick LMS-1xx lidar, run:
 
-```bash
+```
 export DINGO_LASER=1
 roslaunch cpr_office_gazebo office_construction_world.launch platform:=dingo
 ```

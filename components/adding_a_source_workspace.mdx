@@ -1,8 +1,15 @@
 Configuring non-standard peripherals requires a source workspace on the robot computer.
 
+:::tip
+
+The instructions below use `cpr_noetic_ws` as the workspace name. You can choose a different
+workspace name and substitute it in the commands below.
+
+:::
+
 1. Create a new workspace:
 
-   ```bash
+   
    mkdir -p ~/cpr_noetic_ws/src
    ```
 
@@ -10,14 +17,14 @@ Configuring non-standard peripherals requires a source workspace on the robot co
 
 3. After adding your packages, make sure any necessary dependencies are installed:
 
-   ```bash
+   
    cd ~/cpr_noetic_ws/
    rosdep install --from-paths src --ignore-src --rosdistro noetic -y
    ```
 
 4. Build the workspace:
 
-   ```bash
+   
    cd ~/cpr_noetic_ws/
    catkin_make
    ```
@@ -25,12 +32,12 @@ Configuring non-standard peripherals requires a source workspace on the robot co
 5. Modify your robot-wide setup file (`/etc/ros/setup.bash`) to source your new workspace instead
    of the base noetic install:
 
-   ```bash
+   
    source /home/administrator/cpr_noetic_ws/devel/setup.bash
    ```
 
 6. Reinitialize your environment so that it picks up your new workspace:
 
-   ```bash
+   
    source /etc/ros/setup.bash
    ```

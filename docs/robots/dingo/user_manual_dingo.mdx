@@ -45,7 +45,7 @@ There are two Dingo variants:
 Your Dingo shipment contains the following:
 
 - Dingo UGV (Dingo-D or Dingo-O variant)
-- One or more 12V sealed lead acid (SLA) or 14.4V Lithium-ion batteries
+- One or more 12V sealed lead-acid (SLA) or 14.4V Lithium-ion batteries
 - One or more 110/220V universal chargers for your batteries
 - One Sony PS4 Bluetooth controller
 - One Dingo quick start guide
@@ -99,7 +99,7 @@ The human-machine-interface (HMI) panel is shown below and includes from left:
 | :---------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 |  <img src="/img/robot_images/dingo_images/icon-motor.png" width="50"/>  | **Motor Stop button**: LED is solid green when Dingo is able to drive and flashing green when the Dingo's motors are disengaged; pressing button toggles the motors between engaged and disengaged mode (further details in [Motor Stop Buttons](#dingo-stop-buttons))                                                                                                                                                  |
 |  <img src="/img/robot_images/dingo_images/icon-comms.png" width="50"/>  | **Comms indictor**: LED is solid green when communication between the MCU and computer has been established and LED is off otherwise                                                                                                                                                                                                                                                                                    |
-|  <img src="/img/robot_images/dingo_images/icon-wifi.png" width="50"/>   | **Wifi indicator**: LED is solid green when wifi is connected and LED is off otherwise                                                                                                                                                                                                                                                                                                                                  |
+|  <img src="/img/robot_images/dingo_images/icon-wifi.png" width="50"/>   | **Wi-Fi indicator**: LED is solid green when Wi-Fi is connected and LED is off otherwise                                                                                                                                                                                                                                                                                                                                  |
 | <img src="/img/robot_images/dingo_images/icon-battery.png" width="50"/> | **Battery indicator**: LED is solid green when the battery level is ok, solid yellow when the battery level is getting low (should be charged soon), and solid red when the battery level is critical (should be charged immediately)                                                                                                                                                                                   |
 |  <img src="/img/robot_images/dingo_images/icon-power.png" width="50"/>  | **System Power button**: LED is solid blue when the system powered on and running and the LED is flashing blue during the shutdown process; when the system is powered off, pressing the power button begins the power on process; when the system is powered on, a quick press of the power button begins a graceful shutdown and a prolonged press of the power button triggers and immediate power off of the system |
 
@@ -188,7 +188,7 @@ taken to ensure that data is interpreted correctly.
 | Speed, Maximum        | 1.3 m/s                                                     | 1.3 m/s                                |
 | Operating Environment | Indoor                                                      | Same as Dingo-D                        |
 | Operating Time        | 2 hours (SLA), 4 hours (Lithium)                            | 2 hours (2x SLA), 4 hours (2x Lithium) |
-| Battery Chemistry     | Lithium Ion or Sealed Lead Acid                             | Same as Dingo-D                        |
+| Battery Chemistry     | Lithium Ion or Sealed Lead-Acid                             | Same as Dingo-D                        |
 | Charge Time           | 4 hours                                                     | Same as Dingo-D                        |
 | User Power            | 20A @ VBAT (11-16.8V), 7A @ 12V, 5A @ 5V                    | Same as Dingo-D                        |
 | Communication         | Ethernet, USB 3.0                                           | Same as Dingo-D                        |
@@ -234,7 +234,7 @@ This indicates that ROS is up on the computer and has established communications
 
 ### Network Configuration
 
-To get Dingo connected to your local wifi network, you must first access the Onboard Computer using
+To get Dingo connected to your local Wi-Fi network, you must first access the Onboard Computer using
 a wired connection to the robot. Remove the top trough cover and the appropriate yellow fairing to
 access the computer module, then connect to one of the network ports with a standard ethernet cable.
 See the [Dingo Tutorials](/docs/robots/dingo/tutorials_dingo#dingo-networking) for details.
@@ -282,7 +282,7 @@ while hot-swapping as long as there is at least one battery in the system or the
 prior to removing the batteries. Note that plugging in shore power will engage a motor stop and it is not possible to
 drive Dingo while connected to shore power.
 
-The Sealed Lead Acid batteries have overcurrent protection in the form of an ATO fuse. The Lithium-Ion batteries include
+The Sealed Lead-Acid batteries have overcurrent protection in the form of an ATO fuse. The Lithium-Ion batteries include
 integrated protections against fault due to overcurrent, overdischarge, and short circuit. The batteries are rugged and
 designed for the demanding environments into which Dingo may be deployed.
 
@@ -307,7 +307,9 @@ Clearpath Robotics is committed to high standards of safety.
 Dingo contains several features to protect the safety of users and the integrity of the robot.
 
 :::caution
+
 Dingo is a fast moving robotic platform. Please read the following notices carefully.
+
 :::
 
 ### General warnings

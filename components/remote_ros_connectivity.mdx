@@ -10,7 +10,7 @@ In order for the ROS tools on the Remote PC to talk to your robot, they need to 
 
 The suggested pattern is to create a file in your home directory called `remote-robot.sh` with the following contents:
 
-```bash
+```
 export ROS_MASTER_URI=http://cpr-robot-0001:11311 # Your robot's hostname
 export ROS_IP=10.25.0.102 # Your Remote PC's wireless IP address
 ```
@@ -18,14 +18,18 @@ export ROS_IP=10.25.0.102 # Your Remote PC's wireless IP address
 If your network does not already resolve your robot's hostname to its wireless IP address, you may need to add a
 corresponding line to the Remote PC's `/etc/hosts` file:
 
-```bash
+```
 10.25.0.101 cpr-robot-0001
 ```
 
-NOTE: You can verify the hostname and IP address of your robot using the following commands during an SSH session
+:::note
+
+You can verify the hostname and IP address of your robot using the following commands during an SSH session
 with the Onboard PC.
 
-```bash
+:::
+
+```
 hostname
 hostname -i
 ```
@@ -33,13 +37,13 @@ hostname -i
 Then, when you are ready to communicate remotely with your robot, you can source that script like so, thus defining
 those two key environment variables in the present context.
 
-```bash
+```
 source remote-robot.sh
 ```
 
 To verify that everything is set up properly, try running a few ROS commands:
 
-```bash
+```
 rosrun rqt_robot_monitor rqt_robot_monitor
 rosrun rqt_console rqt_console
 ```

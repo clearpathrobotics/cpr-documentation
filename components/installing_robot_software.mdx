@@ -11,27 +11,31 @@ however, these ways are not not be covered in this section.
 ##### Install from ISO Image
 
 :::caution
+
 Installing with the Clearpath Robotics ISO image will completely wipe data on the robot's computer,
 since the ISO image will install Ubuntu 20.04 (Focal), ROS Noetic, and robot-specific packages.
+
 :::
 
 :::note
+
 The Clearpath Robotics ISO image only targets Intel-family computers (`amd64` architecture).
 If your robot runs on an Nvidia Jetson computer, see
 [Jetson Software](/docs/computers/jetson/jetson_software) for software installation details.
+
 :::
 
 Clearpath provides a lightly customized installation image of Ubuntu 20.04 "Focal" that automatically
 pulls in all necessary dependencies for the robot software. To install the software on a
 physical robot through the Clearpath Robotics ISO image, you will first need a USB drive of at least
-2GB to create the installation media, an ethernet cable, a monitor, and a keyboard.
+2 GB to create the installation media, an ethernet cable, a monitor, and a keyboard.
 
 1. Download the appropriate [Noetic ISO image](https://packages.clearpathrobotics.com/stable/images/latest/noetic-focal/)
    for your platform.
 
 2. Copy the image to a USB drive using `unetbootin`, `rufus`, `balena etcher`, or a similar program. For example:
 
-   ```bash
+   
    sudo unetbootin isofile="clearpath-universal-noetic-amd64-0.4.17.iso"
    ```
 
@@ -39,16 +43,22 @@ physical robot through the Clearpath Robotics ISO image, you will first need a U
    robot is connected to shore power (where applicable) or that the robot's battery is fully charged.
 
    :::warning
+
    The next step wipe your robot's hard drive, so make sure you have that image
    [backed up](#performing-a-backup).
+
    :::
 
 4. Boot your robot computer from the USB drive and let the installer work its magic. If asked for a partitioning method
    choose `Guided - use entire disk and set up LVM`.
+
    :::note
+
    You may need to configure the computer's BIOS to prioritize booting from the USB drive. On most common
    motherboards, pressing `Delete` during the initial startup will open the BIOS for configuration.
+
    :::
+   
 5. The setup process will be automated and may take a long time depending on the speed of your internet connection.
 6. Once the setup process is complete, the computer will turn off. Please unplug the USB drive and turn the computer back on.
 7. On first boot, the username will be `administrator` and the password will be `clearpath`. You should use the
@@ -94,7 +104,7 @@ physical robot through the Clearpath Robotics ISO image, you will first need a U
 
 9. Finally, start ROS for the first time. In terminal, run:
 
-   ```bash
+   
    sudo systemctl start ros
    ```
 
@@ -110,19 +120,19 @@ need to ensure that the robot's computer is running Ubuntu 20.04 (Focal) and ROS
 
     1. Install the authentication key for the packages.clearpathrobotics.com repository. In terminal, run:
 
-        ```bash
+        
         wget https://packages.clearpathrobotics.com/public.key -O - | sudo apt-key add -
         ```
 
     2. Add the debian sources for the repository. In terminal, run:
 
-       ```bash
+       
        sudo sh -c 'echo "deb https://packages.clearpathrobotics.com/stable/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/clearpath-latest.list'
        ```
 
     3. Update your computer's package cache. In terminal, run:
 
-        ```bash
+        
         sudo apt-get update
         ```
 
@@ -167,7 +177,7 @@ need to ensure that the robot's computer is running Ubuntu 20.04 (Focal) and ROS
 
       3. Finally, start ROS for the first time. In terminal, run:
 
-            ```bash
+            
             sudo systemctl start ros
             ```
 -->

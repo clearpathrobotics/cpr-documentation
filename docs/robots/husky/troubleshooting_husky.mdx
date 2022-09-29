@@ -118,7 +118,7 @@ Charge the battery and try again.
 The battery indicator is controlled by the Husky MCU's microcontroller, based on a voltage measurement of the battery.
 The controls program was designed for a lithium ion battery.
 _24 V lithium ion batteries_ reach a peak voltage of 29 V.
-Our Standard _24 V lead acid battery_ does not reach as high of a voltage, so the MCU's microcontroller thinks the battery is not fully charged.
+Our Standard _24 V lead-acid battery_ does not reach as high of a voltage, so the MCU's microcontroller thinks the battery is not fully charged.
 
 There is not a way to change this behaviour on your Husky.
 
@@ -215,24 +215,23 @@ Verify the upstart logs, `/var/log/upstart/husky_core.log`, to see if there are 
 
 1.  Check that the sensor's User Power connector has the correct voltage.
 2.  If the voltage is correct, then review the [Troubleshooting section for the related sensor](/docs/sensors).
-    > > > > > > > development
 
 TODO: Check if these are incorporated:
 
 **The blue light around the power button does not display when pressing the power button.**
 
 1.  Ensure that the battery is charged and correctly connected.
-2.  Use a multi-meter to verify the voltage on the battery terminals.
+2.  Use a multimeter to verify the voltage on the battery terminals.
 
-**_Comm Status_ light stays red or flickers.**
+**`COMM` status light stays red or flickers.**
 
 1.  Your program may not be sending motion commands faster than 10 Hz.
 2.  If there is a poor quality connection, some commands may be lost, so it may be necessary to increase the frequency of commands sent.
 3.  The maximum frequency commands can be sent is 50 Hz.
 
-**_E-stop Status_ light illuminated**
+**`STOP` status light illuminated**
 
-1.  Twist the red e-stop to release it
+1.  Twist the red stop button to release it.
 2.  Confirm that the robot is not locked out.
 
 **_Battery Status_ indicator flashing**
@@ -247,7 +246,7 @@ TODO: Check if these are incorporated:
 **Husky experiences momentary drops in communication**
 
 1.  It's possible the robot has reached the thermal limit, or current limit.
-2.  The maximum current limits are set to 18.3 A, however, as the motors are only rated for 8A continuous, anything above that will trigger the current limit eventually, the higher above this limit, the more quickly it will trigger. If you are unsure whether this is the case, feel free to contact support@clearpathrobotics.com with a rosbag of your system. Clearpath robotics also offers a high torque upgrade if more torque is required for your project.
+2.  The maximum current limits are set to 18.3 A, however, as the motors are only rated for 8 A continuous, anything above that will trigger the current limit eventually, the higher above this limit, the more quickly it will trigger. If you are unsure whether this is the case, feel free to contact support@clearpathrobotics.com with a rosbag of your system. Clearpath robotics also offers a high torque upgrade if more torque is required for your project.
 
 ### If the Issue Persists
 
