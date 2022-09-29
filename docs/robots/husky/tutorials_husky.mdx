@@ -107,7 +107,7 @@ The most important nodes are summarized in the following table.
 | Node                     | Description                                                                                                                                |
 | :----------------------- | :----------------------------------------------------------------------------------------------------------------------------------------- |
 | `/husky_node`            | Provides control and communication between the Husky platform and ROS. Accepts velocity commands and provides system feedback on `/status` |
-| `/robot_state_publisher` | Subscribes to `/joint_states` and publishes the robot's state to `/tf`                                                                      |
+| `/robot_state_publisher` | Subscribes to `/joint_states` and publishes the robot's state to `/tf`                                                                     |
 | `/bluetooth_teleop`      | Publishes velocity commands from a joystick to `/twist_mux`                                                                                |
 | `/twist_mux`             | Takes in multiple sources of velocity commands, and prioritizes what actually gets sent to the controller                                  |
 | `/ekf_localization`      | Part of the robot localization package, more information regarding this package can be found at <http://wiki.ros.org/robot_localization>   |
@@ -767,7 +767,7 @@ Husky firmware updates are needed.
 
 #### Puma Firmware Updates
 
-See [Husky Maintenance](/docs/robots/husky/maintenance/#maintenance_husky_motor_controller_firmware)
+See [Husky Maintenance](/docs/robots/husky/maintenance_husky#maintenance_husky_motor_controller_firmware)
 for details on updating the Puma firmware.
 
 ---
@@ -1105,10 +1105,10 @@ The details of each test are shown below.
 
 - **E-Stop Test**
 
-  Checks that the robot's E-Stop is working properly.
+  Checks that the robot's motion-stop is working properly.
 
-  This test subscribes to the `/status` ROS topic and checks that when the E-Stop is manually engaged by
-  the user, the E-Stop state is correctly reported on the `/status` ROS topic.
+  This test subscribes to the `/status` ROS topic and checks that when the motion-stop is manually engaged by
+  the user, the motion-stop state is correctly reported on the `/status` ROS topic.
 
 - **ADC Test**
 

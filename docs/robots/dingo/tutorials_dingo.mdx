@@ -802,11 +802,11 @@ The details of each test are shown below.
 
 - **E-Stop Test**
 
-  The **E-Stop Test** checks that the robot's E-Stop is working properly.
+  The **E-Stop Test** checks that the robot's motion-stop is working properly.
 
-  This test subscribes to the `/mcu/status` ROS topic and checks that when the E-Stop is manually engaged by the user, the E-Stop
+  This test subscribes to the `/mcu/status` ROS topic and checks that when the motion-stop is manually engaged by the user, the motion-stop
   state is correctly reported on the `/mcu/status` ROS topic. The user will be asked to verify that the lights flash red while
-  the E-Stop is engaged.
+  the motion-stop is engaged.
 
 - **ADC Test**
 
@@ -854,7 +854,7 @@ The details of each test are shown below.
 
   The **Drive Test** drives the robot using the Odometry data, which inherently will not be 100% accurate. Therefore, some undershoot/overshoot
   is to be expected.
-  
+
   :::
 
 - **Cooling Test**

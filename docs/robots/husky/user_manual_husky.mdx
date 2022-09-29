@@ -25,7 +25,7 @@ Husky is a rugged and easy-to-use unmanned ground robot for rapid prototyping an
 Your Husky shipment contains the following:
 
 - Clearpath Robotics Husky
-- 24V Sealed Lead-Acid Battery Pack
+- 24 V Sealed Lead-Acid Battery Pack
 - Battery Door Cover
 - Battery Charger
 - Lockout Keys (2X)
@@ -38,9 +38,9 @@ equipment will be included per your specific configuration, plus further documen
 
 #### System Architecture
 
-Dingo is built around a computer running Ubuntu (Intel-based computer or Jetson developer kit), paired
-with a 32-bit MCU. The MCU handles I/O, power supply monitoring, and motor control, as well as supplying
-data from the integrated IMU. The communication channel between the MCU and computer is a serial connection.
+Husky is built around a computer running Ubuntu (Intel-based computer or Jetson developer kit), paired
+with a 32-bit MCU. The MCU handles power supply monitoring and motor control. The communication channel
+between the MCU and computer is a serial connection.
 
 #### Exterior Features
 
@@ -163,7 +163,7 @@ $w$ is the effective track of the robot, 0.555 m.
 | Communication                  | RS-232, 115200 baud                                                      |
 | Wheel Encoders                 | 78,000 ticks/m                                                           |
 | Internal Sensing               | Battery Status, Wheel Odometry, Motor Currents                           |
-| Environmental                  | IP 44 (upgrade to IP 55 available)                                       |
+| Environmental                  | IP44 (base Husky); IP30 (with computer); IP55 (with weatherproofing kit) |
 
 _¹Continuous operation on relatively flat terrain with wide turns._ <br />
 _²robot climbing 30° grade with high-mounted payload, or turning in place in high-friction conditions._

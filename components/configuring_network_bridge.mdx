@@ -5,10 +5,11 @@ manipulators, or for connecting the your robot to the internet for the purposes 
 In the unlikely event you must modify your robot's Ethernet bridge, you can do so by editing the configuration
 file found at `/etc/netplan/50-clearpath-bridge.yaml`:
 
-
+```
 # Configure the wired ports to form a single bridge
 # We assume wired ports are en* or eth*
 # This host will have address 192.168.131.1
+
 network:
 version: 2
 renderer: networkd
@@ -51,3 +52,7 @@ See also [Network IP Addresses](/docs/tools/network_ip_addresses) for common IP 
 on Clearpath robots.
 
 :::
+
+```
+
+```
