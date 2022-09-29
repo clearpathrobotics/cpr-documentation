@@ -1,0 +1,20 @@
+1.  As a fail-safe, please make an image of your robot's hard drive. You should always be able to restore this image
+    if you need to revert back to your previous configuration.
+
+    - The easiest approach may be to either connect a removable (USB or similar) hard drive to the robot's computer, or to unplug
+      the robot's hard drive and insert it into a computer or workstation.
+    - You can then use a tool such as CloneZilla or `dd` to write a backup image of your robot's hard drive onto another
+      hard drive.
+    - Alternatively, you can simply replace the robot computer's hard drive, reserving the drive and installing a new one
+      to use with Noetic.
+
+2.  There are several places in the filesystem you should specifically look for customizations for your robot:
+
+    | Location                                      | Description                                                                                                                                               |
+    | :-------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------- |
+    | `/etc/network/interfaces` or `/etc/netplan/*` | Your robot may have a custom network configuration in this file.                                                                                          |
+    | `/etc/ros/*/*-core.d/*.launch`                | Will contain `base.launch` and `description.launch`, may contain custom launch files for your robot configuration. Replaced by `ros.d` in newer versions. |
+    | `/etc/ros/*/ros.d/*.launch`                   | Will contain `base.launch` and `description.launch`, may contain custom launch files for your robot configuration. Replaces `*-core.d` in newer versions. |
+    | `/etc/ros/setup.bash`                         | May contain environment variables for your configuration.                                                                                                 |
+
+3.  Please save all the files listed above and use them as a reference during Noetic configuration.

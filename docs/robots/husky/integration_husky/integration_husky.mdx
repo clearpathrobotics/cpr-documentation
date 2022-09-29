@@ -1,15 +1,31 @@
 ---
-title: Integration
+title: Husky Integration
 sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
 ---
 
 import ComponentIntroductionHusky from "/components/introduction_husky.mdx";
 import ComponentPacsFasteners from "/components/pacs_fasteners.mdx";
 import ComponentPacsMechanical from "/components/pacs_mechanical.mdx";
+import ComponentCommonSoftwareIntegration from "/components/common_software_integration.mdx";
+import Support from "/components/support.mdx";
 
 <ComponentIntroductionHusky />{" "}
 
-## Mechanical, Standard
+## Integration Guide
+
+If you are wanting to attach custom hardware to Husky, you will have to take care of mechanical mounting, electrical
+supply, and software integration. This section aims to equip you with respect to these challenges.
+
+### Mechanical Mounting
+
+When determining mechanical mounting, you have two options, both of which are described below.
+
+- the "Standard" aluminum extrusion interface
+- the "PACS" mounting system and associated kits
+
+#### Mechanical, Standard
 
 A standard Husky is delivered with a 20 X 20 aluminum extrusion frame around the top of the user bay.
 This can be used for mouning sensors, lights, and other small attachments.
@@ -28,18 +44,133 @@ We suggest using the following items to interface with this extrusion:
 
 Misumi also offers a range of configurable products for this 20 X 20 extrusion that can help with your integration.
 
----
-
-## Mechcanical, PACS
+#### Mechanical, PACS
 
 <ComponentPacsMechanical />
 
 Refer to the following pages for Husky brackets that can simplify your integration.
 You can also try different confgurations using our tool at [build.clearpathrobotics.com/husky](https://build.clearpathrobotics.com/husky)
 
-- [Top Plate](/docs/robots/husky/integration_husky/top_plate_husky)
-- [Weatherproofing Cover](/docs/robots/husky/integration_husky/user_bay_cover_husky)
-- [Riser, Full](/docs/robots/husky/integration_husky/riser_full_husky)
-- [Riser, Partial](/docs/robots/husky/integration_husky/riser_partial_husky)
-- [Riser, Stiffener](/docs/robots/husky/integration_husky/riser_stiffener_husky)
-- [Electronics Rack](/docs/robots/husky/integration_husky/electronics_rack_husky)
+- [Top Plate](/docs/robots/husky/integration_husky/kits/top_plate_husky)
+- [Weatherproofing Cover](/docs/robots/husky/integration_husky/kits/user_bay_cover_husky)
+- [Riser, Full](/docs/robots/husky/integration_husky/kits/riser_full_husky)
+- [Riser, Partial](/docs/robots/husky/integration_husky/kits/riser_partial_husky)
+- [Riser, Stiffener](/docs/robots/husky/integration_husky/kits/riser_stiffener_husky)
+- [Electronics Rack](/docs/robots/husky/integration_husky/kits/electronics_rack_husky)
+
+### Electrical Integration
+
+Except for bus-powered USB cameras, most payloads have separate leads for power and data.
+
+#### Data Connections
+
+Data connections (USB and Ethernet) are made to the Husky computer mounted in the user bay
+In addition, the PCIe Gen3 x16 slot may be used to supply a GPU or other attachements, as necessary.
+Additionally, the user bay may be used for an Ethernet switch, when attaching multiple
+Ethernet payloads, or for a PoE power injector as required.
+
+#### User Bay Power Connections
+
+The user bay power connections are capable of supplying:
+
+- VBAT (approximately 24-29 V, unregulated) fused at 5 A
+- 12 V fused at 7.5 A
+- 24 V fused at 3 A.
+
+In total, 282 W of power is available from these User Power breakouts.
+
+:::note
+
+You can order a upgrade for your Husky, that will add 480 W of power (VBAT fused at 20 A). Each terminal comes equipped with a
+removable connector into which your payload power leads may connect.
+
+:::
+
+:::note
+
+Husky UGVs with serial numbers lower than A200-0802 have different user power connections.  
+These older robots have 5V, 12V, and 24V supplies, all fused at 5A.
+Your Husky's serial number is shown on a sticker, attached to the right side of the robot.
+
+:::
+
+To connect to user power:
+
+1.  Expose about 5 mm of bare wire from the payload power leads and twist the exposed wire on both leads.
+2.  Take 2 Molex terminals from the spare parts kit provided and insert the exposed wire and crimp the
+    terminals, ensuring the wires are well secured inside the terminal, as shown below.
+3.  Take 1 connector housing from the spare parts kit provided and insert the positive payload power lead
+    (red) into position 4, 5, or 6 of the connector until it locks into place. The positions numbers are
+    visible on the back of the plastic housing.
+4.  Insert the negative payload power lead (black) into position 1, 2, or 3 of the connector until it locks
+    into place.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/robot_husky_16.jpg"
+      width="300"
+    />
+    <figcaption>Crimping a wire</figcaption>
+  </figure>
+</center>
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/robot_husky_17.jpg"
+      width="300"
+    />
+    <figcaption>Inserting the crimped wires into the Molex connector</figcaption>
+  </figure>
+</center>
+
+When connecting payloads, be sure to observe correct polarity as marked on the inside of the user bay.
+Do not exceed the specified maximum current limit of each power rail; failure to do so may result in
+damage to Husky or your payload.
+
+For more technical information on the Molex power connectors, as well as their corresponding mating connectors,
+please visit the
+[Digi-Key WM23702-ND Product Page](https://www.digikey.ca/en/products/detail/molex/0039012065/930272?s=N4IgTCBcDaIOoFkwGYDsAGMBaAcgERAF0BfIA).
+
+#### Serial Connection
+
+The pinout of the DE-9 connector is shown below.
+
+|                                                                           |                            |
+| :-----------------------------------------------------------------------: | :------------------------: |
+| <img src="/img/robot_images/husky_images/robot_husky_9.png" width="200"/> | <ComponentTableHuskyOne /> |
+
+#### Optional External Motion Stop
+
+Clearpath Robotics offers an upgrade kit to add an external motion-stop. Contact [Support](#support) for details.
+
+#### MCU Debug LEDs
+
+The Husky MCU PCBA comes equipped with LEDs for debugging. They work as follows:
+
+- **D16: HEARTBEAT**: toggles every 500ms when the main firmware loop on the MCU is running
+- **D7: VBAT 20A**: illuminated if the VBAT 20A fuse is working
+- **D8: VBAT 5A**: illuminated if the VBAT 5A fuse is working
+- **D12: 12V 7.5A**: illuminated if the 12V 7.5A fuse is working
+- **D10: 24V 3A**: illuminated if the 24V 3A fuse is working
+
+:::note
+
+On older revisions of the Husky MCU PCBA, the labels are different, but the functionality is similar:
+
+- D5: HEARTBEAT
+- D2: VBAT 5A fuse working
+- D3: 12V 5A fuse working
+- D4: 5V 5A fuse working
+
+:::
+
+### Software Integration
+
+<ComponentCommonSoftwareIntegration />
+
+---
+
+## Support {#support}
+
+<Support />
