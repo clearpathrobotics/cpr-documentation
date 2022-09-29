@@ -9,7 +9,7 @@ const katex = require('rehype-katex');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Clearpath Robotics Documentation',
-  url: 'https://your-docusaurus-test-site.com',
+  url: 'https://docs.clearpathrobotics.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -29,6 +29,7 @@ const config = {
           sidebarPath: require.resolve('./sidebars.js'),
           remarkPlugins: [math],
           rehypePlugins: [katex],
+          showLastUpdateTime: true
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
