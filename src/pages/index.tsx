@@ -3,6 +3,10 @@ import Layout from "@theme/Layout";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Link from "@docusaurus/Link";
 import styles from "./index.module.css";
+import clsx from 'clsx';
+import useBaseUrl, {useBaseUrlUtils} from '@docusaurus/useBaseUrl';
+import Translate, {translate} from '@docusaurus/Translate';
+import Features, {type FeatureItem} from '@site/src/data/features';
 
 function HomepageHeader() {
   return (
@@ -46,6 +50,54 @@ function HomepageImage() {
   );
 }
 
+function Feature({
+  feature,
+  className,
+}: {
+  feature: FeatureItem;
+  className?: string;
+}) {
+  const {withBaseUrl} = useBaseUrlUtils();
+
+  return (
+    <div className={clsx('col', className)}>
+      <img
+        className={styles.featureImage}
+        alt={feature.title}
+        width={Math.floor(feature.image.width)}
+        height={Math.floor(feature.image.height)}
+        src={withBaseUrl(feature.image.src)}
+        loading="lazy"
+      />
+      <h3 className={clsx(styles.featureHeading)}>{feature.title}</h3>
+      <p className="padding-horiz--md">{feature.text}</p>
+    </div>
+  );
+}
+
+function FeaturesContainer() {
+  const firstRow = Features.slice(0, 3);
+  const secondRow = Features.slice(3);
+
+  return (
+    <div className="container text--center">
+      <div className="row margin-bottom--lg">
+        {firstRow.map((feature, idx) => (
+          <Feature feature={feature} key={idx} />
+        ))}
+      </div>
+      <div className="row">
+        {secondRow.map((feature, idx) => (
+          <Feature
+            feature={feature}
+            key={idx}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Home(): JSX.Element {
   const { siteConfig } = useDocusaurusContext();
   return (
@@ -56,7 +108,7 @@ export default function Home(): JSX.Element {
       <main>
         <HomepageHeader />
         <HomepageSubheader />
-        <HomepageImage />
+        <FeaturesContainer />
       </main>
     </Layout>
   );
