@@ -24,7 +24,7 @@ const FEATURES: FeatureItem[] = [
       hyperlink: "/docs/robots/jackal/user_manual_jackal"
     },
     text: (
-      <Translate id="homepage.features.built-using-react.text">
+      <Translate id="homepage_jackal">
         small outdoor platform
       </Translate>
     ),
@@ -41,7 +41,7 @@ const FEATURES: FeatureItem[] = [
       hyperlink: "/docs/robots/husky/user_manual_husky"
     },
     text: (
-      <Translate id="homepage.features.powered-by-mdx.text">
+      <Translate id="homepage_husky">
         medium outdoor platform
       </Translate>
     ),
@@ -58,7 +58,7 @@ const FEATURES: FeatureItem[] = [
       hyperlink: "/docs/robots/warthog/user_manual_warthog"
     },
     text: (
-      <Translate id="homepage.features.ready-for-translations.text">
+      <Translate id="homepage_warthog">
         large outdoor platform
       </Translate>
     ),
@@ -75,7 +75,7 @@ const FEATURES: FeatureItem[] = [
       hyperlink: "/docs/robots/turtlebot/user_manual_turtlebot"
     },
     text: (
-      <Translate id="homepage.features.content-search.text">
+      <Translate id="homepage_turtlebot">
         classroom indoor differential platform
       </Translate>
     ),
@@ -92,7 +92,7 @@ const FEATURES: FeatureItem[] = [
       hyperlink: "/docs/robots/dingo/user_manual_dingo"
     },
     text: (
-      <Translate id="homepage.features.document-versioning.text">
+      <Translate id="homepage_dingo">
         small indoor platform
         differential and omnidirectional configurations
       </Translate>
@@ -110,7 +110,7 @@ const FEATURES: FeatureItem[] = [
       hyperlink: "/docs/robots/boxer/user_manual_boxer"
     },
     text: (
-      <Translate id="homepage.features.content-search.text">
+      <Translate id="homepage_boxer">
         medium indoor differential platform
       </Translate>
     ),
@@ -127,7 +127,7 @@ const FEATURES: FeatureItem[] = [
       hyperlink: "/docs/robots/ridgeback/user_manual_ridgeback"
     },
     text: (
-      <Translate id="homepage.features.content-search.text">
+      <Translate id="homepage_ridgeback">
         large indoor omnidirectional platform
       </Translate>
     ),
