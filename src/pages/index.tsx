@@ -4,8 +4,7 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Link from "@docusaurus/Link";
 import styles from "./index.module.css";
 import clsx from 'clsx';
-import useBaseUrl, {useBaseUrlUtils} from '@docusaurus/useBaseUrl';
-import Translate, {translate} from '@docusaurus/Translate';
+import {useBaseUrlUtils} from '@docusaurus/useBaseUrl';
 import Features, {type FeatureItem} from '@site/src/data/features';
 
 function HomepageHeader() {
@@ -61,14 +60,16 @@ function Feature({
 
   return (
     <div className={clsx('col', className)}>
-      <img
-        className={styles.featureImage}
-        alt={feature.title}
-        width={Math.floor(feature.image.width)}
-        height={Math.floor(feature.image.height)}
-        src={withBaseUrl(feature.image.src)}
-        loading="lazy"
-      />
+      <a href={feature.image.hyperlink}>
+        <img
+          className={styles.featureImage}
+          alt={feature.title}
+          width={Math.floor(feature.image.width)}
+          height={Math.floor(feature.image.height)}
+          src={withBaseUrl(feature.image.src)}
+          loading="lazy"
+        />
+      </a>
       <h3 className={clsx(styles.featureHeading)}>{feature.title}</h3>
       <p className="padding-horiz--md">{feature.text}</p>
     </div>
