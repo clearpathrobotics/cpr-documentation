@@ -82,7 +82,7 @@ function FeaturesContainer() {
 
   return (
     <div className="container text--center">
-      <div className="row margin-bottom--lg">
+      <div className="row margin-top--lg margin-bottom--lg">
         {firstRow.map((feature, idx) => (
           <Feature feature={feature} key={idx} />
         ))}

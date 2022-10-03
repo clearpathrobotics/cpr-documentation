@@ -18,9 +18,9 @@ const FEATURES: FeatureItem[] = [
       id: 'homepage_jackal',
     }),
     image: {
-      src: '/img/website_images/homepage_jackal.jpg',
-      width: 700,
-      height: 300,
+      src: '/img/website_images/jackal_thumbnail.png',
+      width: 250,
+      height: 150,
       hyperlink: "/docs/robots/jackal/user_manual_jackal"
     },
     text: (
@@ -35,9 +35,9 @@ const FEATURES: FeatureItem[] = [
       id: 'homepage_husky',
     }),
     image: {
-      src: '/img/website_images/homepage_husky.jpg',
-      width: 700,
-      height: 300,
+      src: '/img/website_images/husky_thumbnail.png',
+      width: 250,
+      height: 150,
       hyperlink: "/docs/robots/husky/user_manual_husky"
     },
     text: (
@@ -52,9 +52,9 @@ const FEATURES: FeatureItem[] = [
       id: 'homepage_warthog',
     }),
     image: {
-      src: '/img/website_images/homepage_warthog.jpg',
-      width: 700,
-      height: 300,
+      src: '/img/website_images/warthog_thumbnail.png',
+      width: 250,
+      height: 150,
       hyperlink: "/docs/robots/warthog/user_manual_warthog"
     },
     text: (
@@ -69,10 +69,10 @@ const FEATURES: FeatureItem[] = [
       id: 'homepage_turtlebot',
     }),
     image: {
-      src: '/img/website_images/homepage_turtlebot.png',
-      width: 900,
-      height: 300,
-      hyperlink: "/docs/robots/turtlebot/user_manual_turtlebot"
+      src: '/img/website_images/turtlebot_thumbnail.png',
+      width: 250,
+      height: 150,
+      hyperlink: "/docs/robots/turtlebot4/user_manual_turtlebot4"
     },
     text: (
       <Translate id="homepage_turtlebot">
@@ -86,9 +86,9 @@ const FEATURES: FeatureItem[] = [
       id: 'homepage_dingo',
     }),
     image: {
-      src: '/img/website_images/homepage_dingo.png',
-      width: 700,
-      height: 300,
+      src: '/img/website_images/dingo_thumbnail.png',
+      width: 250,
+      height: 150,
       hyperlink: "/docs/robots/dingo/user_manual_dingo"
     },
     text: (
@@ -104,9 +104,9 @@ const FEATURES: FeatureItem[] = [
       id: 'homepage_boxer',
     }),
     image: {
-      src: '/img/website_images/homepage_boxer.png',
-      width: 700,
-      height: 300,
+      src: '/img/website_images/boxer_thumbnail.png',
+      width: 250,
+      height: 150,
       hyperlink: "/docs/robots/boxer/user_manual_boxer"
     },
     text: (
@@ -121,9 +121,9 @@ const FEATURES: FeatureItem[] = [
       id: 'homepage_ridgeback',
     }),
     image: {
-      src: '/img/website_images/homepage_ridgeback.jpg',
-      width: 700,
-      height: 300,
+      src: '/img/website_images/ridgeback_thumbnail.png',
+      width: 250,
+      height: 150,
       hyperlink: "/docs/robots/ridgeback/user_manual_ridgeback"
     },
     text: (
