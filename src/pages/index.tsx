@@ -3,9 +3,9 @@ import Layout from "@theme/Layout";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Link from "@docusaurus/Link";
 import styles from "./index.module.css";
-import clsx from 'clsx';
-import {useBaseUrlUtils} from '@docusaurus/useBaseUrl';
-import Features, {type FeatureItem} from '@site/src/data/features';
+import clsx from "clsx";
+import { useBaseUrlUtils } from "@docusaurus/useBaseUrl";
+import Features, { type FeatureItem } from "@site/src/data/features";
 
 function HomepageHeader() {
   return (
@@ -49,17 +49,11 @@ function HomepageImage() {
   );
 }
 
-function Feature({
-  feature,
-  className,
-}: {
-  feature: FeatureItem;
-  className?: string;
-}) {
-  const {withBaseUrl} = useBaseUrlUtils();
+function Feature({ feature, className }: { feature: FeatureItem; className?: string }) {
+  const { withBaseUrl } = useBaseUrlUtils();
 
   return (
-    <div className={clsx('col', className)}>
+    <div className={clsx("col", className)}>
       <a href={feature.image.hyperlink}>
         <img
           className={styles.featureImage}
@@ -84,7 +78,10 @@ function FeaturesContainer() {
     <div className="container text--center">
       <div className="row margin-top--lg margin-bottom--lg">
         {firstRow.map((feature, idx) => (
-          <Feature feature={feature} key={idx} />
+          <Feature
+            feature={feature}
+            key={idx}
+          />
         ))}
       </div>
       <div className="row">
