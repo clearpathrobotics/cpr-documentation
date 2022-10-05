@@ -1,6 +1,6 @@
 ---
 title: User Manual
-sidebar_position: 2
+sidebar_position: 1
 ---
 
 import ComponentIntroductionBoxer from "/components/introduction_boxer.mdx";
@@ -20,17 +20,16 @@ Contained in your shipment are the following items:
 - Handheld Joystick Controller
 - Optional: OTTO 100 Fast Charger
 
-If you elected to purchase standard payload modules or custom integration services with Boxer,
-then additional equipment will be included per your specific configuration, plus further documentation as required.
+If you elected to purchase standard payload modules or custom integration services with Boxer, then additional equipment will be included per your specific configuration, plus further documentation as required.
 
 The back of Boxer has the Human-Machine-Interface panel _(HMI)_.
 The HMI has 5 elements:
 
-1.  ethernet port
-2.  power button
-3.  E-stop reset button
-4.  chargeport
-5.  E-stop button
+1.  Ethernet port
+2.  Power button
+3.  Motion Stop reset button
+4.  Chargeport
+5.  Motion Stop button
 
 <center>
   <img
@@ -60,16 +59,17 @@ Below is an overview of the Boxer robot hardware that outlines the key component
 ### Software overview
 
 Your Boxer can be controller through ROS, either through a ROS2 API on the base platform or through a ROS1 API on the optional backpack computer.
-Some key topics that comprise the Boxer’s ROS1 API are listed below. For details on the ROS2 API, please contact our Support department.
+Some key topics that comprise the Boxer's ROS1 API are listed below.
+For details on the ROS2 API, please contact our Support department.
 
 | Topic                             | Message Type            | Purpose                                                                                                                                                                    |
 | :-------------------------------- | :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/cmd_vel`                        | `geometry_msgs/Twist`   | Input to Boxer’s kinematic controller. Publish here to make Boxer go.                                                                                                      |
-| `/odom`                           | `nav_msgs/Odometry`     | Publishes the internal odometry from Boxer’s base platform, a filtered localization estimate based on wheel odometry (encoders), an integrated IMU, a camera, and a laser. |
-| `/imu/module0/data`               | `sensor_msgs/IMU`       | Publishes the internal IMU data from Boxer’s base platform.                                                                                                                |
-| `/front/scan`                     | `sensor_msgs/LaserScan` | Publishes the laser scan data from the base platform’s front localization laser.                                                                                           |
-| `/rear/scan`                      | `/rear/scan`            | Publishes the laser scan data from the base platform’s rear safety laser.                                                                                                  |
-| `/realsense/depth/image_rect_raw` | `sensor_msgs/Image`     | Publishes depth data from the base platform’s camera.                                                                                                                      |
+| `/cmd_vel`                        | `geometry_msgs/Twist`   | Input to Boxer's kinematic controller. Publish here to make Boxer go.                                                                                                      |
+| `/odom`                           | `nav_msgs/Odometry`     | Publishes the internal odometry from Boxer's base platform, a filtered localization estimate based on wheel odometry (encoders), an integrated IMU, a camera, and a laser. |
+| `/imu/module0/data`               | `sensor_msgs/IMU`       | Publishes the internal IMU data from Boxer's base platform.                                                                                                                |
+| `/front/scan`                     | `sensor_msgs/LaserScan` | Publishes the laser scan data from the base platform's front localization laser.                                                                                           |
+| `/rear/scan`                      | `/rear/scan`            | Publishes the laser scan data from the base platform's rear safety laser.                                                                                                  |
+| `/realsense/depth/image_rect_raw` | `sensor_msgs/Image`     | Publishes depth data from the base platform's camera.                                                                                                                      |
 
 ---
 
@@ -80,11 +80,11 @@ The Boxer robot contains several features to protect the safety of users and the
 ### General warnings
 
 Use of an autonomous robot is inherently dangerous.
-Please take time to locate the red Emergency Stop _(E-stop)_ button on the rear-right of the system.
-When the E-stop button pressed, it provides a secure way to stop the robot movement, but does not control power attached by the attachment panel.
-Ensure the E-stop button is accessible at all times.
+Please take time to locate the red Motion Stop button on the rear-right of the system.
+When the Motion Stop button pressed, it provides a secure way to stop the robot movement, but does not control power attached by the attachment panel.
+Ensure the Motion Stop button is accessible at all times.
 
-When starting out, favor slower wheel speeds.
+When starting out, favour slower wheel speeds.
 Operating at such speeds will allow for more reaction time in the case of unexpected behaviour.
 
 When the robot is operating, keep clear of the wheels.
@@ -109,7 +109,7 @@ Refer to the [OTTO 100 V2.4 Operation and Maintenance Manual](https://help.ottom
 | Operating Temperature, Min         | 20 °C       |
 | Operating Temperature, Max         | 30 °C       |
 | Storage Temperature, Min           | -20 °C      |
-| Storage Temperature, Max           | 35 ° C      |
+| Storage Temperature, Max           | 35 °C       |
 | Operating Time, Standby            | 8 hours     |
 | Operating Time, Continuous Driving | 3 hours     |
 
@@ -152,10 +152,10 @@ Pull the robot out of the crate by hand, and then roll the robot down the wood r
     </center>
 3.  Wait for the system to boot.
     The Boxer's lights will go through a sequence of colors during this process:
-    - all white for approximately 30 seconds
-    - all red for approximately 30 seconds
-    - flashing white for less than 5 seconds
-    - then flashing red
+    - All white for approximately 30 seconds
+    - All red for approximately 30 seconds
+    - Flashing white for less than 5 seconds
+    - Then flashing red
       The Boxer will be sounding an alarm which will be adjusted during the base unit configuration below.
 
 ### Base unit configuration
@@ -216,7 +216,7 @@ You can omit this section if your Boxer is not equipped with a backpack computer
 
 The backpack computer is an add-on computer that is networked with the base platform's computer, located inside then Boxer.
 This backpack computer can be used to integrate peripherals, like sensors and manipulators.
-A ROS bridge automatically runs upon booting the backpack computer, and transmits the base platform computer’s ROS data to the backpack computer.
+A ROS bridge automatically runs upon booting the backpack computer, and transmits the base platform computer's ROS data to the backpack computer.
 This ROS bridge allows you to leverage the base robot for your own application.
 The backpack computer uses Netplan as its network configuration tool, and has a static IP address of <192.168.131.1>.
 
@@ -254,36 +254,42 @@ To connect the backpack computer to a wireless network follow these steps:
 3.  Open _/etc/netplan/60-wifi.yaml_ with your favourite text editor and populate it.
     Use this example configuration file as reference:
 
-        network:
-          wifis:
-            # change wlp2s0 to exactly match your wireless interface
-            # common values are wlp2s0, wlp3s0, wlan0, etc...
-            # if you aren't sure, use the `iwconfig` or `ip a` command
-            wlp2s0:
-              optional: true
-              access-points:
-                # replace "my-ssid" with the SSID of your wireless network
-                my-ssid:
-                  # put your wireless password here
-                  password: wifi_password_goes_here
-              # DHCP4 should be enabled for most wireless routers
-              # alternatively you can use a static IP address.
-              # e.g, uncomment the following
-              #addresses: [192.168.1.100/24]
-              #gateway: 192.168.1.1
-              #dhcp4: false
-              dhcp4: true
-              dhcp4-overrides:
-                send-hostname: true
+    ```
+    network:
+      wifis:
+        # change wlp2s0 to exactly match your wireless interface
+        # common values are wlp2s0, wlp3s0, wlan0, etc...
+        # if you aren't sure, use the `iwconfig` or `ip a` command
+        wlp2s0:
+          optional: true
+          access-points:
+            # replace "my-ssid" with the SSID of your wireless network
+            my-ssid:
+              # put your wireless password here
+              password: wifi_password_goes_here
+          # DHCP4 should be enabled for most wireless routers
+          # alternatively you can use a static IP address.
+          # e.g, uncomment the following
+          #addresses: [192.168.1.100/24]
+          #gateway: 192.168.1.1
+          #dhcp4: false
+          dhcp4: true
+          dhcp4-overrides:
+            send-hostname: true
+    ```
 
 4.  Connect the backpack computer to the wireless network by running the command below.
     Note that this may take a moment to complete:
 
-        sudo netplan apply
+    ```
+    sudo netplan apply
+    ```
 
 5.  To verify that the backpack computer is connected to the wireless network, check that the backpack computer has an IP address assigned to its wireless interface by running:
 
-        	ip a
+    ```
+    ip a
+    ```
 
 ---
 
@@ -297,7 +303,7 @@ There are three methods of operating the robot with varying degrees of control.
 This section details how to get the Robot driving around using the OTTO user interface.
 
 1.  Power on the system.
-2.  Ensure that the E-stop is released by pulling out the red button at the rear of the unit, and then pressing the blue Reset button.
+2.  Ensure that the Motion Stop is released by pulling out the red button at the rear of the unit, and then pressing the blue Reset button.
     <center>
       <img
         src="/img/robot_images/boxer_images/robot_boxer_13.jpg"
@@ -336,7 +342,7 @@ To drive the robot manually, follow the steps below.
         src="/img/robot_images/boxer_images/robot_boxer_16.png"
         width="600"
       />
-    </center>{" "}
+    </center>
 
 ### 5.1.2 Mapping
 
@@ -366,7 +372,7 @@ To use the controller:
         src="/img/robot_images/boxer_images/robot_boxer_17.png"
         width="600"
       />
-    </center>{" "}
+    </center>
 
 ### Operation using ROS
 
@@ -375,7 +381,7 @@ For general ROS tutorials, visit <https://clearpathrobotics.com/assets/guides/no
 To quickly get started running your Boxer with ROS follow the instructions below.
 
 Upon booting the Boxer, ROS will begin running on both the base platform computer and the backpack computer.
-The Boxer can be operated using ROS over its ROS topics, and there are two ways of interfacing with Boxer’s ROS topics:
+The Boxer can be operated using ROS over its ROS topics, and there are two ways of interfacing with Boxer's ROS topics:
 
 1.  SSH into Boxer's backpack computer, or
 2.  Setting the Boxer's backpack PC as the ROS Master on a local computer.
@@ -384,29 +390,37 @@ You can SSH into the Boxer's backpack computer by connecting a network cable dir
 Configure your computer to have a static IP address on the `192.168.131.0/24` subnet, for example `192.168.131.100`>`.  
 Once this is done you can log into the robot by running:
 
-    ssh administrator@192.168.131.1
+```
+ssh administrator@192.168.131.1
+```
 
 If your laptop is connected to the same Wi-Fi network as the Boxer, you can SSH into the backpack computer using the robot’s IP address on the Wi-Fi network (e.g. `192.168.1.11`)
 You may need to SSH over a wired connection and use the `ip a` command to determine what Wi-Fi address has been assigned to the backpack computer.
 
-      ssh administrator@<computer ip>
+```
+ssh administrator@<computer ip>
+```
 
 The ROS topics on Boxer can be seen by running:
 
-      rostopic list
+```
+rostopic list
+```
 
 Data from sensors such as the camera, internal IMU, front laser, and rear laser can be seen with:
 
+```
 rostopic echo /realsense/depth/image_rect_raw
 rostopic echo /imu/module0/data
 rostopic echo /front/scan
 rostopic echo /rear/scan
+```
 
 Boxer can be driven using its kinematic controller by publishing drive commands to the `/cmd_vel` ROS topic.
 For example, to drive Boxer forward slowly:
 
-      rostopic pub /cmd_vel geometry_msgs/Twist "linear:
-
+```
+rostopic pub /cmd_vel geometry_msgs/Twist "linear
 x: 0.1
 y: 0.0
 z: 0.0
@@ -414,19 +428,25 @@ angular:
 x: 0.0
 y: 0.0
 z: 0.0"
+-r 10
+```
 
 Boxer can be visualized and controlled through RViz.
 On you laptop, set the Boxer's backpack computer as the ROS Master, and run the following command to view Boxer in RViz.
 
-    roslaunch boxer_viz view_robot.launch
+```
+roslaunch boxer_viz view_robot.launch
+```
 
 RViz allows you to interactively drive Boxer around.
 Note that the Boxer-specific packages must be installed and sourced on your laptop before to running the command, otherwise, Boxer will not load correctly in RViz.
 
 To restart ROS without having to reboot the Boxer:
 
+```
 sudo systemctl restart ros
 sudo systemctl restart ros-bridge
+```
 
 ---
 
@@ -456,7 +476,7 @@ There are 19 premade Ø4.3 mm holes that can be used for mounting payloads to th
     src="/img/robot_images/boxer_images/robot_boxer_18.png"
     width="600"
   />
-</center>{" "}
+</center>
 
 The plate also has eight Ø8 mm holes in the corners which are countersunk from the underside of the plate, making them ideal for flathead screws installed to protrude from the plate.
 
@@ -465,9 +485,9 @@ The plate also has eight Ø8 mm holes in the corners which are countersunk from 
     src="/img/robot_images/boxer_images/robot_boxer_19.png"
     width="600"
   />
-</center>{" "}
+</center>
 
-### 6.2 Electrical Integration
+### Electrical Integration
 
 For connecting with any external payloads, such as a backpack computer, refer to the product's datasheet or manual.
 If your robot was equipped with these payloads by Clearpath Robotics this documentation is provided along with your Boxer.
@@ -475,12 +495,12 @@ Contact our Support team if you need more information.
 
 Ensure that the Boxer is shut off and the circuit breaker is turned to the _off_ position before performing any electrical work on the Boxer.
 
-The Boxer is equipped with an attachment interface that consists of a Power-over-Ethernet (PoE) RJ45 bulkhead connector, a USB Type-A bulkhead connector, and a 37-Position panel receptacle and mated plug.
+The Boxer is equipped with an attachment interface that consists of a Power-over-Ethernet (PoE) RJ45 bulkhead connector, a USB Type-A bulkhead connector, and a 37-position panel receptacle and mated plug.
 To connect with the Boxer attachment interface see Section 10 of the [OTTO 100 V2.4 Operation and Maintenance Manual](https://help.ottomotors.com/docs/files/53683025/99909709/1/1606232510624/OMM-000094-Operation+and+Maintenance+Manual+OTTO+100+V2.4_A.pdf).
 
-To add wires to the 37-Position connector for you application, follow the TE Connectivity documentation for [connector 206305-1](https://www.te.com/usa-en/product-206305-1.html) to use appropriate crimp pins.
-Note that the 37-Position connector will come pre-populated from Clearpath Robotics with 2 wires.
-These 2 wires complete the base Boxer's E-stop loop, allowing the robot to move.
+To add wires to the 37-position connector for you application, follow the TE Connectivity documentation for [connector 206305-1](https://www.te.com/usa-en/product-206305-1.html) to use appropriate crimp pins.
+Note that the 37-position connector will come pre-populated from Clearpath Robotics with 2 wires.
+These 2 wires complete the base Boxer's Motion Stop loop, allowing the robot to move.
 Other positions of the connector may be pre-populated, well as the PoE and USB, if your robot was equipped with payloads according to your Clearpath Robotics customizations.
 
 <ComponentIntegrationRosSensors />
@@ -496,11 +516,13 @@ Here are some steps that can be taken to maintain and extend the life of Boxer f
 
 To help extend the life of the batteries, follow the steps below.
 
-- Do not discharge the batteries lower than 10%. Batteries lower than 5% are permanently damaged and cannot be recharged.
+- Do not discharge the batteries lower than 10%.
+  Batteries lower than 5% are permanently damaged and cannot be recharged.
 - Recharge batteries to 100% after every use.
 - Recharge batteries and turn the circuit breaker to ”OFF” before putting the system into long-term storage.
 - Batteries that are in long-term storage will need to be recharged every 6 months.
-- Charge batteries when the ambient temperature is between 20°C to 30°C. Consult Clearpath Robotics if you need to charge batteries outside these conditions.
+- Charge batteries when the ambient temperature is between 20 °C to 30 °C.
+  Consult Clearpath Robotics if you need to charge batteries outside these conditions.
 
 ### Battery charging
 
@@ -515,3 +537,4 @@ Use of other chargers may cause damage or injury.
 ## Support
 
 <Support />
+```
