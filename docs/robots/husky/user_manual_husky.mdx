@@ -31,28 +31,27 @@ Your Husky shipment contains the following:
 - Lockout Keys (2X)
 - Power Connectors (3X)
 
-If you purchased standard payload modules or custom integration services with Husky, then additional
-equipment will be included per your specific configuration, plus further documentation as required.
+If you purchased standard payload modules or custom integration services with Husky, then additional equipment will be included per your specific configuration, plus further documentation as required.
 
 ### Hardware Overview
 
 #### System Architecture
 
-Husky is built around a computer running Ubuntu (Intel-based computer or Jetson developer kit), paired
-with a 32-bit MCU. The MCU handles power supply monitoring and motor control. The communication channel
-between the MCU and computer is a serial connection.
+Husky is built around a computer running Ubuntu (Intel-based computer or Jetson developer kit), paired with a 32-bit MCU.
+The MCU handles power supply monitoring and motor control.
+The communication channel between the MCU and computer is a serial connection.
 
 #### Exterior Features
 
 The Husky exterior is shown below and includes:
 
-- extruded aluminum mounting rail
-- user payload area, including user power panel
-- front and rear bumper bars
-- battery bay
-- status panel
-- power button
-- emergency stop button and lockout
+- Extruded aluminum mounting rail
+- User payload area, including user power panel
+- Front and rear bumper bars
+- Battery bay
+- Status panel
+- Power button
+- Motion Stop button and lockout
 
 <center>
   <figure>
@@ -93,17 +92,14 @@ The silver button at the top of the Status Panel is used to power the Husky on a
 will cause the Husky to power on and a blue ring at the edge of the button will be illuminated. From the "on" state, pressing
 the button will cause the Husky to power off and the blue ring will no longer be illuminated.
 
-See [Stop Button and Lockout](#husky-stop-button-and-lockout) for details of the stop button and lockout.
+See [Stop button and Lockout](#husky-stop-button-and-lockout) for details of the Stop button and Lockout.
 
 #### Payloads
 
-Additional payloads such IMUs, lidars, cameras, GPS, manipulators and many more can be integrated with Husky, either
-as part of your Husky purchase or installed after receiving your Husky. You can find a list of supported packages and
-related documentation for payloads in this documention portal, under the [Computers](/docs/computers),
-[Sensors](/docs/sensors), [Manipulators](/docs/manipulators), and [Accessories](/docs/accessories)
-sections. In addition, refer to [Husky Integration](/docs/robots/husky/integration_husky) for details on
-how to integrate your own payload or how to integrate a payload kit from Clearpath Robotics. Each payload kit that
-ships from Clearpath Robotics comes with a custom mounting bracket and cabling for easy attachment to Husky.
+Additional payloads such IMUs, lidars, cameras, GPS, manipulators and many more can be integrated with Husky, either as part of your Husky purchase or installed after receiving your Husky.
+You can find a list of supported packages and related documentation for payloads in this documention portal, under the [Computers](/docs/computers), [Sensors](/docs/sensors), [Manipulators](/docs/manipulators), and [Accessories](/docs/accessories) sections.
+In addition, refer to [Husky Integration](/docs/robots/husky/integration_husky) for details on how to integrate your own payload or how to integrate a payload kit from Clearpath Robotics.
+Each payload kit that ships from Clearpath Robotics comes with a custom mounting bracket and cabling for easy attachment to Husky.
 
 #### Orientation References
 
@@ -128,12 +124,12 @@ v=\cfrac{v_{r}+v_{l}}{2}
 $$
 
 $$
-\omega=\cfrac{v_{r}-v_{l}}{w}
+\omega=\cfrac{v_{r}-v_{l}}{W}
 $$
 
 $v$ represents the instantaneous translational speed of the platform and $\omega$ the instantaneous rotational speed. <br />
 $v_{r}$ and $v_{l}$ are the right and left wheel velocities, respectively. <br />
-$w$ is the effective track of the robot, 0.555 m.
+$W$ is the effective track of the robot, 0.555 m.
 
 ### System Specifications
 
@@ -149,10 +145,10 @@ $w$ is the effective track of the robot, 0.555 m.
 | Maximum Payload¹               | 75 kg                                                                    |
 | All-terrain Payload²           | 20 kg                                                                    |
 | Speed, Maximum                 | 1 m/s                                                                    |
-| Climb Grade                    | 45°                                                                      |
-| Traversal Grade / Sideslope    | 30°                                                                      |
-| Operating Temperature, Minimum | -10°C                                                                    |
-| Operating Temperature, Maximum | 40°C (not in direct sunlight)                                            |
+| Climb Grade                    | 45 °                                                                     |
+| Traversal Grade / Sideslope    | 30 °                                                                     |
+| Operating Temperature, Minimum | -10 °C                                                                   |
+| Operating Temperature, Maximum | 40 °C (not in direct sunlight)                                           |
 | Operating Time, Average        | 3 hours                                                                  |
 | Operating Time, Standby        | 8 hours                                                                  |
 | Battery                        | 20 Ah @ 24 V, sealed lead-acid                                           |
@@ -180,21 +176,17 @@ _²robot climbing 30° grade with high-mounted payload, or turning in place in h
 ## Getting Started
 
 You are ready to go! This section details how to get Husky into action.
-To begin, place Husky "up on blocks" as described in the [Safety](#safety) section,
-making sure that the wheels are clear of the ground.
+To begin, place Husky "up on blocks" as described in the [Safety](#safety) section, making sure that the wheels are clear of the ground.
 
-For most Husky setups, there will be an Onboard Computer which is directly connected to the Husky
-and a Remote Computer which is used to control Husky and gather data. These two computers must be set up
-to communicate with each other.
+For most Husky setups, there will be an Onboard Computer which is directly connected to the Husky and a Remote Computer which is used to control Husky and gather data.
+These two computers must be set up to communicate with each other.
 
 ### Onboard Computer Setup
 
-If you purchased an Onboard Computer from Clearpath Robotics with Husky, it is already installed,
-connected, and powered. If not, or to set up your own Onboard Computer, see the
-[Husky Tutorials](/docs/robots/husky/tutorials_husky).
+If you purchased an Onboard Computer from Clearpath Robotics with Husky, it is already installed, connected, and powered.
+If not, or to set up your own Onboard Computer, see the [Husky Tutorials](/docs/robots/husky/tutorials_husky).
 
-Note that the Onboard Computer must be connected to Husky's serial port, which is located in the
-user power panel accessible from the User Bay.
+Note that the Onboard Computer must be connected to Husky's serial port, which is located in the user power panel accessible from the User Bay.
 
 <center>
   <figure>
@@ -206,10 +198,9 @@ user power panel accessible from the User Bay.
   </figure>
 </center>
 
-The connector is a female DE-9, suitable for connection directly to a USB-serial adaptor or to a computer
-serial port via a straight-through modem cable (not a null modem cable). How you connect the Onboard
-Computer to Husky depends on whether the Onboard Computer has a dedicated serial port. Husky is delivered with a
-USB-serial adaptor.
+The connector is a female DE-9, suitable for connection directly to a USB-serial adaptor or to a computer serial port via a straight-through modem cable (not a null modem cable).
+How you connect the Onboard Computer to Husky depends on whether the Onboard Computer has a dedicated serial port.
+Husky is delivered with a USB-serial adaptor.
 
 ### Powering Up
 
@@ -235,30 +226,25 @@ To power on Husky, firmly press the power button located above the status panel.
 It will illuminate blue, and the status panel lights will show a brief test pattern.
 The `COMM` status light will turn red, as the PC is not yet communicating with Husky.
 
-The `STOP` status light will be red if the stop button is pressed.
-If the stop button is not pressed, press it and verify that the `STOP` light illuminates.
-Leave the platform in stop mode until it is successfully receiving commands, indicated
-by the `COMM` status light turning green or yellow. If a computer was purchased with Husky, it
-will be setup to interface automatically upon startup; 60-90 seconds after booting up,
-`COMM` status light will change from red to green (or yellow, depending on the stop
-mode status). This indicates that ROS is up on the computer and has established
-communications with the Husky base.
+The `STOP` status light will be red if the Stop button is pressed.
+If the Stop button is not pressed, press it and verify that the `STOP` light illuminates.
+Leave the platform in stop mode until it is successfully receiving commands, indicated by the `COMM` status light turning green or yellow.
+If a computer was purchased with Husky, it will be setup to interface automatically upon startup; 60-90 seconds after booting up, `COMM` status light will change from red to green (or yellow, depending on the stop mode status).
+This indicates that ROS is up on the computer and has established communications with the Husky base.
 
 ### Network Configuration
 
-To get Husky connected to your local Wi-Fi network, you must first access the Onboard Computer using
-a wired connection to the robot. See the
-[Husky Tutorials](/docs/robots/husky/tutorials_husky#husky-networking) for details.
+To get Husky connected to your local Wi-Fi network, you must first access the Onboard Computer using a wired connection to the robot.
+See the [Husky Tutorials](/docs/robots/husky/tutorials_husky#husky-networking) for details.
 
 ### Connecting and Using the Controller {#controller}
 
-To use your controller, it must be paired with your Husky and powered on. If your purchased the Onboard Computer from
-Clearpath Robotics, your controller is already paired with your Husky. If your controller has become
-unpaired or if you wish to pair a new controller, following the instructions in the
+To use your controller, it must be paired with your Husky and powered on.
+If your purchased the Onboard Computer from Clearpath Robotics, your controller is already paired with your Husky.
+If your controller has become unpaired or if you wish to pair a new controller, following the instructions in the
 [Husky Tutorials](/docs/robots/husky/tutorials_husky#pairing-the-controller).
 
-To teleoperate Husky, first release the motion stop. Then, referring to the following images, press the enable
-button (either slow or fast mode) and use the left thumbstick to drive Husky.
+To teleoperate Husky, first release the motion stop. Then, referring to the following images, press the enable button (either slow or fast mode) and use the left thumbstick to drive Husky.
 
 <center>
   <figure>
@@ -284,8 +270,7 @@ button (either slow or fast mode) and use the left thumbstick to drive Husky.
 ### Battery Charging
 
 The battery shipped with Husky A200 may be charged outside the robot or while still inside of Husky.
-If charging while installed, you will need to open the access door to the battery area, and
-disconnect the battery from its connector in the fuse panel. From there:
+If charging while installed, you will need to open the access door to the battery area, and disconnect the battery from its connector in the fuse panel. From there:
 
 1.  Connect the DC output cable from the charger to the battery terminal connector.
 2.  Plug the charger power cord into the charger and then into a wall receptacle.
@@ -293,12 +278,11 @@ disconnect the battery from its connector in the fuse panel. From there:
 4.  When battery is fully charged, the CHARGING LED light will turn off.
 5.  Unplug the charger from the wall and then disconnect it from the battery.
 
-The battery charger shipped with Clearpath Robotics's lead-acid battery-powered products uses a three-state
-charge cycle.
+The battery charger shipped with Clearpath Robotics's lead-acid battery-powered products uses a three-state charge cycle.
 
-1.  A fast, high current initial charge, until the battery voltage reaches 29.6V.
-2.  A topping charge, during which the battery charges at 29.6V constant voltage until the current decreases to 500 mA.
-3.  A precision float charge, during which the battery voltage is held at 27.6V.
+1.  A fast, high current initial charge, until the battery voltage reaches 29.6 V.
+2.  A topping charge, during which the battery charges at 29.6 V constant voltage until the current decreases to 500 mA.
+3.  A precision float charge, during which the battery voltage is held at 27.6 V.
     This mode allows the charger to remain connected to the battery during periods of non-use, keeping it in a state of full charge.
     When in this mode, the CHARGING LED will be off.
 
@@ -317,38 +301,34 @@ the robot raised off the ground. Place a wooden crate, a set of sawhorses, a stu
 other solid flat structure having a height greater than 150 mm under Husky to keep the wheels clear of the
 ground ("up on blocks").
 
-When starting out, favour slower wheel speeds. Husky's control loops can accurately maintain velocities as
-low as 0.1 m/s. Operating at such speeds will give you more time to react if things don't go quite as you
-expect.
+When starting out, favour slower wheel speeds. Husky's control loops can accurately maintain velocities as low as 0.1 m/s.
+Operating at such speeds will give you more time to react if things don't go quite as you expect.
 
-When Husky is operating, keep clear of the wheels, paying particular attention to the pinch hazard which
-exists between each wheel and the end of the corresponding bumper bar.
+When Husky is operating, keep clear of the wheels, paying particular attention to the pinch hazard which exists between each wheel and the end of the corresponding bumper bar.
 
 ### Stop Button and Lockout {#husky-stop-button-and-lockout}
 
 :::warning
 
-Ensure the stop button is accessible at all times.
-Avoid mounting payloads that extend over the rear of Husky and would occlude the stop button.
+Ensure the Stop button is accessible at all times.
+Avoid mounting payloads that extend over the rear of Husky and would occlude the Stop button.
 
 :::
 
-The motion-stop function that allows a person in the physical vicinity of the robot
-to halt its motion and prevent re-initiation of motion. Power supply to Husky's motor drivers is
-enabled by a normally-open relay, which is closed in series with the stop switch. This motion-stop
-system is intended for use in emergency situations. The motion stop system should not be used as
-the means of controlling robot motion during regular operation.
+The motion-stop function that allows a person in the physical vicinity of the robot to halt its motion and prevent re-initiation of motion.
+Power supply to Husky's motor drivers is enabled by a normally-open relay, which is closed in series with the stop switch.
+This motion-stop system is intended for use in emergency situations.
+The motion stop system should not be used as the means of controlling robot motion during regular operation.
 
 When in stop mode, the status panel stop light will illuminate red and Husky will not drive.
 The commands received during stop mode are not buffered; Husky will always act on the latest commands received.
 This means that if the commands are stopped before the stop is released, the Husky will not move.
 If the commands are continued, Husky will move at the speed commanded once the stop is released.
 
-This "stop" function can be asserted by pressing the red stop actuator present at the rear of the
-Husky, opposite the status panel, as shown in the following figure. The motion-stop function can be
-reset by twisting the depressed actuator until it returns to an extended position. There is no second
-"start" action required to reset the stop function. The robot may begin moving again immediately
-after the stop actuator has returned to its extended position.
+This "Stop" function can be asserted by pressing the red stop actuator present at the rear of the Husky, opposite the status panel, as shown in the following figure.
+The motion-stop function can be reset by twisting the depressed actuator until it returns to an extended position.
+There is no second "start" action required to reset the stop function.
+The robot may begin moving again immediately after the stop actuator has returned to its extended position.
 
 <center>
   <figure>
@@ -356,7 +336,7 @@ after the stop actuator has returned to its extended position.
       src="/img/robot_images/husky_images/robot_husky_10.png"
       width="600"
     />
-    <figcaption>Stop button and lockout</figcaption>
+    <figcaption>Stop button and Lockout</figcaption>
   </figure>
 </center>
 
@@ -365,29 +345,26 @@ When in lockout mode, the robot will still power on, but the motors will not dri
 
 ### Electrical System
 
-Husky is powered by a single 24V sealed lead-acid battery, similar to the type found in electric wheelchairs,
-golf carts, and other devices. Husky's battery is capable of delivering 1800W, similar to wall mains.
+Husky is powered by a single 24 V sealed lead-acid battery, similar to the type found in electric wheelchairs, golf carts, and other devices.
+Husky's battery is capable of delivering 1800 W, similar to wall mains.
 This gives Husky's motors their great performance, however, it is also enough power to cause severe bodily harm.
 Please observe the following precautions:
 
 - Do not tamper with the plug attached to the battery.
-- Do not tamper with the fuse panel, except to check and change the fuses, and to connect and disconnect the
-  battery plug.
-- Do not operate Husky without the battery door in place. The battery is not restrained without the door, and
-  will come loose, damaging the fuse panel.
+- Do not tamper with the fuse panel, except to check and change the fuses, and to connect and disconnect the battery plug.
+- Do not operate Husky without the battery door in place.
+  The battery is not restrained without the door, and will come loose, damaging the fuse panel.
 - Charge the battery only with the charger provided by Clearpath Robotics.
 - Please dispose of the batteries properly.
 
 ### Lifting and Transport
 
-For the safety of users and to maximize the lifetime of Husky, please observe the following when manually
-transporting the robot:
+For the safety of users and to maximize the lifetime of Husky, please observe the following when manually transporting the robot:
 
 - Husky should be lifted by two persons, firmly gripping the front and rear bumper-bars.
   The battery can be removed to lighten the load of a manual transport.
-- Ensure that Husky is in stop mode when transporting short distances and powered off when transporting
-  longer distances.
-- Note: It is not advised to push Husky, as this can cause damage to the motors.
+- Ensure that Husky is in Stop mode when transporting short distances and powered off when transporting longer distances.
+- It is not advised to push Husky, as this can cause damage to the motors.
 
 ### Performance Considerations
 
@@ -395,17 +372,15 @@ Included in Husky are native software checks and limits to protect the robot.
 However, it is recommended to monitor the system's status during usage with the `/status` and `/diagnostics` topics.
 These topics provides useful information regarding voltages, currents, temperatures and general health of the system.
 
-The total current draw does not include the motors drivers; it is the current consumed by the MCU and user power
-ports. Husky's motors are rated to draw 8A continuous, but they will spike to several times this, particularly when
-traversing rough terrain and when turning on the spot. To reduce current draw, consider commanding wider-radius turns
-from your control software.
+The total current draw does not include the motors drivers; it is the current consumed by the MCU and user power ports.
+Husky's motors are rated to draw 8 A continuous, but they will spike to several times this, particularly when traversing rough terrain and when turning on the spot.
+To reduce current draw, consider commanding wider-radius turns from your control software.
 
-The temperature is measured in the motor drivers and on the motor casings; the coils inside the motor casings cannot
-be measured. Therefore, it is important to note that the temperature measured on the motor casings is a lagging
-indicator of the temperature of the coils inside the casing. Be aware of the delay in heat propagation on the motors
-during heavy use. The thermal limit of the system is 50°C, and the system will shut down if this limit is reached.
-Monitoring these fields over longer periods of operation will allow you to ensure that you are not putting
-excessive wear on Husky's motors.
+The temperature is measured in the motor drivers and on the motor casings; the coils inside the motor casings cannot be measured.
+Therefore, it is important to note that the temperature measured on the motor casings is a lagging indicator of the temperature of the coils inside the casing.
+Be aware of the delay in heat propagation on the motors during heavy use.
+The thermal limit of the system is 50 °C, and the system will shut down if this limit is reached.
+Monitoring these fields over longer periods of operation will allow you to ensure that you are not putting excessive wear on Husky's motors.
 
 ### Recommended Safe Work Procedures
 

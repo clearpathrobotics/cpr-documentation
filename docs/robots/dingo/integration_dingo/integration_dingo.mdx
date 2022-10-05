@@ -26,18 +26,16 @@ When determining mechanical mounting, you have two options, both of which are de
 
 #### Mechanical, Standard
 
-A standard Dingo is delivered with an 80 mm square mounting hole pattern on Dingo's
-trough cover as shown in [Exterior Features](#dingo-exterior-features), which can be
-used for attaching external payloads. The mounting holes come with M5 screws pre-installed.
-You may mount your hardware directly onto the trough cover or you may design and mount
-a new plate to the trough cover and secure it to the trough cover using M5 screws.
+A standard Dingo is delivered with an 80 mm square mounting pattern of M5 threaded holes on Dingo's trough cover as shown in [Exterior Features](#dingo-exterior-features), which can be used for attaching external payloads.
+The mounting holes come with M5 screws pre-installed.
+You may mount your hardware directly onto the trough cover or you may design and mount a new plate to the trough cover and secure it to the trough cover using M5 screws.
 
 #### Mechanical, PACS
 
 <ComponentPacsMechanical />
 
 Refer to the following pages for Dingo brackets that can simplify your integration.
-You can also try different confgurations using our tool at [build.clearpathrobotics.com/husky](https://build.clearpathrobotics.com/dingo)
+You can also try different confgurations using our tool at [build.clearpathrobotics.com/dingo](https://build.clearpathrobotics.com/dingo)
 
 - [Top Plate](/docs/robots/dingo/integration_dingo/kits/top_plate_dingo)
 
@@ -47,19 +45,16 @@ Except for bus-powered USB cameras, most payloads have separate leads for power 
 
 #### Data Connections
 
-Data connections may be brought through the openings in the trough cover and connected directly to
-the internal computer.
+Data connections may be brought through the openings in the trough cover and connected directly to the internal computer.
 
-Dingo's internal computer options support USB3 and Ethernet connectivity. In addition,
-the PCIe Gen3 x16 slot may be used to supply a GPU or other attachements, as necessary.
-Additionally, the internal mounting area may be used for an Ethernet switch, when attaching multiple
-Ethernet payloads, or for a PoE power injector as required.
+Dingo's internal computer options support USB3 and Ethernet connectivity.
+In addition, the PCIe Gen3 x16 slot may be used to supply a GPU or other attachements, as necessary.
+Additionally, the internal mounting area may be used for an Ethernet switch, when attaching multiple Ethernet payloads, or for a PoE power injector as required.
 
 #### Connector Summary
 
-The Dingo MCU board provides a number of connections for power, relays, auxiliary inputs and
-auxiliary outputs. These are summarized in the following table and described in more detail in
-the following sections.
+The Dingo MCU board provides a number of connections for power, relays, auxiliary inputs and auxiliary outputs.
+These are summarized in the following table and described in more detail in the following sections.
 
 | MCU board label  | MCU board connector | Mating connector | Crimp terminals                                              | Crimping tool    |
 | :--------------- | :------------------ | :--------------- | :----------------------------------------------------------- | :--------------- |
@@ -74,14 +69,12 @@ the following sections.
 
 #### User Power Connections
 
-The following are available as user power: unregulated battery power (see VBAT), regulated 12 V power
-(see PWR1 and PWR2), and regulated 5V power (see PWR1 and PWR2).
+The following are available as user power: unregulated battery power (see VBAT), regulated 12 V power (see PWR1 and PWR2), and regulated 5 V power (see PWR1 and PWR2).
 
-Similar to the data connections, the power leads may be brought through the trough cover and connected
-to the user power. Remove the front trough cover by removing four flathead screws and locate the appropriate power
-connector on the MCU board. Refer to the figure below for the location of the user power connectors.
-Route the power from the MCU board to the appropriate location, either to the internal
-payload modules or through the openings in the trough cover to the topside payload.
+Similar to the data connections, the power leads may be brought through the trough cover and connected to the user power.
+Remove the front trough cover by removing four flathead screws and locate the appropriate power connector on the MCU board.
+Refer to the figure below for the location of the user power connectors.
+Route the power from the MCU board to the appropriate location, either to the internal payload modules or through the openings in the trough cover to the topside payload.
 
 <center>
   <figure>
@@ -95,18 +88,17 @@ payload modules or through the openings in the trough cover to the topside paylo
 
 #### AUX Inputs {#dingo-aux-inputs}
 
-The Dingo MCU includes an 8-pin `INPUTS` connector and a 2-pin `SW_IN` connector
-that allow the user to provide inputs to the system. The user can then subscribe to
-these inputs on the `/mcu/aux_inputs` ROS topic. The AUX inputs
-are mapped to the ROS message bits as follows:
+The Dingo MCU includes an 8-pin `INPUTS` connector and a 2-pin `SW_IN` connector that allow the user to provide inputs to the system.
+The user can then subscribe to these inputs on the `/mcu/aux_inputs` ROS topic.
+The AUX inputs are mapped to the ROS message bits as follows:
 
 - IN1: bit 0
 - IN2: bit 1
 - IN3: bit 2
 
-Electrically, the `INPUTS` connector is used for IN1 and IN2, with pin mapping as
-outlined below. Note that each of the two inputs can be 12 V or 24 V inputs, with a
-shared return path. The inputs have opto-electrical isolation.
+Electrically, the `INPUTS` connector is used for IN1 and IN2, with pin mapping as outlined below.
+Note that each of the two inputs can be 12 V or 24 V inputs, with a shared return path.
+The inputs have opto-electrical isolation.
 
 - 1: 12 V power (for external input circuit, if needed)
 - 2: IN1 return
@@ -117,21 +109,18 @@ shared return path. The inputs have opto-electrical isolation.
 - 7: IN2 12 V input
 - 8: IN2 24 V input
 
-Electrically, the `SW_IN` connector is used for IN3, with pin mapping as outlined
-below. This is intended to be a 'switch' input and it generates a 100 ms pulse
-to the microcontroller when asserted.
+Electrically, the `SW_IN` connector is used for IN3, with pin mapping as outlined below.
+This is intended to be a 'switch' input and it generates a 100 ms pulse to the microcontroller when asserted.
 
-- 1: 3.3V input (IN3)
+- 1: 3.3 V input (IN3)
 - 2: GND
 
 #### AUX Outputs and Relay {#dingo-aux-outputs}
 
-The Dingo MCU includes three user-controlled outputs (AUX1, AUX2, AUX3), that
-can be controlled by publishing to the `/mcu/aux_outputs` ROS topic. To enable
-the AUX outputs, simply publish a single message with the appropriate bits set
-to 1 to turn the output on and 0 to turn it off. The state does not persist
-meaning new commands will need to keep the bit enabled as well. The AUX outputs
-are mapped to the ROS message bits as follows:
+The Dingo MCU includes three user-controlled outputs (AUX1, AUX2, AUX3), that can be controlled by publishing to the `/mcu/aux_outputs` ROS topic.
+To enable the AUX outputs, simply publish a single message with the appropriate bits set to 1 to turn the output on and 0 to turn it off.
+The state does not persist meaning new commands will need to keep the bit enabled as well.
+The AUX outputs are mapped to the ROS message bits as follows:
 
 - AUX1: bit 0
 - AUX2: bit 1
@@ -193,8 +182,8 @@ connector on the MCU labelled `RELAY` with pin mapping:
 #### Optional Fan {#dingo-fan}
 
 While a fan is not included by default with Dingo, a fan may be integrated into the system.
-Electrically, connect a 12 V 2-pin fan to the MCU connector labelled `FAN`
-using a mating connector. The pins should be connected as follows:
+Electrically, connect a 12 V 2-pin fan to the MCU connector labelled `FAN` using a mating connector.
+The pins should be connected as follows:
 
 - 1: 12 V
 - 2: GND
@@ -203,14 +192,12 @@ Then, the use can publish a ROS message to the `/mcu/fans` topic to control the 
 
 #### Optional External Motion Stop {#dingo-external-motion-stop}
 
-In addition to the built-in Motion Stop button, an external motion-stop button can be added that has similar
-functionality. Electrically, the external motion-stop button can be connected to the 6-pin MCU connector
-labelled `ESTOP` using a mating connector.
+In addition to the built-in Motion Stop button, an external motion-stop button can be added that has similar functionality.
+Electrically, the external motion-stop button can be connected to the 6-pin MCU connector labelled `ESTOP` using a mating connector.
 
 The six pins should be connected as follows:
 
-- 1-2: to external motion-stop breakout: press and release external button (3.3V) to engage motion-stop; press and release
-  external button or Motion Stop button to clear the motion-stop
+- 1-2: to external motion-stop breakout: press and release external button (3.3V) to engage motion-stop; press and release external button or Motion Stop button to clear the motion-stop
 - 3-4: short these pins to indicate that external motion-stop is selected
 - 5-6: short these pins to indicate that external motion-stop is present
 
@@ -219,7 +206,7 @@ The six pins should be connected as follows:
 The Dingo MCU PCBA comes equipped with four LEDs controlled by Dingo firmware for debugging.
 If the system is working properly, these LEDs functions as follows:
 
-- **DBG1**: toggles every 500ms when main loop on MCU is running
+- **DBG1**: toggles every 500 ms when main loop on MCU is running
 - **DBG2**: on if MCU connected to ROS on computer; else false (same as COMMS LED on HMI)
 - **DBG3**: toggles when MCU is relaying messages from CAN bus to computer
 - **DBG4**: toggles when MCU is relaying messages from computer to CAN bus
