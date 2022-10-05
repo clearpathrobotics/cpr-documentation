@@ -60,16 +60,16 @@ Below is an overview of the Boxer robot hardware that outlines the key component
 ### Software overview
 
 Your Boxer can be controller through ROS, either through a ROS2 API on the base platform or through a ROS1 API on the optional backpack computer.
-Some key topics that comprise the Boxer’s ROS1 API are listed below. For details on the ROS2 API, please contact our Support department.
+Some key topics that comprise the Boxer's ROS1 API are listed below. For details on the ROS2 API, please contact our Support department.
 
 | Topic                             | Message Type            | Purpose                                                                                                                                                                    |
 | :-------------------------------- | :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/cmd_vel`                        | `geometry_msgs/Twist`   | Input to Boxer’s kinematic controller. Publish here to make Boxer go.                                                                                                      |
-| `/odom`                           | `nav_msgs/Odometry`     | Publishes the internal odometry from Boxer’s base platform, a filtered localization estimate based on wheel odometry (encoders), an integrated IMU, a camera, and a laser. |
-| `/imu/module0/data`               | `sensor_msgs/IMU`       | Publishes the internal IMU data from Boxer’s base platform.                                                                                                                |
-| `/front/scan`                     | `sensor_msgs/LaserScan` | Publishes the laser scan data from the base platform’s front localization laser.                                                                                           |
-| `/rear/scan`                      | `/rear/scan`            | Publishes the laser scan data from the base platform’s rear safety laser.                                                                                                  |
-| `/realsense/depth/image_rect_raw` | `sensor_msgs/Image`     | Publishes depth data from the base platform’s camera.                                                                                                                      |
+| `/cmd_vel`                        | `geometry_msgs/Twist`   | Input to Boxer's kinematic controller. Publish here to make Boxer go.                                                                                                      |
+| `/odom`                           | `nav_msgs/Odometry`     | Publishes the internal odometry from Boxer's base platform, a filtered localization estimate based on wheel odometry (encoders), an integrated IMU, a camera, and a laser. |
+| `/imu/module0/data`               | `sensor_msgs/IMU`       | Publishes the internal IMU data from Boxer's base platform.                                                                                                                |
+| `/front/scan`                     | `sensor_msgs/LaserScan` | Publishes the laser scan data from the base platform's front localization laser.                                                                                           |
+| `/rear/scan`                      | `/rear/scan`            | Publishes the laser scan data from the base platform's rear safety laser.                                                                                                  |
+| `/realsense/depth/image_rect_raw` | `sensor_msgs/Image`     | Publishes depth data from the base platform's camera.                                                                                                                      |
 
 ---
 
@@ -216,7 +216,7 @@ You can omit this section if your Boxer is not equipped with a backpack computer
 
 The backpack computer is an add-on computer that is networked with the base platform's computer, located inside then Boxer.
 This backpack computer can be used to integrate peripherals, like sensors and manipulators.
-A ROS bridge automatically runs upon booting the backpack computer, and transmits the base platform computer’s ROS data to the backpack computer.
+A ROS bridge automatically runs upon booting the backpack computer, and transmits the base platform computer's ROS data to the backpack computer.
 This ROS bridge allows you to leverage the base robot for your own application.
 The backpack computer uses Netplan as its network configuration tool, and has a static IP address of <192.168.131.1>.
 
@@ -366,7 +366,7 @@ To use the controller:
         src="/img/robot_images/boxer_images/robot_boxer_17.png"
         width="600"
       />
-    </center>{" "}
+    </center>
 
 ### Operation using ROS
 
@@ -456,7 +456,7 @@ There are 19 premade Ø4.3 mm holes that can be used for mounting payloads to th
     src="/img/robot_images/boxer_images/robot_boxer_18.png"
     width="600"
   />
-</center>{" "}
+</center>
 
 The plate also has eight Ø8 mm holes in the corners which are countersunk from the underside of the plate, making them ideal for flathead screws installed to protrude from the plate.
 
@@ -465,7 +465,7 @@ The plate also has eight Ø8 mm holes in the corners which are countersunk from 
     src="/img/robot_images/boxer_images/robot_boxer_19.png"
     width="600"
   />
-</center>{" "}
+</center>
 
 ### 6.2 Electrical Integration
 
