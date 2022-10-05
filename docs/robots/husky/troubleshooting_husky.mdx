@@ -126,22 +126,15 @@ There is not a way to change this behaviour on your Husky.
 
 ## Mobility
 
-### Husky experiences momentary drops in communication
-
-1.  It's possible the robot has reached the thermal limit, or current limit.
-2.  The maximum current limits are set to 18.3 A, however, as the motors are only rated for 8A continuous, anything above that will trigger the current limit eventually, the higher above this limit, the more quickly it will trigger.
-    If you are unsure whether this is the case, feel free to contact support@clearpathrobotics.com with a rosbag of your system.
-    Clearpath robotics also offers a high torque upgrade if more torque is required for your project.
-
-### Husky's velocity is inconsistent, with a jumping motion
+### Husky experiences momentary drops in communication, or Husky's velocity has an inconsistent jumping motion
 
 It's possible the robot has reached the thermal limit, or current limit.
-The maximum current limits are set to 18.3 A, however, as the motors are only rated for 8 A continuous, anything above that will trigger the current limit.
-The limit will be triggered if your application sends more than 8 A of current to the motors continuously.
+The maximum current limits are set to 26 A, however, as the motors are only rated for 10.7 A continuous, anything above that will trigger the current limit eventually, the higher above this limit, the more quickly it will trigger.
+If you are unsure whether this is the case, feel free to contact <support@clearpathrobotics.com> with a rosbag of your system.
 
 :::note
 
-Clearpath Robotics also offers a high torque motor upgrade if more torque is required for your project.
+Clearpath Robotics also offers a high torque upgrade if more torque is required for your project.
 
 :::
 
@@ -242,11 +235,6 @@ TODO: Check if these are incorporated:
 **A ROS package isn't starting**
 
 1.  Verify the upstart logs, `/var/log/upstart/husky_core.log` to see if there are any error during upstart.
-
-**Husky experiences momentary drops in communication**
-
-1.  It's possible the robot has reached the thermal limit, or current limit.
-2.  The maximum current limits are set to 18.3 A, however, as the motors are only rated for 8 A continuous, anything above that will trigger the current limit eventually, the higher above this limit, the more quickly it will trigger. If you are unsure whether this is the case, feel free to contact support@clearpathrobotics.com with a rosbag of your system. Clearpath robotics also offers a high torque upgrade if more torque is required for your project.
 
 ### If the Issue Persists
 
