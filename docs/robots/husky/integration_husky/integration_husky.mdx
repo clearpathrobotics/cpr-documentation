@@ -89,7 +89,7 @@ removable connector into which your payload power leads may connect.
 :::note
 
 Husky UGVs with serial numbers lower than A200-0802 have different user power connections.  
-These older robots have 5V, 12V, and 24V supplies, all fused at 5A.
+These older robots have 5 V, 12 V, and 24 V supplies, all fused at 5A.
 Your Husky's serial number is shown on a sticker, attached to the right side of the robot.
 
 :::
@@ -146,22 +146,27 @@ Clearpath Robotics offers an upgrade kit to add an external motion-stop. Contact
 
 #### MCU Debug LEDs
 
-The Husky MCU PCBA comes equipped with LEDs for debugging. They work as follows:
+The Husky MCU PCBA comes equipped with LEDs for debugging.
+They work as follows:
 
-- **D16: HEARTBEAT**: toggles every 500ms when the main firmware loop on the MCU is running
-- **D7: VBAT 20A**: illuminated if the VBAT 20A fuse is working
-- **D8: VBAT 5A**: illuminated if the VBAT 5A fuse is working
-- **D12: 12V 7.5A**: illuminated if the 12V 7.5A fuse is working
-- **D10: 24V 3A**: illuminated if the 24V 3A fuse is working
+- **D16: HEARTBEAT**: toggles every 500 ms when the main firmware loop on the MCU is running.
+- **D7: VBAT 20 A**: illuminated if the VBAT, 20 A fuse is good.
+  This LED will be off if the fuse is blown.
+- **D8: VBAT 5 A**: illuminated if the VBAT, 5 A fuse is good.
+  This LED will be off if the fuse is blown.
+- **D12: 12 V 7.5 A**: illuminated if the 12 V, 7.5 A fuse is good.
+  This LED will be off if the fuse is blown.
+- **D10: 24 V 3 A**: illuminated if the 24 V, 3 A fuse is good.
+  This LED will be off if the fuse is blown.
 
 :::note
 
 On older revisions of the Husky MCU PCBA, the labels are different, but the functionality is similar:
 
 - D5: HEARTBEAT
-- D2: VBAT 5A fuse working
-- D3: 12V 5A fuse working
-- D4: 5V 5A fuse working
+- D2: VBAT, 5 A
+- D3: 12 V, 5 A
+- D4: 5 V, 5 A
 
 :::
 

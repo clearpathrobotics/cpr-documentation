@@ -6,6 +6,7 @@ sidebar_position: 5
 import ComponentReplacingTireOrInnerTube from "/components/maintenance_husky/maintenance_husky_tire_and_inner_tube.mdx";
 import ComponentUpdatingPumaFirmware from "/components/maintenance/firmware_update_puma.mdx";
 import ComponentLeadAcidBatteryCare from "/components/maintenance/lead_acid_battery_care.mdx";
+import ComponentBillOfMaterialsNote from "/components/maintenance/bill_of_materials_note.mdx";
 
 <figure>
   <center>
@@ -15,6 +16,31 @@ import ComponentLeadAcidBatteryCare from "/components/maintenance/lead_acid_batt
     />
   </center>
 </figure>
+
+---
+
+## Common Replacement Items {#husky_maintenance_common_replacement_items}
+
+<ComponentBillOfMaterialsNote />
+
+| Description                | CPR Item | Manufacturer            | Manufacturer Item     | Distributor | Distributor Item |
+| :------------------------- | :------- | :---------------------- | :-------------------- | :---------- | :--------------- |
+| Battery                    | 005670   | Clearpath Robotics      | -                     | -           | -                |
+| Battery Charger            | 000597   | Clearpath Robotics      | -                     | -           | -                |
+| Connector, Mini-fit-jr     | 022207   | Molex                   | 39-01-2065            | Digi-Key    | WM23702-ND       |
+| Contact Crimp, Mini-fit-jr | 022207   | Molex                   | 40-13-0852            | Digi-Key    | WM24935-ND       |
+| Fuse, 3 A                  | 020411   | Littelfuse              | 0287003.PXCN          | Digi-Key    | F4193-ND         |
+| Fuse, 5 A                  | 006745   | Littlefuse              | 0287005.PXCN          | Digi-Key    | F4197-ND         |
+| Fuse, 7.5 A                | 025899   | Littelfuse              | 028707.5PXCN          | Digi-Key    | F4198-ND         |
+| Fuse, 20 A                 | 025898   | Littelfuse              | 0287020.PXCN          | Digi-Key    | F4201-ND         |
+| Fuse, 30 A                 | 025896   | Littelfuse              | 0299030.ZXNV          | Digi-Key    | F1036-ND         |
+| MCU circuit board          | 027104   | Clearpath Robotics      | -                     | -           | -                |
+| Motor, standard            | 005063   | Midwest Motion Products | S22-346F-24V GP52-079 | -           | -                |
+| Motor, high torque         | 007449   | Midwest Motion Products | S22-346F-24V GP52-150 | -           | -                |
+| Tire                       | 000269   | Carlisle                | 5100201               | -           | -                |
+| Tire's inner tube          | 000435   | Carlisle                | 323790                | -           | -                |
+
+---
 
 ## Chassis
 
@@ -32,6 +58,8 @@ This includes a top cover for the user bay, sealed drivetrain bearings, and rubb
 
 :::
 
+---
+
 ## Checking Drivetrain Health
 
 Depending on the environment in which the robot is used in and duty cycle,
@@ -44,6 +72,8 @@ robot drivetrain once per month. Take note of any clicking, grinding or
 irregular skipping sounds while the robot is moving. Note that some clicking
 in the gearheads is normal during stops and starts, due to backlash between
 the gears.
+
+---
 
 ## Wheels
 
@@ -67,13 +97,19 @@ Odometry is calculated using the average diameter of a tire inflated to 137 kPa 
 
 :::
 
+---
+
 ## Replacing Tire or Inner Tube
 
 <ComponentReplacingTireOrInnerTube />
 
+---
+
 ## Updating Motor Controller Firmware {#maintenance_husky_motor_controller_firmware}
 
 <ComponentUpdatingPumaFirmware />
+
+---
 
 ## Lead-Acid Battery Care
 
@@ -89,6 +125,8 @@ With proper maintenance, the battery should maintain the majority of its capacit
     width="600"
   />
 </center>
+
+---
 
 ## Lithium Ion Battery Care
 
@@ -138,16 +176,69 @@ purchased in advance and warehoused at Clearpath for future use.
 
 ---
 
+## Replacing Fuses
+
+You Husky's MCU has fuses that can be changed through the rear battery access panel.
+The large battery input fuse is on the other side of the MCU, so you will need to remove Husky's metal panels to access this fuse.
+
+:::caution
+
+Refer to the white lettering on the circuit board for what rating of fuse to replace in the fuse holder.
+
+The [Common Replacement Items](#husky_maintenance_common_replacement_items) section of this page shows where you can purchase new fuses.
+
+:::
+
+<details><summary>Click to expand</summary>
+
+<figure>
+  <center>
+    <img
+      src="/img/robot_images/husky_images/husky_rear_battery_access.jpg"
+      width="600"
+    />
+    <figcaption>Husky's rear battery access</figcaption>
+  </center>
+</figure>
+
+<br />
+
+<figure>
+  <center>
+    <img
+      src="/img/robot_images/husky_images/husky_mcu_user_fuses.jpg"
+      width="600"
+    />
+    <figcaption>User power fuses</figcaption>
+  </center>
+</figure>
+
+<br />
+
+<figure>
+  <center>
+    <img
+      src="/img/robot_images/husky_images/husky_mcu_main_fuse.jpg"
+      width="600"
+    />
+    <figcaption>Main battery fuse</figcaption>
+  </center>
+</figure>
+
+</details>
+
+---
+
 :::danger TODO—under construction
 
 #### Components to replace
 
-- Battery
-- Fuses
+- Battery, and charging
+- ~~Fuses~~
 - MCU
 - PUMA
 - Gearmotor
-- Tires
+- ~~Tires~~
 - ~~Tire inner tubes~~
 - ~~Computer CMOS Battery~~
 - ~~Computer~~
