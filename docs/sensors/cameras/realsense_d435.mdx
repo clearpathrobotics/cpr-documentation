@@ -61,20 +61,6 @@ The cable cannot exceed 5 metres, or the USB signal may have issues.
 
 ## Troubleshooting
 
-**Cannot see sensor data**
-
-1.  Turn the robot on
-2.  Connect your laptop to a spare RJ45 Ethernet port on the robot
-3.  Configure your laptop's Ethernet port to a static address of _192.168.131.250_, and a subnet of _255.255.255.0_
-4.  SSH into the robot's computer using `ssh administrator@192.168.131.1` and enter the password `clearpath`
-5.  Then enter `cd /dev` and finally `ls`
-    - unplug the sensor's USB cable, and enter `ls`
-    - look for any changes to the listed devices in the directory
-    - you should see the sensor appear as a drive
-    - try changing the USB cable and the USB 3.0 port on the computer and repeat these steps
-
-### If the Issue Persists
-
 <Support />
 
 ---
