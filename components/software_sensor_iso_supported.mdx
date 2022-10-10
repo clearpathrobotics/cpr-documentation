@@ -1,3 +1,79 @@
-This sensor is included in the CPR software bringup-script.
-The bringup-script has been developed to work for most configurations of robots, such as having up to 2 cameras installed.
-You will need to update the robot’s URDF if you have more of this sensor than the bringup-script was designed for.
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+This sensor is included in the Clearpath Robotics operating system that is installed on all our robots.
+This allows you to add of remove the sensor from your robot's software description by changing environment variables in `/etc/ros/setup.bash`.
+
+#### Refer to your robot's README file for more details:
+
+<Tabs groupId="ros_versions">
+  <TabItem
+    value="husky"
+    label="Husky"
+    default
+  >
+    <ul>
+      <li>
+        <a href="https://github.com/husky/husky/blob/noetic-devel/husky_description/README.md">Husky README</a>
+      </li>
+    </ul>
+  </TabItem>
+  <TabItem
+    value="jackal"
+    label="Jackal"
+  >
+    <ul>
+      <li>
+        <a href="https://github.com/jackal/jackal/blob/noetic-devel/jackal_description/README.md">Jackal README</a>
+      </li>
+    </ul>
+  </TabItem>
+  <TabItem
+    value="dingo"
+    label="Dingo"
+  >
+    <ul>
+      <li>
+        <a href="https://github.com/dingo-cpr/dingo/blob/melodic-devel/dingo_description/README.md">Dingo README</a>
+      </li>
+    </ul>
+  </TabItem>
+</Tabs>
+
+<br />
+
+#### Your robot's Tutorials page describes how the operating system is installed and configured:
+
+<Tabs groupId="ros_versions">
+  <TabItem
+    value="husky"
+    label="Husky"
+    default
+  >
+    <ul>
+      <li>
+        <a href="/docs/robots/husky/tutorials_husky/#husky-software-setup">Installing Husky Software</a>
+      </li>
+    </ul>
+  </TabItem>
+  <TabItem
+    value="jackal"
+    label="Jackal"
+  >
+    <ul>
+      <li>
+        <p>TODO</p>
+      </li>
+    </ul>
+  </TabItem>
+  <TabItem
+    value="dingo"
+    label="Dingo"
+  >
+    <ul>
+      <li>
+        <a href="/docs/robots/dingo/tutorials_dingo/#dingo-software-setup">Installing Dingo Software</a>
+      </li>
+    </ul>
+  </TabItem>
+</Tabs>
