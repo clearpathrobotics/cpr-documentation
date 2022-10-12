@@ -3,8 +3,7 @@ title: RealSense D435
 sidebar_position: 5
 ---
 
-import Safety from "/components/safety_sensor_none.mdx";
-import SoftwareBringup from "/components/software_sensor_yperio_supported.mdx";
+import SoftwareBringup from "/components/software_sensor_iso_supported.mdx";
 import Support from "/components/support.mdx";
 
 <center>
@@ -14,20 +13,16 @@ import Support from "/components/support.mdx";
   />
 </center>
 
-<Safety />
-
 ## Item Numbers
 
-| Description                           |                         CPR item                         | Manufacturer item |
-| :------------------------------------ | :------------------------------------------------------: | :---------------- |
-| Intel RealSense D435 sensor           | [024150](/assets/pdf/clearpath_robotics_024150-TDS1.pdf) | 961448            |
-| Intel RealSense D435 sensor, PACS kit |                          027208                          |                   |
+| Description                           |                         CPR item                         |
+| :------------------------------------ | :------------------------------------------------------: |
+| Intel RealSense D435 sensor           | [024150](/assets/pdf/clearpath_robotics_024150-TDS1.pdf) |
+| Intel RealSense D435 sensor, PACS kit |                          027208                          |
 
 ---
 
 ## Specifications
-
-### Overview
 
 | Description                 | Value         |
 | :-------------------------- | :------------ |
@@ -39,42 +34,12 @@ import Support from "/components/support.mdx";
 | Data                        | USB 3.0       |
 | Range, Minimum              | 0.2 m         |
 | Range, Maximum              | 3 m           |
-| View, Horizontal            | 69° at 2m     |
-| View, Vertical              | 42° at 2m     |
+| View, Horizontal            | 69° at 2 m    |
+| View, Vertical              | 42° at 2 m    |
 | Ingress Protection, Solids  | 3             |
 | Ingress Protection, Liquids | 0             |
-| Operating Temperature, Min  | 0°C           |
-| Operating Temperature, Max  | 35°C          |
-
-### Pinout
-
-This camera requires a type-c USB 3.0 connector.
-The cable cannot exceed 5 metres, or the USB signal may have issues.
-
----
-
-## Hardware Build
-
-### Parts List
-
-The PACS kit for this sensor includes:
-
-| ID  | Description                                               |                         CPR item                         | Quantity |
-| :-: | :-------------------------------------------------------- | :------------------------------------------------------: | :------: |
-|  1  | Plate—80 X 80, Attachment Interface                       |   [026914](/assets/pdf/clearpath_robotics_026914.pdf)    |    1     |
-|  2  | Camera, Depth—Intel RealSense D435                        | [024150](/assets/pdf/clearpath_robotics_024150-TDS1.pdf) |    1     |
-|  3  | Screw, Cap, Hex Head—#0.25-20 UNC X 19.1, Stainless Steel |                          026871                          |    1     |
-|  4  | Spacer, Round—Ø6.4 X Ø12.7 X 9.5, Aluminum Alloy          |                          026870                          |    1     |
-|  5  | Spacer, Round—Ø5.3 X Ø8 X 7, Aluminum Alloy               |                          026612                          |    4     |
-|  6  | Screw, Cap, Round Head—M5×0.8 X 16, Stainless Steel       |                          023257                          |    4     |
-
-### Instructions
-
-1.  Mount the sensor (ID 2) to the attachment-plate (ID 1) using a #1/4-20 screw (ID 3) and spacer (ID 4).
-    Use the centre hole in the attachment-plate for mounting the sensor.
-2.  Mount this assembly onto your robot, using the included spacers (ID 5) and screws (ID 6).
-3.  Connect a the sensor's included USB 3.0 cable to one of the robot's USB 3.0 jacks.
-4.  Connect the other end of the USB cable to the sensor.
+| Operating Temperature, Min  | 0 °C          |
+| Operating Temperature, Max  | 35 °C         |
 
 ---
 
@@ -85,20 +50,6 @@ The PACS kit for this sensor includes:
 ---
 
 ## Troubleshooting
-
-**Cannot see sensor data**
-
-1.  Turn the robot on
-2.  Connect your laptop to a spare RJ45 Ethernet port on the robot
-3.  Configure your laptop's Ethernet port to a static address of _192.168.131.250_, and a subnet of _255.255.255.0_
-4.  SSH into the robot's computer using `ssh administrator@192.168.131.1` and enter the password `clearpath`
-5.  Then enter `cd /dev` and finally `ls`
-    - unplug the sensor's USB cable, and enter `ls`
-    - look for any changes to the listed devices in the directory
-    - you should see the sensor appear as a drive
-    - try changing the USB cable and the USB 3.0 port on the computer and repeat these steps
-
-### If the Issue Persists
 
 <Support />
 
