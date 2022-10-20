@@ -4,7 +4,6 @@ sidebar_position: 2
 ---
 
 import Support from "/components/support.mdx";
-import Safety from "/components/safety_sensor_none.mdx";
 import SoftwareBringup from "/components/software_sensor_iso_supported.mdx";
 
 <center>
@@ -14,20 +13,16 @@ import SoftwareBringup from "/components/software_sensor_iso_supported.mdx";
   />
 </center>
 
-<Safety />
-
 ## Item Numbers
 
-| Description                   |                         CPR item                         | Manufacturer item |
-| :---------------------------- | :------------------------------------------------------: | :---------------- |
-| Axis M5525-E sensor           | [006758](/assets/pdf/clearpath_robotics_006758-TDS1.pdf) | 01146-001         |
-| Axis M5525-E sensor, PACS kit |                          027225                          |                   |
+| Description                   |                         CPR item                         |
+| :---------------------------- | :------------------------------------------------------: |
+| Axis M5525-E sensor           | [006758](/assets/pdf/clearpath_robotics_006758-TDS1.pdf) |
+| Axis M5525-E sensor, PACS kit |                          027225                          |
 
 ---
 
 ## Specifications
-
-### Overview
 
 | Description                 | Value                |
 | :-------------------------- | :------------------- |
@@ -44,43 +39,6 @@ import SoftwareBringup from "/components/software_sensor_iso_supported.mdx";
 | Operating Temperature, Min  | -10°C                |
 | Operating Temperature, Max  | 50°C                 |
 
-### IP addresses
-
-| Description               | IP address                                                  |
-| :------------------------ | :---------------------------------------------------------- |
-| Camera                    | 192.168.131.10                                              |
-| Additional Camera Sensors | 192.168.131.11 - 19                                         |
-| Default from Manufacturer | [Axis IP utility](https://help.axis.com/access-your-device) |
-
-### Pinout
-
-This camera requires a RJ45 connector with a standard Ethernet pinout.
-CAT5 or better cable twisting is required for the full 100 Mbit/s network connection.
-
----
-
-## Hardware Build
-
-### Parts List
-
-The PACS kit for this sensor includes:
-
-| ID  | Description                                         |                         CPR item                         | Quantity |
-| :-: | :-------------------------------------------------- | :------------------------------------------------------: | :------: |
-|  1  | Plate—80 X 80, Attachment Interface, Large          |   [027110](/assets/pdf/clearpath_robotics_027110.pdf)    |    1     |
-|  2  | Camera, Pan Tilt Zoom—Axis M5525-E                  | [006758](/assets/pdf/clearpath_robotics_006758-TDS1.pdf) |    1     |
-|  3  | Screw, Cap, Flat Head—M5×0.8 X 12, Stainless Steel  |                          023471                          |    4     |
-|  4  | Screw, Cap, Socket Head—M4×0.7 X 6, Stainless Steel |                          023122                          |    4     |
-|  5  | Cable, Network—RJ45                                 |                          022861                          |    1     |
-
-### Instructions
-
-1.  Remove the camera's white plastic covering, by removing the four Torx screws.
-2.  Mount the sensor's base (ID 2) to the attachment-plate (ID 1) using four M4 screws (ID 4).
-3.  The network cable (ID 7) to the camera's RJ45 jack.
-    Connect the other end of the network cable to a PoE-switch, or PoE-injector.
-4.  Reinstall the camera's white plastic covering, and Torx screws.
-
 ---
 
 ## Software Bringup
@@ -90,35 +48,6 @@ The PACS kit for this sensor includes:
 ---
 
 ## Troubleshooting
-
-**Sensor is not turning on**
-
-1.  Turn the robot on.
-2.  Check that the RJ45 connector is fully seated in the camera.
-3.  Check that the RJ45 connector is fully seated in the PoE-switch or PoE-injector.
-4.  Check all cables and connectors between the computer and camera.
-5.  Check that the network devices between the computer and camera are turned on (PoE-switch or PoE-injector, Network Switches)
-6.  Try replacing all RJ45 network cables between the computer and camera.
-    This is necessary if the exising cable has been pinched, or experienced some other physical damage.
-7.  You may try to power the sensor using the camera's 2-position terminal block, with a 24 VDC supply, at up to 0.6 A of current.
-8.  If the sensor has not powered on, there is likely an issue with the camera.
-    You should contact Clearpath Robotics to see about a possible warrenty claim, or to try further troubleshooting steps.
-
-**Cannot ping the sensor on the robot's computer**
-
-1.  Turn the robot on.
-2.  Connect your laptop to a spare RJ45 Ethernet port on the robot.
-3.  Configure your laptop's Ethernet port to a static address of _192.168.131.250_, and a subnet of _255.255.255.0_
-4.  In a new terminal session, enter `ping 192.168.131.20`
-5.  The sensor if working properly if you receive reply messages.
-6.  If you do not get reply messages, then the issue is likely:
-    1.  Your Ethernet cable has an issue
-    2.  Your laptop's Ethernet port is not configured properly
-    3.  Network devices between the computer and camera are turned on (PoE-switch or PoE-injector, Network Switches)
-    4.  The sensor's IP address is not the same as what you entered into the terminal
-    5.  The sensor is not on
-
-### If the Issue Persists
 
 <Support />
 
