@@ -3,9 +3,7 @@ title: Hokuyo UST10-LX
 sidebar_position: 1
 ---
 
-import Safety from "/components/safety_sensor_laser.mdx";
 import SoftwareBringup from "/components/software_sensor_iso_supported.mdx";
-import SoftwareIpConfiguration from "/components/software_sensor_hokuyo_ip_configure.mdx";
 import Support from "/components/support.mdx";
 
 <center>
@@ -15,20 +13,17 @@ import Support from "/components/support.mdx";
   />
 </center>
 
-<Safety />
-
 ## Item Numbers
 
-| Description                      |                         CPR item                         | Manufacturer item |
-| :------------------------------- | :------------------------------------------------------: | :---------------- |
-| Hokuyo UST10-LX                  | [011759](/assets/pdf/clearpath_robotics_011759-TDS1.pdf) | UST10-LX          |
-| Hokuyo UST10-LX sensor, PACS kit |                          026611                          |                   |
+| Description                      |                         CPR item                         |
+| :------------------------------- | :------------------------------------------------------: |
+| Hokuyo UST10-LX                  | [011759](/assets/pdf/clearpath_robotics_011759-TDS1.pdf) |
+| Hokuyo UST10-LX sensor, PACS kit |                          026611                          |
 
 ---
 
 ## Specifications
 
-### Overview
 
 | Description                 | Value                |
 | :-------------------------- | :------------------- |
@@ -48,74 +43,17 @@ import Support from "/components/support.mdx";
 | Operating Temperature, Min  | -10°C                |
 | Operating Temperature, Max  | 50°C                 |
 
-### IP addresses
-
-| Description               | IP address          |
-| :------------------------ | :------------------ |
-| Primary / Front           | 192.168.131.20      |
-| Secondary / Rear          | 192.168.131.21      |
-| Additional Sensors        | 192.168.131.22 - 29 |
-| Default from Manufacturer | 192.168.0.10        |
-
-### Pinout, Power
-
-| Wire, flying lead on Sensor | Description        |
-| :-------------------------: | :----------------- |
-|             Red             | COM Input +        |
-|            Grey             | COM Output -       |
-|         Light Blue          | IP Reset Input     |
-|           Orange            | Synchronous Output |
-|            Brown            | V+                 |
-|            Blue             | V-                 |
-
-### Pinout, Ethernet
-
-| Pin, RJ45 | Description | Wire colour (typical) |
-| :-------: | :---------- | :-------------------- |
-|     1     | TX+         | Blue                  |
-|     2     | TX-         | White                 |
-|     3     | RX+         | Orange                |
-|     6     | RX-         | Yellow                |
-
----
-
-## Hardware Build
-
-### Parts List
-
-The PACS kit for this sensor includes:
-
-| ID  | Description                                         |                         CPR item                         | Quantity |
-| :-: | :-------------------------------------------------- | :------------------------------------------------------: | :------: |
-|  1  | Plate—80 X 80, Attachment Interface                 |   [026914](/assets/pdf/clearpath_robotics_026914.pdf)    |    1     |
-|  2  | Sensor, 2D LiDAR—Hokuyo UST-10LX                    | [011759](/assets/pdf/clearpath_robotics_011759-TDS1.pdf) |    1     |
-|  3  | Screw, Cap, Round Head—M3×0.5 X 8, Stainless Steel  |                          023300                          |    2     |
-|  4  | Spacer, Round—Ø5.3 X Ø8 X 7, Aluminum Alloy         |                          026612                          |    4     |
-|  5  | Screw, Cap, Round Head—M5×0.8 X 16, Stainless Steel |                          023257                          |    4     |
-
----
-
-### Instructions
-
-1.  Mount the sensor (ID 2) to the attachment-plate (ID 1) using two M3 screws (ID 3).
-    Refer to the [attachment-plate's drawing](/assets/pdf/clearpath_robotics_026914.pdf) for details of what holes to use.
-2.  Mount this assembly onto your robot, using the included spacers (ID 4) and screws (ID 5).
-3.  Connect the sensor's RJ45 network cable to the robot's computer or network switch.
-4.  Add a connector to the sensor's power cable, so it can interface with your robot's User Power breakouts.
-    Ensure that the cable pinout is correct, and can supply 12 V or 24 V to the sensor.
-5.  Connect the sensor's power cable to the robot's User Power breakouts.
-
----
-
-## IP configuration
-
-<SoftwareIpConfiguration />
-
 ---
 
 ## Software Bringup
 
 <SoftwareBringup />
+
+---
+
+## Troubleshooting
+
+<Support />
 
 ---
 
