@@ -3,8 +3,8 @@ title: SICK LMS-111
 sidebar_position: 4
 ---
 
+import SoftwareBringup from "/components/software_sensor_iso_supported.mdx";
 import Support from "/components/support.mdx";
-import Safety from "/components/safety_sensor_laser.mdx";
 
 <center>
   <img
@@ -13,18 +13,16 @@ import Safety from "/components/safety_sensor_laser.mdx";
   />
 </center>
 
-<Safety />
-
 ## Item Numbers
 
-| Description                        | CPR item | Manufacturer item |
-| :--------------------------------- | :------: | :---------------- |
-| SICK LMS111-10100 sensor           |  006387  | 1041114           |
-| SICK LMS111-10100 sensor, PACS kit |  027656  |                   |
+| Description                        | CPR item |
+| :--------------------------------- | :------: |
+| SICK LMS111-10100 sensor           |  006387  |
+| SICK LMS111-10100 sensor, PACS kit |  027656  |
+
+---
 
 ## Specifications
-
-### Overview
 
 | Description                | Value                |
 | :------------------------- | :------------------- |
@@ -37,64 +35,24 @@ import Safety from "/components/safety_sensor_laser.mdx";
 | Range, Minimum             | 0.5 m                |
 | Range, Maximum             | 20 m                 |
 | Range, Accuracy            | ±3 cm                |
-| View, Horizontal           | 270°                 |
-| View, Vertical             |                      |
-| Resolution, Horizontal     |                      |
-| Resolution, Vertical       |                      |
+| View, Horizontal           | 270 °                |
+| Resolution, Horizontal     | 0.25 °               |
 | Operating Temperature, Min | -30 °C               |
 | Operating Temperature, Max | 50 °C                |
 
-### IP addresses
+---
 
-| Description               | IP address          |
-| :------------------------ | :------------------ |
-| Primary / Front           | 192.168.131.20      |
-| Secondary / Rear          | 192.168.131.21      |
-| Additional LiDAR          | 192.168.131.22 - 29 |
-| Default from Manufacturer | 192.168.0.1         |
+## Software Bringup
 
-### Pinout, Power
-
-### Pinout, Power
-
-| Pin, M12-5-A, Male on Sensor | Description     |
-| :--------------------------: | :-------------- |
-|              1               | V+              |
-|              2               | V+, for heater  |
-|              3               | V-              |
-|              4               | Do Not Populate |
-|              5               | V-, for heater  |
-
-### Pinout, Ethernet
-
-| Pin, M12-4-D, Female on Sensor | Pin, RJ45 | Description | Wire colour (typical) |
-| :----------------------------: | :-------: | :---------- | :-------------------- |
-|               1                |     1     | TX+         | Orange / White        |
-|               2                |     3     | RX+         | Green / White         |
-|               3                |     2     | TX-         | Orange                |
-|               4                |     6     | RX-         | Green                 |
+<SoftwareBringup />
 
 ---
 
-## Hardware Build
+## Troubleshooting
 
-### Parts List
+<Support />
 
-The PACS kit for this sensor includes:
-
-| ID  | Description                                         |                         CPR item                         | Quantity |
-| :-: | :-------------------------------------------------- | :------------------------------------------------------: | :------: |
-|  1  | Bracket—Sick LMS1xx                                 |   [008966](/assets/pdf/clearpath_robotics_008966.pdf)    |    1     |
-|  2  | Sensor, 2D LiDAR—Sick LMS111-10100                  | [006387](/assets/pdf/clearpath_robotics_006387-TDS1.pdf) |    1     |
-|  3  | Screw, Cap, Round Head—M5×0.8 X 8, Stainless Steel  |                          023316                          |    4     |
-|  4  | Screw, Cap, Round Head—M5×0.8 X 12, Stainless Steel |                          023318                          |    4     |
-
-### Instructions
-
-1.  Fasten the bracket (ID 1) to the robot using M5 screws (ID 3)
-2.  Mount the sensor (ID 2) to the bracket (ID 1) using four M5 screws (ID 4).
-3.  Connect a M12-4-D to RJ45 network cable to the sensor and robot's computer or network switch.
-4.  Connect a M12-5-A power cable to the sensor, and robot's User Power breakouts. Ensure that the cable pinout is correct, and can supply 12 V or 24 V to the sensor.
+---
 
 ## Further Reading
 
