@@ -3,8 +3,8 @@ title: FLIR Blackfly S
 sidebar_position: 3
 ---
 
+import SoftwareBringup from "/components/software_sensor_iso_supported.mdx";
 import Support from "/components/support.mdx";
-import Safety from "/components/safety_sensor_none.mdx";
 
 <center>
   <img
@@ -13,11 +13,45 @@ import Safety from "/components/safety_sensor_none.mdx";
   />
 </center>
 
-<Safety />
-
 ## Item Numbers
 
-| Description                    |   CPR item   | Manufacturer item |
-| :----------------------------- | :----------: | :---------------- |
-| FLIR Blackfly sensor           | Many options | 01146-001         |
-| FLIR Blackfly sensor, PACS kit |    027218    |                   |
+| Description                    |   CPR item   |
+| :----------------------------- | :----------: |
+| FLIR Blackfly sensor           | Many options |
+| FLIR Blackfly sensor, PACS kit |    027218    |
+
+---
+
+## Specifications
+
+| Description                | Value                              |
+| :------------------------- | :--------------------------------- |
+| Mass, Camera               | 53 g                               |
+| Voltage, Minimum           | 8 V or USB                         |
+| Voltage, Maximum           | 24 V or USB                        |
+| Power, Average             | 4.2 W                              |
+| Data                       | GigE or USB3                       |
+| Resolution                 | 0.4 - 24.5 MP (depending on model) |
+| Frame Rate                 | 15 - 552 FPS                       |
+| Operating Temperature, Min | 0°C                                |
+| Operating Temperature, Max | 50°C                               |
+
+---
+
+## Software Bringup
+
+<SoftwareBringup />
+
+---
+
+## Troubleshooting
+
+<Support />
+
+---
+
+## Further Reading
+
+1.  [Clearpath Robotics Store](https://store.clearpathrobotics.com/collections/vision/products/blackfly-s)
+2.  [FLIR website](https://www.flir.ca/products/blackfly-s-gige/)
+3.  [ROS webpage](http://wiki.ros.org/spinnaker_sdk_camera_driver)

@@ -3,7 +3,6 @@ title: Swift Navigation Duro
 sidebar_position: 1
 ---
 
-import Safety from "/components/safety_sensor_none.mdx";
 import SoftwareBringup from "/components/software_sensor_iso_supported.mdx";
 import Support from "/components/support.mdx";
 
@@ -14,100 +13,32 @@ import Support from "/components/support.mdx";
   />
 </center>
 
-<Safety />
-
 ## Item Numbers
 
-| Description                            |                         CPR item                         | Manufacturer item |
-| :------------------------------------- | :------------------------------------------------------: | :---------------- |
-| Swift Navigation Duro sensor           | [015822](/assets/pdf/clearpath_robotics_015822-TDS1.pdf) | 00864-01          |
-| Swift Navigation Duro sensor, PACS kit |                          027213                          |                   |
+| Description                            |                         CPR item                         |
+| :------------------------------------- | :------------------------------------------------------: |
+| Swift Navigation Duro sensor           | [015822](/assets/pdf/clearpath_robotics_015822-TDS1.pdf) |
+| Swift Navigation Duro sensor, PACS kit |                          027213                          |
 
 ---
 
 ## Specifications
 
-### Overview
-
-| Description                                                                          | Value                |
-| :----------------------------------------------------------------------------------- | :------------------- |
-| Mass                                                                                 | 0.8 kg               |
-| Voltage, Minimum                                                                     | 10 V                 |
-| Voltage, Maximum                                                                     | 35 V                 |
-| Voltage, Sensor                                                                      | 12 V or 24 V         |
-| Power, Average                                                                       | 5 W                  |
-| Data                                                                                 | Ethernet, 100 Mbit/s |
-| View, Vertical                                                                       | ±60° from vertical   |
-| Position Accuracy                                                                    | 2.5 m                |
-| Position Accuracy RTK (requires a [Base Station](docs/accessories/base_station.mdx)) | 0.01 m               |
-| Ingress Protection, Solids                                                           | 6                    |
-| Ingress Protection, Liquids                                                          | 7                    |
-| Operating Temperature, Min                                                           | -40°C                |
-| Operating Temperature, Max                                                           | 75°C                 |
-
-### IP addresses
-
-| Description               | IP address          |
-| :------------------------ | :------------------ |
-| Base Station              | 192.168.131.30      |
-| Primary                   | 192.168.131.31      |
-| Secondary                 | 192.168.131.32      |
-| Additional Sensors        | 192.168.131.33 - 39 |
-| Default from Manufacturer | 192.168.0.222       |
-
-### Pinout, Power
-
-| Pin, M12-5-A, Male on Sensor | Description                             |
-| :--------------------------: | :-------------------------------------- |
-|              1               | V+                                      |
-|              2               | Earth                                   |
-|              3               | V-                                      |
-|              4               | Pulse Per Second (typically unused)     |
-|              5               | Event A Input Signal (typically unused) |
-
-### Pinout, Ethernet
-
-| Pin, M12-4-D, Female on Sensor | Pin, RJ45 | Description | Wire colour (typical) |
-| :----------------------------: | :-------: | :---------- | :-------------------- |
-|               1                |     1     | TX+         | Orange / White        |
-|               3                |     2     | TX-         | Orange                |
-|               2                |     3     | RX+         | Green / White         |
-|               4                |     6     | RX-         | Green                 |
-
-### Pinout, Serial
-
-| Pin, M12-8-A | Description                       |
-| :----------: | :-------------------------------- |
-|      1       | TX, UART0                         |
-|      2       | RX, UART0                         |
-|      3       | Clear to Send, Input              |
-|      4       | Event C, Input                    |
-|      5       | V-, for external devices          |
-|      6       | V+, for external devices (12 VDC) |
-|      7       | Pulse Per Second                  |
-|      8       | RTS, UART0                        |
-
----
-
-## Hardware Build
-
-### Parts List
-
-The PACS kit for this sensor includes:
-
-| ID  | Description                                        |                         CPR item                         | Quantity |
-| :-: | :------------------------------------------------- | :------------------------------------------------------: | :------: |
-|  1  | Plate—80 X 80, Attachment Interface, Large         |   [027110](/assets/pdf/clearpath_robotics_027110.pdf)    |    1     |
-|  2  | Bundle—Swift Navigation, Duro, Starter Kit         | [015822](/assets/pdf/clearpath_robotics_015822-TDS1.pdf) |    1     |
-|  3  | Screw, Cap, Flat Head—M5×0.8 X 12, Stainless Steel |                          023471                          |    4     |
-|  4  | Screw, Cap, Socket Head—M6×1 X 12, Stainless Steel |                          023177                          |    4     |
-
-### Instructions
-
-1.  Fasten the attachment-plate (ID 1) to the robot using M5 screws (ID 3)
-2.  Mount the sensor (ID 2) to the attachment-plate (ID 1) using four M6 screws (ID 4).
-3.  Connect the M12-4-D to RJ45 network cable included in the sensor kit (ID 2) to the sensor and robot's computer or network switch
-4.  Reterminate the M12-5-A power cable included in the sensor kit (ID 2) so it can provide 12 VDC or 24 VDC to the sensor.
+| Description                                                                                                   | Value                |
+| :------------------------------------------------------------------------------------------------------------ | :------------------- |
+| Mass                                                                                                          | 0.8 kg               |
+| Voltage, Minimum                                                                                              | 10 V                 |
+| Voltage, Maximum                                                                                              | 35 V                 |
+| Voltage, Sensor                                                                                               | 12 V or 24 V         |
+| Power, Average                                                                                                | 5 W                  |
+| Data                                                                                                          | Ethernet, 100 Mbit/s |
+| View, Vertical                                                                                                | ±60° from vertical   |
+| Position Accuracy                                                                                             | 2.5 m                |
+| Position Accuracy RTK (requires a [Base Station](docs/accessories/base_station.mdx) or a positioning-service) | 0.01 m               |
+| Ingress Protection, Solids                                                                                    | 6                    |
+| Ingress Protection, Liquids                                                                                   | 7                    |
+| Operating Temperature, Min                                                                                    | -40 °C               |
+| Operating Temperature, Max                                                                                    | 75 °C                |
 
 ---
 
@@ -118,33 +49,6 @@ The PACS kit for this sensor includes:
 ---
 
 ## Troubleshooting
-
-**Sensor is not turning on**
-
-1.  Check that the M12-5-A cable is fully seated in the sensor
-2.  Check that the other end of this cable is terminated correctly, per your robot's User Power breakout
-3.  Check that the User Power connector is fully seated
-4.  Use a multimeter on the VDC setting to confirm that the User Power breakout is at 12 V or 24 V when the robot is on.
-    If not, you should check your fuses, and power supplies for damage.
-5.  Check the M12-5-A connector's voltage across pins 1 and 3.
-    This should read 12 V or 24 V, assuming the User Power breakout measured earlier was working.
-    If you read 0 V, then this indicates a damaged cable.
-
-**Cannot ping the sensor on the robot's computer**
-
-1.  Turn the robot on.
-2.  Connect your laptop to a spare RJ45 Ethernet port on the robot.
-3.  Configure your laptop's Ethernet port to a static address of _192.168.131.250_, and a subnet of _255.255.255.0_
-4.  In a new terminal session, enter `ping 192.168.131.31`
-5.  The sensor if working properly if you receive reply messages.
-6.  If you do not get reply messages, then the issue is likely:
-    1.  Your Ethernet cable has an issue
-    2.  Your laptop's Ethernet port is not configured properly
-    3.  Network devices between the computer and Swift Navigation Duro are turned off
-    4.  The sensor's IP address is not the same as what you entered into the terminal
-    5.  The sensor is not on
-
-### If the Issue Persists
 
 <Support />
 
