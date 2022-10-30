@@ -5,42 +5,149 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-import ComponentIntroductionWarthog from "/components/introduction_warthog.mdx";
 import ComponentPacsMechanical from "/components/pacs_mechanical.mdx";
 import ComponentCommonSoftwareIntegration from "/components/common_software_integration.mdx";
 import Support from "/components/support.mdx";
 
-<ComponentIntroductionWarthog />
-
-## Integration Guide
-
 If you want to attach custom hardware to Warthog, you will have to take care of mechnical mounting, electrical supply, and software integration.
 This section aims to equip you with respect to these challenges.
 
-### Mechanical Mounting
+---
 
-#### Mechanical, Standard
+## Mechanical {#warthog-mechanical-mounting}
+
+### Mechanical, Standard
 
 A standard Wathod includes thru holes on the sides of the battery compartment.
 You can besign mounting brackets to interface with these holes.
 
-#### Mechanical, PACS
+### Mechanical, PACS
 
 <ComponentPacsMechanical />
 
 Refer to the following pages for Warthog brackets that can simplify your integration.
 
-- [Extrusion Rails](/docs/robots/warthog/integration_warthog/kits/extrusion_rails_warthog)
-- [Extrusion Cross-Bar](/docs/robots/warthog/integration_warthog/kits/extrusion_crossbar_warthog)
-- [Top Plate](/docs/robots/warthog/integration_warthog/kits/top_plate_warthog)
+- [Extrusion Rails](/docs/robots/warthog/integration_warthog/kits_warthog/extrusion_rails_warthog)
+- [Extrusion Cross-Bar](/docs/robots/warthog/integration_warthog/kits_warthog/extrusion_crossbar_warthog)
+- [Top Plate](/docs/robots/warthog/integration_warthog/kits_warthog/top_plate_warthog)
 
+### Payload Integration Guidelines
 
+- 705 mm (27.75") is the maximum allowed width of any installed payload (this assumes that the payload is also centered across the width of the UGV chassis.
+- No part of the payload may extend over the sheet metal housings of the drive units or into the small 50 mm (2") gaps between the chassis and drive units.
+  Damage to both the UGV and the payload will result.
+- The chassis has a removable access cover measuring 1175 mm X 667 mm (46.25" X 26.25").
+  This access cover is supported underneath by two adjustable cross members.
+  Regardless of payload, it is imperative that both cross members remain installed (approximately evenly spaced) to provided required support to the access cover.
+  Consider that any payload installed above the top deck will prevent access to the chassis through the access cover, without first removing the installed payload.
+- The rotation of the suspension differential link in the horizontal plane will allow the payload to extend beyond the chassis top deck in both fore and aft locations.
+  The amount of this payload extension (overhang) is dependent on several factors, including the weight and method of attachment of the payload as well as the terrain in which the UGV will operate.
+  Ensure that the amount of overhanging payload allows the UGV to operate safely and does not contact the terrain, especially when crossing steep and/or deep gullies.
+- The available internal chassis volume is:
+  - Length of 445 mm (17.5")
+  - Width of 660 mm (26")
+  - Height of 241 mm (9.5").
+    This space is located at the center of the chassis between two battery packs.
+    Consider that anything placed inside the chassis mush be secured as to not move or shift during UGV operation.
 
+:::note
 
-
-:::danger todo below
+Permanent damage resulting from custom modifications to the mounting plate is not covered under warranty and may not be supported by Clearpath Support.
+Please contact our Support team if you require assistance or have any questions relating to custom modifications.
 
 :::
+
+---
+
+## Electrical Integration {#warthog-electrical-integration}
+
+:::danger
+
+For continued protection against risk of fire, always replace fuses only with those of the same type and rating.
+
+:::
+
+Except for bus-powered USB cameras, most payloads have separate leads for power and data.
+
+### Top Plate Power and Data Connections Connections
+
+| Description                                             | Notes                                   | Mating Connector (CPR Item) | Mating Connector (Manufacturer Item)                                                      |
+| :------------------------------------------------------ | :-------------------------------------- | :-------------------------- | :---------------------------------------------------------------------------------------- |
+| [USER POWER](/assets/pdf/clearpath_robotics_014673.pdf) | 12 V, 24 V, 48 VBAT; each fused to 10 A | 015016                      | [RR-153274-23050](https://www.usbfirewire.com/parts/rr-153274-23050.html#RR-153274-23050) |
+| USB 3.0                                                 |                                         |                             | Male USB type-A                                                                           |
+| ETHERNET RJ45                                           |                                         |                             | Male RJ45                                                                                 |
+| [SERIAL](/assets/pdf/clearpath_robotics_014672.pdf)     |                                         | 015015                      | [RR-153274-23040](https://www.usbfirewire.com/parts/rr-153274-23040.html#RR-153274-23040) |
+
+<br />
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/warthog_images/robot_warthog_2.png"
+      width="600"
+    />
+    <figcaption>Warthog user panel</figcaption>
+  </figure>
+</center>
+
+<br />
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/warthog_images/robot_warthog_3.png"
+      width="600"
+    />
+    <figcaption>Warthog connector pinouts</figcaption>
+  </figure>
+</center>
+
+<br />
+
+The user power receptacles located in the User Panel are capable of supplying 12 VDC, 24 VDC, and unregulated battery voltage (48 - 60 VDC) for powering Warthog's payloads.
+See the figures below for connector locations and pinouts.
+Ensure you select a contact that's appropriate for the gauge of wire used.
+
+:::note power
+
+The user power breakouts are intended for small sensors, like lidar and cameras.
+Warthog's 48 V battery pack is fused at 275 A (13200 W).
+We often add DC-DC and DC-AC supplies inside the Warthog to power large devices like manipulators, lights, and other custom integration attachments.
+
+Refer to the process described on our [Power Supplies](/docs/accessories/power_supplies/#choosing_a_power_supply) page to help you choose a power supply or inverter.
+
+:::
+
+:::danger
+
+Always use adequately sized fuses for your selected wire thickness to prevent electrical fires.
+
+:::
+
+### System Electrical Diagram
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/warthog_images/robot_warthog_4.png"
+      width="400"
+    />
+    <figcaption>Warthog chassis electrical system</figcaption>
+  </figure>
+</center>
+
+---
+
+## Software Integration
+
+ROS has a large ecosystem of sensor drivers, some of which include pre-made URDF description and even
+simulation configurations. Please see the following page on the ROS wiki for a partial list:
+
+<http://wiki.ros.org/Sensors>
+
+For the best experience, consider purchasing supported accessories from Clearpath Robotics for your Warthog.
+This will include simulation, visualization, and driver support for those accessories.
+However, we will happily help you get started with integrating your own devices as well.
+
+---
 
 ## System Architecture
 
@@ -53,7 +160,7 @@ The microcontroller board handles IO, system and battery monitoring, and provide
       src="/img/robot_images/warthog_images/robot_warthog_7.png"
       width="900"
     />
-    <figcaption>System architecture</figcaption>
+    <figcaption>System Architecture</figcaption>
   </figure>
 </center>
 
@@ -80,123 +187,6 @@ The ROS API described below can be used to interface with Warthog.
     <figcaption>Warthog node and topic connections</figcaption>
   </figure>
 </center>
-
----
-
-## Mechanical Mounting {#warthog-mechanical-mounting}
-
-The payload integration area can be used to mount external payloads on top of the Warthog.
-
-### Payload Integration Guidelines
-
-- 705 mm (27.75") is the maximum allowed width of any installed payload (this assumes that the payload is also centered across the width of the UGV chassis.
-- No part of the payload may extend over the sheet metal housings of the drive units or into the small 50 mm (2") gaps between the chassis and drive units.
-  Damage to both the UGV and the payload will result.
-- The chassis has a removable access cover measuring 1175 mm X 667 mm (46.25" X 26.25").
-  This access cover is supported underneath by two adjustable cross members.
-  Regardless of payload, it is imperative that both cross members remain installed (approximately evenly spaced) to provided required support to the access cover.
-  Consider that any payload installed above the top deck will prevent access to the chassis through the access cover, without first removing the installed payload.
-- The rotation of the suspension differential link in the horizontal plane will allow the payload to extend beyond the chassis top deck in both fore and aft locations.
-  The amount of this payload extension (overhang) is dependent on several factors, including the weight and method of attachment of the payload as well as the terrain in which the UGV will operate.
-  Ensure that the amount of overhanging payload allows the UGV to operate safely and does not contact the terrain, especially when crossing steep and/or deep gullies.
-- The available internal chassis volume is:
-  - Length of 445 mm (17.5")
-  - Width of 660 mm (26")
-  - Height of 241 mm (9.5").
-    This space is located at the center of the chassis between two battery packs.
-    Consider that anything placed inside the chassis mush be secured as to not move or shift during UGV operation.
-    Any payload secured ins
-
-:::note
-
-Permanent damage resulting from custom modifications to the mounting plate is not covered under warranty and may not be supported by Clearpath Support.
-Please contact our Support team if you require assistance or have any questions relating to custom modifications.
-
-:::
-
----
-
-## Electrical Integration {#warthog-electrical-integration}
-
-:::danger
-
-For continued protection against risk of fire, always replace fuses only with those of the same type and rating.
-
-:::
-
-The user power receptacles located in the User Panel are capable of supplying 12 VDC, 24VDC, and unregulated battery voltage (48 - 60 VDC) for powering Warthog's payloads.
-See the figures below for connector locations and pinouts.
-Ensure you select a contact that's appropriate for the gauge of wire used.
-The mating connector for "USER POWER" is [USBFirewire RR-153274-23050](https://www.usbfirewire.com/parts/rr-153274-23050.html#RR-153274-23050) and the mating connector for "SERIAL" is [USBFirewire RR-153274-23040](https://www.usbfirewire.com/parts/rr-153274-23040.html#RR-153274-23040).
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/warthog_images/robot_warthog_2.png"
-      width="600"
-    />
-    <figcaption>Warthog user panel</figcaption>
-  </figure>
-</center>
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/warthog_images/robot_warthog_3.png"
-      width="600"
-    />
-    <figcaption>Warthog connector pinouts</figcaption>
-  </figure>
-</center>
-
-The electrical system for the chassis can be seen below.
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/warthog_images/robot_warthog_4.png"
-      width="400"
-    />
-    <figcaption>Warthog chassis electrical system</figcaption>
-  </figure>
-</center>
-
-The left and right drive units electrical system is decribed in the following figures.
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/warthog_images/robot_warthog_5.png"
-      width="400"
-    />
-    <figcaption>Warthog left drive unit's electrical system</figcaption>
-  </figure>
-</center>
-
-<br />
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/warthog_images/robot_warthog_6.png"
-      width="400"
-    />
-    <figcaption>Warthog right drive unit's electrical system</figcaption>
-  </figure>
-</center>
-
----
-
-## Software Integration
-
-ROS has a large ecosystem of sensor drivers, some of which include pre-made URDF description and even
-simulation configurations. Please see the following page on the ROS wiki for a partial list:
-
-<http://wiki.ros.org/Sensors>
-
-For the best experience, consider purchasing supported accessories from Clearpath Robotics for your Warthog.
-This will include simulation, visualization, and driver support for those accessories.
-However, we will happily help you get started with integrating your own devices as well.
 
 ---
 
