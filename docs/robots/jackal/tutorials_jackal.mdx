@@ -73,7 +73,7 @@ Jackal's URDF model can be visualized in RViz.
 Once you have installed the desktop software in an upcoming tutorial, you will be able to run:
 
 ```
-roslaunch dingo_viz view_model.launch
+roslaunch jackal_viz view_model.launch
 ```
 
 <center>
@@ -131,7 +131,6 @@ The most important topics are summarized in the table below.
 | `/navsat/fix`        | `sensors_msgs/NavSatFix`     | Position fix from Jackal's built in GPS receiver.                                                                                                                                |
 | `/navsat/vel`        | `geometry_msgs/TwistStamped` | Velocity over ground according to the integrated GPS receiver.                                                                                                                   |
 | `/cmd_drive `        | `jackal_msgs/Drive`          | Output from Jackal's kinematic controller, input to the motor controllers. Subscribe here for a lower-level look at what's going on.                                             |
-| `/mcu/status`        | `dingo_msgs/Status`          | Low-frequency status data for Jackal's systems. This information is republished in human readable form on the `diagnostics` topic and is best consumed with the Robot Monitor.   |
 | `/feedback`          | `jackal_msgs/Feedback`       | High-frequency inputs from Jackal's encoders and motor current sensors.                                                                                                          |
 | `/status`            | `jackal_msgs/Status`         | Low-frequency status data for Jackal's systems. This information is republished in human readable form on the diagnostics topic and is best consumed with the Robot Monitor.     |
 
@@ -370,6 +369,7 @@ Or, if you drive real Jackal using this method, it will have moved in the real w
 The RViz tool is capable of visualizing many common robotic sensors, as well as other data feeds which can give us clues as to what the robot is doing and why.
 A great place to start with this is adding the [LaserScan](http://wiki.ros.org/rviz/DisplayTypes/LaserScan) plugin to visualize the laser scans being produced by the simulated LMS-111. In the left panel, click the "Add" button, then select the "Topics" tab, and then select the `front/scan` topic:
 
+<!--- The Dingo image works here for Jackal since the robot is hidden in the image --->
 <center>
   <figure>
     <img
@@ -410,7 +410,7 @@ There are three ways to send your Jackal control commands:
 
 Jackal uses [twist_mux](http://wiki.ros.org/twist_mux) to mix separate [geometry_msgs\Twist](http://docs.ros.org/api/geometry_msgs/html/msg/Twist.html) control channels into the `jackal_velocity_controller/cmd_vel` topic.
 
-Additional velocity channels can be defined in [twist_mux.yaml](https://github.com/dingo-cpr/dingo/blob/melodic-devel/dingo_control/config/twist_mux.yaml), or can be piped into the lowest-priority `cmd_vel` topic.
+Additional velocity channels can be defined in [twist_mux.yaml](https://github.com/jackal/jackal/blob/noetic-devel/jackal_control/config/twist_mux.yaml), or can be piped into the lowest-priority `cmd_vel` topic.
 
 #### Odometry
 
@@ -868,7 +868,7 @@ In addtion to the default `jackal_world.launch` file, `jackal_gazebo` contains t
 
 - `empty_world.launch`, which spawns Jackal in a featureless, infinite plane;
 - `hrtac_world.launch`, which is a scenario from the [HRTAC](https://github.com/phir2-lab/hratc2017_framework) competition; and
-- `spawn_dingo.launch`, which is intended to be included in any custom world to add a Jackal simulation to it.
+- `spawn_jackal.launch`, which is intended to be included in any custom world to add a Jackal simulation to it.
 
 <center>
   <figure>
