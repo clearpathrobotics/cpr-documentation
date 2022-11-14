@@ -7,6 +7,7 @@ import ComponentReplacingTireOrInnerTube from "/components/maintenance_husky/mai
 import ComponentUpdatingPumaFirmware from "/components/maintenance/firmware_update_puma.mdx";
 import ComponentLeadAcidBatteryCare from "/components/maintenance/lead_acid_battery_care.mdx";
 import ComponentBillOfMaterialsNote from "/components/maintenance/bill_of_materials_note.mdx";
+import Support from "/components/support.mdx";
 
 <figure>
   <center>
@@ -105,12 +106,6 @@ Odometry is calculated using the average diameter of a tire inflated to 137 kPa 
 
 ---
 
-## Updating Motor Controller Firmware {#maintenance_husky_motor_controller_firmware}
-
-<ComponentUpdatingPumaFirmware />
-
----
-
 ## Lead-Acid Battery Care
 
 Husky's default power supply is a sealed 24 V lead-acid battery (VRLA), providing 20 Ah of charge.
@@ -128,11 +123,11 @@ With proper maintenance, the battery should maintain the majority of its capacit
 
 ---
 
-## Lithium Ion Battery Care
+## Lithium Battery Care
 
-If your Husky has an upgrade to lithium ion batteries, note the required maintenance below.
+If your Husky has an upgrade to lithium batteries, note the required maintenance below.
 
-### Balancing Lithium Ion Batteries
+### Balancing Lithium Batteries
 
 The Husky's batteries must be balanced on a regular basis to ensure accurate
 feedback, consistent performance, and long life. If the batteries are
@@ -158,7 +153,7 @@ A full balance of 24+ hours is recommended at least once per month.
 Contact Clearpath Robotics for assistance with recovering a battery that
 has entered a protective state.
 
-### Checking Lithium Ion Battery Health
+### Checking Lithium Battery Health
 
 A regularly-balanced battery system can be recharged thousands of times
 before degrading. Even with good battery maintenance, the battery will
@@ -226,6 +221,46 @@ The [Common Replacement Items](#husky_maintenance_common_replacement_items) sect
 </figure>
 
 </details>
+
+---
+
+## Software Maintenance  {#software_maintenance}
+
+:::note
+
+If you are upgrading your Husky from an older version of ROS, please refer to
+our upgrade instructions [here](https://clearpathrobotics.com/assets/guides/kinetic/kinetic-to-melodic/index.html)
+and [here](https://clearpathrobotics.com/assets/guides/melodic/melodic-to-noetic/index.html).
+
+:::
+
+### Getting New Packages
+
+Husky is always being improved, both its own software and the many community ROS packages upon which it depends!
+You can use the `apt` package management system to receive new versions all software running on the platform.
+
+Each Husky leaves the factory already configured to pull packages from http://packages.ros.org as well as
+http://packages.clearpathrobotics.com. To update your package and download new package versions, simply run:
+
+```
+sudo apt-get update
+sudo apt-get dist-upgrade
+```
+
+### MCU Firmware Update
+
+Customer updates of Husky firmware are not supported at this time. Contact [Support](#support) if
+Husky firmware updates are needed.
+
+### Motor Controller Firmware Update {#maintenance_husky_motor_controller_firmware}
+
+<ComponentUpdatingPumaFirmware />
+
+---
+
+## Support {#support}
+
+<Support />
 
 ---
 

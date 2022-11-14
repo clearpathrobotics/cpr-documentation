@@ -569,29 +569,7 @@ The second, more sophisticated way to modify the URDF is to create a _new_ packa
 
 ### Keeping Dingo Updated
 
-:::note
-
-If you are upgrading your Dingo from an older version of ROS, please refer to our upgrade instructions [here](https://clearpathrobotics.com/assets/guides/kinetic/kinetic-to-melodic/index.html) and [here](https://clearpathrobotics.com/assets/guides/melodic/melodic-to-noetic/index.html).
-
-:::
-
-#### Getting New Packages
-
-Dingo is always being improved, both its own software and the many community ROS packages upon which it depends!
-You can use the `apt` package management system to receive new versions all software running on the platform.
-
-Each Dingo leaves the factory already configured to pull packages from http://packages.ros.org as well as http://packages.clearpathrobotics.com.
-To update your package and download new package versions, simply run:
-
-```
-sudo apt-get update
-sudo apt-get dist-upgrade
-```
-
-#### MCU Firmware Update
-
-Customer updates of Dingo firmware are not supported at this time.
-Contact [Support](#support) if Dingo firmware updates are needed.
+For details on updating Dingo software or firmware, refer to [Software Maintenance](/docs/robots/dingo/maintenance_dingo#software_maintenance).
 
 ---
 
@@ -793,7 +771,7 @@ The details of each test are shown below.
   - Subscribes to the `/joint_state` ROS topic to receive linear displacement measurements from individual the encoders.
     These measurements are output as comparison to the linear displacement estimations from the encoder-fused odometry.
   - Publishes to the `/cmd_vel` ROS topic to send drive commands to drive the robot.
-  - The user will be asked to verify that the robot drives forward 1 meter.
+  - The user will be asked to verify that the robot drives forward 1 metre.
 
   :::note
 
