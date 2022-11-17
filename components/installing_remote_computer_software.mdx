@@ -1,5 +1,6 @@
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import ComponentRemoteRosConnectivity from "/components/remote_ros_connectivity.mdx";
 
 It is often convenient to use a Remote Computer (eg. laptop) to command and observe your robot. To do this, your
 Remote Computer must be configured correctly.
@@ -7,10 +8,6 @@ Remote Computer must be configured correctly.
 1. Perform a basic ROS installation. See [here](http://wiki.ros.org/noetic/Installation/Ubuntu) for details.
 
 2. Install the desktop packages:
-
-   ```
-   sudo apt-get install ros-noetic-husky-desktop
-   ```
 
    <Tabs groupId="ros_versions">
      <TabItem
@@ -44,10 +41,6 @@ Remote Computer must be configured correctly.
    </details>
 
 4. From your Remote Computer, try launching RViz, the standard ROS robot visualization tool:
-
-   ```
-   roslaunch husky_viz view_robot.launch
-   ```
 
    <Tabs groupId="ros_versions">
      <TabItem

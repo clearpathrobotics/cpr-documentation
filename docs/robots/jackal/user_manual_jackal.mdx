@@ -1,12 +1,358 @@
 ---
 title: User Manual
 sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
 ---
 
 import ComponentIntroductionJackal from "/components/introduction_jackal.mdx";
+import Support from "/components/support.mdx";
+import ComponentUsingRos from "/components/using_ros.mdx";
+import ComponentCommonSafeWorkProcedures from "/components/common_safe_work_procedures.mdx";
+import ComponentSafetyWarning from "/components/safety_warning.mdx";
 
 <ComponentIntroductionJackal />
 
-:::warning todo—under construction
+## Introduction
+
+Jackal is a rugged, lightweight, fast and easy-to-use unmanned ground robot for rapid prototyping
+and research applications. Jackal includes a computer, as well as basic IMU and GPS. Standard
+perception modules are available, including URDF, simulator integration, and demonstration
+applications.
+
+<ComponentSafetyWarning />
+
+### Shipment Contents
+
+Your Jackal shipment contains the following:
+
+- Clearpath Robotics Jackal
+- 270 Wh lithium battery
+- 110 VAC - 220 VAC battery charger
+- Sony PS4 Bluetooth controller
+
+If you purchased standard payload modules or custom integration services with Jackal, then additional
+equipment will be included per your specific configuration, plus further documentation as required.
+
+### Hardware Overview
+
+#### System Architecture
+
+Jackal is built around a computer running Ubuntu (Intel-based computer or Jetson developer kit), paired
+with a 32-bit microcontroller MCU. The MCU handles IO, power supply monitoring and motor control, as well as supplying
+data from the integrated IMU and GPS receiver. The communication channel between the MCU and PC is a Full
+Speed USB connection, with the MCU operating as a standard serial CDC device.
+
+The communication protocol used is rosserial. An instance of the `rosserial_server` serial node is embedded
+in the `jackal_base` node, where it is connected to Jackal's kinematic controller.
+
+An internal magnetometer is available, but not recommended for use due to its location in the vehicle chassis.
+
+#### Exterior Features
+
+The Jackal exterior is shown below and includes:
+
+- 80 mm mounting pattern on the lid
+- 190 mm diameter wheels
+- Human machine interface panel (HMI)
+- Lid latches
+
+<!--- DEFER: Need a figure for Jackal exterior
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/robot_jackal_1.png"
+      width="600"
+    />
+    <figcaption>Jackal exterior</figcaption>
+  </figure>
+</center>
+--->
+
+#### Human-Machine Interface (HMI) Details
+
+<!--- Note that Jackal has the same HMI as Jackal --->
+
+The human-machine-interface (HMI) panel is shown below and includes from left:
+
+|                                  Icon                                   | Description                                                                                                                                                                                                                                                                                                                                                                                                             |
+| :---------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|  <img src="/img/robot_images/dingo_images/icon-motor.png" width="50"/>  | **Motion Stop button**: LED is solid green when Jackal is able to drive and flashing green when the Jackal's motors are disengaged; pressing button toggles the motors between engaged and disengaged mode (further details in [Motion Stop Buttons](#jackal-stop-buttons))                                                                                                                                             |
+|  <img src="/img/robot_images/dingo_images/icon-comms.png" width="50"/>  | **Comms indictor**: LED is solid green when communication between the MCU and computer has been established and LED is off otherwise                                                                                                                                                                                                                                                                                    |
+|  <img src="/img/robot_images/dingo_images/icon-wifi.png" width="50"/>   | **Wi-Fi indicator**: LED is solid green when Wi-Fi is connected and LED is off otherwise                                                                                                                                                                                                                                                                                                                                |
+| <img src="/img/robot_images/dingo_images/icon-battery.png" width="50"/> | **Battery indicator**: LED is solid green when the battery level is ok, solid yellow when the battery level is getting low (should be charged soon), and solid red when the battery level is critical (should be charged immediately)                                                                                                                                                                                   |
+|  <img src="/img/robot_images/dingo_images/icon-power.png" width="50"/>  | **System Power button**: LED is solid blue when the system powered on and running and the LED is flashing blue during the shutdown process; when the system is powered off, pressing the power button begins the power on process; when the system is powered on, a quick press of the power button begins a graceful shutdown and a prolonged press of the power button triggers and immediate power off of the system |
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/dingo_images/hmi.png"
+      width="300"
+    />
+    <figcaption>HMI Panel</figcaption>
+  </figure>
+</center>
+
+#### Payloads
+
+Additional payloads such IMUs, lidars, cameras, GPS, manipulators and many more can be integrated
+with Jackal, either as part of your Jackal purchase or installed after receiving your Jackal.
+You can find a list of supported packages and related documentation for payloads in this
+documention portal, under the [Computers](/docs/computers), [Sensors](/docs/sensors), [Manipulators](/docs/manipulators),
+and [Accessories](/docs/accessories) sections. In addition, refer to [Jackal Integration](/docs/robots/jackal/integration_jackal) for
+details on how to integrate your own payload or how to integrate a payload kit from Clearpath Robotics.
+Each payload kit that ships from Clearpath Robotics comes with a custom mounting bracket and cabling for
+easy attachment to Jackal.
+
+#### Interior Features
+
+To access Jackal's interior, actuate the latches under the front end of the lid, on the opposite end from
+the HMI. When you lift the lid, you will see Jackal's onboard lithium battery, and its two connectors.
+The large Anderson Power Pole connector is to supply power to Jackal and must be connected for
+Jackal to operate. The smaller white Molex connector allows the battery to be charged inside Jackal
+while Jackal is powered off. It is recommended to connect both. The interior components of Jackal are
+labeled below.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/battery-view.png"
+      width="600"
+    />
+    <figcaption>Battery area inside Jackal</figcaption>
+  </figure>
+</center>
+
+Further, you may undo the thumbscrews which hold Jackal's computer tray to the lid. The tray lowers,
+revealing Jackal's onboard computer, user power supplies, and internal user hardware mounting area.
+The figures below illustrate the components of the tray and user power supplies.
+Note that the fused user power is available as four-pin Molex connectors, or a plug-in screw terminal
+block. For more information on integrating payloads electrically, see
+[Jackal Integration](/docs/robots/jackal/integration_jackal#jackal-payload-electrical-integration).
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/user-tray.png"
+      width="600"
+    />
+    <figcaption>Computer and user tray</figcaption>
+  </figure>
+</center>
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/user-power.png"
+      width="600"
+    />
+    <figcaption>User power supply</figcaption>
+  </figure>
+</center>
+
+#### Orientation References
+
+The reference frame used by all Clearpath Robotics ground robots is based on ISO 8855.
+
+<!--- DEFER:
+, and is shown in the figure below.
+Jackal's front is shown.
+--->
+
+When commanded with a positive translational velocity (forward), wheels travel in the positive x-direction.
+The direction of the axes differs from those used for roll, pitch, and yaw in aircraft, and care should be
+taken to ensure that data is interpreted correctly.
+
+<!-- DEFER: need image -->
+
+### System Specifications
+
+| Specification         | Measurement                                                              |
+| :-------------------- | :----------------------------------------------------------------------- |
+| Dimension, Length     | 508 mm                                                                   |
+| Dimension, Width      | 430 mm                                                                   |
+| Dimension, Height     | 250 mm                                                                   |
+| Ground Clearance      | 65 mm                                                                    |
+| Maximum Payload       | 20 kg                                                                    |
+| Speed, Maximum        | 2.0 m/s                                                                  |
+| Battery Chemistry     | Lithium, 270 Wh                                                      |
+| Operating Time        | 8 hours (basic usage), 2 hours (heavy usage)                             |
+| Charge Time           | 4 hours                                                                  |
+| User Power            | 16 A @ VBAT (25.6 V nominal), 7 A @ 12 V, 5 A @ 5 V                      |
+| Communication         | Ethernet, USB 3.0                                                        |
+| Internal Sensing      | Battery Status, Wheel Odometry, Motor Currents, Onboard IMU, Onboard GPS |
+| Operating Temperature | -20 to 45 °C                                                             |
+| Operating Environment | Indoor or Outdoor (designed for IP62)                                    |
+
+<center>
+  <img
+    src="/img/robot_images/jackal_images/jackal_dimensions.png"
+    width="800"
+  />
+</center>
+
+---
+
+## Getting Started
+
+You are ready to go! This section details how to get Jackal into action.
+To begin, place Jackal "up on blocks" as described in the [Safety](#safety) section, making sure that the wheels are clear of the ground.
+
+For most Jackal setups, there will be an Onboard Computer which is directly connected to the Jackal and a Remote Computer
+which is used to control Jackal and gather data. These two computers must be set up to communicate with each other.
+
+### Onboard Computer Setup
+
+If you purchased an Onboard Computer from Clearpath Robotics with Jackal, it is already installed, connected, and powered.
+If not, or to set up your own Onboard Computer, see the [Jackal Tutorials](/docs/robots/jackal/tutorials_jackal#jackal-software-setup).
+
+Note that the Onboard Computer must be connected to the USB port on the Jackal MCU, which is accessible inside the Jackal.
+
+### Powering Up
+
+If you've just unpacked Jackal from its packaging, you may need to open it up and connect the battery.
+
+Press the power button <img src="/img/robot_images/dingo_images/icon-power.png" width="20" /> on Jackal's HMI panel.
+The LEDs should show a test pattern, after which you will wait about 30 seconds for the internal computer to finish booting up.
+Once it has finished booting, the Comms indicator <img src="/img/robot_images/dingo_images/icon-comms.png" width="20" /> should turn green.
+This indicates that ROS is up on the computer and has established communications with the Jackal base.
+
+### Network Configuration
+
+To get Jackal connected to your local Wi-Fi network, you must first access the Onboard Computer using a wired connection to the robot.
+Open the chassis, lower the computer tray, and connect to the network port labeled STATIC with a standard
+ethernet cable. See the [Jackal Tutorials](/docs/robots/jackal/tutorials_jackal#jackal-networking) for details
+on completing the Wi-Fi setup.
+
+### Connecting and Using the Controller {#controller}
+
+To use your controller, it must be paired with your Jackal and powered on.
+If your purchased the Onboard Computer from Clearpath Robotics, your controller is already paired with your Jackal.
+If your controller has become unpaired or if you wish to pair a new controller, following the instructions in
+the [Jackal Tutorials](/docs/robots/jackal/tutorials_jackal#pairing-the-controller).
+
+To teleoperate Jackal, first clear the motion-stop.
+Then, power on the controller by pressing the `PS` button on the controller.
+Once the blue LED on the top of the controller goes solid, you are paired and ready to drive.
+Hold the L1 trigger button (deadman switch) and push the left thumbstick forward to drive the Jackal.
+For full speed mode, hold the R1 trigger.
+See the figure below for the Sony PS4 controls layout.
+If you are not seeing any action, refer to [Support](#jackal-support) to get in touch with support.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/jackal-sony-ps4-controller-labelled.png"
+      width="600"
+    />
+    <figcaption>PS4 Controls Layout</figcaption>
+  </figure>
+</center>
+
+### Using ROS
+
+<ComponentUsingRos />
+
+### Battery Charging
+
+When finished with the Jackal, press and release the power button <img src="/img/robot_images/dingo_images/icon-power.png" width="20" /> to power it off.
+
+Jackal's lithium battery may be charged internal to the chassis: simply plug in
+the charger to the charge port located under the rear fender. Charging will occur
+when Jackal is powered down.
+
+Alternatively, if you have multiple batteries, you can easily lift the lid and
+remove the battery for external charging. When charging externally, remove the pigtail
+which adapts the charger to the platform's weather sealed charge port.
+
+The battery is manufactured for Clearpath Robotics by AllCell Technologies. The
+pack includes integrated protections against fault due to overcurrent, overdischarge,
+and short circuit. The pack is rugged and designed for the demanding environments into
+which Jackal may be deployed.
+
+However, please take note of the following:
+
+- The pack must not be stored or operated above +60 °C or below -19 °C.
+- The pack must not be punctured or disassembled.
+- The pack should be dropped off or delivered to your local hazardous waste authority for disposal.
+- When traveling with Jackal, consult your airline's restrictions regarding lithium
+  batteries. If possible, bring the pack in your carry on luggage, where it will
+  be subject to normal cabin temperatures and pressures.
+
+Please contact Clearpath Robotics for additional information about Jackal's battery or
+for information about purchasing additional packs.
+
+---
+
+## Safety Considerations {#safety}
+
+Clearpath Robotics is committed to high standards of safety.
+Jackal contains several features to protect the safety of users and the integrity of the robot.
+
+:::caution
+
+Jackal is a fast moving robotic platform. Please read the following notices carefully.
 
 :::
+
+### General Warnings
+
+Jackal is a rugged and high-performance robot.
+For the safety of yourself and others, always conduct initial experiments and software development with
+the robot raised off the ground. Place a wooden crate, a set of sawhorses, a sturdy storage tub, or any
+other solid flat structure having a height greater than 100 mm under Jackal to keep the wheels clear of the
+ground ("up on blocks").
+
+When starting out, favour slower wheel speeds. Jackal's control loops can accurately maintain velocities as low as 0.1 m/s.
+Operating at such speeds will give you more time to react if things don't go quite as you expect.
+
+### Motion Stop Buttons {#jackal-stop-buttons}
+
+The Motion Stop button <img src="/img/robot_images/dingo_images/icon-motor.png" width="20" /> is located on the HMI Panel at the back of Jackal.
+To engage Stop Mode, press the Motion Stop button once; you should see that the green LED by the Motion Stop button is flashing and that all four corner LEDs are flashing red.
+To disengage Stop Mode, press the Motion Stop button again; all LEDs should return to their original values.
+
+When in Stop Mode, the Jackal will not drive.
+The commands received while in Stop Mode are not buffered; Jackal will always act on the latest commands received.
+This means that if the commands are stopped before the Motion Stop button is pressed to disengage Stop Mode, the Jackal will not move.
+If the commands are continued, Jackal will move at the speed commanded once the Motion Stop button is pressed to disengage Stop Mode.
+
+Ensure that the Motion Stop button is accessible at all times.
+Avoid mounting payloads that extend over the rear of Jackal and would block access to the Motion Stop button.
+
+### Electrical System
+
+Jackal is powered by batteries capable of delivering high outputs for short durations.
+This gives Jackal's motors their great performance; however, it is also enough power to cause severe bodily harm.
+Always use caution when operating Jackal to avoid personal injury or property damage.
+To ensure safety, please observe the following precautions:
+
+- Do not tamper with the plug attached to the battery.
+- Do not tamper with the fuses, except to check and change the fuses.
+- Always replace fuses with the same type and rating to ensure continued protection against risk of fires.
+- Consult Clearpath Robotics support if you need to service the batteries.
+- Charge the battery only with the charger provided by Clearpath Robotics.
+- Please dispose of the batteries properly or return them to Clearpath Robotics to do so.
+
+### Lifting and Transport
+
+For the safety of users and to maximize the lifetime of Jackal, please observe the following when manually transporting the robot:
+
+- Ensure that Jackal's Stop Mode is engaged when transporting short distances and powered off when transporting longer distances.
+- Do not push the robot at more than 0.5 m/s (1.6 ft/s) or damage to the motor controls may occur.
+
+### Performance Considerations
+
+Included in Jackal are native software checks and limits to protect the robot.
+However, it is recommended to monitor the system's status during usage with the `/status` and `/diagnostics` topics.
+These topics provides useful information regarding voltages, currents, temperatures and general health of the system.
+
+### Recommended Safe Work Procedures
+
+<ComponentCommonSafeWorkProcedures />
+
+---
+
+## Support {#jackal-support}
+
+<Support />

@@ -7,6 +7,7 @@ toc_max_heading_level: 4
 
 import ComponentIntroductionDingo from "/components/introduction_dingo.mdx";
 import ComponentSupport from "/components/support.mdx";
+import ComponentUsingRos from "/components/using_ros.mdx";
 import ComponentWiredRobotConnection from "/components/wired_robot_connection.mdx";
 import ComponentWifiRobotConnection from "/components/wifi_robot_connection.mdx";
 import ComponentRemoteRosConnectivity from "/components/remote_ros_connectivity.mdx";
@@ -45,7 +46,7 @@ There are two Dingo variants:
 Your Dingo shipment contains the following:
 
 - Dingo UGV (Dingo-D or Dingo-O variant)
-- One or more 12 V sealed lead-acid (SLA) or 14.4 V Lithium-ion batteries
+- One or more 12 V sealed lead-acid (SLA) or 14.4 V lithium batteries
 - One or more 110/220 V universal chargers for your batteries
 - One Sony PS4 Bluetooth controller
 - One Dingo quick start guide
@@ -56,7 +57,7 @@ If you elected to purchase standard payload modules or custom integration servic
 
 #### System Architecture
 
-Dingo is built around a computer running Ubuntu (Intel-based computer or Jetson developer kit), paired with a 32-bit MCU.
+Dingo is built around a computer running Ubuntu (Intel-based computer or Jetson developer kit), paired with a 32-bit microcontroller MCU.
 The MCU handles I/O, power supply monitoring, and motor control, as well as supplying data from the integrated IMU.
 The communication channel between the MCU and computer is a Gigabit Ethernet connection.
 
@@ -163,8 +164,14 @@ To connect the shore power, remove the top trough cover (to access the MCU) and 
 
 #### Orientation References
 
-The reference frame used by all Clearpath Robotics ground robots is based on ISO 8855, and is shown in the figure below.
-Husky's front is shown. When commanded with a positive translational velocity (forward), wheels travel in the positive x-direction.
+The reference frame used by all Clearpath Robotics ground robots is based on ISO 8855.
+
+<!--- TODO:
+, and is shown in the figure below.
+Husky's front is shown.
+--->
+
+When commanded with a positive translational velocity (forward), wheels travel in the positive x-direction.
 The direction of the axes differs from those used for roll, pitch, and yaw in aircraft, and care should be taken to ensure that data is interpreted correctly.
 
 <!-- TODO: need image -->
@@ -181,8 +188,8 @@ The direction of the axes differs from those used for roll, pitch, and yaw in ai
 | Maximum Payload       | 20 kg                                                       | 20 kg                                  |
 | Speed, Maximum        | 1.3 m/s                                                     | 1.3 m/s                                |
 | Operating Environment | Indoor                                                      | Same as Dingo-D                        |
-| Operating Time        | 2 hours (SLA), 4 hours (Lithium)                            | 2 hours (2X SLA), 4 hours (2X Lithium) |
-| Battery Chemistry     | Lithium Ion or Sealed Lead-Acid                             | Same as Dingo-D                        |
+| Operating Time        | 2 hours (SLA), 4 hours (lithium)                            | 2 hours (2X SLA), 4 hours (2X lithium) |
+| Battery Chemistry     | Lithium or Sealed Lead-Acid                             | Same as Dingo-D                        |
 | Charge Time           | 4 hours                                                     | Same as Dingo-D                        |
 | User Power            | 20 A @ VBAT (11-16.8 V), 7A @ 12 V, 5 A @ 5 V               | Same as Dingo-D                        |
 | Communication         | Ethernet, USB 3.0                                           | Same as Dingo-D                        |
@@ -270,13 +277,13 @@ The system will remain operational while hot-swapping as long as there is at lea
 Note that plugging in shore power will engage a motion-stop and it is not possible to drive Dingo while connected to shore power.
 
 The Sealed Lead-Acid batteries have overcurrent protection in the form of an ATO fuse.
-The Lithium-Ion batteries include integrated protections against fault due to overcurrent, overdischarge, and short circuit.
+The lithium batteries include integrated protections against fault due to overcurrent, overdischarge, and short circuit.
 The batteries are rugged and designed for the demanding environments into which Dingo may be deployed.
 
 However, please take note of the following:
 
 - SLA batteries must be charged while in a 0 to +45 ◦C range and discharged while in a -30 to +60 ◦C range.
-- Li-Ion batteries must be charged while in a 0 to +50 ◦C range and discharged while in a -20 to +60 ◦C range.
+- Lithium batteries must be charged while in a 0 to +50 ◦C range and discharged while in a -20 to +60 ◦C range.
 - The batteries must not be punctured or disassembled.
 - The batteries should be dropped off or delivered to your local hazardous waste authority for disposal.
 - When traveling with Dingo, consult your airline's restrictions regarding lithium batteries (if applicable).
@@ -297,7 +304,7 @@ Dingo is a fast moving robotic platform. Please read the following notices caref
 
 :::
 
-### General warnings
+### General Warnings
 
 Dingo is a rugged and high-performance vehicle.
 For the safety of yourself and others, always conduct initial experiments and software development with the vehicle raised off the ground.
