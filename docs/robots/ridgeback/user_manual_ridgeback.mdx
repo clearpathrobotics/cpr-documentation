@@ -70,11 +70,11 @@ Stop Reset button below the left rear Stop button, and the Power ON/OFF button b
 Stop button. On the front of the robot, there are another two red mushroom stop buttons. These buttons
 are described further in the table below.
 
-|  Button         | Description                                                                                                                                                                                                                                                                                                                                                                                                             |
-| :-------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Power ON/OFF    | Turns Ridgeback on or off. Note that the power button is a soft, momentary switch: to shut Ridgeback down, press and release it, and when the onboard PC has completed a safe power-down, the robot itself will also power-down. |
-| Stop (x4)       | Stops Ridgeback by placing the four integrated motor drivers into an electrical reset condition. This is intended as a backup option for immobilizing Ridgeback when autonomy software malfunctions or commands unintended motion. The stop buttons have a mechanical latch, which can be released by twisting the latched button. If you have a wireless e-stop, pendant, or other stop-asserting hardware you would like to integrate with Ridgeback, a breakout header is supplied on the main microcontroller PCB. |
-| Stop Reset      | Clears the electrically-enforced stop latch, allowing Ridgeback to run again after it has been stopped via one of the stop buttons. Note that the mushroom button's mechanical latch must be cleared before the electrical reset can have any effect. |
+|    Button    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| :----------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Power ON/OFF | Turns Ridgeback on or off. Note that the power button is a soft, momentary switch: to shut Ridgeback down, press and release it, and when the onboard PC has completed a safe power-down, the robot itself will also power-down.                                                                                                                                                                                                                                                                                       |
+|  Stop (x4)   | Stops Ridgeback by placing the four integrated motor drivers into an electrical reset condition. This is intended as a backup option for immobilizing Ridgeback when autonomy software malfunctions or commands unintended motion. The stop buttons have a mechanical latch, which can be released by twisting the latched button. If you have a wireless e-stop, pendant, or other stop-asserting hardware you would like to integrate with Ridgeback, a breakout header is supplied on the main microcontroller PCB. |
+|  Stop Reset  | Clears the electrically-enforced stop latch, allowing Ridgeback to run again after it has been stopped via one of the stop buttons. Note that the mushroom button's mechanical latch must be cleared before the electrical reset can have any effect.                                                                                                                                                                                                                                                                  |
 
 #### Body Lights
 
@@ -83,16 +83,16 @@ express system status according to the table below, but in the absence of one of
 be commanded from ROS to display indications from autonomy or other higher-level software.
 See http://wiki.ros.org/ridgeback_base for information on commanding the body lights.
 
-| Front Lights        | Rear Lights            | System State                                                                      |
-| :------------------ | :--------------------- | :-------------------------------------------------------------------------------- |
+| Front Lights        | Rear Lights            | System State                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| :------------------ | :--------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Solid red           | Solid red              | The MCU is not in contact with the computer. That is, the `rosserial` connection is not active. This condition will be seen briefly on startup while Ridgeback's computer is booting up. If it persists, or is seen after initialization, either the base node on the computer has crashed, the network switch has failed, or a serious MCU error has occurred. If you suspect one of these conditions, please contact support. |
-| Flashing red        | Flashing red           | Stop mode is engaged. To disengage, twist the mushroom buttons to ensure that they are unlatched, and check any external stop hardware, if present. |
-| Flashing orange     | Flashing orange        | A system fault has been detected, typically the motor drivers. Refer to logs or diagnostics for details.  |
-| Pulsing orange      | Pulsing orange         | Battery is low. Connect Ridgeback to the charger.                                 |
-| Alternating red/off | Alternating red/orange | All stops are mechanically cleared but still electrically latched. Press the Stop Reset button to enable full operation.  |
-| Pulsing green       | Pulsing green          | Charger is connected, Ridgeback's battery is charging. Note that the battery can also be charged with the platform off. This indication will only be seen if the charger is connected while Ridgeback is powered up.  |
-| Solid green         | Solid green            | Charger is connected and Ridgeback is charged fully.                               |
-| Solid white         | Solid red              | Normal operation; ready to drive. The intensity of the lights will increase slightly when actually in motion. This is the status which may be overridden by publishing your own light patterns to the `/cmd_lights` ROS topic.  |
+| Flashing red        | Flashing red           | Stop mode is engaged. To disengage, twist the mushroom buttons to ensure that they are unlatched, and check any external stop hardware, if present.                                                                                                                                                                                                                                                                             |
+| Flashing orange     | Flashing orange        | A system fault has been detected, typically the motor drivers. Refer to logs or diagnostics for details.                                                                                                                                                                                                                                                                                                                        |
+| Pulsing orange      | Pulsing orange         | Battery is low. Connect Ridgeback to the charger.                                                                                                                                                                                                                                                                                                                                                                               |
+| Alternating red/off | Alternating red/orange | All stops are mechanically cleared but still electrically latched. Press the Stop Reset button to enable full operation.                                                                                                                                                                                                                                                                                                        |
+| Pulsing green       | Pulsing green          | Charger is connected, Ridgeback's battery is charging. Note that the battery can also be charged with the platform off. This indication will only be seen if the charger is connected while Ridgeback is powered up.                                                                                                                                                                                                            |
+| Solid green         | Solid green            | Charger is connected and Ridgeback is charged fully.                                                                                                                                                                                                                                                                                                                                                                            |
+| Solid white         | Solid red              | Normal operation; ready to drive. The intensity of the lights will increase slightly when actually in motion. This is the status which may be overridden by publishing your own light patterns to the `/cmd_lights` ROS topic.                                                                                                                                                                                                  |
 
 #### User Bay
 
@@ -104,12 +104,12 @@ connect a device to the onboard network, it is suggested to give it a static IP 
 this cannot be changed since the MCU is statically set to 192.168.131.2 and expects the computer to be at
 192.168.131.1. Avoid IPs in use by the following pre-existing devices:
 
-| IP Address             | Device Assignment                                                                 |
-| :--------------------- | :-------------------------------------------------------------------------------- |
-| 192.168.131.1          | Onboard PC (both ports, br0 network interface) |
-| 192.168.131.2          | Ethernet-connected MCU |
-| 192.168.131.20         | Front-facing LIDAR |
-| 192.168.131.21         | Rear-facing LIDAR (if present) |
+| IP Address     | Device Assignment                              |
+| :------------- | :--------------------------------------------- |
+| 192.168.131.1  | Onboard PC (both ports, br0 network interface) |
+| 192.168.131.2  | Ethernet-connected MCU                         |
+| 192.168.131.20 | Front-facing LIDAR                             |
+| 192.168.131.21 | Rear-facing LIDAR (if present)                 |
 
 #### Payload Integration Plate
 
@@ -134,27 +134,25 @@ The direction of the axes differs from those used for roll, pitch, and yaw in ai
 
 ### System Specifications
 
-| Specification         | Measurement                                                 |
-| :-------------------- | :---------------------------------------------------------- |
-| Dimension, Length     | 960 mm                                                      |
-| Dimension, Width      | 793 mm                                                      |
-| Dimension, Height     | 311 mm <sup>†</sup>                                         |
-| Ground Clearance      | 18 mm                                                       |
-| Maximum Payload       | 100 kg                                                      |
-| Speed, Maximum        | 1.1 m/s                                                     |
-| Operating Environment | Indoor                                                      |
-| Operating Time        | 15 hours with max payload   (24 V 100 Ah)                   |
-| Battery Chemistry     | Marine Grade AGM Sealed Lead Acid                           |
-| Charge Time           | 8 hours                                                     |
-| User Power            | 7.5 A @ VBAT (24 V), 7.5 A @ 12 V, 7.5 A @ 5 V              |
-| Power                 | 800 W Typical Use, Shore Power Available                    |
+| Specification         | Measurement                                                                  |
+| :-------------------- | :--------------------------------------------------------------------------- |
+| Dimension, Length     | 960 mm                                                                       |
+| Dimension, Width      | 793 mm                                                                       |
+| Dimension, Height     | 311 mm <sup>†</sup>                                                          |
+| Ground Clearance      | 18 mm                                                                        |
+| Maximum Payload       | 100 kg                                                                       |
+| Speed, Maximum        | 1.1 m/s                                                                      |
+| Operating Environment | Indoor                                                                       |
+| Operating Time        | 15 hours with max payload (24 V 100 Ah)                                      |
+| Battery Chemistry     | Marine Grade AGM Sealed Lead Acid                                            |
+| Charge Time           | 8 hours                                                                      |
+| User Power            | 7.5 A @ VBAT (24 V), 7.5 A @ 12 V, 7.5 A @ 5 V                               |
+| Power                 | 800 W Typical Use, Shore Power Available                                     |
 | Control Modes         | Kinematic control (forward, sideways, rotation), individual wheel velocities |
-| Communication         | Ethernet, USB 3.0, RS232                                    |
-| Internal Sensing      | Battery Status, Wheel Odometry, Motor Currents, Onboard IMU |
+| Communication         | Ethernet, USB 3.0, RS232                                                     |
+| Internal Sensing      | Battery Status, Wheel Odometry, Motor Currents, Onboard IMU                  |
 
-<sup>†</sup> The height of the Ridgeback was increased by 15mm starting with the robot with serial number R100-0111.
-Older Ridgebacks measure 296mm high.
-
+<sup>†</sup> The height of the Ridgeback was increased by 15mm starting with the robot with serial number R100-0111. Older Ridgebacks measure 296mm high.
 
 <center>
   <img
@@ -330,4 +328,3 @@ These topics provides useful information regarding voltages, currents, temperatu
 ## Support {#ridgeback-support}
 
 <ComponentSupport />
-

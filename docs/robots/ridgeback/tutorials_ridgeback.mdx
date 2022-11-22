@@ -91,40 +91,39 @@ Ridgeback can be customized and extended through the use of several environment 
 The details are in the [ridgeback_description](https://github.com/ridgeback/ridgeback/tree/melodic-devel/ridgeback_description) repository.
 Some of the most important ones are listed below.
 
-| Variable                        | Default | Description                                                                 |
-| :------------------------------ | :------ | :-------------------------------------------------------------------------- |
-| `RIDGEBACK_FRONT_HOKUYO_LASER`  | `0`     | Set to `1` if the robot is equipped with a front-facing Hokuyo LIDAR unit (e.g. UST10)    |
-| `RIDGEBACK_REAR_HOKUYO_LASER`   | `0`     | Set to `1` if the robot is equipped with a rear-facing Hokuyo LIDAR unit (e.g. UST10)    |
-| `RIDGEBACK_FRONT_SICK_LASER `   | `0`     | Set to `1` if the robot is equipped with a front-facing SICK LMS-111 LIDAR unit    |
-| `RIDGEBACK_REAR_SICK_LASER `    | `0`     | Set to `1` if the robot is equipped with a rear-facing SICK LMS-111 LIDAR unit    |
-| `RIDGEBACK_MICROTRAIN_IMU`      | `0`     | Set to `1` if the robot is equipped with a Microstrain IMU                              |
-
+| Variable                       | Default | Description                                                                            |
+| :----------------------------- | :------ | :------------------------------------------------------------------------------------- |
+| `RIDGEBACK_FRONT_HOKUYO_LASER` | `0`     | Set to `1` if the robot is equipped with a front-facing Hokuyo LIDAR unit (e.g. UST10) |
+| `RIDGEBACK_REAR_HOKUYO_LASER`  | `0`     | Set to `1` if the robot is equipped with a rear-facing Hokuyo LIDAR unit (e.g. UST10)  |
+| `RIDGEBACK_FRONT_SICK_LASER `  | `0`     | Set to `1` if the robot is equipped with a front-facing SICK LMS-111 LIDAR unit        |
+| `RIDGEBACK_REAR_SICK_LASER `   | `0`     | Set to `1` if the robot is equipped with a rear-facing SICK LMS-111 LIDAR unit         |
+| `RIDGEBACK_MICROTRAIN_IMU`     | `0`     | Set to `1` if the robot is equipped with a Microstrain IMU                             |
 
 ### Configurations
 
 As an alternative to individually specifying each accessory, some fixed configurations are provided in the package.
 These can be specified using the `config` arg to `description.launch`, and are intended especially as a convenience for simulation launch.
 
-| Config               | Description                                         |
-| :------------------- | :-------------------------------------------------- |
-| `base`               | Base Ridgeback                                      |
-| `base_sick`          | Ridgeback with front SICK laser                     |
-| `dual_hokuyo_lasers` | Ridgeback with front and rear Hokuyo lasers         |
-| `dual_sick_lasers`   | Ridgeback with front and rear SICK lasers           |
+| Config               | Description                                 |
+| :------------------- | :------------------------------------------ |
+| `base`               | Base Ridgeback                              |
+| `base_sick`          | Ridgeback with front SICK laser             |
+| `dual_hokuyo_lasers` | Ridgeback with front and rear Hokuyo lasers |
+| `dual_sick_lasers`   | Ridgeback with front and rear SICK lasers   |
 
 ### Key ROS Topics
 
 You can view all topics that are active using `rostopic list`.
 The most important topics are summarized in the table below.
 
-| Topic                | Message Type            | Purpose                                                                                                                                                                              |
-| :------------------- | :---------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/cmd_vel`           | `geometry_msgs/Twist`   | Input to Ridgeback's kinematic controller. Publish here to make Ridgeback go.                                                                                                        |
-| `/odometry/filtered` | `nav_msgs/Odometry`     | Published by `robot_localization`, a filtered localization estimate based on wheel odometry (encoders) and integrated IMU.                                                           |
-| `/imu/data`          | `sensor_msgs/IMU`       | Published by `imu_filter_madgwick`, an orientation estimated based on the Ridgeback's internal IMU.                                                                                  |
-| `/mcu/status`        | `ridgeback_msgs/Status` | Low-frequency status data for Ridgeback's systems. This information is republished in human readable form on the `diagnostics` topic and is best consumed with the Robot Monitor.    |
-| `/mcu/cmd_fans`      | `ridgeback_msgs/Fans`   | User can publish to this topic to control an the installed fans.                                                                                                                     |
-| `/cmd_lights`        | `ridgeback_msgs/Lights` | User can publish to this topic to override the default behavior of the Ridgeback body lights.                                                                                        |
+| Topic                | Message Type            | Purpose                                                                                                                                                                           |
+| :------------------- | :---------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/cmd_vel`           | `geometry_msgs/Twist`   | Input to Ridgeback's kinematic controller. Publish here to make Ridgeback go.                                                                                                     |
+| `/odometry/filtered` | `nav_msgs/Odometry`     | Published by `robot_localization`, a filtered localization estimate based on wheel odometry (encoders) and integrated IMU.                                                        |
+| `/imu/data`          | `sensor_msgs/IMU`       | Published by `imu_filter_madgwick`, an orientation estimated based on the Ridgeback's internal IMU.                                                                               |
+| `/mcu/status`        | `ridgeback_msgs/Status` | Low-frequency status data for Ridgeback's systems. This information is republished in human readable form on the `diagnostics` topic and is best consumed with the Robot Monitor. |
+| `/mcu/cmd_fans`      | `ridgeback_msgs/Fans`   | User can publish to this topic to control an the installed fans.                                                                                                                  |
+| `/cmd_lights`        | `ridgeback_msgs/Lights` | User can publish to this topic to override the default behavior of the Ridgeback body lights.                                                                                     |
 
 ---
 
@@ -628,7 +627,7 @@ When RViz appears, select the _Set 2D Pose tool_ from the toolbar, and click on 
 
 ---
 
-## Ridgeback Tests   {#testing-ridgeback}
+## Ridgeback Tests {#testing-ridgeback}
 
 Ridgeback robots come preinstalled with a set of test scripts as part of the `ridgeback_tests` ROS package, which can be run to verify robot functionality at the component and system levels.
 
@@ -900,7 +899,7 @@ You can see the complete layout of the office below:
   </figure>
 </center>
 
-### Customizing Ridgeback's Payload   {#customizing-ridgeback-payloads}
+### Customizing Ridgeback's Payload {#customizing-ridgeback-payloads}
 
 To customize Ridgeback's payload you must use the environment variables described in
 [ridgeback_description](https://github.com/ridgeback/ridgeback/tree/melodic-devel/ridgeback_description).
@@ -915,7 +914,7 @@ before launching the simulation world.
 You can also add additional sensors by creating a customized URDF and setting the `RIDGEBACK_URDF_EXTRAS` environment
 variable to point to it.
 
-For example, let's suppose you want to equip Ridgeback with an Intel RealSense D435 camera.  First, install the `realsense2_camera`
+For example, let's suppose you want to equip Ridgeback with an Intel RealSense D435 camera. First, install the `realsense2_camera`
 and `realsense2_description` packages, along with the gazebo plugins:
 
 ```
@@ -1015,7 +1014,7 @@ Then create your customized URDF file, for example `$HOME/Desktop/realsense.urdf
 ```
 
 This file defines the additional links for adding a RealSense camera to the robot, as well as configuring the `openni_kinect`
-plugin for Gazebo to simulate data from a depth camera.  The camera itself will be connected to the Ridgeback's `front_mount`
+plugin for Gazebo to simulate data from a depth camera. The camera itself will be connected to the Ridgeback's `front_mount`
 link, offset 5cm towards the front of the robot.
 
 Now, set the `RIDGEBACK_URDF_EXTRAS` environment variable and try viewing the Ridgeback model:
