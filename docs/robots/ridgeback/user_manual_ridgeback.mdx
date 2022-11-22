@@ -83,14 +83,16 @@ express system status according to the table below, but in the absence of one of
 be commanded from ROS to display indications from autonomy or other higher-level software.
 See http://wiki.ros.org/ridgeback_base for information on commanding the body lights.
 
-| Light Output             | System State                                                                 |
-| :----------------------- | :-------------------------------------------------------------------------------- |
-| Solid red                | The MCU is not in contact with the computer. That is, the `rosserial` connection is not active. This condition will be seen briefly on startup while Ridgeback's computer is booting up. If it persists, or is seen after initialization, either the base node on the computer has crashed, the network switch has failed, or a serious MCU error has occurred. If you suspect one of these conditions, please contact support. |
-| Flashing red             | The Stop circuit is broken. Twist the mushroom buttons to ensure that they are unlatched, and check any external stop hardware, if present. |
-| Flashing yellow, corners | All stops are closed but not reset; the stop loop is now only electrically latched. Press the Stop Reset button to enable full operation.  |
-| Flashing yellow, all     | Motor drivers not yet ready to drive. The motors have a brief initialization sequence that must complete after a stop condition clears before they are ready to drive. If this condition persists, please contact support.  |
-| Fading green             | Charger is connected, Ridgeback's battery is charging. Note that the battery can also be charged with the platform off. This indication will only be seen if the charger is connected while Ridgeback is powered up.  |
-| Headlights + taillights  | When Ridgeback is ready to drive, the front lights will change from red to white. The intensity of the head and tail lights will increase slightly when actually in motion. This is the status which may be overridden by publishing your own light patterns to the `/cmd_lights` ROS topic.  |
+| Front Lights        | Rear Lights            | System State                                                                      |
+| :------------------ | :--------------------- | :-------------------------------------------------------------------------------- |
+| Solid red           | Solid red              | The MCU is not in contact with the computer. That is, the `rosserial` connection is not active. This condition will be seen briefly on startup while Ridgeback's computer is booting up. If it persists, or is seen after initialization, either the base node on the computer has crashed, the network switch has failed, or a serious MCU error has occurred. If you suspect one of these conditions, please contact support. |
+| Flashing red        | Flashing red           | Stop mode is engaged. To disengage, twist the mushroom buttons to ensure that they are unlatched, and check any external stop hardware, if present. |
+| Flashing orange     | Flashing orange        | A system fault has been detected, typically the motor drivers. Refer to logs or diagnostics for details.  |
+| Pulsing orange      | Pulsing orange         | Battery is low. Connect Ridgeback to the charger.                                 |
+| Alternating red/off | Alternating red/orange | All stops are mechanically cleared but still electrically latched. Press the Stop Reset button to enable full operation.  |
+| Pulsing green       | Pulsing green          | Charger is connected, Ridgeback's battery is charging. Note that the battery can also be charged with the platform off. This indication will only be seen if the charger is connected while Ridgeback is powered up.  |
+| Solid green         | Solid green            | Charger is connected and Ridgeback is charged fully.                               |
+| Solid white         | Solid red              | Normal operation; ready to drive. The intensity of the lights will increase slightly when actually in motion. This is the status which may be overridden by publishing your own light patterns to the `/cmd_lights` ROS topic.  |
 
 #### User Bay
 
@@ -177,7 +179,7 @@ are clear of the ground.
 A standard Ridgeback ships with an integrated Onboard Computer that is directly connected to the Ridgeback MCU. Most users
 will also make use of a Remote Computer, which is used to control Ridgeback and gather data.
 These two computers must be set up to communicate with each other. Details on the Remote Computer setup
-can be found in [Ridgeback Tutorials](/docs/robots/dingo/tutorials_ridgeback).
+can be found in [Ridgeback Tutorials](/docs/robots/ridgeback/tutorials_ridgeback).
 
 ### Powering Up
 

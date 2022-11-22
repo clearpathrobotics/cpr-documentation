@@ -46,16 +46,15 @@ If instead you have an older Dingo robot running Ubuntu 18.04 with ROS Melodic, 
 
 [Dingo Software Setup](#dingo-software-setup) outlines the steps for setting up the software on your Dingo robot and optionally on a remote computer.
 
-[Using Dingo](#using-dingo) describes how to simulate and drive your Dingo. [Simuation](#simulating-dingo) is a great way for most users to learn more about their Dingo;
+[Using Dingo](#using-dingo) describes how to simulate and drive your Dingo. [Simulation](#simulating-dingo) is a great way for most users to learn more about their Dingo;
 understanding how to effectively operate Dingo in simulation is valuable whether you are in the testing phase with software you intend to ultimately deploy on a physical Dingo or you do not have one and are simply exploring the platform's capabilities.
-
 [Driving Dingo](#driving-dingo) covers how to teleoperate Dingo using the remote control, a well as safety procedures for operating the physical robot.
 Anyone working with a physical robot should be familiar with this section.
 
-[Navigating Dingo](#navigating-dingo) is a follow-on to what is learned in the [Simuation](#simulating-dingo) tutorial, as navigation and map-making may be run in the simulated environment.
+[Navigating Dingo](#navigating-dingo) is a follow-on to what is learned in the [Simulation](#simulating-dingo) tutorial, as navigation and map-making may be run in the simulated environment.
 However, this content is applicable to both the simulator and the real platform, if your Dingo is equipped with a laser scanner.
 
-[Testing Dingo](#testing-dingo) outlines how to validate that your physical Dingo is working correctly.
+[Dingo Tests](#testing-dingo) outlines how to validate that your physical Dingo is working correctly.
 
 [Advanced Topics](#advanced-topics) covers items that are only required in atypical situations.
 
@@ -174,7 +173,7 @@ The most important topics are summarized in the table below.
 | Topic             | Message Type          | Purpose                                                                                                                                                                                          |
 | :---------------- | :-------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `/cmd_vel`        | `geometry_msgs/Twist` | Input to Dingo's kinematic controller. Publish here to make Dingo go.                                                                                                                            |
-| `/odom`           | `nav_msgs/Odometry`   | Published by `robot_localization`, a filtered localization estimate based on wheel odometry (encoders) and integrated IMU.                                                                       |
+| `/odometry/filtered` | `nav_msgs/Odometry`   | Published by `robot_localization`, a filtered localization estimate based on wheel odometry (encoders) and integrated IMU.                                                                       |
 | `/imu/data`       | `sensor_msgs/IMU`     | Published by `imu_filter_madgwick`, an orientation estimated based on the Dingo's internal IMU.                                                                                                  |
 | `/mcu/status`     | `dingo_msgs/Status`   | Low-frequency status data for Dingo's systems. This information is republished in human readable form on the `diagnostics` topic and is best consumed with the Robot Monitor.                    |
 | `/mcu/aux_input`  | `dingo_msgs/UInt8`    | User can subscribe to this topic to monitor the MCU user inputs. See [AUX Inputs](/docs/robots/dingo/integration_dingo#dingo-aux-inputs).                                                        |
@@ -303,7 +302,7 @@ roslaunch dingo_gazebo dingo_world.launch
 
 You should see the following window appear, or something like it.
 You will see a base Dingo spawned with no additional sensors.
-You can adjust the camera angle by clicking and dragging while holding CTRL, ALT, or the shift key.
+You can adjust the camera angle by clicking and dragging while holding CTRL, ALT, or the Shift key.
 
 <center>
   <figure>
@@ -485,8 +484,8 @@ The same information is also published as a [dingo_msgs\Status](https://docs.ros
 
 There are four ways to drive Dingo and each way will work on a physical Dingo robot as well as on a simulated Dingo.
 
-1.  Using the interactive remote controller in RViz. See [Simulating Husky](#simulating-husky).
-2.  Using autonomous navigation. See [Navigating Husky](#navigating-husky).
+1.  Using the interactive remote controller in RViz. See [Simulating Dingo](#simulating-dingo).
+2.  Using autonomous navigation. See [Navigating Dingo](#navigating-dingo).
 3.  Using the controller for teleoperation. See below.
 4.  Publishing ROS messages. See below.
 
@@ -690,7 +689,7 @@ When RViz appears, select the _Set 2D Pose tool_ from the toolbar, and click on 
 
 ---
 
-## Dingo Tests
+## Dingo Tests {#testing-dingo}
 
 Dingo robots come preinstalled with a set of test scripts as part of the `dingo_tests` ROS package, which can be run to verify robot functionality at the component and system levels.
 
