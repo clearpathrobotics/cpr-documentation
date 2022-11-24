@@ -1,10 +1,13 @@
 ---
 title: User Manual
-sidebar_position: 2
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
 ---
 
 import ComponentIntroductionWarthog from "/components/introduction_warthog.mdx";
 import ComponentNetplanSetup from "/components/netplan_setup.mdx";
+import ComponentUsingRos from "/components/using_ros.mdx";
 import Support from "/components/support.mdx";
 import ComponentCommonSafeWorkProcedures from "/components/common_safe_work_procedures.mdx";
 
@@ -23,10 +26,10 @@ Your Warthog shipment contains the following:
 
 - Warthog UGV
   - Onboard computer
-  - User Panel with power, Ethernet, Serial (RS232) and USB connectivity
+  - User Breakout Panel with power, Ethernet, Serial (RS232) and USB connectivity
   - 48 V Lead-Acid Battery Pack or 48 V Lithium Battery Pack
 - One battery charger
-- One Futaba Remote Control
+- One Futaba remote control
 - One Warthog quick start guide
 - One wireless stop remote
 
@@ -41,16 +44,16 @@ Husky is built around a computer running Ubuntu (Intel-based computer or Jetson 
 32-bit microcontroller MCU. The MCU handles power supply monitoring and motor control. The communication channel
 between the MCU and computer is an Ethernet connection.
 
-#### Exterior Features
+#### System Features
 
-The Warthog exterior is shown below and includes:
+The Warthog is shown below and includes:
 
 - Battery charger access
 - Bilge pumps
 - User breakouts
 - Payload integration area
 - Four E-stop buttons (one on each corner)
-- Four status lights (one on each corner)
+- Four body lights (one on each corner)
 
 <center>
   <figure>
@@ -102,23 +105,28 @@ All payloads should be mounted to the central chassis when traversing through wa
 The primary payload of the unit should be placed on the central chassis.
 If necessary loading can be placed on the drive units however payloads should not exceed 23 kg (50 lbs) on each drive unit.
 
-For more information and guidance on mounting payload structures on top of Warthog, please refer to subsection [Mechanical Mounting](/docs/robots/warthog/integration_warthog/#warthog-mechanical-mounting)
+For more information and guidance on mounting payload structures on top of Warthog, please refer to subsection [Mechanical Mounting](/docs/robots/warthog/integration_warthog/#warthog-mechanical-mounting).
 
-#### Status Lights
+#### Body Lights
 
 Warthog includes four RGB body lights, one on each corner of the chassis. These lights
 express system status according to the table below, but in the absence of one of the low-level conditions, they can
 be commanded from ROS to display indications from autonomy or other higher-level software.
-See http://wiki.ros.org/warthog_base for information on commanding the status lights.
+See http://wiki.ros.org/warthog_base for information on commanding the body lights.
 
-| Light Output             | System State                                                                 |
-| :----------------------- | :-------------------------------------------------------------------------------- |
-| Solid red                | The MCU is not in contact with the computer. That is, the `rosserial` connection is not active. This condition will be seen briefly on startup while Ridgeback's computer is booting up. If it persists, or is seen after initialization, either the base node on the computer has crashed, the network switch has failed, or a serious MCU error has occurred. If you suspect one of these conditions, please contact support. |
-| Flashing red             | The Stop circuit is broken. Twist the mushroom buttons to ensure that they are unlatched, and check any external stop hardware, if present. |
-| Flashing yellow, corners | All stops are closed but not reset; the stop loop is now only electrically latched. Press the Stop Reset button to enable full operation.  |
-| Flashing yellow, all     | Motor drivers not yet ready to drive. The motors have a brief initialization sequence that must complete after a stop condition clears before they are ready to drive. If this condition persists, please contact support.  |
-| Fading green             | Charger is connected, Ridgeback's battery is charging. Note that the battery can also be charged with the platform off. This indication will only be seen if the charger is connected while Ridgeback is powered up.  |
-| Headlights + taillights  | When Ridgeback is ready to drive, the front lights will change from red to white. The intensity of the head and tail lights will increase slightly when actually in motion. This is the status which may be overridden by publishing your own light patterns to the `/cmd_lights` ROS topic.  |
+| Front Lights        | Rear Lights            | System State                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| :------------------ | :--------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Solid red           | Solid red              | The MCU is not in contact with the computer. That is, the `rosserial` connection is not active. This condition will be seen briefly on startup while Warthog's computer is booting up. If it persists, or is seen after initialization, either the base node on the computer has crashed, the network switch has failed, or a serious MCU error has occurred. If you suspect one of these conditions, please contact support. |
+| Flashing red        | Flashing red           | Stop mode is engaged. To disengage, twist the mushroom buttons to ensure that they are unlatched, and check any external stop hardware, if present.                                                                                                                                                                                                                                                                             |
+| Flashing orange     | Flashing orange        | Motor drivers not yet ready to drive. The motors have a brief initialization sequence which must complete after a stop condition clears before they are ready to drive. If this condition persists, please contact our support team.                                                                                                                                                                                                                                                                                                                    |
+| Pulsing orange      | Pulsing orange         | Battery is low. Connect Warthog to the charger.                                                                                                                                                                                                                                                                                                                                                                               |
+| Solid white         | Solid red              | Normal operation; Warthog is ready to drive. This status may be overridden by publishing your own light patterns to the `/cmd_lights` ROS topic. |
+
+#### Orientation References
+
+The reference frame used by all Clearpath Robotics ground robots is based on ISO 8855. When commanded with a positive translational
+velocity (forward), wheels travel in the positive x-direction. The direction of the axes differs from those used for roll, pitch,
+and yaw in aircraft, and care should be taken to ensure that data is interpreted correctly.
 
 ### System Specifications
 
@@ -133,28 +141,52 @@ See http://wiki.ros.org/warthog_base for information on commanding the status li
 | Suspension                      | Geometric Passive Articulation                                                             |
 | Drive Configuration             | 4 X 4 Skid Steer                                                                           |
 | Operating Environment           | Outdoor                                                                                    |
-| Traction                        | Ø610 mm (24") Argo tire (Turf tire or 300 mm (12") wide Quad Track System optional)        |
+| Traction                        | Ø610 mm (24") Argo tire (Turf tire or 300 mm (12") wide Quad Track System (optional)        |
 | Battery Chemistry               | AGM sealed lead-acid (lithium optional)                                                     |
 | Capacity                        | 105 Ah at 48 V, expandable to 200 Ah with lithium option                                    |
 | Nominal Run Time                | Lead-acid: 2.5 hrs, lithium: 6 hrs                                                          |
 | Charge Time                     | 4 Hours approx                                                                             |
-| User Power                      | 12 V, 24 V and 48 V Fused at 10A                                                           |
+| User Power                      | 12 V, 24 V and 48 V Fused at 10 A                                                           |
 | Control Modes                   | Remote control, computer controlled velocity commands, indoor/outdoor autonomy packages    |
-| Feedback Battery                | voltage, motor currents, wheel odometry, control system status, temperature, safety status |
+| Feedback Battery                | Voltage, motor currents, wheel odometry, control system status, temperature, safety status |
 | Communication                   | Ethernet, USB, Remote Control, Wi-Fi                                                       |
-| Drivers                         | and APIs Packaged with ROS Noetic (includes RViz, Gazebo support), Matlab API available    |
+| Drivers                         | Packaged with ROS Noetic (includes RViz, Gazebo support), Matlab API available    |
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/warthog_images/warthog_dimensions.png"
+      width="800"
+    />
+    <figcaption>Warthog dimensions</figcaption>
+  </figure>
+</center>
 
 ---
 
 ## Getting Started
 
-The first step is to read this manual and safety warnings.
-The next step is to power up your Warthog and have some fun driving it around!
-Twist the red power button on the back of Warthog.
-Once the body lights are flashing red, twist (to reset) all four stop buttons (if necessary), and press go on the Wireless Stop Remote (next section).
-In a moment, Warthog should go to solid red lights in back, and solid white in front.
+You are ready to go! This section details how to get Warthog into action.
+To begin, place Warthog "up on blocks", making sure that the wheels are clear of the ground.
 
-### Wireless Stop Remote
+For most Warthog setups, there will be an Onboard Computer which is directly connected to the Warthog and a Remote Computer which is used to control Husky and gather data.
+These two computers must be set up to communicate with each other.
+
+### Onboard Computer Setup
+
+If you purchased an Onboard Computer from Clearpath Robotics with Warthog, it is already installed, connected, and powered.
+If not, or to set up your own Onboard Computer, see the [Warthog Tutorials](/docs/robots/warthog/tutorials_warthog#warthog-software-setup).
+
+Note that the Onboard Computer must be connected to the Ethernet port on the Warthog MCU, which is accessible inside the Warthog.
+
+### Powering Up
+
+To power on your Warthog, twist the red power button on the back of Warthog. Once the body lights are flashing red,
+twist (to reset) all four stop buttons (if necessary), and press go on the Wireless Stop Remote (next section).
+In a moment, Warthog should go to solid red lights in back, and solid white in front.
+This indicates that ROS is up on the computer and has established communications with the MCU.
+
+### Using the Wireless Stop Remote
 
 Included with the Warthog is a wireless stop remote.
 
@@ -180,7 +212,8 @@ The wireless e-stop remote operates as follows:
     To disengage the stop, press start once again.
 
 The battery LED should now be blinking slower, this indicates the remote stop has been disengaged.
-The corner status lights of the Warthog will change from blinking red to solid red at the rear and white at the front assuming all other safety stop sources have been disengaged.
+The corner body lights of the Warthog will change from blinking red to solid red at the rear and white at the front assuming
+all other safety stop sources have been disengaged.
 The Warthog is now ready to drive.
 
 :::note
@@ -189,23 +222,68 @@ If you're not seeing any change in behaviour, please contact our support team.
 
 :::
 
-### Futaba controller
+### Drivetrain
 
-The long range remote control (RC) Futaba radio transmitter can be used to tele-operate the Warthog.
+The Warthog has the ability to be put into neutral which is controlled be the four levers (two per side) in the
+rockers.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/warthog_images/robot_warthog_14.png"
+      width="200"
+    />
+    <figcaption>Drivetrain lever</figcaption>
+  </figure>
+</center>
+
+Use the bolts to restrict the lever from moving as down when the drivetrain is in neutral.
+The groove for the neutral position is marked with white and the bolt is also marked.
+This is shown below.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/warthog_images/robot_warthog_15.png"
+      width="600"
+    />
+    <figcaption>Drivetrain in neutral</figcaption>
+  </figure>
+</center>
+
+Pull the handle on the lever to move it into gear which can be seen below.
+Ensure the lever is in the green groove.
+If the lever is difficult to move, rock the Warthog back and forth.
+Do not try to force the lever to move.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/warthog_images/robot_warthog_16.png"
+      width="600"
+    />
+    <figcaption>Drivetrain in gear</figcaption>
+  </figure>
+</center>
+
+### Using the Futaba Controller {#controller}
+
+The long range remote control (RC) Futaba radio transmitter can be used to teleoperate the Warthog.
 To begin, slide the power switch to the ON position which is labelled in the figure below.
 
 :::caution
 
-The speed adjustment knob should be turned initially all the way to the left while familiarizing yourself with the transmitter and slowly increasing it to get it moving.
+The speed adjustment knob should be turned initially all the way to the left while familiarizing yourself with the
+transmitter and slowly increasing it to get it moving.
 
 :::
 
 The position of the speed adjustment scale is shown in the figure as _CH4_.
 The transmitter needs to be enabled which is done using the _Deadman Switch_.
 The _Deadman Switch_ is a two position spring loaded switch.
-To enable the RC tele-operation, the switch needs to be held down.
+To enable the RC teleoperation, the switch needs to be held down.
 If released, the switch returns to the up position to disable the robot.
-The left joy stick is used for the forward and reverse motion of the robot and the right joystick is used for turning.
+The left joystick is used for the forward and reverse motion of the robot and the right joystick is used for turning.
 
 <center>
   <figure>
@@ -227,195 +305,30 @@ The left joy stick is used for the forward and reverse motion of the robot and t
   </figure>
 </center>
 
+:::note
+
 If the Clearpath Robotics Outdoor Navigation software is installed on the Warthog, the Futaba remote controller (RC) must be turned OFF for autonomous missions to be properly executed by the navigation software.
 The Futaba RC will always publish messages to the `/rc_teleop/cmd_vel` topic when it is ON, and since it has higher priority than the navigation's `/cmd_vel`, the Warthog will not move if autonomous missions are sent and the RC is still ON.
 
-### Body Lights
+:::
 
-Warthog includes four RGB body lights, stacked in a pair on each corner of the chassis.
-These lights express system status according to the table below.
-In the absence of one of the low-level conditions, they can be commanded from ROS to display indications from autonomy or other higher-level software.
+### Network Configuration
 
-| Light Pattern                    | Status                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| :------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Solid Red                        | The MCU is not in contact with the computer. That is, the rosserial connection is not active. This condition will be seen briefly on startup while Warthog's computer is booting up. If it persists, or is seen after initialization, either the base node on the PC has crashed, the network switch has failed, or a serious MCU error has occurred. If you suspect one of these conditions, please contact our support team. |
-| Flashing Red                     | Stop circuit is broken. Twist the mushroom buttons to ensure that they're unlatched, and check any external stop hardware, if present.                                                                                                                                                                                                                                                                                         |
-| Flashing Yellow                  | Motor drivers not yet ready to drive. The motors have a brief initialization sequence which must complete after a stop condition clears before they are ready to drive. If this condition persists, please contact our support team.                                                                                                                                                                                           |
-| White Headlights, Red Taillights | When Warthog is ready to drive, the front will change from red to white. The intensity of the head and tail lights will increase slightly when actually in motion. This is the status which may be overridden by publishing your own light patterns to the `cmd_lights` ROS topic.                                                                                                                                             |
+To get Warthog connected to your local Wi-Fi network, you must first access the Onboard Computer using a wired connection to the robot.
+Locate the User Breakout Panel on the rear of the chassis and connect to an Ethernet port with a standard
+Ethernet cable. See the [Warthog Tutorials](/docs/robots/warthog/tutorials_warthog#warthog-networking) for details
+on completing the Wi-Fi setup.
 
-### Wireless access
+### Using ROS
 
-To get Warthog connected to your local Wi-Fi, you must first access the internal computer using a wired connection.
-Open the chassis, lower the computer tray, and connect to the network port labeled STATIC with a standard ethernet cable (or connect to the Ethernet port on the exterior connector panel).
-
-#### Static IP Configuration
-
-Set your laptop's ethernet port to a static IP such as 192.168.131.101. To do this in Ubuntu, follow the steps
-below:
-
-1.  Click on the Wi-Fi icon in the upper-right corner of your screen, and select Edit Connections
-2.  In the Network Connections window, under Ethernet, select your wired connection and then click Edit
-3.  Select the IPv4 Settings tab and then change the Method to Manual
-4.  Click the Add button to add a new address
-5.  Enter a 192.168.131.101 as the static IP under the Address column, and enter 255.255.255.0 under the NetMask column, and then select Save
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/warthog_images/robot_warthog_12.png"
-      width="400"
-    />
-    <figcaption>Static IP configuration</figcaption>
-  </figure>
-</center>
-
-#### Connect to Warthog via SSH over Ethernet
-
-The next step is to connect to Warthog via SSH.
-To do so, execute the following in a terminal window:
-
-```
-ssh administrator@192.168.131.1
-```
-
-You will be promoted to enter a password. The default password is `clearpath`.
-
-Now that you're connected via SSH over a wired connection, you can setup Warthog to connect to a local Wi-Fi network.
-
-<ComponentNetplanSetup />
-
-Now that you know Warthog's wireless IP address, you may now exit the Ethernet SSH session by executing `exit`.
-Remove the Ethernet cord and close up Warthog.
-Now you can SSH into Warthog over the wireless network.
-To do so, execute:
-
-ssh administrator@ <IP_OF_WARTHOG >
-
-For example:
-ssh administrator@192.168.0.201
-
-SSH sessions allow you to control Warthog's internal computer.
-You can do various things such as download packages, run updates, add/remove files, transfer files etc.
-
-### Remote ROS Connectivity
-
-Now that Warthog is on the wireless network, you can access it via SSH or as a remote ROS master.
-Note that in the default configuration, the background ROS process running on Warthog launches with the robot_upstart package.
-This is configured to set the `ROS_HOSTNAME` environment variable to the Warthog PC's hostname.
-If your network resolves hostnames properly, connecting should be a matter of executing the following two lines from your laptop (or sourcing a script containing these lines):
-
-```
-export ROS_MASTER_URI=http://cpr‐warthog:11311 # Your robot's hostname
-export ROS_IP=192.168.12.123 # Your computer's wireless IP address
-```
-
-If your network doesn't resolve hostnames, you may need to add the following line to your `/etc/hosts` file:
-
-```
-192.168.131.1 cpr‐warthog # The robot's wireless IP address and hostname
-```
-
-Once everything is set up correctly, try running `rostopic` list.
-This will verify that your machine can see the robot's ROS master.
-Then try running rostopic echo `/mcu/status`.
-This will verify that the robot PC can see your machine in order to stream topics to it.
-
-Please contact Clearpath Support if guidance is required in selecting and executing a remote access strategy.
-For more general details on how ROS works over TCP with multiple machines, please see:
-
-<http://wiki.ros.org/ROS/Tutorials/MultipleMachines>
-
-For help troubleshooting a multiple machines connectivity issue, see:
-
-<http://wiki.ros.org/ROS/NetworkSetup>
-
-### Visualizing Warthog
-
-To command or observe Warthog from your desktop computer, first set up a basic ROS installation.
-See the following page for details:
-
-<http://wiki.ros.org/noetic/Installation/Ubuntu>
-
-When your ROS install is set up, install the Warthog desktop packages:
-
-```
-sudo apt‐get install ros‐noetic‐warthog‐desktop
-```
-
-Once your remote access to Warthog's ROS master is configured (as above), you can launch RViz, the standard ROS robot visualization tool:
-
-```
-roslaunch warthog_viz view_robot.launch
-```
-
-From within RViz, you can use interactive markers to drive Warthog.
-You can visualize its published localization estimate, and you can visualize any attached sensors which have been added to its robot description XML (URDF).
-
-From your laptop, you can also launch the standard RQT Robot Monitor. This will report the diagnostic output from Warthog's self-monitoring capabilities, as shown in the figure below:
-
-```
-rosrun rqt_robot_monitor rqt_robot_monitor
-```
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/warthog_images/robot_warthog_13.png"
-      width="600"
-    />
-    <figcaption>Robot monitor</figcaption>
-  </figure>
-</center>
-
-### Drivetrain
-
-The Warthog has the ability to be put into neutral which is controlled be the four levers (two per side) in the
-rockers.
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/warthog_images/robot_warthog_14.png"
-      width="200"
-    />
-    <figcaption>Drivetrain lever</figcaption>
-  </figure>
-</center>
-
-Use the bolts to restrict the lever from moving as down when the drivetrain is in neutral.
-The grove for the neutral position is marked with white and the bolt is also marked.
-This is shown below.
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/warthog_images/robot_warthog_15.png"
-      width="600"
-    />
-    <figcaption>Drivetrain in neutral</figcaption>
-  </figure>
-</center>
-
-Pull the handle on the lever to move it into gear which can be seen below.
-Ensure the lever is in
-the green grove.
-If the lever is difficult to move, rock the Warthog back and forth.
-Do not try to force the lever
-to move.
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/warthog_images/robot_warthog_16.png"
-      width="600"
-    />
-    <figcaption>Drivetrain in gear</figcaption>
-  </figure>
-</center>
+<ComponentUsingRos />
 
 ---
 
-## Safety Considerations
+## Safety Considerations {#safety}
+
+Clearpath Robotics is committed to high standards of safety.
+Warthog contains several features to protect the safety of users and the integrity of the robot.
 
 :::danger
 
@@ -429,9 +342,11 @@ Please read the following safety information carefully.
 For the safety of yourself and others, always conduct initial experiments and software development with the motors not engaged.
 Whenever the robot is not being operated and the motors are engaged, keep it in a stop state.
 Do not ride on the vehicle, it can accelerate and brake quickly.
+
 When starting out, favour slower wheel speeds.
 Warthog's control loops can accurately maintain velocities as low as 0.1 m/s.
 Operating at such speeds will give you more time to react if things don't go quite as you expect.
+
 When enabling the system using the GO button on the wireless remote, be sure to stand well back from the Warthog.
 User code running on the Warthog may still be trying to command the motors, and this can result in sudden and unexpected movement of the vehicle.
 Be prepared to stop the system again using the wireless remote.
@@ -486,7 +401,7 @@ Avoid mounting payloads that extend over the rear of Warthog and would occlude t
 ### Electrical System
 
 The largest electrical safety consideration with the Warthog system is the VBAT connection.
-As it is pulled straight from the batteries, it may have a voltage of 48V (depleted) - 62V (Charging) and can be used to power large external devices.
+As it is pulled straight from the batteries, it may have a voltage of 48 V (depleted) to 62 V (Charging) and can be used to power large external devices.
 This voltage can cause electrical shock if directly contacted, and is fused internally with an inline fuse at 10 A.
 In general, take care to connect or disconnect devices preferably only when the entire system is powered off via the external switch on the rear (main power switch).
 Take note that triggering a Stop condition only disables voltage to the motor controller SEVCON drivers and motors, not the rest of the system which includes the connectors.
@@ -502,18 +417,35 @@ To ensure safety, please also observe the following precautions:
 - Charge the battery only with the charger provided by Clearpath Robotics.
 - Please dispose of the batteries properly, or return the batteries to Clearpath Robotics to do so.
 
+### Lifting and Transport
+
+For the safety of users and to maximize the lifetime of Warthog, please observe the following when manually transporting the robot:
+
+- Ensure that Warthog's Stop Mode is engaged when transporting short distances and powered off when transporting longer distances.
+- Do not push the robot at more than 0.5 m/s (1.6 ft/s) or damage to the motor controls may occur.
+
+### Performance Considerations
+
+Included in Warthog are native software checks and limits to protect the robot.
+However, it is recommended to monitor the system's status during usage with the `/status` and `/diagnostics` topics.
+These topics provides useful information regarding voltages, currents, temperatures and general health of the system.
+
 ### Recommended Safe Work Procedures
+
+#### Common Safe Work Procedures
 
 <ComponentCommonSafeWorkProcedures />
 
-- Keep hands and fingers away from the suspension linkage components at the rear of the robot
-- Never approach the robot while it is operating in water
-- When working on or around the robot always disconnect the motors using the drivetrain levers as described in the user manual
-- Never disconnect the robot motors using drivetrain levers when on a slope
-- Do not attempt to move or operate the robot while charging the batteries
+#### Warthog-Specific Safe Work Procedures
+
+- Keep hands and fingers away from the suspension linkage components at the rear of the robot.
+- Never approach the robot while it is operating in water.
+- When working on or around the robot always disconnect the motors using the drivetrain levers as described in the user manual.
+- Never disconnect the robot motors using drivetrain levers when on a slope.
+- Do not attempt to move or operate the robot while charging the batteries.
 
 ---
 
-## Contact
+## Support
 
 <Support />
