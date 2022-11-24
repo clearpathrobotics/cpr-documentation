@@ -14,35 +14,126 @@ import Support from "/components/support.mdx";
 
 ## Battery and Charging
 
-### General
+### Overview
 
-Warthog contains 48 V lead-acid or lithium battery packs.
-Each battery pack consists of four 12 V lead-acid or lithium batteries.
-Battery configuration may vary with each unit.
-In order to maximize performance, it's important to ensure that the battery level across each set of lead-acid or lithium batteries is within 0.1 - 0.2 V of each other.
-If the battery packs exceed this tolerance, it's advised to charge them to within tolerance before wiring these packs in parallel.
-The overall battery life will vary depending upon the usage of the unit.
+Warthog contains a 48 V lead-acid battery pack, consisting of four 12 V lead-acid batteries, or a lithium battery pack, consisting of four 118 Ah 12.8 V batteries
+connected in a 4S1P configuration with a single Battery Management System (BMS) control unit. Battery configuration may vary with each unit. In order to
+maximize performance, it's important to ensure that the battery level across each set of lead-acid or lithium batteries is within 0.1-0.2 V.
+If the batteries exceed this tolerance, it's advised to charge them to within tolerance before wiring these packs in parallel. The overall battery life
+will vary depending upon the usage of the unit.
+
+### Battery Management System
+
+:::note
+
+If your Warthog is equipped with a lead-acid battery pack, you can ignore this section on the Battery Management System.
+
+:::
+
+If your Warthog is equipped with a lithium battery pack, it is also equipped with a single Battery Management System (BMS) control unit.
+The main function of the BMS is to:
+
+- Protect the individual modules from being over charged or over discharged.
+- Protect the modules from operating outside of their acceptable temperature range.
+- Provide status information to higher level systems via a CAN interface.
+- Provide independent system management without a higher level control system.
+- Provide status, warning and error messages from each of the modules connected to the battery power system.
+- Control the charging operation.
+- Perform module to module balancing of the system, the battery module will control cell balancing within itself.
+
+There is a main power contactor which is controlled by the BMS unit and is placed in such a way that it controls all power to the system.
+Upon turning on the main disconnect switch:
+
+The BMS powers up first and begins communicating with all of the battery modules in the system.
+1. If they are all present and have no errors the BMS will close the main contactor and allow the Warthog to power up as normal,
+  this process can take a few seconds before the main contactor closes.
+    1. If all the modules are not present, the system State of Charge (SOC) is too low, or there are errors being reported by any of the
+    modules in the system, the contactor will not close, and the system will not power up.
+2. Similarly, if a user is in discharge mode (the Warthog is in use) and any errors are detected, or if the SOC falls to a cut off point,
+  the contactor will open and remove power from the system to protect the modules.
+    1. It is not good practice to run the SOC to 0%. This will decrease the life of the battery module. In general, keeping the SOC to a
+    minimum of 30-50% can increase the lifetime of the batteries.
+    2. As a note, the system SOC is identical to the module with the lowest SOC in the system, so if three modules are at 45% SOC, and
+    one module is at 25%, then the SOC of the system is 25%, and the BMS will act accordingly cutting off power to protect the module with
+    the lowest SOC. Cell balancing and proper charging techniques are important to maintaining good battery health.
+3. The Warthog can be charged when the unit is powered and running, and can also be charged when the unit is not powered (main disconnect switch is open).
+    1. The charger has been configured and wired in a way that the BMS is actually controlling the charger and can turn it off, and on, depending
+    on the status of the charging cycle.
+    2. Even though the unit can be charged while running, this process does not allow for proper cell balancing to occur. It will allow for bulk charge
+    to occur to regain most of the charge in the system, however, repeatedly charging in this manner will allow each module to become out of balance with
+    the other modules. If this process if followed long enough the SOC values for each module can vary by a substantial amount. The larger the variation,
+    the longer it will take to fully balance the system. Therefore it is recommended (depending on use) that at least once every two to three weeks that
+    **the system be completely charged while the main disconnect switch is in the off position.** Doing so will allow the BMS to go through an
+    equalization phase where the charger is being turned on and off by the BMS to balance the voltages across each cell layer, in each module across the system.
+    **This is a very important step in maintain battery health, and getting the maximum lifetime out of the battery system.**
+    3. Refer to [BMS ROS Topics](#bms-ros-topics) to view the necessary topics through the ROS API.
+4. To allow for this level of control there are three contactors in the system:
+    1. The main contactor for discharge of the system.
+    2. The charge contactor to connect to the output of the charger.
+    3. The charge control relay to turn the charger outputs on and off and control the cell balancing or equalization phase of the charge cycle.
+
+#### BMS ROS Topics   {#bms-ros-topics}
+
+The table below shows topics that will be very useful in monitoring battery health, as discussed in the section above.
+
+|  Topic                     | Purpose                                        |
+| :------------------------- | :--------------------------------------------- |
+| `/bms/system_status`       | Primarily to view `state_of_charge` (%)        |
+| `/bms/system_measurements` | Primarily to view `battery_system_current` (A) |
+
+Note that the `battery_system_current` topic will be positive when the batteries are charging, indicating that
+current is flowing into the batteries. The lights on the charger unit itself will also indicate when the device is
+charging.
+
+#### To Connect the Charger
+
+1. Plug in the charger DC output cable (heavier gauge cable).
+2. Plug in the charger auxiliary control cable.
+3. Plug the charger into AC power (directly to the wall outlet, no extension cords).
+4. This can be done with or without power on Warthog being on (however the note above applies, at least once every couple of weeks the charge
+  process needs to be allowed to fully balance the system).
+
+#### To Disconnect the Charger
+
+1. Unplug the charger from AC power.
+2. Unplug the charger auxiliary cable.
+3. Unplug the charger DC output cable (heavier gauge cable).
+
+#### Battery Pack Specifications
+
+Key battery system specifications are listed in the table below.
+
+|  Specification                    | Measurement                                    |
+| :-------------------------------- | :--------------------------------------------- |
+| System Voltage ( nominal )        | 51.2V ( up to 59 V while charging )            |
+| System Capcity                    | 118 Ah                                         |
+| System Energy                     | 6.041 kWh                                      |
+| Continuous Discharge Current      | 150 A                                          |
+| Peak Discharge Current ( 30 sec ) | 300 A                                          |
+| Discharge Temperature Range       | -10 °C to 50 °C                                |
+| Charge Temperature Range          | 0 °C to 45 °C                                  |
+
+### General Battery Safety and Maintenance
+
 Always exercise caution and observe the following safety practices when connecting, disconnecting or handling batteries:
 
-- Batteries are high voltage, high current
-- Battery packs must be properly fastened down to ensure they do not move when the Warthog is in operation.
-- Ensure that the battery packs are evenly distributed throughout the Warthog to maximize stability.
+- Batteries are high voltage, high current.
+- Batteries must be properly fastened down to ensure they do not move when the Warthog is in operation.
+- Ensure that the batteries are evenly distributed throughout the Warthog to maximize stability.
 - Battery levels on the unit should be checked on a regular basis.
   It's important to maintain the battery voltage at a suitable level for proper operation.
-- When additional battery packs are added to the system, it's important to connect the positive terminal first to the main power of the Warthog before connecting ground.
-- When installing additional battery packs, disconnect the ground on all battery packs presently in the unit before connecting the positive terminal of the new battery packs.
+- When additional batteries are added to the system, it's important to connect the positive terminal first to the main power of the Warthog before connecting ground.
+- When installing additional batteries, disconnect the ground on all batteries presently in the unit before connecting the positive terminal of the new batteries.
 
 ### Long-term Storage
 
 When storing Warthog for long periods of time, it's important to properly maintain the batteries to fully maximize their life.
-Consider one of the following two procedures when placing Warthog in long-term storage:
+Consider the following procedure when placing Warthog in long-term storage:
 
 - Fully charge Warthog, turn it off and put it into storage.
   Once a week, connect power to the charger and allow the charger to top up the battery for an hour or so.
-- Fully charge Warthog, turn it off and put it into storage, but leave the charger connected and powered the entire time Warthog is in storage.
-  The charger will monitor the battery and will automatically charge it up as needed.
 
-Please contact Clearpath Robotics for additional information about Warthog's battery pack.
+Please contact Clearpath Robotics for additional information about Warthog's batteries.
 
 ---
 
