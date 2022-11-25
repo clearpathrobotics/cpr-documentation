@@ -751,7 +751,7 @@ sections that follow.
 
 This tutorial shows you how to use [move_base](http://wiki.ros.org/move_base) to perform basic
 autonomous planning and movement on a simulated Husky, or a factory-standard Husky with a laser
-scanner publishing on the `/scan` topic.
+scanner publishing on the `/front/scan` topic.
 
 To adapt this demo to your own Husky, you may need to clone the
 [husky_navigation](http://wiki.ros.org/husky_navigation) repository, and modify the relevant
@@ -798,7 +798,7 @@ parameters. To learn about [move_base](http://wiki.ros.org/move_base) and the
 
 This tutorial shows you how to use [move_base](http://wiki.ros.org/move_base) with
 [amcl](http://wiki.ros.org/amcl) to perform autonomous planning and movement with localization
-on a simulated Husky, or a factory-standard Husky with a laser scanner publishing on the `/scan` topic.
+on a simulated Husky, or a factory-standard Husky with a laser scanner publishing on the `/front/scan` topic.
 
 To adapt this demo to your own Husky, you may need to clone the
 [husky_navigation](http://wiki.ros.org/husky_navigation) repository, and modify the relevant parameters.
@@ -816,7 +816,7 @@ navigation stack, see the [ROS Navigation Tutorials](http://wiki.ros.org/navigat
 2. Open window #1 and start the Clearpath-configured Husky simulation environment:
 
    ```
-   roslaunch husky_gazebo husky_playpen.launch
+   export HUSKY_LMS1XX_ENABLED=1; roslaunch husky_gazebo husky_playpen.launch
    ```
 
 3. Open window #2 and start the Clearpath-configured [RViz](http://wiki.ros.org/rviz) visualizer:
@@ -849,7 +849,7 @@ navigation stack, see the [ROS Navigation Tutorials](http://wiki.ros.org/navigat
 This tutorial shows you how to use [move_base](http://wiki.ros.org/move_base) with
 [gmapping](http://wiki.ros.org/gmapping) to perform autonomous planning and movement with simultaneous
 localization and mapping (SLAM), on a simulated Husky, or a factory-standard Husky with a laser scanner
-publishing on the `/scan` topic.
+publishing on the `/front/scan` topic.
 
 To adapt this demo to your own Husky, you may need to clone the
 [husky_navigation](http://wiki.ros.org/husky_navigation) repository, and modify the relevant parameters.
@@ -867,7 +867,7 @@ navigation stack, see the [ROS Navigation Tutorials](http://wiki.ros.org/navigat
 2. Open window #1 and start the Clearpath-configured Husky simulation environment:
 
    ```
-   roslaunch husky_gazebo husky_playpen.launch
+   export HUSKY_LMS1XX_ENABLED=1; roslaunch husky_gazebo husky_playpen.launch
    ```
 
 3. Open window #2 and start the Clearpath-configured [RViz](http://wiki.ros.org/rviz) visualizer:
@@ -911,7 +911,7 @@ This tutorial shows you how to use [move_base](http://wiki.ros.org/move_base)
 with [gmapping](http://wiki.ros.org/gmapping) and
 [frontier_exploration](http://wiki.ros.org/frontier_exploration) to perform autonomous planning
 movement, and exploration with simultaneous localization and mapping (SLAM), on a simulated Husky,
-or a factory-standard Husky with a laser scanner publishing on the `/scan` topic.
+or a factory-standard Husky with a laser scanner publishing on the `/front/scan` topic.
 
 To adapt this demo to your own Husky, you may need to clone the
 [husky_navigation](http://wiki.ros.org/husky_navigation) repository, and modify the relevant parameters.
@@ -1012,7 +1012,7 @@ In each terminal window, make sure to source the catkin workspace where you buil
 2. Open window #1 and start the Clearpath-configured Husky simulation environment:
 
    ```
-   roslaunch husky_gazebo husky_playpen.launch
+   export HUSKY_LMS1XX_ENABLED=1; roslaunch husky_gazebo husky_playpen.launch
    ```
 
 3. Open window #2 and start the Clearpath-configured [RViz](http://wiki.ros.org/rviz) visualizer:
