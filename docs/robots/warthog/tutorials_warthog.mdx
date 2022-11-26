@@ -81,49 +81,49 @@ roslaunch warthog_viz view_model.launch
   </figure>
 </center>
 
-### Environment Variables  {#environment-variables}
+### Environment Variables {#environment-variables}
 
 Warthog can be customized and extended through the use of several environment variables.
 The details are in the [warthog_description](https://github.com/warthog-cpr/warthog/tree/kinetic-devel/warthog_description) repository.
 Some of the most important ones are listed below.
 
-| Variable                       | Default | Description                                                                            |
-| :----------------------------- | :------ | :------------------------------------------------------------------------------------- |
-| `WARTHOG_ARM_MOUNT` | `0` | If enabled, a link called "arm_mount_link" will be created on the bulkhead |
-| `WARTHOG_BULKHEAD` | `0` | Switch for enabling a large, rigid bulkhead on the front of the warthog for mount accessories like arms |
-| `WARTHOG_IMU_RPY` | `0 0 0` | Compound rotations in radians of the IMU |
-| `WARTHOG_IMU_XYX` | `0 0 0` | Position of the IMU in meters |
-| `WARTHOG_JOY_TELEOP` | `0` | Switch to enable teleop control of the platform |
-| `WARTHOG_NAVSAT_SMART6` | `0` | Is the platform equipped with a Smart7 GPS? |
-| `WARTHOG_NAVSAT_SMART6_BAUD` | `57600` | Sets the baud rate for serial communication with the GPS module |
-| `WARTHOG_NAVSAT_SMART6_MOUNT` | `navsat` | The mount on the robot model that the GPS antenna is mounted to. See the Warthog URDF and `WARTHOG_URDF_EXTRAS` for more details on mount points. |
-| `WARTHOG_NAVSAT_SMART6_OFFSET` | `0 0 0` | Position of the Smart 6 GPS in meters |
-| `WARTHOG_NAVSAT_SMART6_PORT` | `/dev/ttyS1` | The serial port that the GPS module communicates over |
-| `WARTHOG_NAVSAT_SMART6_RPY` | `0 0 0` | Compound rotations in radians of the Smart 6 GPS |
-| `WARTHOG_OFFBOARD_STOP` | `false` | Is a remote e-stop setup on the platform? |
-| `WARTHOG_TRACKS` | `0` | Used to specify that Warthog is equipped with tracks instead of wheels. |
-| `WARTHOG_TWIST_MUX_EXTRAS` | `0` | Add additional sources to be controlled by the twise mux of the platform |
-| `WARTHOG_URDF_EXTRAS` | `empty.urdf` | Path to a URDF file with additional modules connected to the robot |
+| Variable                       | Default      | Description                                                                                                                                       |
+| :----------------------------- | :----------- | :------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `WARTHOG_ARM_MOUNT`            | `0`          | If enabled, a link called "arm_mount_link" will be created on the bulkhead                                                                        |
+| `WARTHOG_BULKHEAD`             | `0`          | Switch for enabling a large, rigid bulkhead on the front of the warthog for mount accessories like arms                                           |
+| `WARTHOG_IMU_RPY`              | `0 0 0`      | Compound rotations in radians of the IMU                                                                                                          |
+| `WARTHOG_IMU_XYX`              | `0 0 0`      | Position of the IMU in meters                                                                                                                     |
+| `WARTHOG_JOY_TELEOP`           | `0`          | Switch to enable teleop control of the platform                                                                                                   |
+| `WARTHOG_NAVSAT_SMART6`        | `0`          | Is the platform equipped with a Smart7 GPS?                                                                                                       |
+| `WARTHOG_NAVSAT_SMART6_BAUD`   | `57600`      | Sets the baud rate for serial communication with the GPS module                                                                                   |
+| `WARTHOG_NAVSAT_SMART6_MOUNT`  | `navsat`     | The mount on the robot model that the GPS antenna is mounted to. See the Warthog URDF and `WARTHOG_URDF_EXTRAS` for more details on mount points. |
+| `WARTHOG_NAVSAT_SMART6_OFFSET` | `0 0 0`      | Position of the Smart 6 GPS in meters                                                                                                             |
+| `WARTHOG_NAVSAT_SMART6_PORT`   | `/dev/ttyS1` | The serial port that the GPS module communicates over                                                                                             |
+| `WARTHOG_NAVSAT_SMART6_RPY`    | `0 0 0`      | Compound rotations in radians of the Smart 6 GPS                                                                                                  |
+| `WARTHOG_OFFBOARD_STOP`        | `false`      | Is a remote e-stop setup on the platform?                                                                                                         |
+| `WARTHOG_TRACKS`               | `0`          | Used to specify that Warthog is equipped with tracks instead of wheels.                                                                           |
+| `WARTHOG_TWIST_MUX_EXTRAS`     | `0`          | Add additional sources to be controlled by the twise mux of the platform                                                                          |
+| `WARTHOG_URDF_EXTRAS`          | `empty.urdf` | Path to a URDF file with additional modules connected to the robot                                                                                |
 
 ### Configurations
 
 As an alternative to individually specifying each accessory, some fixed configurations are provided in the package.
 These can be specified using the `config` arg to `description.launch`, and are intended especially as a convenience for simulation launch.
 
-| Config               | Description                                 |
-| :------------------- | :------------------------------------------ |
-| `arm_mount`               | Includes mounting points for am arm payload                             |
-| `base`          | Base Warthog, includes IMU and GPS           |
-| `bulkhead` | Includes a mounting point for additional payload options |
-| `empty` | Includes no accessories at all |
+| Config      | Description                                              |
+| :---------- | :------------------------------------------------------- |
+| `arm_mount` | Includes mounting points for am arm payload              |
+| `base`      | Base Warthog, includes IMU and GPS                       |
+| `bulkhead`  | Includes a mounting point for additional payload options |
+| `empty`     | Includes no accessories at all                           |
 
 ### Key ROS Topics
 
 You can view all topics that are active using `rostopic list`.
 The most important topics are summarized in the table below.
 
-| Topic                          | Message Type        | Purpose                                                                                                                                                                  |
-| :----------------------------- | :------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Topic                            | Message Type          | Purpose                                                                                                                                                                       |
+| :------------------------------- | :-------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `/cmd_vel`                       | `geometry_msgs/Twist` | Input to Warthog's kinematic controller. Publish here to make Warthog go.                                                                                                     |
 | `/odometry/filtered`             | `nav_msgs/Odometry`   | Published by robot_localization, a filtered localization estimate based on wheel odometry (encoders) and integrated IMU.                                                      |
 | `/imu/data`                      | `sensor_msgs/IMU`     | Published by imu_filter_madgwick, an orientation estimate based on Warthog's internal gyroscope, accelerometer, and magnetometer.                                             |
@@ -613,6 +613,7 @@ rosrun warthog_tests check_can_bus_interface
 
 In addtion to the default `warthog_world.launch` file, `warthog_gazebo` contains
 three additional launch files:
+
 - `empty_world.launch`, which spawns Warthog in a featureless, infinite plane;
 - `warthog_race.launch`, which spawns a world with lots of linear barriers; and
 - `spawn_warthog.launch`, which is intended to be included in any custom world to add a Warthog simulation to it.
@@ -668,7 +669,7 @@ source devel/setup.bash
 #### Running the Inspection Simulation
 
 Inspection World is a hilly, outdoor world that includes a water feature, bridge, pipeline, small cave/mine,
-and a small solar farm.  It is intended to simulate a variety of missions, including pipeline inspection,
+and a small solar farm. It is intended to simulate a variety of missions, including pipeline inspection,
 cave/underground navigation, and localization on non-planar terrain.
 
 <center>
@@ -731,7 +732,7 @@ You can see the complete layout of the Inspection World below:
 #### Running the Agriculture Simulation
 
 Agriculture World is a flat, mixed indoor/outdoor world that include a large barn, open fields surrounded by fences,
-and a large solar farm.  It is intended to simulate missions such as solar panel inspection and area coverage.
+and a large solar farm. It is intended to simulate missions such as solar panel inspection and area coverage.
 
 <center>
   <figure>
@@ -765,7 +766,7 @@ Once the simulation is running you can use RViz and other tools as described in
   </figure>
 </center>
 
-#### Customizing Warthog's Payload  {#customize-payload}
+#### Customizing Warthog's Payload {#customize-payload}
 
 To customize Warthog's payload you must use the environment variables described in
 [Environment Variables](#environment-variables).
@@ -773,14 +774,14 @@ To customize Warthog's payload you must use the environment variables described 
 You can add additional sensors by creating a customized URDF and setting the `WARTHOG_URDF_EXTRAS` environment
 variable to point to it.
 
-For example, let's suppose you want to equip Warthog with an Intel RealSense D435 camera.  First, install the `realsense2_camera`
+For example, let's suppose you want to equip Warthog with an Intel RealSense D435 camera. First, install the `realsense2_camera`
 and `realsense2_description` packages, along with the gazebo plugins:
 
 ```
 sudo apt-get install ros-$ROS_DISTRO-realsense2-camera ros-$ROS_DISTRO-realsense2-description ros-$ROS_DISTRO-gazebo-plugins
 ```
 
-Then create your customized URDF file, for example ``$HOME/Desktop/realsense.urdf.xacro``.  Put the following in it:
+Then create your customized URDF file, for example `$HOME/Desktop/realsense.urdf.xacro`. Put the following in it:
 
 ```markup
 <?xml version="1.0"?>
@@ -872,7 +873,7 @@ Then create your customized URDF file, for example ``$HOME/Desktop/realsense.urd
 ```
 
 This file defines the additional links for adding a RealSense camera to the robot, as well as configuring the `openni_kinect`
-plugin for Gazebo to simulate data from a depth camera.  The camera itself will be connected to the Warthog's `front_mount`
+plugin for Gazebo to simulate data from a depth camera. The camera itself will be connected to the Warthog's `front_mount`
 link, offset 5 cm towards the front of the robot.
 
 Now, set the `WARTHOG_URDF_EXTRAS` environment variable and try viewing the Warthog model:
@@ -919,7 +920,7 @@ You can view the sensor data from the RealSense camera by running
 roslaunch warthog_viz view_robot.launch
 ```
 
-and adding the camera & pointcloud from the ``/realsense/color/image_raw`` and ``/realsense/depth/color/points`` topics:
+and adding the camera & pointcloud from the `/realsense/color/image_raw` and `/realsense/depth/color/points` topics:
 
 <center>
   <figure>

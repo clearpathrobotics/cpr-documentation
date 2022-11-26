@@ -45,38 +45,39 @@ There is a main power contactor which is controlled by the BMS unit and is place
 Upon turning on the main disconnect switch:
 
 The BMS powers up first and begins communicating with all of the battery modules in the system.
-1. If they are all present and have no errors the BMS will close the main contactor and allow the Warthog to power up as normal,
-  this process can take a few seconds before the main contactor closes.
-    1. If all the modules are not present, the system State of Charge (SOC) is too low, or there are errors being reported by any of the
-    modules in the system, the contactor will not close, and the system will not power up.
-2. Similarly, if a user is in discharge mode (the Warthog is in use) and any errors are detected, or if the SOC falls to a cut off point,
-  the contactor will open and remove power from the system to protect the modules.
-    1. It is not good practice to run the SOC to 0%. This will decrease the life of the battery module. In general, keeping the SOC to a
-    minimum of 30-50% can increase the lifetime of the batteries.
-    2. As a note, the system SOC is identical to the module with the lowest SOC in the system, so if three modules are at 45% SOC, and
-    one module is at 25%, then the SOC of the system is 25%, and the BMS will act accordingly cutting off power to protect the module with
-    the lowest SOC. Cell balancing and proper charging techniques are important to maintaining good battery health.
-3. The Warthog can be charged when the unit is powered and running, and can also be charged when the unit is not powered (main disconnect switch is open).
-    1. The charger has been configured and wired in a way that the BMS is actually controlling the charger and can turn it off, and on, depending
-    on the status of the charging cycle.
-    2. Even though the unit can be charged while running, this process does not allow for proper cell balancing to occur. It will allow for bulk charge
-    to occur to regain most of the charge in the system, however, repeatedly charging in this manner will allow each module to become out of balance with
-    the other modules. If this process if followed long enough the SOC values for each module can vary by a substantial amount. The larger the variation,
-    the longer it will take to fully balance the system. Therefore it is recommended (depending on use) that at least once every two to three weeks that
-    **the system be completely charged while the main disconnect switch is in the off position.** Doing so will allow the BMS to go through an
-    equalization phase where the charger is being turned on and off by the BMS to balance the voltages across each cell layer, in each module across the system.
-    **This is a very important step in maintain battery health, and getting the maximum lifetime out of the battery system.**
-    3. Refer to [BMS ROS Topics](#bms-ros-topics) to view the necessary topics through the ROS API.
-4. To allow for this level of control there are three contactors in the system:
-    1. The main contactor for discharge of the system.
-    2. The charge contactor to connect to the output of the charger.
-    3. The charge control relay to turn the charger outputs on and off and control the cell balancing or equalization phase of the charge cycle.
 
-#### BMS ROS Topics   {#bms-ros-topics}
+1. If they are all present and have no errors the BMS will close the main contactor and allow the Warthog to power up as normal,
+   this process can take a few seconds before the main contactor closes.
+   1. If all the modules are not present, the system State of Charge (SOC) is too low, or there are errors being reported by any of the
+      modules in the system, the contactor will not close, and the system will not power up.
+2. Similarly, if a user is in discharge mode (the Warthog is in use) and any errors are detected, or if the SOC falls to a cut off point,
+   the contactor will open and remove power from the system to protect the modules.
+   1. It is not good practice to run the SOC to 0%. This will decrease the life of the battery module. In general, keeping the SOC to a
+      minimum of 30-50% can increase the lifetime of the batteries.
+   2. As a note, the system SOC is identical to the module with the lowest SOC in the system, so if three modules are at 45% SOC, and
+      one module is at 25%, then the SOC of the system is 25%, and the BMS will act accordingly cutting off power to protect the module with
+      the lowest SOC. Cell balancing and proper charging techniques are important to maintaining good battery health.
+3. The Warthog can be charged when the unit is powered and running, and can also be charged when the unit is not powered (main disconnect switch is open).
+   1. The charger has been configured and wired in a way that the BMS is actually controlling the charger and can turn it off, and on, depending
+      on the status of the charging cycle.
+   2. Even though the unit can be charged while running, this process does not allow for proper cell balancing to occur. It will allow for bulk charge
+      to occur to regain most of the charge in the system, however, repeatedly charging in this manner will allow each module to become out of balance with
+      the other modules. If this process if followed long enough the SOC values for each module can vary by a substantial amount. The larger the variation,
+      the longer it will take to fully balance the system. Therefore it is recommended (depending on use) that at least once every two to three weeks that
+      **the system be completely charged while the main disconnect switch is in the off position.** Doing so will allow the BMS to go through an
+      equalization phase where the charger is being turned on and off by the BMS to balance the voltages across each cell layer, in each module across the system.
+      **This is a very important step in maintain battery health, and getting the maximum lifetime out of the battery system.**
+   3. Refer to [BMS ROS Topics](#bms-ros-topics) to view the necessary topics through the ROS API.
+4. To allow for this level of control there are three contactors in the system:
+   1. The main contactor for discharge of the system.
+   2. The charge contactor to connect to the output of the charger.
+   3. The charge control relay to turn the charger outputs on and off and control the cell balancing or equalization phase of the charge cycle.
+
+#### BMS ROS Topics {#bms-ros-topics}
 
 The table below shows topics that will be very useful in monitoring battery health, as discussed in the section above.
 
-|  Topic                     | Purpose                                        |
+| Topic                      | Purpose                                        |
 | :------------------------- | :--------------------------------------------- |
 | `/bms/system_status`       | Primarily to view `state_of_charge` (%)        |
 | `/bms/system_measurements` | Primarily to view `battery_system_current` (A) |
@@ -91,7 +92,7 @@ charging.
 2. Plug in the charger auxiliary control cable.
 3. Plug the charger into AC power (directly to the wall outlet, no extension cords).
 4. This can be done with or without power on Warthog being on (however the note above applies, at least once every couple of weeks the charge
-  process needs to be allowed to fully balance the system).
+   process needs to be allowed to fully balance the system).
 
 #### To Disconnect the Charger
 
@@ -103,15 +104,15 @@ charging.
 
 Key battery system specifications are listed in the table below.
 
-|  Specification                    | Measurement                                    |
-| :-------------------------------- | :--------------------------------------------- |
-| System Voltage ( nominal )        | 51.2V ( up to 59 V while charging )            |
-| System Capcity                    | 118 Ah                                         |
-| System Energy                     | 6.041 kWh                                      |
-| Continuous Discharge Current      | 150 A                                          |
-| Peak Discharge Current ( 30 sec ) | 300 A                                          |
-| Discharge Temperature Range       | -10 °C to 50 °C                                |
-| Charge Temperature Range          | 0 °C to 45 °C                                  |
+| Specification                     | Measurement                         |
+| :-------------------------------- | :---------------------------------- |
+| System Voltage ( nominal )        | 51.2V ( up to 59 V while charging ) |
+| System Capcity                    | 118 Ah                              |
+| System Energy                     | 6.041 kWh                           |
+| Continuous Discharge Current      | 150 A                               |
+| Peak Discharge Current ( 30 sec ) | 300 A                               |
+| Discharge Temperature Range       | -10 °C to 50 °C                     |
+| Charge Temperature Range          | 0 °C to 45 °C                       |
 
 ### General Battery Safety and Maintenance
 
@@ -151,7 +152,7 @@ If your unit came equipped with the tread upgrade, please keep the following con
 
 ---
 
-## Software Maintenance  {#software_maintenance}
+## Software Maintenance {#software_maintenance}
 
 :::note
 
@@ -181,8 +182,8 @@ necessary, we do not recommend re-flashing the robot's MCU firmware.
 
 :::
 
-You need to use an external computer to update Warthog's MCU firmware.  You cannot use Warthog's internal computer, as installing the
-firmware requires power-cycling the MCU.  Warthog's MCU controls the power supply to the internal computer.  These instructions
+You need to use an external computer to update Warthog's MCU firmware. You cannot use Warthog's internal computer, as installing the
+firmware requires power-cycling the MCU. Warthog's MCU controls the power supply to the internal computer. These instructions
 assume the external computer is running some flavour of Linux with access to Clearpath's ROS packages.
 
 Follow the below procedure to flash the firmware to Warthog's MCU:
@@ -191,97 +192,102 @@ Follow the below procedure to flash the firmware to Warthog's MCU:
    of the robot. Firmware loading does not usually result in unintended motion, but it's safest to ensure the robot
    cannot move accidentally.
 2. Download the Warthog firmware package onto your computer:
-    ```
-    sudo apt-get install ros-noetic-warthog-firmware
-    ```
 
-3. Remove the top panel from the Warthog.  We recommend opening the panel to the left, as there are cables that run
+   ```
+   sudo apt-get install ros-noetic-warthog-firmware
+   ```
+
+3. Remove the top panel from the Warthog. We recommend opening the panel to the left, as there are cables that run
    into the lid which can be strained.
 
-    <center>
-      <figure>
-        <img
-          src="/img/robot_images/warthog_images/warthog_inside_lid.jpg"
-          width="800"
-        />
-        <figcaption>The inside of Warthog's computer box</figcaption>
-      </figure>
-    </center>
+   {" "}
+   <center>
+     <figure>
+       <img
+         src="/img/robot_images/warthog_images/warthog_inside_lid.jpg"
+         width="800"
+       />
+       <figcaption>The inside of Warthog's computer box</figcaption>
+     </figure>
+   </center>
 
-4. Warthog's MCU is located on the underside of the metal frame over the top of the computer.  To access it you will need to
+4. Warthog's MCU is located on the underside of the metal frame over the top of the computer. To access it you will need to
    disconnect all cables from the breakout on the sloped portion on the left and then undo 4 screws anchoring the frame:
 
-    <center>
-      <figure>
-        <img
-          src="/img/robot_images/warthog_images/warthog_inside.jpg"
-          width="800"
-        />
-        <figcaption>The inside of Warthog's computer box</figcaption>
-      </figure>
-    </center>
+   {" "}
+   <center>
+     <figure>
+       <img
+         src="/img/robot_images/warthog_images/warthog_inside.jpg"
+         width="800"
+       />
+       <figcaption>The inside of Warthog's computer box</figcaption>
+     </figure>
+   </center>
 
-    <center>
-      <figure>
-        <img
-          src="/img/robot_images/warthog_images/screws_left.jpg"
-          width="800"
-        />
-        <figcaption>Screws on the left</figcaption>
-      </figure>
-    </center>
+   {" "}
+   <center>
+     <figure>
+       <img
+         src="/img/robot_images/warthog_images/screws_left.jpg"
+         width="800"
+       />
+       <figcaption>Screws on the left</figcaption>
+     </figure>
+   </center>
 
-    <center>
-      <figure>
-        <img
-          src="/img/robot_images/warthog_images/screws_right.jpg"
-          width="800"
-        />
-        <figcaption>Screws on the right</figcaption>
-      </figure>
-    </center>
+   {" "}
+   <center>
+     <figure>
+       <img
+         src="/img/robot_images/warthog_images/screws_right.jpg"
+         width="800"
+       />
+       <figcaption>Screws on the right</figcaption>
+     </figure>
+   </center>
 
-    Once the screws are removed, carefully lift the center panel and turn it over to expose the MCU's micro USB port
-    and buttons.
+   Once the screws are removed, carefully lift the center panel and turn it over to expose the MCU's micro USB port
+   and buttons.
 
 5. While pressing `BT0` on the MCU, connect the external computer to Warthog's MCU using a USB cable.
 
-    <center>
-      <figure>
-        <img
-          src="/img/robot_images/warthog_images/mcu_buttons.jpg"
-          width="800"
-        />
-        <figcaption>Warthog's MCU buttons</figcaption>
-      </figure>
-    </center>
+   <center>
+     <figure>
+       <img
+         src="/img/robot_images/warthog_images/mcu_buttons.jpg"
+         width="800"
+       />
+       <figcaption>Warthog's MCU buttons</figcaption>
+     </figure>
+   </center>
 
 6. After connecting the computer you should see a device with a name similar to
-    `Bus 001 Device 005: ID 0483:df11 STMicroelectronics STM Device in DFU Mode` in the output of `lsusb`.
+   `Bus 001 Device 005: ID 0483:df11 STMicroelectronics STM Device in DFU Mode` in the output of `lsusb`.
 
-    :::note
+   :::note
 
-    If the MCU does not show up as a DFU device in the output of `lsusb` after completing the above procedure, press
-    and hold BT0 on the MCU press the RST button while holding BT0 down.  This will reset the MCU and force it into DFU
-    mode.
+   If the MCU does not show up as a DFU device in the output of `lsusb` after completing the above procedure, press
+   and hold BT0 on the MCU press the RST button while holding BT0 down. This will reset the MCU and force it into DFU
+   mode.
 
-    :::
+   :::
 
-    With the MCU in DFU mode, run the following command, replacing `001/005` with the value appropriate to the Bus and
-    Device where Warthog's MCU is connected:
+   With the MCU in DFU mode, run the following command, replacing `001/005` with the value appropriate to the Bus and
+   Device where Warthog's MCU is connected:
 
-    ```
-    sudo chmod 666 /dev/bus/usb/001/005
-    ```
+   ```
+   sudo chmod 666 /dev/bus/usb/001/005
+   ```
 
-    Now run the following command to upload the firmware:
+   Now run the following command to upload the firmware:
 
-    ```
-    dfu-util -v -d 0483:df11 -a 0 -s 0x08000000 -D /opt/ros/noetic/share/warthog_firmware/mcu.bin
-    ```
+   ```
+   dfu-util -v -d 0483:df11 -a 0 -s 0x08000000 -D /opt/ros/noetic/share/warthog_firmware/mcu.bin
+   ```
 
-    You should see about 20 seconds worth of lines output beginning with "Download from image ...". When this is
-    complete you may disconnect the computer from the MCU and power-cycle the robot.
+   You should see about 20 seconds worth of lines output beginning with "Download from image ...". When this is
+   complete you may disconnect the computer from the MCU and power-cycle the robot.
 
 ---
 

@@ -124,13 +124,13 @@ express system status according to the table below, but in the absence of one of
 be commanded from ROS to display indications from autonomy or other higher-level software.
 See http://wiki.ros.org/warthog_base for information on commanding the body lights.
 
-| Front Lights        | Rear Lights            | System State                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| :------------------ | :--------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Solid red           | Solid red              | The MCU is not in contact with the computer. That is, the `rosserial` connection is not active. This condition will be seen briefly on startup while Warthog's computer is booting up. If it persists, or is seen after initialization, either the base node on the computer has crashed, the network switch has failed, or a serious MCU error has occurred. If you suspect one of these conditions, please contact support. |
-| Flashing red        | Flashing red           | Stop mode is engaged. To disengage, twist the mushroom buttons to ensure that they are unlatched, and check any external stop hardware, if present.                                                                                                                                                                                                                                                                             |
-| Flashing orange     | Flashing orange        | Motor drivers not yet ready to drive. The motors have a brief initialization sequence which must complete after a stop condition clears before they are ready to drive. If this condition persists, please contact our support team.                                                                                                                                                                                                                                                                                                                    |
-| Pulsing orange      | Pulsing orange         | Battery is low. Connect Warthog to the charger.                                                                                                                                                                                                                                                                                                                                                                               |
-| Solid white         | Solid red              | Normal operation; Warthog is ready to drive. This status may be overridden by publishing your own light patterns to the `/cmd_lights` ROS topic. |
+| Front Lights    | Rear Lights     | System State                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| :-------------- | :-------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Solid red       | Solid red       | The MCU is not in contact with the computer. That is, the `rosserial` connection is not active. This condition will be seen briefly on startup while Warthog's computer is booting up. If it persists, or is seen after initialization, either the base node on the computer has crashed, the network switch has failed, or a serious MCU error has occurred. If you suspect one of these conditions, please contact support. |
+| Flashing red    | Flashing red    | Stop mode is engaged. To disengage, twist the mushroom buttons to ensure that they are unlatched, and check any external stop hardware, if present.                                                                                                                                                                                                                                                                           |
+| Flashing orange | Flashing orange | Motor drivers not yet ready to drive. The motors have a brief initialization sequence which must complete after a stop condition clears before they are ready to drive. If this condition persists, please contact our support team.                                                                                                                                                                                          |
+| Pulsing orange  | Pulsing orange  | Battery is low. Connect Warthog to the charger.                                                                                                                                                                                                                                                                                                                                                                               |
+| Solid white     | Solid red       | Normal operation; Warthog is ready to drive. This status may be overridden by publishing your own light patterns to the `/cmd_lights` ROS topic.                                                                                                                                                                                                                                                                              |
 
 #### Orientation References
 
@@ -151,16 +151,16 @@ and yaw in aircraft, and care should be taken to ensure that data is interpreted
 | Suspension                      | Geometric Passive Articulation                                                             |
 | Drive Configuration             | 4 X 4 Skid Steer                                                                           |
 | Operating Environment           | Outdoor                                                                                    |
-| Traction                        | Ø610 mm (24") Argo tire (Turf tire or 300 mm (12") wide Quad Track System (optional)        |
-| Battery Chemistry               | AGM sealed lead-acid (lithium optional)                                                     |
-| Capacity                        | 105 Ah at 48 V, expandable to 200 Ah with lithium option                                    |
-| Nominal Run Time                | Lead-acid: 2.5 hrs, lithium: 6 hrs                                                          |
+| Traction                        | Ø610 mm (24") Argo tire (Turf tire or 300 mm (12") wide Quad Track System (optional)       |
+| Battery Chemistry               | AGM sealed lead-acid (lithium optional)                                                    |
+| Capacity                        | 105 Ah at 48 V, expandable to 200 Ah with lithium option                                   |
+| Nominal Run Time                | Lead-acid: 2.5 hrs, lithium: 6 hrs                                                         |
 | Charge Time                     | 4 Hours approx                                                                             |
-| User Power                      | 12 V, 24 V and 48 V Fused at 10 A                                                           |
+| User Power                      | 12 V, 24 V and 48 V Fused at 10 A                                                          |
 | Control Modes                   | Remote control, computer controlled velocity commands, indoor/outdoor autonomy packages    |
 | Feedback Battery                | Voltage, motor currents, wheel odometry, control system status, temperature, safety status |
 | Communication                   | Ethernet, USB, Remote Control, Wi-Fi                                                       |
-| Drivers                         | Packaged with ROS Noetic (includes RViz, Gazebo support), Matlab API available    |
+| Drivers                         | Packaged with ROS Noetic (includes RViz, Gazebo support), Matlab API available             |
 
 <center>
   <figure>
@@ -379,7 +379,7 @@ Before entering the water it is important to ensure that:
 - The side panels and top cover are properly fastened down
 - All access panels are fastened down
 
-### Pinch Points   {#warthog-pinch-points}
+### Pinch Points {#warthog-pinch-points}
 
 When operating the Warthog it is important to maintain a safe distance away from the unit.
 The suspension has the ability to pivot.
