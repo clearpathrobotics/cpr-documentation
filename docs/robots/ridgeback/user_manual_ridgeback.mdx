@@ -70,11 +70,11 @@ Stop Reset button below the left rear Stop button, and the Power ON/OFF button b
 Stop button. On the front of the robot, there are another two red mushroom Stop buttons. These buttons
 are described further in the table below.
 
-|    Button    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| :----------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Power ON/OFF | Turns Ridgeback on or off. Note that the power button is a soft, momentary switch: to shut Ridgeback down, press and release it, and when the Onboard Computer has completed a safe power-down, the robot itself will also power-down.                                                                                                                                                                                                                                                                                 |
-| 4X Stop      | Stops Ridgeback by placing the four integrated motor drivers into an electrical reset condition. This is intended as a backup option for immobilizing Ridgeback when autonomy software malfunctions or commands unintended motion. The Stop buttons have a mechanical latch, which can be released by twisting the latched button. If you have a wireless Stop pendant, or other stop-asserting hardware you would like to integrate with Ridgeback, a breakout header is supplied on the main microcontroller PCB. |
-| Stop Reset   | Clears the electrically-enforced stop latch, allowing Ridgeback to run again after it has been stopped via one of the Stop buttons. Note that the mushroom button's mechanical latch must be cleared before the electrical reset can have any effect.                                                                                                                                                                                                                                                                  |
+|    Button    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| :----------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Power ON/OFF | Turns Ridgeback on or off. Note that the power button is a soft, momentary switch: to shut Ridgeback down, press and release it, and when the Onboard Computer has completed a safe power-down, the robot itself will also power-down.                                                                                                                                                                                                                                                                              |
+|   4X Stop    | Stops Ridgeback by placing the four integrated motor drivers into an electrical reset condition. This is intended as a backup option for immobilizing Ridgeback when autonomy software malfunctions or commands unintended motion. The Stop buttons have a mechanical latch, which can be released by twisting the latched button. If you have a wireless Stop pendant, or other stop-asserting hardware you would like to integrate with Ridgeback, a breakout header is supplied on the main microcontroller PCB. |
+|  Stop Reset  | Clears the electrically-enforced stop latch, allowing Ridgeback to run again after it has been stopped via one of the Stop buttons. Note that the mushroom button's mechanical latch must be cleared before the electrical reset can have any effect.                                                                                                                                                                                                                                                               |
 
 #### Body Lights
 
@@ -104,12 +104,12 @@ connect a device to the onboard network, it is suggested to give it a static IP 
 this cannot be changed since the MCU is statically set to 192.168.131.2 and expects the computer to be at
 192.168.131.1. Avoid IPs in use by the following pre-existing devices:
 
-| IP Address     | Device Assignment                              |
-| :------------- | :--------------------------------------------- |
+| IP Address     | Device Assignment                                    |
+| :------------- | :--------------------------------------------------- |
 | 192.168.131.1  | Onboard Computer (both ports, br0 network interface) |
-| 192.168.131.2  | Ethernet-connected MCU                         |
-| 192.168.131.20 | Front-facing LIDAR                             |
-| 192.168.131.21 | Rear-facing LIDAR (if present)                 |
+| 192.168.131.2  | Ethernet-connected MCU                               |
+| 192.168.131.20 | Front-facing LIDAR                                   |
+| 192.168.131.21 | Rear-facing LIDAR (if present)                       |
 
 See [Network IP Addresses](/docs/tools/network_ip_addresses) for a full list of common IP addresses.
 
