@@ -69,11 +69,9 @@ The two larger holes on the left and right side of the payload integration plate
 electrical wires and cables from the mounted payloads into the User Bay. Electrical wires should always
 pass through the provided plastic grommets to protect against cutting and abrasion.
 
-Ridgeback's internal computer options support USB3 and Ethernet connectivity. Where available, the
-PCIe slot may be used to supply Firewire, Thunderbolt, or additional USB3 ports, as necessary.
+Ridgeback's internal computer options support USB3 and Ethernet connectivity.
 
-Additionally, the User Bay may be used for an Ethernet switch, when attaching multiple
-Ethernet payloads, or for a PoE power injector as required.
+An Ethernet switch or PoE power injector can be added to the User Bay as required.
 
 #### Connector Summary {#ridgeback-connector-summary}
 
@@ -82,8 +80,7 @@ These are summarized in the following table and described in more detail in the 
 The power rails on the User Bay Power board are protected against short circuit by fuses. See the
 illustration for the connector and fuse locations.
 
-- For the High Current VBAT User Power (labelled as 24 VDC, 20A MAX), terminate your payload's power lead with the appropriate Anderson connectors.
-  TODO: why is it a 7.5A fuse in figure??
+- For the High Current VBAT User Power (labelled as 24 VDC, 20 A MAX), terminate your payload's power lead with the appropriate Anderson connectors.
 - For the User Power Ports, terminate your payload's power lead with the appropriate crimps and pins.
   for the four pin Molex connector. The maximum current draw permitted on each rail is 5A.
 - For the Inverter Power, terminate your payload's power lead with the appropriate ??? connectors.
@@ -92,7 +89,7 @@ illustration for the connector and fuse locations.
 | :--------------------------- | :----------------------------------------------------------------------- | :------------------------------------------------- | :----------------------------------------------------------- | :--------------- |
 | High Current VBAT User Power | Anderson PP15/45 1327-BK (red) + 1327G6-BK (black) + Anderson 261G2-LPBK | Anderson PP15/45 1327-BK (red) + 1327G6-BK (black) | Anderson 262G2-LPBK (AWG 16-20) or 261G3-LPBK (AWG 10-14)    | Anderson 1309G8  |
 | User Power Ports             | Molex 0039301040                                                         | Molex 0039012040                                   | Molex 0507528200 (AWG 20-22) or Molex 0503518100 (AWG 22-28) | Molex 2002184900 |
-| Inverter Power               | ???                                                                      | ???                                                | ???                                                          | ???              |
+| Inverter Power               | Anderson 1327G8 (blue) + 1327G6-BK (black)                               | Anderson 1327G8 (blue) + 1327G6-BK (black)         | Anderson 262G2-LPBK (AWG 16-20) or 261G3-LPBK (AWG 10-14)    | Anderson 1309G8  |
 
 <center>
   <figure>
@@ -112,8 +109,8 @@ The following are available as user power:
 
 - Unregulated VBAT power (25.6 V nominal, 16 A max), shared across the High Current VBAT User Power (20 A max)
   and User Power Ports (5 A max per port)
-- Regulated 12 V power (?? A max), shared across the User Power ports (5 A max per port)
-- Regulated 5 V power (?? A max), shared across the User Power ports (5 A max per port).
+- Regulated 12 V power (5 A max), shared across the User Power ports (5 A max per port)
+- Regulated 5 V power (5 A max), shared across the User Power ports (5 A max per port).
 
 :::caution
 
@@ -146,7 +143,7 @@ a mating connector. This 4-pin connector is the same as the one used for the Use
 
 The four pins should be connected as follows:
 
-- 1-2: to external motion-stop breakout: press and release external button (3.3V) to engage motion-stop; press and release
+- 1-2: to external motion-stop breakout: press and release external button (3.3 V) to engage motion-stop; press and release
   external button or Motion Stop button to clear the motion-stop
 - 3-4: short these pins to indicate that external motion-stop is present
 

@@ -67,14 +67,14 @@ The exterior of Ridgeback is shown below and includes:
 
 There are four push buttons located on the back of the Ridgeback: the two red mushroom Stop buttons, the
 Stop Reset button below the left rear Stop button, and the Power ON/OFF button below the rear right
-Stop button. On the front of the robot, there are another two red mushroom stop buttons. These buttons
+Stop button. On the front of the robot, there are another two red mushroom Stop buttons. These buttons
 are described further in the table below.
 
 |    Button    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | :----------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Power ON/OFF | Turns Ridgeback on or off. Note that the power button is a soft, momentary switch: to shut Ridgeback down, press and release it, and when the onboard PC has completed a safe power-down, the robot itself will also power-down.                                                                                                                                                                                                                                                                                       |
-|  Stop (x4)   | Stops Ridgeback by placing the four integrated motor drivers into an electrical reset condition. This is intended as a backup option for immobilizing Ridgeback when autonomy software malfunctions or commands unintended motion. The stop buttons have a mechanical latch, which can be released by twisting the latched button. If you have a wireless e-stop, pendant, or other stop-asserting hardware you would like to integrate with Ridgeback, a breakout header is supplied on the main microcontroller PCB. |
-|  Stop Reset  | Clears the electrically-enforced stop latch, allowing Ridgeback to run again after it has been stopped via one of the stop buttons. Note that the mushroom button's mechanical latch must be cleared before the electrical reset can have any effect.                                                                                                                                                                                                                                                                  |
+| Power ON/OFF | Turns Ridgeback on or off. Note that the power button is a soft, momentary switch: to shut Ridgeback down, press and release it, and when the Onboard Computer has completed a safe power-down, the robot itself will also power-down.                                                                                                                                                                                                                                                                                 |
+| 4X Stop      | Stops Ridgeback by placing the four integrated motor drivers into an electrical reset condition. This is intended as a backup option for immobilizing Ridgeback when autonomy software malfunctions or commands unintended motion. The Stop buttons have a mechanical latch, which can be released by twisting the latched button. If you have a wireless Stop pendant, or other stop-asserting hardware you would like to integrate with Ridgeback, a breakout header is supplied on the main microcontroller PCB. |
+| Stop Reset   | Clears the electrically-enforced stop latch, allowing Ridgeback to run again after it has been stopped via one of the Stop buttons. Note that the mushroom button's mechanical latch must be cleared before the electrical reset can have any effect.                                                                                                                                                                                                                                                                  |
 
 #### Body Lights
 
@@ -99,17 +99,19 @@ See http://wiki.ros.org/ridgeback_base for information on commanding the body li
 The User Bay provides access to the User Power Panel, as well as USB and Ethernet ports, and additional
 space for stowing user equipment. The electrical panel can be used to power your payloads, with further details available
 in [Electrical Integration](/docs/robots/ridgeback/integration_ridgeback#ridgeback-payload-electrical-integration).
-The USB3 ports are connected directly to the onboard computer, and the ethernet ports connect to the onboard network switch. To
+The USB3 ports are connected directly to the Onboard Computer, and the Ethernet ports connect to the onboard network switch. To
 connect a device to the onboard network, it is suggested to give it a static IP in the 192.168.131.x/24 subnet and
 this cannot be changed since the MCU is statically set to 192.168.131.2 and expects the computer to be at
 192.168.131.1. Avoid IPs in use by the following pre-existing devices:
 
 | IP Address     | Device Assignment                              |
 | :------------- | :--------------------------------------------- |
-| 192.168.131.1  | Onboard PC (both ports, br0 network interface) |
+| 192.168.131.1  | Onboard Computer (both ports, br0 network interface) |
 | 192.168.131.2  | Ethernet-connected MCU                         |
 | 192.168.131.20 | Front-facing LIDAR                             |
 | 192.168.131.21 | Rear-facing LIDAR (if present)                 |
+
+See [Network IP Addresses](/docs/tools/network_ip_addresses) for a full list of common IP addresses.
 
 #### Payload Integration Plate
 
@@ -146,13 +148,13 @@ The direction of the axes differs from those used for roll, pitch, and yaw in ai
 | Operating Time        | 15 hours with max payload (24 V 100 Ah)                                      |
 | Battery Chemistry     | Marine Grade AGM Sealed Lead Acid                                            |
 | Charge Time           | 8 hours                                                                      |
-| User Power            | 7.5 A @ VBAT (24 V), 7.5 A @ 12 V, 7.5 A @ 5 V                               |
+| User Power            | 5 A @ VBAT (24 V), 5 A @ 12 V, 5 A @ 5 V                                     |
 | Power                 | 800 W Typical Use, Shore Power Available                                     |
 | Control Modes         | Kinematic control (forward, sideways, rotation), individual wheel velocities |
 | Communication         | Ethernet, USB 3.0, RS232                                                     |
 | Internal Sensing      | Battery Status, Wheel Odometry, Motor Currents, Onboard IMU                  |
 
-<sup>†</sup> The height of the Ridgeback was increased by 15mm starting with the robot with serial number R100-0111. Older Ridgebacks measure 296mm high.
+<sup>†</sup> The height of the Ridgeback was increased by 15 mm starting with the robot with serial number R100-0111. Older Ridgebacks measure 296 mm high.
 
 <center>
   <img
@@ -287,14 +289,14 @@ Ridgeback will move at the speed commanded once the Stop is released.
 Always ensure the Stop buttons are accessible at all times. Avoid mounting payloads that extend over the
 front or rear of Ridgeback and would occlude the Stop buttons.
 
-Note that the Ridgeback MCU board does provide a breakout to allow an external motion-stop button/switch to be
+Note that the Ridgeback MCU board includes a breakout to allow an external motion-stop button/switch to be
 integrated by the end user, which could be used to engage/disengage Stop Mode.
 See [Optional External Motion Stop](/docs/robots/ridgeback/integration_ridgeback#ridgeback-external-motion-stop)
 for details on adding an external motion-stop button/switch.
 
 ### Electrical System
 
-Ridgeback is powered by two lead-acid (PbSO<sub>4</sub>) deep-cycle AGM batteries that are capable of delivering over 2000W
+Ridgeback is powered by two lead-acid (PbSO<sub>4</sub>) deep-cycle AGM batteries that are capable of delivering over 2000 W
 for short durations. This gives Ridgeback's motors their great performance; however, it is also enough power to
 cause severe bodily harm. Always use caution when operating Ridgeback to avoid personal injury or property damage.
 To ensure safety, please observe the following precautions:
@@ -302,7 +304,7 @@ To ensure safety, please observe the following precautions:
 - Do not tamper with the battery terminals or wiring.
 - Do not tamper with the fuse panel, except to check and change the fuses, and to connect and disconnect the battery plug.
 - Always replace fuses with the same type and rating to ensure continued protection against risk of fires.
-- Consult Clearpath Robotics support if you need to service the batteries.
+- Consult Clearpath Robotics Support if you need to service the batteries.
 - Do not lay tools or other objects on top of the batteries.
 - Do not move the robot while charging the batteries.
 - Charge the battery only with the integrated charger installed by Clearpath Robotics.

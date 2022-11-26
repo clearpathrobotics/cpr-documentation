@@ -630,7 +630,7 @@ If you wish to customize the parameters of move_base, local costmap, global cost
 
 ### Making a Map {#gmapping-demo}
 
-In this demonstration, Dingo generates a map using gmapping. Begin by launch the gmapping launch file on the robot:
+In this demonstration, Dingo generates a map using Gmapping. Begin by launch the Gmapping launch file on the robot:
 
 ```
 roslaunch dingo_navigation gmapping_demo.launch
@@ -648,7 +648,7 @@ roslaunch dingo_viz view_robot.launch config:=gmapping
       src="/img/robot_images/dingo_images/rviz-gmapping.png"
       width="800"
     />
-    <figcaption>RViz with Dingo's gmapping configuration</figcaption>
+    <figcaption>RViz with Dingo's Gmapping configuration</figcaption>
   </figure>
 </center>
 
@@ -676,7 +676,7 @@ roslaunch dingo_navigation amcl_demo.launch map_file:=/path/to/my/map.yaml
 ```
 
 If you don't specify `map_file`, it defaults to an included pre-made map of the default "Dingo Race" environment which Dingo's simulator spawns in.
-If you're using a real Dingo in your own environment, you'll definitely want to override this with the map created using the gmapping demo.
+If you're using a real Dingo in your own environment, you'll definitely want to override this with the map created using the Gmapping demo.
 
 Before navigating, you need to initialize the localization system by setting the pose of the robot in the map.
 This can be done using 2D Pose Estimate in RViz or by setting the amcl `initial_pose` parameters. To visualize with the suggested RViz configuration launch:

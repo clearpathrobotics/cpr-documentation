@@ -467,7 +467,7 @@ Now that you've had Ridgeback for a while, you may be interested in how to exten
 When ROS packages are grouped together in a directory and then built as one, the result is referred to as a workspace.
 Each workspace generates a `setup.bash` file which the user may source in order to correctly set up important environment variables such as `PATH`, `PYTHONPATH`, and `CMAKE_PREFIX_PATH`.
 
-The standard system-wide setup file is in `opt`:
+The standard system-wide setup file is in `/opt`:
 
 ```
 source /opt/ros/noetic/setup.bash
@@ -494,7 +494,7 @@ This location contains the launch files associated with the `ros` background job
 If you add launch files here, they will be launched with Ridgeback's startup.
 
 However, it's important to note that in the default configuration, any launch files you add may only reference ROS software installed in `/opt/ros/noetic`.
-If you want to launch something from workspace in the home directory, you must change `/etc/ros/setup.bash` to source that workspace's setup file rather than the one from `opt`.
+If you want to launch something from workspace in the home directory, you must change `/etc/ros/setup.bash` to source that workspace's setup file rather than the one from `/opt`.
 
 #### Adding URDF
 
@@ -521,7 +521,7 @@ sudo apt-get install ros-noetic-ridgeback-navigation
 Below are the example launch files for three different configurations for navigating Ridgeback:
 
 - Navigation in an odometric frame without a map, using only [move_base](http://wiki.ros.org/move_base).
-- Generating a map using [gmapping](http://wiki.ros.org/gmapping).
+- Generating a map using [Gmapping](http://wiki.ros.org/gmapping).
 - Localization with a known map using [amcl](http://wiki.ros.org/amcl).
 
 Referring to the [Simulating Ridgeback](#simulating-ridgeback) instructions, bring up Ridgeback with the front laser enabled for the following demos:
@@ -568,7 +568,7 @@ If you wish to customize the parameters of move_base, local costmap, global cost
 
 ### Making a Map {#gmapping-demo}
 
-In this demonstration, Ridgeback generates a map using gmapping. Begin by launch the gmapping launch file on the robot:
+In this demonstration, Ridgeback generates a map using Gmapping. Begin by launch the Gmapping launch file on the robot:
 
 ```
 roslaunch ridgeback_navigation gmapping_demo.launch
@@ -586,7 +586,7 @@ roslaunch ridgeback_viz view_robot.launch config:=gmapping
       src="/img/robot_images/ridgeback_images/rviz-gmapping.png"
       width="800"
     />
-    <figcaption>RViz with Ridgeback's gmapping configuration</figcaption>
+    <figcaption>RViz with Ridgeback's Gmapping configuration</figcaption>
   </figure>
 </center>
 
@@ -614,7 +614,7 @@ roslaunch ridgeback_navigation amcl_demo.launch map_file:=/path/to/my/map.yaml
 ```
 
 If you don't specify `map_file`, it defaults to an included pre-made map of the default "Ridgeback Race" environment which Ridgeback's simulator spawns in.
-If you're using a real Ridgeback in your own environment, you'll definitely want to override this with the map created using the gmapping demo.
+If you're using a real Ridgeback in your own environment, you'll definitely want to override this with the map created using the Gmapping demo.
 
 Before navigating, you need to initialize the localization system by setting the pose of the robot in the map.
 This can be done using 2D Pose Estimate in RViz or by setting the amcl `initial_pose` parameters. To visualize with the suggested RViz configuration launch:
@@ -729,7 +729,6 @@ The details of each test are shown below.
 The `check_can_bus_interface` script checks that communication between the motors, encoders, robot's MCU, and robot's computer are working properly over the CAN bus interface.
 
 This script verifies that the `can0` interface is detected and activated, then proceeds to check the output of `candump` to verify that good CAN packets are being transmitted.
-Based on the Ridgeback configuration, either Ridgeback-D or Ridgeback-O, this script will know to check for good CAN packets from 2 or 4 encoders, respectively.
 
 #### Running CAN Bus Test
 

@@ -13,8 +13,10 @@ import Support from "/components/support.mdx";
 
 If Ridgeback's batteries need replacement, they are accessible by removing the top-plate and the insulator
 cover. Before performing any service or maintenance to the robot, the battery pack must be fully disconnected.
-The batteries weigh approximately 33 kg (73 lbs) each, so use all necessary care and caution when lifting the
+The batteries weigh approximately 33 kg (73 lbs) each, so use care and caution when lifting the
 batteries out of the chassis. Please contact Clearpath Robotics regarding replacement batteries.
+
+It may also be necessary to remove the antenna cables carefully prior to removing the batteries.
 
 ## Long-term storage
 
@@ -24,8 +26,9 @@ maximize their life. Consider one of the following two procedures when placing R
 - Fully charge Ridgeback, turn it off and put it into storage. Once a week, connect power to the charger
   and allow the charger to top up the battery for an hour or so.
 - Fully charge Ridgeback, turn it off and put it into storage, but leave the charger connected and powered
-  the entire time Ridgeback is in storage. The charger will monitor the battery and will automatically
-  charge it up as needed.
+  the entire time Ridgeback is in storage via a wall timer that turns off for one hour every 24-hour cycle.
+  The charger will monitor the battery and will automatically charge it up as needed. Note that the wall
+  timer is needed since the charger times out and turns off otherwise.
 
 Please contact Clearpath Robotics for additional information about Ridgeback's batteries.
 
@@ -40,7 +43,7 @@ Please contact Clearpath Robotics for additional information about Ridgeback's b
 When you update packages, there is periodically a new version of Ridgeback's firmware available. You will know this
 is the case in one of two ways:
 
-1. The firmware and PC are unable to connect to each other, which will be apparent if the body lights remain solid
+1. The firmware and Onboard Computer are unable to connect to each other, which will be apparent if the body lights remain solid
    red after system bootup.
 2. If the firmware version number in the `/status` message does not match the package version output by
    `dpkg -s ros-noetic-ridgeback-firmware`. In the future there will be an automated check for this which outputs
@@ -51,7 +54,7 @@ If new firmware is available, follow the below procedure to flash it to Ridgebac
 1. Place Ridgeback up on blocks. Firmware loading does not usually result in unintended motion, but it's safest when
    off the ground.
 2. Ensure that Ridgeback is on and open.
-3. Connect the MCU to the Ridgeback's PC using a mini-USB cable connected to the port shown below:
+3. Connect the MCU to the Ridgeback's Onboard Computer using a mini-USB cable connected to the port shown below:
 
 <center>
   <figure>
@@ -84,7 +87,7 @@ typically towards the top of the robot's chassis and the `AUX` position is norma
 
 :::
 
-Now, from Ridgeback's PC (connected via SSH or screen/keyboard), execute:
+Now, from Ridgeback's Onboard Computer (connected via SSH or screen/keyboard), execute:
 
 ```
 rosrun ridgeback_firmware upload
