@@ -40,9 +40,19 @@ will be included per your specific configuration, plus further documentation as 
 
 #### System Architecture
 
-Husky is built around a computer running Ubuntu (Intel-based computer or Jetson developer kit), paired with a
-32-bit microcontroller MCU. The MCU handles power supply monitoring and motor control. The communication channel
-between the MCU and computer is an Ethernet connection.
+Warthog is built around an onboard computer running Ubuntu (Intel-based computer or Jetson developer kit), paired with a
+32-bit microcontroller MCU. The MCU handles IO, system and battery monitoring, and provides an interface to the CAN-controlled
+motor drivers. The communication channel between the MCU and computer is an Ethernet connection.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/warthog_images/robot_warthog_7.png"
+      width="800"
+    />
+    <figcaption>System Architecture</figcaption>
+  </figure>
+</center>
 
 #### System Features
 
@@ -188,7 +198,8 @@ This indicates that ROS is up on the computer and has established communications
 
 ### Using the Wireless Stop Remote
 
-Included with the Warthog is a wireless stop remote.
+Included with the Warthog is a wireless stop remote. If for any reason the robot must be halted immediately, press the red STOP button.
+This will immediately cut power to the robot's motors.
 
 <center>
   <figure>
@@ -205,11 +216,11 @@ The system is designed to enter a stopped state when the remote is not communica
 The wireless e-stop remote operates as follows:
 
 1.  Pull the red stop button outwards to disengage it from an e-stop condition.
-2.  Press and hold the green start button on the right side of the unit until the battery LED indicator above the buttons turns green.
+2.  Press and hold the green START button on the right side of the unit until the battery LED indicator above the buttons turns green.
     If the battery light is red, this means the e-stop button is still engaged.
-3.  Press the button labeled "RELEASE" within three seconds followed by the start button again.
+3.  Press the button labelled RELEASE within three seconds followed by the START button again.
 4.  The battery LED should be blinking green quickly, this indicates the remote is paired with the receiver.
-    To disengage the stop, press start once again.
+    To disengage the stop, press START once again.
 
 The battery LED should now be blinking slower, this indicates the remote stop has been disengaged.
 The corner body lights of the Warthog will change from blinking red to solid red at the rear and white at the front assuming
@@ -221,6 +232,15 @@ The Warthog is now ready to drive.
 If you're not seeing any change in behaviour, please contact our support team.
 
 :::
+
+### Using the E-Stop buttons
+
+Warthog has four E-Stop buttons located on the four corners of the robot. Pressing any of
+these buttons will cut power to the motors, just like the STOP button on the E-Stop remote.
+To disengage the E-Stop, simply twist the button in the direction indicated by the arrows.
+
+Whenever you need to perform maintenance on Warthog, we recommend engaging the E-Stop if the
+robot cannot be fully powered down.
 
 ### Drivetrain
 
@@ -359,7 +379,7 @@ Before entering the water it is important to ensure that:
 - The side panels and top cover are properly fastened down
 - All access panels are fastened down
 
-### Pinch Points
+### Pinch Points   {#warthog-pinch-points}
 
 When operating the Warthog it is important to maintain a safe distance away from the unit.
 The suspension has the ability to pivot.
