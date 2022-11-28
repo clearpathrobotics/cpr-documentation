@@ -101,7 +101,7 @@ Some of the most important ones are listed below.
 | `WARTHOG_NAVSAT_SMART6_PORT`   | `/dev/ttyS1` | The serial port that the GPS module communicates over                                                                                             |
 | `WARTHOG_NAVSAT_SMART6_RPY`    | `0 0 0`      | Compound rotations in radians of the Smart 6 GPS                                                                                                  |
 | `WARTHOG_OFFBOARD_STOP`        | `false`      | Is a remote e-stop setup on the platform?                                                                                                         |
-| `WARTHOG_TRACKS`               | `0`          | Used to specify that Warthog is equipped with tracks instead of wheels.                                                                           |
+| `WARTHOG_TRACKS`               | `0`          | Used to specify that Warthog is equipped with tracks instead of wheels                                                                            |
 | `WARTHOG_TWIST_MUX_EXTRAS`     | `0`          | Add additional sources to be controlled by the twise mux of the platform                                                                          |
 | `WARTHOG_URDF_EXTRAS`          | `empty.urdf` | Path to a URDF file with additional modules connected to the robot                                                                                |
 
@@ -591,7 +591,6 @@ The details of each test are shown below.
 The `check_can_bus_interface` script checks that communication between the motors, encoders, robot's MCU, and robot's computer are working properly over the CAN bus interface.
 
 This script verifies that the `can0` interface is detected and activated, then proceeds to check the output of `candump` to verify that good CAN packets are being transmitted.
-Based on the Warthog configuration, either Warthog-D or Warthog-O, this script will know to check for good CAN packets from 2 or 4 encoders, respectively.
 
 #### Running CAN Bus Test
 
