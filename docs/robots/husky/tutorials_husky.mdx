@@ -53,7 +53,6 @@ your Husky robot and optionally on a remote computer.
 is a great way for most users to learn more about their Husky; understanding how to effectively operate Husky
 in simulation is valuable whether you are in the testing phase with software you intend to ultimately deploy on a
 physical Husky, or you do not have one and are simply exploring the platform's capabilities.
-
 [Driving Husky](#driving-husky) covers how to teleoperate Husky using the remote control, as well as safety
 procedures for operating the physical robot. Anyone working with a physical robot should be familiar with this section.
 
@@ -61,7 +60,7 @@ procedures for operating the physical robot. Anyone working with a physical robo
 tutorial, as navigation and map-making may be run in the simulated environment. However, this content is applicable
 to both the simulator and the real platform, if your Husky is equipped with a laser scanner.
 
-[Testing Husky](#testing-husky) outlines how to validate that your physical Husky is working correctly.
+[Husky Tests](#testing-husky) outlines how to validate that your physical Husky is working correctly.
 
 [Advanced Topics](#advanced-topics) covers items that are only required in atypical situations.
 
@@ -303,7 +302,7 @@ You should see the following window appear, or something like it.
 :::note
 
 You can adjust the camera angle by clicking and dragging while holding CTRL, ALT,
-or the shift key.
+or the Shift key.
 
 :::
 
@@ -888,7 +887,7 @@ navigation stack, see the [ROS Navigation Tutorials](http://wiki.ros.org/navigat
    Make sure to select an unoccupied (dark grey) or unexplored (light grey) location.
 
 7. As the robot moves, you should see the grey static map (map topic) grow. Occasionally,
-   the gmapping algorithm will relocalize the robot, causing a discrete jump in the
+   the Gmapping algorithm will relocalize the robot, causing a discrete jump in the
    map→odom transform.
 
 8. To save the generated map, you can run the map_saver utility:
@@ -1033,7 +1032,7 @@ In each terminal window, make sure to source the catkin workspace where you buil
    Husky should explore. Watch the terminal window for instructions.
 
 7. As the robot moves, you should see the grey static map (map topic) grow. Occasionally,
-   the gmapping algorithm will relocalize the robot, causing a discrete jump in the map→odom transform.
+   the Gmapping algorithm will relocalize the robot, causing a discrete jump in the map→odom transform.
 
 8. When the exploration goal is complete, you will see a feedback message in the terminal
    window. You can now issue a new exploration goal if you wish.

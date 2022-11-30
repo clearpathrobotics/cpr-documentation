@@ -4,30 +4,14 @@ sidebar_position: 4
 ---
 
 import ComponentIntroductionJackal from "/components/introduction_jackal.mdx";
+import GettingNewPackages from "/components/maintenance/getting_new_packages.mdx";
 import Support from "/components/support.mdx";
 
 <ComponentIntroductionJackal />
 
-## Software Maintenance  {#software_maintenance}
+## Software Maintenance {#software_maintenance}
 
-:::note
-
-If you are upgrading your Jackal from an older version of ROS, please refer to our upgrade instructions [here](https://clearpathrobotics.com/assets/guides/kinetic/kinetic-to-melodic/index.html) and [here](https://clearpathrobotics.com/assets/guides/melodic/melodic-to-noetic/index.html).
-
-:::
-
-### Getting New Packages
-
-Jackal is always being improved, both its own software and the many community ROS packages upon which it depends!
-You can use the `apt` package management system to receive new versions all software running on the platform.
-
-Each Jackal leaves the factory already configured to pull packages from http://packages.ros.org as well as http://packages.clearpathrobotics.com.
-To update your package and download new package versions, simply run:
-
-```
-sudo apt-get update
-sudo apt-get dist-upgrade
-```
+<GettingNewPackages />
 
 ### MCU Firmware Update
 

@@ -48,14 +48,13 @@ If instead you have an older Jackal robot running Ubuntu 18.04 with ROS Melodic,
 
 [Using Jackal](#using-jackal) describes how to simulate and drive your Jackal. [Simuation](#simulating-jackal) is a great way for most users to learn more about their Jackal;
 understanding how to effectively operate Jackal in simulation is valuable whether you are in the testing phase with software you intend to ultimately deploy on a physical Jackal or you do not have one and are simply exploring the platform's capabilities.
-
 [Driving Jackal](#driving-jackal) covers how to teleoperate Jackal using the remote control, a well as safety procedures for operating the physical robot.
 Anyone working with a physical robot should be familiar with this section.
 
 [Navigating Jackal](#navigating-jackal) is a follow-on to what is learned in the [Simuation](#simulating-jackal) tutorial, as navigation and map-making may be run in the simulated environment.
 However, this content is applicable to both the simulator and the real platform, if your Jackal is equipped with a laser scanner.
 
-[Testing Jackal](#testing-jackal) outlines how to validate that your physical Jackal is working correctly.
+[Jackal Tests](#testing-jackal) outlines how to validate that your physical Jackal is working correctly.
 
 [Advanced Topics](#advanced-topics) covers items that are only required in atypical situations.
 
@@ -621,7 +620,7 @@ If you wish to customize the parameters of move_base, local costmap, global cost
 
 ### Making a Map {#gmapping-demo}
 
-In this demonstration, Jackal generates a map using gmapping. Begin by launch the gmapping launch file on the robot:
+In this demonstration, Jackal generates a map using Gmapping. Begin by launch the Gmapping launch file on the robot:
 
 ```
 roslaunch jackal_navigation gmapping_demo.launch
@@ -646,7 +645,7 @@ roslaunch jackal_viz view_robot.launch config:=gmapping
       src="/img/robot_images/jackal_images/rviz-gmapping.png"
       width="800"
     />
-    <figcaption>RViz with Jackal's gmapping configuration</figcaption>
+    <figcaption>RViz with Jackal's Gmapping configuration</figcaption>
   </figure>
 </center>
 
@@ -681,7 +680,7 @@ If your robot's lidar does not publish on `/front/scan` you can specify the corr
 :::
 
 If you don't specify `map_file`, it defaults to an included pre-made map of the default "Jackal Race" environment which Jackal's simulator spawns in.
-If you're using a real Jackal in your own environment, you'll definitely want to override this with the map created using the gmapping demo.
+If you're using a real Jackal in your own environment, you'll definitely want to override this with the map created using the Gmapping demo.
 
 Before navigating, you need to initialize the localization system by setting the pose of the robot in the map.
 This can be done using 2D Pose Estimate in RViz or by setting the amcl `initial_pose` parameters. To visualize with the suggested RViz configuration launch:
@@ -990,7 +989,7 @@ and [Navigating Jackal](#navigating-jackal) to control and monitor the robot. Fo
       src="/img/robot_images/jackal_images/jackal_rviz_office_gmap.png"
       width="800"
     />
-    <figcaption>Jackal building a map of the office with gmapping</figcaption>
+    <figcaption>Jackal building a map of the office with Gmapping</figcaption>
   </figure>
 </center>
 
