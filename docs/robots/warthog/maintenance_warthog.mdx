@@ -75,6 +75,12 @@ The BMS powers up first and begins communicating with all of the battery modules
 
 #### BMS ROS Topics {#bms-ros-topics}
 
+:::note
+
+If your Warthog is equipped with a lead-acid battery pack, you can ignore this section on the BMS ROS Topics.
+
+:::
+
 The table below shows topics that will be very useful in monitoring battery health, as outlined in the section above.
 
 | Topic                      | Purpose                                        |
@@ -89,7 +95,7 @@ charging.
 #### To Connect the Charger
 
 1. Plug in the charger DC output cable (heavier gauge cable).
-2. Plug in the charger auxiliary control cable.
+2. Plug in the charger auxiliary control cable. (Note: Only relevant to Warthogs with lithium batteries.)
 3. Plug the charger into AC power (directly to the wall outlet, no extension cords).
 4. This can be done with or without power on Warthog being on (however the note above applies: at least once every 2-3 weeks, the charge
    process needs to be allowed to fully balance the system).
@@ -123,8 +129,6 @@ Always exercise caution and observe the following safety practices when connecti
 - Ensure that the batteries are evenly distributed throughout the Warthog to maximize stability.
 - Battery levels on the unit should be checked on a regular basis.
   It's important to maintain the battery voltage at a suitable level for proper operation.
-- When additional batteries are added to the system, it's important to connect the positive terminal first to the main power of the Warthog before connecting ground.
-- When installing additional batteries, disconnect the ground on all batteries presently in the unit before connecting the positive terminal of the new batteries.
 
 ### Long-term Storage
 

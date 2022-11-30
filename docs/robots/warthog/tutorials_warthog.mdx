@@ -194,7 +194,7 @@ The service will automatically start each time you boot your Warthog's computer.
 ### Setting up Warthog's Network Configuration {#warthog-networking}
 
 Warthog is normally equipped with a combination Wi-Fi + Bluetooth module.
-If this is your first unboxing, ensure that Warthog's wireless antennae are firmly screwed on to the chassis.
+If this is your first unboxing, ensure that Warthog's wireless antennae are firmly screwed onto the chassis.
 
 #### First Connection
 
@@ -363,7 +363,7 @@ This includes data from the wheel encoders and IMU (if available).
 
 :::note
 
-Diagnostics are only applicable to real Warthog robots, not simulation.
+Diagnostics are only applicable to real Warthog robots, not simulated ones.
 
 :::
 
@@ -403,7 +403,9 @@ There are three ways to drive Warthog and each way will work on a physical Warth
 Warthog is capable of reaching high speeds.
 Careless driving can cause harm to the operator, bystanders, the robot, or other property.
 Always remain vigilant, ensure you have a clear line of sight to the robot, and operate the robot at safe speeds.
-We strongly recommend driving in normal (slow) mode first, and only enabling turbo in large, open areas that are free of people and obstacles.
+The maximum speed is controllable through a dial on the Fubata controller; we strongly recommend setting the maximum
+speed to a low value for initial driving tests and only setting maximum speed to a high value in open areas that are
+free of people and obstacles.
 
 :::
 
@@ -454,7 +456,7 @@ Now that you've had Warthog for a while, you may be interested in how to extend 
 When ROS packages are grouped together in a directory and then built as one, the result is referred to as a workspace.
 Each workspace generates a `setup.bash` file which the user may source in order to correctly set up important environment variables such as `PATH`, `PYTHONPATH`, and `CMAKE_PREFIX_PATH`.
 
-The standard system-wide setup file is in `opt`:
+The standard system-wide setup file is in `/opt`:
 
 ```
 source /opt/ros/noetic/setup.bash
@@ -481,7 +483,7 @@ This location contains the launch files associated with the `ros` background job
 If you add launch files here, they will be launched with Warthog's startup.
 
 However, it's important to note that in the default configuration, any launch files you add may only reference ROS software installed in `/opt/ros/noetic`.
-If you want to launch something from workspace in the home directory, you must change `/etc/ros/setup.bash` to source that workspace's setup file rather than the one from `opt`.
+If you want to launch something from workspace in the home directory, you must change `/etc/ros/setup.bash` to source that workspace's setup file rather than the one from `/opt`.
 
 #### Adding URDF
 

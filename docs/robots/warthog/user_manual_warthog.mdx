@@ -31,7 +31,7 @@ Your Warthog shipment contains the following:
 - One battery charger
 - One Futaba remote control
 - One Warthog quick start guide
-- One wireless stop remote
+- One Wireless Stop remote
 
 If you purchased standard payload modules or custom integration services with Warthog, then additional equipment
 will be included per your specific configuration, plus further documentation as required.
@@ -62,7 +62,7 @@ The Warthog is shown below and includes:
 - Bilge pumps
 - User breakouts
 - Payload integration area
-- Four E-stop buttons (one on each corner)
+- Four Stop buttons (one on each corner)
 - Four body lights (one on each corner)
 
 <center>
@@ -127,7 +127,7 @@ See http://wiki.ros.org/warthog_base for information on commanding the body ligh
 | Front Lights    | Rear Lights     | System State                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | :-------------- | :-------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Solid red       | Solid red       | The MCU is not in contact with the computer. That is, the `rosserial` connection is not active. This condition will be seen briefly on startup while Warthog's computer is booting up. If it persists, or is seen after initialization, either the base node on the computer has crashed, the network switch has failed, or a serious MCU error has occurred. If you suspect one of these conditions, please contact support. |
-| Flashing red    | Flashing red    | Stop mode is engaged. To disengage, twist the mushroom buttons to ensure that they are unlatched, and check any external stop hardware, if present.                                                                                                                                                                                                                                                                           |
+| Flashing red    | Flashing red    | Stop mode is engaged. To disengage, twist the mushroom buttons on the Warthog and on the Wireless Stop remote to ensure that they are unlatched. See also [Using the Wireless Stop Remote](#using-the-wireless-stop-remote).                                                                                                                                                                                                  |
 | Flashing orange | Flashing orange | Motor drivers not yet ready to drive. The motors have a brief initialization sequence which must complete after a stop condition clears before they are ready to drive. If this condition persists, please contact our support team.                                                                                                                                                                                          |
 | Pulsing orange  | Pulsing orange  | Battery is low. Connect Warthog to the charger.                                                                                                                                                                                                                                                                                                                                                                               |
 | Solid white     | Solid red       | Normal operation; Warthog is ready to drive. This status may be overridden by publishing your own light patterns to the `/cmd_lights` ROS topic.                                                                                                                                                                                                                                                                              |
@@ -135,7 +135,7 @@ See http://wiki.ros.org/warthog_base for information on commanding the body ligh
 #### Orientation References
 
 The reference frame used by all Clearpath Robotics ground robots is based on ISO 8855. When commanded with a positive translational
-velocity (forward), wheels travel in the positive x-direction. The direction of the axes differs from those used for roll, pitch,
+velocity (forward), wheels travel in the positive X-direction. The direction of the axes differs from those used for roll, pitch,
 and yaw in aircraft, and care should be taken to ensure that data is interpreted correctly.
 
 ### System Specifications
@@ -151,7 +151,7 @@ and yaw in aircraft, and care should be taken to ensure that data is interpreted
 | Suspension                      | Geometric Passive Articulation                                                             |
 | Drive Configuration             | 4 X 4 Skid Steer                                                                           |
 | Operating Environment           | Outdoor                                                                                    |
-| Traction                        | Ø610 mm (24") Argo tire (Turf tire or 300 mm (12") wide Quad Track System (optional)       |
+| Traction                        | Ø610 mm (24") Argo Turf tire (default) or 300 mm (12") wide Quad Track System (optional)   |
 | Battery Chemistry               | AGM sealed lead-acid (lithium optional)                                                    |
 | Capacity                        | 105 Ah at 48 V, expandable to 200 Ah with lithium option                                   |
 | Nominal Run Time                | Lead-acid: 2.5 hrs, lithium: 6 hrs                                                         |
@@ -184,21 +184,19 @@ These two computers must be set up to communicate with each other.
 
 ### Onboard Computer Setup
 
-If you purchased an Onboard Computer from Clearpath Robotics with Warthog, it is already installed, connected, and powered.
-If not, or to set up your own Onboard Computer, see the [Warthog Tutorials](/docs/robots/warthog/tutorials_warthog#warthog-software-setup).
-
-Note that the Onboard Computer must be connected to the Ethernet port on the Warthog MCU, which is accessible inside the Warthog.
+Warthog ships with an Onboard Computer from Clearpath Robotics, which is already installed, connected, and powered.
+If you need to reinstall the software on it, refer to the [Warthog Tutorials](/docs/robots/warthog/tutorials_warthog#warthog-software-setup).
 
 ### Powering Up
 
 To power on your Warthog, twist the red power button on the back of Warthog. Once the body lights are flashing red,
-twist (to reset) all four stop buttons (if necessary), and press go on the Wireless Stop Remote (next section).
+twist (to reset) all four Stop buttons (if necessary), and press go on the Wireless Stop remote (next section).
 In a moment, Warthog should go to solid red lights in back, and solid white in front.
 This indicates that ROS is up on the computer and has established communications with the MCU.
 
-### Using the Wireless Stop Remote
+### Using the Wireless Stop Remote {#using-the-wireless-stop-remote}
 
-Included with the Warthog is a wireless stop remote. If for any reason the robot must be halted immediately, press the red STOP button.
+Included with the Warthog is a Wireless Stop remote. If for any reason the robot must be halted immediately, press the red STOP button.
 This will immediately cut power to the robot's motors.
 
 <center>
@@ -211,13 +209,13 @@ This will immediately cut power to the robot's motors.
   </figure>
 </center>
 
-It's capable of engaging a safety stop remotely.
+It's capable of engaging a stop remotely.
 The system is designed to enter a stopped state when the remote is not communicating or loses communication with the base.
-The wireless e-stop remote operates as follows:
+The Wireless Stop remote operates as follows:
 
-1.  Pull the red stop button outwards to disengage it from an e-stop condition.
+1.  Pull the red STOP button outwards to disengage it from a stop condition.
 2.  Press and hold the green START button on the right side of the unit until the battery LED indicator above the buttons turns green.
-    If the battery light is red, this means the e-stop button is still engaged.
+    If the battery light is red, this means the STOP button is still engaged.
 3.  Press the button labelled RELEASE within three seconds followed by the START button again.
 4.  The battery LED should be blinking green quickly, this indicates the remote is paired with the receiver.
     To disengage the stop, press START once again.
@@ -233,13 +231,13 @@ If you're not seeing any change in behaviour, please contact our support team.
 
 :::
 
-### Using the E-Stop buttons
+### Using the Stop buttons
 
-Warthog has four E-Stop buttons located on the four corners of the robot. Pressing any of
-these buttons will cut power to the motors, just like the STOP button on the E-Stop remote.
-To disengage the E-Stop, simply twist the button in the direction indicated by the arrows.
+Warthog has four Stop buttons located on the four corners of the robot. Pressing any of
+these buttons will cut power to the motors, just like the STOP button on the Wireless Stop remote.
+To disengage the stop, simply twist the button in the direction indicated by the arrows.
 
-Whenever you need to perform maintenance on Warthog, we recommend engaging the E-Stop if the
+Whenever you need to perform maintenance on Warthog, we recommend engaging the stop if the
 robot cannot be fully powered down.
 
 ### Drivetrain
@@ -299,8 +297,8 @@ transmitter and slowly increasing it to get it moving.
 :::
 
 The position of the speed adjustment scale is shown in the figure as _CH4_.
-The transmitter needs to be enabled which is done using the _Deadman Switch_.
-The _Deadman Switch_ is a two position spring loaded switch.
+The transmitter needs to be enabled which is done using the _Enable Switch_.
+The _Enable Switch_ is a two position spring loaded switch.
 To enable the RC teleoperation, the switch needs to be held down.
 If released, the switch returns to the up position to disable the robot.
 The left joystick is used for the forward and reverse motion of the robot and the right joystick is used for turning.
@@ -397,8 +395,8 @@ Do not place fingers anywhere along the suspension link as it can result in inju
 
 ### Stop buttons
 
-The Stop system on the Warthog has two major components: The hardwired Stop switches and the wireless
-stop remote.
+The Stop system on the Warthog has two major components: The hardwired Stop switches and the Wireless
+Stop remote.
 
 #### Hardwired Stop
 
@@ -409,13 +407,13 @@ To reset a Stop button, the top of the button should be twisted until the button
 The GO button on Wireless remote must then pressed.
 The Warthog is fully enabled once a relay click is heard, and the front lights change to white.
 
-#### Wireless Remote Stop
+#### Wireless Stop Remote
 
-To operate the Warthog, the wireless remote stop also has to be powered on (by holding the Power button for at least 1 second).
-The remote Stop button toggles the Stop status.
-It must be pressed once to enable Stop, and pressed again to return to an Stop reset ready state.
+To operate the Warthog, the Wireless Stop remote also has to be powered on (by holding the Power button for at least 1 second).
+The remote STOP button toggles the stop status.
+It must be pressed once to enable stop, and pressed again to return to a stop reset ready state.
 The GO button on the remote will then reset the stop condition.
-Always ensure the Stop button is accessible at all times.
+Always ensure the STOP button is accessible at all times.
 Avoid mounting payloads that extend over the rear of Warthog and would occlude the Stop buttons.
 
 ### Electrical System
@@ -424,7 +422,7 @@ The largest electrical safety consideration with the Warthog system is the VBAT 
 As it is pulled straight from the batteries, it may have a voltage of 48 V (depleted) to 62 V (Charging) and can be used to power large external devices.
 This voltage can cause electrical shock if directly contacted, and is fused internally with an inline fuse at 10 A.
 In general, take care to connect or disconnect devices preferably only when the entire system is powered off via the external switch on the rear (main power switch).
-Take note that triggering a Stop condition only disables voltage to the motor controller SEVCON drivers and motors, not the rest of the system which includes the connectors.
+Take note that triggering a stop condition only disables voltage to the motor controller SEVCON drivers and motors, not the rest of the system which includes the connectors.
 The labelled status LEDs on the user panels indicate status of the system voltages.
 If a LED is not lit, then it's most likely that a system fuse has blown.
 Contacting Clearpath support is the best option.
@@ -441,7 +439,7 @@ To ensure safety, please also observe the following precautions:
 
 For the safety of users and to maximize the lifetime of Warthog, please observe the following when manually transporting the robot:
 
-- Ensure that Warthog's Stop Mode is engaged when transporting short distances and powered off when transporting longer distances.
+- Ensure that Warthog's stop mode is engaged when transporting short distances and powered off when transporting longer distances.
 - Do not push the robot at more than 0.5 m/s (1.6 ft/s) or damage to the motor controls may occur.
 
 ### Performance Considerations
