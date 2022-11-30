@@ -89,7 +89,7 @@ illustration for the connector and fuse locations.
 | :--------------------------- | :----------------------------------------------------------------------- | :------------------------------------------------- | :----------------------------------------------------------- | :--------------- |
 | High Current VBAT User Power | Anderson PP15/45 1327-BK (red) + 1327G6-BK (black) + Anderson 261G2-LPBK | Anderson PP15/45 1327-BK (red) + 1327G6-BK (black) | Anderson 262G2-LPBK (AWG 16-20) or 261G3-LPBK (AWG 10-14)    | Anderson 1309G8  |
 | User Power Ports             | Molex 0039301040                                                         | Molex 0039012040                                   | Molex 0507528200 (AWG 20-22) or Molex 0503518100 (AWG 22-28) | Molex 2002184900 |
-| Inverter Power               | Anderson 1327G8 (blue) + 1327G6-BK (black)                               | Anderson 1327G8 (blue) + 1327G6-BK (black)         | Anderson 262G2-LPBK (AWG 16-20) or 261G3-LPBK (AWG 10-14)    | Anderson 1309G8  |
+| Inverter Power               | Anderson 1327G8-BK (blue) + 1327G6-BK (black)                            | Anderson 1327G8-BK (blue) + 1327G6-BK (black)      | Anderson 262G2-LPBK (AWG 16-20) or 261G3-LPBK (AWG 10-14)    | Anderson 1309G8  |
 
 <center>
   <figure>
@@ -107,10 +107,11 @@ Similar to the data connections, power leads may be brought through the two larg
 right side of the payload integration plate, and connected to the power ports in the User Bay.
 The following are available as user power:
 
-- Unregulated VBAT power (25.6 V nominal, 16 A max), shared across the High Current VBAT User Power (20 A max)
-  and User Power Ports (5 A max per port)
-- Regulated 12 V power (5 A max), shared across the User Power ports (5 A max per port)
-- Regulated 5 V power (5 A max), shared across the User Power ports (5 A max per port).
+- Unregulated VBAT power (25.6 V nominal) available in two ways:
+    - High Current VBAT User Power (20 A max)
+    - User Power ports: 5 A, shared across the User Power ports
+- Regulated 12 V power: 5 A, shared across the User Power ports
+- Regulated 5 V power: 5 A, shared across the User Power ports.
 
 :::caution
 
@@ -136,15 +137,16 @@ For continued protection against risk of fire, always replace fuses only with th
 
 #### Optional External Motion Stop {#ridgeback-external-motion-stop}
 
-In addition to the built-in Motion Stop button, an external motion-stop button can be added that has similar functionality.
-Electrically, the external motion-stop button can be connected to the 4-pin MCU connector labelled `E-STOP BREAKOUT` using
+In addition to the built-in Motion Stop button, an external motion-stop latching button/switch can be added that has similar functionality.
+Electrically, the external motion-stop latching button/switch can be connected to the 4-pin MCU connector labelled `E-STOP BREAKOUT` using
 a mating connector. This 4-pin connector is the same as the one used for the User Power Ports. Refer to
 [Connector Summary](#ridgeback-connector-summary) for details.
 
 The four pins should be connected as follows:
 
-- 1-2: to external motion-stop breakout: press and release external button (3.3 V) to engage motion-stop; press and release
-  external button or Motion Stop button to clear the motion-stop
+- 1-2: to external motion-stop breakout
+    - To engage motion-stop: press and release the latching button/switch (3.3 V)
+    - To clear motion-stop: press and release the Motion Stop button on the Ridgeback unit to clear the motion-stop
 - 3-4: short these pins to indicate that external motion-stop is present
 
 ### Software Integration
