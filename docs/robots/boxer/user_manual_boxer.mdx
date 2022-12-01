@@ -37,8 +37,8 @@ If you elected to purchase standard payload modules or custom integration servic
 #### System Architecture
 
 Boxer is built on the OTTO 100 AMR, which provides the core locomotion, safety, and sensing cababilities, along with a ROS2 API
-for control of the system. Boxer is typically augmented with a backpack computer, which allows for user software to be installed
-and executed on the system, controlling the base platform through the ROS2 API over a local Ethernet connection. The backpack
+for control of the system. Boxer is typically augmented with a Backpack Computer, which allows for user software to be installed
+and executed on the system, controlling the Base Unit through the ROS2 API over a local Ethernet connection. The backpack
 computer also allows for control and monitoring of any additional payloads added to Boxer.
 
 #### Exterior Features
@@ -85,7 +85,7 @@ Boxer includes RGB LED strips around its body. These lights express system statu
 | :------------ | :----------------------------------------------------------------------------- |
 | Solid Red     | Robot is starting up                                                           |
 | Flashing Red  | Robot is E-Stopped or Safety Stopped                                           |
-| Circling Blue | Base platform is in Manual mode, allowing it to be controlled via the ROS2 API |
+| Circling Blue | Base Unit is in Manual mode, allowing it to be controlled via the ROS2 API |
 
 At present these lights are not controllable through any ROS topics.
 
@@ -221,45 +221,45 @@ Refer to [Connecting a Vehicle to Your Network](https://help.ottomotors.com/sw22
         width="600"
       />
     </center>
-10. You have finished onfiguring the Boxer base robot, and it's ready for use.
+10. You have finished onfiguring the Boxer Base Unit, and it's ready for use.
 
 ### Backpack Computer Configuration
 
-This section outlines how to configure the backpack computer attached to the base Boxer robot.
-You can omit this section if your Boxer is not equipped with a backpack computer.
+This section outlines how to configure the Backpack Computer attached to the Base Unit.
+You can omit this section if your Boxer is not equipped with a Backpack Computer.
 
-The backpack computer is an add-on computer that is networked with the base platform's computer, located inside then Boxer.
-This backpack computer can be used to integrate peripherals, like sensors and manipulators.
-A ROS bridge automatically runs upon booting the backpack computer, and transmits the base platform computer's ROS data to the backpack computer.
-This ROS bridge allows you to leverage the base robot for your own application.
-The backpack computer uses Netplan as its network configuration tool, and has a static IP address of <192.168.131.1>.
+The Backpack Computer is an add-on computer that is networked with the Base Unit's computer, located inside then Boxer.
+This Backpack Computer can be used to integrate peripherals, like sensors and manipulators.
+A ROS bridge automatically runs upon booting the Backpack Computer, and transmits the Base Unit computer's ROS data to the Backpack Computer.
+This ROS bridge allows you to leverage the Base Unit for your own application.
+The Backpack Computer uses Netplan as its network configuration tool, and has a static IP address of <192.168.131.1>.
 
 #### Connecting to the Backpack Computer
 
-You can connect to the backpack computer on Boxer over a wired or Wi-Fi connection.
+You can connect to the Backpack Computer on Boxer over a wired or Wi-Fi connection.
 
-To connect to the backpack computer over a wired connection:
+To connect to the Backpack Computer over a wired connection:
 
 1.  Configure a network port on your laptop with the IP address <192.168.131.100>.
-2.  Connect a network cable from your laptop to an open network port on the backpack computer.
-3.  Test the connection between the user computer and backpack computer by opening a terminal and entering: `ping 192.168.131.1 `
-4.  From your laptop's terminal, you can access the backpack computer by entering: `ssh administrator@192.168.131.1`
+2.  Connect a network cable from your laptop to an open network port on the Backpack Computer.
+3.  Test the connection between the user computer and Backpack Computer by opening a terminal and entering: `ping 192.168.131.1 `
+4.  From your laptop's terminal, you can access the Backpack Computer by entering: `ssh administrator@192.168.131.1`
 
-To connect to the backpack computer over a Wi-Fi connection:
+To connect to the Backpack Computer over a Wi-Fi connection:
 
-1. Connect your laptop to the same Wi-Fi network as the backpack computer.
-2. Note the IP address of the backpack computer's wireless interface by running this command the backpack computer's terminal: `ip a`
-3. To test the connection between your laptop and backpack computer, enter this command in a terminal from your laptop: `ping <wireless_ip_address>` (eg. `ping 192.168.0.11`)
-4. From your laptop's terminal, you can access the backpack computer by entering: `ssh administrator@<wireless_ip_address>` (eg. `ssh administrator@192.168.0.11`)
+1. Connect your laptop to the same Wi-Fi network as the Backpack Computer.
+2. Note the IP address of the Backpack Computer's wireless interface by running this command the Backpack Computer's terminal: `ip a`
+3. To test the connection between your laptop and Backpack Computer, enter this command in a terminal from your laptop: `ping <wireless_ip_address>` (eg. `ping 192.168.0.11`)
+4. From your laptop's terminal, you can access the Backpack Computer by entering: `ssh administrator@<wireless_ip_address>` (eg. `ssh administrator@192.168.0.11`)
 
 #### Connecting the Backpack Computer to a Wi-Fi Network
 
-To connect the backpack computer to a wireless network follow these steps:
+To connect the Backpack Computer to a wireless network follow these steps:
 
-1.  Access the backpack computer over an SSH connection.
-    Since the backpack computer is presumably not connected to a Wi-Fi network yet, you will need to access the backpack computer over a wired connection.
-    The previous section details how to connect to the backpack computer over a wired connection.
-2.  Once you have accessed the backpack computer, create a netplan configuration by running the following command.
+1.  Access the Backpack Computer over an SSH connection.
+    Since the Backpack Computer is presumably not connected to a Wi-Fi network yet, you will need to access the Backpack Computer over a wired connection.
+    The previous section details how to connect to the Backpack Computer over a wired connection.
+2.  Once you have accessed the Backpack Computer, create a netplan configuration by running the following command.
 
         sudo touch /etc/netplan/60-wifi.yaml
 
@@ -292,14 +292,14 @@ To connect the backpack computer to a wireless network follow these steps:
             send-hostname: true
     ```
 
-4.  Connect the backpack computer to the wireless network by running the command below.
+4.  Connect the Backpack Computer to the wireless network by running the command below.
     Note that this may take a moment to complete:
 
     ```
     sudo netplan apply
     ```
 
-5.  To verify that the backpack computer is connected to the wireless network, check that the backpack computer has an IP address assigned to its wireless interface by running:
+5.  To verify that the Backpack Computer is connected to the wireless network, check that the Backpack Computer has an IP address assigned to its wireless interface by running:
 
     ```
     ip a
@@ -318,7 +318,7 @@ Use of other chargers may cause damage or injury.
 ## Operation
 
 This section outlines how to use the basic functions of the Boxer platform in order to get started quickly.
-There are three methods of operating the robot with varying degrees of control.
+There are several methods of operating the robot.
 
 ### Getting Started with the OTTO User Interface
 
@@ -406,22 +406,22 @@ To use the controller:
 
 To quickly get started running ROS with your Boxer follow the instructions below.
 
-Upon booting the Boxer, ROS will begin running on both the base platform computer and the backpack computer.
+Upon booting the Boxer, ROS will begin running on both the Base Unit computer and the Backpack Computer.
 The Boxer can be operated using ROS over its ROS topics, and there are two ways of interfacing with Boxer's ROS topics:
 
-1.  SSH into Boxer's backpack computer, or
-2.  Setting the Boxer's backpack PC as the ROS Master on a local computer.
+1.  SSH into Boxer's Backpack Computer, or
+2.  Setting the Boxer's Backpack Computer as the ROS Master on a local computer.
 
-You can SSH into the Boxer's backpack computer by connecting a network cable directly between your PC and an open network port
-on the backpack PC. Configure your computer to have a static IP address on the `192.168.131.0/24` subnet, for
+You can SSH into the Boxer's Backpack Computer by connecting a network cable directly between your PC and an open network port
+on the Backpack Computer. Configure your computer to have a static IP address on the `192.168.131.0/24` subnet, for
 example `192.168.131.100`>`. Once this is done you can log into the robot by running:
 
 ```
 ssh administrator@192.168.131.1
 ```
 
-If your laptop is connected to the same Wi-Fi network as the Boxer, you can SSH into the backpack computer using the robot's IP address on the Wi-Fi network (e.g. `192.168.1.11`)
-You may need to SSH over a wired connection and use the `ip a` command to determine what Wi-Fi address has been assigned to the backpack computer.
+If your laptop is connected to the same Wi-Fi network as the Boxer, you can SSH into the Backpack Computer using the robot's IP address on the Wi-Fi network (e.g. `192.168.1.11`)
+You may need to SSH over a wired connection and use the `ip a` command to determine what Wi-Fi address has been assigned to the Backpack Computer.
 
 ```
 ssh administrator@<computer ip>
@@ -458,7 +458,7 @@ z: 0.0"
 ```
 
 Boxer can be visualized and controlled through RViz.
-On you laptop, set the Boxer's backpack computer as the ROS Master, and run the following command to view Boxer in RViz.
+On you laptop, set the Boxer's Backpack Computer as the ROS Master, and run the following command to view Boxer in RViz.
 
 ```
 roslaunch boxer_viz view_robot.launch
