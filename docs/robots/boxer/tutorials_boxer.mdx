@@ -182,17 +182,17 @@ Boxer can be customized and extended through the use of several environment vari
 The details are in the [boxer_description](https://github.com/boxer-cpr/boxer/tree/noetic-devel/boxer_description) repository.
 Some of the most important ones are listed below.
 
-| Variable               | Default            | Description                                                                                                                                                                                 |
-| :--------------------- | :----------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `ROS_ROBOT_SERIAL_NO`  | _undefined_        | The Boxer's serial number. This should be of the form `A31_0123456789` and must match the serial number stamped on the robot                                                                 |
-| `BOXER_API_VERSION`    | `v1_1`             | The version of the OTTO SDK running on the Base Unit.                                                                                                                                   |
-| `BOXER_URDF_EXTRAS`    | `empty.urdf.xacro` | Optional path to an additional URDF file to be added to the robot's description. Commonly used to add additional joints and links to add additional payloads, e.g. arms, additional sensors |
-| `BOXER_CONTROL_EXTRAS` | `empty.yaml`       | Optional path to a configuration file to override any of the Boxer's control parameters. Commonly used to change controller button mappings, EKF parameters, etc.                         |
-| `BOXER_PC`             | `1`                | If `1` the URDF will include a model of the Backpack Computer. If `0` the Backpack Computer is omitted from the URDF. The shape of the mode is determined by the `BOXER_PC_MODEL` variable              |
-| `BOXER_PC_MODEL`       | `evs-2000`         | Customizes the shape of the Backpack Computer added to the URDF. Other options are `ecx-2000` (for Vecow ECX-2000 series computer) and `mini-itx` (for common mini-ITX mini desktop enclosure)    |
-| `BOXER_PC_XYZ`         | `0 0 0`            | Defines the position of the Backpack Computer in the URDF relative to the Boxer's `top_plate_link`                                                                                          |
-| `BOXER_PC_RPY`         | `0 0 0`            | Defines the orientation of the Backpack Computer in the URDF relative to the Boxer's `top_plate_link`                                                                                       |
-| `BOXER_GPIO`           | `0`                | If `1` the GPIO pins on the PC can be controlled via a ROS node. **Not yet supported.**                                                                                                     |
+| Variable               | Default            | Description                                                                                                                                                                                    |
+| :--------------------- | :----------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ROS_ROBOT_SERIAL_NO`  | _undefined_        | The Boxer's serial number. This should be of the form `A31_0123456789` and must match the serial number stamped on the robot                                                                   |
+| `BOXER_API_VERSION`    | `v1_1`             | The version of the OTTO SDK running on the Base Unit.                                                                                                                                          |
+| `BOXER_URDF_EXTRAS`    | `empty.urdf.xacro` | Optional path to an additional URDF file to be added to the robot's description. Commonly used to add additional joints and links to add additional payloads, e.g. arms, additional sensors    |
+| `BOXER_CONTROL_EXTRAS` | `empty.yaml`       | Optional path to a configuration file to override any of the Boxer's control parameters. Commonly used to change controller button mappings, EKF parameters, etc.                              |
+| `BOXER_PC`             | `1`                | If `1` the URDF will include a model of the Backpack Computer. If `0` the Backpack Computer is omitted from the URDF. The shape of the mode is determined by the `BOXER_PC_MODEL` variable     |
+| `BOXER_PC_MODEL`       | `evs-2000`         | Customizes the shape of the Backpack Computer added to the URDF. Other options are `ecx-2000` (for Vecow ECX-2000 series computer) and `mini-itx` (for common mini-ITX mini desktop enclosure) |
+| `BOXER_PC_XYZ`         | `0 0 0`            | Defines the position of the Backpack Computer in the URDF relative to the Boxer's `top_plate_link`                                                                                             |
+| `BOXER_PC_RPY`         | `0 0 0`            | Defines the orientation of the Backpack Computer in the URDF relative to the Boxer's `top_plate_link`                                                                                          |
+| `BOXER_GPIO`           | `0`                | If `1` the GPIO pins on the PC can be controlled via a ROS node. **Not yet supported.**                                                                                                        |
 
 ### Key ROS Topics
 
@@ -202,9 +202,9 @@ Your Boxer can be controlled through ROS, either through a ROS2 API on the Base 
 Some key topics that comprise the Boxer's ROS1 API are listed below.
 For details on the ROS2 API, please contact Support.
 
-| Topic                             | Message Type            | Purpose                                                                                                                                                                    |
-| :-------------------------------- | :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/cmd_vel`                        | `geometry_msgs/Twist`   | Input to Boxer's kinematic controller. Publish here to make Boxer go.                                                                                                      |
+| Topic                             | Message Type            | Purpose                                                                                                                                                                |
+| :-------------------------------- | :---------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/cmd_vel`                        | `geometry_msgs/Twist`   | Input to Boxer's kinematic controller. Publish here to make Boxer go.                                                                                                  |
 | `/odom`                           | `nav_msgs/Odometry`     | Publishes the internal odometry from Boxer's Base Unit, a filtered localization estimate based on wheel odometry (encoders), an integrated IMU, a camera, and a laser. |
 | `/imu/module0/data`               | `sensor_msgs/IMU`       | Publishes the internal IMU data from Boxer's Base Unit.                                                                                                                |
 | `/front/scan`                     | `sensor_msgs/LaserScan` | Publishes the laser scan data from the Base Unit's front localization laser.                                                                                           |
