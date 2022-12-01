@@ -874,8 +874,8 @@ Then create your customized URDF file, for example `$HOME/Desktop/realsense.urdf
 ```
 
 This file defines the additional links for adding a RealSense camera to the robot, as well as configuring the `openni_kinect`
-plugin for Gazebo to simulate data from a depth camera. The camera itself will be connected to the Warthog's `front_mount`
-link, offset 5 cm towards the front of the robot.
+plugin for Gazebo to simulate data from a depth camera. The camera itself will be connected to the Warthog's `top_chassis_link`
+link, offset 62.5 cm towards the front of the robot.
 
 Now, set the `WARTHOG_URDF_EXTRAS` environment variable and try viewing the Warthog model:
 
