@@ -107,6 +107,16 @@ To install the software on a physical robot through the Clearpath Robotics ISO i
           sudo systemctl daemon-reload
         </code>
       </TabItem>
+      <TabItem
+        value="boxer"
+        label="Boxer"
+      >
+        <code>
+          rosrun boxer_bringup install
+          <br />
+          sudo systemctl daemon-reload
+        </code>
+      </TabItem>
     </Tabs>
 
 9.  Finally, start ROS for the first time. In terminal, run:
@@ -172,6 +182,12 @@ need to ensure that the robot's computer is running Ubuntu 20.04 (Focal) and ROS
         >
           <code>sudo apt-get install ros-noetic-ridgeback-robot</code>
         </TabItem>
+        <TabItem
+          value="boxer"
+          label="Boxer"
+        >
+          <code>sudo apt-get install ros-noetic-boxer-robot</code>
+        </TabItem>
       </Tabs>
 
    2. Install the `robot_upstart` job and configure the bringup service so that ROS will launch each time the robot starts. In terminal, run:
@@ -218,6 +234,16 @@ need to ensure that the robot's computer is running Ubuntu 20.04 (Focal) and ROS
             sudo systemctl daemon-reload
           </code>
         </TabItem>
+        <TabItem
+        value="boxer"
+        label="Boxer"
+      >
+        <code>
+          rosrun boxer_bringup install
+          <br />
+          sudo systemctl daemon-reload
+        </code>
+      </TabItem>
       </Tabs>
 
    3. Finally, start ROS for the first time. In terminal, run:
