@@ -41,7 +41,7 @@ To install the software on a physical robot through the Clearpath Robotics ISO i
 3.  Connect your robot computer to internet access (via wired Ethernet), a keyboard, and a monitor.
     Make sure that the robot is connected to shore power (where applicable) or that the robot's battery is fully charged.
 
-    :::warning
+    :::caution
 
     The next step wipes your robot's hard drive, so make sure you have that image [backed up](#performing-a-backup).
 
@@ -103,6 +103,16 @@ To install the software on a physical robot through the Clearpath Robotics ISO i
       >
         <code>
           rosrun ridgeback_bringup install
+          <br />
+          sudo systemctl daemon-reload
+        </code>
+      </TabItem>
+      <TabItem
+        value="warthog"
+        label="Warthog"
+      >
+        <code>
+          rosrun warthog_bringup install
           <br />
           sudo systemctl daemon-reload
         </code>
@@ -183,6 +193,12 @@ need to ensure that the robot's computer is running Ubuntu 20.04 (Focal) and ROS
           <code>sudo apt-get install ros-noetic-ridgeback-robot</code>
         </TabItem>
         <TabItem
+          value="warthog"
+          label="Warthog"
+        >
+          <code>sudo apt-get install ros-noetic-warthog-robot</code>
+        </TabItem>
+        <TabItem
           value="boxer"
           label="Boxer"
         >
@@ -230,6 +246,16 @@ need to ensure that the robot's computer is running Ubuntu 20.04 (Focal) and ROS
         >
           <code>
             rosrun ridgeback_bringup install
+            <br />
+            sudo systemctl daemon-reload
+          </code>
+        </TabItem>
+        <TabItem
+          value="warthog"
+          label="Warthog"
+        >
+          <code>
+            rosrun warthog_bringup install
             <br />
             sudo systemctl daemon-reload
           </code>

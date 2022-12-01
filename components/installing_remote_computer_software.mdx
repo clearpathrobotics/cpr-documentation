@@ -36,6 +36,12 @@ Remote Computer must be configured correctly.
        <code>sudo apt-get install ros-noetic-ridgeback-desktop</code>
      </TabItem>
      <TabItem
+       value="warthog"
+       label="Warthog"
+     >
+       <code>sudo apt-get install ros-noetic-warthog-desktop</code>
+     </TabItem>
+     <TabItem
        value="boxer"
        label="Boxer"
      >
@@ -81,10 +87,17 @@ Remote Computer must be configured correctly.
        <code>roslaunch ridgeback_viz view_robot.launch</code>
      </TabItem>
      <TabItem
+       value="warthog"
+       label="Warthog"
+     >
+       <code>roslaunch warthog_viz view_robot.launch</code>
+     </TabItem>
+     <TabItem
        value="boxer"
        label="Boxer"
      >
        <code>roslaunch boxer_viz view_robot.launch</code>
      </TabItem>
    </Tabs>
+
    From within RViz, you can use interactive markers to drive your robot, you can visualize its published localization estimate and you can visualize any attached sensors which have been added to its robot description XML _URDF_.
