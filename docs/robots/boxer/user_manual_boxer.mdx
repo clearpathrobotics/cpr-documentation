@@ -12,7 +12,6 @@ import ComponentUsingRos from "/components/using_ros.mdx";
 import ComponentCommonSafeWorkProcedures from "/components/common_safe_work_procedures.mdx";
 import ComponentSafetyWarning from "/components/safety_warning.mdx";
 
-
 <ComponentIntroductionBoxer />
 
 ## Introduction
@@ -83,10 +82,10 @@ The HMI has 5 elements:
 
 Boxer includes RGB LED strips around its body. These lights express system status according to the table below.
 
-| LED Pattern | System State  |
-| :---------- | :------------ |
-| Solid Red   | Robot is starting up |
-| Flashing Red | Robot is E-Stopped or Safety Stopped |
+| LED Pattern   | System State                                                                   |
+| :------------ | :----------------------------------------------------------------------------- |
+| Solid Red     | Robot is starting up                                                           |
+| Flashing Red  | Robot is E-Stopped or Safety Stopped                                           |
 | Circling Blue | Base platform is in Manual mode, allowing it to be controlled via the ROS2 API |
 
 At present these lights are not controllable through any ROS topics.
@@ -166,6 +165,7 @@ Pull the robot out of the crate by hand, and then roll the robot down the wood r
     </center>
 3.  Wait for the system to boot.
     The Boxer's lights will go through a sequence of colors during this process:
+
     - All white for approximately 30 seconds
     - All red for approximately 30 seconds
     - Flashing white for less than 5 seconds

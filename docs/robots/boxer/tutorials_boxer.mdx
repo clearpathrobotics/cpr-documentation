@@ -86,11 +86,11 @@ The most obvious difference between OTTO 100 and Boxer 2.4 is that Boxer has bee
 stripe on the sides. This change is purely cosmetic, and is to keep the Boxer visually distinct.
 
 Mechanically, the top deck of the Boxer has a slightly thicker, heavier top-plate with a different arrangement of
-mounting holes than the OTTO 100.  This is to allow the attachment of additional payloads, such as robotic arms,
+mounting holes than the OTTO 100. This is to allow the attachment of additional payloads, such as robotic arms,
 larger sensor arrays, and structural elements.
 
 .. image:: graphics/boxer_dual_gen3_urdf.png
-    :alt: URDF model of Boxer with two Kinova Gen3 arms
+:alt: URDF model of Boxer with two Kinova Gen3 arms
 
 Finally, the OTTO 100's attachment interface and ROS2 API have been enabled. This is necessary to allow the
 backpack PC to communicate with and control the robot.
@@ -101,12 +101,12 @@ Boxer is intended to be controlled via the backpack PC; all necessary ROS nodes,
 the backpack PC. Any topics published by or subscribed to from the OTTO 100's internal PC are relayed from the
 backpack PC.
 
-When the robot powers-on it will be in neutral.  Use the OTTO App to disengage the safeties and enable operation of
-the robot.  Note that this requires that the base platform be connected to your wireless network. Refer to
+When the robot powers-on it will be in neutral. Use the OTTO App to disengage the safeties and enable operation of
+the robot. Note that this requires that the base platform be connected to your wireless network. Refer to
 [Network Setup](#boxer-networking) for more details.
 
 One ethernet port of the backpack PC is reserved for communicating with the base platform. By default this is the
-port identified as `eno1`, labelled "LAN1" on most computers.  All other ethernet ports on the backpack PC are
+port identified as `eno1`, labelled "LAN1" on most computers. All other ethernet ports on the backpack PC are
 bridged together and may be used for diagnostics, connecting external PCs, or adding IP-based accessories such as
 lidar sensors, cameras, or robotic arms.
 
@@ -134,7 +134,7 @@ The base platform includes a number of sensors whose data can be consumed by ROS
 - internal IMU, available as `/imu/module0/data_raw`
 - front-facing Intel RealSense camera
   - depth data available as `/realsense/depth/image_rect_raw`
-  - depth camera info  available as `/realsense/depth/camera_info`
+  - depth camera info available as `/realsense/depth/camera_info`
   - at the time of writing OTTO Motors' ROS2 API does not expose pointcloud or RGB data from the RealSense camera
 
 ---
@@ -176,17 +176,17 @@ Boxer can be customized and extended through the use of several environment vari
 The details are in the [boxer_description](https://github.com/boxer-cpr/boxer/tree/noetic-devel/boxer_description) repository.
 Some of the most important ones are listed below.
 
-| Variable                       | Default | Description                                                                            |
-| :----------------------------- | :------ | :------------------------------------------------------------------------------------- |
-| `ROS_ROBOT_SERIAL_NO` | _undefined_ | The Boxer's serial number. This should be of the form `A31_0123456789 and must match the serial number stamped on the robot|
-| `BOXER_API_VERSION` | `v1_1` | The version of the OTTO SDK running on the base platform. |
-| `BOXER_URDF_EXTRAS` | `empty.urdf.xacro` | Optional path to an additional URDF file to be added to the robot's description.  Commonly used to add additional joints and links to add additional payloads, e.g. arms, additional sensors |
-| `BOXER_CONTROL_EXTRAS` | `empty.yaml` | Optional path to a configuration file to override any of the Boxer's control parameters.  Commonly used to change controller button mappings, EKF parameters, etc... |
-| `BOXER_PC` | `1` | If `1` the URDF will include a model of the backpack PC.  If `t` the backpack PC is omitted from the URDF.  The shape of the mode is determined by the `BOXER_PC_MODEL` variable |
-| `BOXER_PC_MODEL` | `evs-2000` | Customizes the shape of the backpack PC added to the URDF. Other options are `ecx-2000` (for Vecow ECX-2000 series computer) and `mini-itx` (for common mini-ITX mini desktop enclosure) |
-| `BOXER_PC_XYZ` | `0 0 0` | Defines the position of the backpack computer in the URDF relative to the Boxer's `top_plate_link` |
-| `BOXER_PC_RPY` | `0 0 0` | Defines the orientation of the backpack computer in the URDF relative to the Boxer's `top_plate_link` |
-| `BOXER_GPIO` | `0` | If `1` the GPIO pins on the PC can be controlled via a ROS node. **Not yet supported.** |
+| Variable               | Default            | Description                                                                                                                                                                                 |
+| :--------------------- | :----------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `ROS_ROBOT_SERIAL_NO`  | _undefined_        | The Boxer's serial number. This should be of the form `A31_0123456789 and must match the serial number stamped on the robot                                                                 |
+| `BOXER_API_VERSION`    | `v1_1`             | The version of the OTTO SDK running on the base platform.                                                                                                                                   |
+| `BOXER_URDF_EXTRAS`    | `empty.urdf.xacro` | Optional path to an additional URDF file to be added to the robot's description. Commonly used to add additional joints and links to add additional payloads, e.g. arms, additional sensors |
+| `BOXER_CONTROL_EXTRAS` | `empty.yaml`       | Optional path to a configuration file to override any of the Boxer's control parameters. Commonly used to change controller button mappings, EKF parameters, etc...                         |
+| `BOXER_PC`             | `1`                | If `1` the URDF will include a model of the backpack PC. If `t` the backpack PC is omitted from the URDF. The shape of the mode is determined by the `BOXER_PC_MODEL` variable              |
+| `BOXER_PC_MODEL`       | `evs-2000`         | Customizes the shape of the backpack PC added to the URDF. Other options are `ecx-2000` (for Vecow ECX-2000 series computer) and `mini-itx` (for common mini-ITX mini desktop enclosure)    |
+| `BOXER_PC_XYZ`         | `0 0 0`            | Defines the position of the backpack computer in the URDF relative to the Boxer's `top_plate_link`                                                                                          |
+| `BOXER_PC_RPY`         | `0 0 0`            | Defines the orientation of the backpack computer in the URDF relative to the Boxer's `top_plate_link`                                                                                       |
+| `BOXER_GPIO`           | `0`                | If `1` the GPIO pins on the PC can be controlled via a ROS node. **Not yet supported.**                                                                                                     |
 
 ### Key ROS Topics
 
@@ -203,7 +203,7 @@ For details on the ROS2 API, please contact Support.
 | `/imu/module0/data`               | `sensor_msgs/IMU`       | Publishes the internal IMU data from Boxer's base platform.                                                                                                                |
 | `/front/scan`                     | `sensor_msgs/LaserScan` | Publishes the laser scan data from the base platform's front localization laser.                                                                                           |
 | `/rear/scan`                      | `/rear/scan`            | Publishes the laser scan data from the base platform's rear safety laser.                                                                                                  |
-| `/realsense/depth/image_rect_raw` | `sensor_msgs/Image`     | Publishes depth data from the base platform's camera.     
+| `/realsense/depth/image_rect_raw` | `sensor_msgs/Image`     | Publishes depth data from the base platform's camera.                                                                                                                      |
 
 ## Boxer Backpack PC Software Setup {#boxer-software-setup}
 
@@ -255,7 +255,7 @@ API the Foxy version of `ros_bridge` is required to operate the physical robot.
 :::note
 
 The `boxer_manipulation` packages are not available as .deb packages, because they have additional
-dependencies that can only be installed from source.  See below for details on building packages from source, and
+dependencies that can only be installed from source. See below for details on building packages from source, and
 refer to [boxer_manipulation on Github](https://github.com/boxer-cpr/boxer_manipulation) for more details on using
 these packages.
 
@@ -317,7 +317,7 @@ export BOXER_API_VERSION=v1_3
 #export BOXER_URDF_EXTRAS=/path/to/boxer_customizations.urdf.xacro
 ```
 
-The `BOXER_API_VERSION` environment variable must be set on the robot's backpack PC.  This version is determined by
+The `BOXER_API_VERSION` environment variable must be set on the robot's backpack PC. This version is determined by
 the version of the ROS2 API running on the base platform.
 
 At the time of writing the latest version of the OTTO software uses `v1_3`
@@ -357,7 +357,7 @@ The service will automatically start each time you boot your Boxer's computer.
 
 Boxer is normally equipped with a combination Wi-Fi + Bluetooth module.
 If this is your first unboxing, ensure that Boxer's wireless antennae are firmly screwed on to the chassis.
-Boxer is equipped with an external PC mounted to the top of the robot, referred to as the "Backpack PC".  The robot is
+Boxer is equipped with an external PC mounted to the top of the robot, referred to as the "Backpack PC". The robot is
 also equipped with an internal PC. This section explains how to configure the networking for the Backpack PC only. For
 instructions on connecting the internal PC to a network, refer to the [OTTO 100 Documentation](https://help.ottomotors.com).
 
@@ -448,7 +448,7 @@ network:
 
 This file will create a bridged interface called `br0` that will have a static address of 192.168.131.1, but will
 also be able to accept a DHCP lease when connected to a wired router. By default all network ports named `en*` and
-`eth*` are added to the bridge.  This includes all common wired port names, such as:
+`eth*` are added to the bridge. This includes all common wired port names, such as:
 
 - `eth0`
 - `eno1`
@@ -565,15 +565,14 @@ All of Clearpath's robots use the same coordinate system, shown below:
   </figure>
 </center>
 
-| Axis                | Positive Meaning            | Negative Meaning        |
-| :------------------ | :-------------------------- | :---------------------- |
-| X                   | Linear motion forwards      | Linear motion backwards |
-| Y                   | Linear motion left          | Linear motion right     |
-| Z                   | Linear motion up            | Linear motion down      |
-| X^ (roll)           | Roll to the right           | Roll to the left        |
-| Y^ (pitch)          | Pitch down                  | Pitch up                |
-| Z^ (yaw)            | Rotate left                 | Rotate right            |
-
+| Axis       | Positive Meaning       | Negative Meaning        |
+| :--------- | :--------------------- | :---------------------- |
+| X          | Linear motion forwards | Linear motion backwards |
+| Y          | Linear motion left     | Linear motion right     |
+| Z          | Linear motion up       | Linear motion down      |
+| X^ (roll)  | Roll to the right      | Roll to the left        |
+| Y^ (pitch) | Pitch down             | Pitch up                |
+| Z^ (yaw)   | Rotate left            | Rotate right            |
 
 Boxer, in its default configuration, will treat the linear Y & Z axes, as well a the angular X & Y axes, as zero
 at all times; the robot is incapable of moving in these directions.
@@ -628,7 +627,7 @@ catkin_make
 source devel/setup.bash
 ```
 
-Note that you may get warnings about missing dependencies for e.g. `warthog_gazebo` or `jackal_gazebo`.  These
+Note that you may get warnings about missing dependencies for e.g. `warthog_gazebo` or `jackal_gazebo`. These
 dependencies are only needed if you intend to simulate Clearpath's other robotic platforms in these environments.
 If you only intend to simulate Boxer, you can safely ignore these missing dependencies.
 
@@ -769,8 +768,8 @@ for details on how to use Otto's advanced autonomy software
 
 :::
 
-This section explains how to use basic navigation demos with Boxer.  These examples can be used with a simulated Boxer
-or with the physical robot.  Note that if you are using the physical Boxer you also have access to the much more
+This section explains how to use basic navigation demos with Boxer. These examples can be used with a simulated Boxer
+or with the physical robot. Note that if you are using the physical Boxer you also have access to the much more
 advanced Otto autonomy software.
 
 To get all Navigation related files for Boxer, run:
@@ -841,10 +840,10 @@ If you wish to customize the parameters of move_base, local costmap, global cost
 
 ### Making a Map {#gmapping-demo}
 
-Gmapping is an open-source tool for Simultaneous Localization And Mapping, or SLAM.  SLAM allows a robot to build a
+Gmapping is an open-source tool for Simultaneous Localization And Mapping, or SLAM. SLAM allows a robot to build a
 map of its environment while exploring, making it helpful when the robot is in unfaimilar environments.
 
-This section explains how to produce a map using Gmapping.  We will then use this map to set 2D nav goals in the
+This section explains how to produce a map using Gmapping. We will then use this map to set 2D nav goals in the
 following section.
 
 To begin, run the following command:
@@ -879,8 +878,8 @@ roslaunch boxer_viz view_robot.launch
   </figure>
 </center>
 
-Now slowly drive the robot around to produce a map.  If you are driving the robot using the interactive controls in
-RViz you may find it helpful to change the visulaization's fixed frame from `map` or `odom` to `base_link`.  Doing
+Now slowly drive the robot around to produce a map. If you are driving the robot using the interactive controls in
+RViz you may find it helpful to change the visulaization's fixed frame from `map` or `odom` to `base_link`. Doing
 so will keep the robot in a fixed position in the window, while the world rotates around the robot.
 
 When you're satisfied, you can save the produced map using [map_saver](http://wiki.ros.org/map_server#map_saver):
@@ -983,7 +982,7 @@ The details of each test are shown below.
 
 - **E-Stop Test**
 
-  The **E-Stop Test** checks that the robot's E-Stop is working properly. 
+  The **E-Stop Test** checks that the robot's E-Stop is working properly.
 
   This test subscribes to the `/platform/emergency_stop` ROS topic and checks that when the E-Stop is manually engaged and disengaged by the user, the E-Stop states are correctly reported on the `/platform/emergency_stop` ROS topic.
 
