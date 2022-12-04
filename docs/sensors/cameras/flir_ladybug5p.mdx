@@ -1,0 +1,69 @@
+---
+title: FLIR Ladybug5+
+sidebar_position: 4
+---
+
+import SoftwareBringup from "/components/software_sensor_iso_not_supported.mdx";
+import Support from "/components/support.mdx";
+
+<center>
+  <img
+    src="/img/sensor_images/sensor_flir_ladybug5p_1.png"
+    width="400"
+  />
+</center>
+
+## Item Numbers
+
+| Description                     | CPR item |
+| :------------------------------ | :------: |
+| FLIR Ladybug5+ sensor           |  017245  |
+| FLIR Ladybug5+ sensor, PACS kit |  028893  |
+
+---
+
+## Specifications
+
+| Description                 | Value                        |
+| :-------------------------- | :--------------------------- |
+| Mass, Camera                | 3000 g                       |
+| Voltage, Minimum            | 12 V                         |
+| Voltage, Maximum            | 24 V                         |
+| Power, Average              | 13 W                         |
+| Data                        | USB 3.1                      |
+| Resolution                  | 30 MP (5 MP X 6 sensors)     |
+| Frame Rate                  | 30 FPS @ 8k<br />60 FPS @ 4k |
+| Ingress Protection, Solids  | 6                            |
+| Ingress Protection, Liquids | 5                            |
+| Operating Temperature, Min  | -20°C                        |
+| Operating Temperature, Max  | 50°C                         |
+
+---
+
+## Software Bringup
+
+<SoftwareBringup />
+
+:::note
+
+This camera does not have an official ROS driver.
+Clearpath checks that camera's data is being received on the robot's computer by using FLIR's [Software Development Kit](https://www.flir.com/products/ladybug-sdk/)
+
+:::
+
+---
+
+## Troubleshooting
+
+<Support />
+
+---
+
+## Further Reading
+
+1.  [Clearpath Robotics Store](https://store.clearpathrobotics.com/collections/vision/products/ladybug-5p)
+2.  [Datasheet](/assets/pdf/clearpath_robotics_017245-TDS1.pdf)
+3.  [Datasheet](/assets/pdf/clearpath_robotics_017245-TDS2.pdf)
+4.  [Dimensions](/assets/pdf/clearpath_robotics_017245-TDS4.pdf)
+5.  [User Manual](/assets/pdf/clearpath_robotics_017245-TDS3.pdf)
+6.  [FLIR website](https://www.flir.com/products/ladybug5plus/)
