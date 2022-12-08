@@ -274,17 +274,21 @@ From there:
 
 1.  Connect the DC output cable from the charger to the battery terminal connector.
 2.  Plug the charger power cord into the charger and then into a wall receptacle.
-3.  The POWER LED and CHARGING LED lights on the charger will illuminate.
-4.  When battery is fully charged, the CHARGING LED light will turn off.
+3.  The POWER LED and CHARGING LED lights on the charger will illuminate red.
+4.  When battery is fully charged, the CHARGING LED light will turn green.
 5.  Unplug the charger from the wall and then disconnect it from the battery.
 
-The battery charger shipped with Clearpath Robotics's lead-acid battery-powered products uses a three-state charge cycle.
+The battery charger shipped with Clearpath Robotics's lead-acid battery-powered products uses a two-state charge cycle.
 
-1.  A fast, high current initial charge, until the battery voltage reaches 29.6 V.
-2.  A topping charge, during which the battery charges at 29.6 V constant voltage until the current decreases to 500 mA.
-3.  A precision float charge, during which the battery voltage is held at 27.6 V.
-    This mode allows the charger to remain connected to the battery during periods of non-use, keeping it in a state of full charge.
-    When in this mode, the CHARGING LED will be off.
+1.  A fast, high current initial charge, until the battery voltage reaches 27.2 V.
+2.  A topping charge, during which the battery charges at 27.2 V constant voltage.
+
+:::note
+
+Some older Husky chargers use a three-state charge cycle. For those older chargers, the LED light turns off
+(rather than green) when charging is complete.
+
+:::
 
 ---
 
