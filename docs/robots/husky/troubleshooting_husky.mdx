@@ -178,11 +178,11 @@ Your Husky will roll if:
 
 ### Not getting Wi-Fi internet connection
 
-Refer to the [Troubleshooting section of the Networking page](/docs/software/networking).
+Refer to the [Networking page](/docs/software/networking).
 
 ### Cannot connect to the robot's computer over a network cable
 
-Reter to the [Troubleshooting section of the Networking page](/docs/software/networking).
+Reter to the [Networking page](/docs/software/networking).
 
 ---
 
@@ -209,33 +209,31 @@ Verify the upstart logs, `/var/log/upstart/husky_core.log`, to see if there are 
 1.  Check that the sensor's User Power connector has the correct voltage.
 2.  If the voltage is correct, then review the [Troubleshooting section for the related sensor](/docs/sensors).
 
-TODO: Check if these are incorporated:
-
-**The blue light around the power button does not display when pressing the power button.**
+### The blue light around the power button does not display when pressing the power button.
 
 1.  Ensure that the battery is charged and correctly connected.
 2.  Use a multimeter to verify the voltage on the battery terminals.
 
-**`COMM` status light stays red or flickers.**
+### `COMM` status light stays red or flickers.
 
 1.  Your program may not be sending motion commands faster than 10 Hz.
 2.  If there is a poor quality connection, some commands may be lost, so it may be necessary to increase the frequency of commands sent.
 3.  The maximum frequency commands can be sent is 50 Hz.
 
-**`STOP` status light illuminated**
+### `STOP` status light illuminated
 
 1.  Twist the red stop button to release it.
 2.  Confirm that the robot is not locked out.
 
-**_Battery Status_ indicator flashing**
+### _Battery Status_ indicator flashing
 
 1.  Battery voltage is too low for Husky to drive the motors.
 2.  Charge the battery and try again.
 
-**A ROS package isn't starting**
+### A ROS package isn't starting
 
 1.  Verify the upstart logs, `/var/log/upstart/husky_core.log` to see if there are any error during upstart.
 
-### If the Issue Persists
+## If the Issue Persists
 
 <Support />
