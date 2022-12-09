@@ -23,7 +23,7 @@ const FEATURES: FeatureItem[] = [
       height: 150,
       hyperlink: "/docs/robots/jackal/user_manual_jackal",
     },
-    text: <Translate id="homepage_jackal">small outdoor platform</Translate>,
+    text: <Translate id="homepage_jackal">Small Outdoor Platform</Translate>,
   },
   {
     title: translate({
@@ -36,7 +36,7 @@ const FEATURES: FeatureItem[] = [
       height: 150,
       hyperlink: "/docs/robots/husky/user_manual_husky",
     },
-    text: <Translate id="homepage_husky">medium outdoor platform</Translate>,
+    text: <Translate id="homepage_husky">Medium Outdoor Platform</Translate>,
   },
   {
     title: translate({
@@ -49,7 +49,7 @@ const FEATURES: FeatureItem[] = [
       height: 150,
       hyperlink: "/docs/robots/warthog/user_manual_warthog",
     },
-    text: <Translate id="homepage_warthog">large outdoor platform</Translate>,
+    text: <Translate id="homepage_warthog">Large Outdoor Platform</Translate>,
   },
   {
     title: translate({
@@ -62,7 +62,7 @@ const FEATURES: FeatureItem[] = [
       height: 150,
       hyperlink: "/docs/robots/turtlebot4/user_manual_turtlebot4",
     },
-    text: <Translate id="homepage_turtlebot">classroom indoor differential platform</Translate>,
+    text: <Translate id="homepage_turtlebot">Classroom Indoor Differential Platform</Translate>,
   },
   {
     title: translate({
@@ -75,7 +75,7 @@ const FEATURES: FeatureItem[] = [
       height: 150,
       hyperlink: "/docs/robots/dingo/user_manual_dingo",
     },
-    text: <Translate id="homepage_dingo">small indoor platform differential and omnidirectional configurations</Translate>,
+    text: <Translate id="homepage_dingo">Small Indoor Platform, Differential And Omnidirectional Configurations</Translate>,
   },
   {
     title: translate({
@@ -88,7 +88,7 @@ const FEATURES: FeatureItem[] = [
       height: 150,
       hyperlink: "/docs/robots/boxer/user_manual_boxer",
     },
-    text: <Translate id="homepage_boxer">medium indoor differential platform</Translate>,
+    text: <Translate id="homepage_boxer">Medium Indoor Differential Platform</Translate>,
   },
   {
     title: translate({
@@ -101,7 +101,7 @@ const FEATURES: FeatureItem[] = [
       height: 150,
       hyperlink: "/docs/robots/ridgeback/user_manual_ridgeback",
     },
-    text: <Translate id="homepage_ridgeback">large indoor omnidirectional platform</Translate>,
+    text: <Translate id="homepage_ridgeback">Large Indoor Omnidirectional Platform</Translate>,
   },
 ];
 
