@@ -1,12 +1,161 @@
 ---
-title: Integration
+title: Ridgeback Integration
+sidebar_label: Integration
 sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
 ---
 
 import ComponentIntroductionRidgeback from "/components/introduction_ridgeback.mdx";
+import ComponentCommonSoftwareIntegration from "/components/common_software_integration.mdx";
+import Support from "/components/support.mdx";
 
 <ComponentIntroductionRidgeback />
 
-:::warning todo—under construction
+To attach custom hardware to Ridgeback, you will have to take care of mechanical mounting, electrical
+supply, and software integration. This guide aims to equip you with respect to these challenges.
+
+---
+
+### Mechanical Mounting
+
+When determining mechanical mounting, you can use the Standard mounting pattern on the Ridgeback.
+At this time, the "PACS" mounting system is not available for Ridgeback.
+
+#### Mechanical, Standard {#ridgeback-payload-mechanical-integration}
+
+The payload integration plate can be used to mount external payloads on top of the Ridgeback. The plate
+is made of aluminum, which allows Ridgeback to support payloads up to 100 kg (220 lbs). Ridgeback's
+batteries are positioned low in the chassis and slightly rearward of center of the robot to balance the
+weight distribution when mounting front-facing manipulator payloads. To minimize the possibility of tipping
+over, payload structures should always be mounted as close to center as possible.
+
+##### Payload Mounting Holes
+
+Located at the front-end of the mounting plate are two 5/8"-11 screw holes for mounting Baxter, UR5/UR510 manipulator
+arms, or any other payload structure. These holes are indicated in the figure below. If you purchased the Baxter
+or UR5/UR10 package from Clearpath Robotics, Ridgeback will come with the required hardware adapters to securely mount
+the payload structures to the plate.
+
+If your payload structure requires additional mounting holes or a different hole configuration, the plate can be removed
+and additional holes can be drilled. To remove the mounting plate, simply remove the screws that form the diamond pattern
+on top of the plate.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/ridgeback_images/payload_integration_plate.png"
+      width="600"
+    />
+    <figcaption>Payload integration plate</figcaption>
+  </figure>
+</center>
+
+:::warning
+
+Permanent damage resulting from custom modifications to the mounting plate is not covered under warranty and may not be
+supported by Clearpath Support. Please contact our support team if you require assistance or have any questions relating
+to custom modifications.
 
 :::
+
+### Electrical Integration {#ridgeback-payload-electrical-integration}
+
+Except for bus-powered USB cameras, most payloads have separate leads for power and data.
+
+#### Data Connections
+
+The two larger holes on the left and right side of the payload integration plate allow you to pass
+electrical wires and cables from the mounted payloads into the User Bay. Electrical wires should always
+pass through the provided plastic grommets to protect against cutting and abrasion.
+
+Ridgeback's internal computer options support USB3 and Ethernet connectivity.
+
+An Ethernet switch or PoE power injector can be added to the User Bay as required.
+
+#### Connector Summary {#ridgeback-connector-summary}
+
+Several user power connectors are accessible in the User Bay for powering user payloads.
+These are summarized in the following table and described in more detail in the following sections.
+The power rails on the User Bay Power board are protected against short circuit by fuses. See the
+illustration for the connector and fuse locations.
+
+- For the High Current VBAT User Power (labelled as 24 VDC, 20 A MAX), terminate your payload's power lead with the appropriate Anderson connectors.
+- For the User Power Ports, terminate your payload's power lead with the appropriate crimps and pins.
+  for the four pin Molex connector. The maximum current draw permitted on each rail is 5A.
+- For the Inverter Power, terminate your payload's power lead with the appropriate Anderson connectors.
+
+| Port (see Figure)            | MCU board connector                                                      | Mating connector                                   | Crimp terminals                                              | Crimping tool    |
+| :--------------------------- | :----------------------------------------------------------------------- | :------------------------------------------------- | :----------------------------------------------------------- | :--------------- |
+| High Current VBAT User Power | Anderson PP15/45 1327-BK (red) + 1327G6-BK (black) + Anderson 261G2-LPBK | Anderson PP15/45 1327-BK (red) + 1327G6-BK (black) | Anderson 262G2-LPBK (AWG 16-20) or 261G3-LPBK (AWG 10-14)    | Anderson 1309G8  |
+| User Power Ports             | Molex 0039301040                                                         | Molex 0039012040                                   | Molex 0507528200 (AWG 20-22) or Molex 0503518100 (AWG 22-28) | Molex 2002184900 |
+| Inverter Power               | Anderson 1327G8-BK (blue) + 1327G6-BK (black)                            | Anderson 1327G8-BK (blue) + 1327G6-BK (black)      | Anderson 262G2-LPBK (AWG 16-20) or 261G3-LPBK (AWG 10-14)    | Anderson 1309G8  |
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/ridgeback_images/ridgeback_user_power.png"
+      width="600"
+    />
+    <figcaption>User power board</figcaption>
+  </figure>
+</center>
+
+#### User Power Connections
+
+Similar to the data connections, power leads may be brought through the two larger holes on the left and
+right side of the payload integration plate, and connected to the power ports in the User Bay.
+The following are available as user power:
+
+- Unregulated VBAT power (25.6 V nominal) available in two ways:
+  - High Current VBAT User Power (20 A max)
+  - User Power ports: 5 A, shared across the User Power ports
+- Regulated 12 V power: 5 A, shared across the User Power ports
+- Regulated 5 V power: 5 A, shared across the User Power ports.
+
+:::caution
+
+Each User Power Port (Molex 0039301040) has a shared ground (GND) pin with a maximum current rating of 8 A. Ensure
+that the combined current draw for the VBAT, 12 V, and 5 V pins for the corresponding GND
+pin does not exceed 8 A.
+
+:::
+
+:::caution Unregulated Power Rail
+
+The unregulated battery output may range from as low as 20 VDC up to 30 VDC depending on the state of charge of
+the battery and the electrical loading on the system. Ensure any accessories connected to that rail are able to
+deal with unregulated battery voltages.
+
+:::
+
+:::warning Risk of Fire
+
+For continued protection against risk of fire, always replace fuses only with those of the same type and rating.
+
+:::
+
+#### Optional External Motion Stop {#ridgeback-external-motion-stop}
+
+In addition to the built-in Motion Stop button, an external motion-stop latching button/switch can be added that has similar functionality.
+Electrically, the external motion-stop latching button/switch can be connected to the 4-pin MCU connector labelled `E-STOP BREAKOUT` using
+a mating connector. This 4-pin connector is the same as the one used for the User Power Ports. Refer to
+[Connector Summary](#ridgeback-connector-summary) for details.
+
+The four pins should be connected as follows:
+
+- 1-2: to external motion-stop breakout
+  - To engage motion-stop: press and release the latching button/switch (3.3 V)
+  - To clear motion-stop: ensure the button is released on the external motion stop, then press and release the Motion Stop button on the
+    Ridgeback unit to clear the motion-stop
+- 3-4: short these pins to indicate that external motion-stop is present
+
+### Software Integration
+
+<ComponentCommonSoftwareIntegration />
+
+---
+
+## Support {#support}
+
+<Support />

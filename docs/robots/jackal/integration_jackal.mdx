@@ -7,12 +7,13 @@ toc_max_heading_level: 4
 ---
 
 import ComponentIntroductionJackal from "/components/introduction_jackal.mdx";
-import ComponentPacsMechanical from "/components/pacs_mechanical.mdx";
 import ComponentCommonSoftwareIntegration from "/components/common_software_integration.mdx";
 import Support from "/components/support.mdx";
 
+<ComponentIntroductionJackal />
+
 To attach custom hardware to Jackal, you will have to take care of mechanical mounting, electrical
-supply, and software integration. This section aims to equip you with respect to these challenges.
+supply, and software integration. This guide aims to equip you with respect to these challenges.
 
 ---
 
@@ -87,6 +88,16 @@ that the combined current draw for the VBAT, 12V, and 5V pins for the correspond
 pin does not exceed 8 A.
 
 :::
+
+#### MCU Debug LEDs
+
+The Jackal MCU circuit board comes equipped with four LEDs controlled by Jackal firmware for debugging.
+If the system is working properly, these LEDs functions as follows:
+
+- **DBG1**: toggles every 500 ms when main loop on MCU is running
+- **DBG2**: not used in normal operation; LED should be off
+- **DBG3**: not used in normal operation; LED should be off
+- **DBG4**: not used in normal operation; LED should be off
 
 ### Software Integration
 

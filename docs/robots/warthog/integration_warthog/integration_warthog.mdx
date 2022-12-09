@@ -9,16 +9,21 @@ import ComponentPacsMechanical from "/components/pacs_mechanical.mdx";
 import ComponentCommonSoftwareIntegration from "/components/common_software_integration.mdx";
 import Support from "/components/support.mdx";
 
-If you want to attach custom hardware to Warthog, you will have to take care of mechnical mounting, electrical supply, and software integration.
+To attach custom hardware to Warthog, you will have to take care of mechnical mounting, electrical supply, and software integration.
 This section aims to equip you with respect to these challenges.
 
 ---
 
 ## Mechanical {#warthog-mechanical-mounting}
 
+When determining mechanical mounting, you have two options, both of which are described below.
+
+- the "Standard" aluminum extrusion interface
+- the "PACS" mounting system and associated kits
+
 ### Mechanical, Standard
 
-A standard Wathod includes thru holes on the sides of the battery compartment.
+A standard Warthog includes thru holes on the sides of the battery compartment.
 You can besign mounting brackets to interface with these holes.
 
 ### Mechanical, PACS
@@ -31,7 +36,7 @@ Refer to the following pages for Warthog brackets that can simplify your integra
 - [Extrusion Cross-Bar](/docs/robots/warthog/integration_warthog/kits_warthog/extrusion_crossbar_warthog)
 - [Top Plate](/docs/robots/warthog/integration_warthog/kits_warthog/top_plate_warthog)
 
-### Payload Integration Guidelines
+### Common Mechanical Integration Guidelines
 
 - 705 mm (27.75") is the maximum allowed width of any installed payload (this assumes that the payload is also centered across the width of the UGV chassis.
 - No part of the payload may extend over the sheet metal housings of the drive units or into the small 50 mm (2") gaps between the chassis and drive units.
@@ -48,9 +53,9 @@ Refer to the following pages for Warthog brackets that can simplify your integra
   - Width of 660 mm (26")
   - Height of 241 mm (9.5").
     This space is located at the center of the chassis between two battery packs.
-    Consider that anything placed inside the chassis mush be secured as to not move or shift during UGV operation.
+    Consider that anything placed inside the chassis must be secured as to not move or shift during UGV operation.
 
-:::note
+:::caution
 
 Permanent damage resulting from custom modifications to the mounting plate is not covered under warranty and may not be supported by Clearpath Support.
 Please contact our Support team if you require assistance or have any questions relating to custom modifications.
@@ -63,7 +68,7 @@ Please contact our Support team if you require assistance or have any questions 
 
 :::danger
 
-For continued protection against risk of fire, always replace fuses only with those of the same type and rating.
+For continued protection against risk of fire, only replace fuses with those of the same type and rating.
 
 :::
 
@@ -78,7 +83,6 @@ Except for bus-powered USB cameras, most payloads have separate leads for power 
 | ETHERNET RJ45                                           |                                         |                             | Male RJ45                                                                                 |
 | [SERIAL](/assets/pdf/clearpath_robotics_014672.pdf)     |                                         | 015015                      | [RR-153274-23040](https://www.usbfirewire.com/parts/rr-153274-23040.html#RR-153274-23040) |
 
-<br />
 <center>
   <figure>
     <img
@@ -89,7 +93,6 @@ Except for bus-powered USB cameras, most payloads have separate leads for power 
   </figure>
 </center>
 
-<br />
 <center>
   <figure>
     <img
@@ -99,8 +102,6 @@ Except for bus-powered USB cameras, most payloads have separate leads for power 
     <figcaption>Warthog connector pinouts</figcaption>
   </figure>
 </center>
-
-<br />
 
 The user power receptacles located in the User Panel are capable of supplying 12 VDC, 24 VDC, and unregulated battery voltage (48 - 60 VDC) for powering Warthog's payloads.
 See the figures below for connector locations and pinouts.
@@ -138,58 +139,10 @@ Always use adequately sized fuses for your selected wire thickness to prevent el
 
 ## Software Integration
 
-ROS has a large ecosystem of sensor drivers, some of which include pre-made URDF description and even
-simulation configurations. Please see the following page on the ROS wiki for a partial list:
-
-<http://wiki.ros.org/Sensors>
-
-For the best experience, consider purchasing supported accessories from Clearpath Robotics for your Warthog.
-This will include simulation, visualization, and driver support for those accessories.
-However, we will happily help you get started with integrating your own devices as well.
+<ComponentCommonSoftwareIntegration />
 
 ---
 
-## System Architecture
-
-Like most robotic systems, Warthog has an onboard PC coupled to a custom microcontroller board.
-The microcontroller board handles IO, system and battery monitoring, and provides an interface to the CAN-controlled motor drivers.
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/warthog_images/robot_warthog_7.png"
-      width="900"
-    />
-    <figcaption>System Architecture</figcaption>
-  </figure>
-</center>
-
-The ROS API described below can be used to interface with Warthog.
-
-| Topic                          | Message             | Type Purpose                                                                                                                                                                  |
-| :----------------------------- | :------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| /cmd_vel                       | geometry_msgs/Twist | Input to Warthog's kinematic controller. Publish here to make Warthog go.                                                                                                     |
-| /odometry/filtered             | nav_msgs/Odometry   | Published by robot_localization, a filtered localization estimate based on wheel odometry (encoders) and integrated IMU.                                                      |
-| /imu/data                      | sensor_msgs/IMU     | Published by imu_filter_madgwick, an orientation estimate based on Warthog's internal gyroscope, accelerometer, and magnetometer.                                             |
-| /status                        | warthog_msgs/Status | Low-frequency status data for Warthog's systems. This information is republished in human readable form on the diagnostics topic and is best consumed with the Robot Monitor. |
-| /cmd_lights                    | warthog_msgs/Lights | Input to controlling the Warthog's body lights when not in an error state.                                                                                                    |
-| /SIDE/speed                    | std_msgs/Float64    | Input velocity for each motor where SIDE is either left or right. This should not be published to directly, commands from /cmd_vel will be converted to this.                 |
-| /SIDE/status/speed             | std_msgs/Float64    | Reported velocity from each motor's encoder where SIDE is either left or right.                                                                                               |
-| /SIDE/status/fault             | std_msgs/Bool       | Reported state from each motor controller where SIDE is either left or right.                                                                                                 |
-| /SIDE/status/motor_temperature | std_msgs/Int32      | Reported temperature from each motor controller where SIDE is either left or right.                                                                                           |
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/warthog_images/robot_warthog_8.png"
-      width="700"
-    />
-    <figcaption>Warthog node and topic connections</figcaption>
-  </figure>
-</center>
-
----
-
-## Contact
+## Support
 
 <Support />

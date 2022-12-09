@@ -1,5 +1,6 @@
 ---
-title: User Manual
+title: Husky User Manual
+sidebar_label: User Manual
 sidebar_position: 1
 toc_min_heading_level: 2
 toc_max_heading_level: 4
@@ -104,7 +105,7 @@ Each payload kit that ships from Clearpath Robotics comes with a custom mounting
 
 The reference frame used by all Clearpath Robotics ground robots is based on ISO 8855, and is shown in the figure below.
 Husky's front is shown.
-When commanded with a positive translational velocity (forward), wheels travel in the positive x-direction.
+When commanded with a positive translational velocity (forward), wheels travel in the positive X-direction.
 The direction of the axes differs from those used for roll, pitch, and yaw in aircraft, and care should be taken to ensure that data is interpreted correctly.
 
 <center>
@@ -269,22 +270,26 @@ To teleoperate Husky, first release the motion stop. Then, referring to the foll
 ### Battery Charging
 
 The battery shipped with Husky A200 may be charged outside the robot or while still inside of Husky.
-If charging while installed, you will need to open the access door to the battery area, and disconnect the battery from its connector in the fuse panel.
+If charging while installed, you will need to open the access door to the battery area, and disconnect the battery from the MCU board.
 From there:
 
 1.  Connect the DC output cable from the charger to the battery terminal connector.
 2.  Plug the charger power cord into the charger and then into a wall receptacle.
-3.  The POWER LED and CHARGING LED lights on the charger will illuminate.
-4.  When battery is fully charged, the CHARGING LED light will turn off.
+3.  The LED light on the charger will illuminate red.
+4.  When battery is fully charged, the LED light will turn green.
 5.  Unplug the charger from the wall and then disconnect it from the battery.
 
-The battery charger shipped with Clearpath Robotics's lead-acid battery-powered products uses a three-state charge cycle.
+The battery charger shipped with Clearpath Robotics's lead-acid battery-powered products uses a two-state charge cycle.
 
-1.  A fast, high current initial charge, until the battery voltage reaches 29.6 V.
-2.  A topping charge, during which the battery charges at 29.6 V constant voltage until the current decreases to 500 mA.
-3.  A precision float charge, during which the battery voltage is held at 27.6 V.
-    This mode allows the charger to remain connected to the battery during periods of non-use, keeping it in a state of full charge.
-    When in this mode, the CHARGING LED will be off.
+1.  A fast, high current initial charge, until the battery voltage reaches 27.2 V.
+2.  A topping charge, during which the battery charges at 27.2 V constant voltage.
+
+:::note
+
+Some older Husky chargers use a three-state charge cycle. For those older chargers, the LED light turns off
+(rather than green) when charging is complete.
+
+:::
 
 ---
 
@@ -293,7 +298,7 @@ The battery charger shipped with Clearpath Robotics's lead-acid battery-powered 
 Clearpath Robotics is committed to high standards of safety.
 Husky contains several features to protect the safety of users and the integrity of the robot.
 
-### General warnings
+### General Warnings
 
 Husky is a rugged and high-performance robot.
 For the safety of yourself and others, always conduct initial experiments and software development with
@@ -315,7 +320,7 @@ Avoid mounting payloads that extend over the rear of Husky and would occlude the
 
 :::
 
-The motion-stop function that allows a person in the physical vicinity of the robot to halt its motion and prevent re-initiation of motion.
+The motion-stop function allows a person in the physical vicinity of the robot to halt its motion and prevent re-initiation of motion.
 Power supply to Husky's motor drivers is enabled by a normally-open relay, which is closed in series with the stop switch.
 This motion-stop system is intended for use in emergency situations.
 The motion stop system should not be used as the means of controlling robot motion during regular operation.

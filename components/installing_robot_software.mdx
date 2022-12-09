@@ -1,11 +1,15 @@
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-There are three ways to install software on the physical robot.
+There are three methods to install software on the physical robot.
 
-The preferred way is using the Clearpath Robotics ISO image, which is covered in this section.
-The other two ways are using Debian (.deb) packages and installing from source by directly cloning Clearpath Robotics Github repositories and building them in your ROS (catkin) workspace;
-however, these ways are not covered in this section.
+The preferred method is using the Clearpath Robotics ISO image, which is covered in this section.
+
+The second method is using Debian (.deb) packages, which is also covered in this section.
+
+The final approach is installing from source by directly cloning Clearpath Robotics Github
+repositories and building them in your ROS (catkin) workspace; however, this method is not
+covered in this section.
 
 ##### Install from ISO Image
 
@@ -37,7 +41,7 @@ To install the software on a physical robot through the Clearpath Robotics ISO i
 3.  Connect your robot computer to internet access (via wired Ethernet), a keyboard, and a monitor.
     Make sure that the robot is connected to shore power (where applicable) or that the robot's battery is fully charged.
 
-    :::warning
+    :::caution
 
     The next step wipes your robot's hard drive, so make sure you have that image [backed up](#performing-a-backup).
 
@@ -93,6 +97,36 @@ To install the software on a physical robot through the Clearpath Robotics ISO i
           sudo systemctl daemon-reload
         </code>
       </TabItem>
+      <TabItem
+        value="ridgeback"
+        label="Ridgeback"
+      >
+        <code>
+          rosrun ridgeback_bringup install
+          <br />
+          sudo systemctl daemon-reload
+        </code>
+      </TabItem>
+      <TabItem
+        value="warthog"
+        label="Warthog"
+      >
+        <code>
+          rosrun warthog_bringup install
+          <br />
+          sudo systemctl daemon-reload
+        </code>
+      </TabItem>
+      <TabItem
+        value="boxer"
+        label="Boxer"
+      >
+        <code>
+          rosrun boxer_bringup install
+          <br />
+          sudo systemctl daemon-reload
+        </code>
+      </TabItem>
     </Tabs>
 
 9.  Finally, start ROS for the first time. In terminal, run:
@@ -101,76 +135,145 @@ To install the software on a physical robot through the Clearpath Robotics ISO i
     sudo systemctl start ros
     ```
 
-<!-- The ros-noetic-*-robot packages don't seem to exist, so commenting out this section for now.
-
 ##### Installing from Debian Packages
 
 If you are installing software on a physical robot through Debian packages, you will first
 need to ensure that the robot's computer is running Ubuntu 20.04 (Focal) and ROS Noetic.
 
-1. Before you can install the Dingo packages, you need to configure Ubuntu's APT package
-    manager to add Clearpath's package server.
+1. Before you can install the robot packages, you need to configure Ubuntu's APT package
+   manager to add Clearpath's package server.
 
-    1. Install the authentication key for the packages.clearpathrobotics.com repository. In terminal, run:
+   1. Install the authentication key for the packages.clearpathrobotics.com repository. In terminal, run:
 
-        ```
-        wget https://packages.clearpathrobotics.com/public.key -O - | sudo apt-key add -
-        ```
+      ```
+      wget https://packages.clearpathrobotics.com/public.key -O - | sudo apt-key add -
+      ```
 
-    2. Add the debian sources for the repository. In terminal, run:
+   2. Add the debian sources for the repository. In terminal, run:
 
-       ```
-       sudo sh -c 'echo "deb https://packages.clearpathrobotics.com/stable/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/clearpath-latest.list'
-       ```
+      ```
+      sudo sh -c 'echo "deb https://packages.clearpathrobotics.com/stable/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/clearpath-latest.list'
+      ```
 
-    3. Update your computer's package cache. In terminal, run:
+   3. Update your computer's package cache. In terminal, run:
 
-        ```
-        sudo apt-get update
-        ```
+      ```
+      sudo apt-get update
+      ```
 
-  2. After the robot's computer is configured to use Clearpath's debian package repository,
-     you can install the robot-specific packages.
+2. After the robot's computer is configured to use Clearpath's debian package repository,
+   you can install the robot-specific packages.
 
-      1. On a physical robot, you should only need the robot packages. In terminal, run:
+   1. On a physical robot, you should only need the robot packages. In terminal, run:
 
-          <Tabs groupId="ros_versions">
-            <TabItem
-              value="husky"
-              label="Husky"
-              default
-            >
-              <code>sudo apt-get install ros-noetic-husky-robot</code>
-            </TabItem>
-            <TabItem
-              value="dingo"
-              label="Dingo"
-            >
-              <code>sudo apt-get install ros-noetic-dingo-robot</code>
-            </TabItem>
-          </Tabs>
+      <Tabs groupId="ros_versions">
+        <TabItem
+          value="husky"
+          label="Husky"
+          default
+        >
+          <code>sudo apt-get install ros-noetic-husky-robot</code>
+        </TabItem>
+        <TabItem
+          value="jackal"
+          label="Jackal"
+        >
+          <code>sudo apt-get install ros-noetic-jackal-robot</code>
+        </TabItem>
+        <TabItem
+          value="dingo"
+          label="Dingo"
+        >
+          <code>sudo apt-get install ros-noetic-dingo-robot</code>
+        </TabItem>
+        <TabItem
+          value="ridgeback"
+          label="Ridgeback"
+        >
+          <code>sudo apt-get install ros-noetic-ridgeback-robot</code>
+        </TabItem>
+        <TabItem
+          value="warthog"
+          label="Warthog"
+        >
+          <code>sudo apt-get install ros-noetic-warthog-robot</code>
+        </TabItem>
+        <TabItem
+          value="boxer"
+          label="Boxer"
+        >
+          <code>sudo apt-get install ros-noetic-boxer-robot</code>
+        </TabItem>
+      </Tabs>
 
-      2. Install the `robot_upstart` job and configure the bringup service so that ROS will launch each time the robot starts. In terminal, run:
+   2. Install the `robot_upstart` job and configure the bringup service so that ROS will launch each time the robot starts. In terminal, run:
 
-          <Tabs groupId="ros_versions">
-            <TabItem
-              value="husky"
-              label="Husky"
-              default
-            >
-              <code>rosrun husky_bringup install<br />sudo systemctl daemon-reload</code>
-            </TabItem>
-            <TabItem
-              value="dingo"
-              label="Dingo"
-            >
-              <code>rosrun dingo_bringup install<br />sudo systemctl daemon-reload</code>
-            </TabItem>
-          </Tabs>
+      <Tabs groupId="ros_versions">
+        <TabItem
+          value="husky"
+          label="Husky"
+          default
+        >
+          <code>
+            rosrun husky_bringup install
+            <br />
+            sudo systemctl daemon-reload
+          </code>
+        </TabItem>
+        <TabItem
+          value="jackal"
+          label="Jackal"
+        >
+          <code>
+            rosrun jackal_bringup install
+            <br />
+            sudo systemctl daemon-reload
+          </code>
+        </TabItem>
+        <TabItem
+          value="dingo"
+          label="Dingo"
+        >
+          <code>
+            rosrun dingo_bringup install
+            <br />
+            sudo systemctl daemon-reload
+          </code>
+        </TabItem>
+        <TabItem
+          value="ridgeback"
+          label="Ridgeback"
+        >
+          <code>
+            rosrun ridgeback_bringup install
+            <br />
+            sudo systemctl daemon-reload
+          </code>
+        </TabItem>
+        <TabItem
+          value="warthog"
+          label="Warthog"
+        >
+          <code>
+            rosrun warthog_bringup install
+            <br />
+            sudo systemctl daemon-reload
+          </code>
+        </TabItem>
+        <TabItem
+          value="boxer"
+          label="Boxer"
+        >
+          <code>
+            rosrun boxer_bringup install
+            <br />
+            sudo systemctl daemon-reload
+          </code>
+        </TabItem>
+      </Tabs>
 
-      3. Finally, start ROS for the first time. In terminal, run:
+   3. Finally, start ROS for the first time. In terminal, run:
 
-            ```
-            sudo systemctl start ros
-            ```
--->
+      ```
+      sudo systemctl start ros
+      ```
