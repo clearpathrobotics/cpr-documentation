@@ -4,8 +4,6 @@ description: a description of this site
 hide_table_of_contents: false
 ---
 
-# About
-
 ## About this site
 
 This site hosts the documentation for the products that Clearpath Robotics supports. You will find manuals, tutorials, and troubleshooting guides for robots, sensors, and software.
