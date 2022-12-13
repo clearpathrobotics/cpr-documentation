@@ -100,11 +100,6 @@ const config = {
             position: 'right',
           },
           {
-            to: 'https://build.clearpathrobotics.com/',
-            label: 'Build',
-            position: 'right'
-          },
-          {
             to: 'https://store.clearpathrobotics.com/',
             label: 'Store',
             position: 'right'
