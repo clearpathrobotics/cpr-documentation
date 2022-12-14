@@ -54,7 +54,7 @@ This script will ask you questions like:
 - What sensor is this?
 - Where is the sensor on the robot?
   - Column ( _A_, _B_, _C_, _..._ )
-  - Height ( [Top plate](/docs/robots/husky/integration_husky/kits/top_plate_husky), [Riser](/docs/robots/husky/integration_husky/kits/riser_partial_husky) )
+  - Height ( [Top plate](/docs/robots/outdoor_robots/husky/integration_husky/kits/top_plate_husky), [Riser](/docs/robots/outdoor_robots/husky/integration_husky/kits/riser_partial_husky) )
   - Row ( _1_, _2_, _3_, _..._ )
   - Is it on a [Tower](/docs/accessories/tower)
 - Have you turned the sensor relative to the standard facing forward direction?
@@ -63,10 +63,10 @@ You can see these same configuration options when you build a robot on [build.cl
 The number of rows and columns is dependent on the robot platform.
 Refer to the integration pages for our robots for more details:
 
-- [Dingo](/docs/robots/dingo/integration_dingo)
-- [Husky](/docs/robots/husky/integration_husky)
-- [Jackal](/docs/robots/jackal/integration_jackal)
-- [Warthog](/docs/robots/warthog/integration_warthog)
+- [Dingo](/docs/robots/indoor_robots/dingo/integration_dingo)
+- [Husky](/docs/robots/outdoor_robots/husky/integration_husky)
+- [Jackal](/docs/robots/outdoor_robots/jackal/integration_jackal)
+- [Warthog](/docs/robots/outdoor_robots/warthog/integration_warthog)
 
 ## Common PACS Items, For All Robots {#pacs_common_pacs_items_for_all_robots}
 
@@ -75,7 +75,8 @@ Refer to the integration pages for our robots for more details:
 | Plate—80 X 80, Attachment Interface (Blank)                    |   [027627](/assets/pdf/clearpath_robotics_027627.pdf)   |
 | ~~Plate—80 X 80, Attachment Interface~~                        | ~~[026914](/assets/pdf/clearpath_robotics_026914.pdf)~~ |
 | Plate—80 X 80, Attachment Interface                            |   [027303](/assets/pdf/clearpath_robotics_027303.pdf)   |
-| Plate-80 X 80, Attachment Interface                            |   [028859](/assets/pdf/clearpath_robotics_028859.pdf)   |
+| Plate—80 X 80, Attachment Interface                            |   [028859](/assets/pdf/clearpath_robotics_028859.pdf)   |
+| Plate—80 X 80, Attachment Interface                            |   [028877](/assets/pdf/clearpath_robotics_028877.pdf)   |
 | Plate—80 X 80, Attachment Interface, Vertical                  |   [026964](/assets/pdf/clearpath_robotics_026964.pdf)   |
 | Plate—80 X 80, Attachment Interface, Large                     |   [027110](/assets/pdf/clearpath_robotics_027110.pdf)   |
 | Plate—80 X 80, Attachment Interface, Manipulator (UR3 and UR5) |   [027269](/assets/pdf/clearpath_robotics_027269.pdf)   |
@@ -98,7 +99,7 @@ Refer to the integration pages for our robots for more details:
 |                  | [Stereolabs ZED 2i](/docs/sensors/cameras/stereolabs_zed_2)               |                                           025844                                           |             026872             |              027210              |                   No                   |
 | **Computer**     | Mini-ITX Indoor                                                           |                                             -                                              |             027668             |              027667              |                   -                    |
 | **GPS**          | [Garmin GPS 18x](/docs/sensors/gps/garmin_gps_18x)                        |                                           001893                                           |             028876             |              028875              |                   No                   |
-| **GPS**          | [Swift Navigation Duro](/docs/sensors/gps/swift_navigation_duro)          |                                           015822                                           |             027107             |              027213              |                   No                   |
+|                  | [Swift Navigation Duro](/docs/sensors/gps/swift_navigation_duro)          |                                           015822                                           |             027107             |              027213              |                   No                   |
 |                  | [Swift Navigation Duro Inertial](/docs/sensors/gps/swift_navigation_duro) |                                           018151                                           |             027108             |              027214              |                   No                   |
 | **IMU**          | [Microstrain 3DM-GX5-10](/docs/sensors/imu/microstrain_3dm_gx5)           |                                           017839                                           |             028963             |              028962              |                  Yes                   |
 |                  | [Microstrain 3DM-GX5-15](/docs/sensors/imu/microstrain_3dm_gx5)           |                                           017772                                           |             027114             |              027215              |                  Yes                   |
@@ -111,8 +112,10 @@ Refer to the integration pages for our robots for more details:
 |                  | [Hokuyo UST20-LX](/docs/sensors/lidar_2d/hokuyo_ust20_lx)                 |                                           016359                                           |             029013             |              029012              |                  Yes                   |
 |                  | [Hokuyo UST30-LX](/docs/sensors/lidar_2d/hokuyo_ust30_lx)                 |                                           027584                                           |             029015             |              029014              |                  Yes                   |
 |                  | [SICK LMS111](/docs/sensors/lidar_2d/sick_lms111)                         |                                           006387                                           |             027657             |              027656              |                  Yes                   |
-| **Lidar 3D**     | [Velodyne Puck](/docs/sensors/lidar_3d/velodyne_puck)                     |                                     011703<br />020972                                     |             026859             |              027206              |                  Yes                   |
+| **Lidar 3D**     | [Velodyne Puck Lite](/docs/sensors/lidar_3d/velodyne_puck_lite)           |                                     016312<br />023729                                     |             029027             |              029026              |                  Yes                   |
+|                  | [Velodyne Puck](/docs/sensors/lidar_3d/velodyne_puck)                     |                                     011703<br />020972                                     |             026859             |              027206              |                  Yes                   |
 |                  | [Velodyne Puck Vertical](/docs/sensors/lidar_3d/velodyne_puck)            |                                     011703<br />020972                                     |             026965             |              027222              |                  Yes                   |
+|                  | [Velodyne Ultra Puck](/docs/sensors/lidar_3d/velodyne_ultra_puck)         |                                     016901<br />029035                                     |             029037             |              029036              |                  Yes                   |
 |                  | [Ouster, OS0](/docs/sensors/lidar_3d/ouster)                              |                               028847<br />028738<br />028740                               | 028660<br />028661<br />028662 |  028850<br />028851<br />028852  |                   No                   |
 |                  | [Ouster, OS1](/docs/sensors/lidar_3d/ouster)                              |                               028848<br />028742<br />028745                               | 028663<br />028664<br />028665 |  028853<br />028854<br />028855  |                   No                   |
 |                  | [Ouster, OS2](/docs/sensors/lidar_3d/ouster)                              |                               028849<br />028747<br />028749                               | 028666<br />028667<br />028668 |  028856<br />028857<br />028858  |                   No                   |
@@ -126,8 +129,8 @@ Refer to the integration pages for our robots for more details:
 |                  | [Power Supply, TEP 150](/docs/accessories/power_supplies)                 |                                             -                                              |             028942             |              028941              |                   -                    |
 | **Motion-Stop**  | [Kar-Tech](/docs/accessories/wireless_stop_system)                        |                                           014663                                           |             027298             |              027297              |                   No                   |
 |                  | [FORT Robotics Joystick](/docs/accessories/wireless_stop_system)          |                                           025727                                           |             027112             |              027216              |                   No                   |
-| **Network**      | [Network Switch, 5 Port](/docs/accessories/wireless_stop_system)          |                                           021044                                           |             027639             |              027638              |                   -                    |
-|                  | [Network Switch, 8 Port](/docs/accessories/wireless_stop_system)          |                                           025333                                           |             027641             |              027640              |                   -                    |
+| **Network**      | [Network Switch, 5 Port](/docs/accessories/network_switch)                |                                           021044                                           |             027639             |              027638              |                   -                    |
+|                  | [Network Switch, 8 Port](/docs/accessories/network_switch)                |                                           025333                                           |             027641             |              027640              |                   -                    |
 |                  | [USB Hub, 7 Port](/docs/accessories/usb_hub)                              |                                           025440                                           |             027643             |              027642              |                   -                    |
 
 <br />

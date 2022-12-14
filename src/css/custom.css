@@ -30,16 +30,22 @@
     --ifm-font-size-base: 16px;
   }
   article header h1 {
-    font-size: 3.5rem !important;
+    font-size: 2.8rem !important;
   }
   article h2 {
-    font-size: 2.25rem !important;
+    font-size: 2rem !important;
   }
   article h3 {
     font-size: 1.35rem !important;
   }
   article h4 {
     font-size: 1rem !important;
+  }
+}
+
+@media screen and (max-width : 400px){
+  article header h1 {
+    font-size: 2.3rem !important;
   }
 }
 
