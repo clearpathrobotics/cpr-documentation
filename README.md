@@ -168,8 +168,35 @@ The list below are not strict rules, but are considered good practice to keep im
         - RGB (78, 127, 255)
 2.  Remove background colours when possible.
     This helps Users that have set the site to Dark Mode.
+    Refer to _SolidWorks image exports_ for the process of creating these images.
 3.  Avoid embedding text in images.
     This prevents Users from translating the webpage.
     Consider using arrows and circles to notate images, with the text included in your Markdown file.
 
     Note: icons, logos, and symbols that are part of the physical product are exempt from this suggestion.
+
+## SolidWorks image exports
+
+1.  Open your assembly in SolidWorks.
+    Orient the model to the view you want to capture.
+    Click _File_ → _Save-As_.
+
+    <img src="/static/img/readme_images/readme_solidworks_image_1.png" width="800"/>
+
+2.  Select _.png_ as the file type.
+    Then click the _Options_ button.
+
+    <img src="/static/img/readme_images/readme_solidworks_image_2.png" width="800"/>
+
+3.  Make sure the _Remove background_ box has a check mark.
+    Click the _Print capture_ box, so you can manually choose the image's width and height.
+    
+    <img src="/static/img/readme_images/readme_solidworks_image_3.png" width="800"/>
+
+4.  In the same window as Step 3; scroll down to the bottom.
+    Change the _Width_ and _Height_ fields to adjust the bounding box around the SolidWorks model.
+    300 mm tall should be a good balance between image resolution and file size.
+
+    Finally, select _OK_, and _Save_
+    
+    <img src="/static/img/readme_images/readme_solidworks_image_4.png" width="800"/>
