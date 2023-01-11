@@ -1,21 +1,47 @@
-If your PS4 controller runs out of batteries, or you purchase a new one, you might want to re-pair your platform
-and controller. To do this, put the controller into pairing mode by pressing and holding the Share and PS buttons
-until the controller's LED flashes rapidly in white. Then SSH into the robot and run:
+If your PS4 controller runs out of batteries, or you purchase a new one, you might want to re-pair your platform and controller. 
+
+To do this:
+
+1. Ensure your controller's battery is charged.
+
+2. SSH into the robot. The remaining instructions below assume you are already SSH'd into the robot.
+
+3. Make sure the `ds4drv` driver is installed, and the `ds4drv` daemon service is active and running:
+
+```
+sudo systemctl status ds4drv
+```
+
+4. If `ds4drv` is not installed, install it by running:
+
+```
+sudo apt-get install python-ds4drv
+```
+
+5. Put the controller into pairing mode by pressing and holding the SHARE and PS buttons until the controller's LED light bar flashes rapidly in white. 
+
+6. Run the controller pairing script:
 
 ```
 sudo ds4drv-pair
 ```
 
-If `ds4drv-pair` fails to detect the controller, you can connect it manually by running `sudo bluetoothctl`
-and entering the following commands into the bluetooth control application:
+7. In the output of the `ds4drv-pair` script, you should see that the controller automatically pairs via the script. The controller's LED light bar should also turn solid blue to indicate successful pairing.
+
+8. If the `ds4drv-pair` script fails to detect the controller, you can connect it manually by running:
+
+```
+sudo bluetoothctl
+```
+
+9. Enter the following commands in `bluetoothctl` to scan and display the MAC addresses of nearby devices:
 
 ```
 agent on
 scan on
 ```
 
-The bluetooth scan will display the MAC addresses of nearby devices. Determine with MAC address corresponds to the
-controller and copy it. Then run the following commands in bluetoothctl:
+10. Determine which MAC address corresponds to the controller and copy it. Then run the following commands in `bluetoothctl` to pair the controller:
 
 ```
 scan off
@@ -24,4 +50,4 @@ trust <MAC Address>
 connect <MAC Address>
 ```
 
-The controller should now be correctly paired.
+11. The controller should now be correctly paired.
