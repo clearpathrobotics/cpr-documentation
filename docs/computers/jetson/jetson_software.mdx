@@ -4,6 +4,8 @@ sidebar_label: Jetson Software
 sidebar_position: 3
 ---
 
+import ComponentPs4ControllerPairing from "/components/ps4_controller_pairing.mdx";
+
 ## Software Installation
 
 :::note
@@ -364,24 +366,7 @@ This step is not required for Jetson Nano
 This step is optional.
 :::
 
-To pair a PS4 controller to drive the Jetson, hold down the PS and Share buttons on the controller until
-the light bar starts to flash. In a terminal on the Jetson, run `bluetoothctl` and then run the
-following commands:
-
-```
-agent on
-scan on
-< look for the MAC address of your controller; it will be identified by "Wireless Controller" or similar text >
-scan off
-pair <MAC ADDRESS>
-trust <MAC ADDRESS>
-connect <MAC ADDRESS>
-< ctrl + d to exit >
-```
-
-The light on the controller will turn solid blue once it is paired. With the controller paired you should
-be able to control the robot by pressing L1 and using the left stick to drive. For more information see the
-User Manual.
+<ComponentPs4ControllerPairing />
 
 ### Step 7: Use Remote Computer with Jetson (Optional)
 
