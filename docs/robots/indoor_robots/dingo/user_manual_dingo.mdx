@@ -15,6 +15,9 @@ import ComponentRemoteRosConnectivity from "/components/remote_ros_connectivity.
 import ComponentCommonSafeWorkProcedures from "/components/common_safe_work_procedures.mdx";
 import ComponentSafetyWarning from "/components/safety_warning.mdx";
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
 <ComponentIntroductionDingo />
 
 ## Introduction
@@ -145,14 +148,109 @@ To access Dingo's MCU PCBA (for user power), remove the four M5 flathead screws 
 
 Dingo is equipped with LEDs at the four corners of the robot, which indicate the state of the system:
 
-| System State        | Corner LED Output                                                                 |
-| :------------------ | :-------------------------------------------------------------------------------- |
-| Idle                | Front LEDs solid white (low intensity), rear LEDs solid red (low intensity)       |
-| Driving             | Front LEDs solid white (medium intensity), rear LEDs solid red (medium intensity) |
-| Motion stop engaged | Flashing red LEDs                                                                 |
-| Low battery         | Pulsing orange LEDs                                                               |
-| Needs reset         | Adjacent corners alternating between red and off                                  |
-| System fault        | Flashing orange LEDs                                                              |
+<Tabs groupId="dingo_versions">
+  <TabItem
+    value="D100"
+    label="0.2.4"
+    default
+  >
+    <table>
+      <thead>
+        <tr>
+          <th>System State</th>
+          <th>Corner LED Output</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Idle</td>
+          <td>Front LEDs solid white (low intensity), rear LEDs solid red (low intensity)</td>
+        </tr>
+        <tr>
+          <td>Driving</td>
+          <td>Front LEDs solid white (medium intensity), rear LEDs solid red (medium intensity)</td>
+        </tr>
+        <tr>
+          <td>Motion stop engaged</td>
+          <td>Flashing red LEDs</td>
+        </tr>
+        <tr>
+          <td>Low Battery</td>
+          <td>Pulsing orange LEDs</td>
+        </tr>
+        <tr>
+          <td>Needs Reset</td>
+          <td>Adjacent corners alternating between red and off</td>
+        </tr>
+        <tr>
+          <td>System Fault</td>
+          <td>Flashing orange LEDs</td>
+        </tr>
+      </tbody>
+    </table>
+  </TabItem>
+  <TabItem
+    value="D150"
+    label="0.3.0"
+  >
+    <table>
+      <thead>
+        <tr>
+          <th>System State</th>
+          <th>Corner LED Output</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Idle</td>
+          <td>Front LEDs solid white (low intensity), rear LEDs solid red (low intensity)</td>
+        </tr>
+        <tr>
+          <td>Driving</td>
+          <td>Front LEDs solid white (medium intensity), rear LEDs solid red (medium intensity)</td>
+        </tr>
+        <tr>
+          <td>Motion stop engaged</td>
+          <td>Adjacent corners alternating between red and off</td>
+        </tr>
+        <tr>
+          <td>Low Battery</td>
+          <td>Pulsing orange LEDs</td>
+        </tr>
+        <tr>
+          <td>
+            Charging <b>(D150 only)</b>
+          </td>
+          <td>Pulsing green LEDs</td>
+        </tr>
+        <tr>
+          <td>Shore Power</td>
+          <td>Pulsing blue LEDs</td>
+        </tr>
+        <tr>
+          <td>
+            Charging and Shore Power <b>(D150 only)</b>
+          </td>
+          <td>Pulsing green to blue LEDs</td>
+        </tr>
+        <tr>
+          <td>Puma Fault</td>
+          <td>Flashing red LED on Puma at fault, solid red for other corners</td>
+        </tr>
+        <tr>
+          <td>
+            Shore Power Fault <b>(D150 only)</b>
+          </td>
+          <td>Flashing blue and red LEDs</td>
+        </tr>
+        <tr>
+          <td>Battery Fault</td>
+          <td>Flashing yellow and red LEDs</td>
+        </tr>
+      </tbody>
+    </table>
+  </TabItem>
+</Tabs>
 
 While in "Idle" and "Driving" states, the user can override the LEDs by publishing to the `/mcu/lights` topic.
 
