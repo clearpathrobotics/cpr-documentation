@@ -22,7 +22,7 @@ import Support from "/components/support.mdx";
 
 ## Status lights
 
-### COMM light on the rear panel is red
+### `COMM` light on the rear panel is red
 
 A red COMM light means the Husky's computer to microcontroller serial connection is not established.
 This serial connection requires:
@@ -49,7 +49,7 @@ If your robot was functioning recently, the most common causes are:
   nano /etc/ros/setup.bash
   ```
 
-### COMM light is yellow
+### `COMM` light is yellow
 
 A yellow COMM light indicates that there is a functioning Serial connection between the robot's computer and MCU's microcontroller, but there is a ROS software error on the computer.
 The common causes for this error are:
@@ -62,7 +62,7 @@ The common causes for this error are:
 - The Husky's lockout keyswitch is in the _Locked_ position.
   Use the included key to turn the lockout to the _Unlocked_ position.
 
-### COMM light flickers
+### `COMM` light flickers
 
 This frequently happens when the MCU is not receiving motion commands fast enough.
 Increase your published motion command in ROS to at least 10 Hz.
@@ -77,24 +77,29 @@ The maximum command frequency that Husky accepts is 50 Hz.
 
 :::
 
-### ERR light is on
+### `ERR` light is on
 
 This light indicates a General Error.
 It is red when the Husky is in a motion-stop state, has insufficient battery voltage, or an if there is unspecified software error.
 
-### Stop light is on
+### `STOP` status light is on
 
-The common causes for this error are:
+1.  Twist the red stop button at the back of the Husky.
+2.  Confirm that the robot is not locked out.
+3.  Confirm that all external stop devices are functioning, and that their related switches and relays are closed.
+    You may need to use a multimeter to test voltage between the external stop connector and each of these external stop switches.
+    Refer to the [External Stop](integration_husky/#husky_external_stop) section for details.
 
-- The Husky's motion-stop button has been pressed. Twist the red button on the back of the Husky clockwise to release the motion-stop.
-  You can confirm the motion-stop state in ROS by running:
-  ```
-  rostopic echo /status
-  ```
-- The Husky's lockout keyswitch is in the _Locked_ position.
-  Use the included key to turn the lockout to the _Unlocked_ position.
+:::note
 
-### Power button's light is not on
+You can confirm the motion-stop state in ROS by running:
+```
+rostopic echo /status
+```
+
+::: 
+
+### Power button's blue light is not on
 
 The power button on the back of Husky has a blue light that turns on when the button is pressed, indicating that the Husky is receiving power.
 This light will turn on if the switch is receiving power, there is no sofware controlling it.
@@ -110,8 +115,8 @@ The most common fix for this issue is to check that battery is charged, and that
 
 ### Battery indicator is flashing
 
-Battery voltage is too low for Husky to drive the motors.
-Charge the battery and try again.
+1. Battery voltage is too low for Husky to drive the motors.
+2. Charge the battery and try again.
 
 ### Battery indicator only shows 50% charge with a fresh battery
 
@@ -120,7 +125,7 @@ The controls program was designed for a lithium battery.
 _24 V lithium batteries_ reach a peak voltage of 29 V.
 Our Standard _24 V lead-acid battery_ does not reach as high of a voltage, so the MCU's microcontroller thinks the battery is not fully charged.
 
-There is not a way to change this behaviour on your Husky.
+There is no way to change this behaviour on your Husky.
 
 ---
 
@@ -208,27 +213,6 @@ Verify the upstart logs, `/var/log/upstart/husky_core.log`, to see if there are 
 
 1.  Check that the sensor's User Power connector has the correct voltage.
 2.  If the voltage is correct, then review the [Troubleshooting section for the related sensor](/docs/sensors).
-
-### The blue light around the power button does not display when pressing the power button.
-
-1.  Ensure that the battery is charged and correctly connected.
-2.  Use a multimeter to verify the voltage on the battery terminals.
-
-### `COMM` status light stays red or flickers.
-
-1.  Your program may not be sending motion commands faster than 10 Hz.
-2.  If there is a poor quality connection, some commands may be lost, so it may be necessary to increase the frequency of commands sent.
-3.  The maximum frequency commands can be sent is 50 Hz.
-
-### `STOP` status light illuminated
-
-1.  Twist the red stop button to release it.
-2.  Confirm that the robot is not locked out.
-
-### _Battery Status_ indicator flashing
-
-1.  Battery voltage is too low for Husky to drive the motors.
-2.  Charge the battery and try again.
 
 ### A ROS package isn't starting
 
