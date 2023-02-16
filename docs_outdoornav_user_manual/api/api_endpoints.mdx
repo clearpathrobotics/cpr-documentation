@@ -6,4 +6,1000 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-TODO
+The following sections outline the details of the ROS1 Noetic API that
+can be used with OutdoorNav Software.
+
+## Platform API {#topics-platform-api}
+
+The Platform API provides topics to communicate with the hardware
+platform (eg. sensor data, command velocity, tfs, etc\...). This API can
+be used by autonomy software packages to interface with the hardware
+platform.
+
+### Topics Published by UGV {#topics-published-by-platform}
+
+The topics in this section are published by the UGV. If available, they
+are used by the OutdoorNav software.
+
+#### tf
+
+**Message Type:** tf2_msgs/TFMessage
+
+**Description:** Transform tree describing the 3D links/frames of the
+robot.
+
+#### tf_static
+
+**Message Type:** tf2_msgs/TFMessage
+
+**Description:** Static links/frames of robot transform tree.
+
+#### platform/cmd_vel
+
+**Message Type:** geometry_msgs/Twist
+
+**Description:** Platform-level velocity used to drive the robot.
+
+#### platform/description
+
+**Message Type:** std_msgs/String
+
+**Description:** String containing robot URDF description.
+
+#### platform/diagnostics_agg
+
+**Message Type:** diagnostic_msgs/DiagnosticArray
+
+**Description:** Provides a list of human-readable diagnostic messages
+from various subsystems (sensors, onboard systems, localization,
+navigation, mapping etc.)
+
+#### platform/emergency_stop
+
+**Message Type:** std_msgs/Bool
+
+**Description:** True, if robot is emergency stopped, False, otherwise.
+
+#### platform/id
+
+**Message Type:** [cpr_platform_msgs/PlatformID](#msg-platform-id)
+
+**Description:** Contains model, serial number, and hardware revision of
+the platform
+
+#### platform/joint_states
+
+**Message Type:** sensor_msgs/JointState
+
+**Description:** Position and velocity of robot\'s joints.
+
+#### platform/odom
+
+**Message Type:** nav_msgs/Odometry
+
+**Description:** Platform-level wheel odometry.
+
+#### platform/odom_filtered
+
+**Message Type:** nav_msgs/Odometry
+
+**Description:** EKF fused odometry from available sources on the
+platform. This may include the wheel odometry, imu data, etc..
+
+------------------------------------------------------------------------
+
+The following table contains the types of sensors that could be
+integrated onto our robot platforms.
+
+| Type | Description |
+| ---- | ----------  | 
+| **gps** | A singular GPS (Global Positioning System) antenna/receiver pair. These may also be referred to as GNSS receivers. |
+| **ins** | An inertial navigation system (INS) that consists of an IMU and a GPS unit. |
+| **imu** | An inertial measurement unit consisting of an accelerometer, gyroscope and potentially a magnetometer. |
+| **lidar** | A light emitting sensor that uses this light to determine the distance to obstacles. This includes 1D, 2D and 3D range detection sensors. |
+| **radar** | A radio emitting sensor used to compute distance/velocity of obstacles. |
+| **camera** | A singular lens (ie. mono) camera that produces an ROS image stream. This can therefore include regular mono cameras as well as single lens thermal imagers, etc\... |
+| **stereo** | A type of camera with two or more image sensors. |
+
+#### sensors/imu/\[0,1,\...\]/data
+
+**Message Type:** sensor_msgs/Imu
+
+**Description:** Raw data from IMU (gyro / acceleration)
+
+#### sensors/imu/\[0,1,\...\]/magnetic_field
+
+**Message Type:** sensor_msgs/MagneticField
+
+**Description:** Reports the MPU 9250 Magnetometer sensor information.
+
+#### sensors/<type\>/\[0,1,\...\]/fix
+
+**Message Type:** sensor_msgs/NavSatFix
+
+**Type:** gps, ins
+
+**Description:** GPS latitude and longitude data. This data can either
+be RTK corrected or regular GPS data.
+
+#### sensors/<type\>/\[0,1,\...\]/heading
+
+**Message Type:** sensor_msgs/Imu
+
+**Type:** gps, ins, imu
+
+**Description:** RTK heading data computed from a dual GPS receiver
+setup.
+
+#### sensors/<type\>/\[0,1,\...\]/pointcloud
+
+**Message Type:** Type: sensor_msgs/PointCloud2
+
+**Type:** lidar, radar, stereo, camera
+
+**Description:** Raw pointcloud data generated from the specific sensor.
+
+#### sensors/<type\>/\[0,1,\...\]/scan
+
+**Message Type:** sensor_msgs/LaserScan
+
+**Type:** lidar, radar, stereo, camera
+
+**Description:** Raw scan data generated from the specific sensor.
+
+#### sensors/<type\>/\[0,1,\...\]/camera_info
+
+**Message Type:** sensor_msgs/CameraInfo
+
+**Type:** camera, stereo
+
+**Description:** Camera information including image dimensions,
+distortion parameters, calibration parameters, etc\...
+
+#### sensors/<type\>/\[0,1,\...\]/image_raw
+
+**Message Type:** sensor_msgs/Image
+
+**Type:** camera, stereo
+
+**Description:** Raw image data from the specific sensor.
+
+#### sensors/<type\>/\[0,1,\...\]/depth_image_raw
+
+**Message Type:** sensor_msgs/Image
+
+**Type:** camera, stereo
+
+**Description:** Raw depth image from the specific sensor.
+
+#### onboard_systems/wireless/connection (IN DEVELOPMENT)
+
+**Message Type:** [cpr_onboard_systems_msgs/WirelessConnection](#msg-onboard-systems-wireless)
+
+**Description:** Information about the robot's wireless connection
+including ssid, frequency, bitrate, and signal and noise levels.
+
+#### onboard_systems/bms/\[0,1,\...\]/state (IN DEVELOPMENT)
+
+**Message Type:** sensor_msgs/BatteryState
+
+**Description:** State data for each battery module installed.
+
+------------------------------------------------------------------------
+
+### Topics Subscribed to by UGV {#topics-subscribed-by-platform}
+
+The UGV subscribes to the topics in this section.
+
+#### cmd_vel
+
+**Message Type:** geometry_msgs/Twist
+
+**Description:** The command velocity to the platform layer effectively
+commanding the wheels to spin.
+
+## Autonomy API {#topics-autonomy-api}
+
+The Autonomy provides some relevant topics and services suitable for
+controlling and monitoring the robot as it is performing autonomous
+navigation.
+
+### Topics Published by Autonomy
+
+The OutdoorNav software publishes to the topics in this section either
+all the time or while an autonomous navigation missions is running. They
+can be used to monitor the behaviour of OutdoorNav.
+
+#### control_selection/control_state
+
+**Message Type:** [cpr_control_msgs/ControlSelectionState](#msg-control-selection-state)
+
+**Description:** Indicates the complete state of control selection
+including autonomy state and mode.
+
+#### control_selection/current_mode
+
+**Message Type:** [cpr_control_msgs/ControlMode](#msg-control-mode)
+
+**Description:** Current control mode (NEUTRAL, MANUAL, AUTONOMY).
+
+#### localization/odom
+
+**Message Type:** nav_msgs/Odometry
+
+**Description:** The robot's current pose and velocity.
+
+#### localization/status (IN DEVELOPMENT)
+
+**Message Type:** [cpr_localization_msgs/LocalizationStatus](#msg-localization-status)
+
+**Description:** Current localization status. Includes accuracy, GPS
+status
+
+#### mission/feedback
+
+**Message Type:** cpr_navigation_msgs/MissionActionFeedback
+
+**Description:** Feedback topic from the mission action.
+
+#### mission/result
+
+**Message Type:** cpr_navigation_msgs/MissionActionResult
+
+**Description:** Result topic from the mission action.
+
+#### navigation/current_goal_info
+
+**Message Type:** [cpr_navigation_msgs/CurrentGoalInfo](#msg-current-goal-info)
+
+**Description:** string identifier (id), goal and viapoint positions,
+headings, pose/yaw tolerances, etc\...
+
+#### navigation/distance_to_goal
+
+**Message Type:** [cpr_navigation_msgs/DistanceToGoal](#msg-distance-to-goal)
+
+**Description:** The current Euclidean distance and the path distance,
+in meters, from the robot to its current goal.
+
+#### navigation/footprint
+
+**Message Type:** geometry_msgs/Polygon
+
+**Description:** The footprint of the robot.
+
+#### navigation/local_costmap
+
+**Message Type:** nav_msgs/OccupancyGrid
+
+**Description:** An occupancy grid consisting of the Free, Occupied or
+Unknown space that the robot uses to detect obstacles.
+
+#### navigation/local_plan
+
+**Message Type:** nav_msgs/msg/Path
+
+**Description:** The MPC local plan that the navigation uses to control
+the robot along the reference path.
+
+#### navigation/motion_state (IN DEVELOPMENT)
+
+**Message Type:** [cpr_navigation_msgs/MotionState](#msg-motion-state)
+
+**Description:** This topic provides information about the motion state
+of the robot. This includes information about whether the robot is
+moving or stopped. Whether it is about to make a turn and the direction
+of the turn, and the direction of travel of the robot in regards to its
+physical orientation.
+
+#### navigation/odom_intent (IN DEVELOPMENT)
+
+**Message Type:** [cpr_navigation_msgs/OdomIntent](#msg-odom-intent)
+
+**Description:** The robot's current pose and velocity as well as an
+intended pose and velocity in the immediate future.
+
+#### navigation/path
+
+**Message Type:** geometry_msgs/PoseArray
+
+**Description:** The path that the robot is currently traversing. This
+is initialized with the initial path and may be updated with paths
+generated from replanning maneuvers.
+
+#### navigation/progress (BETA)
+
+**Message Type:** [cpr_navigation_msgs/Progress](#msg-navigation-progress)
+
+**Description:** The completion percentage of the current path, the
+current goal and the current mission.
+
+#### navigation/safety_footprints
+
+**Message Type:** geometry_msgs/PolygonStamped
+
+**Description:** Footprint sets used for detecting obstacles and slowing
+down the robot to a standstill. The footprints are modular in size
+according to the current velocity of the robot.
+
+#### navigation/scan_points
+
+**Message Type:** [cpr_navigation_msgs/ScanPoints](#msg-scan-points)
+
+**Description:** Scans and pointclouds from the various ROS message
+formats converted into a simple PointVector format that can be easily
+consumed by the UI.
+
+#### navigation/state (BETA)
+
+**Message Type:** [cpr_navigation_msgs/NavigationState](#msg-navigation-state)
+
+**Description:** The current navigation state. The available states are
+COMPUTE PATH, EXECUTE, REPLAN, NAVIGATING AROUND OBSTACLE, RECOVERY,
+IDLE, PAUSE, ESTOP, LOST. Multiple simultaneous states are possible.
+
+#### navigation/track_error
+
+**Message Type:** [cpr_navigation_msgs/TrackError](#msg-track-error)
+
+**Description:** The current crosstrack error (ie. the off-path distance
+between the robot and the reference path) and as well as the heading
+error (ie. the difference between the current heading and the path
+direction).
+
+#### navigation/cmd_vel
+
+**Message Type:** geometry_msgs/Twist
+
+**Description:** This output commanded velocity from the autonomy
+software (OutdoorNav) to control the velocity of the platform. It is
+commonly relayed directly into the UGV\'s velocity controller.
+
+#### safety/safety_stop
+
+**Message Type:** std_msgs/Bool
+
+**Description:** Flag denoting if autonomy should be stopped due to any
+of the following reasons: emergency stop active, one of the sensors has
+triggered the safety monitor watchdog.
+
+#### safety/watchdog_status (IN DEVELOPMENT)
+
+**Message Type:** [cpr_safety_msgs/WatchdogStatus](#msg-safety-watchdog)
+
+**Description:** Provides a list of status flags for each of the
+possible sensors that may trigger a safety stop. The watchdog will
+trigger if the sensor times out (ie. does not publish a relevant ROS
+message for 1 second).
+
+------------------------------------------------------------------------
+
+### Topics Subscribed to by Autonomy
+
+The OutdoorNav software subscribes to the topics in this section. They
+can be used to control the behaviour of OutdoorNav.
+
+#### platform/odom
+
+**Message Type:** nav_msgs/Odometry
+
+**Description:** Platform-level wheel odometry.
+
+#### mission/cancel
+
+**Message Type:** actionlib_msgs/GoalID
+
+**Description:** This topic is used to cancel all the missions that have
+been sent to the OutdoorNav software.
+
+#### mission/goal
+
+**Message Type:** cpr_navigation_msgs/msg/MissionActionGoal
+
+**Description:** This topic is used to send a goal to the OutdoorNav
+software. The goal can consist of a series of Waypoints and must include
+a Goal point.
+
+------------------------------------------------------------------------
+
+### Services Exported by Autonomy
+
+#### control_selection/set_mode
+
+**Service Type:** [cpr_control_msgs/srv/SetControlMode](#srv-set-control-mode)
+
+**Description:** Change the current control mode from NEUTRAL to MANUAL
+or AUTONOMY.
+
+#### control_selection/autonomy_pause
+
+**Service Type:** std_srvs/SetBool
+
+**Description:** Pause the autonomy when it is currently in AUTONOMY
+mode. Will only pause when autonomy is active.
+
+#### control_selection/autonomy_resume
+
+**Service Type:** std_srvs/SetBool
+
+**Description:** Resume the autonomy when it is current mode is in
+AUTONOMY. Will only resume if the robot is in a paused state.
+
+#### localization/set_datum
+
+**Service Type:** [cpr_localization_msgs/srv/SetDatum](#srv-set-datum)
+
+**Description:** This service is used to manually set the datum
+parameters of OutdoorNav running on the UGV. After setting the datum
+parameter, this service also reinitializes the states of the
+localization according to the current sensor readings. If you are
+sending a mission to the UGV without using the UI and through the API,
+you must call this service before sending the mission.
+
+#### localization/set_pose (IN DEVELOPMENT)
+
+**Service Type:**
+
+**Description:** This service can be used to reset or reinitialize the
+localization of the UGV.
+
+#### navigation/set_collision_avoidance
+
+**Service Type:** std_srvs/SetBool
+
+**Description:** Modify the state of the collision avoidance feature. If
+True, collision avoidance is ENABLED and the robot will use its lidar(s)
+to detect and maneuver around obstacles. If False, collision avoidance
+is DISABLED and the robot will NOT use its lidar(s) to detect and
+maneuver around obstacles. Disabling this feature is not recommended and
+should be used with caution.
+
+:::note
+
+1.  This feature does not take effect immediately when the service is
+    called, but only takes effect at the next Goal.
+
+2. Disabling collision avoidance also disables the continuous planner, in such a case where the
+   continuous planner is enabled. When re-enabling the collision avoidance,
+   the continuous planner must also be re-enabled using the following API service.
+
+:::
+
+#### navigation/set_continuous_planner
+
+**Service Type:** std_srvs/SetBool
+
+**Description:** Modify the state of the continuous planning feature. If
+True, continuous planning is ENABLED and the robot will proactively
+attempt to generate a path around detected obstacles. If False,
+continuous planning is DISABLED and the robot will stop in front of
+obstacles before generating a path around the obstacle.
+
+:::note
+
+1.  This feature takes effect immediately once the service is called.
+2.  This service needs to be called if you are re-enabling the collision
+    avoidance and want the continuous planner to be active. Disabling
+    collision avoidance will have disabled the continous planner.
+
+:::
+
+#### navigation/set_path_smoother
+
+**Service Type:** [cpr_navigation_msgs/srv/SetPathSmoother](#srv-set-path-smoother)
+
+**Description:** Modify the state of the path smoothing feature. If
+True, path smoothing is ENABLED and curved paths will be generated
+according to the specified turning radius. If False, path smoothing is
+DISABLED and point-to-point paths will be generated.
+
+:::note
+
+This feature takes effect immediately once the service is called.
+
+:::
+
+#### navigation/set_path shifter
+
+**Service Type:** [cpr_navigation_msgs/srv/SetPathShifter](#srv-set-path-shifter)
+
+**Description:** Modify the state of the path shifting feature. If True,
+path shifting is ENABLED and the reference path will be automatically
+shifted as it veers off the reference path (to prevent oscillations). If
+False, path shifting is DISABLED and normal behaviour is active.
+
+:::note
+
+This feature takes effect immediately once the service is called.
+
+:::
+
+#### navigation/set_stop_distance (IN DEVELOPMENT)
+
+**Service Type:** [cpr_navigation_msgs/srv/SetStopDistance](#srv-set-stop-distance)
+
+**Description:** Modify the state of the stop distance feature. If True,
+the stop distance feature is ENABLED and the robot will stop the
+specified distance from obstacles. If False, the stop distance feature
+is DISABLED and the robot will stop the default distance from obstacles.
+
+#### navigation/set_delay_compensation (IN DEVELOPMENT)
+
+**Service Type:** [cpr_navigation_msgs/srv/SetDelayCompensation](#srv-set-delay-compensation)
+
+**Description:** Modify the state of the delay compensation feature. If
+True, delay compensation is ENABLED and the controller will compensate
+for low-level mechanical delays. If False, delay compensation is
+DISABLED and the normal behaviour is expected.
+
+------------------------------------------------------------------------
+
+### Actions Exported by Autonomy
+
+#### localization/survey
+
+**Action Type:** [cpr_localization_msgs/action/SurveyBaseStation](#action-survey-base-station)
+
+**Description:** Start surveying the base station, if available.
+
+#### mission
+
+**Action Type:** [cpr_navigation_msgs/action/Mission](#action-mission)
+
+**Description:** Send goals for execution by the robot. This will
+include the goal, the viapoint(s), tasks, goal tolerances and goal
+heading.
+
+#### dock
+
+**Action Type:** [cpr_dock_msgs/action/Dock](#action-dock)
+
+**Description:** Send the robot to the charging dock, if the docking
+package has been included.
+
+## Definitions {#api-definitions}
+
+### Message Definitions
+
+#### cpr_control_msgs/ControlMode {#msg-control-mode}
+
+``` 
+# Control mode message
+
+int8 NEUTRAL=0
+int8 MANUAL=1
+int8 AUTONOMY=2
+
+int8 mode
+```
+
+#### cpr_control_msgs/ControlSelectionState {#msg-control-selection-state}
+
+``` 
+# The complete state of the control selection module. This message includes the autonomy state as well as the navigation mode.
+
+ControlState autonomy
+ControlMode mode
+```
+
+#### cpr_control_msgs/ControlState {#msg-control-state}
+
+``` 
+# The autonomy state message, The autonomy can be either enabled/disabled and active/paused.
+
+bool enabled
+bool paused
+```
+
+#### cpr_localization_msgs/LocalizationStatus {#msg-localization-status}
+
+``` 
+# Localization status message for all sources of localization
+
+# the localization accuracy as a percentage value (covariance?)
+float32 accuracy
+
+# status information related to the GPS receiver units
+GPSStatus[] gps
+
+bool dead_reckoning
+
+uint8 sensors_used  # IN DEVELOPMENT # Bitfield denoting which sensors are used in the localization
+```
+
+#### cpr_localization_msgs/GPSStatus {#msg-gps-status}
+
+``` 
+# GPS receiver status message
+
+uint8 MODE_NO_FIX = 0
+uint8 MODE_SPP = 1
+uint8 MODE_SBAS = 2
+uint8 MODE_FLOAT_RTK = 3
+uint8 MODE_FIXED_RTK = 4
+
+uint8 fix_mode            # No Fix, Single Point Position (SPP), SBAS, Float RTK, Fixed RTK according to enum above.
+
+uint8 num_connected_sats  # Number of satellites connected to the antenna/receiver
+uint8[] cnr_sats          # The carrier-to-noise ratio of each connected satellite
+
+float64 correction_age    # IN DEVELOPMENT
+```
+
+#### cpr_navigation_msgs/Mission {#msg-navigation-mission}
+
+``` 
+# Message definition for an OutdoorNav mission
+
+std_msgs/Header header
+
+# The goal's final waypoint
+cpr_navigation_msgs/Waypoint goalpoint
+
+# If a final heading is to be set for the goal, the following fields are required
+bool enable_final_heading
+float64 goalpoint_heading
+
+# If a goal tolerance is to be set for the goal, the following fields are required
+bool enable_goal_tolerance
+float64 position_tolerance
+float64 yaw_tolerance
+
+# The intermediate waypoints on the way to the goal
+cpr_navigation_msgs/Waypoint[] viapoints
+
+# The list of internal/external software calls that can be assigned to the goal. These will be called in the order that they are added to the list.
+cpr_navigation_msgs/Task[] tasks
+```
+
+#### cpr_navigation_msgs/CurrentGoalInfo {#msg-current-goal-info}
+
+``` 
+# Message contains an identifier for the goal, as well as the final goal heading and tolerances
+
+string goal_id
+cpr_navigation_msgs/Waypoint goal
+float64 goal_heading
+float64 goal_position_tolerance
+float64 goal_heading_tolerance
+cpr_navigation_msgs/Waypoint[] viapoints
+float64[] viapoint_headings
+float64[] viapoint_position_tolerances
+float64[] viapoint_heading_tolerances
+```
+
+#### cpr_navigation_msgs/DistanceToGoal {#msg-distance-to-goal}
+
+``` 
+# Message includes Euclidean and Path distance to goal
+
+float32 euclidean
+float32 path
+```
+
+#### cpr_navigation_msgs/MotionState {#msg-motion-state}
+
+``` 
+# Motion state message to indicate the current motion, expected motion and the direction of travel of the robot.
+
+# State pertaining to current motion of the robot.
+uint8 MOTION_NORMAL=10
+uint8 MOTION_SLOWING=11
+uint8 MOTION_STOPPED=12
+uint8 MOTION_REVERSE=13
+uint8 motion
+
+# State pertaining to the robot's movement along the path. Predictive, ie state
+# will be INDICATOR_LEFT_TURN if in or approaching a left turn.
+uint8 INDICATOR_NORMAL=20
+uint8 INDICATOR_LEFT_TURN=21
+uint8 INDICATOR_RIGHT_TURN=22
+uint8 INDICATOR_CLOCKWISE=23
+uint8 INDICATOR_COUNTERCLOCKWISE=24
+uint8 INDICATOR_HAZARD=25
+uint8 indicator
+
+# Direction of travel of the robot relative to its physical forward direction.
+uint8 DIRECTION_FORWARD=30
+uint8 DIRECTION_REVERSE=31
+uint8 direction
+```
+
+#### cpr_navigation_msgs/NavigationState {#msg-navigation-state}
+
+``` 
+# Message containing the current navigation state(s). Navigation may be in multiple states.
+
+uint8 STATE_IDLE = 0
+uint8 STATE_COMPUTE_PATH = 1
+uint8 STATE_EXECUTE_PATH = 2
+uint8 STATE_REPLAN = 3
+uint8 STATE_NAVIGATING_AROUND_OBSTACLE = 4
+uint8 STATE_RECOVERY = 5
+uint8 STATE_LOST = 6
+uint8 STATE_DONE = 7
+uint8 STATE_SAFETY_STOP = 8
+uint8 STATE_PAUSE = 9
+uint8 STATE_DISABLE = 10
+
+uint8[] states
+```
+
+#### cpr_navigation_msgs/OdomIntent {#msg-odom-intent}
+
+``` 
+# Message containing current and predicted odom related information
+
+std_msgs/Header header
+
+# Current and predicted odom
+perception_navigation_msgs/Odom2DLean odom
+perception_navigation_msgs/Odom2DLean predicted_odom
+
+# Time offset corresponding to prediction
+float32 dt
+```
+
+#### cpr_navigation_msgs/PointVector {#msg-point-vector}
+
+``` 
+# Vector of point vectors (for GUI)
+std_msgs/Header header
+
+cpr_navigation_msgs/Vector2D[] cloud
+```
+
+#### cpr_navigation_msgs/Progress (BETA) {#msg-navigation-progress}
+
+``` 
+# Message containing the completion percentage of the currently executed path and the current goal.
+
+float32 path_progress
+float32 goal_progress
+float32 mission_progress
+```
+
+#### cpr_navigation_msgs/ScanPoints {#msg-scan-points}
+
+``` 
+# Message definition for the detection points used by the navigation that relate to the detected obstacles.
+
+std_msgs/Header header
+
+string[] frames_vector
+cpr_navigation_msgs/PointVector[] cloud_vector
+```
+
+#### cpr_navigation_msgs/Task {#msg-navigation-task}
+
+``` 
+# Message definition for the tasks (ie. internal/external software calls) that can be assigned to an OutdoorNav mission.
+
+
+string task_name
+string service_call
+string version
+float64[] floats
+string[] strings
+```
+
+#### cpr_navigation_msgs/TrackError {#msg-track-error}
+
+``` 
+# The path error message containing the off-path cross track error and the relative heading error to the path direction
+
+std_msgs/Header header
+float32 cross_track_error
+float32 heading_error
+```
+
+#### cpr_navigation_msgs/Vector2D {#msg-vector-2d}
+
+``` 
+# 2D Vector of floats (used for GUI)
+
+float32[2] point
+```
+
+#### cpr_navigation_msgs/Waypoints {#msg-navigation-waypoints}
+
+``` 
+float64 x
+float64 y
+```
+
+#### cpr_onboard_systems_msgs/WirelessConnection {#msg-onboard-systems-wireless}
+
+``` 
+# Message definition for the wireless connection properties.
+
+float32 bitrate  # Mb/s
+int16 txpower  # dBm
+
+# Fractional link quality number preserved in raw
+# field, resolved to decimal for link_quality field.
+string link_quality_raw
+float32 link_quality
+
+int16 signal_level  # dBm
+int16 noise_level  # dBm
+
+string essid
+string bssid
+float64 frequency
+```
+
+#### cpr_platform_msgs/PlatformID {#msg-platform-id}
+
+``` 
+# Platform ID message containing the model, serial #, hardware and firmware versions
+
+string model
+string serial_id
+string hardware_revision
+string firmware_revision
+```
+
+#### cpr_safety_msgs/WatchdogStatus {#msg-safety-watchdog}
+
+``` 
+# Watchdog status message containing information related to sensor monitoring, emergency stop and safety stops
+
+bool[] gps_watchdog_triggered
+bool[] lidar_watchdog_triggered
+bool[] camera_watchdog_triggered
+```
+
+#### Standard ROS Messages
+
+-   [actionlib_msgs/GoalID](http://docs.ros.org/en/noetic/api/actionlib_msgs/html/msg/GoalID.html)
+-   [diagnostic_msgs/DiagnosticArray](http://docs.ros.org/en/noetic/api/diagnostic_msgs/html/msg/DiagnosticArray.html)
+-   [geometry_msgs/PolygonStamped](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/PolygonStamped.html)
+-   [geometry_msgs/Polygon](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Polygon.html)
+-   [geometry_msgs/PoseArray](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/PoseArray.html)
+-   [geometry_msgs/Twist](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Twist.html)
+-   [nav_msgs/OccupancyGrid](http://docs.ros.org/en/noetic/api/nav_msgs/html/msg/OccupancyGrid.html)
+-   [nav_msgs/Odometry](http://docs.ros.org/en/noetic/api/nav_msgs/html/msg/Odometry.html)
+-   [nav_msgs/Path](http://docs.ros.org/en/noetic/api/nav_msgs/html/msg/Path.html)
+-   [sensor_msgs/Imu](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/Imu.html)
+-   [sensor_msgs/LaserScan](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/LaserScan.html)
+-   [sensor_msgs/NavSatFix](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/NavSatFix.html)
+-   [sensor_msgs/PointCloud2](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/PointCloud2.html)
+-   [std_msgs/Bool](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/Bool.html)
+-   [std_msgs/Empty](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/Empty.html)
+-   [std_msgs/String](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/String.html)
+-   [tf2_msgs/TFMessage](http://docs.ros.org/en/noetic/api/tf2_msgs/html/msg/TFMessage.html)
+
+------------------------------------------------------------------------
+
+### Service Definitions
+
+#### cpr_control_msgs/srv/SetControlMode {#srv-set-control-mode}
+
+``` 
+# Service definition to set the control mode
+
+cpr_control_msgs/ControlMode mode
+---
+```
+
+#### cpr_localization_msgs/srv/SetDatum {#srv-set-datum}
+
+``` 
+# Service definition to set the datum with a latitude (lat) and longitude (lon)
+
+float32 lat
+float32 lon
+---
+bool success
+```
+
+#### cpr_navigation_msgs/srv/SetDelayCompensation {#srv-set-delay-compensation}
+
+``` 
+# Service definition to enable/disable the delay compensation feature. If enabling, the delay to compensate for must be specified in the request.
+
+bool enable_delay_compensation
+uint16 delay
+---
+bool success
+string message
+```
+
+#### cpr_navigation_msgs/srv/SetPathSmoother {#srv-set-path-smoother}
+
+``` 
+# Service definition to enable/disable the path smoothing feature. If enabling, minimum turning radius must be specified in the request.
+
+bool enable_path_smoother
+float32 turn_radius
+float32 step_size
+---
+bool success
+string message
+```
+
+#### cpr_navigation_msgs/srv/SetPathShifter {#srv-set-path-shifter}
+
+``` 
+# Service definition to enable/disable the path smoothing feature. If enabling, minimum turning radius must be specified in the request.
+
+bool enable_path_shifter
+float32 path_shift_offset
+float32 path_shift_time
+---
+bool success
+string message
+```
+
+#### cpr_navigation_msgs/srv/SetStopDistance {#srv-set-stop-distance}
+
+``` 
+# Service definition to enable/disable the stop distance. If enabling, the stop distance must be specified in the request.
+
+bool enable_stop_distance
+float32 stop_distance
+---
+bool success
+string message
+```
+
+#### Standard ROS Services
+
+-   [std_srvs/Empty](http://docs.ros.org/en/noetic/api/std_srvs/html/srv/Empty.html)
+-   [std_srvs/SetBool](http://docs.ros.org/en/noetic/api/std_srvs/html/srv/SetBool.html)
+
+------------------------------------------------------------------------
+
+### Action Definitions
+
+#### cpr_localization_msgs/action/SurveyBaseStation {#action-survey-base-station}
+
+``` 
+# Action definition for surveying the base station
+
+# goal
+# the number of GPS fixes that will be used to compute to surveyed position
+uint32 number_of_desired_fixes
+---
+# result
+bool success
+---
+# feedback
+# current progress, as a percentage, of the surveying
+float32 percent_complete
+```
+
+#### cpr_navigation_msgs/action/Mission {#action-mission}
+
+``` 
+# Action definition for sending a mission to the Clearpath OutdoorNav software
+
+# goal
+cpr_navigation_msgs/Mission mission
+---
+# result
+bool success
+---
+# feedback
+string state
+```
+
+#### cpr_dock_msgs/action/Dock {#action-dock}
+
+``` 
+# Action definition for sending a Clearpath UGV to its charging dock.
+
+# goal
+uint8 DOCK = 0
+uint8 UNDOCK = 1
+float32 type
+float32 enable_predock
+---
+# result
+bool success
+---
+# feedback
+string state
+float64 dist_to_dock # (IN DEVELOPMENT)
+```
