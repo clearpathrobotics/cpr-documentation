@@ -1,0 +1,66 @@
+---
+title: APT and Rosdep Configuration
+sidebar_label: APT and Rosdep Configuration
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+To install the IndoorNav software on your robot you must add the ROS1,
+ROS2, and Clearpath Robotics package servers to your apt configuration.
+This is normally done automatically by Clearpath's OS installation
+media, but if you are missing any of these sources, use the following
+commands to add them
+
+**ROS1 Noetic**
+
+```bash
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo apt-key add -
+sudo apt-get update
+```
+
+**ROS2 Foxy**
+
+```bash
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(source /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key  -o /usr/share/keyrings/ros-archive-keyring.gpg
+sudo apt-get update
+```
+
+**Clearpath Robotics**
+
+```bash
+sudo sh -c 'echo "deb https://packages.clearpathrobotics.com/stable/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/clearpath-latest.list'
+wget https://packages.clearpathrobotics.com/public.key -O - | sudo apt-key add -
+sudo apt-get update
+```
+
+Once you have enabled the necessary package sources, make sure rosdep
+can resolve all the necessary dependencies:
+
+```bash
+sudo wget https://raw.githubusercontent.com/clearpathrobotics/public-rosdistro/master/rosdep/50-clearpath.list -O /etc/ros/rosdep/sources.list.d/50-clearpath.list
+rosdep update
+```
+
+:::note
+
+Complete ROS Noetic installation instructions can be found at
+<http://wiki.ros.org/noetic/Installation/Ubuntu>
+
+:::
+
+:::note
+
+Complete ROS2 Foxy installation instructions can be found at
+<https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html>
+
+:::
+
+:::note
+
+Complete instructions for Clearpath APT sources can be found at
+<http://packages.clearpathrobotics.com>
+
+:::

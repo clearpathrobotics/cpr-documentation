@@ -1,0 +1,32 @@
+---
+title: Automatically Starting IndoorNav
+sidebar_label: Automatically Starting IndoorNav
+sidebar_position: 5
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+If you want IndoorNav to start automatically when the robot boots you
+may create a systemd job to start it automatically:
+
+```bash
+rosrun cpr_indoornav_ROBOT install
+```
+
+where `ROBOT` is your supported Clearpath platform:
+
+-   `dingo`
+-   `husky`
+-   `jackal`
+-   `ridgeback`
+
+This command will create a new systemd job called `cpr-indoornav` which
+will start automatically when the robot boots. This systemd job depends
+on the robot's core `ros` systemd job. If you need to restart IndoorNav
+it is recommended that you restart both services:
+
+```bash
+sudo systemctl stop cpr-indoornav
+sudo systemctl restart ros
+sudo systemctl start cpr-indoornav
+```

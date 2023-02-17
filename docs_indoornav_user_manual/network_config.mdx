@@ -1,0 +1,286 @@
+---
+title: "Appendix C: Network Configuration"
+sidebar_label: "Appendix C: Network Configuration"
+sidebar_position: 8
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+Normally the network bridge and port forwarding are configured
+automatically when using the `cpr_indoornav setup` script (see
+[Installing Required Software](/docs_indoornav_user_manual/base_robot_config/config_install_required_sw). This
+appendix explains the network configuration of the robot's PC in more
+detail.
+
+## Configuring the Network Bridge {#config-network-bridge}
+
+The first step to configure your robot for use with IndoorNav is to make
+sure that the ethernet communication between the robot's PC and the
+IndoorNav backpack works. All Clearpath robots are configured to bridge
+their physical ethernet ports together. This allows all the ports on the
+motherboard to operate on multiple subnets simultaneously. By default
+Clearpath robots use the `192.168.131.0/24` subnet for their internal
+network, with all IP-based sensors and peripherals operating on this
+subnet.
+
+IndoorNav requires modifying the default bridge to remove a single
+ethernet port, `eno1` by default, from the bridge and assigning it to
+the `10.252.252.0/24` subnet. This physical port will be dedicated to
+communicating with the IndoorNav backpack PC.
+
+To configure `eno1` to be used to communicate with the backpack PC,
+modify `/etc/netplan/50-clearpath-bridge.yaml` as follows. The example
+below bridges interfaces with the identifiers `eth*`, `enp*`, `enx*` and
+`usb*` together on the `192.168.131.0/24` subnet.
+
+```yaml
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    # dedicated port for communicating with the IndoorNav backpack
+    eno1:
+      dhcp4: no
+      dhcp6: no
+      addresses:
+        - 10.252.252.100/24
+
+    # bridge all other ports together on the 192.168.131.0/24 subnet
+    bridge_eth:
+      dhcp4: no
+      dhcp6: no
+      match:
+        name: eth*
+    bridge_enp:
+      dhcp4: no
+      dhcp6: no
+      match:
+        name: enp*
+    bridge_enx:
+      dhcp4: no
+      dhcp6: no
+      match:
+        name: enx*
+    bridge_usb:
+      dhcp4: no
+      dhcp6: no
+      match:
+        name: usb*
+  bridges:
+    br0:
+      dhcp4: yes
+      dhcp6: no
+      interfaces: [bridge_eth, bridge_enp, bridge_enx, bridge_usb]
+      addresses:
+        - 192.168.131.1/24
+```
+
+Instead of using `eno1` you can use a specific USB to ethernet dongle,
+for example:
+
+```yaml
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    # dedicated port for communicating with the IndoorNav backpack
+    enx70886b8f17a5:
+      dhcp4: no
+      dhcp6: no
+      addresses:
+        - 10.252.252.100/24
+
+    # bridge all other ports together on the 192.168.131.0/24 subnet
+    bridge_eth:
+      dhcp4: no
+      dhcp6: no
+      match:
+        name: eth*
+    bridge_eno:
+      dhcp4: no
+      dhcp6: no
+      match:
+        name: eno*
+    bridge_enp:
+      dhcp4: no
+      dhcp6: no
+      match:
+        name: enp*
+  bridges:
+    br0:
+      dhcp4: yes
+      dhcp6: no
+      interfaces: [bridge_eth, bridge_eno, bridge_enp]
+      addresses:
+        - 192.168.131.1/24
+```
+
+If you made any changes to the bridge configuration reboot the robot
+now. Once the robot and backpack PC are both powered-on, connect them
+with an ethernet cable connected to `eno1` on the backpack and the
+IndoorNav port you configured above. Run the following command to check
+that you can communicate with the backpack PC:
+
+```bash
+ping 10.252.252.1
+```
+
+Once you have configured the network interfaces and confirmed that the
+communication works, ensure that the dedicated IndoorNav port is set in
+the `cpr_indoornav` package's `config/cyclone_dds.xml` file:
+
+``` xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<CycloneDDS xmlns="https://cdds.io/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
+  <Domain id="any">
+    <General>
+      <!--
+        This assumes that eno1 is configured to be a static port dedicated to communicating
+        with the autonomy backpack. By default this should use the 10.252.252.0/24 subnet
+        with the robot's PC at 10.252.252.100 and the autonomy PC at 10.252.252.1
+      -->
+      <NetworkInterfaceAddress>eno1</NetworkInterfaceAddress>
+      <AllowMulticast>true</AllowMulticast>
+    </General>
+    <Internal>
+      <LeaseDuration>5 min</LeaseDuration>
+    </Internal>
+  </Domain>
+</CycloneDDS>
+```
+
+## Configuring Apache2 Proxy Server
+
+IndoorNav operates a web-based mapping GUI that you can use to plan
+routes, mark areas for specific tasks, view/edit the map, and the like.
+To access this interface you should install the `apache2` package and
+configure it to act as a proxy server for the IndoorNav backpack:
+
+```bash
+sudo apt-get install apache2
+sudo a2enmod proxy
+sudo a2enmod proxy_http
+sudo a2enmod proxy_wstunnel
+sudo a2enmod rewrite
+```
+
+Create (or edit) `/etc/apache2/conf-enabled/clearpath.conf` to contain
+the following:
+
+``` 
+Listen 2000
+Listen 2001
+Listen 5000
+Listen 9091
+
+<VirtualHost *:2000>
+  ProxyRequests On
+  ProxyVia On
+
+  ProxyPass / http://10.252.252.1:2000/
+  ProxyPassReverse / http://10.252.252.1:2000/
+</VirtualHost>
+
+<VirtualHost *:2001>
+  ServerName HOSTNAME       # replace HOSTNAME with your robot's hostname!!
+
+  RewriteEngine On
+
+  RewriteCond %{HTTP:Upgrade} =websocket [NC]
+  RewriteRule /(.*)           ws://10.252.252.1:2001/$1 [P,L]
+
+  RewriteCond %{HTTP:Upgrade} !=websocket [NC]
+  RewriteRule /(.*)           ws://10.252.252.1:2001/$1 [P,L]
+
+  ProxyPass / http://10.252.252.1:2001/
+  ProxyPassReverse / http://10.252.252.1:2001/
+</VirtualHost>
+
+<VirtualHost *:5000>
+  ProxyRequests On
+  ProxyVia On
+
+  ProxyPass / http://10.252.252.1:5000/
+  ProxyPassReverse / http://10.252.252.1:5000/
+</VirtualHost>
+
+<VirtualHost *:9091>
+  ServerName HOSTNAME       # replace HOSTNAME with your robot's hostname!!
+
+  RewriteEngine On
+
+  RewriteCond %{HTTP:Upgrade} =websocket [NC]
+  RewriteRule /(.*)           ws://10.252.252.1:9091/$1 [P,L]
+
+  RewriteCond %{HTTP:Upgrade} !=websocket [NC]
+  RewriteRule /(.*)           ws://10.252.252.1:9091/$1 [P,L]
+
+  ProxyPass / http://10.252.252.1:9091/
+  ProxyPassReverse / http://10.252.252.1:9091/
+</VirtualHost>
+```
+
+Make sure to replace the two instances of `HOSTNAME` in the file above
+with your robot's hostname, e.g. `cpr-j100-1234`
+
+Once `/etc/apache2/conf-enabled/clearpath.conf` has been modified,
+restart the `apache2` service:
+
+```bash
+sudo systemctl restart apache2
+```
+
+## Configuring IP Tables
+
+:::warning
+
+It has been observed that using `iptables` to enable port-forwarding may
+cause errors with the ROS2 daemon. We recommend using the Apache Proxy
+Server method described above.
+
+:::
+
+Instead of using Apache2 to act as a proxy server, you can instead use
+the Linux Kernel's `iptables` to enable port-forwarding. If you enable
+`iptables` you should also disable the `apache2` service to prevent the
+proxy server from also listening on these ports:
+
+```bash
+sudo systemctl stop apache2
+sudo systemctl disable apache2
+```
+
+To configure `iptables` run the following commands:
+
+```bash
+sudo sysctl net.ipv4.ip_forward=1
+sudo iptables --policy FORWARD ACCEPT
+sudo iptables -t nat -A PREROUTING -p tcp --dport 2000 -j DNAT --to-destination 10.252.252.1:2000
+sudo iptables -t nat -A PREROUTING -p tcp --dport 2001 -j DNAT --to-destination 10.252.252.1:2001
+sudo iptables -t nat -A PREROUTING -p tcp --dport 5000 -j DNAT --to-destination 10.252.252.1:5000
+sudo iptables -t nat -A PREROUTING -p tcp --dport 9091 -j DNAT --to-destination 10.252.252.1:9091
+sudo iptables -t nat -A POSTROUTING -j MASQUERADE
+```
+
+To make these changes permanent you should edit `/etc/sysctl.conf` and
+make sure that IPv4 forwarding is enabled:
+
+```bash
+net.ipv4.ip_forward=1
+```
+
+and install the `iptables-persistent` package:
+
+```bash
+sudo apt-get install iptables-persistent
+```
+
+If this package is already installed you can update the rules by running
+
+```bash
+sudo dpkg-reconfigure iptables-persistent
+```
+
+Select **Yes** when asked if you want to save the IPv4 rules and **No**
+if you want to save the IPv6 rules.
