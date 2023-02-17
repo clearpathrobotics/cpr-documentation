@@ -1,0 +1,27 @@
+---
+title: IndoorNav Software Overview
+sidebar_label: IndoorNav Software Overview
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+This section will explain the basic usage of IndoorNav. For more
+complete documentation, and a deeper dive into all of the available
+features, please refer to the guides at
+[http://docs.ottomotors.com](https://docs.ottomotors.com/Archive/2-22/out/index-222.html?lang=en).
+
+The following figure shows the basic layout of the networking for
+IndoorNav.
+
+<img src="/img/indoornav_images/IndoorNav/indoornav-network.png" width="400px" />
+
+The robot's main PC is located inside the robot and runs the `roscore`
+process. All sensors are connected to the robot's main PC over USB or
+ethernet, as required by the specific sensor.
+
+The IndoorNav backpack PC communicates over an ethernet connection with
+the main PC. All of the localization and path-planning is done on the
+backpack PC. The backpack PC does not have any direct connection to the
+wireless network; all traffic to/from the user's web browser is routed
+via the robot's main PC.

@@ -1,0 +1,61 @@
+---
+title: "Appendix B: Installing Backpack Software"
+sidebar_label: "Appendix B: Installing Backpack Software"
+sidebar_position: 7
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+:::note
+
+Before you can configure the IndoorNav backpack, you must contact
+Clearpath Robotics' customer support and ask to be sent an archive
+containing additional files needed. You will need to copy this archive
+onto the backpack PC as noted below.
+
+:::
+
+Your IndoorNav backpack PC comes with the latest supported version of
+IndoorNav pre-installed. If you need to update or reinstall the software
+on the backpack PC, first update the OS using the procedure outlined
+here: <https://docs.ottomotors.com/en/51722-52149-updating-individual-robots.html>.
+
+Once the OS has been updated you will need to connect a monitor,
+keyboard, and wired internet connection to backpack PC. Power-on the PC
+and log in using the backpack's default username and password.
+
+After logging in you may now copy the `.tar.gz` file supplied by
+Clearpath Robotics onto the backpack. Make a note of the path to this
+file, as you will need it in the following steps.
+
+Run the following commands to establish a wired internet connection:
+
+```bash
+sudo ip link delete sbr0 type bridge
+sudo dhclient eno1
+```
+
+You may need to replace `eno1` with a different interface ID, depending
+on the physical ethernet port you have connected to your router. Other
+common examples are `enp2s0`, `enp3s0`, and `eth0`. Running the `ip a`
+command will show all available network interfaces.
+
+Run the following commands to download the setup script to complete the
+rest of the backpack software installation:
+
+```bash
+cd $HOME
+git clone https://github.com/clearpathrobotics/cpr-indoornav-install.git
+cd cpr-indoornav-install
+bash install.sh
+```
+
+The `install.sh` script is interactive and will prompt you for the
+following pieces of information (not necessarily in this order):
+
+- a new hostname for the backpack PC
+- the hostname of your robot's primary PC
+- the path to the `.tar.gz` file you copied onto the backpack earlier
+
+You must power-cycle the backpack PC after running
+`install.sh` to finalize the configuration.

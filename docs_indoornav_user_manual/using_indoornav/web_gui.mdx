@@ -1,0 +1,41 @@
+---
+title: Web GUI
+sidebar_label: Web GUI
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+The easiest method of interacting with IndoorNav is via the web GUI. The
+following conditions must be met in order for the web GUI to function
+correctly:
+
+1.  IndoorNav is running (see [Manually Starting IndoorNav](/docs_indoornav_user_manual/base_robot_config/config_starting_manually)
+    or [Automatically Starting IndoorNav](/docs_indoornav_user_manual/base_robot_config/config_starting_automatically),
+2.  the robot is connected to a wireless access point,
+3.  your laptop or desktop is connected to the same network as the
+    robot,
+4.  you know the robot's IP address on the wireless network (or can
+    resolve its hostname to the wireless IP address), and
+5.  port-forwarding has been enabled on the robot.
+
+The web interface operates over `http` on port `TCP/5000`.
+
+<center>
+  <figure>
+    <img src="/img/indoornav_images/IndoorNav/webGUI.png" width="600px" />
+  </figure>
+</center>
+
+To access the web interface, open your web browser and navigate to the
+robot's IP address on port 5000, e.g.: ```http://192.168.0.197:5000```
+
+:::note
+
+Google Chrome 62.x or later is recommended. Other modern browsers, such
+as Firefox 95.x or later and Chromium 95.x or later will likely also
+work, but have not been tested as thoroughly as Google Chrome.
+
+:::
+
+The following sections explain specific features of the Web GUI.

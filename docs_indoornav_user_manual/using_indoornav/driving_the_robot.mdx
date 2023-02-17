@@ -1,0 +1,118 @@
+---
+title: Driving the Robot
+sidebar_label: Driving the Robot
+sidebar_position: 3
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+IndoorNav offers several different methods to drive the robot, in
+addition to using the included game controller, interactive markers in
+Rviz, or publishing directly to `/cmd_vel`.
+
+:::warning
+
+CAUTION! Failure to follow these instructions may result in MINOR or
+MODERATE INJURY or DAMAGE to the system or property.
+
+:::
+
+:::warning
+
+IMPACT HAZARD! Always maintain a safe distance from a robot in
+operation. A robot being operated in manual mode should only be operated
+by personnel who have been trained and authorized according to the
+standards of the facility in which the robot is in use. Be aware of the
+Emergency Stop button locations.
+
+:::
+
+## Driving the Robot in Manual Mode
+
+:::note
+
+See [detailed documentation on manual driving](https://docs.ottomotors.com/Archive/2-22/out/en/51722-51784-driving-a-robot-in-manual-mode.html)
+for more information.
+
+:::
+
+The Web GUI allows teleoperation of the robot without using the included
+game controller. To enable manual driving, select either the Drive or
+Facility tab and use the on-screen controls in the lower-right corner,
+as shown in the figure below. Moving the virtual joystick up/down will
+drive the robot forward/backward, and moving it left/right will make the
+robot turn.
+
+<center>
+  <figure>
+    <img src="/img/indoornav_images/IndoorNav/driveControls.png" width="250px" />
+  </figure>
+</center>
+
+The first time you access the Web GUI after powering-on the robot, the
+robot may be in neutral. Click the <img src="/img/indoornav_images/IndoorNav/driveNeutralButton.png" width="16px" /> button to take the robot out of neutral.
+
+Clicking the <img src="/img/indoornav_images/IndoorNav/driveSettingsButton.png" width="16px" /> will open the drive settings, allowing you to adjust the
+robot's driving speed or disable manual driving, shown in the figure
+below.
+
+<center>
+  <figure>
+    <img src="/img/indoornav_images/IndoorNav/driveSpeed.png" width="400px" />
+  </figure>
+</center>
+
+## Driving the Robot in Autonomous Mode
+
+:::note
+
+See [detailed documentation on autonomous driving](https://docs.ottomotors.com/Archive/2-22/out/en/51722-51785-driving-a-robot-in-autonomous-mode.html)
+for more information.
+
+:::
+
+To drive the robot in autonomous mode the steps are:
+
+1.  Create a map. See [Making a Map](/docs_indoornav_user_manual/using_indoornav/maps#making-a-map) for
+    details.
+
+2.  Confirm that the **Manual** toggle is disabled and manual driving
+    mode is OFF. When disabled, the **Drive Mode** toggle is gray and a
+    **Move** button will be displayed.
+
+3.  Select **Move**.
+
+4.  Select the location on the map to which the robot should drive. The
+    joystick button will turn green and the orientation circle will be
+    displayed at the selected location on the map.
+
+5.  Move the green line inside the orientation circle to define the
+    direction in which the front of the robot should be directed when it
+    stops at the selected location.
+
+    <center>
+      <figure>
+        <img src="/img/indoornav_images/IndoorNav/driveAutonomousMode.png" width="200px" />
+      </figure>
+    </center>
+
+6.  Select **Go** to send the robot on its way. Select **Stop** to stop
+    the robot at any time.
+
+## Driving Using Endpoints
+
+:::note
+
+See [detailed documentation on driving using endpoints](https://docs.ottomotors.com/Archive/2-22/out/en/51722-51786-driving-a-robot-using-endpoints.html)
+for more information.
+
+:::
+
+To drive the robot using endpoints the steps are:
+
+1.  Create a map. See [Making a Map](/docs_indoornav_user_manual/using_indoornav/maps#making-a-map) for
+    details.
+2.  Add Endpoints to the map. See [Adding Endpoints](/docs_indoornav_user_manual/using_indoornav/maps#adding-endpoints) for details.
+3.  Select an Endpoint.
+4.  Select **Go** to send the robot on its way. Select **Stop** to stop
+    the robot at any time.
