@@ -155,7 +155,7 @@ const config = {
         },
       },
       footer: {
-        copyright: `Copyright © 2022 Clearpath Robotics Inc. All rights reserved.`,
+        copyright: `Copyright © 2023 Clearpath Robotics Inc. All rights reserved.`,
       },
       prism: {
         theme: lightCodeTheme,
