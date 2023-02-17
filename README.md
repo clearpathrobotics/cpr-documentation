@@ -109,6 +109,11 @@ When it is time to publish a numbered release of the user manual:
     - outdoornav_user_manual_versioned_sidebars/
     - outdoornav_user_manual_versions.json
 
+## Workflow for publishing OutdoorNav User Manual updates
+
+Follow the steps for the OutdoorNav User Manual workflow above, replacing
+**outdoornav** with **indoornav**.
+
 ## How should I write pages?
 
 1.  Refer to [Markdown's guide](https://www.markdownguide.org/basic-syntax/) for syntax
