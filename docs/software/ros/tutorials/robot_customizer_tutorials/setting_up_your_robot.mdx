@@ -164,7 +164,7 @@ model, and broadcast your robot's updated model in ROS.
 3.  Add the line in step 2. to the bottom of your robot's `.urdf.xacro`
     file.
 
-### Launch   {#robot-model-launch}
+### Launch {#robot-model-launch}
 
 1.  Create a `.launch` file that loads your robot's `.urdf.xacro` file
     into the `robot_description` parameter, and launches
@@ -201,7 +201,7 @@ model, and broadcast your robot's updated model in ROS.
     learn how to include the sensors' drivers launch files to your
     robot.
 
-## Including Sensor Driver Launch Files   {#sensor-drivers}
+## Including Sensor Driver Launch Files {#sensor-drivers}
 
 One of the features of the Robot Customizer ROS package is automatically
 launching the drivers launch files of the sensors attached to your
@@ -219,6 +219,6 @@ simulating your robot and the sensors).
 1.  Continuing from the [previous section](#robot-model-launch), add
     the following line to the bottom of your robot's `.launch` file:
 
-    ``` bash
+    ```bash
     <include file="$(find cpr_robot_customizer)/launch/accessories.launch"/>
     ```
