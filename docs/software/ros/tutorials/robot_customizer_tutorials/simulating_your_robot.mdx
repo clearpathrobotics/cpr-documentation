@@ -1,0 +1,33 @@
+---
+title: Simulating Your Robot
+sidebar_label: Simulating Your Robot
+sidebar_position: 4
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+## Simulating with Gazebo
+
+If you do not have a physical robot and physical sensors, you can
+instead simulate everything using `gazebo`.
+
+The Robot Customizer ROS package provides a useful `.launch` file for
+simulation in `gazebo`. This file is called `gazebo.launch`, and can be
+found
+[here](https://github.com/clearpathrobotics/cpr_robot_customizer/blob/noetic-devel/launch/gazebo.launch).
+
+To use it, simply launch `gazebo.launch` and provide the
+`description_launch` argument with the path to your robot's `.launch`
+file. For example, you can simulate the model of the example
+`generic_robot.urdf.xacro` robot along with the SICK LMS1xx 2D laser
+scanner attached to it. In terminal, run:
+
+``` bash
+roslaunch cpr_robot_customizer gazebo.launch description_launch:=/home/administrator/catkin_ws/src/cpr_robot_customizer/example/description.launch
+```
+
+Once `gazebo` loads, you should see the model of the example generic
+robot, along with the SICK LMS1xx 2D laser scanner mounted ontop of the
+`box` link.
+
+![Robot Customizer Gazebo](/img/software_images/ros/tutorials/robot_customizer/gazebo.png)
