@@ -1,0 +1,45 @@
+It is useful to connect your laptop to the same ROS2 network as your robot,
+particularly if you want to interface with it through ROS2
+topics, services, and actions:
+
+1.  Ensure that your laptop has ROS2 Foxy installed.
+2.  Connect your robot's computer and your laptop to the same (wired or
+    wireless) network.
+3.  Verify that your robot's computer can `ping` your laptop. In a terminal
+    on your robot's computer, run:
+
+    ``` bash
+    ping <YOUR_LAPTOP_IP>
+    ```
+
+4.  Verify that your laptop can `ping` your robot's computer. In a terminal
+    on your laptop, run:
+
+    ``` bash
+    ping <HUSKY_COMPUTER_IP>
+    ```
+
+5.  You should be able to now be able to access your robot's ROS2 data from
+    your laptop, such as viewing ROS2 topics. In a terminal on
+    your laptop, run:
+
+    ``` bash
+    source /opt/ros/foxy/setup.bash
+    ros2 topic list
+    ```
+
+6.  If you are unable to access your robot's ROS2 data from your laptop,
+    make sure to set the `ROS_DOMAIN_ID` environment variable on your
+    laptop to the same value as on your robot's computer. By default,
+    `ROS_DOMAIN_ID` is set to 0 (in ROS2 and on your robot), so you will not
+    need to do this step. However, if `ROS_DOMAIN_ID` is set to a
+    different value on your robot, make sure to do the same on your laptop.
+    In a terminal on your laptop, run:
+
+    ``` bash
+    export ROS_DOMAIN_ID=<ROBOT_ROS_DOMAIN_ID>
+    source /opt/ros/foxy/setup.bash
+    ```
+
+You should now be able to access your robot's ROS2 data (e.g. topics,
+services, and actions) from your laptop.
