@@ -58,7 +58,7 @@ set a parameter use:
 
 **C++**
 
-``` c
+```c
 void:ros::param::set(parameter_name, input_value)
 ```
 
@@ -72,13 +72,13 @@ Similarly, to retrieve a parameter value from the parameter server
 
 **C++**
 
-``` c
+```c
 void:ros::param::get(parameter_name)
 ```
 
 **Python**
 
-``` py
+```py
 rospy.param_get(parameter_name)
 ```
 
@@ -97,10 +97,10 @@ You may also use YAML format along with the parameter tags, which is an
 easy to read 1 to 1 format for setting parameter
 
 ```yaml
-string: 'foo'
+string: "foo"
 integer: 1234
 float: 1234.5
 boolean: true
 list: [1.0, mixed list]
-dictionary: {a: b, c: d}
+dictionary: { a: b, c: d }
 ```

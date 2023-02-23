@@ -21,7 +21,7 @@ Before we begin writing a node, we need to create a workspace and a
 package. Workspaces are simply directories to store all of your
 packages. First we will need to create a new directory.
 
-``` bash
+```bash
 mkdir ~/ros101
 ```
 
@@ -29,14 +29,14 @@ This created a directory in your home folder which we will use as a
 workspace directory. We now need to create a subdirectory in your
 workspace directory to store all your source code for your packages.
 
-``` bash
+```bash
 mkdir ~/ros101/src
 ```
 
 The last step to creating the workspace will be to initialize the
 workspace with **catkin_init_workspace**.
 
-``` bash
+```bash
 cd ~/ros101/src
 catkin_init_workspace
 ```
@@ -51,7 +51,7 @@ this command really does is creates another directory for your new
 package, and two new configuration files inside that directory with some
 default settings.
 
-``` bash
+```bash
 catkin_create_pkg random_husky_driver roscpp std_msgs
 ```
 
@@ -71,14 +71,14 @@ your Husky visualization drive itself. Start by creating a file in your
 **random_driver.cpp**. First make sure you're in the
 random_husky_driver directory and type the following.
 
-``` bash
+```bash
 gedit random_driver.cpp
 ```
 
 This will create and open the new driver file. Within the new driver
 file, copy the following code.
 
-``` c
+```c
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 #include <stdlib.h>
@@ -116,7 +116,7 @@ ros::Rate rate(10);
 
 Lets break down this code line by line,
 
-``` c
+```c
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 ```
@@ -126,7 +126,7 @@ These lines includes the headers that we are going to need. The
 **<geometry_msgs/Twist.h\>** is added so that we can create a message
 of that type.
 
-``` c
+```c
 ros::init(argc, argv, "random_husky_commands");
 ros::NodeHandle nh;
 ```
@@ -134,7 +134,7 @@ ros::NodeHandle nh;
 The first line, ros:/:init, is used to initialize the ROS node, and name
 it "random_husky_commands", while ros:NodeHandle starts the node.
 
-``` c
+```c
 ros::Publisher pub=nh.advertise<geometry_msgs::Twist>("husky_velocity_controller/cmd_vel", 100);
 ```
 
@@ -152,7 +152,7 @@ and even dangerous, but dropped messages are acceptable. In the case of
 sensors, it is recommended to use a larger queue, since delay is
 acceptable to ensure no data is lost.
 
-``` c
+```c
 ros::Rate rate(10)
 ...
 rate.sleep()
@@ -164,7 +164,7 @@ amount of time such that your loop cycles at the desired frequency. This
 accounts for time consumed by other parts of the loop. All Clearpath
 robots require a minimum loop rate of 10Hz.
 
-``` c
+```c
 while(ros::ok())
 ```
 
@@ -172,14 +172,14 @@ The ros::ok function will return true unless it receives a command to
 shut down, either by using the rosnode kill command, or by the user
 pushing Ctrl-C in a terminal.
 
-``` c
+```c
 geometry_msgs::Twist msg;
 ```
 
 This creates the message we are going to send, msg, of the type
 **geometry_msgs:Twist**
 
-``` c
+```c
 msg.linear.x=4*double(rand())/double(RAND_MAX)-2;
 msg.angular.z=6*double(rand())/double(RAND_MAX)-3;
 ```
@@ -189,7 +189,7 @@ msg.angular.z=6*double(rand())/double(RAND_MAX)-3;
 These lines calculate the random linear x and angular z values that will
 be sent to Husky.
 
-``` c
+```c
 pub.publish(msg)
 ```
 
@@ -207,7 +207,7 @@ done by adding the following two lines to the **CMakeLists.txt** files
 in **\~/ros101/src/random_husky_driver**. You can add them as the last
 two lines in the file.
 
-``` bash
+```bash
 add_executable(random_driver random_driver.cpp)
 target_link_libraries(random_driver ${catkin_LIBRARIES})
 ```
@@ -217,7 +217,7 @@ ROS to it's source files. The second lines specifies what libraries
 will be used. Now we need to build our workspace using the
 **catkin_make** command in the workspace directory
 
-``` bash
+```bash
 cd ~/ros101
 catkin_make
 ```
@@ -225,7 +225,7 @@ catkin_make
 Let's bring up the husky visualization as we did in a previous blog
 post.
 
-``` bash
+```bash
 roslaunch husky_gazebo husky_empty_world.launch
 ```
 
@@ -234,14 +234,14 @@ have created. This allows ROS to find the packages that are contained in
 your workspace. Dont forget this process will have to be done on every
 new terminal instance!
 
-``` bash
+```bash
 source ~/ros101/devel/setup.bash
 ```
 
 It's now time to test it out! With gazebo still running, lets start the
 node.
 
-``` bash
+```bash
 rosrun random_husky_driver random_driver
 ```
 
@@ -250,7 +250,7 @@ make sure that our node is publishing to the
 **/husky_velocity_controller/cmd_vel** topic by echoing all messages on
 this topic
 
-``` bash
+```bash
 rostopic echo /husky_velocity_controller/cmd_vel
 ```
 

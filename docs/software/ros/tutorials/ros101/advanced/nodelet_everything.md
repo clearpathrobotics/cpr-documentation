@@ -62,8 +62,8 @@ user-friendly.
 
 Now that I've convinced you, please read the rest of the nodelet docs:
 
--   http://wiki.ros.org/nodelet
--   http://wiki.ros.org/roscpp/Overview/Publishers%20and%20Subscribers#Intraprocess_Publishing
+- http://wiki.ros.org/nodelet
+- http://wiki.ros.org/roscpp/Overview/Publishers%20and%20Subscribers#Intraprocess_Publishing
 
 ## And Now, Code:
 
@@ -72,7 +72,7 @@ Just replace each tag with your string of choice!
 
 **Node Code:**
 
-``` c++
+```c++
 #include "ros/ros.h"
 #include "nodelet/loader.h"
 
@@ -90,7 +90,7 @@ int main(int argc, char **argv){
 
 **Nodelet Code:**
 
-``` c++
+```c++
 #include "ros/ros.h"
 #include "nodelet/nodelet.h"
 

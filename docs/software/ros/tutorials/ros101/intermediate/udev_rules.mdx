@@ -40,7 +40,7 @@ here](http://www.reactivated.net/writing_udev_rules.html). As an
 example, we will examine the udev rule provided by the urg_node driver
 in ROS:
 
-``` bash
+```bash
 SUBSYSTEMS=="usb", KERNEL=="ttyACM[0-9]*", ACTION=="add", ATTRS{idVendor}=="15d1", ATTRS{idProduct}=="0000", MODE="666", PROGRAM="/opt/ros/noetic/lib/urg_node/getID /dev/%k q", SYMLINK+="sensors/hokuyo_%c", GROUP="dialout"
 ```
 
@@ -68,7 +68,7 @@ udevadm info -a -p $(udevadm info -q path -n <devpath>)
 You will get a list of all device attributes visible to udev. looking at
 device [/dev/ttyACM0]{.title-ref}
 
-``` bash
+```bash
 KERNEL=="ttyACM0"
 SUBSYSTEM=="tty"
 DRIVER==""
@@ -90,7 +90,7 @@ tags in the first section to filter, along with tags from a parent
 device. Use regex to make matching more flexible (e.g. \[0-9\] to match
 any number, \* to match anything at all). Example:
 
-``` bash
+```bash
 SUBSYSTEM=="tty", KERNEL=="ttyACM[0-9]*", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="5740", ...
 ```
 
@@ -104,7 +104,7 @@ device types uniquely.
 You should also add the ACTION tag, which is usually "add", sometimes
 "remove" if you want to do something when the device is unplugged.
 
-``` bash
+```bash
 ..., ACTION=="add", ...
 ```
 
@@ -113,11 +113,11 @@ You should also add the ACTION tag, which is usually "add", sometimes
 Now that you have a rule that matches the device you want, you can add
 several configuration tags:
 
-| Tag                               | Usage |
-|-----------------------------------|---------------------------------------------------------------------------------------------------------------------|
-| MODE="0666"                       | Set permissions to allow any user read/write access to the device. |
-| SYMLINK+="hokuyo"                 | Create a symlink in /dev/ for this device. |
-| RUN+="/bin/echo 'hello world'""   | Execute an arbitrary command. [For advanced usage](http://www.reactivated.net/writing_udev_rules.html#external-run) |
+| Tag                             | Usage                                                                                                               |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| MODE="0666"                     | Set permissions to allow any user read/write access to the device.                                                  |
+| SYMLINK+="hokuyo"               | Create a symlink in /dev/ for this device.                                                                          |
+| RUN+="/bin/echo 'hello world'"" | Execute an arbitrary command. [For advanced usage](http://www.reactivated.net/writing_udev_rules.html#external-run) |
 
 It is good practice to make sure symlinks are unique for each device, so
 the above is actually poor practice! If you have multiple devices of the
@@ -133,7 +133,7 @@ If your device has a unique identifier, such as a serial number, encoded
 in its attributes, you can painlessly create a unique symlink for each
 device:
 
-``` bash
+```bash
 ..., SYMLINK+=”device_$attr{serial}”, ...
 ```
 
@@ -142,13 +142,13 @@ device has a serial number, you can use the following trick using
 environment variables.Create a udev rule for the parent device to store
 an environment variable:
 
-``` bash
+```bash
 ..., <match parent device>..., ENV{SERIAL_NUMBER}="$attr{serial_number}"
 ```
 
 And a rule for the child device that uses the variable in the symlink:
 
-``` bash
+```bash
 ..., <match child device>..., SYMLINK+="device_$env{SERIAL_NUMBER}"
 ```
 
@@ -158,7 +158,7 @@ If the manufacturer does not expose a unique identifier through the
 device attributes at all, you could execute an external command using
 the PROGRAM tag:
 
-``` bash
+```bash
 PROGRAM="/bin/device_namer %k", SYMLINK+="%c"
 ```
 
@@ -166,7 +166,7 @@ Unlike the RUN tag which spins off, this command will block (needs to be
 executed before the rule is fully processed), so it must return quickly.
 Theurg_node driver above uses this tag to execute a ROS binary:
 
-``` bash
+```bash
 PROGRAM="/opt/ros/noetic/lib/urg_node/getID /dev/%k q", SYMLINK+="sensors/hokuyo_%c"
 ```
 
@@ -196,15 +196,15 @@ udevadm test $(udevadm info -q path -n /dev/ttyACM0)
 
 ## Things to keep in mind
 
--   Check that your rule follows the naming convention --
-    <priority\>-<device name\>.rules. Technically you can have
-    multiple rules for the same device, and the number determines what
-    order they'd get executed in. Since we're writing addon rules, a
-    priority of 99 is safest.
--   You can have multiple rules in a file separated by newlines. Make
-    sure that each individual rule is on one line.
--   Check that all tags (matching and configuration) are comma
-    separated.
--   Check that your rule file has a trailing newline.
--   Check that your rule is owned by the root user -- ll
-    /etc/udev/rules.d/should say 'root root' for the rule file.
+- Check that your rule follows the naming convention --
+  <priority\>-<device name\>.rules. Technically you can have
+  multiple rules for the same device, and the number determines what
+  order they'd get executed in. Since we're writing addon rules, a
+  priority of 99 is safest.
+- You can have multiple rules in a file separated by newlines. Make
+  sure that each individual rule is on one line.
+- Check that all tags (matching and configuration) are comma
+  separated.
+- Check that your rule file has a trailing newline.
+- Check that your rule is owned by the root user -- ll
+  /etc/udev/rules.d/should say 'root root' for the rule file.
