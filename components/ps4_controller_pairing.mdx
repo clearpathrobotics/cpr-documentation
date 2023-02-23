@@ -6,23 +6,23 @@ To pair a PS4 controller to your robot:
 
 3. Make sure the `ds4drv` driver is installed, and the `ds4drv` daemon service is active and running:
 
-    ```
-    sudo systemctl status ds4drv
-    ```
+   ```
+   sudo systemctl status ds4drv
+   ```
 
 4. If `ds4drv` is not installed, install it by running:
 
-    ```
-    sudo apt-get install python-ds4drv
-    ```
+   ```
+   sudo apt-get install python-ds4drv
+   ```
 
 5. Put the controller into pairing mode by pressing and holding the SHARE and PS buttons until the controller's LED light bar flashes rapidly in white.
 
 6. Run the controller pairing script:
 
-    ```
-    sudo ds4drv-pair
-    ```
+   ```
+   sudo ds4drv-pair
+   ```
 
 7. In the output of the `ds4drv-pair` script, you should see that the controller automatically pairs via the script. The controller's LED light bar should also turn solid blue to indicate successful pairing.
 
@@ -30,30 +30,30 @@ Alternatively, if `ds4drv-pair` fails to detect the controller, you can pair the
 
 1. Install the `bluez` package if it is not installed already by running:
 
-    ```
-    sudo apt-get install bluez
-    ```
+   ```
+   sudo apt-get install bluez
+   ```
 
 2. Run the `bluetoothctl` command:
 
-    ```
-    sudo bluetoothctl
-    ```
+   ```
+   sudo bluetoothctl
+   ```
 
 3. Enter the following commands in `bluetoothctl` to scan and display the MAC addresses of nearby devices:
 
-    ```
-    agent on
-    scan on
-    ```
+   ```
+   agent on
+   scan on
+   ```
 
 4. Determine which MAC address corresponds to the controller and copy it. Then run the following commands in `bluetoothctl` to pair the controller:
 
-    ```
-    scan off
-    pair <MAC Address>
-    trust <MAC Address>
-    connect <MAC Address>
-    ```
+   ```
+   scan off
+   pair <MAC Address>
+   trust <MAC Address>
+   connect <MAC Address>
+   ```
 
 5. The controller should now be correctly paired.

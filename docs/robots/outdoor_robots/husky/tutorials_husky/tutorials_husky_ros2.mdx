@@ -199,7 +199,7 @@ If ROS1 Noetic was previous installed and there is a systemd job to
 start it on boot, it must be disabled to use ROS2 on boot. This can be
 done by running:
 
-``` bash
+```bash
 source /opt/ros/noetic/setup.bash
 rosrun robot_upstart uninstall ros
 ```
@@ -216,7 +216,7 @@ distribution before using it.
 
 For example:
 
-``` bash
+```bash
 source /opt/ros/foxy/setup.bash # Run this command to use ROS2 Foxy
 source /opt/ros/noetic/setup.bash # Run this command to use ROS1 Noetic
 ```
@@ -247,19 +247,19 @@ Ubuntu's APT package manager to add Clearpath's package server:
 1.  Install the authentication key for the
     packages.clearpathrobotics.com repository. In a terminal, run:
 
-    ``` bash
+    ```bash
     wget https://packages.clearpathrobotics.com/public.key -O - | sudo apt-key add -
     ```
 
 2.  Add the debian sources for the repository. In a terminal, run:
 
-    ``` bash
+    ```bash
     sudo sh -c 'echo "deb https://packages.clearpathrobotics.com/stable/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/clearpath-latest.list'
     ```
 
 3.  Update your computer's package cache. In a terminal, run:
 
-    ``` bash
+    ```bash
     sudo apt-get update
     ```
 
@@ -291,14 +291,14 @@ can be compiled and installed from source if desired:
 
 1.  Create a workspace directory. In a terminal, run:
 
-    ``` bash
+    ```bash
     mkdir -p ~/husky_ws/src
     ```
 
 2.  Clone the Husky repositories into your workspace directory. In
     terminal, run:
 
-    ``` bash
+    ```bash
     cd ~/husky_ws/src
     git clone -b foxy-devel https://github.com/husky/husky.git
     cd ..
@@ -306,26 +306,26 @@ can be compiled and installed from source if desired:
 
 3.  Install additional dependencies. In a terminal, run:
 
-    ``` bash
+    ```bash
     rosdep install --from-paths src --ignore-src --rosdistro=$ROS_DISTRO -y
     ```
 
 4.  Build the workspace. In a terminal, run:
 
-    ``` bash
+    ```bash
     colcon build
     ```
 
 5.  You can now source your workspace to make use of the packages you
     just built. In a terminal, run:
 
-    ``` bash
+    ```bash
     source install/setup.bash
     ```
 
 6.  If you would like ROS to run on boot run:
 
-    ``` bash
+    ```bash
     ros2 run husky_bringup install
     ```
 
@@ -465,7 +465,7 @@ duty simulations on separate hardware and connect to them over the network.
 The next tool we will encounter is [RViz](http://wiki.ros.org/rviz). Although superficially similar
 in appearance to Gazebo, RViz has a very different purpose--- unlike
 Gazebo, which shows the reality of the simulated world, RViz shows the
-robot's *perception* of its world, whether real or simulated. So while
+robot's _perception_ of its world, whether real or simulated. So while
 Gazebo won't be used with your real Husky, RViz is used with both.
 
 :::note
@@ -481,7 +481,7 @@ You can using the following launch invocation to start RViz with a
 pre-cooked configuration suitable for visualizing any standard Husky
 config:
 
-``` bash
+```bash
 ros2 launch husky_viz view_robot.launch.py
 ```
 
