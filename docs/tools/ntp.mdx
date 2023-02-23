@@ -139,10 +139,13 @@ ExecStartPre=/usr/sbin/ros-wait-clock
 ```
 
 Then create the file `/usr/sbin/ros-wait-clock` by running
+
 ```
 sudo nano /usr/sbin/ros-wait-clock
 ```
+
 and entering the following:
+
 ```
 #!/bin/bash
 
@@ -166,6 +169,7 @@ echo "Wait for clock sync timed out. Moving ahead with possibly bad clock."
 ```
 
 Save the file, close the editor, and make the file executable by running
+
 ```
 sudo chmod +x /usr/sbin/ros-wait-clock
 ```
