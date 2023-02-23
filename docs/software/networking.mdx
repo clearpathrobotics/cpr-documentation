@@ -15,3 +15,34 @@ robot, refer to the robot-specific tutorials, such as [this Husky tutorial](http
 Contact our Support team at support@clearpathrobotics.com if you have any questions.
 
 :::
+
+### SSH and SFTP
+
+Clearpath robots ship with an SSH server operating on port 22 for remote login.  This server also supports sftp for
+file-transfer to/from the robot if needed.  By default you can log in using the default username and password for the
+robot.
+
+
+### Internal Networking
+
+All Clearpath robots use the `192.168.131.0/24` subnet for any permanently-installed network hardware.  This includes,
+but may not be limited to
+- the robot's primary PC,
+- the robot's MCU,
+- a secondary PC (if present),
+- any cameras, lidar, or other sensors that communicate over ethernet, and
+- any long-range wireless radios.
+
+The `192.168.131.0/24` subnet is statically configured; all devices are configured to use a static IP address, and
+there is normally not a DHCP server operating on this subnet.
+
+For a list of standard payload IP addresses, please see [network IP addresses](/docs/tools/network_ip_addresses).
+
+
+### Clock Synchronization
+
+If your robot contains multiple computers, their clocks must remain synchronized to allow proper communication between
+ROS nodes running on each one.  Clearpath configures the computers to use `chrony` to synchronize the clocks, with the
+primary PC being the authoritative source for the others.
+
+For details on configuring `chrony`, please see [configuring NTP](/docs/tools/ntp).
