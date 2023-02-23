@@ -1,0 +1,106 @@
+---
+title: ROS Parameter Server
+sidebar_label: ROS Parameter Server
+sidebar_position: 7
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+Configuration information in ROS is usually saved to the Parameter
+server. The Parameter sever is a collection of values that can be
+accessed upon request through the command prompt, nodes or launch files.
+Parameters are intended to be fairly static, globally available values
+such as integers, floats, strings or bool values.
+
+## Parameters From the Terminal
+
+Parameters can be can be viewed and changed directly from a terminal
+using various rosparam commands. The simplest command lists all of the
+currently active parameters.
+
+```
+rosparam list
+```
+
+With a Husky gazebo simulation running, the following is an example of
+the output of rosparam list and gives us a good idea the type of values
+that are best suited for the parameter server.
+
+The rosparam get command can be used to determine the value of a
+parameter.
+
+```
+rosparam get
+```
+
+For example, we can see that gravity in the z direction in Gazebo is set
+to -9.8, and we are currently running ROS Noetic.
+
+It is also possible to change a parameter using rosparam set
+
+```
+rosparam set
+```
+
+Say we wanted to simulate Husky driving on the moon, then we could
+change the gravity parameter is gazebo very easily
+
+```
+rosparam set /gazebo/gravit_z -1.6
+```
+
+## Accessing Parameters from Nodes
+
+It is often the case that your nodes will have to access the parameter
+server during start up to retrieve configuration information, or set a
+parameter value. This can be done quite easily in both C++ or Python, to
+set a parameter use:
+
+**C++**
+
+``` c
+void:ros::param::set(parameter_name, input_value)
+```
+
+**Python**
+
+```py
+rospy.param_set(parameter_name, input_value)
+```
+
+Similarly, to retrieve a parameter value from the parameter server
+
+**C++**
+
+``` c
+void:ros::param::get(parameter_name)
+```
+
+**Python**
+
+``` py
+rospy.param_get(parameter_name)
+```
+
+## Accessing Parameter from Launch Files
+
+The final source where you may need to access the parameter server is
+from a launch file. Setting a parameter value during a launch file is
+common practice to conveniently initialize parameters on start up. This
+can be done in your launch file using
+
+```xml
+<param name="param-name" value="param-value" />
+```
+
+You may also use YAML format along with the parameter tags, which is an
+easy to read 1 to 1 format for setting parameter
+
+```yaml
+string: 'foo'
+integer: 1234
+float: 1234.5
+boolean: true
+list: [1.0, mixed list]
+dictionary: {a: b, c: d}
+```

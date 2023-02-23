@@ -1,0 +1,60 @@
+---
+title: "ROS 101: Drive a Warthog"
+sidebar_label: "ROS 101: Drive a Warthog"
+sidebar_position: 5
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+## Updating the Virtual Machine
+
+Open a terminal window (Ctrl + Alt + T), and enter the following:
+
+```
+sudo apt-get update
+sudo apt-get install ros-noetic-warthog-simulator
+sudo apt-get install ros-noetic-warthog-desktop
+sudo apt-get install ros-noetic-warthog-navigation
+```
+
+## Running a Virtual Warthog
+
+Open a terminal window, and enter:
+
+```
+roslaunch warthog_gazebo empty_world.launch
+```
+
+Open another terminal window, and enter:
+
+```
+roslaunch warthog_viz view_robot.launch
+```
+
+You should be given two windows, both showing a yellow, rugged robot
+(Warthog!). The left one shown is Gazebo. This is where we get a
+realistic simulation of our robot, including wheel slippage, skidding,
+and inertia. We can add objects to this simulation, or even entire maps
+of real places.
+
+![image](/img/software_images/ros/tutorials/ros101/warthogsim.png)
+
+This window below is RViz. This tool allows us to see sensor data from a
+robot, and give it commands (in a future post). RViz is a more
+simplified simulation in the interest of speed.
+
+![image](/img/software_images/ros/tutorials/ros101/warthogviz.png)
+
+We can now command the robot to go forwards. Open a terminal window, and
+copy the following:
+
+```
+rostopic pub /cmd_vel geometry_msgs/Twist "linear: x: 0.5 y: 0.0 z: 0.0
+angular: x: 0.0 y: 0.0 z: 0.0" -r 10
+```
+
+In the above command, we publish to the cmd_vel topic, of topic type
+**geometry_msgs/Twist**. The data we publish tells the simulated Warthog
+to go forwards at 0.5m/s, without any rotation. You should see your
+Warthog move forwards. In the gazebo window, you might also notice
+simulated wheel slip, and skidding.
