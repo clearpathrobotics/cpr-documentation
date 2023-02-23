@@ -7,13 +7,14 @@ toc_max_heading_level: 4
 ---
 
 import ComponentIntroductionHusky from "/components/introduction_husky.mdx";
+import ComponentRos1ToRos2UpgradePrep from "/components/ros1_to_ros2_upgrade_prep.mdx";
 import ComponentPs4ControllerPairing from "/components/ps4_controller_pairing.mdx";
 import ComponentChangingDefaultPassword from "/components/changing_default_password.mdx";
 import ComponentWiredRobotConnection from "/components/wired_robot_connection.mdx";
 import ComponentWifiRobotConnection from "/components/wifi_robot_connection.mdx";
 import ComponentConfiguringNetworkBridge from "/components/configuring_network_bridge.mdx";
 import ComponentPerformingABackup from "/components/performing_a_backup.mdx";
-import ComponentInstallingRobotSoftware from "/components/installing_robot_software.mdx";
+import ComponentInstallingRobotSoftwareRos2 from "/components/installing_robot_software_ros2.mdx";
 import ComponentRemoteRos2Connection from "/components/remote_ros2_connection.mdx";
 import ComponentAddingASourceWorkspace from "/components/adding_a_source_workspace.mdx";
 import ComponentDrivingWithRemoteController from "/components/driving_with_remote_controller.mdx";
@@ -150,76 +151,9 @@ Ubuntu Focal + ROS2 Foxy.
 
 <ComponentPerformingABackup />
 
-#### Upgrading Ubuntu OS Version (Optional)
+#### Installing Ubuntu OS + ROS2
 
-:::note
-
-If you already have Ubuntu 20.04 installed, you can skip this step.
-
-:::
-
-ROS2 specifically targets Ubuntu 20.04; therefore, if your computer is
-currently running an older Ubuntu OS version (e.g. Ubuntu 18.04 for ROS1
-Melodic, or Ubuntu 16.04 for ROS2 Kinetic), you will need to update it
-to Ubuntu 20.04.
-
-The recommended method of installing Ubuntu 20.04 is from an ISO via a
-bootable USB drive. The Ubuntu 20.04 ISO can be found from [Ubuntu's
-official releases](https://releases.ubuntu.com/20.04/).
-
-On any computer:
-
-1.  Download the `.iso` file from the link above.
-2.  Insert a USB drive.
-3.  Write the downloaded Ubuntu 20.04 ISO to the USB drive using a
-    software such as `Rufus`, `Etcher`, or `UNetbootin`. This will erase
-    all data already on the USB drive, so make sure you have backed up
-    anything important!
-
-On the computer to be upgraded to Ubuntu 20.04:
-
-1.  Ensure that it is turned off and has internet access via ethernet.
-2.  Insert the newly formatted USB drive.
-3.  Turn on and choose to boot from the USB drive.
-4.  The installer should run automatically. Step through any prompts
-    that come up. The computer will turn off automatically when the
-    installation completes.
-5.  Once the computer turns off, remove the USB drive and turn on the
-    computer. It will now be running your fresh install of Ubuntu 20.04.
-
-#### Removing ROS1 Noetic (Optional)
-
-:::note
-
-If ROS1 Noetic was not previously installed, you can skip this step.
-
-:::
-
-If ROS1 Noetic was previous installed and there is a systemd job to
-start it on boot, it must be disabled to use ROS2 on boot. This can be
-done by running:
-
-```bash
-source /opt/ros/noetic/setup.bash
-rosrun robot_upstart uninstall ros
-```
-
-#### Installing ROS2 Foxy
-
-Simply follow the [official ROS2 Foxy installation
-instructions](https://docs.ros.org/en/foxy/Installation.html) to install
-ROS2 Foxy on your Ubuntu 20.04 computer.
-
-If your Ubuntu 20.04 computer for some reason has ROS1 Noetic installed
-already, you will just need to `source` the desired ROS version and
-distribution before using it.
-
-For example:
-
-```bash
-source /opt/ros/foxy/setup.bash # Run this command to use ROS2 Foxy
-source /opt/ros/noetic/setup.bash # Run this command to use ROS1 Noetic
-```
+<ComponentRos1ToRos2UpgradePrep />
 
 #### Installing Husky Software
 
@@ -239,95 +173,7 @@ sure you have a working ROS2 Foxy installation set up on your computer.
 
 :::
 
-##### Add Clearpath Debian Package Repository
-
-Before you can install the Husky packages, you need to configure
-Ubuntu's APT package manager to add Clearpath's package server:
-
-1.  Install the authentication key for the
-    packages.clearpathrobotics.com repository. In a terminal, run:
-
-    ```bash
-    wget https://packages.clearpathrobotics.com/public.key -O - | sudo apt-key add -
-    ```
-
-2.  Add the debian sources for the repository. In a terminal, run:
-
-    ```bash
-    sudo sh -c 'echo "deb https://packages.clearpathrobotics.com/stable/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/clearpath-latest.list'
-    ```
-
-3.  Update your computer's package cache. In a terminal, run:
-
-    ```bash
-    sudo apt-get update
-    ```
-
-##### Installing from Debian Packages
-
-The preferred way to install Husky's packages is using precompiled
-Debian packages. These packages are available for Ubuntu 20.04.
-
-After your computer is configured to use Clearpath's debian package
-repository, you can install the Husky packages needed for this tutorial.
-In a terminal, run:
-
-```
-sudo apt-get install ros-foxy-husky-desktop ros-foxy-husky-simulator
-```
-
-The `husky_robot` package only needs to be installed on the physical
-Husky robot; however, you can optionally install it on your computer
-too. In a terminal, run:
-
-```
-sudo apt-get install ros-foxy-husky-robot
-```
-
-##### Installing from Source
-
-Husky packages are available on [GitHub](https://github.com/husky/), and
-can be compiled and installed from source if desired:
-
-1.  Create a workspace directory. In a terminal, run:
-
-    ```bash
-    mkdir -p ~/husky_ws/src
-    ```
-
-2.  Clone the Husky repositories into your workspace directory. In
-    terminal, run:
-
-    ```bash
-    cd ~/husky_ws/src
-    git clone -b foxy-devel https://github.com/husky/husky.git
-    cd ..
-    ```
-
-3.  Install additional dependencies. In a terminal, run:
-
-    ```bash
-    rosdep install --from-paths src --ignore-src --rosdistro=$ROS_DISTRO -y
-    ```
-
-4.  Build the workspace. In a terminal, run:
-
-    ```bash
-    colcon build
-    ```
-
-5.  You can now source your workspace to make use of the packages you
-    just built. In a terminal, run:
-
-    ```bash
-    source install/setup.bash
-    ```
-
-6.  If you would like ROS to run on boot run:
-
-    ```bash
-    ros2 run husky_bringup install
-    ```
+<ComponentInstallingRobotSoftwareRos2 />
 
 #### Testing Base Configuration
 
@@ -373,7 +219,7 @@ and turn on the controller. The controller pairs automatically.
 
 Husky is normally equipped with a combination Wi-Fi + Bluetooth module.
 If this is your first unboxing, ensure that Husky's wireless antennae are firmly screwed on to the chassis.
-Some Husky robots may only be equipped with a single antenna, depending on the exact model of PC installed in the robot.
+Some Husky robots may only be equipped with a single antenna, depending on the exact model of computer installed in the robot.
 
 #### First Connection
 
@@ -532,7 +378,7 @@ For instructions on controller pairing, [Pairing the Controller](#pairing-the-co
 You can also use a remote controller to drive your robot in Gazebo. To set up your computer for teleop
 using the remote controller follow these steps:
 
-1. Connect the controller to your PC.
+1. Connect the controller to your computer.
 
 2. Set the `HUSKY_JOY_DEVICE` environment variable to point to your game controller device
    Normally this will be `/dev/input/js0`.
