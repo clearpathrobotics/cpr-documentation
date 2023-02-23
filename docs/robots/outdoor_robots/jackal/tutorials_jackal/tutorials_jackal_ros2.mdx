@@ -68,10 +68,10 @@ procedures for operating the physical robot. Anyone working with a physical robo
 Jackal fully supports ROS; all of the packages are available in [Jackal Github](https://github.com/jackal).
 Notable packages include:
 
--   Jackal Common packages: [Git repository](https://github.com/jackal/jackal/tree/foxy-devel)
--   Jackal Robot packages: [Git repository](https://github.com/jackal/jackal_robot/tree/foxy-devel)
--   Jackal Simulator packages: [Git repository](https://github.com/jackal/jackal_simulator/tree/foxy-devel)
--   Jackal Desktop packages: [Git repository](https://github.com/jackal/jackal_desktop/tree/foxy-devel)
+- Jackal Common packages: [Git repository](https://github.com/jackal/jackal/tree/foxy-devel)
+- Jackal Robot packages: [Git repository](https://github.com/jackal/jackal_robot/tree/foxy-devel)
+- Jackal Simulator packages: [Git repository](https://github.com/jackal/jackal_simulator/tree/foxy-devel)
+- Jackal Desktop packages: [Git repository](https://github.com/jackal/jackal_desktop/tree/foxy-devel)
 
 ### Description Package
 
@@ -173,7 +173,7 @@ firmware.
 
 Install the Jackal firmware package on the Jackal:
 
-``` bash
+```bash
 sudo apt-get update
 sudo apt-get install ros-foxy-jackal-firmware
 ```
@@ -184,7 +184,7 @@ pressing the **M_RST** button.
 
 Then, on the Jackal, run:
 
-``` bash
+```bash
 jackal_firmware_flash.sh
 ```
 
@@ -243,21 +243,21 @@ and can be compiled and installed from source if desired:
 
 1.  Install vcs:
 
-    ``` bash
+    ```bash
     sudo apt-get update
     sudo apt-get install python3-vcstool
     ```
 
 2.  Create a workspace directory. In a terminal, run:
 
-    ``` bash
+    ```bash
     mkdir -p ~/jackal_ws/src
     ```
 
 3.  Clone the Jackal repositories into your workspace directory. In
     terminal, run:
 
-    ``` bash
+    ```bash
     cd ~/jackal_ws
     wget https://raw.githubusercontent.com/jackal/jackal_robot/foxy-devel/dependencies.repos
     vcs import src < dependencies.repos
@@ -265,26 +265,26 @@ and can be compiled and installed from source if desired:
 
 4.  Source the ROS2 Foxy installation. In a terminal, run:
 
-    ``` bash
+    ```bash
     source /opt/ros/foxy/setup.bash
     ```
 
 5.  Install additional dependencies. In a terminal, run:
 
-    ``` bash
+    ```bash
     rosdep install --from-paths src --ignore-src --rosdistro=$ROS_DISTRO -y
     ```
 
 6.  Build the workspace. In a terminal, run:
 
-    ``` bash
+    ```bash
     colcon build
     ```
 
 7.  You can now source your workspace to make use of the packages you
     just built. In a terminal, run:
 
-    ``` bash
+    ```bash
     source install/setup.bash
     ```
 
@@ -295,21 +295,20 @@ must build it from source.
 
 :::note
 
-If you have built the Jackal packages from source, you can skip to step
-7.
+If you have built the Jackal packages from source, you can skip to step 7.
 :::
 
 1.  If you don't yet have a workspace directory, create one. In
     terminal, run:
 
-    ``` bash
+    ```bash
     mkdir -p ~/jackal_ws/src
     ```
 
 2.  Clone the [micro_ros_setup]{.title-ref} repositories into your
     workspace directory. In a terminal, run:
 
-    ``` bash
+    ```bash
     cd ~/jackal_ws/src
     git clone -b foxy https://github.com/micro-ROS/micro_ros_setup.git
     cd ..
@@ -317,33 +316,33 @@ If you have built the Jackal packages from source, you can skip to step
 
 3.  Source the ROS2 Foxy installation. In a terminal, run:
 
-    ``` bash
+    ```bash
     source /opt/ros/foxy/setup.bash
     ```
 
 4.  Install additional dependencies. In a terminal, run:
 
-    ``` bash
+    ```bash
     sudo apt update && rosdep update
     rosdep install --from-paths src --ignore-src -y
     ```
 
 5.  Build the workspace. In a terminal, run:
 
-    ``` bash
+    ```bash
     colcon build
     ```
 
 6.  You can now source your workspace to make use of the packages you
     just built. In a terminal, run:
 
-    ``` bash
+    ```bash
     source install/setup.bash
     ```
 
 7.  Create and build the microROS agent. In a terminal, run:
 
-    ``` bash
+    ```bash
     ros2 run micro_ros_setup create_agent_ws.sh
     ros2 run micro_ros_setup build_agent.sh
     source install/setup.bash
@@ -355,13 +354,13 @@ If you would like ROS2 to run on boot on the Jackal, first make sure
 your `ROBOT_SETUP` environment variable is set to your workspace before
 installing:
 
-``` bash
+```bash
 export ROBOT_SETUP=~/jackal_ws/install/setup.bash
 ```
 
 Then install the job:
 
-``` bash
+```bash
 ros2 run jackal_robot install
 ```
 
@@ -369,13 +368,13 @@ ros2 run jackal_robot install
 
 To run the ROS2 software in the terminal, first source the workspace:
 
-``` bash
+```bash
 source ~/jackal_ws/install/setup.bash
 ```
 
 Then launch Jackal bringup. In a terminal, run:
 
-``` bash
+```bash
 ros2 launch jackal_robot bringup.launch.py
 ```
 
@@ -407,19 +406,19 @@ Ubuntu's APT package manager to add Clearpath's package server:
 1.  Install the authentication key for the
     packages.clearpathrobotics.com repository. In a terminal, run:
 
-    ``` bash
+    ```bash
     wget https://packages.clearpathrobotics.com/public.key -O - | sudo apt-key add -
     ```
 
 2.  Add the debian sources for the repository. In a terminal, run:
 
-    ``` bash
+    ```bash
     sudo sh -c 'echo "deb https://packages.clearpathrobotics.com/stable/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/clearpath-latest.list'
     ```
 
 3.  Update your computer's package cache. In a terminal, run:
 
-    ``` bash
+    ```bash
     sudo apt-get update
     ```
 
@@ -443,14 +442,14 @@ and can be compiled and installed from source if desired:
 
 1.  Create a workspace directory. In a terminal, run:
 
-    ``` bash
+    ```bash
     mkdir -p ~/jackal_ws/src
     ```
 
 2.  Clone the Jackal repositories into your workspace directory. In
     terminal, run:
 
-    ``` bash
+    ```bash
     cd ~/jackal_ws/src
     git clone -b foxy-devel https://github.com/jackal/jackal.git
     git clone -b foxy-devel https://github.com/jackal/jackal_desktop.git
@@ -460,26 +459,26 @@ and can be compiled and installed from source if desired:
 
 3.  Source the ROS2 Foxy installation. In a terminal, run:
 
-    ``` bash
+    ```bash
     source /opt/ros/foxy/setup.bash
     ```
 
 4.  Install additional dependencies. In a terminal, run:
 
-    ``` bash
+    ```bash
     rosdep install --from-paths src --ignore-src --rosdistro=$ROS_DISTRO -y
     ```
 
 5.  Build the workspace. In a terminal, run:
 
-    ``` bash
+    ```bash
     colcon build
     ```
 
 6.  You can now source your workspace to make use of the packages you
     just built. In a terminal, run:
 
-    ``` bash
+    ```bash
     source install/setup.bash
     ```
 
