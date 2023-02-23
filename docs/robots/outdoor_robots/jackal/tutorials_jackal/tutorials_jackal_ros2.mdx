@@ -1,0 +1,802 @@
+---
+title: Jackal Tutorials (ROS2)
+sidebar_label: ROS2
+sidebar_position: 3
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+import ComponentIntroductionJackal from "/components/introduction_jackal.mdx";
+import ComponentRos1ToRos2UpgradePrep from "/components/ros1_to_ros2_upgrade_prep.mdx";
+import ComponentPs4ControllerPairing from "/components/ps4_controller_pairing.mdx";
+import ComponentChangingDefaultPassword from "/components/changing_default_password.mdx";
+import ComponentWiredRobotConnection from "/components/wired_robot_connection.mdx";
+import ComponentWifiRobotConnection from "/components/wifi_robot_connection.mdx";
+import ComponentConfiguringNetworkBridge from "/components/configuring_network_bridge.mdx";
+import ComponentPerformingABackup from "/components/performing_a_backup.mdx";
+import ComponentInstallingRobotSoftwareRos2 from "/components/installing_robot_software_ros2.mdx";
+import ComponentRemoteRos2Connection from "/components/remote_ros2_connection.mdx";
+import ComponentAddingASourceWorkspace from "/components/adding_a_source_workspace.mdx";
+import ComponentDrivingWithRemoteController from "/components/driving_with_remote_controller.mdx";
+import Support from "/components/support.mdx";
+
+<ComponentIntroductionJackal />
+
+## Jackal Overview
+
+### Introduction
+
+Jackal is a rugged, lightweight, fast and easy-to-use unmanned ground robot for rapid prototyping
+and research applications. These tutorials will assist you with setting up and operating your Jackal.
+The tutorial topics are listed in the right column and presented in the suggested reading order.
+
+For more information or to receive a quote, please [visit us online](http://clearpathrobotics.com/jackal).
+
+:::note
+
+These tutorials assume that you are comfortable working with [ROS](https://docs.ros.org/). We recommend starting with
+[ROS2 tutorials](https://docs.ros.org/en/foxy/Tutorials.html) if you are not familiar with ROS already.
+
+:::
+
+:::note
+
+These tutorials specifically target Jackal robots running Ubuntu 20.04 with [ROS2 Foxy](https://docs.ros.org/en/foxy/index.html).
+
+:::
+
+[Jackal ROS Packages](#jackal-ros-packages) provides the references for the software packages and key ROS topics.
+
+[Jackal Software Setup](#jackal-software-setup) outlines the steps for setting up the software on
+your Jackal robot and optionally on a remote computer.
+
+[Using Jackal](#using-jackal) describes how to simulate and drive your Jackal. [Simuation](#simulating-jackal)
+is a great way for most users to learn more about their Jackal; understanding how to effectively operate Jackal
+in simulation is valuable whether you are in the testing phase with software you intend to ultimately deploy on a
+physical Jackal, or you do not have one and are simply exploring the platform's capabilities.
+[Driving Jackal](#driving-jackal) covers how to teleoperate Jackal using the remote control, as well as safety
+procedures for operating the physical robot. Anyone working with a physical robot should be familiar with this section.
+
+<!-- [Jackal Tests](#testing-jackal) outlines how to validate that your physical Jackal is working correctly. -->
+
+[Advanced Topics](#advanced-topics) covers items that are only required in atypical situations.
+
+---
+
+## Jackal ROS Packages {#jackal-ros-packages}
+
+Jackal fully supports ROS; all of the packages are available in [Jackal Github](https://github.com/jackal).
+Notable packages include:
+
+- Jackal Common packages: [Git repository](https://github.com/jackal/jackal/tree/foxy-devel)
+- Jackal Robot packages: [Git repository](https://github.com/jackal/jackal_robot/tree/foxy-devel)
+- Jackal Simulator packages: [Git repository](https://github.com/jackal/jackal_simulator/tree/foxy-devel)
+- Jackal Desktop packages: [Git repository](https://github.com/jackal/jackal_desktop/tree/foxy-devel)
+
+### Description Package
+
+The [jackal_description](https://github.com/jackal/jackal/tree/foxy-devel/jackal_description) repository
+provides a [URDF](http://wiki.ros.org/urdf) model of Jackal.
+
+Jackal's URDF model can be visualized in RViz and can be customized and extended through the use of several
+environment variables. Once you have installed the desktop software in an upcoming tutorial,
+you will be able to run:
+
+```
+ros2 launch jackal_viz view_model.launch.py
+```
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/jackal-urdf.png"
+      width="600"
+    />
+    <figcaption>Jackal model</figcaption>
+  </figure>
+</center>
+
+<!-- NOTE: Need to add this content back in for Humble
+
+### Environment Variables
+
+Jackal can be customized and extended through the use of several environment variables.
+These are summarized in the [accessories.urdf.xacro](https://github.com/jackal/jackal/blob/noetic-devel/jackal_description/urdf/accessories.urdf.xacro) file.
+Some of the most important ones are listed below.
+
+| Variable                        | Default | Description                                                                                                 |
+| :------------------------------ | :------ | :---------------------------------------------------------------------------------------------------------- |
+| `JACKAL_LASER`                  | `0`     | Set to 1 to equip Jackal with a primary lidar unit, normally front-facing                                   |
+| `JACKAL_LASER_SECONDARY`        | `0`     | Set to 1 to equip Jackal with a secondary lidar unit, normally rear-facing                                  |
+| `JACKAL_LASER_3D`               | `0`     | Set to 1 to equip Jackal with a primary 3D lidar unit, normally front-facing                                |
+| `JACKAL_BLACKFLY`               | `0`     | Set to 1 to equip Jackal with a Blackfly camera                                                             |
+| `JACKAL_IMU_MICROSTRAIN`        | `0`     | Set to 1 to equip Jackal with a Microstrain IMU                                                             |
+| `JACKAL_FRONT_ACCESSORY_FENDER` | `0`     | Set to 1 to equip Jackal with extended front fender for mounting additional sensors such as laser scanners. |
+| `JACKAL_REAR_ACCESSORY_FENDER`  | `0`     | Set to 1 to equip Jackal with extended rear fender for mounting additional sensors such as laser scanners.  |
+
+### Configurations
+
+As an alternative to individually specifying each accessory, some fixed configurations are provided in the package.
+These can be specified using the `config` arg to `description.launch`, and are intended especially as a convenience for simulation launch.
+
+| Config        | Description                                          |
+| :------------ | :--------------------------------------------------- |
+| `base`        | Base Jackal                                          |
+| `front_laser` | Adds a SICK LMS1xx lidar to the Jackal's front mount |
+
+:::note
+
+Additional configurations coming soon
+
+:::
+
+### Key ROS Topics
+
+You can view all topics that are active using `rostopic list`.
+The most important topics are summarized in the table below.
+
+| Topic                | Message Type                 | Purpose                                                                                                                                                                      |
+| :------------------- | :--------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/cmd_vel`           | `geometry_msgs/Twist`        | Input to Jackal's kinematic controller. Publish here to make Jackal go.                                                                                                      |
+| `/odometry/filtered` | `nav_msgs/Odometry`          | Published by `robot_localization`, a filtered localization estimate based on wheel odometry (encoders) and integrated IMU.                                                   |
+| `/imu/data`          | `sensor_msgs/IMU`            | Published by `imu_filter_madgwick`, an orientation estimated based on the Jackal's internal IMU.                                                                             |
+| `/navsat/fix`        | `sensors_msgs/NavSatFix`     | Position fix from Jackal's built in GPS receiver.                                                                                                                            |
+| `/navsat/vel`        | `geometry_msgs/TwistStamped` | Velocity over ground according to the integrated GPS receiver.                                                                                                               |
+| `/cmd_drive `        | `jackal_msgs/Drive`          | Output from Jackal's kinematic controller, input to the motor controllers. Subscribe here for a lower-level look at what's going on.                                         |
+| `/feedback`          | `jackal_msgs/Feedback`       | High-frequency inputs from Jackal's encoders and motor current sensors.                                                                                                      |
+| `/status`            | `jackal_msgs/Status`         | Low-frequency status data for Jackal's systems. This information is republished in human readable form on the diagnostics topic and is best consumed with the Robot Monitor. |
+-->
+
+---
+
+## Jackal Software Setup {#jackal-software-setup}
+
+### Installing and Configuring Robot Software
+
+#### Backing Up Robot Configuration
+
+Upgrading your Clearpath Jackal to ROS2 Foxy from older ROS distributions (including ROS1) is supported;
+however it's important to understand that each Jackal is different, having undergone customization to your
+specifications.
+
+Please take the time to understand what these modifications are and how to recreate them on your fresh install of
+Ubuntu Focal + ROS2 Foxy.
+
+##### Performing a Backup {#performing-a-backup}
+
+<ComponentPerformingABackup />
+
+#### Updating firmware
+
+For ROS2 Foxy, Jackal uses new [microROS](https://micro.ros.org/) based
+firmware.
+
+Install the Jackal firmware package on the Jackal:
+
+```bash
+sudo apt-get update
+sudo apt-get install ros-foxy-jackal-firmware
+```
+
+To update the firmware, place the Jackal MCU into bootloader mode by
+switching the **PWR_MODE** switch from NORM to ALT, then
+pressing the **M_RST** button.
+
+Then, on the Jackal, run:
+
+```bash
+jackal_firmware_flash.sh
+```
+
+Wait for the firmware to be flashed.
+
+Once the firmware has been flashed, place the Jackal MCU back into
+normal mode by switching the **PWR_MODE** switch from ALT to
+NORM. The robot will power off. Turn the robot back on by pressing the
+power button.
+
+#### Installing Ubuntu OS + ROS2
+
+<ComponentRos1ToRos2UpgradePrep />
+
+#### Installing Jackal Robot Software
+
+:::note
+
+The physical Jackal robot comes pre-configured with ROS and the necessary Jackal packages already installed;
+therefore, you will only need to follow the instructions below if you are re-installing software on the Jackal.
+
+:::
+
+:::note
+
+If you wish to install the Jackal packages on your computer (e.g. to
+interface with the physical Jackal robot and/or to simulate Jackal), then
+proceed with the following instructions below. A prequisite is to make
+sure you have a working ROS2 Foxy installation set up on your computer.
+
+:::
+
+##### Installing from Debian Packages
+
+:::note
+
+Jackal Debian packages are not yet available. Please install from
+source.
+
+:::
+
+The preferred way to install Jackal's packages is using precompiled
+Debian packages. These packages are available for Ubuntu 20.04.
+
+On the physical robot you need to install the `jackal_robot` package. In
+terminal, run:
+
+```
+sudo apt-get install ros-foxy-jackal-robot
+```
+
+##### Installing from Source
+
+Jackal packages are available on [GitHub](https://github.com/jackal/),
+and can be compiled and installed from source if desired:
+
+1.  Install vcs:
+
+    ```bash
+    sudo apt-get update
+    sudo apt-get install python3-vcstool
+    ```
+
+2.  Create a workspace directory. In a terminal, run:
+
+    ```bash
+    mkdir -p ~/jackal_ws/src
+    ```
+
+3.  Clone the Jackal repositories into your workspace directory. In
+    terminal, run:
+
+    ```bash
+    cd ~/jackal_ws
+    wget https://raw.githubusercontent.com/jackal/jackal_robot/foxy-devel/dependencies.repos
+    vcs import src < dependencies.repos
+    ```
+
+4.  Source the ROS2 Foxy installation. In a terminal, run:
+
+    ```bash
+    source /opt/ros/foxy/setup.bash
+    ```
+
+5.  Install additional dependencies. In a terminal, run:
+
+    ```bash
+    rosdep install --from-paths src --ignore-src --rosdistro=$ROS_DISTRO -y
+    ```
+
+6.  Build the workspace. In a terminal, run:
+
+    ```bash
+    colcon build
+    ```
+
+7.  You can now source your workspace to make use of the packages you
+    just built. In a terminal, run:
+
+    ```bash
+    source install/setup.bash
+    ```
+
+##### Installing the microROS agent
+
+The microROS agent is not currently released as a debian package, so we
+must build it from source.
+
+:::note
+
+If you have built the Jackal packages from source, you can skip to step 7.
+:::
+
+1.  If you don't yet have a workspace directory, create one. In
+    terminal, run:
+
+    ```bash
+    mkdir -p ~/jackal_ws/src
+    ```
+
+2.  Clone the [micro_ros_setup]{.title-ref} repositories into your
+    workspace directory. In a terminal, run:
+
+    ```bash
+    cd ~/jackal_ws/src
+    git clone -b foxy https://github.com/micro-ROS/micro_ros_setup.git
+    cd ..
+    ```
+
+3.  Source the ROS2 Foxy installation. In a terminal, run:
+
+    ```bash
+    source /opt/ros/foxy/setup.bash
+    ```
+
+4.  Install additional dependencies. In a terminal, run:
+
+    ```bash
+    sudo apt update && rosdep update
+    rosdep install --from-paths src --ignore-src -y
+    ```
+
+5.  Build the workspace. In a terminal, run:
+
+    ```bash
+    colcon build
+    ```
+
+6.  You can now source your workspace to make use of the packages you
+    just built. In a terminal, run:
+
+    ```bash
+    source install/setup.bash
+    ```
+
+7.  Create and build the microROS agent. In a terminal, run:
+
+    ```bash
+    ros2 run micro_ros_setup create_agent_ws.sh
+    ros2 run micro_ros_setup build_agent.sh
+    source install/setup.bash
+    ```
+
+##### Installing the systemd job
+
+If you would like ROS2 to run on boot on the Jackal, first make sure
+your `ROBOT_SETUP` environment variable is set to your workspace before
+installing:
+
+```bash
+export ROBOT_SETUP=~/jackal_ws/install/setup.bash
+```
+
+Then install the job:
+
+```bash
+ros2 run jackal_robot install
+```
+
+##### Launching Jackal Software Manually
+
+To run the ROS2 software in the terminal, first source the workspace:
+
+```bash
+source ~/jackal_ws/install/setup.bash
+```
+
+Then launch Jackal bringup. In a terminal, run:
+
+```bash
+ros2 launch jackal_robot bringup.launch.py
+```
+
+##### Testing Base Configuration
+
+After installing the software, check that the system has started correct.
+
+1. The Jackal Comms indicator <img src="/img/robot_images/dingo_images/icon-comms.png" width="20" /> should turn green.
+
+2. Your Jackal should be accepting commands from your joystick (see next section).
+
+#### Installing Jackal Desktop Software
+
+:::note
+
+If you wish to install the Jackal packages on your computer (e.g. to
+interface with the physical Jackal robot and/or to simulate Jackal),
+then proceed with the following instructions below. A prequisite is to
+make sure you have a working ROS2 Foxy installation set up on your
+computer.
+
+:::
+
+##### Add Clearpath Debian Package Repository
+
+Before you can install the Jackal packages, you need to configure
+Ubuntu's APT package manager to add Clearpath's package server:
+
+1.  Install the authentication key for the
+    packages.clearpathrobotics.com repository. In a terminal, run:
+
+    ```bash
+    wget https://packages.clearpathrobotics.com/public.key -O - | sudo apt-key add -
+    ```
+
+2.  Add the debian sources for the repository. In a terminal, run:
+
+    ```bash
+    sudo sh -c 'echo "deb https://packages.clearpathrobotics.com/stable/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/clearpath-latest.list'
+    ```
+
+3.  Update your computer's package cache. In a terminal, run:
+
+    ```bash
+    sudo apt-get update
+    ```
+
+##### Installing from Debian Packages
+
+The preferred way to install Jackal's packages is using precompiled
+Debian packages. These packages are available for Ubuntu 20.04.
+
+After your computer is configured to use Clearpath's debian package
+repository, you can install the Jackal packages needed for this
+tutorial. In a terminal, run:
+
+```
+sudo apt-get install ros-foxy-jackal-desktop ros-foxy-jackal-simulator
+```
+
+##### Installing from Source
+
+Jackal packages are available on [GitHub](https://github.com/jackal/),
+and can be compiled and installed from source if desired:
+
+1.  Create a workspace directory. In a terminal, run:
+
+    ```bash
+    mkdir -p ~/jackal_ws/src
+    ```
+
+2.  Clone the Jackal repositories into your workspace directory. In
+    terminal, run:
+
+    ```bash
+    cd ~/jackal_ws/src
+    git clone -b foxy-devel https://github.com/jackal/jackal.git
+    git clone -b foxy-devel https://github.com/jackal/jackal_desktop.git
+    git clone -b foxy-devel https://github.com/jackal/jackal_simulator.git
+    cd ..
+    ```
+
+3.  Source the ROS2 Foxy installation. In a terminal, run:
+
+    ```bash
+    source /opt/ros/foxy/setup.bash
+    ```
+
+4.  Install additional dependencies. In a terminal, run:
+
+    ```bash
+    rosdep install --from-paths src --ignore-src --rosdistro=$ROS_DISTRO -y
+    ```
+
+5.  Build the workspace. In a terminal, run:
+
+    ```bash
+    colcon build
+    ```
+
+6.  You can now source your workspace to make use of the packages you
+    just built. In a terminal, run:
+
+    ```bash
+    source install/setup.bash
+    ```
+
+#### Pairing the Controller {#pairing-the-controller}
+
+Joystick controllers are used for teleoperation; they allow you to
+remotely drive the Jackal, whether it is a physical Jackal robot, or a
+simulated Jackal. The following instructions below detail how to pair
+different controllers to the Jackal's computer; however, these
+instructions can also be used to pair these controllers to your own
+computer.
+
+##### PS4 Controller
+
+:::note
+
+If your Jackal comes with a PS4 controller, it will be paired already.
+Simply turn on the Jackal and turn on the controller.
+:::
+
+<ComponentPs4ControllerPairing />
+
+##### Logitech F710 Controller
+
+:::caution
+
+Logitech controllers are not considered safe, and usage should be experimental only. If your robot has bluetooth
+capabilities, please switch to using a PS4 controller instead.
+
+:::
+
+To re-pair the Logitech F710 controller or pair a new Logitech F710
+controller, plug the controller's USB dongle into the Jackal's computer
+and turn on the controller. The controller pairs automatically.
+
+### Setting up Jackal's Network Configuration {#jackal-networking}
+
+Jackal is normally equipped with a combination Wi-Fi + Bluetooth module.
+If this is your first unboxing, ensure that Jackal's wireless antennae are firmly screwed on to the chassis.
+Some Jackal robots may only be equipped with a single antenna, depending on the exact model of computer installed in the robot.
+
+#### First Connection
+
+By default, Jackal's Wi-Fi is in client mode, looking for the wireless network at the Clearpath factory.
+
+<ComponentWiredRobotConnection />
+
+#### Changing the Default Password
+
+<ComponentChangingDefaultPassword />
+
+#### Wi-Fi Setup
+
+<ComponentWifiRobotConnection />
+
+### Remote ROS2 Connection {#remote-computer-software}
+
+:::note
+
+This step is optional.
+
+:::
+
+<ComponentRemoteRos2Connection />
+
+---
+
+## Using Jackal {#using-jackal}
+
+### Simulating Jackal {#simulating-jackal}
+
+Whether you actually have a Jackal robot or not, the Jackal simulator is a great way to get started with ROS2
+robot development. In this tutorial, we will go through the basics of starting Gazebo and RViz and how to drive
+your Jackal around.
+
+#### Launching Gazebo
+
+[Gazebo](https://gazebosim.org/home) is a common simulation tool used in ROS2. Jackal's model in
+Gazebo includes reasonable approximations of its dynamics, including wheel slippage, skidding, and
+inertia. To launch simulated Jackal in a simple example world, run the following command:
+
+```
+ros2 launch jackal_gazebo jackal_world.launch.py
+```
+
+You should see the following window appear, or something like it.
+
+:::note
+
+You can adjust the camera angle by clicking and dragging while holding CTRL, ALT,
+or the Shift key.
+
+:::
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/gazebo-jackal-race.png"
+      width="800"
+    />
+    <figcaption>Simulated Jackal in the Race World</figcaption>
+  </figure>
+</center>
+
+:::note
+
+To stop the simulation, close the Gazebo window, and then CTRL-C out of the terminal
+process.
+
+:::
+
+The window which you are looking at is the Gazebo Client. This window shows you the "true" state of the
+simulated world which the robot exists in. It communicates on the backend with the Gazebo Server, which
+is doing the heavy lifting of actually maintaining the simulated world. At the moment, you're running
+both the client and server locally on your own machine, but some advanced users may choose to run heavy
+duty simulations on separate hardware and connect to them over the network.
+
+#### Launch RViz
+
+The next tool we will encounter is [RViz](http://wiki.ros.org/rviz). Although superficially similar
+in appearance to Gazebo, RViz has a very different purpose--- unlike
+Gazebo, which shows the reality of the simulated world, RViz shows the
+robot's _perception_ of its world, whether real or simulated. So while
+Gazebo won't be used with your real Jackal, RViz is used with both.
+
+:::note
+
+If you are working with a simulated robot you should leave Gazebo
+running and open a new terminal to launch RViz. If you installed the
+Jackal simulation packages from source, make sure to run
+`source install/setup.bash` in the workspace where the packages are
+installed when opening the new terminal.
+:::
+
+You can using the following launch invocation to start RViz with a
+pre-cooked configuration suitable for visualizing any standard Jackal
+config:
+
+```bash
+ros2 launch jackal_viz view_robot.launch.py
+```
+
+You should see RViz appear:
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/jackal-urdf.png"
+      width="600"
+    />
+    <figcaption>Jackal RViz</figcaption>
+  </figure>
+</center>
+
+### Driving Jackal {#driving-jackal}
+
+There are four ways to drive Jackal and each way will work on a physical Jackal robot as well as on a simulated Jackal.
+
+1. Using the interactive remote controller in RViz. See [Simulating Jackal](#simulating-jackal).
+2. Using autonomous navigation. This will be covered in a future tutorial.
+3. Using the controller for teleoperation. See below.
+4. Publishing ROS2 messages. See below.
+
+:::warning
+
+Jackal is capable of reaching high speeds.
+Careless driving can cause harm to the operator, bystanders, the robot, or other property.
+Always remain vigilant, ensure you have a clear line of sight to the robot, and operate the robot at safe speeds.
+We strongly recommend driving in normal (slow) mode first, and only enabling turbo in large, open areas that are free of people and obstacles.
+
+:::
+
+#### Driving with Remote Controller
+
+:::note
+
+For instructions on controller pairing, [Pairing the Controller](#pairing-the-controller).
+
+:::
+
+<ComponentDrivingWithRemoteController />
+
+##### Using Remote Control with Gazebo
+
+:::note
+
+You can also use a remote controller to drive your robot in Gazebo. To set up your computer for teleop
+using the remote controller follow these steps:
+
+1. Connect the controller to your computer.
+
+2. Set the `JACKAL_JOY_DEVICE` environment variable to point to your game controller device
+   Normally this will be `/dev/input/js0`.
+
+3. Launch Gazebo as described in [Simulation](#simulating-jackal).
+
+:::
+
+#### Driving with ROS2 Messages
+
+You can manually publish `geometry_msgs/Twist` ROS2 messages to either the
+`/jackal_velocity_controller/cmd_vel_unstamped` or the `/cmd_vel` ROS2 topics to drive Jackal.
+
+For example, in a terminal, run:
+
+```
+ros2 topic pub --once /jackal_velocity_controller/cmd_vel_unstamped geometry_msgs/msg/Twist '{linear: {x: 0.5, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}'
+```
+
+The command above makes Jackal drive forward momentarily at 0.5 m/s without any rotation. To
+have Jackal move forward continually, remove `--once` and add `--rate 10` to the command above.
+
+### Keeping Jackal Updated
+
+For details on updating Jackal software or firmware, refer to [Software Maintenance](/docs/robots/outdoor_robots/jackal/maintenance_jackal#software_maintenance).
+
+---
+
+<!-- NOTE: Need to add this back in once added for Humble
+
+## Testing Jackal {#testing-jackal}
+
+Jackal robots come preinstalled with a set of test scripts as part of the `jackal_tests` ROS package, which can be run to verify robot functionality at the component and system levels.
+
+If your Jackal does not have the `jackal_tests` ROS package installed already, you can manually install it by opening terminal and running:
+
+```
+sudo apt-get install ros-noetic-jackal-tests
+```
+
+### Running ROS Tests
+
+The `ros_tests` script exposes a set of interactive tests to verify the functionality of core features.
+These tests run at the ROS-level via ROS topics, and serve as a useful robot-level diagnostic tool for
+identifying the root cause of problems, or at the very least, narrowing down on where the root cause(s) may be.
+
+To run `ros_tests` on a Jackal robot, open terminal and run:
+
+```
+rosrun jackal_tests ros_tests
+```
+
+Upon running `ros_tests`, a list of available tests will be shown in a menu. From the menu, you can choose
+individual tests to run, or simply choose the option to automatically run all the tests.
+
+The details of each test are shown below.
+
+- **Motion Stop Test**
+
+  Checks that the robot's motion-stop is working properly.
+
+  This test subscribes to the `/status` ROS topic and checks that when the motion-stop is manually engaged by
+  the user, the motion-stop state is correctly reported on the `/status` ROS topic.
+
+- **ADC Test**
+
+  Checks that the robot's voltage and current values across its internal hardware components are within
+  expected tolerances.
+
+  This test subscribes to the `/status` ROS topic and checks that the voltage and current values across
+  the internal hardware are within expected tolerances.
+
+- **Rotate Test** (Optional test; only applies to Jackal's with an IMU)
+
+  Rotates the robot counter clockwise 2 full revolutions and checks that the motors, IMU, and EKF odometry are working properly.
+
+  This test:
+
+  - Subscribes to the `/imu/data` ROS topic to receive angular velocity measurements from the IMU's Gyroscope.
+    These measurements are converted into angular displacement estimations, and the robot will rotate until 2
+    full revolutions are estimated.
+  - Subscribes to the `/odometry/filtered` ROS topic to receive angular velocity estimations from the EKF
+    odometry. These measurements are converted into angular displacement estimations, and are output as comparison
+    to the angular displacement estimations from the IMU's Gyroscope.
+  - Publishes to the `/cmd_vel` ROS topic to send drive commands to rotate the robot.
+  - The user will be asked to verify that the robot rotates 2 full revolutions.
+
+  :::note
+
+  The **Rotate Test** rotates the robot using the IMU's Gyroscope data, which inherently will not be 100% accurate.
+  Therefore, some undershoot/overshoot is to be expected.
+
+  :::
+
+- **Drive Test**
+
+  Drives the robot forward 1 metre and checks that the motors, encoders, and encoder-fused odometry are working properly.
+
+  This test:
+
+  - Subscribes to the `/jackal_velocity_controller/odom` ROS topic to receive linear displacement estimations from the
+    encoder-fused odometry. The robot will drive forward until 1 metre is estimated.
+  - Subscribes to the `/joint_state` ROS topic to receive linear displacement measurements from individual the
+    encoders. These measurements are output as comparison to the linear displacement estimations from the
+    encoder-fused odometry.
+  - Publishes to the `/cmd_vel` ROS topic to send drive commands to drive the robot.
+  - The user will be asked to verify that the robot drives forward 1 metre.
+
+  :::note
+
+  The **Drive Test** drives the robot using the Odometry data, which inherently will not be 100% accurate.
+  Therefore, some undershoot/overshoot is to be expected.
+
+  :::
+
+--- -->
+
+## Advanced Topics {#advanced-topics}
+
+### Configuring the Network Bridge
+
+<ComponentConfiguringNetworkBridge />
+
+### Jetson Installation
+
+Refer to the [Jetson](/docs/computers/jetson/jetson_hardware) page for details on installing a Jetson in Jackal.
+However, at present, ROS2 software is not supported on Jetson in Jackal.
+
+## Support {#support}
+
+<Support />
