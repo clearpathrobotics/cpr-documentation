@@ -1,0 +1,67 @@
+---
+title: "Hardware Integration Requirements"
+sidebar_label: "Hardware Integration Requirements"
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+## Hardware Integration Requirements
+
+A UGV must meet all of the requirements below to enable integration with
+OutdoorNav Software.
+
+|      | Requirement |
+|------|------------------------------------------------------------------|
+| <input type="checkbox"/> | UGV has a mounting point for the OutdoorNav Computer (recommendation: Vecow ECX-2000-9R) |
+| <input type="checkbox"/> | UGV has electrical provisions for powering the OutdoorNav Computer. |
+| <input type="checkbox"/> | UGV has a mounting point for a network switch (recommendation: TRENDnet TI-G80) |
+| <input type="checkbox"/> | UGV has electrical provisions for powering the network switch |
+| <input type="checkbox"/> | UGV has a mounting point for a forward-facing 3D lidar (recommendation: Velodyne VLP-16) |
+| <input type="checkbox"/> | 3D lidar can see objects 0.2 meters tall that are placed on the ground 1 meter in front of the UGV |
+| <input type="checkbox"/> | The shadowing of 3D lidar's view angles are acceptable by Clearpath Robotics Engineering. |
+| <input type="checkbox"/> | UGV has electrical provisions for powering the 3D lidar UGV has a mounting point for an attitude and heading reference system (recommendation: Microstrain 3DM-GX5-25 ). Note: Brackets between the AHRS and drive wheels should be stiff. The AHRS measures acceleration. Stiff brackets will ensure the measured acceleration is of the overall UGV, and not a vibration of the chassis. |
+| <input type="checkbox"/> | UGV has mounting points for two GPS receivers (recommendation: Swift Navigation Duro) |
+| <input type="checkbox"/> | UGV has mounting points for two GPS antennae (recommendation: Swift Navigation Antenna) |
+| <input type="checkbox"/> | GPS antenna mount points are at least 700 millimeters apart. |
+| <input type="checkbox"/> | GPS antennae are pointed +Z, toward the sky. |
+| <input type="checkbox"/> | UGV has electrical provisions for powering both GPS receivers. |
+| <input type="checkbox"/> | GPS antenna #1 has view angles that are not blocked by any parts on the UGV (±60°). |
+| <input type="checkbox"/> | The shadowing of GPS antenna #1's view angles are acceptable by Clearpath Robotics Engineering. |
+| <input type="checkbox"/> | GPS receiver #1 has at least 6 satellite connections with a signal-to-noise ratio of at least 50 dB-Hz. Refer to "passing test" and "failing test" figures below. |
+| <input type="checkbox"/> | GPS antenna #2 has view angles are not blocked by any parts on the UGV (±60°). |
+| <input type="checkbox"/> | The shadowing of GPS antenna #2's view angles are acceptable by Clearpath Robotics Engineering. |
+| <input type="checkbox"/> | GPS receiver #2 has at least 6 satellite connections with a signal-to-noise ratio of at least 50 dB-Hz. Refer to "passing test" and "failing test" figures below. |
+| <input type="checkbox"/> | UGV has a mounting point for a long range network client (recommendation: Microhard pX2). |
+| <input type="checkbox"/> | UGV has electrical provisions for powering the long range network client. |
+| <input type="checkbox"/> | UGV has a mounting point for a 2.4 / 5.8 GHz antenna. |
+
+Signature: <input type="text" size="40" /> Date: <input type="text" size="40" />
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/swiftnav-snr-good.png"/>
+    <figcaption>GPS receiver, signal-to-noise, passing test</figcaption>
+  </figure>
+</center>
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/swiftnav-snr-bad.png"/>
+    <figcaption>GPS receiver, signal-to-noise, failing test</figcaption>
+  </figure>
+</center>
+
+## Network Requirements
+
+A UGV must meet all of the requirements below to enable integration with
+OutdoorNav Software.
+
+|      | Requirement |
+|------|------------------------------------------------------------------|
+| <input type="checkbox"/> | The UGV's controller (eg. x86 computer or ARM microcontroller) is running Linux and is configured with ROS Noetic. |
+| <input type="checkbox"/> | The UGV's controller shall have an RJ45 Ethernet port configured to the static address `192.168.131.1` and subnet `255.255.255.0` |
+| <input type="checkbox"/> | The UGV controller's file `/etc/hosts` has been updated to include the OutdoorNav Computer's hostname and IP address: `cpr-outdoor-nav    192.168.131.100` |
+| <input type="checkbox"/> | The UGV controller's hostname has been made available for updating the `/etc/hosts` file on the OutdoorNav Computer. |
+
+Signature: <input type="text" size="40" /> Date: <input type="text" size="40" />

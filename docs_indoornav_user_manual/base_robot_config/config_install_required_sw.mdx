@@ -1,0 +1,47 @@
+---
+title: Installing Required Software
+sidebar_label: Installing Required Software
+sidebar_position: 3
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+Once you have configured apt and rosdep, you can install the IndoorNav
+libraries and their dependencies on your robot by running:
+
+``` bash
+sudo apt-get install ros-$ROS_DISTRO-cpr-indoornav-ROBOT
+```
+
+where _ROBOT_ is replaced with the model of Clearpath robot
+you are installing:
+- `dingo` for Dingo-O or Dingo-D,
+- `husky` for Husky A200,
+- `jackal` for Jackal J100, or
+- `ridgeback` for Ridgeback.
+
+This will automatically install the required launch files and
+dependencies.
+
+Once the packages are installed, run the following to configure the
+IndoorNav software:
+
+```bash
+rosrun cpr_indoornav setup
+```
+
+This script will install additional necessary packages, configure
+`apache2` to act as a proxy server to the IndoorNav backpack, configure
+SSH credentials to allow ROS to launch nodes on the backpack PC
+automatically, and configure the networking between the main PC and
+backpack to ensure the hostnames and IP addresses are configured
+correctly. The `setup` script is interactive; you will be prompted to
+enter your password more than once and select options from multiple
+menus.
+
+Once you have finished running the setup script, reboot the robot to
+finish.
+
+For more details on the networking configuration the
+`cpr_indoornav setup` script performs, please see
+[Configuring the Network Bridge](/docs_indoornav_user_manual/network_config#config-network-bridge).

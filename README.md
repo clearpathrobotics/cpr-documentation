@@ -78,6 +78,42 @@
 10. The administrators of this documentation will review the website for any functional issues,
     and will periodically merge the latest commits in the _development_ branch into the _production_ branch.
 
+## Workflow for publishing OutdoorNav User Manual updates
+
+The OutdoorNav User Manual is a "versioned" document, which means that a snapshot of the content is
+made to align with a release. This allows users to access version-specific copies of the
+documentation.
+
+### Development Phase
+
+During the development phase, follow steps 1-10 of the workflow above. Note that the updates will not affect
+the default view of the user manual, only the "next" version of the manual
+(eg. http://docs.clearpathrobotics.com/docs_outdoornav_user_manual/next/index).
+
+### Release Phase
+
+When it is time to publish a numbered release of the user manual:
+
+1.  Create a branch from _development_ with a name indicating the purpose, such as _release_xxxxxx_
+2.  Run the versioning command, where _new_version_ is aligned with the corresponding software release:
+
+        npm run docusaurus docs:version:outdoornav_user_manual <new_version>
+
+3.  Update /docs/software/navigation_packages.mdx to:
+    - Update the version number for the "Latest".
+    - Add an entry for the previous release.
+4.  Build and test the changes (see steps 4-8 from the standard workflow above).
+5.  When ready, publish your branch on GitHub, and submit a Pull Request to merge your changes into the _development_ branch.
+    Be sure to include the updates to the following:
+    - outdoornav_user_manual_versioned_docs/
+    - outdoornav_user_manual_versioned_sidebars/
+    - outdoornav_user_manual_versions.json
+
+## Workflow for publishing OutdoorNav User Manual updates
+
+Follow the steps for the OutdoorNav User Manual workflow above, replacing
+**outdoornav** with **indoornav**.
+
 ## How should I write pages?
 
 1.  Refer to [Markdown's guide](https://www.markdownguide.org/basic-syntax/) for syntax
@@ -190,7 +226,7 @@ The list below are not strict rules, but are considered good practice to keep im
 
 3.  Make sure the _Remove background_ box has a check mark.
     Click the _Print capture_ box, so you can manually choose the image's width and height.
-    
+
     <img src="/static/img/readme_images/readme_solidworks_image_3.png" width="800"/>
 
 4.  In the same window as Step 3; scroll down to the bottom.
@@ -198,5 +234,5 @@ The list below are not strict rules, but are considered good practice to keep im
     300 mm tall should be a good balance between image resolution and file size.
 
     Finally, select _OK_, and _Save_
-    
+
     <img src="/static/img/readme_images/readme_solidworks_image_4.png" width="800"/>
