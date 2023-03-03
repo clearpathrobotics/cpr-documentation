@@ -20,14 +20,15 @@ Contact our Support team at support@clearpathrobotics.com if you have any questi
 
 ### SSH and SFTP
 
-Clearpath robots ship with an SSH server operating on port 22 for remote login.  This server also supports sftp for
-file-transfer to/from the robot if needed.  By default you can log in using the default username and password for the
+Clearpath robots ship with an SSH server operating on port 22 for remote login. This server also supports sftp for
+file-transfer to/from the robot if needed. By default you can log in using the default username and password for the
 robot.
 
 ### Internal Networking
 
-All Clearpath robots use the `192.168.131.0/24` subnet for any permanently-installed network hardware.  This includes,
+All Clearpath robots use the `192.168.131.0/24` subnet for any permanently-installed network hardware. This includes,
 but may not be limited to
+
 - the robot's primary PC,
 - the robot's MCU,
 - a secondary PC (if present),
@@ -42,7 +43,7 @@ For a list of standard payload IP addresses, please see [network IP addresses](/
 ### Clock Synchronization
 
 If your robot contains multiple computers, their clocks must remain synchronized to allow proper communication between
-ROS nodes running on each one.  Clearpath configures the computers to use `chrony` to synchronize the clocks, with the
+ROS nodes running on each one. Clearpath configures the computers to use `chrony` to synchronize the clocks, with the
 primary PC being the authoritative source for the others.
 
 For details on configuring `chrony`, please see [configuring NTP](/docs/tools/ntp).
