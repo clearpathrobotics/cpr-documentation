@@ -57,16 +57,16 @@ Additionally, the internal mounting area may be used for an Ethernet switch, whe
 The Dingo MCU board provides a number of connections for power, relays, auxiliary inputs and auxiliary outputs.
 These are summarized in the following table and described in more detail in the following sections.
 
-| MCU board label  | MCU board connector | Mating connector | Crimp terminals                                              | Crimping tool    |
-| :--------------- | :------------------ | :--------------- | :----------------------------------------------------------- | :--------------- |
+| MCU board label  | MCU board connector                                         | Mating connector                                            | Crimp terminals                                              | Crimping tool    |
+| :--------------- | :---------------------------------------------------------- | :---------------------------------------------------------- | :----------------------------------------------------------- | :--------------- |
 | PWR1, PWR2       | Dingo 1.0: Molex 0039301040<br/>Dingo 1.5: Molex 0039302040 | Dingo 1.0: Molex 0039012040<br/>Dingo 1.5: Molex 0039014041 | Molex 0507528200 (AWG 20-22) or Molex 0503518100 (AWG 22-28) | Molex 2002184900 |
-| VBAT             | Molex 768250002     | Molex 1700010102 | Molex 0507528200 (AWG 20-22) or Molex 0503518100 (AWG 22-28) | Molex 2002184900 |
-| INPUTS           | TE 3-794682-8       | TE 794617-8      | TE 1-794610-1 (AWG 20-24) or TE 1-794611-1 (AWG 26-30)       | TE 91391-1       |
-| SW_IN            | TE 2-1445094-2      | TE 1445022-2     | TE 1-794610-1 (AWG 20-24) or TE 1-794611-1 (AWG 26-30)       | TE 91391-1       |
-| AUX1, AUX2, AUX3 | TE 3-794682-4       | TE 794617-4      | TE 1-794610-1 (AWG 20-24) or TE 1-794611-1 (AWG 26-30)       | TE 91391-1       |
-| RELAY            | TE 4-794682-0       | TE 1-794616-0    | TE 1-794610-1 (AWG 20-24) or TE 1-794611-1 (AWG 26-30)       | TE 91391-1       |
-| FAN              | Molex 0533750210    | Molex 0511630200 | Molex 0507528200 (AWG 20-22) or Molex 0503518100 (AWG 22-28) | Molex 2002184900 |
-| ESTOP            | Molex 053370610     | Molex 0511630600 | Molex 0507528200 (AWG 20-22) or Molex 0503518100 (AWG 22-28) | Molex 2002184900 |
+| VBAT             | Molex 768250002                                             | Molex 1700010102                                            | Molex 0507528200 (AWG 20-22) or Molex 0503518100 (AWG 22-28) | Molex 2002184900 |
+| INPUTS           | TE 3-794682-8                                               | TE 794617-8                                                 | TE 1-794610-1 (AWG 20-24) or TE 1-794611-1 (AWG 26-30)       | TE 91391-1       |
+| SW_IN            | TE 2-1445094-2                                              | TE 1445022-2                                                | TE 1-794610-1 (AWG 20-24) or TE 1-794611-1 (AWG 26-30)       | TE 91391-1       |
+| AUX1, AUX2, AUX3 | TE 3-794682-4                                               | TE 794617-4                                                 | TE 1-794610-1 (AWG 20-24) or TE 1-794611-1 (AWG 26-30)       | TE 91391-1       |
+| RELAY            | TE 4-794682-0                                               | TE 1-794616-0                                               | TE 1-794610-1 (AWG 20-24) or TE 1-794611-1 (AWG 26-30)       | TE 91391-1       |
+| FAN              | Molex 0533750210                                            | Molex 0511630200                                            | Molex 0507528200 (AWG 20-22) or Molex 0503518100 (AWG 22-28) | Molex 2002184900 |
+| ESTOP            | Molex 053370610                                             | Molex 0511630600                                            | Molex 0507528200 (AWG 20-22) or Molex 0503518100 (AWG 22-28) | Molex 2002184900 |
 
 #### User Power Connections
 
@@ -213,9 +213,9 @@ Electrically, the external motion-stop button can be connected to the 6-pin MCU 
 The six pins should be connected as follows:
 
 - 1-2: to an external "normally closed" motion-stop breakout button:
-    - press to engage the motion stop
-    - twist and release the external motion stop button to clear the motion-stop
-    - to re-enable the motors, the Motion Stop Button on the HMI panel must be pressed
+  - press to engage the motion stop
+  - twist and release the external motion stop button to clear the motion-stop
+  - to re-enable the motors, the Motion Stop Button on the HMI panel must be pressed
 - 3-4: short these pins to indicate that external motion-stop is selected
 - 5-6: short these pins to indicate that external motion-stop is present
 
