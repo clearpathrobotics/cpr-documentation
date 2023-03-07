@@ -1,0 +1,82 @@
+---
+title: OutdoorNav Starter Kit
+sidebar_position: 1
+---
+
+TODO: top-level image
+
+The OutdoorNav Starter Kit is a low-cost hardware bundles that allows you to begin autonomous outdoor navigation using
+Clearpath's [OutdoorNav Autonomy Software](/docs/software/navigation_packages#outdoornav-autonomy-software). It integrates
+easily onto Husky and Jackal, but is compatible with third-party robots as outlined below.
+
+## Item Numbers  {#item-numbers}
+
+| Description            | Sales Kit |
+| :--------------------- | :-------: |
+| OutdoorNav Starter Kit | 028356    |
+| OutdoorNav Starter Kit Husky Adapter Cable | TODO  |
+| OutdoorNav Starter Kit Jackal Adapter Cable | TODO  |
+
+TODO: Stephen Sharp to provide PACS kits for individual components (as some components can be mounted separately for third-party integrations).
+TODO: Stephen Sharp to provide part numbers for Husky 100mm cable and Jackal 100mm cable.
+
+## Mechanical Mounting
+
+The OutdoorNav Starter Kit can be mounted directly using either its 80 X 80 mm or 120 X 120 mm hole pattern using M5 flathead screws.
+
+TODO: Stephen Sharp to create drawing
+
+On Jackal, mount the kit using the standard 80 X 80 hole pattern at the front of Jackal.
+
+On Husky, the kit should be mounted on the leading edge of the top plate. Where a PACS-compatible top plate exists, the kit can be mounted directly.
+When using an older Husky without a PACS-compatible top plate, it will be necessary to drill your own holes.
+
+---
+
+## Electrical Integration
+
+The OutdoorNav Starter Kit includes a 1 m cable for generic integrations. Adapter cables are then used for robot-specific integrations.
+
+- For electrical integration on Husky, purchase the OutdoorNav Starter Kit Husky Adapter Cable, as listed in [Item Numbers](#item-numbers).
+- For electrical integration on Jackal, purchase the OutdoorNav Starter Kit Jackal Adapter Cable, as listed in [Item Numbers](#item-numbers).
+- For electrical integration on third-party robot, an adapter cable will need to be created. Refer to the pinout below.
+
+TODO: Stephen Sharp to provide pinout information for the end of the 1m cable; include voltage/current ratings
+
+---
+
+## Software Integration
+
+The required software for the OutdoorNav Starter Kit is pre-installed. However, existing robot computer must be configured as outlined below
+to operate properly with the OutdoorNav Starter Kit.
+
+### Base Robot Software Configuration
+
+The following configuration must be applied to your base robot's computer.
+
+- Connect an ethernet cable between the base robot computer and the OutdoorNavStarter Kit, either directly between them or via an ethernet switch.
+  Make note of which port was used on the base robot computer so that it's IP address can be configured in the next step.
+- Ensure network connectivity between the base robot computer and the OutdoorNav Starter Kit on the `192.168.131.XXX` subnet.
+  Configure the base robot computer to have a static IP assigned on the interface that is used to connect to the OutdoorNav Starter Kit.
+  Ideally this IP address will be `192.168.131.1`, but it can be in the `192.168.131.1-4` range. In some cases, this may require the
+  creation of a virtual interface.
+- On the base robot computer, add the following line to the `/etc/hosts` file.
+    ```
+    192.168.131.5     cpr-outdoornav
+    ```
+- Install ROS Noetic (the base version is sufficient).
+
+### Base Robot Software Validation Checks
+
+The following checks must be successful for the OutdoorNav Autonomy Software to operate properly:
+
+- The OutdoorNav Starter Kit can be pinged at `192.168.131.5` from the base robot computer.
+- ROS Noetic is running on the base robot computer withwith the `ROS_MASTER_URI` set to the base platform computer.
+  Note that `localhost` is acceptable only if the primary subnet on the base robot computer is the `192.168.131.XXX` subnet.
+- All ROS topics listed in the [Interface Control Checklist](/docs_outdoornav_user_manual/integration_requirements/interface_control_requirements)
+  are publishing as expected on the base robot computer.
+
+Once communication has been set up and both the base robot computer and OutdoorNav Starter Kit have been restarted:
+
+- Run `rostopic list` on the base robot computer and confirm that it includes the OutdoorNav topics.
+- On the base robot computer, ensure that you are able to echo the `/control_selection/control_state` topic.
