@@ -10,6 +10,9 @@ import ComponentPacsMechanical from "/components/pacs_mechanical.mdx";
 import ComponentCommonSoftwareIntegration from "/components/common_software_integration.mdx";
 import Support from "/components/support.mdx";
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
 <ComponentIntroductionDingo />
 
 To attach custom hardware to Dingo, you will have to take care of mechanical mounting, electrical
@@ -77,29 +80,37 @@ Remove the front trough cover by removing four flathead screws and locate the ap
 Refer to the figure below for the location of the user power connectors.
 Route the power from the MCU board to the appropriate location, either to the internal payload modules or through the openings in the trough cover to the topside payload.
 
-##### Dingo 1.0 MCU and User Power
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/dingo_images/dingo-mcu.png"
-      width="1000"
-    />
-    <figcaption>Dingo 1.0 MCU and User Power</figcaption>
-  </figure>
-</center>
-
-##### Dingo 1.5 MCU and User Power
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/dingo_images/dingo-mcu-1_5.png"
-      width="1000"
-    />
-    <figcaption>Dingo 1.5 MCU and User Power</figcaption>
-  </figure>
-</center>
+<Tabs groupId="dingo_versions">
+  <TabItem
+    value="D100"
+    label="Dingo 1.0"
+  >
+    <center>
+      <figure>
+        <img
+          src="/img/robot_images/dingo_images/dingo-mcu.png"
+          width="1000"
+        />
+        <figcaption>Dingo 1.0 MCU and User Power</figcaption>
+      </figure>
+    </center>
+  </TabItem>
+  <TabItem
+    value="D150"
+    label="Dingo 1.5"
+    default
+  >
+    <center>
+      <figure>
+        <img
+          src="/img/robot_images/dingo_images/dingo-mcu-1_5.png"
+          width="1000"
+        />
+        <figcaption>Dingo 1.5 MCU and User Power</figcaption>
+      </figure>
+    </center>
+  </TabItem>
+</Tabs>
 
 #### AUX Inputs {#dingo-aux-inputs}
 
