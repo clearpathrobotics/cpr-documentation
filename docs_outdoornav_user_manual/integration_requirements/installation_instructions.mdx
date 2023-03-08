@@ -1,0 +1,46 @@
+---
+title: "Installation Instructions"
+sidebar_label: "Installation Instructions"
+sidebar_position: 4
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+### Install Docker {#install-docker}
+
+```
+cd ~/cpr_outdoornav_launch/scripts/
+./install_docker.sh
+```
+
+### Install OutdoorNav Software {#install-outdoornav}
+
+```
+cd ~/cpr_outdoornav_launch/scripts/
+./install_outdoornav.sh
+```
+
+### Configure OutdoorNav Sensors {#configure-outdoornav-sensors}
+
+```
+cd ~/cpr_outdoornav_launch/scripts/
+./configure_outdoornav.sh
+```
+
+### Finalize Setup {#final-setup}
+
+For installations of the OutdoorNav software on the platform computer (not a backpack computer), run the following:
+
+```
+cd ~/cpr_outdoornav_launch/
+pushd scripts
+sudo ./setup_computers.sh
+```
+
+For installations of the OutdoorNav software on a backpack computer (including the Starter Kit) run the following (you will need the platform user string and the platform user IP):
+
+```
+cd ~/cpr_outdoornav_launch/
+pushd scripts
+sudo ./setup_computers.sh -b
+```
