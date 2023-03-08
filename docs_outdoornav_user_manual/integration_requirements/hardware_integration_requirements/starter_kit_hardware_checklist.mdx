@@ -1,0 +1,43 @@
+---
+title: "Starter Kit Hardware Checklist"
+sidebar_label: "Starter Kit Hardware Checklist"
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+The OutdoorNav Starter Hardware Kit from Clearpath Robotics contains:
+
+- Ublox F9P GNSS
+- Phidget Spatial 3/3/3 IMU
+- RealSense D435f (x2) Depth Camera
+
+To integrate this kit onto your robot, ensure that all of the requirements below are satisfied for proper operation of the OutdoorNav
+software.
+
+<center>
+  <figure>
+    <img src="/img/software_images/starter_kit_connectivity_diagram.png" width="600"/>
+    <figcaption>Starter Kit Integration</figcaption>
+  </figure>
+</center>
+
+|      | Requirement |
+|------|------------------------------------------------------------------|
+| <input type="checkbox"/> | Once mounted, the XYZ position of the Starter Kit frame relative to the [base_link frame](/docs_outdoornav_user_manual/integration_requirements/hardware_integration_requirements#base-link-frame) has been noted here:<br/>X: <input type="text" size="5" />, Y: <input type="text" size="5" />, Z: <input type="text" size="5" /> |
+| <input type="checkbox"/> | The Starter Kit is connected to the base robot computer via a gigabit ethernet cable (Cat6(a) minimum). |
+
+Should any of the external sensors positions need to be moved, the following constraints should be followed:
+
+- The GNSS antenna is to be placed on an unobstructed part of the platform with clear visibility.
+- The RealSense D435f cameras should be placed with a minimal amount of their field of view (FoV) obstructed by the platform body.
+
+The new XYZ position of the GNSS antenna and/or the Realsense D435f cameras relative to the [Starter Kit Frame](/docs_outdoornav_user_manual/integration_requirements/hardware_integration_requirements#starter-kit-frame) are noted below:
+
+| Sensor | X | Y | Z | R | P | Y |
+|--------|---|---|---|---|---|---|
+| GNSS Antenna | <input type="text" size="5" /> | <input type="text" size="5" /> | <input type="text" size="5" /> |  0.0 | 0.0 | 0.0 |
+| RealSense D435f (front) | <input type="text" size="5" /> | <input type="text" size="5" /> | <input type="text" size="5" /> | <input type="text" size="5" /> | <input type="text" size="5" /> | <input type="text" size="5" /> |
+| RealSense D435f (rear) | <input type="text" size="5" /> | <input type="text" size="5" /> | <input type="text" size="5" /> | <input type="text" size="5" /> | <input type="text" size="5" /> | <input type="text" size="5" /> |
+
+Signature: <input type="text" size="40" /> Date: <input type="text" size="40" />

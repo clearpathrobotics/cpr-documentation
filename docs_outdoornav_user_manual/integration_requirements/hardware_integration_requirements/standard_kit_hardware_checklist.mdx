@@ -1,0 +1,25 @@
+---
+title: "Standard Kit Hardware Checklist"
+sidebar_label: "Standard Kit Hardware Checklist"
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+The OutdoorNav Standard Hardware Kit from Clearpath Robotics contains:
+
+- SwiftNav Piksi/Duro GNSS (x2)
+- Microstrain GX5-25 AHRS
+- Velodyne VLP-16 3D Lidar
+
+To integrate this kit onto your robot, ensure that all of the requirements below are satisfied for proper operation of the OutdoorNav
+software.
+
+|      | Requirement |
+|------|------------------------------------------------------------------|
+| <input type="checkbox"/> | All sensors have been mounted to the platform with fixed brackets. |
+| <input type="checkbox"/> | Spacing between the GNSS antennas is greater than 0.7 m. |
+| <input type="checkbox"/> | SwitfNav Piksi/Duro GNSS units and Velodyne lidar units have been configured to communicate over ethernet (IP). IP sensors are assigned within the following ranges on the `192.168.131.XXX` subnet and recorded in the table below.<br/>**Lidars**: 192.168.131.20-29, **GNSS**: 192.168.131.30-39, **Wireless hardware**: 192.168.131.50-59<br/><table><tr><th>Sensor</th><th>Sensor IP</th></tr><tr><th>SwiftNav Piksi/Duro (Reference)</th><th><input type="text" size="20" /></th></tr><tr><th>SwiftNav Piksi/Duro (Reference)</th><th><input type="text" size="20" /></th></tr><tr><th>Velodyne VLP-16</th><th><input type="text" size="20" /></th></tr><tr><th>Microhard Wireless</th><th><input type="text" size="20" /></th></tr></table> |
+| <input type="checkbox"/> | For each sensor that is to be integrated, measure the XYZ position, in metres, and RPY (roll/pitch/yaw) orientation, in radians, relative to the robot's [base_link frame](/docs_outdoornav_user_manual/integration_requirements/hardware_integration_requirements#base-link-frame). Record the XYZ and RPY values in the table below.<br/><table><tr><th>Sensor</th><th>X</th><th>Y</th><th>Z</th><th>R</th><th>P</th><th>Y</th></tr><tr><th>SwiftNav Piksi/Duro (Reference)</th><th><input type="text" size="5" /></th><th><input type="text" size="5" /></th><th><input type="text" size="5" /></th><th><input type="text" size="5" /></th><th><input type="text" size="5" /></th><th><input type="text" size="5" /></th></tr><tr><th>Swiftnav Piksi/Duro (Attitude)</th><th><input type="text" size="5" /></th><th><input type="text" size="5" /></th><th><input type="text" size="5" /></th><th><input type="text" size="5" /></th><th><input type="text" size="5" /></th><th><input type="text" size="5" /></th></tr><tr><th>Velodyne VLP-16</th><th><input type="text" size="5" /></th><th><input type="text" size="5" /></th><th><input type="text" size="5" /></th><th><input type="text" size="5" /></th><th><input type="text" size="5" /></th><th><input type="text" size="5" /></th></tr><tr><th>Microstrain GX5­25 AHRS</th><th><input type="text" size="5" /></th><th><input type="text" size="5" /></th><th><input type="text" size="5" /></th><th><input type="text" size="5" /></th><th><input type="text" size="5" /></th><th><input type="text" size="5" /></th></tr></table> |
+
+Signature: <input type="text" size="40" /> Date: <input type="text" size="40" />

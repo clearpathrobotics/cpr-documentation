@@ -1,0 +1,45 @@
+---
+title: "Hardware Integration Requirements"
+sidebar_label: "Hardware Integration Requirements"
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+Several hardware configurations are compatible with OutdoorNav Autonomy Software.
+Select the checklist below that corresponds to your hardware kit.
+
+- [OutdoorNav Standard Kit Hardware Checklist](/docs_outdoornav_user_manual/integration_requirements/hardware_integration_requirements/standard_kit_hardware_checklist)
+- [OutdoorNav Starter Kit Hardware Checklist](/docs_outdoornav_user_manual/integration_requirements/hardware_integration_requirements/starter_kit_hardware_checklist)
+- [OutdoorNav Custom Kit Hardware Checklist](/docs_outdoornav_user_manual/integration_requirements/hardware_integration_requirements/custom_kit_hardware_checklist)
+
+## Notes on Measuring Frame Relationships
+
+### `base_link` Frame  {#base-link-frame}
+
+For mobile robots, the `base_link` should be rigidly attached to the mobile platform. It can be attached at
+any position of the platform to provide a point of reference. It is also expected from CPR that the orientation
+of the `base_link` be in the NWU convention. ROS standards for the `base_link` can be found in
+[REP-103](https://www.ros.org/reps/rep-0103.html#axis-orientation) and
+[REP-105](https://www.ros.org/reps/rep-0105.html#base-link).
+
+### Starter Kit Frame  {#starter-kit-frame}
+
+The starter kit frame (`starter_kit_link`) is located at the center of the bottom plate of the enclosure.
+Its orientation is also in the NWU convention with the x-axis of the frame pointing out of the front
+RealSense camera and the y-axis coming out of the side of the enclosure **without** the power and ethernet breakouts.
+
+### Sensor Frame
+
+The sensors frame for each sensor will vary. Please consult the documentation for the specific sensor.
+
+### Measuring Relative Pose
+
+Consider frame A (eg. `starter_kit_link`) and frame B (eg. `base_link`), rigidly attached to the platform.
+The relationship of A relative to B consists of two parts, the relative position and relative orientation.
+The position of A relative to B can be obtained by measuring the distance (in X, Y, Z axes) from frame B to
+frame A, and providing that value in frame B's coordinate frame. The orientation of A relative to B is obtained
+by rotating the axes of frame B until they line up with frame A, noting that results in each axis are the
+rotation angles of the orientation. A trick for the orientation's sign is to remember that if you rotate the
+X-axis towards the Y-axis or Z-axis the rotation will be positive and that if you rotate qway from the
+Y-axis or X-axis, it results in negative rotations.
