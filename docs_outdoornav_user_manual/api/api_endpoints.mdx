@@ -92,7 +92,7 @@ The following table contains the types of sensors that could be
 integrated onto our robot platforms.
 
 | Type | Description |
-| ---- | ----------  | 
+| ---- | ----------  |
 | **gps** | A singular GPS (Global Positioning System) antenna/receiver pair. These may also be referred to as GNSS receivers. |
 | **ins** | An inertial navigation system (INS) that consists of an IMU and a GPS unit. |
 | **imu** | An inertial measurement unit consisting of an accelerometer, gyroscope and potentially a magnetometer. |
@@ -557,13 +557,16 @@ heading.
 **Description:** Send the robot to the charging dock, if the docking
 package has been included.
 
+## Mission API Services {#services-mission-api}
+
+
 ## Definitions {#api-definitions}
 
 ### Message Definitions
 
 #### cpr_control_msgs/ControlMode {#msg-control-mode}
 
-``` 
+```
 # Control mode message
 
 int8 NEUTRAL=0
@@ -575,7 +578,7 @@ int8 mode
 
 #### cpr_control_msgs/ControlSelectionState {#msg-control-selection-state}
 
-``` 
+```
 # The complete state of the control selection module. This message includes the autonomy state as well as the navigation mode.
 
 ControlState autonomy
@@ -584,7 +587,7 @@ ControlMode mode
 
 #### cpr_control_msgs/ControlState {#msg-control-state}
 
-``` 
+```
 # The autonomy state message, The autonomy can be either enabled/disabled and active/paused.
 
 bool enabled
@@ -593,7 +596,7 @@ bool paused
 
 #### cpr_localization_msgs/LocalizationStatus {#msg-localization-status}
 
-``` 
+```
 # Localization status message for all sources of localization
 
 # the localization accuracy as a percentage value (covariance?)
@@ -609,7 +612,7 @@ uint8 sensors_used  # IN DEVELOPMENT # Bitfield denoting which sensors are used 
 
 #### cpr_localization_msgs/GPSStatus {#msg-gps-status}
 
-``` 
+```
 # GPS receiver status message
 
 uint8 MODE_NO_FIX = 0
@@ -628,7 +631,7 @@ float64 correction_age    # IN DEVELOPMENT
 
 #### cpr_navigation_msgs/Mission {#msg-navigation-mission}
 
-``` 
+```
 # Message definition for an OutdoorNav mission
 
 std_msgs/Header header
@@ -654,7 +657,7 @@ cpr_navigation_msgs/Task[] tasks
 
 #### cpr_navigation_msgs/CurrentGoalInfo {#msg-current-goal-info}
 
-``` 
+```
 # Message contains an identifier for the goal, as well as the final goal heading and tolerances
 
 string goal_id
@@ -670,7 +673,7 @@ float64[] viapoint_heading_tolerances
 
 #### cpr_navigation_msgs/DistanceToGoal {#msg-distance-to-goal}
 
-``` 
+```
 # Message includes Euclidean and Path distance to goal
 
 float32 euclidean
@@ -679,7 +682,7 @@ float32 path
 
 #### cpr_navigation_msgs/MotionState {#msg-motion-state}
 
-``` 
+```
 # Motion state message to indicate the current motion, expected motion and the direction of travel of the robot.
 
 # State pertaining to current motion of the robot.
@@ -707,7 +710,7 @@ uint8 direction
 
 #### cpr_navigation_msgs/NavigationState {#msg-navigation-state}
 
-``` 
+```
 # Message containing the current navigation state(s). Navigation may be in multiple states.
 
 uint8 STATE_IDLE = 0
@@ -727,7 +730,7 @@ uint8[] states
 
 #### cpr_navigation_msgs/OdomIntent {#msg-odom-intent}
 
-``` 
+```
 # Message containing current and predicted odom related information
 
 std_msgs/Header header
@@ -742,7 +745,7 @@ float32 dt
 
 #### cpr_navigation_msgs/PointVector {#msg-point-vector}
 
-``` 
+```
 # Vector of point vectors (for GUI)
 std_msgs/Header header
 
@@ -751,7 +754,7 @@ cpr_navigation_msgs/Vector2D[] cloud
 
 #### cpr_navigation_msgs/Progress (BETA) {#msg-navigation-progress}
 
-``` 
+```
 # Message containing the completion percentage of the currently executed path and the current goal.
 
 float32 path_progress
@@ -761,7 +764,7 @@ float32 mission_progress
 
 #### cpr_navigation_msgs/ScanPoints {#msg-scan-points}
 
-``` 
+```
 # Message definition for the detection points used by the navigation that relate to the detected obstacles.
 
 std_msgs/Header header
@@ -772,7 +775,7 @@ cpr_navigation_msgs/PointVector[] cloud_vector
 
 #### cpr_navigation_msgs/Task {#msg-navigation-task}
 
-``` 
+```
 # Message definition for the tasks (ie. internal/external software calls) that can be assigned to an OutdoorNav mission.
 
 
@@ -785,7 +788,7 @@ string[] strings
 
 #### cpr_navigation_msgs/TrackError {#msg-track-error}
 
-``` 
+```
 # The path error message containing the off-path cross track error and the relative heading error to the path direction
 
 std_msgs/Header header
@@ -795,7 +798,7 @@ float32 heading_error
 
 #### cpr_navigation_msgs/Vector2D {#msg-vector-2d}
 
-``` 
+```
 # 2D Vector of floats (used for GUI)
 
 float32[2] point
@@ -803,14 +806,14 @@ float32[2] point
 
 #### cpr_navigation_msgs/Waypoints {#msg-navigation-waypoints}
 
-``` 
+```
 float64 x
 float64 y
 ```
 
 #### cpr_onboard_systems_msgs/WirelessConnection {#msg-onboard-systems-wireless}
 
-``` 
+```
 # Message definition for the wireless connection properties.
 
 float32 bitrate  # Mb/s
@@ -831,7 +834,7 @@ float64 frequency
 
 #### cpr_platform_msgs/PlatformID {#msg-platform-id}
 
-``` 
+```
 # Platform ID message containing the model, serial #, hardware and firmware versions
 
 string model
@@ -842,7 +845,7 @@ string firmware_revision
 
 #### cpr_safety_msgs/WatchdogStatus {#msg-safety-watchdog}
 
-``` 
+```
 # Watchdog status message containing information related to sensor monitoring, emergency stop and safety stops
 
 bool[] gps_watchdog_triggered
@@ -876,7 +879,7 @@ bool[] camera_watchdog_triggered
 
 #### cpr_control_msgs/srv/SetControlMode {#srv-set-control-mode}
 
-``` 
+```
 # Service definition to set the control mode
 
 cpr_control_msgs/ControlMode mode
@@ -885,7 +888,7 @@ cpr_control_msgs/ControlMode mode
 
 #### cpr_localization_msgs/srv/SetDatum {#srv-set-datum}
 
-``` 
+```
 # Service definition to set the datum with a latitude (lat) and longitude (lon)
 
 float32 lat
@@ -896,7 +899,7 @@ bool success
 
 #### cpr_navigation_msgs/srv/SetDelayCompensation {#srv-set-delay-compensation}
 
-``` 
+```
 # Service definition to enable/disable the delay compensation feature. If enabling, the delay to compensate for must be specified in the request.
 
 bool enable_delay_compensation
@@ -908,7 +911,7 @@ string message
 
 #### cpr_navigation_msgs/srv/SetPathSmoother {#srv-set-path-smoother}
 
-``` 
+```
 # Service definition to enable/disable the path smoothing feature. If enabling, minimum turning radius must be specified in the request.
 
 bool enable_path_smoother
@@ -921,7 +924,7 @@ string message
 
 #### cpr_navigation_msgs/srv/SetPathShifter {#srv-set-path-shifter}
 
-``` 
+```
 # Service definition to enable/disable the path smoothing feature. If enabling, minimum turning radius must be specified in the request.
 
 bool enable_path_shifter
@@ -934,7 +937,7 @@ string message
 
 #### cpr_navigation_msgs/srv/SetStopDistance {#srv-set-stop-distance}
 
-``` 
+```
 # Service definition to enable/disable the stop distance. If enabling, the stop distance must be specified in the request.
 
 bool enable_stop_distance
@@ -955,7 +958,7 @@ string message
 
 #### cpr_localization_msgs/action/SurveyBaseStation {#action-survey-base-station}
 
-``` 
+```
 # Action definition for surveying the base station
 
 # goal
@@ -972,7 +975,7 @@ float32 percent_complete
 
 #### cpr_navigation_msgs/action/Mission {#action-mission}
 
-``` 
+```
 # Action definition for sending a mission to the Clearpath OutdoorNav software
 
 # goal
@@ -987,7 +990,7 @@ string state
 
 #### cpr_dock_msgs/action/Dock {#action-dock}
 
-``` 
+```
 # Action definition for sending a Clearpath UGV to its charging dock.
 
 # goal
@@ -1002,4 +1005,124 @@ bool success
 # feedback
 string state
 float64 dist_to_dock # (IN DEVELOPMENT)
+```
+
+
+#### onav_mission_manager_msgs/msg/Mission #{storage-mission}
+
+```
+# A mission containing one or more Waypoints, which may contain zero or more Tasks
+
+# A UUID string used to uniquely identify this mission
+string uuid
+
+# The human-readable name of this mission
+string name
+
+# The ordered list of Waypoints that make up the mission
+onav_mission_manager_msgs/Waypoint[] waypoints
+
+# Configuration parameters for the mission
+# Additional details TBD
+string onav_config
+```
+
+#### onav_mission_manager_msgs/msg/StorageState #{storage-storagestate}
+
+```
+# The entire contents of the Mission database
+# Note that all of the following cases are valid:
+# - a Task can be referenced in multiple Waypoints
+# - a Waypoint can be referenced in multiple Missions
+# - a Waypoint can be orphaned (i.e. not included in any Missions)
+# - a Task can be orphaned (i.e. not included in any Waypoints)
+
+# All missions defined in the database
+onav_mission_manager_msgs/Mission[] missions
+
+# All waypoints defined in the database
+onav_mission_manager_msgs/Waypoint[] waypoints
+
+# All tasks defined in the database
+onav_mission_manager_msgs/Task[] tasks
+
+```
+
+#### onav_mission_manager_msgs/msg/StorageState #{storage-storagestate}
+
+```
+# The entire contents of the Mission database
+# Note that all of the following cases are valid:
+# - a Task can be referenced in multiple Waypoints
+# - a Waypoint can be referenced in multiple Missions
+# - a Waypoint can be orphaned (i.e. not included in any Missions)
+# - a Task can be orphaned (i.e. not included in any Waypoints)
+
+# All missions defined in the database
+onav_mission_manager_msgs/Mission[] missions
+
+# All waypoints defined in the database
+onav_mission_manager_msgs/Waypoint[] waypoints
+
+# All tasks defined in the database
+onav_mission_manager_msgs/Task[] tasks
+
+```
+
+#### onav_mission_manager_msgs/msg/Task #{storage-task}
+
+```
+# A single task that can be executed at a Waypoint
+
+# A UUID string to uniquely identify this Task
+string uuid
+
+# The human-readable name of this task
+string name
+
+# The ROS action that this task executes
+string service_call
+
+# The version of this task
+string version
+
+# Numerical/boolean data to be passed to the service_call
+# The exact meaning of these values is dependent on the underlying service
+float64[] floats
+
+# String data to be passed to the service_call
+# The exact meaning of these values is dependent on the underlying service
+string[] strings
+```
+
+#### onav_mission_manager_msgs/msg/Waypoint #{storage-waypoint}
+
+```
+# A single Waypoint along a Mission
+
+# A UUID string to uniquely identify this Waypoint
+string uuid
+
+# The human-readable name of this Waypoint
+string name
+
+# The latitude (in degrees) of this Waypoint
+float64 latitude
+
+# The longitude (in degrees) of this Waypoint
+float64 longitude
+
+# The compass heading (in degrees) of this Waypoint
+float64 heading
+
+# A radius in meters indicating the acceptable radius from the target location
+# Posititon tolerance is disabled if this value is negative
+float64 position_tolerance
+
+# A tolerance in degrees indicating the acceptable deviation from the heading
+# Heading tolerance is disabled if this value is negative
+float64 yaw_tolerance
+
+# The ordered set of Tasks to execute once the goal position & orientation are reached
+onav_mission_manager_msgs/Task[] tasks
 ```
