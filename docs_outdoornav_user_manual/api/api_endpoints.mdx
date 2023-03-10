@@ -559,11 +559,11 @@ package has been included.
 
 ------------------------------------------------------------------------
 
-## Mission API Services {#services-mission-api}
+## Mission Manager API {#services-mission-api}
 
 The Mission Manager API allows creation, deletion, and modification of OutdoorNav missions.  Mission data is stored
-in a databse-like structure on-disk.  The web-based GUI is the primary method of managing missions, but this service
-API provides the ability to write your front-end if desired.
+in a databse-like structure on-disk.  The web UI is the primary method of managing missions, but this service
+API provides the ability to write your own UI if desired.
 
 ### Topics Exported by Mission Manager
 
@@ -613,25 +613,25 @@ Tasks in the original Waypoint are also duplicated.
 
 **Service Type:** [onav_mission_manager_msgs/srv/CreateMission](#storage-createmission)
 
-**Description:** Create a new Mission
+**Description:** Create a new Mission.
 
 #### mission_manager/create_task
 
 **Service Type:** [onav_mission_manager_msgs/srv/CreateTask](#storage-createtask)
 
-**Description:** Create a new Task
+**Description:** Create a new Task.
 
 #### mission_manager/create_waypoint
 
 **Service Type:** [onav_mission_manager_msgs/srv/CreateWaypoint](#storage-createwaypoint)
 
-**Description:** Create a new Waypoint
+**Description:** Create a new Waypoint.
 
 #### mission_manager/delete_all
 
 **Service Type:** [onav_mission_manager_msgs/srv/DeleteEverything](#storage-deleteeverything)
 
-**Description:** Delete everything in the database
+**Description:** Delete everything in the database.
 
 :::note
 
@@ -655,7 +655,7 @@ by any Waypoints.
 
 :::note
 
-Use with caution; deleted items cannot be recovered
+Use with caution; deleted items cannot be recovered.
 
 :::
 
@@ -703,37 +703,37 @@ should subscribe to the `mission_manager/state` topic.
 
 **Service Type:** [onav_mission_manager_msgs/srv/GetAllMissions](#storage-getallmissions)
 
-**Description:** Get all Missions defined in the database
+**Description:** Get all Missions defined in the database.
 
 #### mission_manager/get_all_tasks
 
 **Service Type:** [onav_mission_manager_msgs/srv/GetAllTasks](#storage-getalltasks)
 
-**Description:** Get all Tasks defined in the database
+**Description:** Get all Tasks defined in the database.
 
 #### mission_manager/get_all_waypoints
 
 **Service Type:** [onav_mission_manager_msgs/srv/GetAllWaypoints](#storage-getallwaypoints)
 
-**Description:** Get all Waypoints defined in the database
+**Description:** Get all Waypoints defined in the database.
 
 #### mission_manager/get_mission
 
 **Service Type:** [onav_mission_manager_msgs/srv/GetMission](#storage-getmission)
 
-**Description:** Get the Mission with the specified ID
+**Description:** Get the Mission with the specified ID.
 
 #### mission_manager/get_task
 
 **Service Type:** [onav_mission_manager_msgs/srv/GetTask](#storage-gettask)
 
-**Description:** Get the Task with the specified ID
+**Description:** Get the Task with the specified ID.
 
 #### mission_manager/get_waypoint
 
 **Service Type:** [onav_mission_manager_msgs/srv/GetWaypoint](#storage-getwaypoint)
 
-**Description:** Get the Waypoint with the specified ID
+**Description:** Get the Waypoint with the specified ID.
 
 #### mission_manager/import
 
@@ -754,13 +754,13 @@ The data itself is a base64 encoded JSON string representing the underlying on-d
 
 **Service Type:** [onav_mission_manager_msgs/srv/AddRemoveById](#storage-addremovebyid)
 
-**Description:** Remove a Task from a Waypoint.  All instances of the Task are removed from the given Waypoint
+**Description:** Remove a Task from a Waypoint.  All instances of the Task are removed from the given Waypoint.
 
 #### mission_manager/remove_waypoint_from_mission
 
 **Service Type:** [onav_mission_manager_msgs/srv/AddRemoveById](#storage-addremovebyid)
 
-**Description:** Remove a Waypoint from a Mission.  All instances of the Waypoint are removed from the given Mission
+**Description:** Remove a Waypoint from a Mission.  All instances of the Waypoint are removed from the given Mission.
 
 #### mission_manager/update_mission
 
