@@ -174,7 +174,7 @@ distortion parameters, calibration parameters, etc\...
 
 #### onboard_systems/wireless/connection (IN DEVELOPMENT)
 
-**Message Type:** [cpr_onboard_systems_msgs/WirelessConnection](#msg-onboard-systems-wireless)
+**Message Type:** wireless_msgs/Connection
 
 **Description:** Information about the robot's wireless connection
 including ssid, frequency, bitrate, and signal and noise levels.
@@ -1033,27 +1033,6 @@ float64 x
 float64 y
 ```
 
-#### cpr_onboard_systems_msgs/WirelessConnection.msg {#msg-onboard-systems-wireless}
-
-```
-# Message definition for the wireless connection properties.
-
-float32 bitrate  # Mb/s
-int16 txpower  # dBm
-
-# Fractional link quality number preserved in raw
-# field, resolved to decimal for link_quality field.
-string link_quality_raw
-float32 link_quality
-
-int16 signal_level  # dBm
-int16 noise_level  # dBm
-
-string essid
-string bssid
-float64 frequency
-```
-
 #### cpr_platform_msgs/PlatformID.msg {#msg-platform-id}
 
 ```
@@ -1152,7 +1131,7 @@ float64 yaw_tolerance
 onav_ms2_msgs/Task[] tasks
 ```
 
-#### onav_mission_manager_msgs/msg/StorageState {#storage-storagestate}
+#### onav_mission_manager_msgs/msg/StorageState.msg {#storage-storagestate}
 
 ```
 # The entire contents of the Mission database
@@ -1172,7 +1151,7 @@ onav_ms2_msgs/Waypoint[] waypoints
 onav_ms2_msgs/Task[] tasks
 ```
 
-#### Standard ROS Messages
+#### Standard ROS Messages {#std-ros-msgs}
 
 -   [actionlib_msgs/GoalID](http://docs.ros.org/en/noetic/api/actionlib_msgs/html/msg/GoalID.html)
 -   [diagnostic_msgs/DiagnosticArray](http://docs.ros.org/en/noetic/api/diagnostic_msgs/html/msg/DiagnosticArray.html)
@@ -1191,6 +1170,7 @@ onav_ms2_msgs/Task[] tasks
 -   [std_msgs/Empty](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/Empty.html)
 -   [std_msgs/String](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/String.html)
 -   [tf2_msgs/TFMessage](http://docs.ros.org/en/noetic/api/tf2_msgs/html/msg/TFMessage.html)
+-   [wireless_msgs/Connection](http://docs.ros.org/en/noetic/api/wireless_msgs/html/msg/Connection.html)
 
 ------------------------------------------------------------------------
 
