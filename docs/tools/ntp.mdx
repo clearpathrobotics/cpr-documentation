@@ -4,14 +4,14 @@ sidebar_position: 6
 ---
 
 Network Time Protocol, or NTP, is a network protocol that allows computers on a network to synchronize their clocks
-with each other.  This is essential for ROS, as many types of data are time-sensitive.
+with each other. This is essential for ROS, as many types of data are time-sensitive.
 
 ### Chrony
 
 Clearpath uses a Linux package called `chrony` to provide clock synchronization across multiple devices inside a robot.
 The robot's primary PC acts as the main NTP source for other computers inside the robot.
 
-To (re-)configure `chrony`, edit the file `/etc/chrony/chrony.conf`.  The following shows the default configuration
+To (re-)configure `chrony`, edit the file `/etc/chrony/chrony.conf`. The following shows the default configuration
 for the primary PC:
 
 ```
@@ -122,14 +122,14 @@ makestep 1 3
 
 ### Work-around for no RTC
 
-Most computers have a realtme clock (RTC) that keeps time while the computer is otherwise powered-off.  This clock has
-a replaceable battery, referred to either as the RTC backup battery or CMOS battery.  If you are using a computer that
-does not have an RTC backup battery, or does not have a RTC at all, you may see unusual behaviour.  Typically the
-clock will reset to a default date (often January 1, 1970) when the computer loses power.  The clock will then jump
+Most computers have a realtme clock (RTC) that keeps time while the computer is otherwise powered-off. This clock has
+a replaceable battery, referred to either as the RTC backup battery or CMOS battery. If you are using a computer that
+does not have an RTC backup battery, or does not have a RTC at all, you may see unusual behaviour. Typically the
+clock will reset to a default date (often January 1, 1970) when the computer loses power. The clock will then jump
 ahead to the present as soon as a connection with an NTP server is established.
 
 Under most circumstances this is fine, but some ROS nodes will behave incorrectly if the clock suddenly jumps ahead by
-50+ years.  To mitigate this, if you are configuring a computer that does not have a reliable RTC, modify the file
+50+ years. To mitigate this, if you are configuring a computer that does not have a reliable RTC, modify the file
 `/lib/systemd/system/ros.service` to add an `ExecStartPre` command to the service:
 
 ```
