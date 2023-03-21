@@ -16,17 +16,26 @@ easily onto Husky and Jackal, but is compatible with third-party robots as outli
 | OutdoorNav Starter Kit                      |  028356   |
 | OutdoorNav Starter Kit Husky Adapter Cable  |   TODO    |
 | OutdoorNav Starter Kit Jackal Adapter Cable |   TODO    |
+| GNSS Antenna Relocation Kit                 |  028590   |
+| RealSense D435f Relocation Kit              |  028817   |
 
-TODO: Stephen Sharp to provide PACS kits for individual components (as some components can be mounted separately for third-party integrations).
-TODO: Stephen Sharp to provide part numbers for Husky 100mm cable and Jackal 100mm cable.
+TODO: Stephen Sharp to provide part numbers for Husky 100 mm cable and Jackal 100  mm cable.
 
 ## Mechanical Mounting
 
-The OutdoorNav Starter Kit can be mounted directly using either its 80 X 80 mm or 120 X 120 mm hole pattern using M5 flathead screws.
+The OutdoorNav Starter Kit can be mounted directly using either its 80 X 80 mm or 120 X 120 mm hole pattern as shown in the following image.
 
-TODO: Stephen Sharp to create drawing
+<center>
+  <figure>
+    <img
+      src="/img/software_images/starter_kit_integration_drawing.png"
+      width="600"
+    />
+    <figcaption>Starter Kit mounting hole pattern</figcaption>
+  </figure>
+</center>
 
-On Jackal, mount the kit using the standard 80 X 80 hole pattern at the front of Jackal.
+On Jackal, mount the kit using the standard 120 X 120 hole pattern at the front of Jackal.
 
 On Husky, mount the kit on the leading edge of the top plate. Where a PACS-compatible top plate exists, the kit can be mounted directly.
 When using an older Husky without a PACS-compatible top plate, it will be necessary to drill your own holes.
@@ -37,17 +46,40 @@ Refer also to the [OutdoorNav Starter Kit Hardware Checklist](/docs_outdoornav_u
 
 ## Electrical Integration
 
-The OutdoorNav Starter Kit includes a 1 m cable for generic integrations. Adapter cables are then used for robot-specific integrations.
+### Power Integration
 
-- For electrical integration on Husky, purchase the OutdoorNav Starter Kit Husky Adapter Cable, as listed in [Item Numbers](#item-numbers).
-- For electrical integration on Jackal, purchase the OutdoorNav Starter Kit Jackal Adapter Cable, as listed in [Item Numbers](#item-numbers).
-- For electrical integration on third-party robot, an adapter cable will need to be created. Refer to the pinout below.
+The OutdoorNav Starter Kit includes a 1 m IP67 power cable to provide power from the base platform to the Starter Kit.
+Adapter cables can be used for robot-specific integrations.
 
-TODO: Stephen Sharp to provide pinout information for the end of the 1m cable; include voltage/current ratings
+- For power integration on Husky, purchase the OutdoorNav Starter Kit Husky Adapter Cable, as listed in [Item Numbers](#item-numbers).
+- For power integration on Jackal, purchase the OutdoorNav Starter Kit Jackal Adapter Cable, as listed in [Item Numbers](#item-numbers).
+- For power integration on a third-party robot, an adapter cable will need to be created.
+  - The provided 1 m power cable is terminated with a Molex Mini-Fit Jr connector (Molex 0039012025).
+  - The adapter cable should use the appropriate mating connector (Molex 0039013029).
+  - The pinout is illustrated in the figure below:
+    - Pin 1: VIN (18 to 75 VDC, 7 A max)
+    - Pin 2: GND
+
+    <center>
+      <figure>
+        <img
+          src="/img/software_images/starter_kit_power_cable_connector.png"
+          width="50"
+        />
+        <figcaption>Starter Kit power cable connector</figcaption>
+      </figure>
+    </center>
+
+
+### Data Integration
+
+The OutdoorNav Starter Kit includes a 1 m IP67 Ethernet cable for data connectivity between the base platform to the Starter Kit.
+Refer to [OutdoorNav Platform Computer Checklist](/docs_outdoornav_user_manual/integration_requirements/hardware_integration_requirements/platform_computer_checklist)
+for addititional details on data connectivity.
 
 ---
 
 ## Software Integration
 
-The required software for the OutdoorNav Starter Kit is pre-installed. However, existing robot computer must be configured as outlined
+The required software for the OutdoorNav Starter Kit is pre-installed. However, the base platform computer must be configured as outlined
 in the [OutdoorNav Platform Computer Checklist](/docs_outdoornav_user_manual/integration_requirements/hardware_integration_requirements/platform_computer_checklist).
