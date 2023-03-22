@@ -8,39 +8,114 @@ toc_max_heading_level: 4
 
 ### Install Docker {#install-docker}
 
-```
+``` bash
 cd ~/cpr_outdoornav_launch/scripts/
 ./install_docker.sh
 ```
 
-### Install OutdoorNav Software {#install-outdoornav}
-
-```
-cd ~/cpr_outdoornav_launch/scripts/
-./install_outdoornav.sh
-```
-
 ### Configure OutdoorNav Sensors {#configure-outdoornav-sensors}
 
-```
+Prior to configuring the sensors, ensure that you have measured the position (XYZ) and orientation (RPY) of each of your sensors w.r.t. the base_link. See your results from the [Integration Requirements](/docs_outdoornav_user_manual/integration_requirements/hardware_integration_requirements).
+
+``` bash
 cd ~/cpr_outdoornav_launch/scripts/
 ./configure_outdoornav.sh
 ```
 
 ### Finalize Setup {#final-setup}
 
+The script in the sections below will reboot the computer it is installed run on.
+
+##### Platform Computer
+
 For installations of the OutdoorNav software on the platform computer (not a backpack computer), run the following:
 
-```
+``` bash
 cd ~/cpr_outdoornav_launch/
 pushd scripts
 sudo ./setup_computers.sh
 ```
+##### Secondary/Starter Kit Computer
 
-For installations of the OutdoorNav software on a backpack computer (including the Starter Kit) run the following (you will need the platform user string and the platform user IP):
+Prior to running the script on the secondary/starter kit computer, ensure that you have the user and IP of the platform computer that the secondary/starter kit computer is connected to. Run the following:
 
-```
+``` bash
 cd ~/cpr_outdoornav_launch/
 pushd scripts
 sudo ./setup_computers.sh -b
 ```
+
+### Install OutdoorNav Software {#install-outdoornav}
+
+``` bash
+cd ~/cpr_outdoornav_launch/scripts/
+./install_outdoornav.sh
+```
+### Configure Platform Footprint {#configure-platform-footprint}
+
+If the platform has sensors and/or parts that protrude outside of the platform body, then a few environment variables will need to be modified to adjust the footprint of the robot. Things that could be extending past the footprint culd include but not limited to:
+
+-   GPS antennae,
+-   Charging receivers,
+-   Arms,
+-   etc...
+
+Change the environment variables fmor the Table below, in the following file:
+
+```
+cd ~/cpr_outdoornav_launch
+nano outdoornav_tuning.env
+```
+
+| Environment Variable        | Description                            | Default |
+|-----------------------------|----------------------------------------|---------|
+| **FOOTPRINT_OFFSET_POS_X**  | Distance from base_link to the furthest edge of any part/sensor at the front of the robot | 0.5   |
+| **FOOTPRINT_OFFSET_NEG_X**  | Distance from base_link to the furthest edge of any part/sensor at the rear of the robot  | -0.5  |
+| **FOOTPRINT_OFFSET_POS_Y**  | Distance from base_link to the furthest edge of any part/sensor at the left of the robot  | 0.35  |
+| **FOOTPRINT_OFFSET_NEG_Y**  | Distance from base_link to the furthest edge of any part/sensor at the right of the robot | -0.35 |
+
+
+### Starting OutdoorNav
+
+``` bash
+cd ~/cpr_outdoornav_launch/    # directory with docker-compose.yaml
+docker compose --profile outdoornav up -d
+```
+
+### Testing OutdoorNav Installation
+
+1. Ping all of the network sensors to ensure proper communication with the platform/secondary/backpack computer.
+
+2. Check the following topics and make sure there is data being published to them:
+
+``` bash
+rostopic echo -n 1 /platform/odom
+rostopic echo -n 1 /platform/cmd_vel
+ 
+# IMU 1 (if included)
+rostopic echo -n 1 /sensors/imu/0/data
+ 
+rostopic echo -n 1 /localization/odom
+ 
+# Velodyne 1 (if included)
+rostopic echo /sensors/lidar/0/pointcloud
+ 
+# Velodyne 2 (if included)
+rostopic echo -n 1 /sensors/lidar/1/pointcloud
+ 
+# Laser Scan Front (if included)
+rostopic echo -n 1 /sensors/lidar/0/scan
+ 
+# Laser Scan Rear (if included)
+rostopic echo -n 1 /sensors/lidar/1/scan
+ 
+# Realsense D435 Front (if included)
+rostopic echo -n 1 /sensors/stereo/0/pointcloud
+rostopic echo -n 1 /sensors/stereo/0/depth/image_rect_raw
+ 
+# Realsense D435 Rear (if included)
+rostopic echo -n 1 /sensors/stereo/1/pointcloud
+rostopic echo -n 1 /sensors/stereo/1/depth/image_rect_raw
+```
+
+Once installation is complete, you can proceed to [Getting Started](/docs_outdoornav_user_manual/getting_started/system_setup) to start using the software.
