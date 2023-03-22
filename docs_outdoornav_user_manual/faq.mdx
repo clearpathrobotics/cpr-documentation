@@ -29,10 +29,9 @@ toc_max_heading_level: 4
         the controller is turned off. If it is on then it will be
         sending "no motion" commands that will be overriding the
         autonomy commands.
-    4.  Ensure that at least 1 Goal is enabled in the Goal Panel.
-    5.  Check that the task settings have all been set for each Goal in
-        the Mission. A missing task setting for a Move PTZ task will
-        block the execution of the Goal it is in.
+    4.  Check the task settings for each Waypoint in the Mission. 
+        A missing task setting for a Move PTZ task will block the 
+        execution of the Mission it is in.
 
 3.  **How do I delete a waypoint?**
 
@@ -40,46 +39,26 @@ toc_max_heading_level: 4
     **Waypoint Mode** button. Now you can click the Waypoint you wish to
     delete. A drop down list will appear. Select **Delete**.
 
-4.  **How do I add a Task to a Goal?**
+4.  **How do I add a Task to a Waypoint?**
 
     See [Add Task to Goal](/docs_outdoornav_user_manual/web_user_interface/ui_autonomous_mode#add-task) for information on how
-    to add a Task to a Goal.
+    to add a Task to a Waypoint.
 
-5.  **How do I remove a waypoint from an existing Goal?**
+5.  **Why is the "Save Image" Task failing?**
 
-    Open the Goal Panel. Select the Goal which you want to edit and
-    expand the Waypoint list, if necessary. Make sure the **Edit
-    Missions** toggle is enabled. On the map, select the Waypoint you
-    would like to remove. It will be highlighted in the Goal Panel. You
-    can then click the **x** beside that Waypoint in the Goal Panel to
-    remove it from the Goal.
-
-6.  **How do I add a waypoint to an existing Goal?**
-
-    Open the Goal Panel. Make sure the **Edit Missions** toggle is
-    enabled. Select the Goal which you want to add the Waypoint to.
-    Select the Waypoint on the map. There will be a menu option to **Add
-    Waypoint to Current Goal**. This will add the waypoint to the
-    beginning of the goal. You can then drag and drop the Waypoint in
-    the Goal Panel to place it in the order you need. This will only be
-    possible using a mouse or touchpad as the touchscreen will not allow
-    you to drag/drop the Waypoint.
-
-7.  **Why is the "Save Image" Task failing?**
-
-    Check the Goals that are enabled in your Goal Panel. If you see a
-    red warning triangle beside the **Save Image** task it means that
-    the settings for this task were not set. Set them and rerun the
+    Check the Waypoints that have a **Save Image** task in the Waypoint panel. 
+    If you see a red warning triangle beside the **Save Image** task it means 
+    that the settings for this task were not set. Set them and rerun the
     mission.
 
-8.  **The navigation gets stuck on the ""Compute Path"" feedback.
+6.  **The navigation gets stuck on the ""Compute Path"" feedback.
     What should I do?**
 
     Power cycle the UGV by powering off the base platform. Wait 10
     seconds, then turn the base power back on. Allow 1-2 minutes for the
     software to start up and refresh the Web UI page.
 
-9.  **The UGV position and/or heading are behaving erratically while the
+7.  **The UGV position and/or heading are behaving erratically while the
     UGV is stationary. What should I do?**
 
     Power cycle the UGV by powering off the base platform. Wait 10
