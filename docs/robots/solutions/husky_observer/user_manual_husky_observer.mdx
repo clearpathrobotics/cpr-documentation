@@ -6,4 +6,1112 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
+import ComponentIntroductionHuskyObserver from "/components/introduction_husky_observer.mdx";
+import Support from "/components/support.mdx";
+import ComponentUsingRos from "/components/using_ros.mdx";
+import ComponentCommonSafeWorkProcedures from "/components/common_safe_work_procedures.mdx";
+import ComponentSafetyWarning from "/components/safety_warning.mdx";
+import ComponentPs4ControllerPairing from "/components/ps4_controller_pairing.mdx";
+import ComponentChangingDefaultPassword from "/components/changing_default_password.mdx";
+import ComponentWiredRobotConnection from "/components/wired_robot_connection.mdx";
+import ComponentPerformingABackup from "/components/performing_a_backup.mdx";
+import ComponentAddingASourceWorkspace from "/components/adding_a_source_workspace.mdx";
+import ComponentInstallingRemoteComputerSoftware from "/components/installing_remote_computer_software.mdx";
+
+<ComponentIntroductionHuskyObserver />
+
+## Introduction
+
+Husky Observer is a fully integrated system that enables robotics developers to accelerate inspection solutions.
+Built on top of the versatile [Husky](/docs/robots/outdoor_robots/husky/user_manual_husky) base platform,
+Husky Observer enables robotics developers to fast-track their system development. With it, you can get your test
+application running faster without worrying about autonomous navigation and sensor integration.
+
+<ComponentSafetyWarning />
+
+### Shipment Contents
+
+Your Husky Observer shipment contains the following:
+
+- Husky Observer robot
+- Lockout keys (2X)
+- Wireless charging transmitter and dock
+- Wired charging adapter
+- PS4 controller (for manual operation)
+- Tablet
+- TODO: others?
+
+If you purchased standard payload modules or custom integration services with Husky Observer, then additional equipment will
+be included per your specific configuration, plus further documentation as required.
+
+### Hardware Overview
+
+#### System Architecture
+
+Husky Observer is built around a computer running Ubuntu, paired with a 32-bit microcontroller MCU.
+The MCU handles power supply monitoring and motor control, with all remaining processing handled by the computer.
+The communication channel between the MCU and computer is a serial connection.
+
+#### Exterior Features {#exterior-features}
+
+The Husky Observer exterior is shown below and includes:
+
+- Pan-tilt-zoom (PTZ) camera
+- Thermal camera (optional)
+- Shotgun microphone (optional)
+- Antennas (cellular, wifi, GPS, safety)
+- Stack light
+- 3-D LiDAR
+- Expansion connectors (power, ethernet, USB)
+- Front and rear expansion mount points
+- Front (standard) and rear (optional) 2-D LiDARs
+- Front and rear depth cameras
+- Motion stop buttons and lockout
+- Omnidirectional microphone
+- Front and rear driving lights
+- Wireless charging receiver
+- Wired charge connector
+- Main power switch
+- Status panel
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/robot_husky_observer_front.png"
+      width="600"
+    />
+    <figcaption>Husky Observer exterior, front view (TODO: new image)</figcaption>
+  </figure>
+</center>
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/robot_husky_observer_rear.png"
+      width="600"
+    />
+    <figcaption>Husky Observer exterior, rear view (TODO: new image)</figcaption>
+  </figure>
+</center>
+
+#### Stack Light {#stack-light}
+
+The stack light is composed of two lights, the details of which are described below.
+
+- The bottom is an orange strobe light that is enabled when the robot is in motion or may soon be in motion;
+  those near the robot should exercise caution when this light is strobing.
+- The top is a multi-color light that indicates the system status.
+
+| Strobe Light (bottom) | Status Light (top) | Robot State |
+|-----------------------|--------------------|-------------|
+| Off                   | Red                | Motion stop engaged; robot prevented from moving. |
+| Off                   | Magenta            | A system error/warning exists; see the OutdoorNav UI for details. |
+| Off                   | Amber              | Battery charging in progress (battery less than 50% charged). |
+| Off                   | Cyan               | Battery charging in progress (battery 50% to 95% charged). |
+| Off                   | White              | Battery charging in progress (battery over 95% charged). |
+| On                    | Magenta            | Low battery; see the OutdoorNav UI for details. |
+| On                    | Green              | Robot is driving (teleop mode). |
+| On                    | Blue               | Robot is driving (autonomous mode). |
+| On                    | White              | Robot is ready to drive, but currently idle. |
+
+See also additional status as reported in the [Status Panel](#status-panel).
+
+#### Status Panel {#status-panel}
+
+The status panel, which complements the [Stack Light](#stack-light), is a display of LED indicators located on the rear of
+the chassis which provide information about the current status of Husky Observer. The indicators are described in the table below.
+
+|                                   Icon                                   | Description                                                                                                                                                                                                                                                                                   |
+| :----------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <img src="/img/robot_images/husky_images/robot_husky_3.png" width="50"/> | **Battery Status** This is not used on Husky Observer. Refer to the battery state indicator in the OutdoorNav UI instead.                                                                                                                                                                |
+| <img src="/img/robot_images/husky_images/robot_husky_4.png" width="50"/> | **Communication Status** When green, Husky Observer is receiving a stream of correctly-formatted motion commands, and is ready to drive. When yellow, Husky Observer is receiving commands, but will not drive due to motion stop or another error. When red, serial communications are currently timed-out. |
+| <img src="/img/robot_images/husky_images/robot_husky_5.png" width="50"/> | **General Error Status** Illuminates red when Husky Observer will not drive due to an error state. Such states include motion stop, insufficient battery power, or an unspecified software error.                                                                                                   |
+| <img src="/img/robot_images/husky_images/robot_husky_6.png" width="50"/> | **Motion Stop Status** Illuminates red when Husky Observer will not drive due to the motion stop being activated, either onboard or wireless (if available).                                                                                                                                     |
+| <img src="/img/robot_images/husky_images/robot_husky_7.png" width="50"/> | **Charge Indicator** Illuminates red when Husky user power is being supplied externally.  (TODO: is this used on Husky Observer?)                                                                                                                                                                                                    |
+
+#### Switches and Buttons
+
+##### Main Power Switch
+
+On the rear of the robot, the main power switch can be used to turn the entire system OFF and ON.
+
+TODO: new figure showing OFF and ON positions
+
+##### Motion-stop Buttons
+
+There are four motion-stop buttons on the robot, one at each of the four corners. Depressing any
+of these four buttons will engage motion-stop and remove power from the robot motors. Refer
+to the [Safety](safety) section for further details.
+
+##### Motion-stop Override Key Switch
+
+In addition to the motion-stop buttons on the robot, if your Husky Observer is equipped with a wireless motion-stop function,
+it is possible to disable this function with the override key switch. Refer to the [Safety](safety) section for further details.
+
+#### Payloads
+
+Additional payloads can be integrated with Husky Observer, either as part of your purchase or installed after receiving your Husky Observer.
+Refer to [Husky Observer Integration](/docs/robots/solutions/husky_observer/integration_husky_observer) for details on how to integrate your own payload or how to integrate a payload kit from Clearpath Robotics.
+Each payload kit that ships from Clearpath Robotics comes with a custom mounting bracket and cabling for easy attachment to Husky Observer.
+
+#### Orientation References
+
+The reference frame used by all Clearpath Robotics ground robots is based on ISO 8855, and is shown in the figure below.
+Husky Observer's front is shown.
+When commanded with a positive translational velocity (forward), wheels travel in the positive X-direction.
+The direction of the axes differs from those used for roll, pitch, and yaw in aircraft, and care should be taken to ensure that data is interpreted correctly.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/robot_husky_8.png"
+      width="600"
+    />
+    <figcaption>Husky Observer orientation references (TODO: new image)</figcaption>
+  </figure>
+</center>
+
+### System Specifications
+
+TODO: validate these specifications
+TODO: shipping temperature range?
+
+| Specification                  | Measurement                                                              |
+| :----------------------------- | :----------------------------------------------------------------------- |
+| Dimensions                     | 1061 mm (length) X 854 mm (width) X 1224 mm (height)                     |
+| Track Width                    | 550 mm                                                                   |
+| Wheelbase Length               | 512 mm                                                                   |
+| Ground Clearance               | 130 mm                                                                   |
+| Mass                           | 80 kg                                                                    |
+| Maximum Payload                | 10 kg                                                                    |
+| Speed, Maximum                 | 1.0 m/s                                                                  |
+| Climb Grade                    | 45 °                                                                     |
+| Traversal Grade / Sideslope    | 30 °                                                                     |
+| Ambient Operating Temperature  | -10 to + 40 °C                                                           |
+| Environmental                  | Designed for IP55                                                        |
+| Operating Time, Average        | 2.5 to 4.0 hours                                                         |
+| Operating Time, Standby        | 8 hours                                                                  |
+| Battery                        | 35 Ah @ 24 V, LiFePO<sub>4</sub>                                         |
+| Wireless charging              | Up to 300 W (approximately 3 hours to charge from 10 to 90% when powered off) |
+| Wired charging                 | 750 W (approximately 1 hour to charge from 10 to 90% when powered off)   |
+| Expansion                      | VBAT @ TBD A, USB 3.0 (5 V @ TBD A), Ethernet (data only, 1 Gbps)        |
+
+<center>
+  <img
+    src="/img/robot_images/husky_observer_images/husky_observer_dimensions.png"
+    width="1000"
+  />
+</center>
+
+---
+
+## Safety
+
+### General Safety Notices
+
+#### Important Safety Information
+
+<center>
+  <img
+    src="/img/robot_images/husky_observer_images/safety_information.png"
+    width="800"
+  />
+</center>
+
+#### General Hazard Labels
+
+Review the following to learn more about the labels that may be used on Clearpath Robotics products. Hazards
+can also apply to attachments and accessories used in conjunction with a Clearpath Robotics product.
+
+| **Label** | **Label Title** | **Label Description** |
+|:---------:|-----------------|-----------------------|
+| <img src="/img/robot_images/husky_observer_images/automatic_motion_hazard.png" /> | Automatic Motion Hazard | Clearpath Robotics robots may suddenly begin moving autonomously or when being driven manually. Always be aware of Clearpath Robotics products and their potential for movement. |
+| <img src="/img/robot_images/husky_observer_images/crushing_hazard.png" /> | Crushing Risk | Objects or personnel can be crushed between the Clearpath Robotics robot and another object. Keep hands and other objects clear of crush points at all times. Keep clear of all docking Clearpath Robotics robots. |
+| <img src="/img/robot_images/husky_observer_images/electrical_shock_hazard.png" /> | Electrical Shock Risk | Clearpath Robotics robots contain circuitry and batteries that may cause electrical shock if not properly insulated. |
+| <img src="/img/robot_images/husky_observer_images/entanglement_hazard.png" /> | Entanglement Risk | Clearpath Robotics robots as well as their sensors can lead to entanglement for hair or dangling materials during their rotation. Keep dangling materials/hair away from Clearpath Robotics robots during motion. |
+| <img src="/img/robot_images/husky_observer_images/environmental_hazard.png" /> | Environmental Hazard | Clearpath Robotics robots contain batteries and materials that may require special disposal methods. Consult local regulations. |
+| <img src="/img/robot_images/husky_observer_images/falling_object_hazard.png" /> | Falling Object Risk | Beware of objects that may have shifted in any Clearpath Robotics robot crate as they pose a risk of falling when opened. |
+| <img src="/img/robot_images/husky_observer_images/high_surface_temp_hazard.png" /> | High Surface Temperature Risk | Robot PC heat sinks and robot motors can become extremely hot during operation. |
+| <img src="/img/robot_images/husky_observer_images/impact_hazard.png" /> | Impact Risk | Clearpath Robotics robots travelling through a facility can potentially impact objects and personnel. Keep clear of all docking Clearpath Robotics robots. |
+| <img src="/img/robot_images/husky_observer_images/laser_radiation_hazard.png" /> | Laser Radiation Risk | Clearpath Robotics robots may use Class 1 laser products. These provide no hazard during normal use, however it is not recommended to stare directly into the beam(s). |
+| <img src="/img/robot_images/husky_observer_images/material_hazard_lithium.png" /> | Material Hazard - Lithium | Robot batteries contain harmful material. Always use proper handling procedures when handling robot batteries. |
+| <img src="/img/robot_images/husky_observer_images/manual_load_lifting_hazard.png" /> | Manual Load Lifting Risk | Always use ergonomic techniques when manually lifting loads. |
+| <img src="/img/robot_images/husky_observer_images/pinching_hazard.png" /> | Pinching Risk | Keep hands and other objects clear of pinch points at all times. Keep clear of all docking Clearpath Robotics robots. |
+| <img src="/img/robot_images/husky_observer_images/radio_frequency_hazard.png" /> | Radio Frequency Risk | Clearpath Robotics robots and/or accesories may use radio frequency (RF) radiating antennas. These provide no hazard during normal use, however prolonged exposure around the antenna is not recommended. |
+| <img src="/img/robot_images/husky_observer_images/tripping_hazard.png" /> | Tripping Hazard | Clearpath Robotics products may pose a tripping hazard. |
+
+#### Safety Awareness
+
+Personnel present during the operation of a Clearpath Robotics robot need to be made aware or be accompanied by personnel who
+are familiar with the specific risks and hazards associated with automated mobile robots (AMR).
+The following checklist identifies basic topics that should be addressed by site-specific worker and visitor
+safety orientation training.
+
+<center>
+  <img
+    src="/img/robot_images/husky_observer_images/caution_awareness.png"
+    width="800"
+  />
+</center>
+
+- Proper PPE must be worn, including safety footwear (ie. steel toe).
+- Crossing into the path of a moving Clearpath Robotics robot should be avoided, as well as placing or throwing obstacles into the path of a moving Clearpath Robotics robot.
+
+<center>
+  <img
+    src="/img/robot_images/husky_observer_images/impact_awareness.png"
+    width="800"
+  />
+</center>
+
+- Be aware that a Clearpath Robotics robot can be anywhere in the operating area of the facility at any time, and may pose a tripping hazard even when not in motion.
+- Personnel need to be aware of the Clearpath Robotics robot docking and charging areas, where detection fields are reduced.
+- Personnel should be aware that Clearpath Robotics robot LiDAR safety scanners use a class 1 laser and high intensity LED.
+- Personnel should keep all loose clothing and body parts away from Clearpath Robotics robots, accessories, attachments, and payloads, while they are in autonomous operation. Using an Emergency Stop button is the only acceptable manner of interacting with a Clearpath Robotics robot or attachment while it is being operated autonomously.
+
+In addition to the preceding basic items for all workers and visitors, the following should be considered for facility personnel, including drivers of other robots:
+
+- When required to move a product manually, personnel must ensure it is in an Motion Stop state or shut down completely and should not push manually for prolonged periods.
+- Alert personnel that while operating a Clearpath Robotics robot outside of the Autonomy State, they are solely responsible for obstacle and collision avoidance.
+- Maintenance not outlined in either this document or the operations and maintenance manual can only be performed by a Clearpath Robotics Authorized Personnel.
+
+##### Operating Environment and Intended Use
+
+The autonomous mobile robot system is intended for use in:
+
+- indoor and outdoor industrial and commercial environments;
+- environments free of vertical drops greater than 200 mm;
+- environments free of fast-moving people or vehicles;
+- environments free of glass or transparent plastic floors or walls;
+- temperatures between -10 °C and +40 °C;
+- environments free of open water or other liquids deeper than 20 mm;
+- environments free of grades greater than 12%.
+
+The system is intended to be operated by trained personnel familiar with autonomous mobile robotic technology.
+It is intended to be monitored constantly by those personnel during operation.
+
+The system is intended to be operated around trained personnel familiar with the hazards that the system presents.
+
+The system is intended to be operated in the as-furnished condition, without additional equipment, payload or passengers.
+
+
+#### Disclaimer
+
+It is the responsibility of the user to be familiar with all applicable safety standards and ensure that the hardware,
+software, and/or services delivered by Clearpath Robotics (collectively referred to as the "Product") are maintained
+and operated in a safe manner, in a suitable environment, and in accordance with the recommended maintenance requirements
+prescribed by Clearpath Robotics.
+
+Without limiting the foregoing, it is the user's responsibility to ensure that personnel operating the Product are
+adequately trained and comply with all laws, regulations, codes, and safe practices, including health and safety and
+workers' compensation laws, applicable to the user's activities and its ownership, possession, and use of the Product.
+Modification, removal or addition of components, or changes to the functionality or operation of the Product in any way,
+except as expressly authorized by Clearpath Robotics, may jeopardize the safety of the Product.
+
+The robot system and its associated equipment, including all safety functions, are provided "as-is". Clearpath Robotics
+makes no claim that the achieved residual risk to persons, property or animals is tolerable, or meets any generally-accepted
+threshold. Residual risk is user- and use-specific. Evaluation of tolerable residual risk is subjective.
+
+Clearpath makes no claim that the degree of safety function reliability is commensurate with the degree of risk reduction
+those safety functions ostensibly provide. The system operator is responsible for the safe use of the robot system and
+associated equipment. Clearpath disclaims all responsibility for injury to persons or animals, or damage to property
+resulting from the use of the robot system and its associated equipment.
+
+Additional review by local Authorities-Having-Jurisdiction, Nationally-Recognised Testing Laboratories, Notified Bodies,
+or others may be required to establish that the system as-used achieves tolerable residual risk. The operator is responsible
+for additions or modifications to the system that may be mandated or recommended by third-parties. Clearpath may provide
+system documentation to support a third-party review, but shall not be held responsible for meeting third-party expectations
+for content, completeness, style or conformance to any standard.
+
+If at any time you have any questions or concerns regarding the safe operation of your Clearpath Robotics product,
+contact [Support](#support).
+
+#### Recommended Safe Work Procedures
+
+<ComponentCommonSafeWorkProcedures />
+
+### Husky Observer Safety Notices
+
+<center>
+  <img
+    src="/img/robot_images/husky_observer_images/autonomous_robot_danger.png"
+    width="800"
+  />
+</center>
+
+#### Unexpected Motion
+
+Autonomous and teleoperated robots may begin moving, stop, or change direction unexpectedly. They may move in
+an unintuitive way. Always maintain physical separation from the robot when it is in motion or capable of starting
+motion.
+
+#### Sensor and Response Limitations
+
+The sensors that the mobile robot uses to navigate within its environment and avoid obstacles have limited performance.
+Examples of common limitations include range, fidelity, response speed, and refresh rate. Some sensors, such as the
+LiDARs used for collision avoidance, may be unable to detect some materials, such as glass. Always treat the robot
+as a collision hazard. Proper maintenance/cleaning should be undertaken on the sensors to ensure their optimal performance.
+
+#### Stability, Traction, and Stopping Distance Limitations
+
+The robot's ability to take action in response to sensor input is also limited. The amount of traction the robot can
+generate on different surfaces is limited, and may not be sufficient to maintain its position. For example, a robot
+on an icy grade may slide uncontrollably. The reaction time and stopping rate of the robot is limited. The robot may
+not have enough time to stop if an obstacle appears suddenly in the robot's path. Never run or jump into a moving
+robot's path. Never operate the robot in environments other than those for which it is intended.
+
+#### Electrical Subsystem
+
+Husky Observer is powered by two 12 V Lithium-Iron-Phosphate( LiFePO<sub>4</sub>) batteries in series to make a 24 V pack.
+These batteries are similar to the type found in electric wheelchairs, golf carts, fork trucks, and other devices. 
+Husky Observer's battery pack is capable of delivering 5565 W, three times the power of a standard wall outlet.
+This gives Husky Observer's motors their great performance, however, it is also enough power to cause severe bodily harm. 
+
+Note that the Husky Observer PDU has a 50 A fuse that limits the continuous power output to 1325 W.
+
+Please observe the following precautions:
+
+- Turn the Main Power Switch to "OFF" when working on Husky Observer's hardware.
+- The Main Power Switch isolates the energy from the switch to the rest of the robot.
+  This potential energy is still present at the battery terminals, and the cable connecting the switch to the batteries.
+- Do not tamper with the battery packs.
+- Charge the battery only with the charger provided by Clearpath Robotics.
+- Please dispose of the batteries properly according to local regulations.
+
+#### Lifting and Transport
+
+For the safety of users and to maximize the lifetime of Husky Observer, please observe the following when manually transporting the robot:
+
+- Husky Observer should be lifted by two persons, firmly gripping the front and rear bumper-bars.
+- Ensure that Husky Observer is in Motion-Stop mode when transporting short distances and powered off when transporting longer distances.
+- It is not advised to push Husky Observer, as this can cause damage to the motors.
+
+#### Performance Considerations
+
+Included in Husky Observer are native software checks and limits to protect the robot.
+However, it is recommended to monitor the system's status during usage with the `/status` and `/diagnostics` topics
+or through the OutdoorNav UI as described in [Monitoring System Status](#monitoring-system-status).
+These topics provide useful information regarding voltages, currents, temperatures and general health of the system.
+
+The total current draw does not include the motors drivers; it is the current consumed by the MCU and user power ports.
+Husky Observer's motors are rated to draw 10.7 A continuous, but they will spike to several times higher than this,
+particularly when traversing rough terrain and when turning on the spot.
+To reduce current draw, consider commanding wider-radius turns from your control software.
+
+The temperature is measured in the motor drivers and on the motor casings; the coils inside the motor casings cannot be measured.
+Therefore, it is important to note that the temperature measured on the motor casings is a lagging indicator of the temperature of the coils inside the casing.
+Be aware of the delay in heat propagation on the motors during heavy use.
+The thermal limit of the system is 50 °C, and the system will shut down if this limit is reached.
+Monitoring these fields over longer periods of operation will allow you to ensure that you are not putting excessive wear on
+Husky Observer's motors.
+
+### Husky Observer Safety Features
+
+#### Onboard Motion-Stop Function
+
+The mobile robot includes an onboard motion-stop function that allows a person in the physical vicinity of the robot to
+halt its motion and prevent re-initiation of motion. This function can be asserted by pressing any one or more of the
+four red stop actuators present around the periphery of the mobile robot as shown in the figure below.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/husky_observer_motion_stop_buttons.png"
+      width="600"
+    />
+    <figcaption>Husky Observer motion-stop buttons (TODO: new image)</figcaption>
+  </figure>
+</center>
+
+The motion-stop function can be reset by twisting all depressed actuators until they return to an extended position.
+**There is no second "start" action required to reset the stop function. The robot may begin moving again immediately
+after the final stop actuator has returned to its extended position.**
+
+The onboard motion-stop system is intended for use in emergency situations. The motion-stop system should not be used
+as the means of controlling robot motion during regular operation.
+
+#### Wireless Motion-Stop Function
+
+In addition to the onboard motion-stop function, the system includes a wireless motion-stop function. This function
+allows a person who is physically separated from the robot to halt its motion and prevent re-initiation of motion. 
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/wireless_motion_stop_controller.png"
+      width="200"
+    />
+    <figcaption>Wireless motion-stop controller</figcaption>
+  </figure>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/wireless_motion_stop_override.png"
+      width="600"
+    />
+    <figcaption>Wireless motion-stop override (TODO: new image)</figcaption>
+  </figure>
+</center>
+
+To assert the stop function:
+
+- depress the red push-button actuator on the side of the provided controller (yellow).
+
+To reset the stop function:
+
+- twist the depressed actuator until it returns to its extended position;
+- depress and hold for 1 second the black start button on the side of the controller.
+
+The wireless motion-stop function is automatically asserted if the robot is not able to communicate wirelessly
+with the controller. This is to ensure that the stop function does not become unexpectedly non-operational as
+a result of robot or operator motion, interference, atmospheric conditions, depleted battery, etc. The
+controller must be powered and within range of the mobile robot to communicate.
+
+The wireless motion stop system is intended for use in emergency situations. The motion stop system should
+not be used as the means of controlling robot motion during regular operation.
+
+The wireless motion-stop function (but not the on-board motion-stop function) may be overridden by means of
+a key switch as shown in the figure above. This is to allow the robot to be operated **at higher risk** while,
+for example, the controller battery is dead, out of range or not accessible, etc.
+
+Operation of the mobile robot while the wireless motion-stop function is overridden **is not recommended**.
+The system deployer/operator assumes all responsibility for injury to persons or animals, or damage to property,
+arising from the inability to remotely stop the motion of the vehicle due to the use of this override.
+			
+#### Motion Buzzer
+
+When Husky Observer is driving in any direction, both in manual and autonomous modes, a buzzer will sound
+to provide an audible warning to anyone in the nearby area. No configuration or operation action
+is required to enable this feature.
+
+#### OutdoorNav Autonomous Obstacle Avoidance Function
+
+During and **only** during OutdoorNav missions (not during IndoorNav missions and not during OutdoorNav Manual Mode),
+the 3-dimensional LiDAR is used to perform obstacle avoidance to reduce the risk of the robot colliding with stationary or dynamic obstacles
+in its environment. The navigation uses the robot's 3D LiDAR scanner to detect obstacles within a certain range. A gradual speed reduction
+is asserted as the distance to the obstacle decreases and the robot will attempt to re-plan around any obstacle it detects. This may happen
+several times if the robot has navigated itself into a tight space surrounded by walls. No intervention from the user is required.
+
+The 3D LiDAR scanner used for obstacle detection has a 360° field-of-view in the horizontal plane, and a ±15° field-of-view in all
+vertical planes with respect to the center of the lens as shown in the figure below. However, some regions of the scanned
+envelope may be occluded by the robot itself. The LiDAR is unable to detect objects in these regions (and all regions outside the scanned
+envelope). The obstacle avoidance feature will not respond if obstacles are within those regions.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/vlp16_fov.png"
+      width="400"
+    />
+    <figcaption>3-D LiDAR field of view, plan, and elevation</figcaption>
+  </figure>
+</center>
+
+There are also gaps in LiDAR coverage due to the divergence of the laser beams in the vertical direction, and discrete sampling
+in the horizontal direction. The divergence angle is 2° vertically between beams and 0.1 - 0.4° horizontally between samples
+(depending on configuration). As a result the LiDAR may fail to detect the approach of slender or pointed objects.
+
+The LiDAR data is filtered to reduce false-positives. It is possible that this filtering could reduce the detectability of
+certain objects.
+
+---
+
+## Getting Started
+
+### Hardware Setup
+
+This section describes how to unpack the system and complete the hardware setup.
+
+#### Base Station Setup
+
+<center>
+  <img
+    src="/img/robot_images/husky_observer_images/base_station_caution.png"
+    width="800"
+  />
+</center>
+
+##### Base Station Location
+
+The location of the base station, particularly its antenna, will play a critical
+role in the performance of the outdoor navigation software, especially at long
+range.
+
+Below are a set of criteria in order of priority, for the location of the base
+station, such that the performance of the networking/software is not degraded:
+
+- The base station should be secured as high as possible so that the GPS
+antenna can accurately obtain a GPS signal and so that the network antenna can
+propagate its radio waves without interference from nearby obstructions.
+For example, a good location could be on the roof of a building or trailer.
+
+- A location on the ground (if no elevated location is available/accessible)
+where the base station can be secured using the tripod that has been shipped with
+the robot. If this location is selected, ensure that the tripod is secured a
+minimum of 10 \si{\meter} from any buildings or obstructions so that the GPS
+antenna has a clear view of the sky. Recommended minimum height is 1.75
+\si{\meter} from bottom of antenna to ground.
+
+- A location where an Ethernet cable can be fed to to connect the base
+station to the WAN (if WAN available).
+
+##### Base Station Orientation
+
+The robot and Base Station are both shipped with an omnidirectional antennas.
+As such, there is no need to orient the Base Station to face the robot's
+are of operation.
+
+##### Base Station Power
+
+Power for the Base Station may be provided from one of two sources, either the
+internal battery or the external power supply that is provided with the system.
+To power source is selected by opening the Base Station and connecting the
+corresponding set of Anderson connectors. Once a power source has been
+connected, press the recessed silver power button on the
+side of the enclosure. When powered, the button will illuminate blue.
+
+##### Internet over Base Station Network
+
+If a wired internet connection is available at the user testing facility, an
+Ethernet cable can be run from an access point to the Ethernet port on the bottom
+of the base station case. This will provide internet access for the robot
+and the tablet.
+
+#### Autocharge Dock Setup
+
+<center>
+  <img
+    src="/img/robot_images/husky_observer_images/dock_weight_caution.png"
+    width="800"
+  />
+</center>
+
+The Autonomous Docking software enables the robot to navigate toward the dock target
+and autonomously approach the target to begin charging the robot's batteries.
+The complete dock consisting of the target, the WiBotic charging unit (transmitter)
+and the enclosing material can be seen below in \autoref{fig:dock_target}.
+\newline
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/autocharge_dock.png"
+      width="400"
+    />
+    <figcaption>Autocharge Dock</figcaption>
+  </figure>
+</center>
+
+The robot requires open, flat, level ground in front of the dock to manoeuvre.
+It must have GPS signal visibility (ie. not too close to any tall buildings or
+trees) and clear line-of-sight to the dock target from all points in this
+pre-dock region. Allow at least 8 meters from the "pointed" end of the dock and
+a width of at least 4 meters, as shown in \autoref{fig:dock_space_requirements}.
+
+The charge dock, including WiBotic wireless transmitter, ships pre-assembled.
+Remove it from the crate and position it at the desired location. The concave
+portion of the target points toward the robot when docked.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/dock_space_requirements.png"
+      width="600"
+    />
+    <figcaption>Dock Space Requirements</figcaption>
+  </figure>
+</center>
+
+The dock may be secured to the ground if desired. if the attachment points
+are near the transmitter box, non-metallic fasteners and anchors should be
+used to avoid magnetic interference with the charge system.
+
+##### Wireless Transmitter
+
+The WiBotic wireless transmitter ships pre-installed in the dock. To
+complete the installation of the wireless transmitter:
+
+- Plug the wireless transmitter into a power terminal using the provided
+power cord (an extension cord may be required). The transmitter requires
+90 - 264 V AC, 50 - 60 Hz.
+- Power ON the wireless transmitter by pressing the switch on the side
+of the transmitter. The center <span style={{color: '#38761d'}}>GREEN</span>
+LED will light up when powered ON.
+
+##### Wireless Receiver
+
+The WiBotic wireless receiver ships pre-installed on the Husky robot
+and does not require any customer assembly.
+
+#### Robot Setup
+
+##### Unpacking the System
+
+The total mass of the crated system is approximately 300 kg.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/handling_danger.png"
+      width="600"
+    />
+  </figure>
+</center>
+
+It is recommended that the crate be loaded, unloaded, and transported
+by fork truck or manual pump truck. The crate is not designed for lifting
+by crane.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/crate_warning.png"
+      width="600"
+    />
+  </figure>
+</center>
+
+The crate is assembled using 9/16" hex head screws. Both the front and rear
+panels are held in place with 12 screws. They can be removed with a wrench or
+impact driver with an appropriate 9/16" socket.
+
+The robot is held in place using ratcheting tie-down straps. Loosen the straps
+on either side of the robot, and remove them from the crate. In the accessories
+crate, there is a shelf which may be removed and used as a ramp. Place it behind
+the robot, bridging the drop between the crate floor and the ground. The robot
+may then be rolled out by pulling on the rear bumper. Make sure that the ramp
+does not shift during this process.
+
+#### Robot Startup
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/base_platform_power_button.png"
+      width="600"
+    />
+    <figcaption>Robot power switch</figcaption>
+  </figure>
+</center>
+
+When powering up the robot for the first time, follow these steps:
+
+1. Turn the Battery Disconnect Switch to the "ON" position. Note that this
+  switch is set to "OFF" prior to shipping to prevent battery drain during
+  shipping.
+1.  Wait one to two minutes for the system to boot fully before proceeding.
+  The external light indicators on the rear of the robot will illuminate once
+  the system is powered. The "COMM" light will notify the user about the
+  status of the computer. The possibilities are:
+
+    1. **<span style={{color: '#38761d'}}>GREEN:</span>** Communication with the computer is active/stable and robot is ready to drive.
+    1. **<span style={{color: '#eec364'}}>YELLOW:</span>** Communication with the computer is active/stable but Motion-Stop is engaged. Release the Motion-Stop.
+    1. **<span style={{color: '#d04638'}}>RED:</span>** No communication with the robot computer or ROS error.
+
+##### Charge State
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/battery_level_warning.png"
+      width="600"
+    />
+  </figure>
+</center>
+
+Use the OutdoorNav UI to determine the charge state of the robot batteries.
+
+##### Motion-stop State
+
+The state of the robot motion-stop function can be determined in two ways:
+via the [Stack Light](#stack-light) and via the [Status Panel](#status-panel).
+
+The status stack light illuminates solid red with the motion-stop is engaged
+and is off or a different color when motion-stop is not engaged.
+
+The second way to determine the motion-stop state of the robot is to inspect
+the status panel on the rear side of the base Husky.
+This panel includes "COMM" and "STOP" indicators. When a
+motion-stop is asserted, the "COMM" indicator will illuminate
+**<span style={{color: '#eec364'}}>YELLOW</span>** and the "STOP" indicator
+will illuminate **<span style={{color: '#d04638'}}>RED</span>**. When the robot is
+powered off the indicators will be off. When the robot is powered on and a
+motion stop is not asserted, the "COMM" indicator will be illuminated
+**<span style={{color: '#38761d'}}>GREEN</span>** and the "STOP" indicator will
+be off.
+
+#### Charging the Robot
+
+TODO: consider moving this section to Maintenance
+
+##### Autocharge Dock
+
+The operator can start charging the robot using the autocharge dock in two ways,
+noting that the robot will only charge on the dock when the disconnect is in the
+"ON" position.
+
+- Manually drive the robot to its position at the dock. The receiver on
+the robot should be properly aligned with the circle on the dock transmitter.
+- Use the OutdoorNav UI to dock the robot autonomously. Please consult
+[Autonomous Missions](#autonomous-missions) for further details.
+This method requires that the [base station has been surveyed](#survey-base-station),
+the [Datum has been set to the coordinates of the test site](#set-datum),
+and that the [dock location has been set](#set-dock-location).
+
+##### Manual Charger
+
+The Manual Charger may be used when the robot is far from its wireless
+charger or when a faster charge time is desired. For faster charging,
+first turn off the robot.
+
+TODO: Possibly update some of the wording here for the new charger.
+
+- Plug the manual charger into an AC outlet and wait for the power
+light to turn solid **<span style={{color: '#0000ff'}}>BLUE</span>**.
+- Remove the cap from the manual charging port (rear of robot) by
+squeezing the two cap sides and lifting.
+- Connect the manual charger plug into port.
+
+After a moment the **<span style={{color: '#e38e4e'}}>ORANGE</span>**
+"lightning bolt" will illuminate on the charger indicating that charging
+has begun. The **<span style={{color: '#38761d'}}>GREEN</span>** battery level
+indicator on the charger will also flash. When both segments of this
+indicator turn solid, charging is complete.
+
+Be sure to replace the charge port cap when charging is complete. This
+will protect the connectors from environmental conditions.
+
+#### Robot Expansion and Debug Ports
+
+As outlined in [Exterior Features](#exterior-features), the robot comes equipped with
+additional ports (power, USB, Ethernet) that can be used for both
+system expansion (eg. extra sensors) or for system debugging. All data connectivity is
+to the main computer. See [Husky Observer Integration](/docs/robots/solutions/husky_observer/integration_husky_observer)
+for further details.
+
+### Base Software Setup
+
+#### Networking Setup {#networking-setup}
+
+TODO:
+
+##### Network Modes {#network-modes}
+Modes:
+
+1. "Base Station Wi-Fi mode": Base station (wifi only; contact CPR for details on adding cellular support to the base station)
+1. "Robot Cellular/Wi-Fi + Base Station Wi-Fi mode": dual-mode; on tablet, have two connection modes
+1. "Customer Wi-Fi Network mode": No base station, robot + tablet connected to customer wifi network with internet access (contact CPR for options if internet access is not available on the wifi network; need to generate map tiles)
+1. "Cellular Only mode": No base station or customer wifi network, cellular in robot + separate cellular in tablet
+
+| Network Mode | Description | Base Station Setup | Robot Setup | Tablet Setup |
+|--------------|-------------|--------------------|-------------|--------------|
+
+
+
+TODO: add notes on how the tablet and/or laptop can connect to the robot in each case
+TODO: explicitly list the URL for connecting to the OutdoorNav UI in each case.
+
+- Connect the tablet to the base station network. Enter the network list
+at the bottom right of the screen and find the wireless network related to
+your robot. The SSID of the network will be ``HITT04BaseRadio''. The
+password to connect to this network is ``\textbf{clearpath}''.
+
+#### Wired Network Connection
+
+During setup or debugging, it may be desirable to connected to Husky Observer through a wired Ethernet connection.
+After connecting an Ethernet cable from your laptop to the debug/expansion port as shown in the
+[User Manual](/docs/robots/solutions/husky_observer/husky_observer_user_manual#exterior-features),
+follow the steps below to establish a network connection to the main computer. It is also possible
+to access other components on the system using the appropriate IP address (refer to the
+[User Manual](/docs/robots/solutions/husky_observer/husky_observer_user_manual#networking-configuration) for a full list).
+
+<ComponentWiredRobotConnection />
+
+#### Changing the Default Password {#changing-default-password}
+
+<ComponentChangingDefaultPassword />
+
+#### Installing Remote Computer Software {#remote-computer-software}
+
+:::note
+
+This step is optional.
+
+:::
+
+<ComponentInstallingRemoteComputerSoftware />
+
+TODO: need to confirm how to do this through the Microhard WiFi
+
+#### Adding a Source Workspace
+
+<ComponentAddingASourceWorkspace />
+
+#### Connecting and Using the Controller {#controller}
+
+To use your controller, it must be paired with your Husky Observer and powered on.
+Note that your controller is already paired with your Husky Observer when it ships.
+If your controller has become unpaired or if you wish to pair a new controller, following the instructions in the
+[Husky Tutorials](/docs/robots/outdoor_robots/husky/tutorials_husky/tutorials_husky_ros1#pairing-the-controller).
+
+To teleoperate Husky Observer, first release the motion stop. Then, referring to the following image, press the
+enable button (either slow or fast mode) and use the left thumbstick to drive Husky Observer.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/common_images/controller_ps4.png"
+      width="400"
+    />
+    <figcaption>PS4 Contoller</figcaption>
+  </figure>
+</center>
+
+#### Using ROS
+
+<ComponentUsingRos />
+
+#### Remote Access Setup via Ngrok
+
 TODO
+
+### OutdoorNav Software Setup
+
+#### Tablet Startup
+
+The Husky Observer ships with a Getac ruggedized tablet as shown in \autoref{fig:getac}.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/getac.png"
+      width="300"
+    />
+    <figcaption>Getac ruggedized tablet</figcaption>
+  </figure>
+</center>
+
+Power on the Getac ruggedized tablet by pressing the
+**<span style={{color: '#38761d'}}>GREEN</span>** power button on the right side of
+the tablet. The tablet is running Windows 10 which will startup on power-up.
+If prompted for a password, enter: **``clearpath``**.
+
+##### Connecting to OutdoorNav Web User Interface
+
+In order to connect to the Outdoor Nav User Interface, ensure that the tablet
+has network connectivity to the Husky Observer as described in
+[Networking Setup](#networking-setup) and note the URL for accessing the OutdoorNav UI.
+
+1. Open the Chrome browser.
+1. Enter the OutdoorNav UI URL in the search bar.
+1. Optional: Add a bookmark to Chrome.
+
+These steps will open the OutdoorNav UI, which will allow you to
+teleoperate and autonomously control the robot.
+
+##### Loading Map Tiles
+
+The OutdoorNav UI does not cache map tiles on the browser so you
+will need to connect to an internet source to load the map tiles. Ensure
+that your networking setup conforms to one of the supported
+[Network Modes](#network-modes), to ensure that the tablet has network
+connectivity to both the robot and the internet.
+
+#### Survey Base Station {#survey-base-station}
+
+If a base station is present, it must be surveyed before being able to
+autonomously operate the robot. Follow the instructions in the
+[OutdoorNav User Manual](/docs_outdoornav_user_manual/getting_started/system_setup#survey_base_station)
+for details on how to survey the base station.
+
+#### RTK Correction Setup
+
+TODO:
+
+1. No base station: Skylark subscription
+2. Base Station: no action, other than surveying the base station
+
+#### Set Datum {#set-datum}
+
+Before being able to operate the robot autonomously, you will need to set
+the datum (ie. the reference point in the world coordinate frame). 
+Follow the instructions in the
+[OutdoorNav User Manual](https://docs.clearpathrobotics.com/docs_outdoornav_user_manual/getting_started/system_setup#set-datum)
+for details on how to set the datum.
+
+#### Set Dock Location {#set-dock-location}
+
+Before being able to operate the robot autonomously, you will need to set
+the dock location. Follow the instructions in the
+[OutdoorNav User Manual](https://docs.clearpathrobotics.com/docs_outdoornav_user_manual/getting_started/system_setup#set-dock-location)
+for details on how to set the dock location.
+
+If the base station has been moved (and therefore been resurveyed), or if
+the dock has been moved to a new location, you will need to set
+the location of the dock by repeating the above instructions.
+
+---
+
+## OutdoorNav Operation
+
+#### Autonomous Missions {#autonomous-missions}
+
+TODO: see HITT04
+
+TODO: add UI + API references
+
+#### Monitoring System Status {#monitoring-system-status}
+
+TODO: add notes about how to monitor the system status in the OutdoorNav UI
+
+---
+
+## Support
+
+<Support />
+
+---
+
+## Appendix A: Networking Configuration {#networking-configuration}
+
+TODO
+
+### Base Station Network WiFi Access
+
+In some cases, it may be desirable to connect additional equipment, such as a laptop, to the
+Base Station network via WiFi. To do so, use the settings outlined below. Note that a static IP
+address, subnet, and gateway must be specified manually in your networking setup.
+
+\begin{itemize}
+  \item \textbf{WiFi SSID:} HITT04 Base Station
+  \item \textbf{WiFi password:} clearpath
+  \item \textbf{Available IP range:} 192.168.131.200 to 192.168.131.254
+  \item \textbf{Subnet:} 255.255.255.0
+  \item \textbf{Gateway:} 192.168.131.50
+\end{itemize}
+
+### Accessing the Base Computer from the WAN
+
+All images and videos that are collected during missions are stored on the UGV Base Computer
+until downloaded and deleted by the operator. When the download/delete function is performed
+by a computer within the Base Station network, the UGV Base Computer can be accessed
+as described in the previous section by connecting to TCP port 22 on the UGV Base Computer.
+When the download/delete function is performed by a computer on the WAN network (connected
+to the Base Station WAN port), the operator can access the UGV Base Computer by accessing
+TCP port 8022 on the Base Station, which gets mapped to TCP port 22 on the UGV Base Computer.
+
+### Husky Observer Network Components
+
+| Component | IP Address | Credentials |
+|-----------|------------|-------------|
+| Main Computer | 192.168.131.1<br/>10.252.252.100 | **user:** administrator<br/>**password:** clearpath |
+| IndoorNav Computer (optional) | 10.252.252.1 | **user:** administrator<br/>**password:** clearpath |
+| Camera, Axis, PTZ | 192.168.131.10 | **user:** administrator<br/>**password:** clearpath |
+| Camera, FLIR, Thermal (optional) | 192.168.131.11 | **user:** administrator<br/>**password:** clearpath |
+| 2D LiDAR, Hokuyo, front | 192.168.131.20 | n/a |
+| 2D LiDAR, Hokuyo, rear | 192.168.131.21 | n/a |
+| 3D LiDAR, Velodyne | 192.168.131.22 | n/a |
+| GPS receiver, SwiftNav, base station (optional) | 192.168.131.30 | n/a |
+| GPS receiver, SwiftNav, robot, right | 192.168.131.31 | n/a |
+| GPS receiver, SwiftNav, robot, left | 192.168.131.32 | n/a |
+| Networking Gateway, Microhard, base station (optional) | 192.168.131.50 | **user:** administrator<br/>**password:** clearpath |
+| Networking Gateway, Microhard, robot | 192.168.131.51 | **user:** administrator<br/>**password:** clearpath |
+| Wireless Power Transmitter, WiBotic, dock | 192.168.131.70 | n/a |
+| Tablet, Getac | 192.168.131.75 | **user:** administrator<br/>**password:** clearpath |
+
+---
+
+## Appendix B: Advanced Configuration
+
+Each of the sensors on Husky Observer has a variety of settings, which have
+been selected to work in a broad range of use cases. Certain specialized
+use cases may require the operator to create a custom configuration. The
+information below outlines the key settings for each sensor and where
+settings can be updated.
+
+:::warning
+
+NOTE: Updating camera settings may affect overall system stability.
+Proceed with caution! See \autoref{sec:contact} for details on how
+to contact Clearpath if you have any questions.
+
+:::
+
+### FLIR PTZ Camera Configuration
+
+#### Key Settings
+
+- Resolution: TODO
+- Frame rate: TODO frames per second (front); TODO frames per second (rear)
+
+#### Where to make adjustments
+
+- TODO
+
+#### Pan Limits
+
+TODO: Chris to add his notes here
+
+### RealSense Front and Rear Rear Driving Camera Configuration
+
+#### Key Settings
+
+
+- Resolution: TODO
+- Frame rate: TODO frames per second (front); TODO frames per second (rear)
+
+#### Where to make adjustments
+
+- TODO
+
+### Motion Buzzer Enable/Disable
+
+The system is equipped with a buzzer to produces a loud sound when the system
+is driving in any direction. This buzzer is enabled by default. To disable the buzzer,
+the following file can be updated on the robot:
+
+```
+/home/administrator/config/buzzer.bash
+```
+
+To enable the buzzer, set:
+
+```
+export ENABLE_REVERSE_ALARM=1
+```
+  
+To disable the buzzer, set:
+
+```
+export ENABLE_REVERSE_ALARM=0
+```
+
+After updating `buzzer.bash`, the system must be power cycled for the change to
+take effect.
+
+---
+
+## Appendix C: Software Installation and Backup
+
+### Backing Up Robot Configuration
+
+If making changes to your robot configuration, it is recommended that you make a backup first
+so that you can restore the original state if things go wrong.
+
+<ComponentPerformingABackup />
+
+### Installing and Configuring Robot Software
+
+:::note
+
+Husky Observer ships with all software pre-installed;
+therefore, you will only need to follow the instructions below if you are re-installing software on the Husky Observer.
+
+:::
+
+There are three components to the Husky Observer software:
+
+1. Base Husky software. Refer to the [Husky Tutorials](/docs/robots/outdoor_robots/husky/tutorials_husky/tutorials_husky_ros1#installing-husky-software) for details.
+1. Husky Observer system packages. TODO: details on installing the "husky_observer" debian package and its dependencies.
+1. OutdoorNav software packages. Contact [Support](#support) for details on installing or upgrading these packages.
+
+See [Maintenance](/docs/robots/solutions/husky_observer/husky_observer_maintenance#software_maintenance) for details on keeping Husky Observer software up to date.

@@ -4,4 +4,125 @@ sidebar_label: Troubleshooting
 sidebar_position: 5
 ---
 
-TODO
+Below are troubleshooting tips for Husky Observer. Refer also to [Husky Troubleshooting](/docs/robots/outdoor_robots/husky/troubleshooting_husky) for
+troubleshooting tips related to the base Husky.
+
+## Missions
+
+1. **The robot position and/or heading are behaving erratically
+    while the robot is stationary. What should I do?**
+
+    If this occurs, power cycle the robot by turning the Battery Disconnect Switch
+    to the "OFF" position, waiting 10 seconds, turning the disconnect to the
+    "ON", allowing 1-2 minutes for the software to startup, and then refresh
+    the UI page.
+
+1. **How do I start, pause or stop a mission?**
+
+    Refer to the [OutdoorNav User Manual](/docs_outdoornav_user_manual/web_user_interface/ui_autonomous_mode#mission-execution).
+
+1. **When I start a Mission the robot does not move. What could be the problem?**
+
+    There could be one of several reasons for this happening:
+
+    1. Check that none of the onboard Motion-Stop actuators are activated.
+    1. Check that the wireless Motion-Stop is not engaged and the
+        <span style={{color: '#38761d'}}>GREEN</span> start button has been pressed to
+        release the Motion-Stop.
+
+        This can be checked via the UI (a red Status Indicator means Motion-Stop is
+        engaged) or the onboard robot lights (will flash when Motion-Stop is engaged).
+
+    1. Ensure that at least 1 Goal is enabled in the Goal Panel.
+
+    1. Check that the task settings have all been set for each Goal in the Mission.
+        A missing task setting for a Move PTZ task will block the execution of the Goal
+        it is in.
+
+1. **How do I delete a Waypoint?**
+
+    Make sure the "Edit Missions" toggle is enabled, then click the "Waypoint Mode"
+    button. Now you can click the Waypoint you wish to delete. A dropdown list will
+    appear. Select "Delete".
+
+1. **How do I add a Task to a Goal?**
+
+    Refer to the [OutdoorNav User Manual](/docs_outdoornav_user_manual/web_user_interface/ui_autonomous_mode#add-task).
+
+1. **How do I remove a Waypoint from an existing Goal?**
+
+    Open the Goal Panel.  Select the Goal which you want to edit and expand the
+    Waypoint list, if necessary. Make sure the "Edit Missions" toggle is
+    enabled. On the map, select the Waypoint you would like to remove. It will
+    be highlighted in the Goal Panel. You can then click the "x" beside that
+    Waypoint in the Goal Panel to remove it from the Goal.
+
+1. **How do I add a Waypoint to an already existing Goal?**
+
+    Open the Goal Panel. Make sure the "Edit Missions" toggle is enabled.
+    Select the Goal which you want to add the Waypoint to. Select the Waypoint
+    on the map. There will be a menu option to "Add Waypoint to Current Goal".
+    This will add the waypoint to the beginning of the goal. You can then drag
+    and drop the Waypoint in the Goal Panel to place it in the order you need.
+    This will only be possible using a mouse or touchpad as the touchscreen
+    will not allow you to drag/drop the Waypoint.
+
+1. **Why is the "Save Image" Task failing?**
+
+    Check the Goals that are enabled in your Goal Panel. If you see a red
+    warning triangle beside the "Save Image" task it means that the
+    settings for this task were not set. Set them and rerun the mission.
+
+1. **The navigation gets stuck on the "Compute Path" feedback. What should I do?**
+
+    If this occurs, power cycle the robot by turning the disconnect to the
+    "OFF" position, waiting 10 seconds, turning the disconnect to the "ON",
+    allowing 1-2 minutes for the software to startup, and then refresh the
+    UI page.
+
+## Autonomous Docking
+
+1. **When trying to dock, my robot drives towards the dock but stops
+    2 m away and remains there. "Docking Failed" is displayed in the UI
+    feedback bar. How can I fix this?**
+
+    It is likely that one of these 3 things occured:
+    1. The base station was recently resurveyed, or
+    1. The datum was recently changed, or
+    1. The dock location was not set correctly.
+
+    If any of these have occured recently and you did not reset the dock location
+    from the UI, you will need to do so by following the instructions in
+    sections [Survey Base Station](/docs/robots/solutions/husky_observer/user_manual_husky_observer#survey-base-station),
+    [Set Datum](/docs/robots/solutions/husky_observer/user_manual_husky_observer#set-datum), and
+    [Set Dock Location](/docs/robots/solutions/husky_observer/user_manual_husky_observer#set-dock-location).
+
+## System
+
+1. **The E-stop light is illuminated. How do I resolve this?**
+
+    This light indicates that one of the E-stop sources (4 on the robot, one
+    remote) is actived. Once all sources have been deactivated, the light
+    will turn off.
+
+1. **The joystick does not seem to work well. How do I resolve this?**
+
+    The joystick is intended for operation and debugging when in close proximity
+    to the robot. It should be functional at a range of up to 10 meters, when there is direct
+    line of sight from the joystick to the robot. Note that the OutdoorNav UI virtual joystick is
+    intended to be the primary way to perform teleoperation of the robot for larger ranges.
+
+1. **The robot turned off when there was still 20% battery left as shown in the UI.
+    Why did the robot turn off?**
+
+    Draining the batteries all the way down to 0% can lead failure of the batteries and,
+    in the worst case, the damage could be permanent. To prevent this from occurring, the
+    robot powers itself off automatically when the battery level reaches 20% to protect the
+    batteries. Connect the manual charger to the robot to allow the battery level to recover
+    above 20%.
+
+---
+
+## Support {#support}
+
+<Support />
