@@ -102,17 +102,17 @@ The stack light is composed of two lights, the details of which are described be
   those near the robot should exercise caution when this light is strobing.
 - The top is a multi-color light that indicates the system status.
 
-| Strobe Light (bottom) | Status Light (top) | Robot State |
-|-----------------------|--------------------|-------------|
-| Off                   | Red                | Motion stop engaged; robot prevented from moving. |
+| Strobe Light (bottom) | Status Light (top) | Robot State                                                       |
+| --------------------- | ------------------ | ----------------------------------------------------------------- |
+| Off                   | Red                | Motion stop engaged; robot prevented from moving.                 |
 | Off                   | Magenta            | A system error/warning exists; see the OutdoorNav UI for details. |
-| Off                   | Amber              | Battery charging in progress (battery less than 50% charged). |
-| Off                   | Cyan               | Battery charging in progress (battery 50% to 95% charged). |
-| Off                   | White              | Battery charging in progress (battery over 95% charged). |
-| On                    | Magenta            | Low battery; see the OutdoorNav UI for details. |
-| On                    | Green              | Robot is driving (teleop mode). |
-| On                    | Blue               | Robot is driving (autonomous mode). |
-| On                    | White              | Robot is ready to drive, but currently idle. |
+| Off                   | Amber              | Battery charging in progress (battery less than 50% charged).     |
+| Off                   | Cyan               | Battery charging in progress (battery 50% to 95% charged).        |
+| Off                   | White              | Battery charging in progress (battery over 95% charged).          |
+| On                    | Magenta            | Low battery; see the OutdoorNav UI for details.                   |
+| On                    | Green              | Robot is driving (teleop mode).                                   |
+| On                    | Blue               | Robot is driving (autonomous mode).                               |
+| On                    | White              | Robot is ready to drive, but currently idle.                      |
 
 See also additional status as reported in the [Status Panel](#status-panel).
 
@@ -121,13 +121,13 @@ See also additional status as reported in the [Status Panel](#status-panel).
 The status panel, which complements the [Stack Light](#stack-light), is a display of LED indicators located on the rear of
 the chassis which provide information about the current status of Husky Observer. The indicators are described in the table below.
 
-|                                   Icon                                   | Description                                                                                                                                                                                                                                                                                   |
-| :----------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <img src="/img/robot_images/husky_images/robot_husky_3.png" width="50"/> | **Battery Status** This is not used on Husky Observer. Refer to the battery state indicator in the OutdoorNav UI instead.                                                                                                                                                                |
+|                                   Icon                                   | Description                                                                                                                                                                                                                                                                                                  |
+| :----------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <img src="/img/robot_images/husky_images/robot_husky_3.png" width="50"/> | **Battery Status** This is not used on Husky Observer. Refer to the battery state indicator in the OutdoorNav UI instead.                                                                                                                                                                                    |
 | <img src="/img/robot_images/husky_images/robot_husky_4.png" width="50"/> | **Communication Status** When green, Husky Observer is receiving a stream of correctly-formatted motion commands, and is ready to drive. When yellow, Husky Observer is receiving commands, but will not drive due to motion stop or another error. When red, serial communications are currently timed-out. |
-| <img src="/img/robot_images/husky_images/robot_husky_5.png" width="50"/> | **General Error Status** Illuminates red when Husky Observer will not drive due to an error state. Such states include motion stop, insufficient battery power, or an unspecified software error.                                                                                                   |
-| <img src="/img/robot_images/husky_images/robot_husky_6.png" width="50"/> | **Motion Stop Status** Illuminates red when Husky Observer will not drive due to the motion stop being activated, either onboard or wireless (if available).                                                                                                                                     |
-| <img src="/img/robot_images/husky_images/robot_husky_7.png" width="50"/> | **Charge Indicator** Illuminates red when Husky user power is being supplied externally.  (TODO: is this used on Husky Observer?)                                                                                                                                                                                                    |
+| <img src="/img/robot_images/husky_images/robot_husky_5.png" width="50"/> | **General Error Status** Illuminates red when Husky Observer will not drive due to an error state. Such states include motion stop, insufficient battery power, or an unspecified software error.                                                                                                            |
+| <img src="/img/robot_images/husky_images/robot_husky_6.png" width="50"/> | **Motion Stop Status** Illuminates red when Husky Observer will not drive due to the motion stop being activated, either onboard or wireless (if available).                                                                                                                                                 |
+| <img src="/img/robot_images/husky_images/robot_husky_7.png" width="50"/> | **Charge Indicator** Illuminates red when Husky user power is being supplied externally. (TODO: is this used on Husky Observer?)                                                                                                                                                                             |
 
 #### Switches and Buttons
 
@@ -176,25 +176,25 @@ The direction of the axes differs from those used for roll, pitch, and yaw in ai
 TODO: validate these specifications
 TODO: shipping temperature range?
 
-| Specification                  | Measurement                                                              |
-| :----------------------------- | :----------------------------------------------------------------------- |
-| Dimensions                     | 1061 mm (length) X 854 mm (width) X 1224 mm (height)                     |
-| Track Width                    | 550 mm                                                                   |
-| Wheelbase Length               | 512 mm                                                                   |
-| Ground Clearance               | 130 mm                                                                   |
-| Mass                           | 80 kg                                                                    |
-| Maximum Payload                | 10 kg                                                                    |
-| Speed, Maximum                 | 1.0 m/s                                                                  |
-| Climb Grade                    | 45 °                                                                     |
-| Traversal Grade / Sideslope    | 30 °                                                                     |
-| Ambient Operating Temperature  | -10 to + 40 °C                                                           |
-| Environmental                  | Designed for IP55                                                        |
-| Operating Time, Average        | 2.5 to 4.0 hours                                                         |
-| Operating Time, Standby        | 8 hours                                                                  |
-| Battery                        | 35 Ah @ 24 V, LiFePO<sub>4</sub>                                         |
-| Wireless charging              | Up to 300 W (approximately 3 hours to charge from 10 to 90% when powered off) |
-| Wired charging                 | 750 W (approximately 1 hour to charge from 10 to 90% when powered off)   |
-| Expansion                      | VBAT @ TBD A, USB 3.0 (5 V @ TBD A), Ethernet (data only, 1 Gbps)        |
+| Specification                 | Measurement                                                                   |
+| :---------------------------- | :---------------------------------------------------------------------------- |
+| Dimensions                    | 1061 mm (length) X 854 mm (width) X 1224 mm (height)                          |
+| Track Width                   | 550 mm                                                                        |
+| Wheelbase Length              | 512 mm                                                                        |
+| Ground Clearance              | 130 mm                                                                        |
+| Mass                          | 80 kg                                                                         |
+| Maximum Payload               | 10 kg                                                                         |
+| Speed, Maximum                | 1.0 m/s                                                                       |
+| Climb Grade                   | 45 °                                                                          |
+| Traversal Grade / Sideslope   | 30 °                                                                          |
+| Ambient Operating Temperature | -10 to + 40 °C                                                                |
+| Environmental                 | Designed for IP55                                                             |
+| Operating Time, Average       | 2.5 to 4.0 hours                                                              |
+| Operating Time, Standby       | 8 hours                                                                       |
+| Battery                       | 35 Ah @ 24 V, LiFePO<sub>4</sub>                                              |
+| Wireless charging             | Up to 300 W (approximately 3 hours to charge from 10 to 90% when powered off) |
+| Wired charging                | 750 W (approximately 1 hour to charge from 10 to 90% when powered off)        |
+| Expansion                     | VBAT @ TBD A, USB 3.0 (5 V @ TBD A), Ethernet (data only, 1 Gbps)             |
 
 <center>
   <img
@@ -223,22 +223,22 @@ TODO: shipping temperature range?
 Review the following to learn more about the labels that may be used on Clearpath Robotics products. Hazards
 can also apply to attachments and accessories used in conjunction with a Clearpath Robotics product.
 
-| **Label** | **Label Title** | **Label Description** |
-|:---------:|-----------------|-----------------------|
-| <img src="/img/robot_images/husky_observer_images/automatic_motion_hazard.png" /> | Automatic Motion Hazard | Clearpath Robotics robots may suddenly begin moving autonomously or when being driven manually. Always be aware of Clearpath Robotics products and their potential for movement. |
-| <img src="/img/robot_images/husky_observer_images/crushing_hazard.png" /> | Crushing Risk | Objects or personnel can be crushed between the Clearpath Robotics robot and another object. Keep hands and other objects clear of crush points at all times. Keep clear of all docking Clearpath Robotics robots. |
-| <img src="/img/robot_images/husky_observer_images/electrical_shock_hazard.png" /> | Electrical Shock Risk | Clearpath Robotics robots contain circuitry and batteries that may cause electrical shock if not properly insulated. |
-| <img src="/img/robot_images/husky_observer_images/entanglement_hazard.png" /> | Entanglement Risk | Clearpath Robotics robots as well as their sensors can lead to entanglement for hair or dangling materials during their rotation. Keep dangling materials/hair away from Clearpath Robotics robots during motion. |
-| <img src="/img/robot_images/husky_observer_images/environmental_hazard.png" /> | Environmental Hazard | Clearpath Robotics robots contain batteries and materials that may require special disposal methods. Consult local regulations. |
-| <img src="/img/robot_images/husky_observer_images/falling_object_hazard.png" /> | Falling Object Risk | Beware of objects that may have shifted in any Clearpath Robotics robot crate as they pose a risk of falling when opened. |
-| <img src="/img/robot_images/husky_observer_images/high_surface_temp_hazard.png" /> | High Surface Temperature Risk | Robot PC heat sinks and robot motors can become extremely hot during operation. |
-| <img src="/img/robot_images/husky_observer_images/impact_hazard.png" /> | Impact Risk | Clearpath Robotics robots travelling through a facility can potentially impact objects and personnel. Keep clear of all docking Clearpath Robotics robots. |
-| <img src="/img/robot_images/husky_observer_images/laser_radiation_hazard.png" /> | Laser Radiation Risk | Clearpath Robotics robots may use Class 1 laser products. These provide no hazard during normal use, however it is not recommended to stare directly into the beam(s). |
-| <img src="/img/robot_images/husky_observer_images/material_hazard_lithium.png" /> | Material Hazard - Lithium | Robot batteries contain harmful material. Always use proper handling procedures when handling robot batteries. |
-| <img src="/img/robot_images/husky_observer_images/manual_load_lifting_hazard.png" /> | Manual Load Lifting Risk | Always use ergonomic techniques when manually lifting loads. |
-| <img src="/img/robot_images/husky_observer_images/pinching_hazard.png" /> | Pinching Risk | Keep hands and other objects clear of pinch points at all times. Keep clear of all docking Clearpath Robotics robots. |
-| <img src="/img/robot_images/husky_observer_images/radio_frequency_hazard.png" /> | Radio Frequency Risk | Clearpath Robotics robots and/or accesories may use radio frequency (RF) radiating antennas. These provide no hazard during normal use, however prolonged exposure around the antenna is not recommended. |
-| <img src="/img/robot_images/husky_observer_images/tripping_hazard.png" /> | Tripping Hazard | Clearpath Robotics products may pose a tripping hazard. |
+|                                      **Label**                                       | **Label Title**               | **Label Description**                                                                                                                                                                                              |
+| :----------------------------------------------------------------------------------: | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+|  <img src="/img/robot_images/husky_observer_images/automatic_motion_hazard.png" />   | Automatic Motion Hazard       | Clearpath Robotics robots may suddenly begin moving autonomously or when being driven manually. Always be aware of Clearpath Robotics products and their potential for movement.                                   |
+|      <img src="/img/robot_images/husky_observer_images/crushing_hazard.png" />       | Crushing Risk                 | Objects or personnel can be crushed between the Clearpath Robotics robot and another object. Keep hands and other objects clear of crush points at all times. Keep clear of all docking Clearpath Robotics robots. |
+|  <img src="/img/robot_images/husky_observer_images/electrical_shock_hazard.png" />   | Electrical Shock Risk         | Clearpath Robotics robots contain circuitry and batteries that may cause electrical shock if not properly insulated.                                                                                               |
+|    <img src="/img/robot_images/husky_observer_images/entanglement_hazard.png" />     | Entanglement Risk             | Clearpath Robotics robots as well as their sensors can lead to entanglement for hair or dangling materials during their rotation. Keep dangling materials/hair away from Clearpath Robotics robots during motion.  |
+|    <img src="/img/robot_images/husky_observer_images/environmental_hazard.png" />    | Environmental Hazard          | Clearpath Robotics robots contain batteries and materials that may require special disposal methods. Consult local regulations.                                                                                    |
+|   <img src="/img/robot_images/husky_observer_images/falling_object_hazard.png" />    | Falling Object Risk           | Beware of objects that may have shifted in any Clearpath Robotics robot crate as they pose a risk of falling when opened.                                                                                          |
+|  <img src="/img/robot_images/husky_observer_images/high_surface_temp_hazard.png" />  | High Surface Temperature Risk | Robot PC heat sinks and robot motors can become extremely hot during operation.                                                                                                                                    |
+|       <img src="/img/robot_images/husky_observer_images/impact_hazard.png" />        | Impact Risk                   | Clearpath Robotics robots travelling through a facility can potentially impact objects and personnel. Keep clear of all docking Clearpath Robotics robots.                                                         |
+|   <img src="/img/robot_images/husky_observer_images/laser_radiation_hazard.png" />   | Laser Radiation Risk          | Clearpath Robotics robots may use Class 1 laser products. These provide no hazard during normal use, however it is not recommended to stare directly into the beam(s).                                             |
+|  <img src="/img/robot_images/husky_observer_images/material_hazard_lithium.png" />   | Material Hazard - Lithium     | Robot batteries contain harmful material. Always use proper handling procedures when handling robot batteries.                                                                                                     |
+| <img src="/img/robot_images/husky_observer_images/manual_load_lifting_hazard.png" /> | Manual Load Lifting Risk      | Always use ergonomic techniques when manually lifting loads.                                                                                                                                                       |
+|      <img src="/img/robot_images/husky_observer_images/pinching_hazard.png" />       | Pinching Risk                 | Keep hands and other objects clear of pinch points at all times. Keep clear of all docking Clearpath Robotics robots.                                                                                              |
+|   <img src="/img/robot_images/husky_observer_images/radio_frequency_hazard.png" />   | Radio Frequency Risk          | Clearpath Robotics robots and/or accesories may use radio frequency (RF) radiating antennas. These provide no hazard during normal use, however prolonged exposure around the antenna is not recommended.          |
+|      <img src="/img/robot_images/husky_observer_images/tripping_hazard.png" />       | Tripping Hazard               | Clearpath Robotics products may pose a tripping hazard.                                                                                                                                                            |
 
 #### Safety Awareness
 
@@ -293,7 +293,6 @@ It is intended to be monitored constantly by those personnel during operation.
 The system is intended to be operated around trained personnel familiar with the hazards that the system presents.
 
 The system is intended to be operated in the as-furnished condition, without additional equipment, payload or passengers.
-
 
 #### Disclaimer
 
@@ -363,9 +362,9 @@ robot's path. Never operate the robot in environments other than those for which
 #### Electrical Subsystem
 
 Husky Observer is powered by two 12 V Lithium-Iron-Phosphate( LiFePO<sub>4</sub>) batteries in series to make a 24 V pack.
-These batteries are similar to the type found in electric wheelchairs, golf carts, fork trucks, and other devices. 
+These batteries are similar to the type found in electric wheelchairs, golf carts, fork trucks, and other devices.
 Husky Observer's battery pack is capable of delivering 5565 W, three times the power of a standard wall outlet.
-This gives Husky Observer's motors their great performance, however, it is also enough power to cause severe bodily harm. 
+This gives Husky Observer's motors their great performance, however, it is also enough power to cause severe bodily harm.
 
 Note that the Husky Observer PDU has a 50 A fuse that limits the continuous power output to 1325 W.
 
@@ -433,7 +432,7 @@ as the means of controlling robot motion during regular operation.
 #### Wireless Motion-Stop Function
 
 In addition to the onboard motion-stop function, the system includes a wireless motion-stop function. This function
-allows a person who is physically separated from the robot to halt its motion and prevent re-initiation of motion. 
+allows a person who is physically separated from the robot to halt its motion and prevent re-initiation of motion.
 
 <center>
   <figure>
@@ -476,7 +475,7 @@ for example, the controller battery is dead, out of range or not accessible, etc
 Operation of the mobile robot while the wireless motion-stop function is overridden **is not recommended**.
 The system deployer/operator assumes all responsibility for injury to persons or animals, or damage to property,
 arising from the inability to remotely stop the motion of the vehicle due to the use of this override.
-			
+
 #### Motion Buzzer
 
 When Husky Observer is driving in any direction, both in manual and autonomous modes, a buzzer will sound
@@ -540,19 +539,19 @@ Below are a set of criteria in order of priority, for the location of the base
 station, such that the performance of the networking/software is not degraded:
 
 - The base station should be secured as high as possible so that the GPS
-antenna can accurately obtain a GPS signal and so that the network antenna can
-propagate its radio waves without interference from nearby obstructions.
-For example, a good location could be on the roof of a building or trailer.
+  antenna can accurately obtain a GPS signal and so that the network antenna can
+  propagate its radio waves without interference from nearby obstructions.
+  For example, a good location could be on the roof of a building or trailer.
 
 - A location on the ground (if no elevated location is available/accessible)
-where the base station can be secured using the tripod that has been shipped with
-the robot. If this location is selected, ensure that the tripod is secured a
-minimum of 10 \si{\meter} from any buildings or obstructions so that the GPS
-antenna has a clear view of the sky. Recommended minimum height is 1.75
-\si{\meter} from bottom of antenna to ground.
+  where the base station can be secured using the tripod that has been shipped with
+  the robot. If this location is selected, ensure that the tripod is secured a
+  minimum of 10 \si{\meter} from any buildings or obstructions so that the GPS
+  antenna has a clear view of the sky. Recommended minimum height is 1.75
+  \si{\meter} from bottom of antenna to ground.
 
 - A location where an Ethernet cable can be fed to to connect the base
-station to the WAN (if WAN available).
+  station to the WAN (if WAN available).
 
 ##### Base Station Orientation
 
@@ -631,11 +630,11 @@ The WiBotic wireless transmitter ships pre-installed in the dock. To
 complete the installation of the wireless transmitter:
 
 - Plug the wireless transmitter into a power terminal using the provided
-power cord (an extension cord may be required). The transmitter requires
-90 - 264 V AC, 50 - 60 Hz.
+  power cord (an extension cord may be required). The transmitter requires
+  90 - 264 V AC, 50 - 60 Hz.
 - Power ON the wireless transmitter by pressing the switch on the side
-of the transmitter. The center <span style={{color: '#38761d'}}>GREEN</span>
-LED will light up when powered ON.
+  of the transmitter. The center <span style={{color: '#38761d'}}>GREEN</span>
+  LED will light up when powered ON.
 
 ##### Wireless Receiver
 
@@ -696,16 +695,16 @@ does not shift during this process.
 When powering up the robot for the first time, follow these steps:
 
 1. Turn the Battery Disconnect Switch to the "ON" position. Note that this
-  switch is set to "OFF" prior to shipping to prevent battery drain during
-  shipping.
-1.  Wait one to two minutes for the system to boot fully before proceeding.
-  The external light indicators on the rear of the robot will illuminate once
-  the system is powered. The "COMM" light will notify the user about the
-  status of the computer. The possibilities are:
+   switch is set to "OFF" prior to shipping to prevent battery drain during
+   shipping.
+1. Wait one to two minutes for the system to boot fully before proceeding.
+   The external light indicators on the rear of the robot will illuminate once
+   the system is powered. The "COMM" light will notify the user about the
+   status of the computer. The possibilities are:
 
-    1. **<span style={{color: '#38761d'}}>GREEN:</span>** Communication with the computer is active/stable and robot is ready to drive.
-    1. **<span style={{color: '#eec364'}}>YELLOW:</span>** Communication with the computer is active/stable but Motion-Stop is engaged. Release the Motion-Stop.
-    1. **<span style={{color: '#d04638'}}>RED:</span>** No communication with the robot computer or ROS error.
+   1. **<span style={{color: '#38761d'}}>GREEN:</span>** Communication with the computer is active/stable and robot is ready to drive.
+   1. **<span style={{color: '#eec364'}}>YELLOW:</span>** Communication with the computer is active/stable but Motion-Stop is engaged. Release the Motion-Stop.
+   1. **<span style={{color: '#d04638'}}>RED:</span>** No communication with the robot computer or ROS error.
 
 ##### Charge State
 
@@ -750,12 +749,12 @@ noting that the robot will only charge on the dock when the disconnect is in the
 "ON" position.
 
 - Manually drive the robot to its position at the dock. The receiver on
-the robot should be properly aligned with the circle on the dock transmitter.
+  the robot should be properly aligned with the circle on the dock transmitter.
 - Use the OutdoorNav UI to dock the robot autonomously. Please consult
-[Autonomous Missions](#autonomous-missions) for further details.
-This method requires that the [base station has been surveyed](#survey-base-station),
-the [Datum has been set to the coordinates of the test site](#set-datum),
-and that the [dock location has been set](#set-dock-location).
+  [Autonomous Missions](#autonomous-missions) for further details.
+  This method requires that the [base station has been surveyed](#survey-base-station),
+  the [Datum has been set to the coordinates of the test site](#set-datum),
+  and that the [dock location has been set](#set-dock-location).
 
 ##### Manual Charger
 
@@ -766,9 +765,9 @@ first turn off the robot.
 TODO: Possibly update some of the wording here for the new charger.
 
 - Plug the manual charger into an AC outlet and wait for the power
-light to turn solid **<span style={{color: '#0000ff'}}>BLUE</span>**.
+  light to turn solid **<span style={{color: '#0000ff'}}>BLUE</span>**.
 - Remove the cap from the manual charging port (rear of robot) by
-squeezing the two cap sides and lifting.
+  squeezing the two cap sides and lifting.
 - Connect the manual charger plug into port.
 
 After a moment the **<span style={{color: '#e38e4e'}}>ORANGE</span>**
@@ -795,6 +794,7 @@ for further details.
 TODO:
 
 ##### Network Modes {#network-modes}
+
 Modes:
 
 1. "Base Station Wi-Fi mode": Base station (wifi only; contact CPR for details on adding cellular support to the base station)
@@ -803,17 +803,14 @@ Modes:
 1. "Cellular Only mode": No base station or customer wifi network, cellular in robot + separate cellular in tablet
 
 | Network Mode | Description | Base Station Setup | Robot Setup | Tablet Setup |
-|--------------|-------------|--------------------|-------------|--------------|
-
-
+| ------------ | ----------- | ------------------ | ----------- | ------------ |
 
 TODO: add notes on how the tablet and/or laptop can connect to the robot in each case
 TODO: explicitly list the URL for connecting to the OutdoorNav UI in each case.
 
 - Connect the tablet to the base station network. Enter the network list
-at the bottom right of the screen and find the wireless network related to
-your robot. The SSID of the network will be ``HITT04BaseRadio''. The
-password to connect to this network is ``\textbf{clearpath}''.
+  at the bottom right of the screen and find the wireless network related to
+  your robot. The SSID of the network will be "HITT04BaseRadio". The password to connect to this network is **`clearpath`**.
 
 #### Wired Network Connection
 
@@ -893,7 +890,7 @@ The Husky Observer ships with a Getac ruggedized tablet as shown in \autoref{fig
 Power on the Getac ruggedized tablet by pressing the
 **<span style={{color: '#38761d'}}>GREEN</span>** power button on the right side of
 the tablet. The tablet is running Windows 10 which will startup on power-up.
-If prompted for a password, enter: **``clearpath``**.
+If prompted for a password, enter: **`clearpath`**.
 
 ##### Connecting to OutdoorNav Web User Interface
 
@@ -933,16 +930,16 @@ TODO:
 #### Set Datum {#set-datum}
 
 Before being able to operate the robot autonomously, you will need to set
-the datum (ie. the reference point in the world coordinate frame). 
+the datum (ie. the reference point in the world coordinate frame).
 Follow the instructions in the
-[OutdoorNav User Manual](https://docs.clearpathrobotics.com/docs_outdoornav_user_manual/getting_started/system_setup#set-datum)
+[OutdoorNav User Manual](/docs_outdoornav_user_manual/getting_started/system_setup#set-datum)
 for details on how to set the datum.
 
 #### Set Dock Location {#set-dock-location}
 
 Before being able to operate the robot autonomously, you will need to set
 the dock location. Follow the instructions in the
-[OutdoorNav User Manual](https://docs.clearpathrobotics.com/docs_outdoornav_user_manual/getting_started/system_setup#set-dock-location)
+[OutdoorNav User Manual](/docs_outdoornav_user_manual/getting_started/system_setup#set-dock-location)
 for details on how to set the dock location.
 
 If the base station has been moved (and therefore been resurveyed), or if
@@ -981,13 +978,11 @@ In some cases, it may be desirable to connect additional equipment, such as a la
 Base Station network via WiFi. To do so, use the settings outlined below. Note that a static IP
 address, subnet, and gateway must be specified manually in your networking setup.
 
-\begin{itemize}
-  \item \textbf{WiFi SSID:} HITT04 Base Station
-  \item \textbf{WiFi password:} clearpath
-  \item \textbf{Available IP range:} 192.168.131.200 to 192.168.131.254
-  \item \textbf{Subnet:} 255.255.255.0
-  \item \textbf{Gateway:} 192.168.131.50
-\end{itemize}
+- **WiFi SSID:** HITT04 Base Station
+- **WiFi password:** clearpath
+- **Available IP range:** 192.168.131.200 to 192.168.131.254
+- **Subnet:** 255.255.255.0
+- **Gateway:** 192.168.131.50
 
 ### Accessing the Base Computer from the WAN
 
@@ -1001,22 +996,22 @@ TCP port 8022 on the Base Station, which gets mapped to TCP port 22 on the UGV B
 
 ### Husky Observer Network Components
 
-| Component | IP Address | Credentials |
-|-----------|------------|-------------|
-| Main Computer | 192.168.131.1<br/>10.252.252.100 | **user:** administrator<br/>**password:** clearpath |
-| IndoorNav Computer (optional) | 10.252.252.1 | **user:** administrator<br/>**password:** clearpath |
-| Camera, Axis, PTZ | 192.168.131.10 | **user:** administrator<br/>**password:** clearpath |
-| Camera, FLIR, Thermal (optional) | 192.168.131.11 | **user:** administrator<br/>**password:** clearpath |
-| 2D LiDAR, Hokuyo, front | 192.168.131.20 | n/a |
-| 2D LiDAR, Hokuyo, rear | 192.168.131.21 | n/a |
-| 3D LiDAR, Velodyne | 192.168.131.22 | n/a |
-| GPS receiver, SwiftNav, base station (optional) | 192.168.131.30 | n/a |
-| GPS receiver, SwiftNav, robot, right | 192.168.131.31 | n/a |
-| GPS receiver, SwiftNav, robot, left | 192.168.131.32 | n/a |
-| Networking Gateway, Microhard, base station (optional) | 192.168.131.50 | **user:** administrator<br/>**password:** clearpath |
-| Networking Gateway, Microhard, robot | 192.168.131.51 | **user:** administrator<br/>**password:** clearpath |
-| Wireless Power Transmitter, WiBotic, dock | 192.168.131.70 | n/a |
-| Tablet, Getac | 192.168.131.75 | **user:** administrator<br/>**password:** clearpath |
+| Component                                              | IP Address                       | Credentials                                         |
+| ------------------------------------------------------ | -------------------------------- | --------------------------------------------------- |
+| Main Computer                                          | 192.168.131.1<br/>10.252.252.100 | **user:** administrator<br/>**password:** clearpath |
+| IndoorNav Computer (optional)                          | 10.252.252.1                     | **user:** administrator<br/>**password:** clearpath |
+| Camera, Axis, PTZ                                      | 192.168.131.10                   | **user:** administrator<br/>**password:** clearpath |
+| Camera, FLIR, Thermal (optional)                       | 192.168.131.11                   | **user:** administrator<br/>**password:** clearpath |
+| 2D LiDAR, Hokuyo, front                                | 192.168.131.20                   | n/a                                                 |
+| 2D LiDAR, Hokuyo, rear                                 | 192.168.131.21                   | n/a                                                 |
+| 3D LiDAR, Velodyne                                     | 192.168.131.22                   | n/a                                                 |
+| GPS receiver, SwiftNav, base station (optional)        | 192.168.131.30                   | n/a                                                 |
+| GPS receiver, SwiftNav, robot, right                   | 192.168.131.31                   | n/a                                                 |
+| GPS receiver, SwiftNav, robot, left                    | 192.168.131.32                   | n/a                                                 |
+| Networking Gateway, Microhard, base station (optional) | 192.168.131.50                   | **user:** administrator<br/>**password:** clearpath |
+| Networking Gateway, Microhard, robot                   | 192.168.131.51                   | **user:** administrator<br/>**password:** clearpath |
+| Wireless Power Transmitter, WiBotic, dock              | 192.168.131.70                   | n/a                                                 |
+| Tablet, Getac                                          | 192.168.131.75                   | **user:** administrator<br/>**password:** clearpath |
 
 ---
 
@@ -1055,7 +1050,6 @@ TODO: Chris to add his notes here
 
 #### Key Settings
 
-
 - Resolution: TODO
 - Frame rate: TODO frames per second (front); TODO frames per second (rear)
 
@@ -1078,7 +1072,7 @@ To enable the buzzer, set:
 ```
 export ENABLE_REVERSE_ALARM=1
 ```
-  
+
 To disable the buzzer, set:
 
 ```
