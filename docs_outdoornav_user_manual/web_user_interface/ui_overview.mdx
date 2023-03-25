@@ -40,12 +40,18 @@ mode.
 6.  **GPS Status Indicator:** The GPS status indicators will display GPS
     signal accuracy for position (POS indicator) and heading (DIR
     indicator). Green indicators represent RTK accuracy and are
-    currently required for accurate autonomous navigation. Noticeable
-    oscillations may occur if the indicators are yellow. Red indicators
-    mean no GPS signal and autonomous navigation missions should not be
-    started.
+    currently required for accurate autonomous navigation. Yellow and orange 
+    indicators represent SBAS and SPP accuraciy respectively and noticeable 
+    oscillations may occur in such cases. Red indicators mean no GPS signal 
+    and autonomous navigation missions should not be started.
 
-7.  **Battery Life Indicator:** The UGV's battery life indicator.
+7. **ROS Status Indicator:** The ROS status indicator is used to give a 
+    quick overview of the current status of the watched ROS topics. If 
+    green it means that all topics are being received correctly while yellow
+    indicates that one or more topics is not being recieved. Further information
+    can be found in the status page by clicking on the ROS status indicator.
+
+8.  **Battery Life Indicator:** The UGV's battery life indicator.
 
     :::note
     
@@ -55,22 +61,23 @@ mode.
     
     :::
 
-8.  **Wireless Connection Indicator:** The wireless connection indicator
+9.  **Wireless Connection Indicator:** The wireless connection indicator
     represents the signal strength between the wifi access point
     (typically the Base Station) and the UGV.
 
-9.  **Views List:** A dropdown list of available views, detailed later
+10.  **Views List:** A dropdown list of available views, detailed later
     in this section. Some of the available views are Map, Camera and 3D
     views, etc.
 
-10. **Mission List:** View the list of missions that Operator(s) have
+11. **Mission List:** View the list of missions that Operator(s) have
     created.
 
-11. **Save Mission Button:** Save the current mission. This will store
+12. **Save Mission Button:** Save the current mission. This will store
     the the current mission to the database.
 
-12. **Edit Mission Toggle:** This toggle allows the user to start
-    creating Viapoints for the current Mission. Once this button is enabled,
+13. **Edit Mission Toggle:** This toggle allows the user to start
+    creating Viapoints for the current Mission. The user will also be able to
+    drag and drop waypoints in this mode. Once this button is enabled,
     the Waypoint Mode will now be available for selection. When a Mission is 
     started this toggle will be disabled (ie. the Operator will not be able 
     to modify/add Viapoints).
@@ -82,21 +89,21 @@ mode.
     
     :::
 
-13. **Waypoint Panel Toggle:** View list of Waypoints in the current mission.
+14. **Waypoint Panel Toggle:** View list of Waypoints in the current mission.
 
-14. **Waypoint Drop Button:** The Waypoint indicator marker on the
+15. **Waypoint Drop Button:** The Waypoint indicator marker on the
     bottom bar allow the user to place a Waypoint at the location of the UGV. 
 
-15. **Start Button:** Start the current mission.
+16. **Start Button:** Start the current mission.
 
-16. **Pause Button:** Pause the current mission. Pressing the start button
+17. **Pause Button:** Pause the current mission. Pressing the start button
     while paused will continue the current mission.
 
-17. **Stop Button:** Cancel the Mission or Task that is currently being
+18. **Stop Button:** Cancel the Mission or Task that is currently being
     executed. Pressing the start button while when stopped will restart
     the list of steps in the current Mission.
 
-18. **Feedback Bar:** The feedback bar will display information
+19. **Feedback Bar:** The feedback bar will display information
     regarding the execution state of the navigation and of any Tasks
     being executed.
 
@@ -131,11 +138,16 @@ Operator can access the following views:
 5.  **UGV:** The blue arrow represents the UGV. Its location is its
     position in the world frame and its orientation is the heading in
     the world frame.
-6.  **Datum:** The blue Waypoint marker on the map view represents the
+6.  **Base Station:** The yellow antenna icon is the last known location of
+    the base station based on the last survey performed. By clicking it the 
+    user will be presented with the base station's coordinates, when it was 
+    surveyed and how many samples were taken during the survey.
+
+7.  **Datum:** The blue Waypoint marker on the map view represents the
     location of the reference point (ie. (x,y)=(0,0)) of the world
     coordinate system. The world (ie. map) coordinate system is in the
     ENU convention.
-7.  **Scale:** The scale representing the ratio of a distance on the map
+8.  **Scale:** The scale representing the ratio of a distance on the map
     to the corresponding distance on the ground.
 
 ## Camera Views
