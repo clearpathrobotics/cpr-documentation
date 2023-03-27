@@ -797,16 +797,17 @@ TODO:
 
 Modes:
 
-1. "Base Station Wi-Fi mode": Base station (wifi only; contact CPR for details on adding cellular support to the base station)
-1. "Robot Cellular/Wi-Fi + Base Station Wi-Fi mode": dual-mode; on tablet, have two connection modes
-1. "Customer Wi-Fi Network mode": No base station, robot + tablet connected to customer wifi network with internet access (contact CPR for options if internet access is not available on the wifi network; need to generate map tiles)
-1. "Cellular Only mode": No base station or customer wifi network, cellular in robot + separate cellular in tablet
+1. "Base Station mode": Base station has wifi; robot has wifi + LTE (requires customer sim card); tablet has wifi connected to base station
+1. "Customer Network mode": Customer wifi mesh network; robot has wifi + LTE (requires customer sim card); tablet has wifi connected to customer wifi network
+1. "Cellular Only mode": No base station or customer wifi network, cellular in robot + separate cellular in tablet (built-in or via usb-tethered connection to cell phone)
 
 | Network Mode | Description | Base Station Setup | Robot Setup | Tablet Setup |
 | ------------ | ----------- | ------------------ | ----------- | ------------ |
 
 TODO: add notes on how the tablet and/or laptop can connect to the robot in each case
 TODO: explicitly list the URL for connecting to the OutdoorNav UI in each case.
+TODO: add notes on Microhard setup in each case
+
 
 - Connect the tablet to the base station network. Enter the network list
   at the bottom right of the screen and find the wireless network related to
