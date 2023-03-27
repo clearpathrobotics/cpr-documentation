@@ -591,15 +591,17 @@ is added to the end of the Task's `waypoints` list.
 
 #### mission_manager/clone_mission
 
-**Service Type:** [onav_mission_manager_msgs/srv/GetMission](#storage-getmission)
+**Service Type:** [onav_mission_manager_msgs/srv/CloneMission](#storage-clonemission)
 
-**Description:** Create a deep-copy of a Mission.  The new Mission will be renamed to have `-copy` at the end. All
-Waypoints and their associated Tasks are also duplicated.
+**Description:** Create a deep-copy of a Mission.  The new Mission will be given the provided name, or reuse the original
+mission's name wth `-copy` appended to the end if no name is provided. All Waypoints and their associated Tasks are also
+duplicated but not renamed.
 
 :::note
 
-In 0.8.0 onward, all missions are required to have unique names. Copying a mission multiple times will add incrementing
-numbers to the suffix: `-copy` for the first, `-copy1` for the second, `-copy2` for the third, and so on.
+In 0.8.0 onward, all missions are required to have unique names.  If the specified name is not unique the cloning will
+fail. Cloning a mission multiple times without specifying a unique name will add incrementing numbers to the suffix:
+`-copy` for the first, `-copy1` for the second, `-copy2` for the third, and so on.
 
 :::
 
@@ -1282,6 +1284,22 @@ int32 position
 ---
 # True if the object was added/removed successfully, otherwise False
 bool ok
+```
+
+#### onav_mission_manager_msgs/srv/CloneMission.srv {#storage-clonemission}
+```
+# The desired name for the new mission
+string name
+
+# The additional configuration options
+# see onav_ms2_msgs/msg/Mission for details
+string onav_config
+
+# The ordered list of Waypoint UUIDs to include in this mission
+string[] waypoint_ids
+---
+# The resulting Mission, with an auto-generated UUID is returned
+onav_ms2_msgs/Mission result
 ```
 
 #### onav_mission_manager_msgs/srv/CreateMission.srv {#storage-createmission}
