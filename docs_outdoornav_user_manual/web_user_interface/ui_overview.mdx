@@ -25,7 +25,7 @@ mode.
     (ie. Home), Settings, Status or Help pages.
 
 2.  **Path Progress Meter:** A meter indicating the percentage complete
-    of a navigation Goal.
+    of a Mission.
 
 3.  **UGV Position:** The UGV's X and Y position in the world frame
     relative to the Datum.
@@ -40,12 +40,18 @@ mode.
 6.  **GPS Status Indicator:** The GPS status indicators will display GPS
     signal accuracy for position (POS indicator) and heading (DIR
     indicator). Green indicators represent RTK accuracy and are
-    currently required for accurate autonomous navigation. Noticeable
-    oscillations may occur if the indicators are yellow. Red indicators
-    mean no GPS signal and autonomous navigation missions should not be
-    started.
+    currently required for accurate autonomous navigation. Yellow and orange 
+    indicators represent SBAS and SPP accuracy respectively and noticeable 
+    oscillations may occur in such cases. Red indicators mean no GPS signal 
+    and autonomous navigation missions should not be started.
 
-7.  **Battery Life Indicator:** The UGV's battery life indicator.
+7. **ROS Status Indicator:** The ROS status indicator is used to give a 
+    quick overview of the current status of the watched ROS topics. If 
+    green it means that all topics are being received correctly while yellow
+    indicates that one or more topics is not being recieved. Further information
+    can be found in the status page by clicking on the ROS status indicator.
+
+8.  **Battery Life Indicator:** The UGV's battery life indicator.
 
     :::note
     
@@ -55,51 +61,44 @@ mode.
     
     :::
 
-8.  **Wireless Connection Indicator:** The wireless connection indicator
+9.  **Wireless Connection Indicator:** The wireless connection indicator
     represents the signal strength between the wifi access point
     (typically the Base Station) and the UGV.
 
-9.  **Views List:** A dropdown list of available views, detailed later
+10.  **Views List:** A dropdown list of available views, detailed later
     in this section. Some of the available views are Map, Camera and 3D
     views, etc.
 
-10. **Mission List:** View the list of missions that Operator(s) have
+11. **Mission List:** View the list of Missions that Operator(s) have
     created.
 
-11. **Save Mission Button:** Save the current mission. This will store
-    the the current mission to the database.
-
 12. **Edit Mission Toggle:** This toggle allows the user to start
-    creating Goals for the current Mission. Once this button is enabled,
-    the Waypoint Mode and Route Mode buttons will now be available for
-    selection. When a Mission is started this toggle will be disabled
-    (ie. the Operator will not be able to modify/add Goals).
+    creating Waypoints for the current Mission. The user will also be able to
+    drag and drop Waypoints in this mode. Once this button is enabled,
+    the Waypoint Mode will now be available for selection. When a Mission is 
+    started this toggle will be disabled (ie. the Operator will not be able 
+    to modify/add Waypoints).
 
     :::note
 
-    If the toggle is enabled while an autonomous mission is running, it
-    will cancel the current mission.
+    If the toggle is enabled while an autonomous Mission is running, it
+    will cancel the current Mission.
     
     :::
 
-13. **Goal Panel Toggle:** View list of Goals in the current mission.
+13. **Waypoint Panel Toggle:** View list of Waypoints in the current Mission.
 
-14. **Goal/Waypoint Buttons:** The two waypoint indicator markers on the
-    bottom bar allow the user to place either a Waypoint or Goal Point
-    at the location of the UGV. These buttons work similarly to the
-    route mode. The "Goal" button initiates a Goal Point and the
-    "Waypoint" button extends the Goal. Pressing the "Goal" button
-    again will start a new Goal.
+14. **Waypoint Drop Button:** The Waypoint indicator marker on the
+    bottom bar allows the user to place a Waypoint at the location of the UGV. 
 
-15. **Start Button:** Start the current mission (ie. execute the list of
-    enabled Goals sequentially).
+15. **Start Button:** Start the current Mission.
 
-16. **Pause Button:** Pause the current Goal. Pressing the start button
-    while paused will continue the current mission.
+16. **Pause Button:** Pause the current Mission. Pressing the start button
+    while paused will continue the current Mission.
 
-17. **Stop Button:** Cancel the Goal or Task that is currently being
+17. **Stop Button:** Cancel the Mission or Task that is currently being
     executed. Pressing the start button while when stopped will restart
-    the list of Goals in the current Mission.
+    the list of steps in the current Mission.
 
 18. **Feedback Bar:** The feedback bar will display information
     regarding the execution state of the navigation and of any Tasks
@@ -133,22 +132,19 @@ Operator can access the following views:
 4.  **Waypoint Mode Button:** This button allows the user to place
     Waypoints on the map. Users can also select existing Waypoints to
     modify/delete them.
-5.  **Start Route Button:** This button allows the user to create a
-    route of Waypoints which will form a path from the UGV's current
-    position to the first point clicked to the last location clicked. As
-    points are clicked on the map, the Waypoints are added sequentially
-    to the Goal with the last point clicked being the Goal Point.
-6.  **End Route Button:** This button will finalize the Goal that is
-    currently being created and allow the user to start creating a new
-    Goal.
-7.  **UGV:** The blue arrow represents the UGV. Its location is its
+5.  **UGV:** The blue arrow represents the UGV. Its location is its
     position in the world frame and its orientation is the heading in
     the world frame.
-8.  **Datum:** The blue Waypoint marker on the map view represents the
+6.  **Base Station:** The yellow antenna icon is the last known location of
+    the base station based on the last survey performed. By clicking it the 
+    user will be presented with the base station's coordinates, when it was 
+    surveyed, and how many samples were taken during the survey.
+
+7.  **Datum:** The blue Waypoint marker on the map view represents the
     location of the reference point (ie. (x,y)=(0,0)) of the world
     coordinate system. The world (ie. map) coordinate system is in the
     ENU convention.
-9.  **Scale:** The scale representing the ratio of a distance on the map
+8.  **Scale:** The scale representing the ratio of a distance on the map
     to the corresponding distance on the ground.
 
 ## Camera Views
@@ -196,7 +192,7 @@ available views.
         looking at the inspection point.
     4.  Click the "Save Camera Position".
     5.  When creating an autonomous mission to this inspection point,
-        add the "Move PTZ" task to Goal.
+        add the "Move PTZ" task to a Waypoint.
     6.  Click the settings button beside the task and add the camera
         position related to the inspection point.
 
