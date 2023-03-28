@@ -570,7 +570,7 @@ side of the enclosure. When powered, the button will illuminate blue.
 
 ##### Internet over Base Station Network
 
-If a wired internet connection is available at the user testing facility, an
+If a wired internet connection is available at the user facility, an
 Ethernet cable can be run from an access point to the Ethernet port on the bottom
 of the base station case. This will provide internet access for the robot
 and the tablet.
@@ -680,6 +680,20 @@ the robot, bridging the drop between the crate floor and the ground. The robot
 may then be rolled out by pulling on the rear bumper. Make sure that the ramp
 does not shift during this process.
 
+##### Installation of SIM Card (Optional) {#installation-of-sim-card}
+
+An LTE SIM card can optionally be installed into the robot to provide network
+access when out of range of WiFi networks. A SIM card if not required if
+Husky Observer is always being operated in the range of WiFi networks.
+Note that the SIM card (and corresponding data plan) is provided by the end user,
+not by Clearpath.
+
+TODO: Update these installation details.
+1. Open the lid on Husky Observer.
+1. Find the Microhard.
+1. Insert the SIM card.
+1. See [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for details on the software setup.
+
 #### Robot Startup
 
 <center>
@@ -740,44 +754,7 @@ be off.
 
 #### Charging the Robot
 
-TODO: consider moving this section to Maintenance
-
-##### Autocharge Dock
-
-The operator can start charging the robot using the autocharge dock in two ways,
-noting that the robot will only charge on the dock when the disconnect is in the
-"ON" position.
-
-- Manually drive the robot to its position at the dock. The receiver on
-  the robot should be properly aligned with the circle on the dock transmitter.
-- Use the OutdoorNav UI to dock the robot autonomously. Please consult
-  [Autonomous Missions](#autonomous-missions) for further details.
-  This method requires that the [base station has been surveyed](#survey-base-station),
-  the [Datum has been set to the coordinates of the test site](#set-datum),
-  and that the [dock location has been set](#set-dock-location).
-
-##### Manual Charger
-
-The Manual Charger may be used when the robot is far from its wireless
-charger or when a faster charge time is desired. For faster charging,
-first turn off the robot.
-
-TODO: Possibly update some of the wording here for the new charger.
-
-- Plug the manual charger into an AC outlet and wait for the power
-  light to turn solid **<span style={{color: '#0000ff'}}>BLUE</span>**.
-- Remove the cap from the manual charging port (rear of robot) by
-  squeezing the two cap sides and lifting.
-- Connect the manual charger plug into port.
-
-After a moment the **<span style={{color: '#e38e4e'}}>ORANGE</span>**
-"lightning bolt" will illuminate on the charger indicating that charging
-has begun. The **<span style={{color: '#38761d'}}>GREEN</span>** battery level
-indicator on the charger will also flash. When both segments of this
-indicator turn solid, charging is complete.
-
-Be sure to replace the charge port cap when charging is complete. This
-will protect the connectors from environmental conditions.
+See [Maintenance](maintenance_husky_observer#charging) for details on charging the robot.
 
 #### Robot Expansion and Debug Ports
 
@@ -787,33 +764,9 @@ system expansion (eg. extra sensors) or for system debugging. All data connectiv
 to the main computer. See [Husky Observer Integration](/docs/robots/solutions/husky_observer/integration_husky_observer)
 for further details.
 
-### Base Software Setup
+### Base Husky Software Setup
 
-#### Networking Setup {#networking-setup}
-
-TODO:
-
-##### Network Modes {#network-modes}
-
-Modes:
-
-1. "Base Station mode": Base station has wifi; robot has wifi + LTE (requires customer sim card); tablet has wifi connected to base station
-1. "Customer Network mode": Customer wifi mesh network; robot has wifi + LTE (requires customer sim card); tablet has wifi connected to customer wifi network
-1. "Cellular Only mode": No base station or customer wifi network, cellular in robot + separate cellular in tablet (built-in or via usb-tethered connection to cell phone)
-
-| Network Mode | Description | Base Station Setup | Robot Setup | Tablet Setup |
-| ------------ | ----------- | ------------------ | ----------- | ------------ |
-
-TODO: add notes on how the tablet and/or laptop can connect to the robot in each case
-TODO: explicitly list the URL for connecting to the OutdoorNav UI in each case.
-TODO: add notes on Microhard setup in each case
-
-
-- Connect the tablet to the base station network. Enter the network list
-  at the bottom right of the screen and find the wireless network related to
-  your robot. The SSID of the network will be "HITT04BaseRadio". The password to connect to this network is **`clearpath`**.
-
-#### Wired Network Connection
+#### Wired Network Connection {#wired-network-connection}
 
 During setup or debugging, it may be desirable to connected to Husky Observer through a wired Ethernet connection.
 After connecting an Ethernet cable from your laptop to the debug/expansion port as shown in the
@@ -836,9 +789,15 @@ This step is optional.
 
 :::
 
-<ComponentInstallingRemoteComputerSoftware />
+:::note
 
-TODO: need to confirm how to do this through the Microhard WiFi
+This step assumes that your laptop (ie. "remote computer") is already present
+on the same subnet as the robot. See [System Networking Setup](#networking-setup)
+and [Appendix A](#networking-configuration) for networking details.
+
+:::
+
+<ComponentInstallingRemoteComputerSoftware />
 
 #### Adding a Source Workspace
 
@@ -852,15 +811,15 @@ If your controller has become unpaired or if you wish to pair a new controller, 
 [Husky Tutorials](/docs/robots/outdoor_robots/husky/tutorials_husky/tutorials_husky_ros1#pairing-the-controller).
 
 To teleoperate Husky Observer, first release the motion stop. Then, referring to the following image, press the
-enable button (either slow or fast mode) and use the left thumbstick to drive Husky Observer.
+enable button (either slow or turbo mode) and use the left thumbstick to drive Husky Observer.
 
 <center>
   <figure>
     <img
-      src="/img/robot_images/common_images/controller_ps4.png"
-      width="400"
+      src="/img/robot_images/jackal_images/jackal-sony-ps4-controller-labelled.png"
+      width="600"
     />
-    <figcaption>PS4 Contoller</figcaption>
+    <figcaption>PS4 Controls Layout</figcaption>
   </figure>
 </center>
 
@@ -868,15 +827,211 @@ enable button (either slow or fast mode) and use the left thumbstick to drive Hu
 
 <ComponentUsingRos />
 
-#### Remote Access Setup via Ngrok
+### System Networking Setup {#networking-setup}
 
-TODO
+#### Network Requirements
+
+To monitor and control Husky Observer, it must be integrated into a communication network. The main
+requirements are:
+
+1. The user control device (tablet or laptop) must have network connectivity to the Husky Observer,
+   either over a local Wi-Fi network or over the internet (eg. cellular connection to the robot).
+1. The user control device (tablet or laptop) must have access to the internet to be able to download
+   map tiles. (In advanced modes, it is possible to create your own map to avoid this requirement.)
+
+#### Network Modes {#network-modes}
+
+While there are many ways to meet the Network Requirements listed above, there are three common network
+modes for deploying Husky Observer, which are outlined below.
+
+| Network Mode | Description | Base Station Setup | Robot Setup | Tablet Setup | OutdoorNav URL via Local WiFi | OutdoorNav URL via Internet/Cellular |
+| ------------ | ----------- | ------------------ | ----------- | ------------ | ----------------------------- | ------------------------------------ |
+| Base Station | Base Station with WiFi for near-range operations; optional LTE also available on robot for long-range operations | Pre-configured at factory | Pre-configured at factory; see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup | Pre-configured at factory | http://192.168.131.1 | See [Remote Access Setup](#remote-access) |
+| Customer Network | Customer WiFi for near-range operations; optional LTE also available on robot for long-range operations | N/A | See [Updating the WiFi SSID or Password on Robot](#robot-wifi-setup); see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup | See [Windows 10 instructions](https://support.microsoft.com/en-us/windows/connect-to-a-wi-fi-network-in-windows-1f881677-b569-0cd5-010d-e3cd3579d263) for connecting to Customer WiFi network; configure as Static IP 192.168.131.75/24 | http://192.168.131.1 | See [Remote Access Setup](#remote-access) |
+| Cellular Only | Uses cellular in robot + separate cellular in Tablet | N/A | See [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for setup | Pre-configured at factory (TODO: confirm) or use USB-tethering to a cell phone | N/A | See [Remote Access Setup](#remote-access) |
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/onav_network_base_station_mode.png"
+      width="600"
+    />
+    <figcaption>Base Station Mode</figcaption>
+  </figure>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/onav_network_customer_network_mode.png"
+      width="800"
+    />
+    <figcaption>Customer Network Mode</figcaption>
+  </figure>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/onav_network_cellular_only_mode.png"
+      width="400"
+    />
+    <figcaption>Cellular Only Mode</figcaption>
+  </figure>
+</center>
+
+#### Network Access Point Advanced Configuration
+
+Both the robot and base station (if present) are equipped with a network access point
+that supports cellular, WiFi, and wired ethernet connections. These devices are
+pre-configured before shipping, but there are a small number of settings that the
+user may wish to adjust. The updates are optional
+
+##### Configuring WAN/Internet Port on Base Station
+
+To switch between DHCP and Static modes for the WAN/Internet port on the Base Station:
+
+1. Configure a wired Ethernet port on your laptop to 192.168.131.100/24.
+1. Open the front panel of the Base Station and connect an Ethernet cable from
+   the configured port on your laptop to one of the available LAN ports on the
+   Microhard in the Base Station.
+1. Open the following in your Chrome browser: http://192.168.131.50/network/wan<br/>
+   This should bring you to the "Network -> WAN" menu.
+   Note: Refer [Appendix A](#networking-configuration) for default credentials.
+1. Update the "WAN2 Port Configuration" as desired.
+1. TODO: how to save/apply the changes?
+1. Disconnect the Ethernet cable and close the Base Station.
+
+##### Updating the WiFi SSID or Password on Base Station
+
+The Base Station, if present, serves as a WiFi Access Point.
+Follow the steps below to change the default WiFi SSID or Password of this access point.
+
+1. Configure a wired Ethernet port on your laptop to 192.168.131.100/24.
+1. Open the front panel of the Base Station and connect an Ethernet cable from
+   the configured port on your laptop to one of the available LAN ports on the
+   Microhard in the Base Station.
+1. Open the following in your Chrome browser: http://192.168.131.50/wireless/radio1<br/>
+   This should bring you to the "Wireless -> Radio1" menu.
+   Note: Refer [Appendix A](#networking-configuration) for default credentials.
+1. Update the "Radio1 Virtual Interface 1" to set the new SSID or password as desired.
+1. TODO: how to save/apply the changes?
+1. Disconnect the Ethernet cable and close the Base Station.
+1. Apply the corresponding changes to the robot (see below).
+
+##### Updating the WiFi SSID or Password on Robot {#robot-wifi-setup}
+
+Using WiFi, the robot can connect to the Base Station, if present, or to a customer
+WiFi network. If the SSID or password on the Base Station has changed or if connecting
+the robot to a customer WiFi network, follow the steps below to match those of the
+WiFi access point.
+
+1. Configure a wired Ethernet port on your laptop to 192.168.131.100/24.
+   See [Wired Network Connection](#wired-network-connection) for details.
+1. Connect an ethernet cable from the configured port on your laptop to the
+   debug/expansion port on the top of the robot.
+1. Open the following in your Chrome browser: http://192.168.131.51/wireless/radio1<br/>
+   This should bring you to the "Wireless -> Radio1" menu.
+   Note: Refer [Appendix A](#networking-configuration) for default credentials.
+1. Update the "Radio1 Virtual Interface 1" to set the new SSID or password to match
+   that of the access point.
+1. TODO: how to save/apply the changes?
+1. Disconnect the Ethernet cable.
+
+##### Enabling LTE (Cellular) Networking on Robot {#lte-setup}
+
+Where WiFi access is not available or when the robot will be travelling out of
+WiFi range, it is necessary to enable LTE (cellular) networking on the robot.
+Follow the steps below to enable LTE.
+
+TODO: failover details; possibly port additional settings from https://wiki.clearpathrobotics.com/display/~stphillips/Microhard+Cellular+Setup.
+
+1. See [Installation of SIM Card](#installation-of-sim-card) for details on the physical installation of a SIM card.
+1. Configure a wired Ethernet port on your laptop to 192.168.131.100/24.
+   See [Wired Network Connection](#wired-network-connection) for details.
+1. Connect an ethernet cable from the configured port on your laptop to the
+   debug/expansion port on the top of the robot.
+1. Open the following in your Chrome browser: http://192.168.131.51/wwan/settings<br/>
+   This should bring you to the "WWAN -> Settings" menu.
+   Note: Refer [Appendix A](#networking-configuration) for default credentials.
+1. Apply the following settings:
+    - Carrier status: `Enable`
+    - IP-Passthrough: `Disable`
+    - MTU Size: (blank)
+    - SIM Selection: `SIM Card-1 Only`
+    - Data Roaming: `Disable`
+    - Carrier Operator: `Auto`
+    - Technologies Mode: `AUTO`
+    - APN: (carrier-specific)
+    - SIM Type: `Auto Detect`
+    - Advanced+: (not checked)
+    - Network+: (not checked)
+    - IoT Sockets available: `None`
+    - RSSI Threshold: `90`
+1. After a couple minutes, check the WWAN status in your Chrome browser: http://192.168.131.51/wwan/status<br/>
+   Ensure that "Activity Status" is `Connected` and that a "WWAN IP Address" has been assigned.
+1. Disconnect the Ethernet cable.
+
+
+#### Remote Access Setup {#remote-access}
+
+:::note
+
+This step is optional. It is only for customers attempting to access Husky Observer over the internet.
+
+:::
+
+When attempting to access Husky Observer over the internet, it can sometimes be difficult to determine the
+IP address of the robot and to expose the necessary ports for access. Various services are available to simplify
+this remote access task. Once such service, [ngrok](https://ngrok.com/), is described in detail below.
+
+##### Remote Access via Ngrok
+
+[ngrok](https://ngrok.com/) an application that enables developers to expose a local development server to
+the internet with minimal effort. It can be leveraged to make the OutdoorNav user interface (hosted on the
+Husky Observer robot) appear to be hosted on a subdomain of ngrok.com, meaning that no public IP or domain
+name on Husky Observer is needed. While the ngrok tools are pre-installed on Husky Observer, a small amount
+of customer configuration is required to use them.
+
+1. [Sign up for ngrok](https://dashboard.ngrok.com/signup) if you don't yet have an account. The "Pro" and "Enterprise" tiers are recommended.
+1. Configure a wired Ethernet port on your laptop to 192.168.131.100/24.
+   See [Wired Network Connection](#wired-network-connection) for details.
+1. Connect an ethernet cable from the configured port on your laptop to the
+   debug/expansion port on the top of the robot.
+1. SSH to the robot: `ssh administrator@192.168.131.1`. (See [Appendix A](#network-setup) for credentials.)
+1. Ensure that the robot has internet access (eg. `ping 8.8.8.8`).
+1. Register your ngrok auth token (shown [here](https://dashboard.ngrok.com/get-started/setup)) with the ngrok agent:<br/>
+   e.g., `ngrok config add-authtoken (your_auth_token)`
+1. Optional: Run a simple test to verify ngrok is working:
+    - Terminal 1: `python3 -m http.server`
+    - Terminal 2: `ngrok http 8000`
+    - The ngrok terminal will display a remote address that you can enter, which should display the python3 HTTP server.
+1. Select a subdomain name that will be used to access the OutdoorNav UI at https://your_subdomain.ngrok.io.
+1. Run `ngrok config edit` to set up a tunnel for your subdomain to port 80 on Husky Observer, where the
+   OutdoorNav UI is running. These updates will be saved to: `~/.config/ngrok/ngrok.yaml`. Note that the example below
+   includes a basic username/password authentication. Different authorization mechanisms are available. Refer to
+   ngrok documentation for details.
+    ``` yaml
+    version: "2"
+    authtoken: your_auth_token
+    region: us
+    tunnels:
+      first:
+        addr: 80
+        proto: http
+        subdomain: your_subdomain
+        basic_auth: ['your_username:your_password']
+    ```
+1. Check if ngrok is up and running by checking the [ngrok agent page](https://dashboard.ngrok.com/tunnels/agents).
+1. Try to access the OutdoorNav UI at https://your_subdomain.ngrok.io.
+
+:::note
+
+While the example above shows how to forward port 80, it is possible to use ngrok
+to forward other ports as well, such as port 22 for SSH access. Simply add
+additional tunnels to the example above.
+
+:::
 
 ### OutdoorNav Software Setup
 
 #### Tablet Startup
 
-The Husky Observer ships with a Getac ruggedized tablet as shown in \autoref{fig:getac}.
+The Husky Observer ships with a Getac ruggedized tablet as shown in below.
 
 <center>
   <figure>
@@ -916,17 +1071,26 @@ connectivity to both the robot and the internet.
 
 #### Survey Base Station {#survey-base-station}
 
-If a base station is present, it must be surveyed before being able to
-autonomously operate the robot. Follow the instructions in the
+If a Base Station is present, it must be surveyed to be able to
+operate the robot autonomously. Follow the instructions in the
 [OutdoorNav User Manual](/docs_outdoornav_user_manual/getting_started/system_setup#survey_base_station)
-for details on how to survey the base station.
+for details on how to survey the Base Station.
 
 #### RTK Correction Setup
 
-TODO:
+RTK corrections are used to minimize errors related to GPS-based localization and
+are strongly recommended when attempting to operate Husky Observer autonomously.
+If a Base Station is present, RTK corrections will be acquired from the Base Station,
+once it has been surveyed (see above).
+If a Base Station is not present, it is necessary to acquire RTK corrections through
+the internet. While various services are available for providing RTK corrections,
+Husky Observer has been validated with the [SwiftNav Skylark](https://www.swiftnav.com/skylark)
+service. Follow the steps below to set up the Skylark service.
 
-1. No base station: Skylark subscription
-2. Base Station: no action, other than surveying the base station
+1. [Sign up for a Skylark account](https://account.swiftnav.com/sign-up) if you do not have one. (Note that Clearpath does not provide a Skylark account.)
+1. [Create a Skylark subscription](https://sjphilli.account.swiftnav.com/subscriptions) from the subscriptions tab.
+1. Create a new Device in the "Devices" tab corresponding to the robot that will be receiving the corrections.
+1. TODO: details on updating the Duro units to point somewhere else? Or Skylark service to point to the robot?
 
 #### Set Datum {#set-datum}
 
@@ -979,8 +1143,8 @@ In some cases, it may be desirable to connect additional equipment, such as a la
 Base Station network via WiFi. To do so, use the settings outlined below. Note that a static IP
 address, subnet, and gateway must be specified manually in your networking setup.
 
-- **WiFi SSID:** HITT04 Base Station
-- **WiFi password:** clearpath
+- **Default WiFi SSID:** CPR Base Station
+- **Default WiFi password:** clearpath
 - **Available IP range:** 192.168.131.200 to 192.168.131.254
 - **Subnet:** 255.255.255.0
 - **Gateway:** 192.168.131.50

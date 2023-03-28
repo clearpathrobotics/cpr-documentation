@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ---
 title: PACS
 sidebar_label: PACS
@@ -157,3 +158,163 @@ Refer to the integration pages for our robots for more details:
     To get in touch with a salesperson regarding Clearpath Robotics products, please email <a href="mailto:sales@clearpathrobotics.com">sales@clearpathrobotics.com</a>.
   </p>
 </Admonition>
+=======
+---
+title: PACS
+sidebar_label: PACS
+sidebar_position: 5
+---
+
+import Admonition from "@theme/Admonition";
+
+<figure>
+  <center>
+    <img
+      src="/img/robot_images/dingo_images/dingo_omni_pacs_1.jpg"
+      width="800"
+    />
+    <figcaption>
+      A Dingo-O with many M5×0.8 threaded holes on its full-riser. <br /> These holes are aligned with M5×0.8 mounting holes on the lower plate.
+    </figcaption>
+  </center>
+</figure>
+
+## Overview
+
+PACS is a Clearpath Robotics standard for adding components to a robot.
+Our robots have mounting plates with a 80 mm X 80 mm grid of M5×0.8 threaded holes.
+This allows us to add sensors and attachments using adapter plates.
+The _Parts Lists_ in our [Sensors pages](/docs/sensors) include these 80 mm X 80 mm brackets.
+Some example brackets are also detailed in the [Common PACS Items section](#pacs_common_pacs_items_for_all_robots) below.
+
+<figure>
+  <center>
+    <img
+      src="/img/robot_images/husky_images/robot_husky_31.png"
+      width="600"
+    />
+    <figcaption>A Husky configured with many sensors and accessories using PACS brackets.</figcaption>
+  </center>
+</figure>
+
+<figure>
+  <center>
+    <img
+      src="/img/robot_images/husky_images/robot_husky_30.png"
+      width="600"
+    />
+    <figcaption>
+      A Husky top plate, with PACS hardpoint <em>A01</em> in the front-left of the robot, and <em>G08</em> in the back-right
+    </figcaption>
+  </center>
+</figure>
+
+The number of rows and columns is dependent on the robot platform.
+Refer to the integration pages for our robots for more details:
+
+- [Dingo](/docs/robots/indoor_robots/dingo/integration_dingo)
+- [Husky](/docs/robots/outdoor_robots/husky/integration_husky)
+- [Jackal](/docs/robots/outdoor_robots/jackal/integration_jackal)
+- [Warthog](/docs/robots/outdoor_robots/warthog/integration_warthog)
+
+## Common PACS Items, For All Robots {#pacs_common_pacs_items_for_all_robots}
+
+| Description                                                    |                        CPR Item                         |
+| :------------------------------------------------------------- | :-----------------------------------------------------: |
+| Plate—80 X 80, Attachment Interface (Blank)                    |   [027627](/assets/pdf/clearpath_robotics_027627.pdf)   |
+| ~~Plate—80 X 80, Attachment Interface~~                        | ~~[026914](/assets/pdf/clearpath_robotics_026914.pdf)~~ |
+| Plate—80 X 80, Attachment Interface                            |   [027303](/assets/pdf/clearpath_robotics_027303.pdf)   |
+| Plate—80 X 80, Attachment Interface                            |   [028859](/assets/pdf/clearpath_robotics_028859.pdf)   |
+| Plate—80 X 80, Attachment Interface                            |   [028877](/assets/pdf/clearpath_robotics_028877.pdf)   |
+| Plate—80 X 80, Attachment Interface, Vertical                  |   [026964](/assets/pdf/clearpath_robotics_026964.pdf)   |
+| Plate—80 X 80, Attachment Interface, Large                     |   [027110](/assets/pdf/clearpath_robotics_027110.pdf)   |
+| Plate—80 X 80, Attachment Interface, Manipulator (UR3 and UR5) |   [027269](/assets/pdf/clearpath_robotics_027269.pdf)   |
+| Plate—80 X 80, Attachment Interface                            |   [028866](/assets/pdf/clearpath_robotics_028866.pdf)   |
+| Screw, Round Head, M5×0.8                                      |   [Many](/docs/components/fasteners/screw_round_head)   |
+
+## Sensor and Attachment Kits
+
+| Category         | Description                                                                            |                                          CPR Item                                          |           Sales Kit            | Installation Kit, With Fasteners | Environment Variables in Clearpath OS? |
+| :--------------- | :------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------: | :----------------------------: | :------------------------------: | :------------------------------------: |
+| **Accessories**  | [DIN Rail](/docs/accessories/din_rail)                                                 |                                             -                                              |             027882             |              027881              |                   No                   |
+| **Camera**       | [Axis F1035-E](/docs/sensors/cameras/axis_f1035_e)                                     |                                           020068                                           |             027105             |              027212              |                   No                   |
+|                  | [Axis F34](/docs/sensors/cameras/axis_f1035_e)                                         |                                           020442                                           |             027634             |              027633              |                   No                   |
+|                  | [Axis M5525-E](/docs/sensors/cameras/axis_m5525_e)                                     |                                           006758                                           |             027106             |              027225              |                   No                   |
+|                  | [FLIR Blackfly S](/docs/sensors/cameras/flir_blackfly_s)                               |                                            many                                            |             027118             |              027218              |                  Yes                   |
+|                  | [FLIR Ladybug5+](/docs/sensors/cameras/flir_ladybug5p)                                 |                                           017245                                           |             028894             |              028893              |                   No                   |
+|                  | [Intel RealSense D435](/docs/sensors/cameras/realsense_d435)                           |                                           024150                                           |             026869             |              027208              |                  Yes                   |
+|                  | [Occam Omni 60 Colour](/docs/sensors/cameras/occam_omni_60)                            |                                           019645                                           |             027102             |              027211              |                   No                   |
+|                  | [Stereolabs ZED 2](/docs/sensors/cameras/stereolabs_zed_2)                             |                                           023611                                           |             028960             |              028959              |                   No                   |
+|                  | [Stereolabs ZED 2i](/docs/sensors/cameras/stereolabs_zed_2)                            |                                           025844                                           |             026872             |              027210              |                   No                   |
+| **Computer**     | Mini-ITX Indoor                                                                        |                                             -                                              |             027668             |              027667              |                   -                    |
+| **GPS**          | [Garmin GPS 18x](/docs/sensors/gps/garmin_gps_18x)                                     |                                           001893                                           |             028876             |              028875              |                   No                   |
+|                  | [Swift Navigation Duro](/docs/sensors/gps/swift_navigation_duro)                       |                                           015822                                           |             027107             |              027213              |                   No                   |
+|                  | [Swift Navigation Duro Inertial](/docs/sensors/gps/swift_navigation_duro)              |                                           018151                                           |             027108             |              027214              |                   No                   |
+| **IMU**          | [Microstrain 3DM-GX5-10](/docs/sensors/imu/microstrain_3dm_gx5)                        |                                           017839                                           |             028963             |              028962              |                  Yes                   |
+|                  | [Microstrain 3DM-GX5-15](/docs/sensors/imu/microstrain_3dm_gx5)                        |                                           017772                                           |             027114             |              027215              |                  Yes                   |
+|                  | [Microstrain 3DM-GX5-25](/docs/sensors/imu/microstrain_3dm_gx5)                        |                                           014603                                           |             027117             |              027217              |                  Yes                   |
+|                  | [Microstrain 3DM-GX5-35](/docs/sensors/imu/microstrain_3dm_gx5)                        |                                           028528                                           |             028964             |              028957              |                  Yes                   |
+|                  | [Microstrain 3DM-GX5-45](/docs/sensors/imu/microstrain_3dm_gx5)                        |                                           017391                                           |             028966             |              028965              |                  Yes                   |
+|                  | [Redshift Labs UM7](/docs/sensors/imu/redshift_labs_um7)                               |                                           011914                                           |             028881             |              028880              |                   No                   |
+| **Lidar 2D**     | [Hokuyo UST10-LX](/docs/sensors/lidar_2d/hokuyo_ust10_lx)                              |                                           011759                                           |             027207             |              026611              |                  Yes                   |
+|                  | [Hokuyo UST10-LX Vertical](/docs/sensors/lidar_2d/hokuyo_ust10_lx)                     |                                           011759                                           |             026966             |              027224              |                  Yes                   |
+|                  | [Hokuyo UST20-LX](/docs/sensors/lidar_2d/hokuyo_ust20_lx)                              |                                           016359                                           |             029013             |              029012              |                  Yes                   |
+|                  | [Hokuyo UST30-LX](/docs/sensors/lidar_2d/hokuyo_ust30_lx)                              |                                           027584                                           |             029015             |              029014              |                  Yes                   |
+|                  | [SICK LMS111](/docs/sensors/lidar_2d/sick_lms111)                                      |                                           006387                                           |             027657             |              027656              |                  Yes                   |
+| **Lidar 3D**     | [Velodyne Puck Lite](/docs/sensors/lidar_3d/velodyne_puck_lite)                        |                                     016312<br />023729                                     |             029027             |              029026              |                  Yes                   |
+|                  | [Velodyne Puck](/docs/sensors/lidar_3d/velodyne_puck)                                  |                                     011703<br />020972                                     |             026859             |              027206              |                  Yes                   |
+|                  | [Velodyne Puck Vertical](/docs/sensors/lidar_3d/velodyne_puck)                         |                                     011703<br />020972                                     |             026965             |              027222              |                  Yes                   |
+|                  | [Velodyne Ultra Puck](/docs/sensors/lidar_3d/velodyne_ultra_puck)                      |                                     016901<br />029035                                     |             029037             |              029036              |                  Yes                   |
+|                  | [Ouster, OS0](/docs/sensors/lidar_3d/ouster)                                           |                                     028738<br />028740                                     | 028660<br />028661<br />028662 |  028850<br />028851<br />028852  |                   No                   |
+|                  | [Ouster, OS1](/docs/sensors/lidar_3d/ouster)                                           |                               028848<br />028742<br />028745                               | 028663<br />028664<br />028665 |  028853<br />028854<br />028855  |                   No                   |
+|                  | [Ouster, OS2](/docs/sensors/lidar_3d/ouster)                                           |                               028849<br />028747<br />028749                               | 028666<br />028667<br />028668 |  028856<br />028857<br />028858  |                   No                   |
+| **Lights**       | [Stack Light, Controls Base](/docs/accessories/stack_light)                            | 020710<br />020711<br />020715<br />020716<br />020717<br />020718<br />020719<br />020720 |             027111             |              027220              |                   No                   |
+| **Manipulator**  | [FLIR PTU E46](/docs/manipulators/flir_ptu_e46)                                        |                                     018807<br />027246                                     |             028873             |              028872              |                   No                   |
+|                  | [Kinova Gen 3 Lite](/docs/manipulators/kinova_gen3_lite)                               |                                           022586                                           |             026913             |              027219              |                   No                   |
+|                  | Universal Robots UR5e Arm                                                              |                                           027264                                           |             027272             |              027271              |                   No                   |
+|                  | Universal Robots UR5e Controls Cabinet                                                 |                                             -                                              |       027291<br />027293       |        027290<br />027292        |                   No                   |
+| **Motion-Stop**  | [Kar-Tech](/docs/accessories/wireless_stop_system)                                     |                                           014663                                           |             027298             |              027297              |                   No                   |
+|                  | [FORT Robotics Joystick](/docs/accessories/wireless_stop_system)                       |                                           025727                                           |             027112             |              027216              |                   No                   |
+| **Network**      | [Network Access Point, Microhard px2-ENC](/docs/accessories/network_access_point)      |                                           015329                                           |             029104             |                -                 |                   -                    |
+|                  | [Network Access Point, Microhard BulletPlusAC](/docs/accessories/network_access_point) |                                           027795                                           |             029105             |                -                 |                   -                    |
+|                  | [Network Switch, 5 Port](/docs/accessories/network_switch)                             |                                           021044                                           |             027639             |              027638              |                   -                    |
+|                  | [Network Switch, 8 Port](/docs/accessories/network_switch)                             |                                           025333                                           |             027641             |              027640              |                   -                    |
+|                  | [Network Switch, 16 Port](/docs/accessories/network_switch)                            |                                           029098                                           |               -                |                -                 |                   -                    |
+|                  | [USB Hub, 7 Port](/docs/accessories/usb_hub)                                           |                                           025440                                           |             027643             |              027642              |                   -                    |
+| **Power Supply** | [Power Supply, SB-15](/docs/accessories/power_supplies)                                |                                             -                                              |             028902             |              028901              |                   -                    |
+|                  | [Power Supply, SB-25](/docs/accessories/power_supplies)                                |                                             -                                              |             028904             |              028903              |                   -                    |
+|                  | [Power Supply, TEP 150](/docs/accessories/power_supplies)                              |                                             -                                              |             028942             |              028941              |                   -                    |
+| **Relay**        | [Relay, USB Controlled, 2 Channel](/docs/accessories/relay_board)                      |                                           019464                                           |             029099             |                -                 |                   -                    |
+|                  | [Relay, USB Controlled, 4 Channel](/docs/accessories/relay_board)                      |                                           019465                                           |             029100             |                -                 |                   -                    |
+|                  | [Relay, USB Controlled, 8 Channel](/docs/accessories/relay_board)                      |                                           019466                                           |             029101             |                -                 |                   -                    |
+
+<br />
+
+<Admonition
+  type="info"
+  icon="🤖"
+  title="specifications"
+>
+  <p>Click on a sensor's hyperlink for specifications, environment variables, and downloads.</p>
+</Admonition>
+
+<Admonition
+  type="caution"
+  icon="✏️"
+  title="don't see a sensor you're looking for?"
+>
+  <p>
+    Ask for it by emailing <a href="mailto:info@clearpathrobotics.com">info@clearpathrobotics.com</a>.
+  </p>
+</Admonition>
+
+<Admonition
+  type="tip"
+  icon="🚀"
+  title="purchase"
+>
+  <p>
+    To get in touch with a salesperson regarding Clearpath Robotics products, please email <a href="mailto:sales@clearpathrobotics.com">sales@clearpathrobotics.com</a>.
+  </p>
+</Admonition>
+>>>>>>> cdb0e3a (Added networking details)
