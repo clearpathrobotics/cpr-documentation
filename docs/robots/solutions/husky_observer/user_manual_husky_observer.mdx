@@ -689,6 +689,7 @@ Note that the SIM card (and corresponding data plan) is provided by the end user
 not by Clearpath.
 
 TODO: Update these installation details.
+
 1. Open the lid on Husky Observer.
 1. Find the Microhard.
 1. Insert the SIM card.
@@ -844,11 +845,11 @@ requirements are:
 While there are many ways to meet the Network Requirements listed above, there are three common network
 modes for deploying Husky Observer, which are outlined below.
 
-| Network Mode | Description | Base Station Setup | Robot Setup | Tablet Setup | OutdoorNav URL via Local WiFi | OutdoorNav URL via Internet/Cellular |
-| ------------ | ----------- | ------------------ | ----------- | ------------ | ----------------------------- | ------------------------------------ |
-| Base Station | Base Station with WiFi for near-range operations; optional LTE also available on robot for long-range operations | Pre-configured at factory | Pre-configured at factory; see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup | Pre-configured at factory | http://192.168.131.1 | See [Remote Access Setup](#remote-access) |
-| Customer Network | Customer WiFi for near-range operations; optional LTE also available on robot for long-range operations | N/A | See [Updating the WiFi SSID or Password on Robot](#robot-wifi-setup); see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup | See [Windows 10 instructions](https://support.microsoft.com/en-us/windows/connect-to-a-wi-fi-network-in-windows-1f881677-b569-0cd5-010d-e3cd3579d263) for connecting to Customer WiFi network; configure as Static IP 192.168.131.75/24 | http://192.168.131.1 | See [Remote Access Setup](#remote-access) |
-| Cellular Only | Uses cellular in robot + separate cellular in Tablet | N/A | See [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for setup | Pre-configured at factory (TODO: confirm) or use USB-tethering to a cell phone | N/A | See [Remote Access Setup](#remote-access) |
+| Network Mode     | Description                                                                                                      | Base Station Setup        | Robot Setup                                                                                                                                                 | Tablet Setup                                                                                                                                                                                                                            | OutdoorNav URL via Local WiFi | OutdoorNav URL via Internet/Cellular      |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------------------------------------- |
+| Base Station     | Base Station with WiFi for near-range operations; optional LTE also available on robot for long-range operations | Pre-configured at factory | Pre-configured at factory; see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup                                            | Pre-configured at factory                                                                                                                                                                                                               | http://192.168.131.1          | See [Remote Access Setup](#remote-access) |
+| Customer Network | Customer WiFi for near-range operations; optional LTE also available on robot for long-range operations          | N/A                       | See [Updating the WiFi SSID or Password on Robot](#robot-wifi-setup); see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup | See [Windows 10 instructions](https://support.microsoft.com/en-us/windows/connect-to-a-wi-fi-network-in-windows-1f881677-b569-0cd5-010d-e3cd3579d263) for connecting to Customer WiFi network; configure as Static IP 192.168.131.75/24 | http://192.168.131.1          | See [Remote Access Setup](#remote-access) |
+| Cellular Only    | Uses cellular in robot + separate cellular in Tablet                                                             | N/A                       | See [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for setup                                                                                     | Pre-configured at factory (TODO: confirm) or use USB-tethering to a cell phone                                                                                                                                                          | N/A                           | See [Remote Access Setup](#remote-access) |
 
 <center>
   <figure>
@@ -949,23 +950,22 @@ TODO: failover details; possibly port additional settings from https://wiki.clea
    This should bring you to the "WWAN -> Settings" menu.
    Note: Refer [Appendix A](#networking-configuration) for default credentials.
 1. Apply the following settings:
-    - Carrier status: `Enable`
-    - IP-Passthrough: `Disable`
-    - MTU Size: (blank)
-    - SIM Selection: `SIM Card-1 Only`
-    - Data Roaming: `Disable`
-    - Carrier Operator: `Auto`
-    - Technologies Mode: `AUTO`
-    - APN: (carrier-specific)
-    - SIM Type: `Auto Detect`
-    - Advanced+: (not checked)
-    - Network+: (not checked)
-    - IoT Sockets available: `None`
-    - RSSI Threshold: `90`
+   - Carrier status: `Enable`
+   - IP-Passthrough: `Disable`
+   - MTU Size: (blank)
+   - SIM Selection: `SIM Card-1 Only`
+   - Data Roaming: `Disable`
+   - Carrier Operator: `Auto`
+   - Technologies Mode: `AUTO`
+   - APN: (carrier-specific)
+   - SIM Type: `Auto Detect`
+   - Advanced+: (not checked)
+   - Network+: (not checked)
+   - IoT Sockets available: `None`
+   - RSSI Threshold: `90`
 1. After a couple minutes, check the WWAN status in your Chrome browser: http://192.168.131.51/wwan/status<br/>
    Ensure that "Activity Status" is `Connected` and that a "WWAN IP Address" has been assigned.
 1. Disconnect the Ethernet cable.
-
 
 #### Remote Access Setup {#remote-access}
 
@@ -997,25 +997,25 @@ of customer configuration is required to use them.
 1. Register your ngrok auth token (shown [here](https://dashboard.ngrok.com/get-started/setup)) with the ngrok agent:<br/>
    e.g., `ngrok config add-authtoken (your_auth_token)`
 1. Optional: Run a simple test to verify ngrok is working:
-    - Terminal 1: `python3 -m http.server`
-    - Terminal 2: `ngrok http 8000`
-    - The ngrok terminal will display a remote address that you can enter, which should display the python3 HTTP server.
+   - Terminal 1: `python3 -m http.server`
+   - Terminal 2: `ngrok http 8000`
+   - The ngrok terminal will display a remote address that you can enter, which should display the python3 HTTP server.
 1. Select a subdomain name that will be used to access the OutdoorNav UI at https://your_subdomain.ngrok.io.
 1. Run `ngrok config edit` to set up a tunnel for your subdomain to port 80 on Husky Observer, where the
    OutdoorNav UI is running. These updates will be saved to: `~/.config/ngrok/ngrok.yaml`. Note that the example below
    includes a basic username/password authentication. Different authorization mechanisms are available. Refer to
    ngrok documentation for details.
-    ``` yaml
-    version: "2"
-    authtoken: your_auth_token
-    region: us
-    tunnels:
-      first:
-        addr: 80
-        proto: http
-        subdomain: your_subdomain
-        basic_auth: ['your_username:your_password']
-    ```
+   ```yaml
+   version: "2"
+   authtoken: your_auth_token
+   region: us
+   tunnels:
+     first:
+       addr: 80
+       proto: http
+       subdomain: your_subdomain
+       basic_auth: ["your_username:your_password"]
+   ```
 1. Check if ngrok is up and running by checking the [ngrok agent page](https://dashboard.ngrok.com/tunnels/agents).
 1. Try to access the OutdoorNav UI at https://your_subdomain.ngrok.io.
 
