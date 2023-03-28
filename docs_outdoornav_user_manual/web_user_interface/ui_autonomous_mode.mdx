@@ -8,8 +8,8 @@ toc_max_heading_level: 4
 
 ![](/img/outdoornav_images/gps_danger.png)
 
-Ensure that you have read [Safety](/docs_outdoornav_user_manual/safety) and are
-aware of possible hazards when using this product as well as the safety
+Ensure that the [Safety](/docs_outdoornav_user_manual/safety) document has been
+read and the user is aware of possible hazards when using this product as well as the safety
 methods that can be used to stop the moving UGV.
 
 The Autonomous Mode of OutdoorNav Software is a set of robotic
@@ -35,8 +35,8 @@ These components are referred to throughout this manual.
     a ROS action at a specific Waypoint. Tasks are called in the order they are 
     added to a Waypoint.
 -   **Ghost Waypoint** A transparent waypoint that is not part of the mission. This
-    Waypoint appears inbetween two other waypoints when in edit mode. The user can 
-    drag and drop this ghost waypoint to add a new waypoint to the mission in between
+    Waypoint appears between two other waypoints when in edit mode. The user can 
+    drag and drop this ghost waypoint to add a new waypoint to the mission between
     the other two waypoints.
 
 ## Map Settings
@@ -61,10 +61,10 @@ To access the Map Settings: Menu → Settings → Map:
 
 ## Mission Creation
 
-To create a new Mission to run on the UGV first ensure that the UI is in "Edit Mode" (
+To create a new Mission first ensure that the UI is in "Edit Mode" (
 select the pencil icon in the bottom bar). Then open the drop down menu in the bottom
-bar and select the "Add Mission" option. This will allow you to create a new mission 
-which you can then add Waypoints to. 
+bar and select the "Add Mission" option. This will allow the user to create a new mission 
+which can then be defined with Waypoints. 
 
 ### Waypoint Mode
 
@@ -73,8 +73,8 @@ To add new Waypoints to a mission while edit mode is enabled select the
 locations where the user clicks on the map. These will appear as red 
 Waypoints with the exception of the first waypoint (green) and the last waypoint (yellow).
 
-As waypoints are placed, a "ghost waypoint" will appear between each real
-waypoint and can be dragged to a new spot to insert a real Waypoint in 
+As Waypoints are placed, a "ghost waypoint" will appear between each pair of real
+Waypoints and can be dragged to a new spot to insert a real Waypoint 
 between them.  Waypoints can also be dragged and dropped on the map to 
 modify their positions.
 
@@ -122,8 +122,8 @@ meaning.
 
 To rename a Waypoint follow these steps:
 
-1.  Enable the "Waypoint Panel" toggle. If you cannot find this button,
-    see [Waypoint Panel](#waypoint-panel) for reference.
+1.  Enable the "Waypoint Panel" toggle. See [Waypoint Panel](#waypoint-panel) 
+    for further details.
 2.  Click the name of the Waypoint which the user wants to rename.
 3.  Erase the current name and type the new name.
 
@@ -177,9 +177,9 @@ To add a Task to the end of a Mission:
     -   **Undock UGV:** <img src="/img/outdoornav_images/undockTask_40px.png" width="30px"/>
         Will undock the UGV from the autocharge dock. Once
         completed, the UGV can be sent on autonomous missions. It is
-        often recommended to place the undock task first in the list of Waypoints;
+        often recommended to place the undock Task first in the list of Waypoints;
         that way, the UGV will automatically continue towards its next
-        waypoint once undocked. See Section
+        Waypoint once undocked. See Section
         [Autonomous Docking](#autonomous-docking) for more
         information on the autonomous docking feature.
 
@@ -206,7 +206,7 @@ To add a Task to the end of a Mission:
 #### Waypoint Heading
 
 When creating a Waypoint, the user has the option of setting a final heading
-for the Waypoint. For example, when creating a mission to an inspection point,
+for the Waypoint. For example, when creating a Waypoint at an inspection point,
 the user may want the UGV to navigate and stop facing a certain
 direction. In [Waypoint Panel](#waypoint-panel), the list of
 Waypoints can be seen and the advanced settings of each Waypoint can be accessed
@@ -225,9 +225,9 @@ this value. See the figure below showing the advanced settings.
 </center>
 
 The heading that has been entered will only be applied to the Waypoint
-(ie. the robot will only align itself with the correct heading at The
-waypoint). If you need the robot to be at specific headings at
-other waypoints you'll need to enter these in for each specific Waypoint.
+(ie. the robot will only align itself with the correct heading at the
+Waypoint). If the robot is required to be at specific headings at
+other Waypoints the user will need to enter these in for each specific Waypoint.
 
 #### Waypoint Tolerance
 
@@ -235,9 +235,9 @@ When creating a Mission, the user has the option of setting a specific
 tolerance for each Waypoint. By default, the Waypoint position and orientation
 tolerances are 0.3 meters and 180°, respectively. If a specific Waypoint
 requires that the tolerances be either increased or decreased, these
-values can be modified in the advanced settings. For example, if you
-require that the position and/or orientation at a Waypoint be very accurate,
-let's say 0.1 meters position and 5° orientation, or looser at 1.0 meter
+values can be modified in the advanced settings. For example, if it's
+required that the position and/or orientation at a Waypoint be very accurate,
+such as 0.1 meters position and 5° orientation, or looser at 1.0 meter
 position, this can be done within these settings.
 
 In [Waypoint Panel](#waypoint-panel), the list of waypoints can be
@@ -251,8 +251,8 @@ orientation values, in meters and degrees, respectively.
 ### Start Mission
 
 At the bottom of the UI, the user has the ability to start the currently
-selected mission by clicking the "Play" button <img src="/img/outdoornav_images/ui_start_button.png" width="16px"/>. When the
-mission has been started this button will turn green. 
+selected Mission by clicking the "Play" button <img src="/img/outdoornav_images/ui_start_button.png" width="16px"/>. When the
+Mission has been started this button will turn green. 
 
 ### Pause Mission
 
@@ -301,11 +301,11 @@ To undock the UGV autonomously, the user should follow these steps:
 
 ### Recover from Failed Docking or Undocking
 
-If for any reason, the docking or undocking tasks fail, you can:
+If for any reason, the docking or undocking tasks fail, the user can:
 
 -   Manually drive the UGV towards the the dock target, aligning the
     charging unit with the receiver on the UGV.
 -   Manually drive the UGV in reverse away from the dock target. It is
-    suggested that you reverse roughly 2-3 meters away from the target,
+    suggested that the user reverse roughly 2-3 meters away from the target,
     then wait 1-2 minutes before starting any autonomous navigation
     missions.
