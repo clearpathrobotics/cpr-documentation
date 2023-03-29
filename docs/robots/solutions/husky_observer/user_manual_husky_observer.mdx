@@ -1386,7 +1386,10 @@ to contact Clearpath if you have any questions.
 
 :::
 
-### FLIR PTZ Camera Configuration
+### Axis PTZ Camera Configuration
+
+The Husky Observer is equipped with an [Axis Q62](https://www.axis.com/products/axis-q62-series) series PTZ camera, with
+color and low-light capabilities, defogger, and lens wiper.
 
 #### Key Settings
 
@@ -1399,7 +1402,90 @@ to contact Clearpath if you have any questions.
 
 #### Pan Limits
 
-TODO: Chris to add his notes here
+The Axis Q62 is normally capable of making continuous rotations in either direction. This allows the camera to always
+take the shortest trajectory to reach any given pan angle. However, if you have additional equipment mounted on top of
+the camera, for example a Flir thermal camera or a microphone, this behaviour may cause the wires to get tangled around
+the PTZ camera and potentially cause damage to the robot.
+
+To prevent damage to the robot, Clearpath recommends setting pan limits on the Axis camera.  This will restrict the
+camera's range of motion to less than 180 degrees in either direction, eliminating the risk of the camera making
+continuous rotations.
+
+To set pan limits, connect your laptop to one of the robot's exposed ethernet ports and assign your laptop a static
+IP address in the range `192.168.131.100-200`.  Open your web browser and navigate to
+[http://192.168.131.10](http://192.168.131.10). Log into the Axis configuration website using the username `root` and
+the password `clearpath`.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/axis_q62_login.png"
+      width="600"
+    />
+    <figcaption>Axis Q62 login screen (TODO: new image)</figcaption>
+  </figure>
+</center>
+
+In the browser, click on Settings and select PTZ
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/axis_q62_settings_ptz.png"
+      width="600"
+    />
+    <figcaption>Axis Q62 PTZ settings (TODO: new image)</figcaption>
+  </figure>
+</center>
+
+Disable any exisitng pan limits by opening the limits menu and making sure all the buttons are off.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/axis_q62_limits_off.png"
+      width="600"
+    />
+    <figcaption>Disabling the Axis Q62 pan limits (TODO: new image)</figcaption>
+  </figure>
+</center>
+
+Move the camera to a pan of -179 degrees. Then click on the left pan limit button to set the left limit to -179 degrees.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/axis_q62_set_left_limit.png"
+      width="600"
+    />
+    <figcaption>Setting the left pan limit to -179 degrees (TODO: new image)</figcaption>
+  </figure>
+</center>
+
+Then move the camera to a pan of 180 degrees.  Click on the right pan limit button to set the right pan limit to 180
+degrees.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/axis_q62_set_right_limit.png"
+      width="600"
+    />
+    <figcaption>Setting the right pan limit to 180 degrees (TODO: new image)</figcaption>
+  </figure>
+</center>
+
+Click the Done button to apply the new limits.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/axis_q62_done.png"
+      width="600"
+    />
+    <figcaption>Click Done to apply the pan limits (TODO: new image)</figcaption>
+  </figure>
+</center>
 
 ### RealSense Front and Rear Rear Driving Camera Configuration
 
