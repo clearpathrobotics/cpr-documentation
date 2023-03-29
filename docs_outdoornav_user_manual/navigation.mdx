@@ -17,8 +17,6 @@ following table describes the available features, their default state
 and any additional parameters that we expose that may also be included
 to tune the feature.
 
-_Navigation Features_
-
 | Feature     | Description                                            |
 |-----------------------------|----------------------------------------|
 | **Data Collection**         | The data collection feature enabled the user to record rosbag data of the sensors, localization, and  navigation components of OutdoorNav. If `true`,  rosbags will be saved and timestamed in the `/home/administrator/onav_log/rosbag_data/` directory. If `false`, no rosbag will be recorded.<br/><br/>Environment Variable: `ENABLE_BAGGING` (Default: `false`). |
@@ -45,8 +43,6 @@ The following table lists the sensors that are useable with the
 OutdoorNav software. These sensor drivers can be turned on/off using
 these environment variables, however, the sensor will always remain
 powered on.
-
-_Sensor Tuning_
 
 | Environment Variable           | Description                               | Data Type
 |--------------------------------|-------------------------------------------|--------------
@@ -77,16 +73,12 @@ following links before attempting to modify these parameters.
 
 #### Voxel Grid Filter
 
-_Voxel grid filter parameters_
-
 | Environment Variable | Description                              | Data Type (Default) |
 |----------------------|------------------------------------------|---------------------|
 | **<type\>_ENABLE_FILTER_VOXEL** | Enable/disable the PCL voxel filter for the sensor of type <type\>.<br/><br/>type = {VLP, D435, REAR_VLP, REAR_D435} | bool<br/>(false) |
 | **PCL_FIL_FILTER_VOXEL_LEAF_SIZE** | The size of a leaf (on x,y,z), in meters, used for downsampling. Range: 0.0 to 1.0. | double (0.01) |
 
 #### Cropbox Filter
-
-_Cropbox filter parameters_
 
 | Environment Variable | Description                              | Data Type (Default) |
 |----------------------|------------------------------------------|---------------------|
@@ -100,8 +92,6 @@ _Cropbox filter parameters_
 
 #### Radius Outlier Filter
 
-_Radius outlier filter parameters_
-
 | Environment Variable | Description                              | Data Type (Default) |
 |----------------------|------------------------------------------|---------------------|
 | **<type\>_ENABLE_FILTER_RADIUS_OUTLIER** | Enable/disable the PCL radius outlier filter for the sensor of type <type\>.<br/><br/>type = {VLP, D435, REAR_VLP, REAR_D435} | bool<br/>(false) |
@@ -110,8 +100,6 @@ _Radius outlier filter parameters_
 
 #### Statistical Outlier Filter
 
-_Statistical outlier filter parameters_
-
 | Environment Variable | Description                              | Data Type (Default) |
 |----------------------|------------------------------------------|---------------------|
 | **<type\>_ENABLE_FILTER_STATISTICAL_OUTLIER** | Enable/disable the PCL statistical outlier filter for the sensor of type <type\>.<br/><br/>type = {VLP, D435, REAR_VLP, REAR_D435} | bool<br/>(false) |
@@ -119,8 +107,6 @@ _Statistical outlier filter parameters_
 | **PCL_FILTER_SOR_STD_DEV** | The standard deviation multiplier threshold. All points outside the mean +- sigma * std_mul will be considered outliers. Range: 0.0 to 5.0. | double<br/>(0.3) |
 
 #### PointCloud to LaserScan Filter
-
-_PointCloud to LaserScan filter parameters_
 
 | Environment Variable | Description                              | Data Type (Default) |
 |----------------------|------------------------------------------|---------------------|
@@ -137,8 +123,6 @@ _PointCloud to LaserScan filter parameters_
 
 #### DepthImage to LaserScan Filter
 
-_DepthImage to LaserScan filter parameters_
-
 | Environment Variable | Description                              | Data Type (Default) |
 |----------------------|------------------------------------------|---------------------|
 | **<type\>_ENABLE_DEPTH_TO_LASERSCAN** | Enable/disable the depth image to laserscan outlier filter for the sensor of type <type\>.<br/><br/>type = {D435, REAR_D435} | bool<br/>(false) |
@@ -152,8 +136,6 @@ _DepthImage to LaserScan filter parameters_
 The following table lists the environment variables that can be used to
 enable/disable which sensor is used as part of the collision avoidance
 feature of OutdoorNav.
-
-_Navigation Tuning_
 
 | Environment Variable | Description                              | Data Type |
 |----------------------|------------------------------------------|-----------|
@@ -174,8 +156,6 @@ recommended that you first consult the following link(s) before
 attempting to modify these parameters.
 
 -   [Costmap2D/ObstacleLayer](http://wiki.ros.org/costmap_2d/hydro/obstacles)
-
-_Advanced Navigation Tuning_
 
 | Environment Variable | Description                              | Data Type |
 |----------------------|------------------------------------------|-----------|
