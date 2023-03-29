@@ -15,7 +15,6 @@ import ComponentPs4ControllerPairing from "/components/ps4_controller_pairing.md
 import ComponentChangingDefaultPassword from "/components/changing_default_password.mdx";
 import ComponentWiredRobotConnection from "/components/wired_robot_connection.mdx";
 import ComponentPerformingABackup from "/components/performing_a_backup.mdx";
-import ComponentAddingASourceWorkspace from "/components/adding_a_source_workspace.mdx";
 import ComponentInstallingRemoteComputerSoftware from "/components/installing_remote_computer_software.mdx";
 
 <ComponentIntroductionHuskyObserver />
@@ -39,6 +38,7 @@ Your Husky Observer shipment contains the following:
 - Wired charging adapter
 - PS4 controller (for manual operation)
 - Tablet
+- Base Station (optional) + power supply
 - TODO: others?
 
 If you purchased standard payload modules or custom integration services with Husky Observer, then additional equipment will
@@ -60,7 +60,7 @@ The Husky Observer exterior is shown below and includes:
 - Thermal camera (optional)
 - Shotgun microphone (optional)
 - Antennas (cellular, wifi, GPS, safety)
-- Stack light
+- Stack lights
 - 3-D LiDAR
 - Expansion connectors (power, ethernet, USB)
 - Front and rear expansion mount points
@@ -94,18 +94,18 @@ The Husky Observer exterior is shown below and includes:
   </figure>
 </center>
 
-#### Stack Light {#stack-light}
+#### Stack Lights {#stack-lights}
 
-The stack light is composed of two lights, the details of which are described below.
+The stack lights are composed of two lights, the details of which are described below.
 
 - The bottom is an orange strobe light that is enabled when the robot is in motion or may soon be in motion;
-  those near the robot should exercise caution when this light is strobing.
+  personnel near the robot should exercise caution when this light is strobing.
 - The top is a multi-color light that indicates the system status.
 
 | Strobe Light (bottom) | Status Light (top) | Robot State                                                       |
 | --------------------- | ------------------ | ----------------------------------------------------------------- |
 | Off                   | Red                | Motion stop engaged; robot prevented from moving.                 |
-| Off                   | Magenta            | A system error/warning exists; see the OutdoorNav UI for details. |
+| Off                   | Magenta            | A system error/warning exists; see the [OutdoorNav UI](#monitoring-system-status) for details. |
 | Off                   | Amber              | Battery charging in progress (battery less than 50% charged).     |
 | Off                   | Cyan               | Battery charging in progress (battery 50% to 95% charged).        |
 | Off                   | White              | Battery charging in progress (battery over 95% charged).          |
@@ -118,12 +118,12 @@ See also additional status as reported in the [Status Panel](#status-panel).
 
 #### Status Panel {#status-panel}
 
-The status panel, which complements the [Stack Light](#stack-light), is a display of LED indicators located on the rear of
-the chassis which provide information about the current status of Husky Observer. The indicators are described in the table below.
+The status panel, which complements the [Stack Lights](#stack-lights), is a display of LED indicators located on the rear of
+the chassis that provides information about the current status of Husky Observer. The indicators are described in the table below.
 
 |                                   Icon                                   | Description                                                                                                                                                                                                                                                                                                  |
 | :----------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <img src="/img/robot_images/husky_images/robot_husky_3.png" width="50"/> | **Battery Status** This is not used on Husky Observer. Refer to the battery state indicator in the OutdoorNav UI instead.                                                                                                                                                                                    |
+| <img src="/img/robot_images/husky_images/robot_husky_3.png" width="50"/> | **Battery Status** This is not used on Husky Observer. Refer to the battery state indicator in the OutdoorNav UI or on the stack light instead.                                                                                                                                                                                    |
 | <img src="/img/robot_images/husky_images/robot_husky_4.png" width="50"/> | **Communication Status** When green, Husky Observer is receiving a stream of correctly-formatted motion commands, and is ready to drive. When yellow, Husky Observer is receiving commands, but will not drive due to motion stop or another error. When red, serial communications are currently timed-out. |
 | <img src="/img/robot_images/husky_images/robot_husky_5.png" width="50"/> | **General Error Status** Illuminates red when Husky Observer will not drive due to an error state. Such states include motion stop, insufficient battery power, or an unspecified software error.                                                                                                            |
 | <img src="/img/robot_images/husky_images/robot_husky_6.png" width="50"/> | **Motion Stop Status** Illuminates red when Husky Observer will not drive due to the motion stop being activated, either onboard or wireless (if available).                                                                                                                                                 |
@@ -266,8 +266,8 @@ safety orientation training.
 
 - Be aware that a Clearpath Robotics robot can be anywhere in the operating area of the facility at any time, and may pose a tripping hazard even when not in motion.
 - Personnel need to be aware of the Clearpath Robotics robot docking and charging areas, where detection fields are reduced.
-- Personnel should be aware that Clearpath Robotics robot LiDAR safety scanners use a class 1 laser and high intensity LED.
-- Personnel should keep all loose clothing and body parts away from Clearpath Robotics robots, accessories, attachments, and payloads, while they are in autonomous operation. Using an Emergency Stop button is the only acceptable manner of interacting with a Clearpath Robotics robot or attachment while it is being operated autonomously.
+- Personnel should be aware that Clearpath Robotics robot LiDAR safety scanners use a class 1 laser and high intensity LEDs.
+- Personnel should keep all loose clothing and body parts away from Clearpath Robotics robots, accessories, attachments, and payloads, while they are in autonomous operation. Using a Motion Stop button is the only acceptable manner of interacting with a Clearpath Robotics robot or attachment while it is being operated autonomously.
 
 In addition to the preceding basic items for all workers and visitors, the following should be considered for facility personnel, including drivers of other robots:
 
@@ -361,7 +361,7 @@ robot's path. Never operate the robot in environments other than those for which
 
 #### Electrical Subsystem
 
-Husky Observer is powered by two 12 V Lithium-Iron-Phosphate( LiFePO<sub>4</sub>) batteries in series to make a 24 V pack.
+Husky Observer is powered by two 12 V Lithium-Iron-Phosphate (LiFePO<sub>4</sub>) batteries in series to make a 24 V pack.
 These batteries are similar to the type found in electric wheelchairs, golf carts, fork trucks, and other devices.
 Husky Observer's battery pack is capable of delivering 5565 W, three times the power of a standard wall outlet.
 This gives Husky Observer's motors their great performance, however, it is also enough power to cause severe bodily harm.
@@ -453,7 +453,7 @@ allows a person who is physically separated from the robot to halt its motion an
 
 To assert the stop function:
 
-- depress the red push-button actuator on the side of the provided controller (yellow).
+- depress the red push-button actuator on the side of the provided controller.
 
 To reset the stop function:
 
@@ -478,13 +478,13 @@ arising from the inability to remotely stop the motion of the vehicle due to the
 
 #### Motion Buzzer
 
-When Husky Observer is driving in any direction, both in manual and autonomous modes, a buzzer will sound
-to provide an audible warning to anyone in the nearby area. No configuration or operation action
+When Husky Observer is in motion in any direction, both in manual and autonomous modes, a buzzer will sound
+to provide an audible warning to personnel in the nearby area. No configuration or operator action
 is required to enable this feature.
 
 #### OutdoorNav Autonomous Obstacle Avoidance Function
 
-During and **only** during OutdoorNav missions (not during IndoorNav missions and not during OutdoorNav Manual Mode),
+During and **only** during OutdoorNav missions (not during OutdoorNav Manual Mode),
 the 3-dimensional LiDAR is used to perform obstacle avoidance to reduce the risk of the robot colliding with stationary or dynamic obstacles
 in its environment. The navigation uses the robot's 3D LiDAR scanner to detect obstacles within a certain range. A gradual speed reduction
 is asserted as the distance to the obstacle decreases and the robot will attempt to re-plan around any obstacle it detects. This may happen
@@ -522,6 +522,13 @@ This section describes how to unpack the system and complete the hardware setup.
 
 #### Base Station Setup
 
+:::note
+
+The Base Station is an optional component. Skip this step if your system does
+not include a Base Station.
+
+:::
+
 <center>
   <img
     src="/img/robot_images/husky_observer_images/base_station_caution.png"
@@ -531,48 +538,49 @@ This section describes how to unpack the system and complete the hardware setup.
 
 ##### Base Station Location
 
-The location of the base station, particularly its antenna, will play a critical
+The location of the Base Station, particularly its antenna, will play a critical
 role in the performance of the outdoor navigation software, especially at long
 range.
 
-Below are a set of criteria in order of priority, for the location of the base
-station, such that the performance of the networking/software is not degraded:
+Below are a set of criteria in order of priority, for the location of the Base
+Station, such that the performance of the networking/software is not degraded:
 
-- The base station should be secured as high as possible so that the GPS
+- The Base Station should be secured as high as possible so that the GPS
   antenna can accurately obtain a GPS signal and so that the network antenna can
   propagate its radio waves without interference from nearby obstructions.
   For example, a good location could be on the roof of a building or trailer.
 
 - A location on the ground (if no elevated location is available/accessible)
-  where the base station can be secured using the tripod that has been shipped with
+  where the Base Station can be secured using the tripod that has been shipped with
   the robot. If this location is selected, ensure that the tripod is secured a
-  minimum of 10 \si{\meter} from any buildings or obstructions so that the GPS
+  minimum of 10 meters from any buildings or obstructions so that the GPS
   antenna has a clear view of the sky. Recommended minimum height is 1.75
-  \si{\meter} from bottom of antenna to ground.
+  meters from the bottom of the antenna to the ground.
 
-- A location where an Ethernet cable can be fed to to connect the base
-  station to the WAN (if WAN available).
+- A location where an Ethernet cable can be fed to to connect the Base
+  Station to the WAN (if WAN available).
 
 ##### Base Station Orientation
 
 The robot and Base Station are both shipped with an omnidirectional antennas.
 As such, there is no need to orient the Base Station to face the robot's
-are of operation.
+area of operation.
 
 ##### Base Station Power
 
-Power for the Base Station may be provided from one of two sources, either the
-internal battery or the external power supply that is provided with the system.
-To power source is selected by opening the Base Station and connecting the
-corresponding set of Anderson connectors. Once a power source has been
-connected, press the recessed silver power button on the
+The Base Station is powered by an internal battery. The Base Station also
+includes a power supply that, when connected, will charge the battery.
+When connected, the power supply can provide sufficient power both to
+charge the battery and to operate the Base Station.
+
+To power on the Base Station, press the recessed silver power button on the
 side of the enclosure. When powered, the button will illuminate blue.
 
 ##### Internet over Base Station Network
 
 If a wired internet connection is available at the user facility, an
 Ethernet cable can be run from an access point to the Ethernet port on the bottom
-of the base station case. This will provide internet access for the robot
+of the Base Station case. This will provide internet access for the robot
 and the tablet.
 
 #### Autocharge Dock Setup
@@ -587,16 +595,15 @@ and the tablet.
 The Autonomous Docking software enables the robot to navigate toward the dock target
 and autonomously approach the target to begin charging the robot's batteries.
 The complete dock consisting of the target, the WiBotic charging unit (transmitter)
-and the enclosing material can be seen below in \autoref{fig:dock_target}.
-\newline
+and the enclosing material can be seen in the figure below.
 
 <center>
   <figure>
     <img
-      src="/img/robot_images/husky_observer_images/autocharge_dock.png"
+      src="/img/robot_images/husky_observer_images/autocharge_dock.jpg"
       width="400"
     />
-    <figcaption>Autocharge Dock</figcaption>
+    <figcaption>Autocharge Dock (TODO: new image)</figcaption>
   </figure>
 </center>
 
@@ -604,23 +611,23 @@ The robot requires open, flat, level ground in front of the dock to manoeuvre.
 It must have GPS signal visibility (ie. not too close to any tall buildings or
 trees) and clear line-of-sight to the dock target from all points in this
 pre-dock region. Allow at least 8 meters from the "pointed" end of the dock and
-a width of at least 4 meters, as shown in \autoref{fig:dock_space_requirements}.
+a width of at least 4 meters, as shown in the figure below.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/dock_space_requirements.jpg"
+      width="600"
+    />
+    <figcaption>Dock Space Requirements (TODO: new image)</figcaption>
+  </figure>
+</center>
 
 The charge dock, including WiBotic wireless transmitter, ships pre-assembled.
 Remove it from the crate and position it at the desired location. The concave
 portion of the target points toward the robot when docked.
 
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/husky_observer_images/dock_space_requirements.png"
-      width="600"
-    />
-    <figcaption>Dock Space Requirements</figcaption>
-  </figure>
-</center>
-
-The dock may be secured to the ground if desired. if the attachment points
+The dock may be secured to the ground if desired. If the attachment points
 are near the transmitter box, non-metallic fasteners and anchors should be
 used to avoid magnetic interference with the charge system.
 
@@ -633,12 +640,12 @@ complete the installation of the wireless transmitter:
   power cord (an extension cord may be required). The transmitter requires
   90 - 264 V AC, 50 - 60 Hz.
 - Power ON the wireless transmitter by pressing the switch on the side
-  of the transmitter. The center <span style={{color: '#38761d'}}>GREEN</span>
+  of the transmitter. The center **<span style={{color: '#38761d'}}>GREEN</span>**
   LED will light up when powered ON.
 
 ##### Wireless Receiver
 
-The WiBotic wireless receiver ships pre-installed on the Husky robot
+The WiBotic wireless receiver ships pre-installed on the Husky Observer robot
 and does not require any customer assembly.
 
 #### Robot Setup
@@ -683,8 +690,8 @@ does not shift during this process.
 ##### Installation of SIM Card (Optional) {#installation-of-sim-card}
 
 An LTE SIM card can optionally be installed into the robot to provide network
-access when out of range of WiFi networks. A SIM card if not required if
-Husky Observer is always being operated in the range of WiFi networks.
+access when out of range of WiFi networks. A SIM card is not required if
+Husky Observer is always being operated within range of WiFi networks.
 Note that the SIM card (and corresponding data plan) is provided by the end user,
 not by Clearpath.
 
@@ -703,13 +710,13 @@ TODO: Update these installation details.
       src="/img/robot_images/husky_images/base_platform_power_button.png"
       width="600"
     />
-    <figcaption>Robot power switch</figcaption>
+    <figcaption>Robot main power switch (TODO: new image)</figcaption>
   </figure>
 </center>
 
 When powering up the robot for the first time, follow these steps:
 
-1. Turn the Battery Disconnect Switch to the "ON" position. Note that this
+1. Turn the Main Power Switch to the "ON" position. Note that this
    switch is set to "OFF" prior to shipping to prevent battery drain during
    shipping.
 1. Wait one to two minutes for the system to boot fully before proceeding.
@@ -726,7 +733,7 @@ When powering up the robot for the first time, follow these steps:
 <center>
   <figure>
     <img
-      src="/img/robot_images/husky_images/battery_level_warning.png"
+      src="/img/robot_images/husky_observer_images/battery_level_warning.png"
       width="600"
     />
   </figure>
@@ -737,9 +744,9 @@ Use the OutdoorNav UI to determine the charge state of the robot batteries.
 ##### Motion-stop State
 
 The state of the robot motion-stop function can be determined in two ways:
-via the [Stack Light](#stack-light) and via the [Status Panel](#status-panel).
+via the [Stack Lights](#stack-lights) and via the [Status Panel](#status-panel).
 
-The status stack light illuminates solid red with the motion-stop is engaged
+The status stack light illuminates solid red when the motion-stop is engaged
 and is off or a different color when motion-stop is not engaged.
 
 The second way to determine the motion-stop state of the robot is to inspect
@@ -769,7 +776,7 @@ for further details.
 
 #### Wired Network Connection {#wired-network-connection}
 
-During setup or debugging, it may be desirable to connected to Husky Observer through a wired Ethernet connection.
+During setup or debugging, it may be desirable to connect to Husky Observer through a wired Ethernet connection.
 After connecting an Ethernet cable from your laptop to the debug/expansion port as shown in the
 [Exterior Features](#exterior-features),
 follow the steps below to establish a network connection to the main computer. It is also possible
@@ -799,10 +806,6 @@ and [Appendix A](#networking-configuration) for networking details.
 :::
 
 <ComponentInstallingRemoteComputerSoftware />
-
-#### Adding a Source Workspace
-
-<ComponentAddingASourceWorkspace />
 
 #### Connecting and Using the Controller {#controller}
 
@@ -848,7 +851,7 @@ modes for deploying Husky Observer, which are outlined below.
 | Network Mode     | Description                                                                                                      | Base Station Setup        | Robot Setup                                                                                                                                                 | Tablet Setup                                                                                                                                                                                                                            | OutdoorNav URL via Local WiFi | OutdoorNav URL via Internet/Cellular      |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------------------------------------- |
 | Base Station     | Base Station with WiFi for near-range operations; optional LTE also available on robot for long-range operations | Pre-configured at factory | Pre-configured at factory; see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup                                            | Pre-configured at factory                                                                                                                                                                                                               | http://192.168.131.1          | See [Remote Access Setup](#remote-access) |
-| Customer Network | Customer WiFi for near-range operations; optional LTE also available on robot for long-range operations          | N/A                       | See [Updating the WiFi SSID or Password on Robot](#robot-wifi-setup); see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup | See [Windows 10 instructions](https://support.microsoft.com/en-us/windows/connect-to-a-wi-fi-network-in-windows-1f881677-b569-0cd5-010d-e3cd3579d263) for connecting to Customer WiFi network; configure as Static IP 192.168.131.75/24 | http://192.168.131.1          | See [Remote Access Setup](#remote-access) |
+| Customer Network | Customer WiFi for near-range operations; optional LTE also available on robot for long-range operations          | N/A                       | See [Updating the WiFi SSID or Password on Robot](#robot-wifi-setup); see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup | See [Windows 10 instructions](https://support.microsoft.com/en-us/windows/connect-to-a-wi-fi-network-in-windows-1f881677-b569-0cd5-010d-e3cd3579d263) for connecting to Customer WiFi network; configure as Static IP `192.168.131.75/24` | http://192.168.131.1          | See [Remote Access Setup](#remote-access) |
 | Cellular Only    | Uses cellular in robot + separate cellular in Tablet                                                             | N/A                       | See [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for setup                                                                                     | Pre-configured at factory (TODO: confirm) or use USB-tethering to a cell phone                                                                                                                                                          | N/A                           | See [Remote Access Setup](#remote-access) |
 
 <center>
@@ -871,43 +874,45 @@ modes for deploying Husky Observer, which are outlined below.
       src="/img/robot_images/husky_observer_images/onav_network_cellular_only_mode.png"
       width="400"
     />
-    <figcaption>Cellular Only Mode</figcaption>
+    <figcaption>Cellular Only Mode<br/>(<a href="https://www.flaticon.com/free-icons/wifi" title="wifi icons">Some icons created by Freepik - Flaticon</a>)</figcaption>
   </figure>
 </center>
 
 #### Network Access Point Advanced Configuration
 
-Both the robot and base station (if present) are equipped with a network access point
+Both the robot and Base Station (if present) are equipped with a network access point
 that supports cellular, WiFi, and wired ethernet connections. These devices are
 pre-configured before shipping, but there are a small number of settings that the
-user may wish to adjust. The updates are optional
+user may wish to adjust.
 
 ##### Configuring WAN/Internet Port on Base Station
 
 To switch between DHCP and Static modes for the WAN/Internet port on the Base Station:
 
-1. Configure a wired Ethernet port on your laptop to 192.168.131.100/24.
+1. Configure a wired Ethernet port on your laptop to `192.168.131.101/24`.
+   See [Wired Network Connection](#wired-network-connection) for details.
 1. Open the front panel of the Base Station and connect an Ethernet cable from
    the configured port on your laptop to one of the available LAN ports on the
    Microhard in the Base Station.
 1. Open the following in your Chrome browser: http://192.168.131.50/network/wan<br/>
-   This should bring you to the "Network -> WAN" menu.
+   This should bring you to the "Network &srarr; WAN" menu.
    Note: Refer [Appendix A](#networking-configuration) for default credentials.
-1. Update the "WAN2 Port Configuration" as desired.
+1. Update the "WAN2 Port Configuration" as desired. TODO: example figures (DHCP vs Static)
 1. TODO: how to save/apply the changes?
 1. Disconnect the Ethernet cable and close the Base Station.
 
 ##### Updating the WiFi SSID or Password on Base Station
 
 The Base Station, if present, serves as a WiFi Access Point.
-Follow the steps below to change the default WiFi SSID or Password of this access point.
+Follow the steps below to change the default WiFi SSID or password of this access point.
 
-1. Configure a wired Ethernet port on your laptop to 192.168.131.100/24.
+1. Configure a wired Ethernet port on your laptop to `192.168.131.101/24`.
+   See [Wired Network Connection](#wired-network-connection) for details.
 1. Open the front panel of the Base Station and connect an Ethernet cable from
    the configured port on your laptop to one of the available LAN ports on the
    Microhard in the Base Station.
 1. Open the following in your Chrome browser: http://192.168.131.50/wireless/radio1<br/>
-   This should bring you to the "Wireless -> Radio1" menu.
+   This should bring you to the "Wireless &srarr; Radio1" menu.
    Note: Refer [Appendix A](#networking-configuration) for default credentials.
 1. Update the "Radio1 Virtual Interface 1" to set the new SSID or password as desired.
 1. TODO: how to save/apply the changes?
@@ -921,12 +926,12 @@ WiFi network. If the SSID or password on the Base Station has changed or if conn
 the robot to a customer WiFi network, follow the steps below to match those of the
 WiFi access point.
 
-1. Configure a wired Ethernet port on your laptop to 192.168.131.100/24.
+1. Configure a wired Ethernet port on your laptop to `192.168.131.101/24`.
    See [Wired Network Connection](#wired-network-connection) for details.
 1. Connect an ethernet cable from the configured port on your laptop to the
    debug/expansion port on the top of the robot.
 1. Open the following in your Chrome browser: http://192.168.131.51/wireless/radio1<br/>
-   This should bring you to the "Wireless -> Radio1" menu.
+   This should bring you to the "Wireless &srarr; Radio1" menu.
    Note: Refer [Appendix A](#networking-configuration) for default credentials.
 1. Update the "Radio1 Virtual Interface 1" to set the new SSID or password to match
    that of the access point.
@@ -941,15 +946,15 @@ Follow the steps below to enable LTE.
 
 TODO: failover details; possibly port additional settings from https://wiki.clearpathrobotics.com/display/~stphillips/Microhard+Cellular+Setup.
 
-1. See [Installation of SIM Card](#installation-of-sim-card) for details on the physical installation of a SIM card.
-1. Configure a wired Ethernet port on your laptop to 192.168.131.100/24.
+1. Complete the physical [Installation of SIM Card](#installation-of-sim-card).
+1. Configure a wired Ethernet port on your laptop to `192.168.131.101/24`.
    See [Wired Network Connection](#wired-network-connection) for details.
 1. Connect an ethernet cable from the configured port on your laptop to the
    debug/expansion port on the top of the robot.
 1. Open the following in your Chrome browser: http://192.168.131.51/wwan/settings<br/>
-   This should bring you to the "WWAN -> Settings" menu.
+   This should bring you to the "WWAN &srarr; Settings" menu.
    Note: Refer [Appendix A](#networking-configuration) for default credentials.
-1. Apply the following settings:
+1. Apply the following settings: (TODO: image)
    - Carrier status: `Enable`
    - IP-Passthrough: `Disable`
    - MTU Size: (blank)
@@ -964,14 +969,14 @@ TODO: failover details; possibly port additional settings from https://wiki.clea
    - IoT Sockets available: `None`
    - RSSI Threshold: `90`
 1. After a couple minutes, check the WWAN status in your Chrome browser: http://192.168.131.51/wwan/status<br/>
-   Ensure that "Activity Status" is `Connected` and that a "WWAN IP Address" has been assigned.
+   Ensure that "Activity Status" is `Connected` and that a "WWAN IP Address" has been assigned. (TODO: image)
 1. Disconnect the Ethernet cable.
 
 #### Remote Access Setup {#remote-access}
 
 :::note
 
-This step is optional. It is only for customers attempting to access Husky Observer over the internet.
+This step is optional. It is only for users attempting to access Husky Observer over the internet.
 
 :::
 
@@ -981,16 +986,16 @@ this remote access task. Once such service, [ngrok](https://ngrok.com/), is desc
 
 ##### Remote Access via Ngrok
 
-[ngrok](https://ngrok.com/) an application that enables developers to expose a local development server to
-the internet with minimal effort. It can be leveraged to make the OutdoorNav user interface (hosted on the
+[ngrok](https://ngrok.com/) is an application that enables developers to expose a local development server to
+the internet with minimal effort. It can be leveraged to make the OutdoorNav User Interface (hosted on the
 Husky Observer robot) appear to be hosted on a subdomain of ngrok.com, meaning that no public IP or domain
 name on Husky Observer is needed. While the ngrok tools are pre-installed on Husky Observer, a small amount
-of customer configuration is required to use them.
+of configuration is required to use them.
 
-1. [Sign up for ngrok](https://dashboard.ngrok.com/signup) if you don't yet have an account. The "Pro" and "Enterprise" tiers are recommended.
-1. Configure a wired Ethernet port on your laptop to 192.168.131.100/24.
+1. [Sign up for ngrok](https://dashboard.ngrok.com/signup) if you don't yet have an account. The "Pro" tier is recommended.
+1. Configure a wired Ethernet port on your laptop to `192.168.131.101/24`.
    See [Wired Network Connection](#wired-network-connection) for details.
-1. Connect an ethernet cable from the configured port on your laptop to the
+1. Connect an Ethernet cable from the configured port on your laptop to the
    debug/expansion port on the top of the robot.
 1. SSH to the robot: `ssh administrator@192.168.131.1`. (See [Appendix A](#network-setup) for credentials.)
 1. Ensure that the robot has internet access (eg. `ping 8.8.8.8`).
@@ -1069,28 +1074,75 @@ that your networking setup conforms to one of the supported
 [Network Modes](#network-modes), to ensure that the tablet has network
 connectivity to both the robot and the internet.
 
-#### Survey Base Station {#survey-base-station}
+#### RTK Correction Setup
+
+:::note
+
+This step is optional, but highly recommended.
+
+:::
+
+RTK corrections are used to minimize errors related to GPS-based localization and
+are strongly recommended when attempting to operate Husky Observer autonomously.
+If a Base Station is present, RTK corrections will be acquired from the Base Station,
+once it has been surveyed. Alternatively, RTK corrections can be acquired through
+the internet, such as through the [SwiftNav Skylark](https://www.swiftnav.com/skylark)
+service. Both the Base Station and Skylark setup instructions are outlined below.
+
+##### Survey Base Station {#survey-base-station}
 
 If a Base Station is present, it must be surveyed to be able to
 operate the robot autonomously. Follow the instructions in the
 [OutdoorNav User Manual](/docs_outdoornav_user_manual/getting_started/system_setup#survey_base_station)
 for details on how to survey the Base Station.
 
-#### RTK Correction Setup
+##### RTK Corrections via the Skylark Service
 
-RTK corrections are used to minimize errors related to GPS-based localization and
-are strongly recommended when attempting to operate Husky Observer autonomously.
-If a Base Station is present, RTK corrections will be acquired from the Base Station,
-once it has been surveyed (see above).
-If a Base Station is not present, it is necessary to acquire RTK corrections through
+If a Base Station is not present, RTK corrections can be acquired through
 the internet. While various services are available for providing RTK corrections,
 Husky Observer has been validated with the [SwiftNav Skylark](https://www.swiftnav.com/skylark)
 service. Follow the steps below to set up the Skylark service.
 
 1. [Sign up for a Skylark account](https://account.swiftnav.com/sign-up) if you do not have one. (Note that Clearpath does not provide a Skylark account.)
-1. [Create a Skylark subscription](https://sjphilli.account.swiftnav.com/subscriptions) from the subscriptions tab.
+1. Create a Skylark subscription (https://{your_account_name}.account.swiftnav.com/subscriptions) from the subscriptions tab.
 1. Create a new Device in the "Devices" tab corresponding to the robot that will be receiving the corrections.
-1. TODO: details on updating the Duro units to point somewhere else? Or Skylark service to point to the robot?
+1. Configure the "position" SwiftNav Duro to communicate with the Skylark service.
+    1. Ensure that the [Swift Console](https://support.swiftnav.com/support/solutions/articles/44001903699-installing-swift-console)
+       is installed on your laptop.
+    1. Configure a wired Ethernet port on your laptop to `192.168.131.101/24`.
+       See [Wired Network Connection](#wired-network-connection) for details.
+    1. Connect an ethernet cable from the configured port on your laptop to the
+       debug/expansion port on the top of the robot.
+    1. Confirm that you can `ping 192.168.131.31`, which validates network connectivity to the "position" Duro.
+    1. Open the Swift Console.
+    1. "Connect to Device" using "TCP/IP" with "Host" `192.168.131.31` and port `55555`.
+        <img
+          src="/img/robot_images/husky_observer_images/swift_console_connect.png"
+          width="500"
+        />
+    1. In the "Settings" tab:
+        1. Under "ethernet", set the "interface mode" to `Config`.
+        1. Under "ethernet", set the "gateway" to `192.168.131.51`, which
+           is the IP address of network access point on the robot.<br/>
+           <img
+             src="/img/robot_images/husky_observer_images/swift_console_settings_ethernet.png"
+             width="700"
+           />
+        1. Under "ntrip", set "enable" to `True` and then fill in the remaining fields using
+           the credentials from the Skylark web portal.<br/>
+           <img
+             src="/img/robot_images/husky_observer_images/swift_console_settings_ntrip.png"
+             width="700"
+           />
+    1. Click "Save to Device" to save the settings.
+    1. In the "Settings" tab, under "ethernet", set the "interface mode" to `Active`.
+    1. Click "Save to Device" to save the settings.
+    1. In the "Observations" tab, confirm that RTK corrections from Skylark are being received.<br/>
+       <img
+         src="/img/robot_images/husky_observer_images/swift_console_observations.png"
+         width="700"
+       />
+    1. Disconnect the ethernet cable between your laptop and the robot.
 
 #### Set Datum {#set-datum}
 
@@ -1107,7 +1159,7 @@ the dock location. Follow the instructions in the
 [OutdoorNav User Manual](/docs_outdoornav_user_manual/getting_started/system_setup#set-dock-location)
 for details on how to set the dock location.
 
-If the base station has been moved (and therefore been resurveyed), or if
+If the Base Station has been moved (and therefore been resurveyed), or if
 the dock has been moved to a new location, you will need to set
 the location of the dock by repeating the above instructions.
 
@@ -1115,15 +1167,148 @@ the location of the dock by repeating the above instructions.
 
 ## OutdoorNav Operation
 
+This section outlines how to operate the system through teleoperation as
+well as how to operate the system for autonomous missions,
+controlled by the OutdoorNav User Interface. Refer to the
+[Outdoor Nav User Manual](/docs_outdoornav_user_manual/web_user_interface/ui_overview)
+for details on the User Interface including: Main Components, Map View, Camera Views, and 3D View.
+
+
+:::note
+
+While this section outlines how to operate the robot using the User Interface,
+all functionality is also available through the Application Programming Interface (API).
+Refer to the [Outdoor Nav User Manual](/docs_outdoornav_user_manual/api/api_overview)
+for details on the API, including both an overview and a detailed listing.
+
+:::
+
+### Manual Mode (Teleoperation)
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/teleop_danger.png"
+      width="800"
+    />
+  </figure>
+</center>
+
+Ensure that you have read [Safety](#safety) and are aware of possible
+hazards when using this product as well as the safety methods that can be
+used to stop the moving robot.
+
+Teleoperation allows the user to operate the robot remotely, using the built-in
+cameras. Refer to the [Outdoor Nav User Manual](/docs_outdoornav_user_manual/web_user_interface/ui_manual_mode)
+for details on the Manual Mode (Teleoperation).
+
+### Autonomous Mode
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/gps_danger.png"
+      width="800"
+    />
+  </figure>
+</center>
+
+Ensure that you have read [Safety](#safety) and are aware of possible
+hazards when using this product as well as the safety methods that can be
+used to stop the moving robot.
+
+In autonomous mode, the user is able to create missions and then command
+the robot to execute those missions, without requiring user intervention
+during the execution of the mission.
+
 #### Autonomous Missions {#autonomous-missions}
 
-TODO: see HITT04
+Refer to the Outdoor Nav User Manual for details on the
+[Autonomous Mode](/docs_outdoornav_user_manual/web_user_interface/ui_autonomous_mode),
+including details on [Autonomous Docking](/docs_outdoornav_user_manual/web_user_interface/ui_autonomous_mode#autonomous-docking).
 
-TODO: add UI + API references
+#### Retrieving Results from Autonomous Missions
+
+During an autonomous mission, images, videos, audio, and other collateral may be
+captured and stored on the robot.
+At the end of the mission, these can be downloaded using an SFTP client that has
+network access to the robot. This connectivity could be from a device on the
+Base Station network (if present) or over the internet (where configured,
+see [Remote Access Setup](#remote-access)).
+
+The IP address, username, and password for connecting to
+the robot are provided in [Appendix A: Networking Configuration](#networking-configuration).
+The output files from the
+autonomous missions are available to be downloaded from: `/home/administrator/missiondata`.
+
+
+Key notes:
+- In the above directory, there will be a subdirectory for each of the cameras.
+  Each of the camera subdirectories will contain images and videos whose filenames
+  are based on the time at which the image was captured or the time at which the video
+  recording was started. For example, a video that was
+  started on May 17, 2022 at 13:25:08 would correspond to a filename of:
+  `20220517T132508.avi`
+- Audio files use a similar file naming convention as images and videos.
+- The operator is responsible for deleting image, video, and audio files after they have been downloaded
+  and archived. Failure to do so may result in the robot storage becoming full, which
+  could prevent new mission data from being saved.
+- Any SFTP-compatible client can be used to download the data. FileZilla,
+  with details below, is the recommended SFTP client.
+
+##### Using FileZilla for Downloading Data
+
+FileZilla, [available for free download](https://filezilla-project.org/download.php?type=client),
+has a graphical user interface and is the recommended SFTP client.
+
+:::note
+
+The example below shows how to download files using the Base Station network.
+If downloading via the internet instead, update the `host` below based on the
+[Remote Access Setup](#remote-access). For example, if using ngrok with a tunnel
+set up on port 22 with a subdomain of `customer1-sftp`, then the `host` would
+be `customer1-sftp.ngrok.io`.
+
+:::
+
+To use FileZilla, begin by entering the following settings on a laptop or tablet
+on the Base Station network, then click "Quickconnect" as illustrated in
+the figure below.
+
+- **host:** 192.168.131.1
+- **username:** administrator
+- **password:** clearpath
+- **port:** 22
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/filezilla_connection_details.png"
+      width="800"
+    />
+    <figcaption>FileZilla Quickconnect</figcaption>
+  </figure>
+</center>
+
+To transfer files, use the local (left) and remote (right) file browsers as shown
+in the figure below. You can copy files off of the robot by selecting
+them on the right and dragging them to a folder on the left.
+
+Once you are finished, close the connection with Server &srarr; Disconnect.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/filezilla_full_view.png"
+      width="800"
+    />
+    <figcaption>FileZilla Full View</figcaption>
+  </figure>
+</center>
 
 #### Monitoring System Status {#monitoring-system-status}
 
-TODO: add notes about how to monitor the system status in the OutdoorNav UI
+TODO: Add notes about how to monitor the system status in the OutdoorNav UI once we implement this feature.
 
 ---
 
@@ -1134,8 +1319,6 @@ TODO: add notes about how to monitor the system status in the OutdoorNav UI
 ---
 
 ## Appendix A: Networking Configuration {#networking-configuration}
-
-TODO
 
 ### Base Station Network WiFi Access
 
@@ -1151,13 +1334,13 @@ address, subnet, and gateway must be specified manually in your networking setup
 
 ### Accessing the Base Computer from the WAN
 
-All images and videos that are collected during missions are stored on the UGV Base Computer
+All images and videos that are collected during missions are stored on the robot Base Computer
 until downloaded and deleted by the operator. When the download/delete function is performed
-by a computer within the Base Station network, the UGV Base Computer can be accessed
-as described in the previous section by connecting to TCP port 22 on the UGV Base Computer.
+by a computer within the Base Station network, the robot Base Computer can be accessed
+as described in the previous section by connecting to TCP port 22 on the robot Base Computer.
 When the download/delete function is performed by a computer on the WAN network (connected
-to the Base Station WAN port), the operator can access the UGV Base Computer by accessing
-TCP port 8022 on the Base Station, which gets mapped to TCP port 22 on the UGV Base Computer.
+to the Base Station WAN port), the operator can access the robot Base Computer by accessing
+TCP port 8022 on the Base Station, which gets mapped to TCP port 22 on the robot Base Computer.
 
 ### Husky Observer Network Components
 
@@ -1170,10 +1353,10 @@ TCP port 8022 on the Base Station, which gets mapped to TCP port 22 on the UGV B
 | 2D LiDAR, Hokuyo, front                                | 192.168.131.20                   | n/a                                                 |
 | 2D LiDAR, Hokuyo, rear                                 | 192.168.131.21                   | n/a                                                 |
 | 3D LiDAR, Velodyne                                     | 192.168.131.22                   | n/a                                                 |
-| GPS receiver, SwiftNav, base station (optional)        | 192.168.131.30                   | n/a                                                 |
-| GPS receiver, SwiftNav, robot, right                   | 192.168.131.31                   | n/a                                                 |
-| GPS receiver, SwiftNav, robot, left                    | 192.168.131.32                   | n/a                                                 |
-| Networking Gateway, Microhard, base station (optional) | 192.168.131.50                   | **user:** administrator<br/>**password:** clearpath |
+| GPS receiver, SwiftNav, Base Station (optional)        | 192.168.131.30                   | n/a                                                 |
+| GPS receiver, SwiftNav, robot, right (position)        | 192.168.131.31                   | n/a                                                 |
+| GPS receiver, SwiftNav, robot, left (heading)          | 192.168.131.32                   | n/a                                                 |
+| Networking Gateway, Microhard, Base Station (optional) | 192.168.131.50                   | **user:** administrator<br/>**password:** clearpath |
 | Networking Gateway, Microhard, robot                   | 192.168.131.51                   | **user:** administrator<br/>**password:** clearpath |
 | Wireless Power Transmitter, WiBotic, dock              | 192.168.131.70                   | n/a                                                 |
 | Tablet, Getac                                          | 192.168.131.75                   | **user:** administrator<br/>**password:** clearpath |
@@ -1246,6 +1429,18 @@ export ENABLE_REVERSE_ALARM=0
 
 After updating `buzzer.bash`, the system must be power cycled for the change to
 take effect.
+
+### Omnidirectional Microphone Configuration
+
+TODO
+
+### FLIR Thermal Camera Configuration
+
+TODO
+
+### Shotgun Microphone Configuration
+
+TODO
 
 ---
 
