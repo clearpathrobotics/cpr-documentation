@@ -102,17 +102,17 @@ The stack lights are composed of two lights, the details of which are described 
   personnel near the robot should exercise caution when this light is strobing.
 - The top is a multi-color light that indicates the system status.
 
-| Strobe Light (bottom) | Status Light (top) | Robot State                                                       |
-| --------------------- | ------------------ | ----------------------------------------------------------------- |
-| Off                   | Red                | Motion stop engaged; robot prevented from moving.                 |
+| Strobe Light (bottom) | Status Light (top) | Robot State                                                                                    |
+| --------------------- | ------------------ | ---------------------------------------------------------------------------------------------- |
+| Off                   | Red                | Motion stop engaged; robot prevented from moving.                                              |
 | Off                   | Magenta            | A system error/warning exists; see the [OutdoorNav UI](#monitoring-system-status) for details. |
-| Off                   | Amber              | Battery charging in progress (battery less than 50% charged).     |
-| Off                   | Cyan               | Battery charging in progress (battery 50% to 95% charged).        |
-| Off                   | White              | Battery charging in progress (battery over 95% charged).          |
-| On                    | Magenta            | Low battery; see the OutdoorNav UI for details.                   |
-| On                    | Green              | Robot is driving (teleop mode).                                   |
-| On                    | Blue               | Robot is driving (autonomous mode).                               |
-| On                    | White              | Robot is ready to drive, but currently idle.                      |
+| Off                   | Amber              | Battery charging in progress (battery less than 50% charged).                                  |
+| Off                   | Cyan               | Battery charging in progress (battery 50% to 95% charged).                                     |
+| Off                   | White              | Battery charging in progress (battery over 95% charged).                                       |
+| On                    | Magenta            | Low battery; see the OutdoorNav UI for details.                                                |
+| On                    | Green              | Robot is driving (teleop mode).                                                                |
+| On                    | Blue               | Robot is driving (autonomous mode).                                                            |
+| On                    | White              | Robot is ready to drive, but currently idle.                                                   |
 
 See also additional status as reported in the [Status Panel](#status-panel).
 
@@ -123,7 +123,7 @@ the chassis that provides information about the current status of Husky Observer
 
 |                                   Icon                                   | Description                                                                                                                                                                                                                                                                                                  |
 | :----------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <img src="/img/robot_images/husky_images/robot_husky_3.png" width="50"/> | **Battery Status** This is not used on Husky Observer. Refer to the battery state indicator in the OutdoorNav UI or on the stack light instead.                                                                                                                                                                                    |
+| <img src="/img/robot_images/husky_images/robot_husky_3.png" width="50"/> | **Battery Status** This is not used on Husky Observer. Refer to the battery state indicator in the OutdoorNav UI or on the stack light instead.                                                                                                                                                              |
 | <img src="/img/robot_images/husky_images/robot_husky_4.png" width="50"/> | **Communication Status** When green, Husky Observer is receiving a stream of correctly-formatted motion commands, and is ready to drive. When yellow, Husky Observer is receiving commands, but will not drive due to motion stop or another error. When red, serial communications are currently timed-out. |
 | <img src="/img/robot_images/husky_images/robot_husky_5.png" width="50"/> | **General Error Status** Illuminates red when Husky Observer will not drive due to an error state. Such states include motion stop, insufficient battery power, or an unspecified software error.                                                                                                            |
 | <img src="/img/robot_images/husky_images/robot_husky_6.png" width="50"/> | **Motion Stop Status** Illuminates red when Husky Observer will not drive due to the motion stop being activated, either onboard or wireless (if available).                                                                                                                                                 |
@@ -848,11 +848,11 @@ requirements are:
 While there are many ways to meet the Network Requirements listed above, there are three common network
 modes for deploying Husky Observer, which are outlined below.
 
-| Network Mode     | Description                                                                                                      | Base Station Setup        | Robot Setup                                                                                                                                                 | Tablet Setup                                                                                                                                                                                                                            | OutdoorNav URL via Local WiFi | OutdoorNav URL via Internet/Cellular      |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------------------------------------- |
-| Base Station     | Base Station with WiFi for near-range operations; optional LTE also available on robot for long-range operations | Pre-configured at factory | Pre-configured at factory; see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup                                            | Pre-configured at factory                                                                                                                                                                                                               | http://192.168.131.1          | See [Remote Access Setup](#remote-access) |
+| Network Mode     | Description                                                                                                      | Base Station Setup        | Robot Setup                                                                                                                                                 | Tablet Setup                                                                                                                                                                                                                              | OutdoorNav URL via Local WiFi | OutdoorNav URL via Internet/Cellular      |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------------------------------------- |
+| Base Station     | Base Station with WiFi for near-range operations; optional LTE also available on robot for long-range operations | Pre-configured at factory | Pre-configured at factory; see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup                                            | Pre-configured at factory                                                                                                                                                                                                                 | http://192.168.131.1          | See [Remote Access Setup](#remote-access) |
 | Customer Network | Customer WiFi for near-range operations; optional LTE also available on robot for long-range operations          | N/A                       | See [Updating the WiFi SSID or Password on Robot](#robot-wifi-setup); see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup | See [Windows 10 instructions](https://support.microsoft.com/en-us/windows/connect-to-a-wi-fi-network-in-windows-1f881677-b569-0cd5-010d-e3cd3579d263) for connecting to Customer WiFi network; configure as Static IP `192.168.131.75/24` | http://192.168.131.1          | See [Remote Access Setup](#remote-access) |
-| Cellular Only    | Uses cellular in robot + separate cellular in Tablet                                                             | N/A                       | See [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for setup                                                                                     | Pre-configured at factory (TODO: confirm) or use USB-tethering to a cell phone                                                                                                                                                          | N/A                           | See [Remote Access Setup](#remote-access) |
+| Cellular Only    | Uses cellular in robot + separate cellular in Tablet                                                             | N/A                       | See [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for setup                                                                                     | Pre-configured at factory (TODO: confirm) or use USB-tethering to a cell phone                                                                                                                                                            | N/A                           | See [Remote Access Setup](#remote-access) |
 
 <center>
   <figure>
@@ -874,7 +874,15 @@ modes for deploying Husky Observer, which are outlined below.
       src="/img/robot_images/husky_observer_images/onav_network_cellular_only_mode.png"
       width="400"
     />
-    <figcaption>Cellular Only Mode<br/>(<a href="https://www.flaticon.com/free-icons/wifi" title="wifi icons">Some icons created by Freepik - Flaticon</a>)</figcaption>
+    <figcaption>
+      Cellular Only Mode
+      <br />(<a
+        href="https://www.flaticon.com/free-icons/wifi"
+        title="wifi icons"
+      >
+        Some icons created by Freepik - Flaticon
+      </a>)
+    </figcaption>
   </figure>
 </center>
 
@@ -1107,42 +1115,42 @@ service. Follow the steps below to set up the Skylark service.
 1. Create a Skylark subscription (https://{your_account_name}.account.swiftnav.com/subscriptions) from the subscriptions tab.
 1. Create a new Device in the "Devices" tab corresponding to the robot that will be receiving the corrections.
 1. Configure the "position" SwiftNav Duro to communicate with the Skylark service.
-    1. Ensure that the [Swift Console](https://support.swiftnav.com/support/solutions/articles/44001903699-installing-swift-console)
-       is installed on your laptop.
-    1. Configure a wired Ethernet port on your laptop to `192.168.131.101/24`.
-       See [Wired Network Connection](#wired-network-connection) for details.
-    1. Connect an ethernet cable from the configured port on your laptop to the
-       debug/expansion port on the top of the robot.
-    1. Confirm that you can `ping 192.168.131.31`, which validates network connectivity to the "position" Duro.
-    1. Open the Swift Console.
-    1. "Connect to Device" using "TCP/IP" with "Host" `192.168.131.31` and port `55555`.
-        <img
-          src="/img/robot_images/husky_observer_images/swift_console_connect.png"
-          width="500"
-        />
-    1. In the "Settings" tab:
-        1. Under "ethernet", set the "interface mode" to `Config`.
-        1. Under "ethernet", set the "gateway" to `192.168.131.51`, which
-           is the IP address of network access point on the robot.<br/>
-           <img
-             src="/img/robot_images/husky_observer_images/swift_console_settings_ethernet.png"
-             width="700"
-           />
-        1. Under "ntrip", set "enable" to `True` and then fill in the remaining fields using
-           the credentials from the Skylark web portal.<br/>
-           <img
-             src="/img/robot_images/husky_observer_images/swift_console_settings_ntrip.png"
-             width="700"
-           />
-    1. Click "Save to Device" to save the settings.
-    1. In the "Settings" tab, under "ethernet", set the "interface mode" to `Active`.
-    1. Click "Save to Device" to save the settings.
-    1. In the "Observations" tab, confirm that RTK corrections from Skylark are being received.<br/>
-       <img
-         src="/img/robot_images/husky_observer_images/swift_console_observations.png"
-         width="700"
-       />
-    1. Disconnect the ethernet cable between your laptop and the robot.
+   1. Ensure that the [Swift Console](https://support.swiftnav.com/support/solutions/articles/44001903699-installing-swift-console)
+      is installed on your laptop.
+   1. Configure a wired Ethernet port on your laptop to `192.168.131.101/24`.
+      See [Wired Network Connection](#wired-network-connection) for details.
+   1. Connect an ethernet cable from the configured port on your laptop to the
+      debug/expansion port on the top of the robot.
+   1. Confirm that you can `ping 192.168.131.31`, which validates network connectivity to the "position" Duro.
+   1. Open the Swift Console.
+   1. "Connect to Device" using "TCP/IP" with "Host" `192.168.131.31` and port `55555`.
+      <img
+        src="/img/robot_images/husky_observer_images/swift_console_connect.png"
+        width="500"
+      />
+   1. In the "Settings" tab:
+      1. Under "ethernet", set the "interface mode" to `Config`.
+      1. Under "ethernet", set the "gateway" to `192.168.131.51`, which
+         is the IP address of network access point on the robot.<br/>
+         <img
+           src="/img/robot_images/husky_observer_images/swift_console_settings_ethernet.png"
+           width="700"
+         />
+      1. Under "ntrip", set "enable" to `True` and then fill in the remaining fields using
+         the credentials from the Skylark web portal.<br/>
+         <img
+           src="/img/robot_images/husky_observer_images/swift_console_settings_ntrip.png"
+           width="700"
+         />
+   1. Click "Save to Device" to save the settings.
+   1. In the "Settings" tab, under "ethernet", set the "interface mode" to `Active`.
+   1. Click "Save to Device" to save the settings.
+   1. In the "Observations" tab, confirm that RTK corrections from Skylark are being received.<br/>
+      <img
+        src="/img/robot_images/husky_observer_images/swift_console_observations.png"
+        width="700"
+      />
+   1. Disconnect the ethernet cable between your laptop and the robot.
 
 #### Set Datum {#set-datum}
 
@@ -1172,7 +1180,6 @@ well as how to operate the system for autonomous missions,
 controlled by the OutdoorNav User Interface. Refer to the
 [Outdoor Nav User Manual](/docs_outdoornav_user_manual/web_user_interface/ui_overview)
 for details on the User Interface including: Main Components, Map View, Camera Views, and 3D View.
-
 
 :::note
 
@@ -1241,8 +1248,8 @@ the robot are provided in [Appendix A: Networking Configuration](#networking-con
 The output files from the
 autonomous missions are available to be downloaded from: `/home/administrator/missiondata`.
 
-
 Key notes:
+
 - In the above directory, there will be a subdirectory for each of the cameras.
   Each of the camera subdirectories will contain images and videos whose filenames
   are based on the time at which the image was captured or the time at which the video
