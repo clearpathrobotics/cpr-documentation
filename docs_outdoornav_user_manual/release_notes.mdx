@@ -6,6 +6,36 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
+## 0.7.0
+
+### New Features
+
+-   Goal terminology has been removed from the mission generation nomenclature (see 
+    [Definitions](/docs_outdoornav_user_manual/web_user_interface/ui_autonomous_mode#definitions)) 
+    Users can now add tasks, apply final headings, and set navigation tolerances 
+    to any Waypoint in a mission.
+-   Drag and Drop of waypoints now available in Edit Mode.
+-   New Waypoints can be inserted between existing Waypoints in a mission. 
+-   Mission API now available to create/edit/load missions, waypoints and tasks.
+-   Mission execution via mission ID is now available.
+-   The base station location is now displayed in the UI after carrying out an automated survey.
+-   New coloring scheme for GNSS status icons to provide more accurate information.
+
+### Bug Fixes
+
+-   1069: Fixed the test script for versions pre-0.5
+-   996: Axis camera missing ptz_state
+
+### Known Issues
+
+-   131: Software upgrade process not documented fully
+-   609: Realsense D435 collision avoidance not fully tuned
+-   751: Wireless icon in UI doesn't work for Ubiquity hardware
+-   1134: Display/Hide Datum point not working
+-   1137: Refreshing page re-enabled edit button while mission running
+-   1138: Issues with Greying out waypoints in edge cases 
+
+
 ## 0.6.0
 
 ### New Features

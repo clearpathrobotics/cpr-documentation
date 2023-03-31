@@ -21,7 +21,7 @@ unit. This a combination of Clearpath's proprietary packages and custom
 configured open-source packages from ROS community. Please see the
 software architecture section for more information.
 
-## Definitions
+## Definitions {#definitions}
 
 The list below defines what a "Mission" is as well as its components.
 These components are referred to throughout this manual.
@@ -91,6 +91,14 @@ over the planned route as can be seen in the following figure.
     <figcaption>Route with deviation</figcaption>
   </figure>
 </center>
+
+:::note
+
+If the UGV is manually driven outside of the constrained replanning area 
+while a mission is running, the mission will need to be restarted as the UGV 
+will no longer be able to find it's way back onto the path.
+
+:::
 
 ### Waypoint Panel
 
