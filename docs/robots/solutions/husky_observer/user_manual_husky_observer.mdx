@@ -1393,12 +1393,17 @@ colour and low-light capabilities, defogger, and lens wiper.
 
 #### Key Settings
 
-- Resolution: TODO
-- Frame rate: TODO frames per second (front); TODO frames per second (rear)
+- Resolution: Max: 1920x1080.  ROS driver defaults: 640x480
+- Frame rate: 60Hz
 
 #### Where to make adjustments
 
-- TODO
+Global camera settings (like pan & tilt limits) can be set by logging into the Axis setup tool on the camera. Connect
+a laptop to the robot and assign the laptop a static IP address in the range `192.168.131.100-200`.  Then open a
+browser and navigate to [http://192.168.131.10](http://192.168.131.10).
+
+ROS driver settings can be edited in `/etc/ros/noetic/ros.d/axis_ptz.launch` or by changing the environment variables
+found in `/etc/ros/setup.bash` on the robot's primary computer.
 
 #### Pan Limits
 
@@ -1422,7 +1427,7 @@ the password `clearpath`.
       src="/img/robot_images/husky_observer_images/axis_q62_login.png"
       width="600"
     />
-    <figcaption>Axis Q62 login screen (TODO: new image)</figcaption>
+    <figcaption>Axis Q62 login screen</figcaption>
   </figure>
 </center>
 
@@ -1434,7 +1439,7 @@ In the browser, click on Settings and select PTZ
       src="/img/robot_images/husky_observer_images/axis_q62_settings_ptz.png"
       width="600"
     />
-    <figcaption>Axis Q62 PTZ settings (TODO: new image)</figcaption>
+    <figcaption>Axis Q62 PTZ settings</figcaption>
   </figure>
 </center>
 
@@ -1446,11 +1451,22 @@ Disable any exisitng pan limits by opening the limits menu and making sure all t
       src="/img/robot_images/husky_observer_images/axis_q62_limits_off.png"
       width="600"
     />
-    <figcaption>Disabling the Axis Q62 pan limits (TODO: new image)</figcaption>
+    <figcaption>Disabling the Axis Q62 pan limits</figcaption>
   </figure>
 </center>
 
-Move the camera to a pan of -179 degrees. Then click on the left pan limit button to set the left limit to -179 degrees.
+Move the camera to a pan of -179 degrees. The easiest way to move the camera precisely is to launch the ROS driver and use the `cmd` topic to move the camera:
+
+```bash
+# Start the driver in one terminal
+# Replace the IP address as appropriate for your camera
+roslaunch axis_camera axis.launch enable_ptz:=true username:=root password:=clearpath hostname:=192.168.131.10
+
+# In a second terminal, run
+rostopic pub /axis/cmd axis_camera/Axis "{pan: -179.0, tilt: 0.0, zoom: 1.0, focus: 0.0, brightness: 1.0, iris: 0.0, autofocus: true, autoiris: true}" -1
+```
+
+Once the camera finishes moving, set the left pan limit by pressing the left limit button:
 
 <center>
   <figure>
@@ -1458,12 +1474,17 @@ Move the camera to a pan of -179 degrees. Then click on the left pan limit butto
       src="/img/robot_images/husky_observer_images/axis_q62_set_left_limit.png"
       width="600"
     />
-    <figcaption>Setting the left pan limit to -179 degrees (TODO: new image)</figcaption>
+    <figcaption>Setting the left pan limit to -179 degrees</figcaption>
   </figure>
 </center>
 
-Then move the camera to a pan of 180 degrees.  Click on the right pan limit button to set the right pan limit to 180
-degrees.
+Then move the camera to a pan of 179 degrees:
+
+```bash
+rostopic pub /axis/cmd axis_camera/Axis "{pan: 179.0, tilt: 0.0, zoom: 1.0, focus: 0.0, brightness: 1.0, iris: 0.0, autofocus: true, autoiris: true}" -1
+```
+
+Once the camera finishes moving, click on the right pan limit button to set the right pan limit to 179 degrees.
 
 <center>
   <figure>
@@ -1471,21 +1492,12 @@ degrees.
       src="/img/robot_images/husky_observer_images/axis_q62_set_right_limit.png"
       width="600"
     />
-    <figcaption>Setting the right pan limit to 180 degrees (TODO: new image)</figcaption>
+    <figcaption>Setting the right pan limit to 179 degrees</figcaption>
   </figure>
 </center>
 
-Click the Done button to apply the new limits.
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/husky_observer_images/axis_q62_done.png"
-      width="600"
-    />
-    <figcaption>Click Done to apply the pan limits (TODO: new image)</figcaption>
-  </figure>
-</center>
+Click the Done button to apply the new limits.  Note that the camera will now have a 2-degree deadzone at the rear where
+it cannot point.  This is an unfortunate but unavoidable side-effect of setting the limits this way.
 
 ### RealSense Front and Rear Rear Driving Camera Configuration
 
