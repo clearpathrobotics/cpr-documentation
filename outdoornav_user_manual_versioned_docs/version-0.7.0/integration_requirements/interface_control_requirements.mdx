@@ -1,0 +1,119 @@
+---
+title: "ROS Interface Control Requirements"
+sidebar_label: "ROS Interface Control Requirements"
+sidebar_position: 3
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+## ROS Interface Control Checklist
+
+Prior to the installation and tuning of Clearpath Robotics (CPR)
+OutdoorNav software on your platform (robot computer), CPR requires that the platform's
+ROS interface satisfies the conditions listed below. Ensure that all of the requirements
+are satisfied for a smooth installation and tuning process.
+
+![](/img/outdoornav_images/onav_interface_control.png)
+
+|      | Requirement |
+|------|------------------------------------------------------------------|
+| <input type="checkbox"/> | The platform computer is on the 192.168.131.xxx subnet (ideally in the range 1-4). |
+| <input type="checkbox"/> | The platform computer has an installation of [ROS1 Noetic](http://wiki.ros.org/noetic/Installation). |
+| <input type="checkbox"/> | A URDF is supplied to CPR by the customer, in which the `base_link` coordinate frame is defined according to the [REP-105 base-link](https://www.ros.org/reps/rep-0105.html#base-link) ROS standard.  |
+| <input type="checkbox"/> | The platform outputs [tf2_msgs/TFMessage](http://docs.ros.org/en/jade/api/tf2_msgs/html/msg/TFMessage.html) messages on the ROS standard `/tf` topic, at a minimum rate of **30 Hz**. |
+| <input type="checkbox"/> | The platform outputs a latched [tf2_msgs/TFMessage](http://docs.ros.org/en/jade/api/tf2_msgs/html/msg/TFMessage.html) message on the ROS standard `/tf_static` topic. This should include any fixed frames of ROS enabled devices/sensors that are available on your platform. |
+| <input type="checkbox"/> | The platform computer has a velocity controller that accepts, as input, [geometry_msgs/Twist](http://docs.ros.org/en/melodic/api/geometry_msgs/html/msg/Twist.html) messages on the ROS standard `/cmd_vel` topic, at a minimum rate of **10 Hz**. |
+| <input type="checkbox"/> | The platform computer has a velocity controller that tracks the input velocity and outputs the resulting platform velocity on the `/platform/cmd_vel` topic. |
+| <input type="checkbox"/> | The platform outputs [nav_msgs/Odometry](http://docs.ros.org/en/noetic/api/nav_msgs/html/msg/Odometry.html) messages on the `/platform/odom` topic, at a minimum rate of **10 Hz**. |
+| <input type="checkbox"/> | The `/platform/odom` topic publishes its data with the header.frame_id = `odom` and the child_frame_id = `base_link`, as per the [REP-105 odom](https://www.ros.org/reps/rep-0105.html#odom) ROS standard. **IMPORTANT**: The platform should however not broadcast the `odom` --> `base_link` transformation since the OutdoorNav software will do so. |
+| <input type="checkbox"/> | If available, the platform odometry output has less than ±5% linear position error. |
+| <input type="checkbox"/> | If available, the platform odometry output has less than ±5% orientation error. |
+| <input type="checkbox"/> | The platform outputs [std_msgs/Bool](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/Bool.html) messages on the `/platform/emergency_stop` topic, at a minimum rate of **5 Hz**, indicating whether or not the platform is in a stopped state. |
+| <input type="checkbox"/> | Perform the validation tests described in [Interface Control Validation Test](#interface-control-validation) section and [record a rosbag](http://wiki.ros.org/rosbag/Commandline#rosbag_record) of all of your topics. The linear and angular velocities of the three trial runs recorded should be noted here:<br/><br/>Trial #1: Linear x: <input type="text"/>, Angular z: <input type="text"/><br/>Trial #2: Linear x: <input type="text"/>, Angular z: <input type="text"/><br/>Trial #3: Linear x: <input type="text"/>, Angular z: <input type="text"/><br/> |
+
+:::note
+
+Consult the [Platform API](/docs_outdoornav_user_manual/api/api_endpoints##topics-platform-api) for
+detailed information on the published/subscribed platform topics.
+
+:::
+
+If the platform is an Ackermann (or double Ackermann) drive vehicle:
+
+|      | Requirement |
+|------|------------------------------------------------------------------|
+| <input type="checkbox"/> | A conversion from [geometry_msgs/Twist](http://docs.ros.org/en/melodic/api/geometry_msgs/html/msg/Twist.html) messages to Ackermann inputs is provided. |
+
+:::note
+
+Ackermann drive platforms require both steering and throttle inputs to
+drive the platform. It is required that our OutdoorNav output `/cmd_vel`
+be converted into a message suitable to your platform. An example of an
+Ackermann message type can be found
+[here](http://wiki.ros.org/teb_local_planner/Tutorials/Planning%20for%20car-like%20robots).
+This may satisfy your particular platform, and is only a starting point
+on how to do this conversion.
+
+:::
+
+If the platform computer is running a version of ROS2:
+
+|      | Requirement |
+|------|------------------------------------------------------------------|
+| <input type="checkbox"/> | The platform computer has a [ROS2 to ROS1 bridge](https://github.com/ros2/ros1_bridge) is installed to enable the exchange of messages between the two ROS versions. |
+
+Signature: <input type="text" size="40" /> Date: <input type="text" size="40" />
+
+## Interface Control Validation Test {#interface-control-validation}
+
+The following test is designed to validate the platforms velocity
+controller. It will be required that you command the robot to drive in
+three circles, of varying radii, by applying the following command to
+the platform.
+
+``` bash
+rostopic pub -r 10 /cmd_vel geometry_msgs/Twist "linear:
+x: ___
+y: 0.0
+z: 0.0
+angular:
+x: 0.0
+y: 0.0
+z: ___"
+```
+
+The three trials that we request will vary between platforms depending
+on the its maximum linear $(v_{max})$ and angular velocities
+$(\omega_{max})$, minimum linear $(v_{min})$ and angular velocities
+$(\omega_{min})$, as well as limitations due to the minimum allowable
+turning radius $(r_{min})$. Of these three trials, we would like to see
+data within three linear velocity bands, as seen in the table below,
+resulting in three different turning radii. For the purpose of these
+tests the followng formula can be used when determining the required
+linear and angular velocities to apply: $r = v/\omega$.
+
+| Trial \# | Linear X Bands \[m/s\]                     |  Example Linear X Band \[m/s\] |
+| ---------|--------------------------------------------|-------------------------------------|
+| 1        | $v_{min} \cdot [1.0, 1.5]$                 | $[0.5, 0.75]$ |
+| 2        | $((v_{max} - v_{min})/2) \cdot [0.9, 1.1]$ | $[2.025, 2.475]$ |
+| 3        | $v_{max} \cdot [0.9, 1.0]$                 | $[4.5, 5.0]$ |
+
+As an example, a platform with specs $v \in [0.5, 5.0]$, $r_{min} = 3$
+would have linear x velocity bands as listed in the table above. The
+trials could then be as outlined in the table below.
+
+| Trial \#  | Linear X \[m/s\]   | Angular Z \[rad/s\] |Turn Radius \[m\] |
+|-----------|--------------------|---------------------|------------------|
+| 1         | 0.75               | 0.25                | 3 |
+| 2         | 2.25               | 0.5                 | 4.5 |
+| 3         | 4.5                |  0.75               |  6 |
+
+Finally, the test data in the collected ROSbag should include the
+following:
+
+1.  `/tf` and `/tf_static`
+2.  `/platform/cmd_vel`
+3.  `/platform/odom`
+4.  `/cmd_vel`
+5.  `/platform/emergency_stop` (if available)
+6.  raw NavSatFix data from a GPS unit (if possible).
