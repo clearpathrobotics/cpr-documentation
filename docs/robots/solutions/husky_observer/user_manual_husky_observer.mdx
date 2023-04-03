@@ -100,7 +100,7 @@ The stack lights are composed of two lights, the details of which are described 
 
 - The bottom is an orange strobe light that is enabled when the robot is in motion or may soon be in motion;
   personnel near the robot should exercise caution when this light is strobing.
-- The top is a multi-color light that indicates the system status.
+- The top is a multi-colour light that indicates the system status.
 
 | Strobe Light (bottom) | Status Light (top) | Robot State                                                                                    |
 | --------------------- | ------------------ | ---------------------------------------------------------------------------------------------- |
@@ -1355,7 +1355,7 @@ TCP port 8022 on the Base Station, which gets mapped to TCP port 22 on the robot
 | ------------------------------------------------------ | -------------------------------- | --------------------------------------------------- |
 | Main Computer                                          | 192.168.131.1<br/>10.252.252.100 | **user:** administrator<br/>**password:** clearpath |
 | IndoorNav Computer (optional)                          | 10.252.252.1                     | **user:** administrator<br/>**password:** clearpath |
-| Camera, Axis, PTZ                                      | 192.168.131.10                   | **user:** administrator<br/>**password:** clearpath |
+| Camera, Axis, PTZ                                      | 192.168.131.10                   | **user:** root<br/>**password:** clearpath |
 | Camera, FLIR, Thermal (optional)                       | 192.168.131.11                   | **user:** administrator<br/>**password:** clearpath |
 | 2D LiDAR, Hokuyo, front                                | 192.168.131.20                   | n/a                                                 |
 | 2D LiDAR, Hokuyo, rear                                 | 192.168.131.21                   | n/a                                                 |
@@ -1386,20 +1386,118 @@ to contact Clearpath if you have any questions.
 
 :::
 
-### FLIR PTZ Camera Configuration
+### Axis PTZ Camera Configuration
+
+The Husky Observer is equipped with an [Axis Q62](https://www.axis.com/products/axis-q62-series) series PTZ camera, with
+colour and low-light capabilities, defogger, and lens wiper.
 
 #### Key Settings
 
-- Resolution: TODO
-- Frame rate: TODO frames per second (front); TODO frames per second (rear)
+- Resolution: Max: 1920x1080.  ROS driver defaults: 640x480
+- Frame rate: 60Hz
 
 #### Where to make adjustments
 
-- TODO
+Global camera settings (like pan & tilt limits) can be set by logging into the Axis setup tool on the camera. Connect
+a laptop to the robot and assign the laptop a static IP address in the range `192.168.131.100-200`.  Then open a
+browser and navigate to [http://192.168.131.10](http://192.168.131.10).
+
+ROS driver settings can be edited in `/etc/ros/noetic/ros.d/axis_ptz.launch` or by changing the environment variables
+found in `/etc/ros/setup.bash` on the robot's primary computer.
 
 #### Pan Limits
 
-TODO: Chris to add his notes here
+The Axis Q62 is normally capable of making continuous rotations in either direction. This allows the camera to always
+take the shortest trajectory to reach any given pan angle. However, if you have additional equipment mounted on top of
+the camera, for example a Flir thermal camera or a microphone, this behaviour may cause the wires to get tangled around
+the PTZ camera and potentially cause damage to the robot.
+
+To prevent damage to the robot, Clearpath recommends setting pan limits on the Axis camera.  This will restrict the
+camera's range of motion to less than 180 degrees in either direction, eliminating the risk of the camera making
+continuous rotations.
+
+To set pan limits, connect your laptop to one of the robot's exposed ethernet ports and assign your laptop a static
+IP address in the range `192.168.131.100-200`.  Open your web browser and navigate to
+[http://192.168.131.10](http://192.168.131.10). Log into the Axis configuration website using the credentials found
+in [Appendix A](#networking-configuration).
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/axis_q62_login.png"
+      width="600"
+    />
+    <figcaption>Axis Q62 login screen</figcaption>
+  </figure>
+</center>
+
+In the browser, click on Settings and select PTZ
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/axis_q62_settings_ptz.png"
+      width="600"
+    />
+    <figcaption>Axis Q62 PTZ settings</figcaption>
+  </figure>
+</center>
+
+Disable any exisitng pan limits by opening the limits menu and making sure all the buttons are off.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/axis_q62_limits_off.png"
+      width="600"
+    />
+    <figcaption>Disabling the Axis Q62 pan limits</figcaption>
+  </figure>
+</center>
+
+Move the camera to a pan of -179 degrees. The easiest way to move the camera precisely is to launch the ROS driver and use the `cmd` topic to move the camera:
+
+```bash
+# Start the driver in one terminal
+# Replace the IP address as appropriate for your camera
+roslaunch axis_camera axis.launch enable_ptz:=true username:=root password:=clearpath hostname:=192.168.131.10
+
+# In a second terminal, run
+rostopic pub /axis/cmd axis_camera/Axis "{pan: -179.0, tilt: 0.0, zoom: 1.0, focus: 0.0, brightness: 1.0, iris: 0.0, autofocus: true, autoiris: true}" -1
+```
+
+Once the camera finishes moving, set the left pan limit by pressing the left limit button:
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/axis_q62_set_left_limit.png"
+      width="600"
+    />
+    <figcaption>Setting the left pan limit to -179 degrees</figcaption>
+  </figure>
+</center>
+
+Then move the camera to a pan of 179 degrees:
+
+```bash
+rostopic pub /axis/cmd axis_camera/Axis "{pan: 179.0, tilt: 0.0, zoom: 1.0, focus: 0.0, brightness: 1.0, iris: 0.0, autofocus: true, autoiris: true}" -1
+```
+
+Once the camera finishes moving, click on the right pan limit button to set the right pan limit to 179 degrees.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/axis_q62_set_right_limit.png"
+      width="600"
+    />
+    <figcaption>Setting the right pan limit to 179 degrees</figcaption>
+  </figure>
+</center>
+
+Click the Done button to apply the new limits.  Note that the camera will now have a 2-degree deadzone at the rear where
+it cannot point.  This is an unfortunate but unavoidable side-effect of setting the limits this way.
 
 ### RealSense Front and Rear Rear Driving Camera Configuration
 
