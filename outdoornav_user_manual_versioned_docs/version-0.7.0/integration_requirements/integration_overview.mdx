@@ -1,0 +1,34 @@
+---
+title: "Integration Overview"
+sidebar_label: "Integration Overview"
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+The scope of work to transform a non-autonomous UGV into an autonomous
+one will vary depending on the exact hardware capabilities and software
+interfaces of the UGV. Development work will be required by Clearpath
+Robotics, the end user, or a third party developer to bring the UGV into
+compliance with the requirements listed in the table below. This may
+involve implementing encoders and controllers to provide velocity
+control of the platform and implementing a CAN bus to ROS interface with
+kinematic control. The table below provides a general outline of the
+requirements; the detailed requirements are covered in the following
+sections.
+
+_Navigation hardware and software general integration scope of work_
+
+| \#  | Task                             | Note                            |
+|-----|----------------------------------|---------------------------------|
+| 1   | **Convert platform to drive by wire** | If required; can be a significant electromechanical integration |
+| 1.1 | Implement actuated steering and  throttle control if necessary | |
+| 1.2 | Implement the encoder and controller hardware to provide wheel velocity control and odometry feedback | May require electronic power steering position feedback and controller |
+| 2   | **Create a ROS interface** | |        
+| 2.1 | Commission an OutdoorNav computer running Ubuntu 20.04 and ROS Noetic | |
+| 2.2 | Create a ROS interface to the UGV Often interfacing via CAN bus motor controllers and platform controller | |
+| 2.3 | Create a ROS platform driver including UGV kinematics with ROS-control | Accepts velocity input, commands motor controllers, provides other status feedback |
+| 3   | **Install and configure OutdoorNav Hardware and Software** | |
+| 3.1 | Install OutdoorNav computer and sensors on the UGV | Provide mechanical mounting, power and ethernet communication to UGV computer |
+| 3.2 | Install, update and configure OutdoorNav Software on computer | Configure for sensor mounting locations, UGV kinematics and data topics. Can be done remotely with assistance from Clearpath Robotics Engineering. Approximately 1-2 days. |
+| 3.3 | Tune the path planning and following controllers for new UGV | Can be done at a Clearpath Robotics facility. Can often be done at end user facility via remote login from Clearpath Robotics Engineering. Approximately 2-5 days. |
