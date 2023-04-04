@@ -8,8 +8,8 @@ toc_max_heading_level: 4
 
 ![](/img/outdoornav_images/gps_danger.png)
 
-Ensure that you have read [Safety](/docs_outdoornav_user_manual/safety) and are
-aware of possible hazards when using this product as well as the safety
+Ensure that the [Safety](/docs_outdoornav_user_manual/safety) document has been
+read and the user is aware of possible hazards when using this product as well as the safety
 methods that can be used to stop the moving UGV.
 
 The Autonomous Mode of OutdoorNav Software is a set of robotic
@@ -21,28 +21,23 @@ unit. This a combination of Clearpath's proprietary packages and custom
 configured open-source packages from ROS community. Please see the
 software architecture section for more information.
 
-## Definitions
+## Definitions {#definitions}
 
 The list below defines what a "Mission" is as well as its components.
 These components are referred to throughout this manual.
 
--   **Mission** A Mission is a set of one or more Goals.
--   **Goal** A Goal must contain one Goal Point, can contain several
-    Viapoints (but not required to contain any), and can contain any
-    number of Tasks.
--   **Path** The list of Viapoints along with Goal point will determine
-    the path of for the specific Goal.
--   **Goal Point** A Goal Point is the final Waypoint in a Goal and is
-    the destination of the Goal.
+-   **Mission** A Mission is a set of one or more Waypoints.
+-   **Path** The list of Waypoints that will determine the path 
+    for the specific Mission.
 -   **Waypoint** A Waypoint is any geographical point referenced by its
-    position relative to the datum in meters. Both Viapoints and Goal
-    Points are types of Waypoints.
--   **Viapoint** A Viapoint is a Waypoint which is part of a Goal but
-    not the last point. The list of Viapoints forms the path for the
-    specific Goal.
+    position relative to the datum in meters. 
 -   **Task** A Task is an automated activity or wait time implemented as
-    a ROS action. Tasks are called in the order they are added to a
-    Goal.
+    a ROS action at a specific Waypoint. Tasks are called in the order they are 
+    added to a Waypoint.
+-   **Ghost Waypoint** A transparent waypoint that is not part of the mission. This
+    Waypoint appears between two other waypoints when in edit mode. The user can 
+    drag and drop this ghost waypoint to add a new waypoint to the mission between
+    the other two waypoints.
 
 ## Map Settings
 
@@ -64,94 +59,24 @@ To access the Map Settings: Menu → Settings → Map:
     The user can change this value in the Map Settings page. Enter the
     new values and click the "Set Datum" button.
 
-## Goal Creation
+## Mission Creation
 
-To create or modify Goals, the "Edit Mission" toggle must be enabled.
-The user can then create the Goals using one of two methods:
-
-1.  Waypoint Mode
-2.  Route Mode (Easier)
-
-While the steps of the creating a mission can vary, the general process
-for creating a Mission is defined below. These steps will be covered in
-more detail in the following sections.
-
-1.  Defining a point on the map as a Goal Point.
-2.  Adding Task for the Goal.
-3.  Adding Viapoints for the Goal to help guide the UGV from its
-    starting point to the Goal.
-4.  Repeating the steps above to add more Goals (if needed).
-5.  Specifying the order of the Goals.
-6.  Saving the Mission.
-
-<iframe width="680" height="350" src="https://www.youtube.com/embed/zcD5shs5wZ4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+To create a new Mission first ensure that the UI is in "Edit Mode" (
+select the pencil icon in the bottom bar). Then open the drop down menu in the bottom
+bar and select the "Add Mission" option. This will allow the user to create a new mission 
+which can then be defined with Waypoints. 
 
 ### Waypoint Mode
 
-The first option to create Goals is to select the "Waypoint Mode"
-button. This will allow the user to place Waypoints at locations where
-the user clicks on the map. These will appear as red Waypoints until
-they are either converted into a Goal Point or Viapoint.
+To add new Waypoints to a mission while edit mode is enabled select the 
+"Waypoint Mode" button. This will allow the user to place Waypoints at 
+locations where the user clicks on the map. These will appear as red 
+Waypoints with the exception of the first waypoint (green) and the last waypoint (yellow).
 
-Select the Waypoint to open the dropdown list. The user can now add the
-Waypoint to a Goal, create a new Goal from a waypoint, or Delete the
-Waypoint.
-
-### Route Mode
-
-The second option to create Goals is to select the "Start Route"
-button. This will enable "Route Mode" and will allow the user to click
-points on the map along which the user wants Waypoints to be added
-sequentially. Once the final point is selected the user must click the
-"End Route" button for the Goal to be created.
-
-During this process, as Waypoints are added, the last Waypoint added
-prior to ending the route will be the Goal Point of the Goal while the
-previous points are considered the Viapoints of the Goal. The UGV will
-travel through these Viapoints towards the Goal Point. See the figures
-below for an example of the "Route Mode" process.
-
-<center>
-  <figure>
-    <img src="/img/outdoornav_images/ui_route_start.png" />
-    <figcaption>Route Mode: Step 1</figcaption>
-  </figure>
-</center>
-
-<center>
-  <figure>
-    <img src="/img/outdoornav_images/ui_route1.png" />
-    <figcaption>Route Mode: Step 2</figcaption>
-  </figure>
-</center>
-
-<center>
-  <figure>
-    <img src="/img/outdoornav_images/ui_route2.png" />
-    <figcaption>Route Mode: Step 3</figcaption>
-  </figure>
-</center>
-
-<center>
-  <figure>
-    <img src="/img/outdoornav_images/ui_route3.png" />
-    <figcaption>Route Mode: Step 4</figcaption>
-  </figure>
-</center>
-
-<center>
-  <figure>
-    <img src="/img/outdoornav_images/ui_route4.png" />
-    <figcaption>Route Mode: Step 5</figcaption>
-  </figure>
-</center>
-
-<center>
-  <figure>
-    <img src="/img/outdoornav_images/ui_route_end.png" />
-    <figcaption>Route Mode: Step 6</figcaption>
-  </figure>
-</center>
+As Waypoints are placed, a "ghost waypoint" will appear between each pair of real
+Waypoints and can be dragged to a new spot to insert a real Waypoint 
+between them.  Waypoints can also be dragged and dropped on the map to 
+modify their positions.
 
 ## Constrained Replanning {#constrained_path}
 
@@ -167,65 +92,68 @@ over the planned route as can be seen in the following figure.
   </figure>
 </center>
 
-### Goal Panel
+:::note
+
+If the UGV is manually driven outside of the constrained replanning area 
+while a Mission is running, the Mission will need to be restarted as the UGV 
+will no longer be able to find it's way back onto the path.
+
+:::
+
+### Waypoint Panel
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/ui_goal_panel.png" />
-    <figcaption>Goal Panel</figcaption>
+    <img src="/img/outdoornav_images/ui_waypoint_panel.png" />
+    <figcaption>Waypoint Panel</figcaption>
   </figure>
 </center>
 
-Enable the "Goal Panel" toggle to open the list of available Goals
+Enable the "Waypoint Panel" toggle to open the list of available Waypoints
 within the selected Mission as shown in the figure above. The user can
-now enable/disable Goals, rearrange the list, rename Goals, add Tasks to
-the end of Goals, and modify the final heading and/or tolerance of each
-Goal.
+now rearrange the list, rename Waypoints, add Tasks to the Waypoints, 
+and modify the final heading and/or tolerance of each Waypoint.
 
-When the Mission is started, the Goals are executed in the order that
-they appear in the Goals panel (provided that they are enabled).
+### Rearrange List of Waypoints
 
-### Rearrange List of Goals
+Waypoints can be rearranged in order of operation in the list. To do this,
+enable the "Waypoints Panel" toggle to access the list of Waypoints. Here, the
+user will be able to drag and drop the Waypoints to reorder them.
 
-Goals can be rearranged once they have been completed. To do this,
-enable the "Goals Panel" toggle to access the list of Goals. Here, the
-user will be able to drag and drop the Goals to reorder them.
+### Rename Waypoint
 
-### Rename Goal
+By default, once Waypoints are created they are assigned a default name
+which is the word "Waypoint" followed by a numeric value representing the
+the number of Waypoints that have been created plus one. The user has the
+option to rename these Waypoints in order for them to have more descriptive
+meaning. 
 
-By default, once Goals are created they are assigned a default name
-which is the word "Goal" followed by a numeric value representing the
-the number of Goals that have been created plus one. The user has the
-option to rename these Goals in order for them to have more descriptive
-meaning. The Goal name will appear in the feedback bar once the Mission
-is sent and will let the user know which Goal is currently being
-executed.
+To rename a Waypoint follow these steps:
 
-To rename a Goal follow these steps:
-
-1.  Enable the "Goal Panel" toggle. If you cannot find this button,
-    see [Goal Panel](#goal-panel) for reference.
-2.  Click the name of the Goal which the user wants to rename.
+1.  Enable the "Waypoint Panel" toggle. See [Waypoint Panel](#waypoint-panel) 
+    for further details.
+2.  Click the name of the Waypoint which the user wants to rename.
 3.  Erase the current name and type the new name.
 
-### Add Task to Goal {#add-task}
+### Add Task to Waypoint {#add-task}
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/ui_goal_tasks.png" />
-    <figcaption>Add Task to Goal</figcaption>
+    <img src="/img/outdoornav_images/ui_waypoint_tasks.png" />
+    <figcaption>Add Task to Waypoint</figcaption>
   </figure>
 </center>
 
 To add a Task to the end of a Mission:
 
-1.  Click the "+" icon (beside the Gear icon) in the Goal the Task is
+1.  Click the "+" icon (beside the Gear icon) in the Waypoint Row the Task is
     to be added to.
 
 2.  Click the "Add Task" Button that has appeared.
 
-3.  Select the Task from the dropdown list. Standard goal icons will be
-    replaced accordingly depending on the task selected.
+3.  Select the Task from the dropdown list. Standard waypoint icons will be
+    replaced accordingly depending on the task selected (waypoint icons will keep the colours
+    assigned to them based on placement).
 
     -   **Dock UGV:** <img src="/img/outdoornav_images/dockTask_40px.png" width="30px"/>
         Will dock the UGV to begin charging the UGVs
@@ -257,15 +185,15 @@ To add a Task to the end of a Mission:
     -   **Undock UGV:** <img src="/img/outdoornav_images/undockTask_40px.png" width="30px"/>
         Will undock the UGV from the autocharge dock. Once
         completed, the UGV can be sent on autonomous missions. It is
-        often recommended to place the undock Goal first in the list;
+        often recommended to place the undock Task first in the list of Waypoints;
         that way, the UGV will automatically continue towards its next
-        Goal once undocked. See Section
+        Waypoint once undocked. See Section
         [Autonomous Docking](#autonomous-docking) for more
         information on the autonomous docking feature.
 
     -   **Wait:** <img src="/img/outdoornav_images/waitTask_40px.png" width="30px"/>
         Will pause and wait for the specified number of
-        seconds at the end of the Goal.
+        seconds at the end of the Waypoint.
 
         Settings: Enter the amount of time to wait, in seconds.
 
@@ -274,7 +202,7 @@ To add a Task to the end of a Mission:
 
     :::note
 
-    If a goal has more than one task assigned to it, the goal icon will
+    If a waypoint has more than one task assigned to it, the icon will
     be replaced with <img src="/img/outdoornav_images/multiTask_40px.png" width="30px"/>
 
     :::
@@ -283,66 +211,56 @@ To add a Task to the end of a Mission:
 
 <iframe width="696" height="358" src="https://youtube.com/embed/V6K2VXM5EaU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-#### Goal Heading
+#### Waypoint Heading
 
-When creating a Goal, the user has the option of setting a final heading
-for the Goal. For example, when creating a Goal to an inspection point,
+When creating a Waypoint, the user has the option of setting a final heading
+for the Waypoint. For example, when creating a Waypoint at an inspection point,
 the user may want the UGV to navigate and stop facing a certain
-direction. In [Goal Panel](#goal-panel), the list of
-Goals can be seen and the advanced settings of each Goal can be accessed
+direction. In [Waypoint Panel](#waypoint-panel), the list of
+Waypoints can be seen and the advanced settings of each Waypoint can be accessed
 by clicking the "Gear" icon.
 
-To set the Goal's final heading, the user will need to check the
+To set the Waypoint's final heading, the user will need to check the
 "Final Heading Enabled" checkbox and enter the heading value in
 degrees. The heading indicator on the top bar can be used to help set
 this value. See the figure below showing the advanced settings.
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/ui_adv_goal_settings.png" />
-    <figcaption>Goal Advanced Settings</figcaption>
+    <img src="/img/outdoornav_images/ui_adv_waypoint_settings.png" />
+    <figcaption>Waypoint Advanced Settings</figcaption>
   </figure>
 </center>
 
-The heading that has been entered will only be applied to the Goal Point
+The heading that has been entered will only be applied to the Waypoint
 (ie. the robot will only align itself with the correct heading at the
-end of the goal). If you need the robot to be at specific headings at
-some of the Goal's Viapoints, the only way to do this is to split the
-longer Goal into smaller goals and apply your required headings as
-required.
+Waypoint). If the robot is required to be at specific headings at
+other Waypoints the user will need to enter these in for each specific Waypoint.
 
-#### Goal Tolerance
+#### Waypoint Tolerance
 
-When creating a Goal, the user has the option of setting a specific
-tolerance for the Goal. By default, the Goal position and orientation
-tolerances are 0.3 meters and 180°, respectively. If a specific Goal
+When creating a Mission, the user has the option of setting a specific
+tolerance for each Waypoint. By default, the Waypoint position and orientation
+tolerances are 0.3 meters and 180°, respectively. If a specific Waypoint
 requires that the tolerances be either increased or decreased, these
-values can be modified in the advanced settings. For example, if you
-require that the position and/or orientation at a Goal be very accurate,
-let's say 0.1 meters position and 5° orientation, or looser at 1.0 meter
+values can be modified in the advanced settings. For example, if it's
+required that the position and/or orientation at a Waypoint be very accurate,
+such as 0.1 meters position and 5° orientation, or looser at 1.0 meter
 position, this can be done within these settings.
 
-In [Goal Panel](#goal-panel), the list of goals can be
-seen and the advanced settings of each Goal can be accessed by clicking
-the "Gear" icon. To set the Goal's tolerance, the user will need to
-check the "Goal Tolerance Enabled" checkbox and enter the position and
+In [Waypoint Panel](#waypoint-panel), the list of waypoints can be
+seen and the advanced settings of each Waypoint can be accessed by clicking
+the "Gear" icon. To set the Waypoint's tolerance, the user will need to
+check the "Waypoint Tolerance Enabled" checkbox and enter the position and
 orientation values, in meters and degrees, respectively.
-
-### Save Mission
-
-The user can save the Mission (set of Goals) at any time while the UI is
-open in the web browser. When the user clicks the "Save" button (see
-[Main Components](/docs_outdoornav_user_manual/web_user_interface/ui_overview#main-components) the Mission will be
-saved to the database of missions.
 
 ## Mission Execution
 
 ### Start Mission
 
 At the bottom of the UI, the user has the ability to start the currently
-selected mission by clicking the "Play" button <img src="/img/outdoornav_images/ui_start_button.png" width="16px"/>. When the
-mission has been started this button will turn green. Starting a mission
-consists of sending the currently enabled set of goals.
+selected Mission by clicking the "Play" button <img src="/img/outdoornav_images/ui_start_button.png" width="16px"/>. When the
+Mission has been started this button will turn green. 
 
 ### Pause Mission
 
@@ -368,15 +286,12 @@ the mission/task will be shown to be cancelled in the feedback bar.
 To dock the UGV autonomously, the user should follow these steps:
 
 -   Enable the "Edit Mission" toggle.
--   Create a Goal whose Waypoints approach the dock from the front and
-    whose Goal Point is within 10 meters of the dock.
--   Enable the Goals Panel toggle to view the list of Goals, rename this
-    Goal to "Dock Goal" or something descriptive and add the "Dock
-    UGV" task to the Goal that was just created.
--   Run the "Dock Goal" Goal.
-
-See Section [Goal Creation](#goal-creation) for details on
-how to create, rename and add tasks to a Goal.
+-   Create a Mission whose Waypoints approach the dock from the front and
+    whose final Waypoint is within 10 meters of the dock.
+-   Enable the Waypoints Panel toggle to view the list of Waypoints, rename the last
+    Waypoint to "Dock Waypoint" or something descriptive and add the "Dock
+    UGV" task to this Waypoint.
+-   Run the Mission.
 
 ### Undocking The UGV
 
@@ -384,23 +299,21 @@ To undock the UGV autonomously, the user should follow these steps:
 
 -   Enable the "Edit Mission" toggle. Select the "Waypoint Mode"
     button.
--   Select the Goal Waypoint icon on the bottom bar (yellow Waypoint
-    button) to create a Goal Point at the current location of the UGV.
--   Enable the Goals Panel toggle to view the list of Goals, rename this
-    Goal to "Undock Goal" or something descriptive and add the
-    "Undock UGV" task to the Goal that was just created.
--   Run the "Undock Goal" Goal.
-
-See Section [Goal Creation](#goal-creation) for details on
-how to create, rename and add tasks to a Goal.
+-   Select the Waypoint icon on the bottom bar to create a Waypoint at the 
+    current location of the UGV. This step should either be it's own mission 
+    or it should be the starting point of a mission.
+-   Enable the Waypoints Panel toggle to view the list of Waypoints, rename this
+    Waypoint to "Undock Waypoint" or something descriptive and add the
+    "Undock UGV" task to the Waypoint that was just created.
+-   Run the Mission.
 
 ### Recover from Failed Docking or Undocking
 
-If for any reason, the docking or undocking tasks fail, you can:
+If for any reason, the docking or undocking tasks fail, the user can:
 
 -   Manually drive the UGV towards the the dock target, aligning the
     charging unit with the receiver on the UGV.
 -   Manually drive the UGV in reverse away from the dock target. It is
-    suggested that you reverse roughly 2-3 meters away from the target,
+    suggested that the user reverse roughly 2-3 meters away from the target,
     then wait 1-2 minutes before starting any autonomous navigation
     missions.
