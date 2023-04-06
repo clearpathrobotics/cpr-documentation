@@ -102,8 +102,9 @@ When it is time to publish a numbered release of the user manual:
 3.  Update /docs/software/navigation_packages.mdx to:
     - Update the version number for the "Latest".
     - Add an entry for the previous release.
-4.  Build and test the changes (see steps 4-8 from the standard workflow above).
-5.  When ready, publish your branch on GitHub, and submit a Pull Request to merge your changes into the _development_ branch.
+4.  Update /static/versions.js to update the outdoornav version to match the GitHub tag.
+5.  Build and test the changes (see steps 4-8 from the standard workflow above).
+6.  When ready, publish your branch on GitHub, and submit a Pull Request to merge your changes into the _development_ branch.
     Be sure to include the updates to the following:
     - outdoornav_user_manual_versioned_docs/
     - outdoornav_user_manual_versioned_sidebars/
