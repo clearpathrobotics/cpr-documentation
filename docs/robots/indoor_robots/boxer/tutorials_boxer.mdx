@@ -23,15 +23,15 @@ import Support from "/components/support.mdx";
 
 :::caution
 
-This guide is for the Boxer 2.4, released in November 2021. The Boxer 2.4 is not compatible with the older Boxer.
-Owners of previous-generation Boxers should refer to the documentation [here](http://www.clearpathrobotics.com/assets/guides/kinetic/boxer/).
+This guide is for the Boxer V2.4 (released in November 2021) and V2.5 (released in May 2023). Boxer V2.4 and V2.5 are not compatible with the older Boxer (V2.2).
+Owners of previous-generation (V2.2) Boxers should refer to the documentation [here](http://www.clearpathrobotics.com/assets/guides/kinetic/boxer/).
 
 :::
 
 :::note
 
 OTTO Motors and Clearpath Robotics operate under the same parent company.
-Boxer 2.4 is a collaboration between the teams at OTTO Motors and Clearpath Robotics.
+Boxer V2.4 and V2.5 are a collaboration between the teams at OTTO Motors and Clearpath Robotics.
 
 :::
 
@@ -81,7 +81,7 @@ The following terms are used throughout this guide:
 
 ### Differences from OTTO 100
 
-The most obvious difference between OTTO 100 and Boxer 2.4 is that Boxer has been painted black with a yellow
+The most obvious difference between OTTO 100 and Boxer V2.4/V2.5 is that Boxer has been painted black with a yellow
 stripe on the sides. This change is purely cosmetic, and is to keep the Boxer visually distinct.
 
 Mechanically, the top deck of the Boxer has a slightly thicker, heavier top-plate with a different arrangement of
@@ -366,7 +366,7 @@ Boxer is normally equipped with a combination Wi-Fi + Bluetooth module.
 If this is your first unboxing, ensure that Boxer's wireless antennae are firmly screwed on to the chassis.
 Boxer is equipped with a Backpack Computer mounted to the top of the Base Unit. The Base Unit is
 also equipped with an internal computer. This section explains how to configure the networking for the Backpack Computer only. For
-instructions on connecting the Base Unit's computer to a network, refer to the [OTTO 100 Documentation](https://help.ottomotors.com).
+instructions on connecting the Base Unit's computer to a network, refer to the [OTTO 100 Documentation](https://docs.ottomotors.com).
 
 #### Enabling the OTTO App
 
@@ -376,7 +376,7 @@ Configure your laptop to have a static IP address on the 10.255.255.0/16 subnet,
 
 Open a web browser and navigate to http://10.255.255.1:8090. You will be promted to enter your network credentials.
 
-Refer to [OTTO Motors' documentation](https://help.ottomotors.com/latest/commissioning/connecting-a-robot-to-the-network)
+Refer to [OTTO Motors' documentation](https://docs.ottomotors.com/en/30495-30526-connecting-a-robot-to-a-network.html)
 for more details on configuring the Base Unit's networking.
 
 #### First Connection
@@ -770,7 +770,7 @@ For details on updating Boxer software or firmware, refer to [Software Maintenan
 
 Boxer includes the latest autonomy software from OTTO, including [Fleet Manager](https://ottomotors.com/fleet-manager).
 
-Please refer to [OTTO Motors' documentation](https://help.ottomotors.com) and the OTTO 100 user manual
+Please refer to [OTTO Motors' documentation](https://docs.ottomotors.com) and the OTTO 100 user manual
 for details on how to use OTTO's advanced autonomy software
 
 :::
@@ -987,11 +987,11 @@ The details of each test are shown below.
 
   This test also the robot's model is loaded into the `robot_description` ROS parameter.
 
-- **E-Stop Test**
+- **Emergency Stop Test**
 
-  The **E-Stop Test** checks that the robot's E-Stop is working properly.
+  The **Emergency Stop Test** checks that the robot's emergency stop is working properly.
 
-  This test subscribes to the `/platform/emergency_stop` ROS topic and checks that when the E-Stop is manually engaged and disengaged by the user, the E-Stop states are correctly reported on the `/platform/emergency_stop` ROS topic.
+  This test subscribes to the `/platform/emergency_stop` ROS topic and checks that when the emergency stop is manually engaged and disengaged by the user, the emergency stop states are correctly reported on the `/platform/emergency_stop` ROS topic.
 
 - **Rotate Test**
 
