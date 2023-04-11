@@ -56,7 +56,7 @@ computer also allows for control and monitoring of any additional payloads added
 #### Exterior Features
 
 Below is an overview of the Boxer robot hardware that outlines the key components that you should be aware of in order to get started
-with using your robot. Note that the front e-stop button is only present on Boxer V2.5.
+with using your robot. Note that the front emergency stop button is only present on Boxer V2.5.
 
 <Tabs groupId="boxer_versions">
   <TabItem
@@ -103,9 +103,9 @@ The HMI has 5 elements:
 
 1.  Ethernet port
 2.  Power button
-3.  E-Stop reset button
+3.  Emergency stop reset button
 4.  Chargeport
-5.  Rear E-Stop button
+5.  Rear emergency stop button
 
 <center>
   <img
@@ -114,11 +114,11 @@ The HMI has 5 elements:
   />
 </center>
 
-#### Front E-Stop Button
+#### Front Emergency Stop Button
 
-In addition to the Rear E-Stop button described in the HMI Panel above, Boxer 2.5 (but not Boxer 2.4)
-has a Front E-Stop button, which is mounted to the right of the front safety LiDAR. Refer to
-[E-Stop Buttons](#boxer-stop-buttons) for additional details.
+In addition to the rear emergency stop button described in the HMI Panel above, Boxer 2.5 (but not Boxer 2.4)
+has a front emergency stop button, which is mounted to the right of the front safety LiDAR. Refer to
+[Emergency Stop Buttons](#boxer-stop-buttons) for additional details.
 
 <center>
   <img
@@ -136,7 +136,7 @@ Boxer includes RGB LED strips around its body. These lights express system statu
 | LED Pattern   | System State                                                                |
 | :------------ | :-------------------------------------------------------------------------- |
 | Solid Red     | Robot is starting up                                                        |
-| Flashing Red  | Robot is E-Stopped or Safety Stopped                                        |
+| Flashing Red  | Robot is emergency stopped or safety stopped                                |
 | Circling Blue | Base Unit is in Manual mode, allowing it to be controlled via the ROS 2 API |
 
 At present these lights are not controllable through any ROS topics.
@@ -378,7 +378,7 @@ There are several methods of operating the robot.
 This section details how to get the Robot driving around using the OTTO user interface.
 
 1.  Power on the system.
-2.  Ensure that all E-Stop buttons are released by pulling out the red buttons at the front (V2.5 only) and rear of the unit, and then pressing the blue E-Stop Reset button.
+2.  Ensure that all emergency stop buttons are released by pulling out the red buttons at the front (V2.5 only) and rear of the unit, and then pressing the blue emergency stop Reset button.
     <center>
       <img
         src="/img/robot_images/boxer_images/robot_boxer_13.jpg"
@@ -439,7 +439,7 @@ To use the controller:
 1.  Power up the robot and connect to the OTTO App at `http://<hostname>:5000`
 2.  The system will boot up into a neutral state.
     Take the robot out of _Neutral_ by clicking the _Joystick_ icon at the bottom right of the interface.
-3.  Release all E-Stop buttons and press the E-Stop Reset button.
+3.  Release all emergency stop buttons and press the emergency stop reset button.
 4.  Press the PS button on the controller to sync with the robot.
     Once the blue LED on the top of the controller is solid, the Robot is paired and ready to move.
     Hold the L1 trigger button to engage the enable switch.
@@ -550,26 +550,26 @@ When the robot is operating, keep clear of the wheels.
 
 Refer to the [OTTO 100 V2.5 Operation and Maintenance Manual](https://docs.ottomotors.com/PDFs/100-v2.5-OMM.pdf) for further safety precautions when using self-driving vehicles.
 
-### E-Stop Buttons {#boxer-stop-buttons}
+### Emergency Stop Buttons {#boxer-stop-buttons}
 
 :::warning
 
-Ensure the E-Stop buttons are accessible at all times.
-Avoid mounting payloads that extend over the front or rear of Boxer and would occlude the E-Stop buttons.
+Ensure the emergency stop buttons are accessible at all times.
+Avoid mounting payloads that extend over the front or rear of Boxer and would occlude the emergency stop buttons.
 
 :::
 
-Please take time to locate the red E-Stop buttons on the front (V2.5 only) and rear and of the system.
-The e-stop function allows a person in the physical vicinity of the robot to halt its motion and prevent re-initiation of motion.
-This e-stop system is intended for use in emergency situations.
-The e-stop system should not be used as the means of controlling robot motion during regular operation.
+Please take time to locate the red emergency stop buttons on the front (V2.5 only) and rear and of the system.
+The emergency stop function allows a person in the physical vicinity of the robot to halt its motion and prevent re-initiation of motion.
+This emergency stop system is intended for use in emergency situations.
+The emergency stop system should not be used as the means of controlling robot motion during regular operation.
 
-When any E-Stop button is pressed, it provides a secure way to stop the robot movement, but does not control power attached by the attachment panel.
-The e-stop function can be reset by pulling out all the red E-Stop buttons until they return to an extended position and then pressing the E-Stop Reset button.
-The robot may begin moving again immediately after the E-Stop Reset button has been pressed.
+When any emergency stop button is pressed, it provides a secure way to stop the robot movement, but does not control power attached by the attachment panel.
+The emergency stop function can be reset by pulling out all the red emergency stop buttons until they return to an extended position and then pressing the emergency stop reset button.
+The robot may begin moving again immediately after the emergency stop reset button has been pressed.
 
-When in e-stop mode, the light strip will be flashing red and Boxer will not drive.
-The commands received during e-stop mode are not buffered; Boxer will always act on the latest commands received.
+When in emergency stop mode, the light strip will be flashing red and Boxer will not drive.
+The commands received during emergency stop mode are not buffered; Boxer will always act on the latest commands received.
 This means that if the commands are stopped before the stop is released, the Boxer will not move.
 If the commands are continued, Boxer will move at the speed commanded once the stop is released.
 
