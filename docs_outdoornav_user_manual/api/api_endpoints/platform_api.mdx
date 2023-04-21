@@ -159,7 +159,16 @@ distortion parameters, calibration parameters, etc\...
 
 &emsp;&emsp;**Description:** Raw image data from the specific sensor.
 
-#### /sensors/<type\>_\[0,1,\...\]/depth_image_raw
+#### /sensors/<type\>_\[0,1,\...\]/depth/camera_info
+
+&emsp;&emsp;**Message Type:** sensor_msgs/CameraInfo
+
+&emsp;&emsp;**Type:** camera, stereo
+
+&emsp;&emsp;**Description:** Camera information for the depth image including image dimensions,
+distortion parameters, calibration parameters, etc\...
+
+#### /sensors/<type\>_\[0,1,\...\]/depth/image_rect_raw
 
 &emsp;&emsp;**Message Type:** sensor_msgs/Image
 
