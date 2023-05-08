@@ -33,7 +33,7 @@ function Root({children}) {
     <>
       {children}
       <FooterButton />
-      { signInRequested && <Authenticator variation="modal"></Authenticator> }
+      { signInRequested && <Authenticator variation="modal" hideSignUp={true}></Authenticator> }
     </>
   );
 }
