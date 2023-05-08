@@ -61,3 +61,13 @@ a {
   color: #000000;
   background: #ffcc00;
 }
+
+.amplify-button[data-variation='link'] {
+  color: #000000;
+  background: #ffffff
+}
+
+.amplify-button:hover[data-variation='link'] {
+  color: #000000;
+  background: #ffcc00
+}
