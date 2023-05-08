@@ -143,6 +143,10 @@ const config = {
             position: "right",
           },
           {
+            type: 'custom-signInButton', 
+            position: "right"
+          },
+          {
             type: 'custom-signOutButton', 
             position: "right"
           },
