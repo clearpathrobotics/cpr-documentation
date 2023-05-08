@@ -142,14 +142,6 @@ const config = {
             label: "Home",
             position: "right",
           },
-          {
-            type: 'custom-signInButton', 
-            position: "right"
-          },
-          {
-            type: 'custom-signOutButton', 
-            position: "right"
-          },
           // {
           //   type: 'docsVersionDropdown',
           //   docsPluginId: 'outdoornav_user_manual',
