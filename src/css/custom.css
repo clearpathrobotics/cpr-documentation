@@ -52,3 +52,12 @@
 a {
   color: #3869e5;
 }
+
+.amplify-button[data-variation='primary'] {
+  background: #56575a
+}
+
+.amplify-button:hover[data-variation='primary'] {
+  color: #000000;
+  background: #ffcc00;
+}
