@@ -1,0 +1,8 @@
+# Hidden Page Example
+
+- This page should not appear in the sidebar since this file is located in the `/src/pages/` directory, rather than in `/docs`.
+- Similarly, you cannot navigate to the file `_hiddenPageExampleContent` because it has an underscore at the begnning of the filename.
+  Docusaurus does not build routing paths to filenames that start with an underscore.
+- This 2 file system seems necessary to protect content from users without login credentials.
+  The main file runs the React component BlockedPageRouting, to see what content should be rendered.
+  This ensures that the unprivileged user cannot find the content by using through their web browser's developer tools to review the HTML.
