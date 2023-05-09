@@ -33,8 +33,7 @@ function Root({children}) {
 
   function handleClick() {
     changeSignInRequested(!signInRequested);
-    checkIfSignedIn();
-    if (signInRequested) signOut();
+    if (isUserSignedIn) signOut();
   }
 
   function FooterButton() {
@@ -56,7 +55,6 @@ function Root({children}) {
     }, 1000);
     return () => clearInterval(interval);
   }, [])
-  
   
   return (
     <>
