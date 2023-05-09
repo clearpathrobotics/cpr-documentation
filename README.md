@@ -27,11 +27,27 @@
 
 3.  Open the folder
 4.  In a terminal, navigate to the root of the project folder and run `npm install`
-5.  Start the local server by running `npm run start`
-6.  A new tab should open in your prefered web browser once the site is running.
+5.  Pull the AWS configuration settings to your local machine by running 
+    ```
+    amplify pull --appId dfy90wyu8dics --envName staging`
+    ```
+    This should open a tab in your web browser, asking for permission to connect Amplify Studio to the Amplify CLI (command line interface).
+    After responding yes, return to the terminal and answer a few more questions to configure your local machine:
+    ```
+    ? Choose your default editor:                     Visual Studio Code
+    ? Choose the type of app that you're building     javascript  
+    ? What javascript framework are you using         react
+    ? Source Directory Path:                          .
+    ? Distribution Directory Path:                    build
+    ? Build Command:                                  npm run build
+    ? Start Command:                                  npm run start
+    ? Do you plan on modifying this backend?          No
+    ```
+6.  Start the local server by running `npm run start`
+7.  A new tab should open in your prefered web browser once the site is running.
     Your terminal session should show the port the webpage is running on.
     The default address is http://localhost:3000/ but this may change if you are already using that port for another site.
-7.  If you want to test something on a mobile screensize; you can do this within your desktop's Chrome browser.
+8.  If you want to test something on a mobile screensize; you can do this within your desktop's Chrome browser.
     When the site is running locally; enter Chrome's developer tools by selecting: _3 dots in the top right_ → _More tools_ → _Developer tools_.
     You can then select the _Device Toolbar_ button, and change the screensize, as shown in the two images below.
     We are designing to a smallest screen width of 320 px.
