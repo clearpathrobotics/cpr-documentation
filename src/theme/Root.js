@@ -14,6 +14,7 @@ function Root({children}) {
   async function signOut() {
     try {
         await Auth.signOut();
+        changeSignInRequested(false);
     } catch (error) {
         console.log('error signing out: ', error);
     }
@@ -41,6 +42,12 @@ function Root({children}) {
       <button onClick={handleClick}>{isUserSignedIn ? 'Sign Out' : 'Sign In'}</button>
     )
   }
+
+  // Checks if signed in using Auth, on page reload
+  useEffect(() => {
+    checkIfSignedIn()
+    if (isUserSignedIn) changeSignInRequested(true);
+  }, []);
 
   // Checks if signed in using Auth, every second
   useEffect(() => {
