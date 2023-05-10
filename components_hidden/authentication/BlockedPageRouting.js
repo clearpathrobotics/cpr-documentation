@@ -7,10 +7,10 @@ Amplify.configure(awsExports);
 
 import BlockedPageContent from "./blockedPageContent.mdx"
 
-async function fetchUserIsEmployee(setUserIsEmployee) {
+async function fetchUserIsTrusted(setUserIsTrusted) {
   const {accessToken} = await Auth.currentSession();
   const cognitogroups = accessToken.payload['cognito:groups'];
-  setUserIsEmployee(cognitogroups.includes('employee') !== -1);
+  setUserIsTrusted(cognitogroups.includes('trusted') !== -1);
 }
 
 function PageContent(props) {
@@ -18,13 +18,13 @@ function PageContent(props) {
 }
 
 function Page(props) {
-  const [userIsEmployee, setUserIsEmployee] = useState(false);
+  const [userIsTrusted, setUserIsTrusted] = useState(false);
   
   useEffect(() => {
-    fetchUserIsEmployee(setUserIsEmployee);
+    fetchUserIsTrusted(setUserIsTrusted);
   }, []);
 
-  if (userIsEmployee) {
+  if (userIsTrusted) {
     return <PageContent content={props.content}/>
   } else {
     return <BlockedPageContent />;
