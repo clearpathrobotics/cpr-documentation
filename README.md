@@ -253,3 +253,104 @@ The list below are not strict rules, but are considered good practice to keep im
     Finally, select _OK_, and _Save_
 
     <img src="/static/img/readme_images/readme_solidworks_image_4.png" width="800"/>
+
+## Authentication
+
+Our website uses AWS Authenticator to allow a user to login.
+We have intentionally removed the fields to allow a user to sign up, since we intend to manage access by invitation only.
+To login, the user clicks the Sign In button at the bottom of the page, and enters their username and password.
+
+### How we authenticate a user's credentials
+
+Most of the functionality is added in this repository's file `/src/theme/Root.js`.
+Root.js is Docusaurus's way to change application functionality, similar to App.js in a standard React application.
+In Root.js's return section, `<Authenticator>` may be added to the DOM, based on some binary State checks.
+When `<Authenticator>` is added to the DOM, a popup will appear in the centre of the user's screen, asking for login credentials.
+
+[Authenticator](https://ui.docs.amplify.aws/react/connected-components/authenticator) is a user interface component.
+The actual sign in and getting user information from the AWS database is done with `Auth`.
+Root.js is configured to get database configuration details using:
+
+```
+import awsExports from '/aws-exports';
+```
+
+Once the user has signed in, we use methods from `Auth` to review the user's infromation stored in the database.
+The main thing that we are checking is what `groups` the user is assigned to.
+
+### How a user gets routed to hidden content
+
+`Authenticator` and `Auth` handle the login.
+We then use our components `BlockedPageRouting` and `InjectPrivilegedContent` to decide what gets pushed to the DOM.
+You can find these components in `/components_hidden/authentication`.
+
+You can see these components being used on the page `/docs/tools/documentation`.
+
+### Where to put hidden source files
+
+Content that you want to hide should either be placed in:
+
+- `docs_hidden` for full pages.
+  Note that these are [Docusaurus Pages](https://docusaurus.io/docs/creating-pages), rather than [Docusaurus Docs](https://docusaurus.io/docs/create-doc).
+  The main differences being that Pages do not get built into a tree structure, and do not have a table-of-contents.
+- `components_hidden` for snippets of content, to call into an existing page.
+- Images go in the standard location `/static/img`. 
+  Images were not considered sensitive during the development of these authentication tools.
+  This means users can access any image through a URL, even if they are not logged in.
+  For example: https://docs.clearpathrobotics.com/img/robot_images/husky_images/husky_banner.png
+
+Anything in `docs_hidden` will need a 2 file structure, similar to the examples in `/docs_hidden/hiddenPageExample`.
+This 2 file structure is required by our `BlockedPageRouting` component, to prevent unpriviliged users from accessing the data through their browser's developer tools. 
+### Caution
+
+`aws-exports` is a file that gets created during the Docusaurus build.
+This file includes database configuration details which are necessary for `Auth` to connect to the AWS database.
+It is important that `aws-exports.js` does not get shared publicily, since this would allow someone to access our user data.
+
+- Keep `aws-exports.js` in the `.gitignore` file
+- Do not run `amplify pull` on a local server that is being shipped to a customer (like a robot).
+  `amplify pull` should only be run on our development computers, when we intend to make changes to this repository.
+- Do not publish the contents of `aws-exports.js` publicly (emails, GitHub comments, Support tickets).
+
+### Giving a user login credentials
+
+1.  Login to AWS.
+
+2.  Confirm that you are connected to the Ohio datacenter.
+
+3.  Select the Cognito application (you may need to use the serch bar).
+
+    <img src="/static/img/readme_images/readme_aws_homepage_to_cognito.png" width="800"/>
+
+4.  Select the link for the `cprdocumentation-staging` data.
+
+    <img src="/static/img/readme_images/readme_aws_cognito_landing.png" width="800"/>
+    
+5.  Select the _Create user_ button.
+
+    <img src="/static/img/readme_images/readme_aws_cognito_cprdocumentation_staging.png" width="800"/>
+
+6.  Fill in the user's information, and then select the _Create user_ button.
+
+    <img src="/static/img/readme_images/readme_aws_cognito_create_user.png" width="800"/>
+
+7.  You will be routed back to the Cognito homepage.
+    Find the new entry in the Users list, and click on the hyperlink for that new user.
+
+    <img src="/static/img/readme_images/readme_aws_cognito_landing_new_user.png" width="800"/>
+
+8.  Click the _Add user to a group_ button.
+    <img src="/static/img/readme_images/readme_aws_cognito_add_user_to_a_group.png" width="800"/>
+
+9.  Select the _trusted_ group, and then click the _Add_ button.
+    <img src="/static/img/readme_images/readme_aws_cognito_trusted_group.png" width="800"/>
+
+### Deleting a user
+
+1.  Follow steps 1 - 4 from above, to get to the `cprdocumentation-staging` landing page.
+
+2.  Select the user from the list, and then click the _Delete user_ button.
+
+    <img src="/static/img/readme_images/readme_aws_cognito_delete_user.png" width="800"/>
+
+3.  Confirm the popup that you want to disable access, and delete the user information.
