@@ -69,16 +69,6 @@ const config = {
         showLastUpdateTime: true,
       },
     ],
-    [
-      "@docusaurus/plugin-content-pages",
-      {
-        id: "docs_hidden",
-        path: "docs_hidden",
-        routeBasePath: "docs_hidden",
-        remarkPlugins: [math],
-        rehypePlugins: [katex],
-      },
-    ],
   ],
 
   themeConfig:
