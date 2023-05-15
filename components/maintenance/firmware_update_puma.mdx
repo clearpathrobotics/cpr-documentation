@@ -139,6 +139,31 @@ Replace `motor_controller_firmware_husky_001.bin` with whatever firmware file yo
 
 :::
 
+:::tip
+
+You may need change the permissions of the `sflash` program.
+You can do this by right-clicking on `sflash` and selecting `properties`.
+Change the permissions to `Allow executing file as a program`.
+
+<figure>
+  <center>
+    <img
+      src="/img/accessories_images/puma/sflash_permissions.png"
+      width="350"
+    />
+  </center>
+</figure>
+
+
+Alternatively; you can add execute permissions to sflash using a termainal.
+Navigate to the file through a terminal, and running: 
+
+```
+chmod +x sflash
+```
+
+:::
+
 You should see the program running in the terminal window.
 You will see the following message when the firmware installation is complete:
 

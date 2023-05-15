@@ -16,164 +16,164 @@ The OutdoorNav software publishes to the topics in this section either
 all the time or while an autonomous navigation missions is running. They
 can be used to monitor the behaviour of OutdoorNav.
 
-#### control_selection/control_state
+#### /control_selection/control_state
 
-**Message Type:** [cpr_control_msgs/ControlSelectionState](definitions#msg-control-selection-state)
+&emsp;&emsp;**Message Type:** [cpr_control_msgs/ControlSelectionState](definitions#msg-control-selection-state)
 
-**Description:** Indicates the complete state of control selection
+&emsp;&emsp;**Description:** Indicates the complete state of control selection
 including autonomy state and mode.
 
-#### control_selection/current_mode
+#### /control_selection/current_mode
 
-**Message Type:** [cpr_control_msgs/ControlMode](definitions#msg-control-mode)
+&emsp;&emsp;**Message Type:** [cpr_control_msgs/ControlMode](definitions#msg-control-mode)
 
-**Description:** Current control mode (NEUTRAL, MANUAL, AUTONOMY).
+&emsp;&emsp;**Description:** Current control mode (NEUTRAL, MANUAL, AUTONOMY).
 
-#### localization/odom
+#### /localization/odom
 
-**Message Type:** nav_msgs/Odometry
+&emsp;&emsp;**Message Type:** nav_msgs/Odometry
 
-**Description:** The robot's current pose and velocity.
+&emsp;&emsp;**Description:** The robot's current pose and velocity.
 
-#### localization/status (IN DEVELOPMENT)
+#### /localization/status (IN DEVELOPMENT)
 
-**Message Type:** [cpr_localization_msgs/LocalizationStatus](definitions#msg-localization-status)
+&emsp;&emsp;**Message Type:** [cpr_localization_msgs/LocalizationStatus](definitions#msg-localization-status)
 
-**Description:** Current localization status. Includes accuracy, GPS
+&emsp;&emsp;**Description:** Current localization status. Includes accuracy, GPS
 status
 
-#### mission/feedback
+#### /mission/feedback
 
-**Message Type:** cpr_navigation_msgs/MissionActionFeedback
+&emsp;&emsp;**Message Type:** cpr_navigation_msgs/MissionActionFeedback
 
-**Description:** Feedback topic from the mission action.
+&emsp;&emsp;**Description:** Feedback topic from the mission action.
 
-#### mission/result
+#### /mission/result
 
-**Message Type:** cpr_navigation_msgs/MissionActionResult
+&emsp;&emsp;**Message Type:** cpr_navigation_msgs/MissionActionResult
 
-**Description:** Result topic from the mission action.
+&emsp;&emsp;**Description:** Result topic from the mission action.
 
-#### navigation/current_goal_info
+#### /navigation/current_goal_info
 
-**Message Type:** [cpr_navigation_msgs/CurrentGoalInfo](definitions#msg-current-goal-info)
+&emsp;&emsp;**Message Type:** [cpr_navigation_msgs/CurrentGoalInfo](definitions#msg-current-goal-info)
 
-**Description:** string identifier (id), goal and viapoint positions,
+&emsp;&emsp;**Description:** string identifier (id), goal and viapoint positions,
 headings, pose/yaw tolerances, etc\...
 
-#### navigation/distance_to_goal
+#### /navigation/distance_to_goal
 
-**Message Type:** [cpr_navigation_msgs/DistanceToGoal](definitions#msg-distance-to-goal)
+&emsp;&emsp;**Message Type:** [cpr_navigation_msgs/DistanceToGoal](definitions#msg-distance-to-goal)
 
-**Description:** The current Euclidean distance and the path distance,
+&emsp;&emsp;**Description:** The current Euclidean distance and the path distance,
 in meters, from the robot to its current goal.
 
-#### navigation/footprint
+#### /navigation/footprint
 
-**Message Type:** geometry_msgs/Polygon
+&emsp;&emsp;**Message Type:** geometry_msgs/Polygon
 
-**Description:** The footprint of the robot.
+&emsp;&emsp;**Description:** The footprint of the robot.
 
-#### navigation/local_costmap
+#### /navigation/local_costmap
 
-**Message Type:** nav_msgs/OccupancyGrid
+&emsp;&emsp;**Message Type:** nav_msgs/OccupancyGrid
 
-**Description:** An occupancy grid consisting of the Free, Occupied or
+&emsp;&emsp;**Description:** An occupancy grid consisting of the Free, Occupied or
 Unknown space that the robot uses to detect obstacles.
 
-#### navigation/local_plan
+#### /navigation/local_plan
 
-**Message Type:** nav_msgs/msg/Path
+&emsp;&emsp;**Message Type:** nav_msgs/msg/Path
 
-**Description:** The MPC local plan that the navigation uses to control
+&emsp;&emsp;**Description:** The MPC local plan that the navigation uses to control
 the robot along the reference path.
 
-#### navigation/motion_state (IN DEVELOPMENT)
+#### /navigation/motion_state (IN DEVELOPMENT)
 
-**Message Type:** [cpr_navigation_msgs/MotionState](definitions#msg-motion-state)
+&emsp;&emsp;**Message Type:** [cpr_navigation_msgs/MotionState](definitions#msg-motion-state)
 
-**Description:** This topic provides information about the motion state
+&emsp;&emsp;**Description:** This topic provides information about the motion state
 of the robot. This includes information about whether the robot is
 moving or stopped. Whether it is about to make a turn and the direction
 of the turn, and the direction of travel of the robot in regards to its
 physical orientation.
 
-#### navigation/odom_intent (IN DEVELOPMENT)
+#### /navigation/odom_intent (IN DEVELOPMENT)
 
-**Message Type:** [cpr_navigation_msgs/OdomIntent](definitions#msg-odom-intent)
+&emsp;&emsp;**Message Type:** [cpr_navigation_msgs/OdomIntent](definitions#msg-odom-intent)
 
-**Description:** The robot's current pose and velocity as well as an
+&emsp;&emsp;**Description:** The robot's current pose and velocity as well as an
 intended pose and velocity in the immediate future.
 
-#### navigation/path
+#### /navigation/path
 
-**Message Type:** geometry_msgs/PoseArray
+&emsp;&emsp;**Message Type:** geometry_msgs/PoseArray
 
-**Description:** The path that the robot is currently traversing. This
+&emsp;&emsp;**Description:** The path that the robot is currently traversing. This
 is initialized with the initial path and may be updated with paths
 generated from replanning maneuvers.
 
-#### navigation/progress (BETA)
+#### /navigation/progress (BETA)
 
-**Message Type:** [cpr_navigation_msgs/Progress](definitions#msg-navigation-progress)
+&emsp;&emsp;**Message Type:** [cpr_navigation_msgs/Progress](definitions#msg-navigation-progress)
 
-**Description:** The completion percentage of the current path, the
+&emsp;&emsp;**Description:** The completion percentage of the current path, the
 current goal and the current mission.
 
-#### navigation/safety_footprints
+#### /navigation/safety_footprints
 
-**Message Type:** geometry_msgs/PolygonStamped
+&emsp;&emsp;**Message Type:** geometry_msgs/PolygonStamped
 
-**Description:** Footprint sets used for detecting obstacles and slowing
+&emsp;&emsp;**Description:** Footprint sets used for detecting obstacles and slowing
 down the robot to a standstill. The footprints are modular in size
 according to the current velocity of the robot.
 
-#### navigation/scan_points
+#### /navigation/scan_points
 
-**Message Type:** [cpr_navigation_msgs/ScanPoints](definitions#msg-scan-points)
+&emsp;&emsp;**Message Type:** [cpr_navigation_msgs/ScanPoints](definitions#msg-scan-points)
 
-**Description:** Scans and pointclouds from the various ROS message
+&emsp;&emsp;**Description:** Scans and pointclouds from the various ROS message
 formats converted into a simple PointVector format that can be easily
 consumed by the UI.
 
-#### navigation/state (BETA)
+#### /navigation/state (BETA)
 
-**Message Type:** [cpr_navigation_msgs/NavigationState](definitions#msg-navigation-state)
+&emsp;&emsp;**Message Type:** [cpr_navigation_msgs/NavigationState](definitions#msg-navigation-state)
 
-**Description:** The current navigation state. The available states are
+&emsp;&emsp;**Description:** The current navigation state. The available states are
 COMPUTE PATH, EXECUTE, REPLAN, NAVIGATING AROUND OBSTACLE, RECOVERY,
 IDLE, PAUSE, ESTOP, LOST. Multiple simultaneous states are possible.
 
-#### navigation/track_error
+#### /navigation/track_error
 
-**Message Type:** [cpr_navigation_msgs/TrackError](definitions#msg-track-error)
+&emsp;&emsp;**Message Type:** [cpr_navigation_msgs/TrackError](definitions#msg-track-error)
 
-**Description:** The current crosstrack error (ie. the off-path distance
+&emsp;&emsp;**Description:** The current crosstrack error (ie. the off-path distance
 between the robot and the reference path) and as well as the heading
 error (ie. the difference between the current heading and the path
 direction).
 
-#### navigation/cmd_vel
+#### /navigation/cmd_vel
 
-**Message Type:** geometry_msgs/Twist
+&emsp;&emsp;**Message Type:** geometry_msgs/Twist
 
-**Description:** This output commanded velocity from the autonomy
+&emsp;&emsp;**Description:** This output commanded velocity from the autonomy
 software (OutdoorNav) to control the velocity of the platform. It is
 commonly relayed directly into the UGV's velocity controller.
 
-#### safety/safety_stop
+#### /safety/safety_stop
 
-**Message Type:** std_msgs/Bool
+&emsp;&emsp;**Message Type:** std_msgs/Bool
 
-**Description:** Flag denoting if autonomy should be stopped due to any
+&emsp;&emsp;**Description:** Flag denoting if autonomy should be stopped due to any
 of the following reasons: emergency stop active, one of the sensors has
 triggered the safety monitor watchdog.
 
-#### safety/watchdog_status (IN DEVELOPMENT)
+#### /safety/watchdog_status (IN DEVELOPMENT)
 
-**Message Type:** [cpr_safety_msgs/WatchdogStatus](definitions#msg-safety-watchdog)
+&emsp;&emsp;**Message Type:** [cpr_safety_msgs/WatchdogStatus](definitions#msg-safety-watchdog)
 
-**Description:** Provides a list of status flags for each of the
+&emsp;&emsp;**Description:** Provides a list of status flags for each of the
 possible sensors that may trigger a safety stop. The watchdog will
 trigger if the sensor times out (ie. does not publish a relevant ROS
 message for 1 second).
@@ -185,24 +185,24 @@ message for 1 second).
 The OutdoorNav software subscribes to the topics in this section. They
 can be used to control the behaviour of OutdoorNav.
 
-#### platform/odom
+#### /platform/cmd_vel
 
-**Message Type:** nav_msgs/Odometry
+&emsp;&emsp;**Message Type:** geometry_msgs/Twist
 
-**Description:** Platform-level wheel odometry.
+&emsp;&emsp;**Description:** Platform-level commanded velocity. This should be the velocity tracked by the platforms velocity controller.
 
-#### mission/cancel
+#### /mission/cancel
 
-**Message Type:** actionlib_msgs/GoalID
+&emsp;&emsp;**Message Type:** actionlib_msgs/GoalID
 
-**Description:** This topic is used to cancel all the missions that have
+&emsp;&emsp;**Description:** This topic is used to cancel all the missions that have
 been sent to the OutdoorNav software.
 
-#### mission/goal
+#### /mission/goal
 
-**Message Type:** cpr_navigation_msgs/msg/MissionActionGoal
+&emsp;&emsp;**Message Type:** cpr_navigation_msgs/msg/MissionActionGoal
 
-**Description:** This topic is used to send a goal to the OutdoorNav
+&emsp;&emsp;**Description:** This topic is used to send a goal to the OutdoorNav
 software. The goal can consist of a series of Waypoints and must include
 a Goal point.
 
@@ -210,50 +210,50 @@ a Goal point.
 
 ### Services Exported by Autonomy
 
-#### control_selection/set_mode
+#### /control_selection/set_mode
 
-**Service Type:** [cpr_control_msgs/srv/SetControlMode](definitions#srv-set-control-mode)
+&emsp;&emsp;**Service Type:** [cpr_control_msgs/srv/SetControlMode](definitions#srv-set-control-mode)
 
-**Description:** Change the current control mode from NEUTRAL to MANUAL
+&emsp;&emsp;**Description:** Change the current control mode from NEUTRAL to MANUAL
 or AUTONOMY.
 
-#### control_selection/autonomy_pause
+#### /control_selection/autonomy_pause
 
-**Service Type:** std_srvs/SetBool
+&emsp;&emsp;**Service Type:** std_srvs/SetBool
 
-**Description:** Pause the autonomy when it is currently in AUTONOMY
+&emsp;&emsp;**Description:** Pause the autonomy when it is currently in AUTONOMY
 mode. Will only pause when autonomy is active.
 
-#### control_selection/autonomy_resume
+#### /control_selection/autonomy_resume
 
-**Service Type:** std_srvs/SetBool
+&emsp;&emsp;**Service Type:** std_srvs/SetBool
 
-**Description:** Resume the autonomy when it is current mode is in
+&emsp;&emsp;**Description:** Resume the autonomy when it is current mode is in
 AUTONOMY. Will only resume if the robot is in a paused state.
 
-#### localization/set_datum
+#### /localization/set_datum
 
-**Service Type:** [cpr_localization_msgs/srv/SetDatum](definitions#srv-set-datum)
+&emsp;&emsp;**Service Type:** [cpr_localization_msgs/srv/SetDatum](definitions#srv-set-datum)
 
-**Description:** This service is used to manually set the datum
+&emsp;&emsp;**Description:** This service is used to manually set the datum
 parameters of OutdoorNav running on the UGV. After setting the datum
 parameter, this service also reinitializes the states of the
 localization according to the current sensor readings. If you are
 sending a mission to the UGV without using the UI and through the API,
 you must call this service before sending the mission.
 
-#### localization/set_pose (IN DEVELOPMENT)
+#### /localization/set_pose (IN DEVELOPMENT)
 
-**Service Type:**
+&emsp;&emsp;**Service Type:**
 
-**Description:** This service can be used to reset or reinitialize the
+&emsp;&emsp;**Description:** This service can be used to reset or reinitialize the
 localization of the UGV.
 
-#### navigation/set_collision_avoidance
+#### /navigation/set_collision_avoidance
 
-**Service Type:** std_srvs/SetBool
+&emsp;&emsp;**Service Type:** std_srvs/SetBool
 
-**Description:** Modify the state of the collision avoidance feature. If
+&emsp;&emsp;**Description:** Modify the state of the collision avoidance feature. If
 True, collision avoidance is ENABLED and the robot will use its lidar(s)
 to detect and maneuver around obstacles. If False, collision avoidance
 is DISABLED and the robot will NOT use its lidar(s) to detect and
@@ -271,11 +271,11 @@ should be used with caution.
 
 :::
 
-#### navigation/set_continuous_planner
+#### /navigation/set_continuous_planner
 
-**Service Type:** std_srvs/SetBool
+&emsp;&emsp;**Service Type:** std_srvs/SetBool
 
-**Description:** Modify the state of the continuous planning feature. If
+&emsp;&emsp;**Description:** Modify the state of the continuous planning feature. If
 True, continuous planning is ENABLED and the robot will proactively
 attempt to generate a path around detected obstacles. If False,
 continuous planning is DISABLED and the robot will stop in front of
@@ -290,11 +290,11 @@ obstacles before generating a path around the obstacle.
 
 :::
 
-#### navigation/set_path_smoother
+#### /navigation/set_path_smoother
 
-**Service Type:** [cpr_navigation_msgs/srv/SetPathSmoother](definitions#srv-set-path-smoother)
+&emsp;&emsp;**Service Type:** [cpr_navigation_msgs/srv/SetPathSmoother](definitions#srv-set-path-smoother)
 
-**Description:** Modify the state of the path smoothing feature. If
+&emsp;&emsp;**Description:** Modify the state of the path smoothing feature. If
 True, path smoothing is ENABLED and curved paths will be generated
 according to the specified turning radius. If False, path smoothing is
 DISABLED and point-to-point paths will be generated.
@@ -305,11 +305,11 @@ This feature takes effect immediately once the service is called.
 
 :::
 
-#### navigation/set_path shifter
+#### /navigation/set_path shifter
 
-**Service Type:** [cpr_navigation_msgs/srv/SetPathShifter](definitions#srv-set-path-shifter)
+&emsp;&emsp;**Service Type:** [cpr_navigation_msgs/srv/SetPathShifter](definitions#srv-set-path-shifter)
 
-**Description:** Modify the state of the path shifting feature. If True,
+&emsp;&emsp;**Description:** Modify the state of the path shifting feature. If True,
 path shifting is ENABLED and the reference path will be automatically
 shifted as it veers off the reference path (to prevent oscillations). If
 False, path shifting is DISABLED and normal behaviour is active.
@@ -320,20 +320,20 @@ This feature takes effect immediately once the service is called.
 
 :::
 
-#### navigation/set_stop_distance (IN DEVELOPMENT)
+#### /navigation/set_stop_distance (IN DEVELOPMENT)
 
-**Service Type:** [cpr_navigation_msgs/srv/SetStopDistance](definitions#srv-set-stop-distance)
+&emsp;&emsp;**Service Type:** [cpr_navigation_msgs/srv/SetStopDistance](definitions#srv-set-stop-distance)
 
-**Description:** Modify the state of the stop distance feature. If True,
+&emsp;&emsp;**Description:** Modify the state of the stop distance feature. If True,
 the stop distance feature is ENABLED and the robot will stop the
 specified distance from obstacles. If False, the stop distance feature
 is DISABLED and the robot will stop the default distance from obstacles.
 
-#### navigation/set_delay_compensation (IN DEVELOPMENT)
+#### /navigation/set_delay_compensation (IN DEVELOPMENT)
 
-**Service Type:** [cpr_navigation_msgs/srv/SetDelayCompensation](definitions#srv-set-delay-compensation)
+&emsp;&emsp;**Service Type:** [cpr_navigation_msgs/srv/SetDelayCompensation](definitions#srv-set-delay-compensation)
 
-**Description:** Modify the state of the delay compensation feature. If
+&emsp;&emsp;**Description:** Modify the state of the delay compensation feature. If
 True, delay compensation is ENABLED and the controller will compensate
 for low-level mechanical delays. If False, delay compensation is
 DISABLED and the normal behaviour is expected.
@@ -342,23 +342,23 @@ DISABLED and the normal behaviour is expected.
 
 ### Actions Exported by Autonomy
 
-#### localization/survey
+#### /localization/survey
 
-**Action Type:** [cpr_localization_msgs/action/SurveyBaseStation](definitions#action-survey-base-station)
+&emsp;&emsp;**Action Type:** [cpr_localization_msgs/action/SurveyBaseStation](definitions#action-survey-base-station)
 
-**Description:** Start surveying the base station, if available.
+&emsp;&emsp;**Description:** Start surveying the base station, if available.
 
-#### mission
+#### /mission
 
-**Action Type:** [cpr_navigation_msgs/action/Mission](definitions#action-mission)
+&emsp;&emsp;**Action Type:** [cpr_navigation_msgs/action/Mission](definitions#action-mission)
 
-**Description:** Send goals for execution by the robot. This will
+&emsp;&emsp;**Description:** Send goals for execution by the robot. This will
 include the goal, the viapoint(s), tasks, goal tolerances and goal
 heading.
 
-#### dock
+#### /dock
 
-**Action Type:** [cpr_dock_msgs/action/Dock](definitions#action-dock)
+&emsp;&emsp;**Action Type:** [cpr_dock_msgs/action/Dock](definitions#action-dock)
 
-**Description:** Send the robot to the charging dock, if the docking
+&emsp;&emsp;**Description:** Send the robot to the charging dock, if the docking
 package has been included.

@@ -6,6 +6,8 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
+import versions from "@site/static/versions.js"
+
 Prior to installing the OutdoorNav software, ensure that you have completed the relevant [Hardware Kit Checklist](/docs_outdoornav_user_manual/integration_requirements/hardware_integration_requirements). If installing on a secondary/backpack/Starter Kit computer, ensure to have also completed the:
 - [Interface Control Checklist](/docs_outdoornav_user_manual/integration_requirements/interface_control_requirements)
 
@@ -15,10 +17,12 @@ All the following instructions, unless otherwise specified, are to be run on the
 
 The following repository is required to run the instructions in the subsequent sections.
 
-``` bash
+<code>
+{`
 cd ~/
-git clone -b 0.6.2 https://gitlab.clearpathrobotics.com/cpr-outdoornav/cpr_outdoornav_launch.git
-```
+git clone -b ${versions.outdoornav} https://gitlab.clearpathrobotics.com/cpr-outdoornav/cpr_outdoornav_launch.git
+`}
+</code>
 
 For remote installations, please contact Clearpath Robotics customer support in order to obtain the relevant information required to proceed.
 
