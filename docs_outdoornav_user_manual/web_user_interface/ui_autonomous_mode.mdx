@@ -281,16 +281,24 @@ the mission/task will be shown to be cancelled in the feedback bar.
 
 ## Autonomous Docking
 
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_map_with_dock.png" />
+    <figcaption>Dock Icon</figcaption>
+  </figure>
+</center>
+
 ### Docking The UGV
 
 To dock the UGV autonomously, the user should follow these steps:
 
 -   Enable the "Edit Mission" toggle.
 -   Create a Mission whose Waypoints approach the dock from the front and
-    whose final Waypoint is within 10 meters of the dock.
+    whose final Waypoint is within the maximum predock distance which is shown as a circle around the dock.
 -   Enable the Waypoints Panel toggle to view the list of Waypoints, rename the last
     Waypoint to "Dock Waypoint" or something descriptive and add the "Dock
-    UGV" task to this Waypoint.
+    UGV" task to this Waypoint.  If there is more than one dock in the system the user will
+    have to open the task options and select the dock name from the list.
 -   Run the Mission.
 
 ### Undocking The UGV
