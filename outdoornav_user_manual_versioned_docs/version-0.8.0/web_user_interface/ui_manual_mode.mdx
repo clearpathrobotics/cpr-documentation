@@ -1,0 +1,49 @@
+---
+title: Web UI Manual Mode (Teleoperation)
+sidebar_label: Web UI Manual Mode (Teleoperation)
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+The Manual Mode in the Web UI allows the user to operate the UGV
+remotely (teleoperate) by using sensors on the UGV to visualize the
+environment and by using a joystick to control the motion of the UGV.
+
+![](/img/outdoornav_images/teleop_danger.png)
+
+Ensure that you have read [Safety](/docs_outdoornav_user_manual/safety) and are
+aware of possible hazards when using this product as well as the safety
+methods that can be used to stop the moving UGV.
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_teleop_components.png" />
+    <figcaption>Teleoperation Components</figcaption>
+  </figure>
+</center>
+
+1.  **Speedometer:** An indicator of the UGV's current forward speed.
+2.  **Joystick:** The joystick will allow the user to move the UGV
+    manually from the UI. Motion can be sent to the UGV in 360°
+    directions and the speed can be controlled by the distance of the
+    joystick from its neutral position.
+3.  **Sensitivity Scale:** A UGV-specific scale that controls the
+    maximum allowable UGV velocities at each level. The maximum linear
+    velocity is 1.0 meters per second and the maximum angular velocity
+    is 0.5 radians per second. The scale levels are 100%, 80%, 50% and
+    20%, with the default set to 80%.
+4.  **Local Docking Buttons:** The local docking/undocking buttons used
+    to dock/undock the UGV through the teleop view.  To dock, the UGV 
+    must be within the predock distance and facing the dock before the 
+    button is selected. 
+
+## Monitor Wireless Strength
+
+While teleoperating the UGV, the user will notice that the delay between
+the time a command is sent and the time it is executed (and/or visible
+on the UI camera views) will increase as the distance increases. This
+effect will be further amplified by any obstacles between the UGV and
+the base (eg. walls, vehicles, mounds, etc.). It is important to monitor
+this delay an be cautious when driving the UGV with larger delay for
+risk of crashing into obstacles.
