@@ -6,13 +6,20 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-The scope of work to transform a non-autonomous UGV into an autonomous
-one will vary depending on the exact hardware capabilities and software
-interfaces of the UGV. Development work will be required by Clearpath
-Robotics, the end user, or a third party developer to bring the UGV into
-compliance with the requirements listed in the table below. This may
-involve implementing encoders and controllers to provide velocity
-control of the platform and implementing a CAN bus to ROS interface with
-kinematic control. The table below provides a general outline of the
-requirements; the detailed requirements are covered in the following
-sections.
+The scope of Appendix C is to provide information on how to tune the various components of
+OutdoorNav.
+
+Instructions for tuning specific platform types can be found here:
+
+- [Differential Drive (Skid-Steer) Dynamics](tuning_instructions/differential_drive_dynamics)
+- [Ackermann Drive Dynamics](tuning_instructions/ackermann_drive_dynamics)
+
+
+Lists of parameters related to each component of the autonomy can be found here:
+
+- [Localization Parameters](tuning_parameters/localization_parameters)
+- [Navigation Parameters](tuning_parameters/navigation_parameters)
+- [Collision Avoidance Parameters](tuning_parameters/collision_avoidance_parameters)
+
+In future releases, we will describe how the user can [Customize their UI](user_interface_customization)
+as well as how to [Customize which Sensors](sensor_customization) are input into OutdoorNav.
