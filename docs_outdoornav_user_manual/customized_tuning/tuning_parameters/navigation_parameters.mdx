@@ -43,12 +43,12 @@ The MPC controller operates as a state machine that contains the following state
 | **`GOAL`**       | Tracking behavior as the platform approaches the goal.              | Will enter GOAL mode when the `goal_horizon_threshold` parameter distance to the goal has been reached.|
 | **`PRECISE`**    | State when more precision is required in the tracking.              | At the start of the path, we begin in Precise mode to ensure that we have a good start to tracking.|
 | **`RESCUE`**     | State to rescue the tracker when the platform is stuck.             | Will enter RESCUE mode when platform is appraching a condition that make it stuck.|
-| **`HYSTERESIS`** | State when you the platform requires compensation for tire flexion. | Will enter HYSTERESIS mode when the platform detects that it has will begin oscillating sue to tire deformation. |
+| **`HYSTERESIS`** | State when you the platform requires compensation for tire flexion. | Will enter HYSTERESIS mode when the platform detects that it has will begin oscillating due to tire deformation. |
 | **`CORNER`**     | State when there is a curve or a corner ahead.                      | Will enter CORNER mode when the platform approaches, within a `corner_lookahead` parameter distance, to a corner with at least `corner_detection_threshold` of a curvature.|
 
 #### Default State Parameters {#default_state_params}
 
-The following list defines the deafult parameters that the MPC controller uses. 
+The following list defines the default parameters that the MPC controller uses. 
 For the most part, they apply to all states of the MPC controller.
 
 | Parameter | Description | Namespace | SI Units |
@@ -79,12 +79,12 @@ For the most part, they apply to all states of the MPC controller.
 | `fwd_a_weight` | Weight for state ẍ (forward acceleration) in MPC cost function, in the MPC state: DEFAULT. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--** |
 | `yaw_a_weight` | Weight for state (yaw acceleration) in MPC cost function, in the MPC state: DEFAULT. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--** |
 | `horizon_percent_change` | The percentage factor used when shortening the MPC horizon. This will affect how quickly we want to speed up after a curvature slowdown. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--** |
-| `error_slowdown_multiplier` | The amount by which to increase the MPC horizon based on the crosstrack and/or heading error. This should be greater than 1.0 since increasing the MPC horizon will decrease the maximum MPC velocity. ** Less than 1.0 will result in the opposite behaviour which is not the exected behaviour for this parameter. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--** |
-| `crosstrackerror_slowdown` | Theshold on the amount of crosstrack error, above which to a slowdown the platform. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) |  |
-| `headingerror_slowdown` | Theshold on the amount of heading error, above which to a slowdown the platform. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) |  |
-| `curvature_slowdown` | Theshold on the path curvature, above which to a slowdown the platform. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) |  |
+| `error_slowdown_multiplier` | The amount by which to increase the MPC horizon based on the crosstrack and/or heading error. This should be greater than 1.0 since increasing the MPC horizon will decrease the maximum MPC velocity. ** Less than 1.0 will result in the opposite behaviour which is not the expected behaviour for this parameter. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--** |
+| `crosstrackerror_slowdown` | Threshold on the amount of crosstrack error, above which to a slowdown the platform. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) |  |
+| `headingerror_slowdown` | Threshold on the amount of heading error, above which to a slowdown the platform. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) |  |
+| `curvature_slowdown` | Threshold on the path curvature, above which to a slowdown the platform. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) |  |
 | `endpoint_multiplier` | Weight multiplier of the very last point along the local plan segment in MPC state: DEFAULT. This value ensures convergence/stability of the optimizer by mimicking the MPCs infinite horizon by applying a terminal cost. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--** |
-| `shrinking_horizon_min` | The minimum horizon that will be used in the computation. This value will prevent the horizon from dropping below this value suring all the horizon adjustments. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **s** |
+| `shrinking_horizon_min` | The minimum horizon that will be used in the computation. This value will prevent the horizon from dropping below this value during all the horizon adjustments. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **s** |
 | `crosstrack_tolerance` | The amount of lateral error that the controller will handle before stopping the platform and replanning a new path. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **m** |
 | `reference_trajectory_factor` | A factor that will skew the path parameter. This value should be between 0 and 1. Values closer to 0.0 will skew the path param closer to the platform, decreasing speed but increasing the accuracy of the path tracking, and vice versa as you approach 1.0. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **m** |
 
@@ -120,7 +120,7 @@ as it approaches corners.
 |-----------|-------------|-----------|:--------:|
 | `corner_segment_slowdown` | Flag to enable/disable the slowdown behaviour in MPC state: CORNER | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location)| **bool** |
 | `corner_lookahead` | The distance on the reference path from the platforms current location, along which to determine if a corner is present. If a corner is present the MPC state will switch to CORNER state and begin reducing the horizon accordingly. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location)| **m** |
-| `corner_detection_threshold` | Theshold on the path curvature, between the platforms current location and the end of the corner_lookahead distance, above which to switch the MPC in state: CORNER, and begin reducing the horizon accordingly. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location)| **rad** |
+| `corner_detection_threshold` | Threshold on the path curvature, between the platforms current location and the end of the corner_lookahead distance, above which to switch the MPC in state: CORNER, and begin reducing the horizon accordingly. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location)| **rad** |
 | `corner_slowdown_multiplier` | The multiplier by which to increase the MPC horizon during the MPCs CORNER state in order to slow the platform down from its top speed. This value should be greater than 1.0. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location)| **--** |
 | `endpoint_multiplier_corner` | Weight multiplier of the very last point along the local plan segment in MPC state: CORNER. This value ensures convergence/stability of the optimizer by mimicking the MPCs infinite horizon by applying a terminal cost. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location)| **--** |
 
