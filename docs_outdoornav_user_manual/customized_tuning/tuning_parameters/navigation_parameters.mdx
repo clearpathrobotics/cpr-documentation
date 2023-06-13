@@ -10,12 +10,15 @@ import versions from "@site/static/versions.js"
 
 ## Controllers {#controllers}
 
+### Determine the file location of the parameter {#file_location}
+
+The parameters related to the controller, can be found here:
+
 ``` bash
-cd ~/cpr_outdoornav_launch/scripts/
-./install_docker.sh
+~/cpr_outdoornav_launch/onav_robots/params/<platform_type>/navigation/controls_general.yaml
 ```
 
-### Determine the file location of the parameter
+If they are not listed in the above file, it is because they are using the default values and are not being overwritten.
 
 ### MPC Controller {#controller}
 
@@ -39,117 +42,126 @@ The MPC controller operates as a state machine that contains the following state
 | **`DEFAULT`**    | Standard tracking behavior.                                         | Will revert to this state if none of the other state conditions are met. |
 | **`GOAL`**       | Tracking behavior as the platform approaches the goal.              | Will enter GOAL mode when the `goal_horizon_threshold` parameter distance to the goal has been reached.|
 | **`PRECISE`**    | State when more precision is required in the tracking.              | At the start of the path, we begin in Precise mode to ensure that we have a good start to tracking.|
-| **`RESCUE`**     | State to rescue the tracker when the platform is stuck.             | Will enter RESCUE mode when robot is appraching a condition that make it stuck.|
-| **`HYSTERESIS`** | State when you the platform requires compensation for tire flexion. | Enters |
+| **`RESCUE`**     | State to rescue the tracker when the platform is stuck.             | Will enter RESCUE mode when platform is appraching a condition that make it stuck.|
+| **`HYSTERESIS`** | State when you the platform requires compensation for tire flexion. | Will enter HYSTERESIS mode when the platform detects that it has will begin oscillating due to tire deformation. |
 | **`CORNER`**     | State when there is a curve or a corner ahead.                      | Will enter CORNER mode when the platform approaches, within a `corner_lookahead` parameter distance, to a corner with at least `corner_detection_threshold` of a curvature.|
 
-#### Normal Behavior Parameters {#normal_behavior}
+#### Default State Parameters {#default_state_params}
+
+The following list defines the default parameters that the MPC controller uses. 
+For the most part, they apply to all states of the MPC controller.
 
 | Parameter | Description | Namespace | SI Units |
 |-----------|-------------|-----------|:--------:|
-| `vehicle_length` | The length (longitudinally) of the robot/platform. | navigation/*&ltcontroller&gt*/path_tracker | **m** |
-| `mpc_horizon` | The prediction horizon of the MPC. | navigation/*&ltcontroller&gt*/path_tracker | **s** |
-| `max_lookahead` | Maximum distance along the path we seek to follow. Affects how far we do collision checks as well as the maximum velocity of the platform. | navigation/*&ltcontroller&gt*/path_tracker | **m** |
-| `min_lookahead` | Minimum distance along the path we seek to follow. Affects how far we do collision checks as well as the maximum velocity of the platform. | navigation/*&ltcontroller&gt*/path_tracker | **m** |
-| `lookahead_smoother` | Factor between 0 and 1 that determines the smoothness of the change in lookahead distance: 0 means only maximum velocity is used to determine the horizon (can be jumpy but speeds up the robot faster); 1 means only averaged planned velocity is used to determine the horizon (smoother but speeds up the robot slowly). | navigation/*&ltcontroller&gt*/path_tracker | **--** |
-| `lookahead_factor` | How aggressively do we want to increase the lookahead from min_lookahead to max_lookahead | navigation/*&ltcontroller&gt*/path_tracker | **--** |
-| `mpc_opt_maxiteration` | The maximum number of iterations that the solver will run. Increase this value for better performance, decrease for shorter computation time.  | navigation/*&ltcontroller&gt*/path_tracker | **--** |
-| `discretization_steps` | Number of grid points along the MPC prediction; Lower: less accuracy, but faster | navigation/*&ltcontroller&gt*/path_tracker | **--** |
-| `max_fwd_velocity` | The maximum allowable linear velocity that the MPC controller can compute. | navigation/*&ltcontroller&gt*/path_tracker | **m/s** |
-| `min_fwd_velocity` | The minimum allowable linear velocity, in any mode, that the MPC controller can compute. This can be used to overcome the different deadbands that different robots may have. | navigation/*&ltcontroller&gt*/path_tracker | **m/s** |
-| `max_rev_velocity` | The maximum allowable reverse linear velocity (ie. positive value), in any mode, that the MPC controller can compute. By default this is set to the `max_fwd_velocity`, so only needed if your maximum linear reverse velocity is different than the forward linear velocity.| navigation/*&ltcontroller&gt*/path_tracker | **m/s** |
-| `max_ang_velocity` | The maximum allowable angular velocity, in any mode, that the MPC controller can compute. This parameter bounds both positive and negative angular velocities. | navigation/*&ltcontroller&gt*/path_tracker | **rad/s** |
-| `max_accel` | The maximum allowable linear acceleration, in normal navigation mode, that the MPC controller can compute. | navigation/*&ltcontroller&gt*/path_tracker | **m/s/s** |
-| `max_decel` | The maximum allowable linear deceleration (ie. negative value), in any mode, that the MPC controller can compute. | navigation/*&ltcontroller&gt*/path_tracker | **m/s/s** |
-| `max_ang_accel` | The maximum allowable angular acceleration, in any mode, that the MPC controller can compute. This parameter bounds both positive and negative angular accelerations. | navigation/*&ltcontroller&gt*/path_tracker | **rad/s/s** |
-| `max_lateral_accel` | The maximum allowable lateral acceleration, in any mode, that the MPC controller can compute. This parameter bounds both positive and negative lateral accelerations. | navigation/*&ltcontroller&gt*/path_tracker | **m/s/s** |
-| `stiction_compensator_fwd` | The minimum linear velocity for movement of the platform. This should typically be the minimum linear velocity that the platform requires for it to move. | navigation/*&ltcontroller&gt*/path_tracker | **m/s** |
-| `stiction_compensator_yaw` | The minimum angular velocity for movement of the platform. This should typically be the minimum angular velocity that the platform requires for it to move. | navigation/*&ltcontroller&gt*/path_tracker | **m/s** |
-| `x_weight` | Weight for state x in MPC cost function, in the MPC state: DEFAULT. | navigation/*&ltcontroller&gt*/path_tracker | **--** |
-| `y_weight` | Weight for state y in MPC cost function, in the MPC state: DEFAULT. | navigation/*&ltcontroller&gt*/path_tracker | **--** |
-| `yaw_weight` | Weight for state yaw in MPC cost function, in the MPC state: DEFAULT. | navigation/*&ltcontroller&gt*/path_tracker | **--** |
-| `fwd_v_weight` | Weight for state ẋ (forward velocity) in MPC cost function, in the MPC state: DEFAULT. | navigation/*&ltcontroller&gt*/path_tracker | **--** |
-| `yaw_d_weight` | Weight for state (yaw velocity) in MPC cost function, in the MPC state: DEFAULT. | navigation/*&ltcontroller&gt*/path_tracker | **--** |
-| `fwd_a_weight` | Weight for state ẍ (forward acceleration) in MPC cost function, in the MPC state: DEFAULT. | navigation/*&ltcontroller&gt*/path_tracker | **--** |
-| `yaw_a_weight` | Weight for state (yaw acceleration) in MPC cost function, in the MPC state: DEFAULT. | navigation/*&ltcontroller&gt*/path_tracker | **--** |
-| `horizon_percent_change` | The percentage factor used when shortening the MPC horizon. This will affect how quickly we want to speed up after a curvature slowdown. | navigation/*&ltcontroller&gt*/path_tracker | **--** |
-| `error_slowdown_multiplier` | The amount by which to increase the MPC horizon based on the crosstrack and/or heading error. This should be greater than 1.0 since increasing the MPC horizon will decrease the maximum MPC velocity. ** Less than 1.0 will result in the opposite behaviour which is not the exected behaviour for this parameter. | navigation/*&ltcontroller&gt*/path_tracker | **--** |
-| `crosstrackerror_slowdown` | Theshold on the amount of crosstrack error, above which to a slowdown the platform. | navigation/*&ltcontroller&gt*/path_tracker |  |
-| `headingerror_slowdown` | Theshold on the amount of heading error, above which to a slowdown the platform. | navigation/*&ltcontroller&gt*/path_tracker |  |
-| `curvature_slowdown` | Theshold on the path curvature, above which to a slowdown the platform. | navigation/*&ltcontroller&gt*/path_tracker |  |
-| `endpoint_multiplier` | Weight multiplier of the very last point along the local plan segment in MPC state: DEFAULT. This value ensures convergence/stability of the optimizer by mimicking the MPCs infinite horizon by applying a terminal cost. | navigation/*&ltcontroller&gt*/path_tracker | **--** |
-| `shrinking_horizon_min` | The minimum horizon that will be used in the computation. This value will prevent the horizon from dropping below this value suring all the horizon adjustments. | navigation/*&ltcontroller&gt*/path_tracker | **s** |
-| `crosstrack_tolerance` | The amount of lateral error that the controller will handle before stopping the platform and replanning a new path. | navigation/*&ltcontroller&gt*/path_tracker | **m** |
-| `reference_trajectory_factor` | A factor that will skew the path parameter. This value should be between 0 and 1. Values closer to 0.0 will skew the path param closer to the robot, decreasing speed but increasing the accuracy of the path tracking, and vice versa as you approach 1.0. | navigation/*&ltcontroller&gt*/path_tracker | **m** |
+| `vehicle_length` | The length (longitudinally) of the platform. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **m** |
+| `mpc_horizon` | The prediction horizon of the MPC. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **s** |
+| `max_lookahead` | Maximum distance along the path we seek to follow. Affects how far we do collision checks as well as the maximum velocity of the platform. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **m** |
+| `min_lookahead` | Minimum distance along the path we seek to follow. Affects how far we do collision checks as well as the maximum velocity of the platform. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **m** |
+| `lookahead_smoother` | Factor between 0 and 1 that determines the smoothness of the change in lookahead distance: 0 means only maximum velocity is used to determine the horizon (can be jumpy but speeds up the platform faster); 1 means only averaged planned velocity is used to determine the horizon (smoother but speeds up the platform slowly). | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--** |
+| `lookahead_factor` | How aggressively do we want to increase the lookahead from min_lookahead to max_lookahead | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--** |
+| `mpc_opt_maxiteration` | The maximum number of iterations that the solver will run. Increase this value for better performance, decrease for shorter computation time.  | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--** |
+| `discretization_steps` | Number of grid points along the MPC prediction; Lower: less accuracy, but faster | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--** |
+| `max_fwd_velocity` | The maximum allowable linear velocity that the MPC controller can compute. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **m/s** |
+| `min_fwd_velocity` | The minimum allowable linear velocity, in any mode, that the MPC controller can compute. This can be used to overcome the different deadbands that different platforms may have. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **m/s** |
+| `max_rev_velocity` | The maximum allowable reverse linear velocity (ie. positive value), in any mode, that the MPC controller can compute. By default this is set to the `max_fwd_velocity`, so only needed if your maximum linear reverse velocity is different than the forward linear velocity.| [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **m/s** |
+| `max_ang_velocity` | The maximum allowable angular velocity, in any mode, that the MPC controller can compute. This parameter bounds both positive and negative angular velocities. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **rad/s** |
+| `max_accel` | The maximum allowable linear acceleration, in normal navigation mode, that the MPC controller can compute. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **m/s/s** |
+| `max_decel` | The maximum allowable linear deceleration (ie. negative value), in any mode, that the MPC controller can compute. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **m/s/s** |
+| `max_ang_accel` | The maximum allowable angular acceleration, in any mode, that the MPC controller can compute. This parameter bounds both positive and negative angular accelerations. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **rad/s/s** |
+| `max_lateral_accel` | The maximum allowable lateral acceleration, in any mode, that the MPC controller can compute. This parameter bounds both positive and negative lateral accelerations. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **m/s/s** |
+| `stiction_compensator_fwd` | The minimum linear velocity for movement of the platform. This should typically be the minimum linear velocity that the platform requires for it to move. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **m/s** |
+| `stiction_compensator_yaw` | The minimum angular velocity for movement of the platform. This should typically be the minimum angular velocity that the platform requires for it to move. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **m/s** |
+| `x_weight` | Weight for state x in MPC cost function, in the MPC state: DEFAULT. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--** |
+| `y_weight` | Weight for state y in MPC cost function, in the MPC state: DEFAULT. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--** |
+| `yaw_weight` | Weight for state yaw in MPC cost function, in the MPC state: DEFAULT. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--** |
+| `fwd_v_weight` | Weight for state ẋ (forward velocity) in MPC cost function, in the MPC state: DEFAULT. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--** |
+| `yaw_d_weight` | Weight for state (yaw velocity) in MPC cost function, in the MPC state: DEFAULT. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--** |
+| `fwd_a_weight` | Weight for state ẍ (forward acceleration) in MPC cost function, in the MPC state: DEFAULT. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--** |
+| `yaw_a_weight` | Weight for state (yaw acceleration) in MPC cost function, in the MPC state: DEFAULT. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--** |
+| `horizon_percent_change` | The percentage factor used when shortening the MPC horizon. This will affect how quickly we want to speed up after a curvature slowdown. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--** |
+| `error_slowdown_multiplier` | The amount by which to increase the MPC horizon based on the crosstrack and/or heading error. This should be greater than 1.0 since increasing the MPC horizon will decrease the maximum MPC velocity. ** Less than 1.0 will result in the opposite behaviour which is not the expected behaviour for this parameter. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--** |
+| `crosstrackerror_slowdown` | Threshold on the amount of crosstrack error, above which to a slowdown the platform. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) |  |
+| `headingerror_slowdown` | Threshold on the amount of heading error, above which to a slowdown the platform. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) |  |
+| `curvature_slowdown` | Threshold on the path curvature, above which to a slowdown the platform. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) |  |
+| `endpoint_multiplier` | Weight multiplier of the very last point along the local plan segment in MPC state: DEFAULT. This value ensures convergence/stability of the optimizer by mimicking the MPCs infinite horizon by applying a terminal cost. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--** |
+| `shrinking_horizon_min` | The minimum horizon that will be used in the computation. This value will prevent the horizon from dropping below this value during all the horizon adjustments. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **s** |
+| `crosstrack_tolerance` | The amount of lateral error that the controller will handle before stopping the platform and replanning a new path. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **m** |
+| `reference_trajectory_factor` | A factor that will skew the path parameter. This value should be between 0 and 1. Values closer to 0.0 will skew the path param closer to the platform, decreasing speed but increasing the accuracy of the path tracking, and vice versa as you approach 1.0. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **m** |
 
-#### Goal Behavior Parameters {#goal_behavior}
+#### Goal State Parameters {#goal_state_params}
 
-Additionally, there are parameters that can be modified to tune the behavior of the controller as it approaches and near and around the goal point.
-
-| Parameter | Description | Namespace | SI Units |
-|-----------|-------------|-----------|:--------:|
-| `goal_horizon_threshold` | The distance from the goal point which the MPC state will switch into state: GOAL , and begin reducing the horizon accordingly. | navigation/*&ltcontroller&gt*/path_tracker | **m** |
-| `goal_slowdown_multiplier` | The multiplier by which to increase the MPC horizon during the MPCs GOAL state in order to slow the platform down from its top speed. This value should be greater than 1.0. | navigation/*&ltcontroller&gt*/path_tracker | |
-| `max_speed_at_goal` | The maximum allowable speed at the goal point for the controller to stop and consider the goal complete. On OEM platforms, this value shold be increased. | navigation/*&ltcontroller&gt*/path_tracker | **m/s** |
-| `x_weight_goal` | Weight for state x in MPC cost function, in the MPC state: GOAL. | navigation/*&ltcontroller&gt*/path_tracker | |
-| `y_weight_goal` | Weight for state y in MPC cost function, in the MPC state: GOAL. | navigation/*&ltcontroller&gt*/path_tracker | |
-| `yaw_weight_goal` | Weight for state yaw in MPC cost function, in the MPC state: GOAL. | navigation/*&ltcontroller&gt*/path_tracker | |
-| `fwd_v_weight_goal` | Weight for state ẋ (forward velocity) in MPC cost function, in the MPC state: GOAL. | navigation/*&ltcontroller&gt*/path_tracker | |
-| `yaw_d_weight_goal` | Weight for state (yaw velocity) in MPC cost function, in the MPC state: GOAL. | navigation/*&ltcontroller&gt*/path_tracker | |
-| `fwd_a_weight_goal` | Weight for state ẍ (forward acceleration) in MPC cost function, in the MPC state: GOAL. | navigation/*&ltcontroller&gt*/path_tracker | |
-| `yaw_a_weight_goal` | Weight for state (yaw acceleration) in MPC cost function, in the MPC state: GOAL. | navigation/*&ltcontroller&gt*/path_tracker | |
-| `endpoint_multiplier_goal` | Weight multiplier of the very last point along the local plan segment in MPC state: GOAL. This value ensures convergence/stability of the optimizer by mimicking the MPCs infinite horizon by applying a terminal cost. | navigation/*&ltcontroller&gt*/path_tracker | |
-| `goal_tolerance_xy_rtk` | The (x, y) tolerance value (ie. radius) assigned to a goal, when RTK is enabled, in order to determine whether or not to consider the goal complete. | navigation/*&ltcontroller&gt*/path_tracker | **m** |
-| `goal_tolerance_yaw_rtk` | The yaw tolerance value (ie. heading) assigned to a goal, when RTK is enabled, in order to determine whether or not to consider the goal complete. | navigation/*&ltcontroller&gt*/path_tracker | **rad** |
-| `goal_tolerance_xy_nortk` | The (x, y) tolerance value (ie. radius) assigned to a goal, when RTK is disabled, in order to determine whether or not to consider the goal complete. | navigation/*&ltcontroller&gt*/path_tracker | **m** |
-| `goal_tolerance_yaw_nortk` | The yaw tolerance value (ie. heading) assigned to a goal, when RTK is disabled, in order to determine whether or not to consider the goal complete. | navigation/*&ltcontroller&gt*/path_tracker | **rad** |
-
-#### Corner Behavior Parameters {#corner_behavior}
-
-Additionally, there are parameters that can be modified to tune the behavior of the controller as it approaches and during the corners..
+The following parameters can be modified to tune the controller as it approaches
+the goal point as well as its behavior around the goal point.
 
 | Parameter | Description | Namespace | SI Units |
 |-----------|-------------|-----------|:--------:|
-| `corner_segment_slowdown` | Flag to enable/disable the slowdown behaviour in MPC state: CORNER | navigation/*&ltcontroller&gt*/path_tracker| **bool** |
-| `corner_lookahead` | The distance on the reference path from the platforms current location, along which to determine if a corner is present. If a corner is present the MPC state will switch to CORNER state and begin reducing the horizon accordingly. | navigation/*&ltcontroller&gt*/path_tracker| **m** |
-| `corner_detection_threshold` | Theshold on the path curvature, between the platforms current location and the end of the corner_lookahead distance, above which to switch the MPC in state: CORNER, and begin reducing the horizon accordingly. | navigation/*&ltcontroller&gt*/path_tracker| **rad** |
-| `corner_slowdown_multiplier` | The multiplier by which to increase the MPC horizon during the MPCs CORNER state in order to slow the platform down from its top speed. This value should be greater than 1.0. | navigation/*&ltcontroller&gt*/path_tracker| **--** |
-| `endpoint_multiplier_corner` | Weight multiplier of the very last point along the local plan segment in MPC state: CORNER. This value ensures convergence/stability of the optimizer by mimicking the MPCs infinite horizon by applying a terminal cost. | navigation/*&ltcontroller&gt*/path_tracker| **--** |
+| `goal_horizon_threshold` | The distance from the goal point which the MPC state will switch into state: GOAL , and begin reducing the horizon accordingly. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **m** |
+| `goal_slowdown_multiplier` | The multiplier by which to increase the MPC horizon during the MPCs GOAL state in order to slow the platform down from its top speed. This value should be greater than 1.0. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | |
+| `max_speed_at_goal` | The maximum allowable speed at the goal point for the controller to stop and consider the goal complete. On OEM platforms, this value shold be increased. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **m/s** |
+| `x_weight_goal` | Weight for state x in MPC cost function, in the MPC state: GOAL. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | |
+| `y_weight_goal` | Weight for state y in MPC cost function, in the MPC state: GOAL. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | |
+| `yaw_weight_goal` | Weight for state yaw in MPC cost function, in the MPC state: GOAL. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | |
+| `fwd_v_weight_goal` | Weight for state ẋ (forward velocity) in MPC cost function, in the MPC state: GOAL. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | |
+| `yaw_d_weight_goal` | Weight for state (yaw velocity) in MPC cost function, in the MPC state: GOAL. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | |
+| `fwd_a_weight_goal` | Weight for state ẍ (forward acceleration) in MPC cost function, in the MPC state: GOAL. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | |
+| `yaw_a_weight_goal` | Weight for state (yaw acceleration) in MPC cost function, in the MPC state: GOAL. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | |
+| `endpoint_multiplier_goal` | Weight multiplier of the very last point along the local plan segment in MPC state: GOAL. This value ensures convergence/stability of the optimizer by mimicking the MPCs infinite horizon by applying a terminal cost. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | |
+| `goal_tolerance_xy_rtk` | The (x, y) tolerance value (ie. radius) assigned to a goal, when RTK is enabled, in order to determine whether or not to consider the goal complete. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **m** |
+| `goal_tolerance_yaw_rtk` | The yaw tolerance value (ie. heading) assigned to a goal, when RTK is enabled, in order to determine whether or not to consider the goal complete. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **rad** |
+| `goal_tolerance_xy_nortk` | The (x, y) tolerance value (ie. radius) assigned to a goal, when RTK is disabled, in order to determine whether or not to consider the goal complete. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **m** |
+| `goal_tolerance_yaw_nortk` | The yaw tolerance value (ie. heading) assigned to a goal, when RTK is disabled, in order to determine whether or not to consider the goal complete. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **rad** |
+
+#### Corner State Parameters {#corner_state_params}
+
+The following parameters can be modified to tune the behavior of the controller during and as it
+as it approaches corners.
+
+| Parameter | Description | Namespace | SI Units |
+|-----------|-------------|-----------|:--------:|
+| `corner_segment_slowdown` | Flag to enable/disable the slowdown behaviour in MPC state: CORNER | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location)| **bool** |
+| `corner_lookahead` | The distance on the reference path from the platforms current location, along which to determine if a corner is present. If a corner is present the MPC state will switch to CORNER state and begin reducing the horizon accordingly. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location)| **m** |
+| `corner_detection_threshold` | Threshold on the path curvature, between the platforms current location and the end of the corner_lookahead distance, above which to switch the MPC in state: CORNER, and begin reducing the horizon accordingly. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location)| **rad** |
+| `corner_slowdown_multiplier` | The multiplier by which to increase the MPC horizon during the MPCs CORNER state in order to slow the platform down from its top speed. This value should be greater than 1.0. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location)| **--** |
+| `endpoint_multiplier_corner` | Weight multiplier of the very last point along the local plan segment in MPC state: CORNER. This value ensures convergence/stability of the optimizer by mimicking the MPCs infinite horizon by applying a terminal cost. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location)| **--** |
 
 #### OEM Specific Parameters {#oem_tuning_params}
 
+When tuning the controller on a third-party OEM platform, there are several other considerations
+that we will not have taken into account during the tuning of our platforms. Below, we define
+parameters that may be modified to tune the controller for your third-party OEM platform.
+
 ##### Platform Dynamics {#platform_dynamics_params}
+
+The following parameters can be used to modify the dynamics model that the contrller uses to 
+compute command velocities.
 
 | Parameter | Description | Namespace | SI Units |
 |-----------|-------------|-----------|:--------:|
-| `no_turn_on_spot_motion` | Flag to enable/disable turn on spot motion. By default, the MPC motion model is represented by a differential drive kinematics. This parameter will modify the MPC motion model to remove turn in place motions and bias the motion in the forward direction. | navigation/*&ltcontroller&gt*/path_tracker | - |
-| `min_fwd_turn` |  | navigation/*&ltcontroller&gt*/path_tracker | |
-| `pivot_point_offset_x` | The longitudinal offset that can be applied to the MPC model in order to account for a particular platforms center of rotation | navigation/*&ltcontroller&gt*/path_tracker | - |
-| `pivot_point_offset_y` | The lateral offset that can be applied to the MPC model in order to account for a particular platforms center of rotation | navigation/*&ltcontroller&gt*/path_tracker | - |
-| `min_fwd_turn` |  | navigation/*&ltcontroller&gt*/path_tracker | **--**|
+| `no_turn_on_spot_motion` | Flag to enable/disable turn on spot motion. By default, the MPC motion model is represented by a differential drive kinematics. This parameter will modify the MPC motion model to remove turn in place motions and bias the motion in the forward direction. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | - |
+| `min_fwd_turn` |  | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--** |
+| `pivot_point_offset_x` | The longitudinal offset that can be applied to the MPC model in order to account for a particular platforms center of rotation | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | - |
+| `pivot_point_offset_y` | The lateral offset that can be applied to the MPC model in order to account for a particular platforms center of rotation | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | - |
+| `min_fwd_turn` |  | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **--**|
 
 ##### Delay Compensation {#delay_compensation_params}
 
+The following parameters can be used to compensate for any delays that are present in the system.
+
 | Parameter | Description | Namespace | SI Units |
 |-----------|-------------|-----------|:--------:|
-| `enable_delay_compensation` | A boolean flag to enable/disable the delay compensation feature. The delay compensation feature is used to compensate for low-level dynamics delays that may be present in the robot/platform to be controlled. The user can apply an input controller delay and the feature will compute command velocities that compensate for such a delay. | navigation/*&ltcontroller&gt*/path_tracker | **bool** |
-| `controller_delay` | The amount of controller delay that the delay compensation feature will attempt to compensate for, in ms. | navigation/*&ltcontroller&gt*/path_tracker | **ms** |
+| `enable_delay_compensation` | A boolean flag to enable/disable the delay compensation feature. The delay compensation feature is used to compensate for low-level dynamics delays that may be present in the platform to be controlled. The user can apply an input controller delay and the feature will compute command velocities that compensate for such a delay. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **bool** |
+| `controller_delay` | The amount of controller delay that the delay compensation feature will attempt to compensate for, in ms. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **ms** |
 
 ##### Stop Distance {#stop_distance_params}
 
+The following parameters can be used to set a specific stop distance away from obstacles.
+
 | Parameter | Description | Namespace | SI Units |
 |-----------|-------------|-----------|:--------:|
-| `enable_stop_distance` | A flag to use enable/disable the stop distance feature. The stop distance feature forces the platform to stop a specified distance in front of obstacles. | navigation/*&ltcontroller&gt*/path_tracker | **bool** |
-| `obstacle_stop_distance` | The distance at which the platform will stop in front of a detected obstacle. | navigation/*&ltcontroller&gt*/path_tracker | **m** |
+| `enable_stop_distance` | A flag to use enable/disable the stop distance feature. The stop distance feature forces the platform to stop a specified distance in front of obstacles. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **bool** |
+| `obstacle_stop_distance` | The distance at which the platform will stop in front of a detected obstacle. | [/navigation/*&ltcontroller&gt*/path_tracker](#file_location) | **m** |
 
 
 ## Path Planners {#path_planners}
 
-| Parameter | Description | Namespace | SI Units |
-|-----------|-------------|-----------|:--------:|
-| `enable_path_smoother` | A flag to use enable/disable the path smoothing feature. The path smoothing feature will generate paths through the Waypoints, with a specified turning radius. | navigation/*&ltcontroller&gt*/path_tracker| **bool** |
-| `planner_type` | The algorithm used to compute the platforms initial path: (0) - Cubic Spline, (1) - Dubins. | navigation/*&ltcontroller&gt*/path_tracker| **--** |
-| `turning_radius` | Dubins: The turning radius that is used to generate the initial path through the Waypoints. | navigation/*&ltcontroller&gt*/path_tracker| **m** |
-| `step_size` | Dubins: The distance between subsequent samples of the path generator. | navigation/*&ltcontroller&gt*/path_tracker| **--** |
-| `points_per_unit` | Cubic: The number of path points to generate per unit of measure path distance. | navigation/*&ltcontroller&gt*/path_tracker| **--** |
-| `skip_points` | Cubic: The number of points to skip in the cubic interpolation. | navigation/*&ltcontroller&gt*/path_tracker| **--** |
+Information incoming in release 0.9. Please contact Clearpath customer support at support@clearpathrobotics.com to discuss the issue.
