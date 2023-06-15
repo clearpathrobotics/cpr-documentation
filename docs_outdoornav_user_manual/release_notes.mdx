@@ -10,21 +10,29 @@ toc_max_heading_level: 4
 
 ### New Features
 
--   Docking improvements including: multiple docks, visual represntation of docks on map, 
-    local docking/undocking through teleop view.
+-   Inertial Measurement Units (IMUs) integrated into localization.
+-   Added localization status topic (see see [API Endpoints](/docs_outdoornav_user_manual/api/api_endpoints/autonomy_api))
+-   Added re-localization service (see [API Endpoints](/docs_outdoornav_user_manual/api/api_endpoints/autonomy_api))
 -   Additional diagnostic information in the status view.
+-   Docking improvements including: multiple docks, visual represntation of docks on map, 
+    local docking/undocking through teleop view. Docking only functional with 2D LiDARs.
+-   Customization & Tuning Appendix C added. Lists of tuning parameters for navigation
+    and collision avoidance are now available. As well as, instructions/process on how to
+    tune UGVs with differential drive dynamics. Instructions for UGVs with Ackermann dynamics
+    are on their way.
 
 ### Bug Fixes 
 
--   1134: Display/Hide Datum Point not working
--   1137: Refreshing page re-enables edit button while mission running
+-   1134: Display/Hide Datum Point not working.
+-   1137: Refreshing page re-enables edit button while mission running.
+-   1276: Feedback added for incorrect first Waypoint placement.
 
 ### Known Issues
 
--   131: Software upgrade process not documented fully
--   609: Realsense D435 collision avoidance not fully tuned
--   751: Wireless icon in UI doesn't work for Ubiquity hardware
--   1138: Issues with greying out Waypoints in edge cases 
+-   131: Software upgrade process not documented fully.
+-   609: Realsense D435 collision avoidance not fully tuned.
+-   751: Wireless icon in UI doesn't work for Ubiquity hardware.
+-   1138: Issues with greying out Waypoints in edge cases .
 
 ## 0.7.0
 

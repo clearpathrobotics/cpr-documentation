@@ -29,18 +29,43 @@ including autonomy state and mode.
 
 &emsp;&emsp;**Description:** Current control mode (NEUTRAL, MANUAL, AUTONOMY).
 
+#### /dock/feedback
+
+&emsp;&emsp;**Message Type:** [cpr_dock_msgs/DockActionFeedback](definitions#action-dock)
+
+&emsp;&emsp;**Description:** Feedback topic from the dock action.
+
+#### /dock/result
+
+&emsp;&emsp;**Message Type:** [cpr_dock_msgs/DockActionResult](definitions#action-dock)
+
+&emsp;&emsp;**Description:** Result topic from the dock action.
+
+#### /dock/properties
+
+&emsp;&emsp;**Message Type:** [cpr_dock_msgs/DockProperties](definitions#msg-dock-properties)
+
+&emsp;&emsp;**Description:**  A list of docks, in which each dock includes information related to
+the location, id, etc...
+
+#### /dock/state
+
+&emsp;&emsp;**Message Type:** [cpr_dock_msgs/DockState](definitions#msg-dock-state)
+
+&emsp;&emsp;**Description:**  The current state of the docking process.
+
 #### /localization/odom
 
 &emsp;&emsp;**Message Type:** nav_msgs/Odometry
 
 &emsp;&emsp;**Description:** The robot's current pose and velocity.
 
-#### /localization/status (IN DEVELOPMENT)
+#### /localization/status
 
 &emsp;&emsp;**Message Type:** [cpr_localization_msgs/LocalizationStatus](definitions#msg-localization-status)
 
-&emsp;&emsp;**Description:** Current localization status. Includes accuracy, GPS
-status
+&emsp;&emsp;**Description:** Current localization status. Includes accuracy, GNSS
+status, and whether the robot is dead reckoning.
 
 #### /mission/feedback
 
@@ -178,6 +203,24 @@ possible sensors that may trigger a safety stop. The watchdog will
 trigger if the sensor times out (ie. does not publish a relevant ROS
 message for 1 second).
 
+#### /target_tracker/state
+
+&emsp;&emsp;**Message Type:** [cpr_dock_msgs/TargetTrackerState](definitions#msg-target-tracker-state)
+
+&emsp;&emsp;**Description:** The state information for target tracker used as part of docking.
+
+#### /undock/feedback
+
+&emsp;&emsp;**Message Type:** [cpr_dock_msgs/UndockActionFeedback](definitions#action-undock)
+
+&emsp;&emsp;**Description:** Feedback topic from the undock action.
+
+#### /undock/result
+
+&emsp;&emsp;**Message Type:** [cpr_dock_msgs/UndockActionResult](definitions#action-undock)
+
+&emsp;&emsp;**Description:** Result topic from the undock action.
+
 ------------------------------------------------------------------------
 
 ### Topics Subscribed to by Autonomy
@@ -206,6 +249,35 @@ been sent to the OutdoorNav software.
 software. The goal can consist of a series of Waypoints and must include
 a Goal point.
 
+#### /dock/cancel
+
+&emsp;&emsp;**Message Type:** actionlib_msgs/GoalID
+
+&emsp;&emsp;**Description:** This topic is used to cancel the docking process that has been
+initialized by a previously sent goal.
+
+#### /dock/goal
+
+&emsp;&emsp;**Message Type:** [cpr_dock_msgs/msg/DockActionGoal](definitions#action-dock)
+
+&emsp;&emsp;**Description:** This topic is used to send a goal to the docking process.
+The goal consists of the UUID of the dock to dock at as well as wether or not local docking
+should be performed.
+
+#### /undock/cancel
+
+&emsp;&emsp;**Message Type:** actionlib_msgs/GoalID
+
+&emsp;&emsp;**Description:** This topic is used to cancel the undocking process that has been
+initialized by a previously sent goal.
+
+#### /undock/goal
+
+&emsp;&emsp;**Message Type:** [cpr_dock_msgs/msg/UndockActionGoal](definitions#action-undock)
+
+&emsp;&emsp;**Description:** This topic is used to send a goal to the undocking process.
+The goal is empty since we always consider undocking to be a local undoking process.
+
 ------------------------------------------------------------------------
 
 ### Services Exported by Autonomy
@@ -230,6 +302,34 @@ mode. Will only pause when autonomy is active.
 
 &emsp;&emsp;**Description:** Resume the autonomy when it is current mode is in
 AUTONOMY. Will only resume if the robot is in a paused state.
+
+#### /dock/add
+
+&emsp;&emsp;**Service Type:** [cpr_dock_msgs/srv/AddDock](definitions#srv-add-dock)
+
+&emsp;&emsp;**Description:** Add a dock to the database of docks. Complete list of dock information is required as input.
+The new dock will appear on the UI.
+
+#### /dock/remove
+
+&emsp;&emsp;**Service Type:** [cpr_dock_msgs/srv/RemoveDock](definitions#srv-remove-dock)
+
+&emsp;&emsp;**Description:** Remove and existing dock from the database. Input to this service requires ether the UUID
+or the semantic name of the dock.
+
+#### /dock/set_location/by_id
+
+&emsp;&emsp;**Service Type:** [cpr_dock_msgs/srv/SetDockLocationByID](definitions#srv-set-dock-location-by-id)
+
+&emsp;&emsp;**Description:** Can be used to either set up a new dock (empty string in the uuid field), or update
+the location of an existing dock (where the `uuid` field is required).
+
+#### /dock/set_location/by_name
+
+&emsp;&emsp;**Service Type:** [cpr_dock_msgs/srv/SetDockLocationByName](definitions#srv-set-dock-location-by-name)
+
+&emsp;&emsp;**Description:** Can be used to update the location of an existing dock. Requires the semantic name 
+of the dock to be input into the `name` field.
 
 #### /localization/set_datum
 
@@ -342,6 +442,13 @@ DISABLED and the normal behaviour is expected.
 
 ### Actions Exported by Autonomy
 
+#### /dock
+
+&emsp;&emsp;**Action Type:** [cpr_dock_msgs/action/Dock](definitions#action-dock)
+
+&emsp;&emsp;**Description:** Send the robot to the charging dock, if the docking
+package has been included.
+
 #### /localization/survey
 
 &emsp;&emsp;**Action Type:** [cpr_localization_msgs/action/SurveyBaseStation](definitions#action-survey-base-station)
@@ -356,9 +463,9 @@ DISABLED and the normal behaviour is expected.
 include the goal, the viapoint(s), tasks, goal tolerances and goal
 heading.
 
-#### /dock
+#### /undock
 
-&emsp;&emsp;**Action Type:** [cpr_dock_msgs/action/Dock](definitions#action-dock)
+&emsp;&emsp;**Action Type:** [cpr_dock_msgs/action/Dock](definitions#action-undock)
 
-&emsp;&emsp;**Description:** Send the robot to the charging dock, if the docking
+&emsp;&emsp;**Description:** Undock the robot to the charging dock, if the docking
 package has been included.
