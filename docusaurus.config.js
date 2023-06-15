@@ -39,7 +39,7 @@ const config = {
       {
         path: "docs",
         routeBasePath: "docs",
-        sidebarPath: require.resolve("./sidebars.js"),
+        sidebarPath: require.resolve("./sidebars-docs.js"),
         remarkPlugins: [math],
         rehypePlugins: [katex],
         showLastUpdateTime: true,
@@ -88,39 +88,27 @@ const config = {
             position: "left",
           },
           {
-            to: "/docs/computers",
-            label: "Computers",
-            position: "left",
-          },
-          {
-            to: "/docs/sensors",
-            label: "Sensors",
-            position: "left",
-          },
-          {
-            to: "/docs/manipulators",
-            label: "Manipulators",
-            position: "left",
-          },
-          {
-            to: "/docs/accessories",
-            label: "Accessories",
-            position: "left",
-          },
-          {
-            to: "/docs/components",
-            label: "Components",
-            position: "left",
-          },
-          {
             to: "/docs/software",
             label: "Software",
             position: "left",
           },
           {
-            to: "/docs/tools",
-            label: "Tools",
+            to: "/docs/add-ons",
+            label: "Add-ons",
             position: "left",
+          },
+          {
+            type: "docsVersion",
+            label: "OutdoorNav",
+            position: "left",
+            docsPluginId: "outdoornav_user_manual",
+          },
+          {
+            type: "doc",
+            docId: "index",
+            label: "IndoorNav",
+            position: "left",
+            docsPluginId: "indoornav_user_manual",
           },
           {
             to: "about",
