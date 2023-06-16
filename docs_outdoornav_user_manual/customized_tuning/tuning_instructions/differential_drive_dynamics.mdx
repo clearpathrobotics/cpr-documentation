@@ -45,11 +45,11 @@ is required to receive, in order for it to move).
 
 To verify this, the user should set up two missions:
 
-1. A single Waypoint that is 10-20 meters directly in front of the UGV. This will verify 
-the requried linear motion of the UGV.
-2. A single waypoint that is 10-20 meters directly behind the UGV. The first part of the 
-navigation to this point (ie. the rotation to face the Waypoint) will verify the required 
-angular motion of the UGV.
+1. A two Waypoint mission where the first Waypoint is located on the robot, and second Waypoint about 10-20 meters 
+directly in front of the UGV. This will verify the requried linear motion of the UGV.
+2. A two Waypoint mission where the first Waypoint is located on the robot, and second Waypoint about 10-20 meters 
+directly behind the UGV. The first part of the navigation to this point (ie. the rotation to face the Waypoint) will 
+verify the required angular motion of the UGV.
 
 If the above tests demonstrate that the UGV **is stuck** in a velocity deadband and is not moving,
 then proceed to [Tune Deadband](#tune_deadband).
@@ -67,8 +67,8 @@ normal navigation along a straight path.
 To verify the amount of oscilations around the reference path, the user should set up four 
 missions, each of which should pass (or fall within the users requirements) prior to moving on from this section of the tuning. The start
 and end points of each of the tests should be identical and the start position (XY) should
-be noted/marked on the testing area.  Waypoint should be placed 20-30m away from the start 
-position. The four UGV orientations for each test are as follows:
+be noted/marked on the testing area. The first Waypoint should be placed on the robots current location and the second Waypoint should be 
+placed 20-30m away from the start position. The four UGV orientations for each test are as follows:
 
 1. Align the UGV with a 0&deg offset from the Waypoint.
 2. Align the UGV with a 90&deg offset from the Waypoint.
@@ -151,9 +151,10 @@ velocity that the UGV will travel along long straight paths. This does not mean 
 always drive at this velocity, but it is the velocity that it will accelerate to on straights, 
 when starting a mission and/or when coming out of a curve.
 
-To test this we simply want to create a mission that sends the UGV to a single Waypoint 
-directly in front of the UGVs current position. The Waypoint should be at least 20 meters
-away from the current position and will depend on the linear velocity you wish to acheive.
+To test this we want to create a mission that sends the UGV to a Waypoint 
+directly in front of the UGVs current position. This requires two Waypoints: the first one located at the robots 
+current position and the second Waypoint at least 20 meters away from the start position and will depend on the 
+linear velocity you wish to acheive.
 
 If during the above test, the velocity **does not** reach the desired velocity, proceed to 
 [Increase Linear Velocity](#increase_linear_velocity) and repeat the above test until the
