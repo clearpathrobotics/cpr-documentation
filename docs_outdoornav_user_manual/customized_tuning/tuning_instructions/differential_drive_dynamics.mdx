@@ -16,7 +16,7 @@ test. This allows the user to analyze the effect of this single parameter on the
 # Tuning Flowchart
 
 When attempting to tune the navigation controller, it is recommended to follow the following
-flowchart. Begin with setting up [Initial Parameters](#initialize_parameters) for your platform.
+flowchart. Begin with setting up [Initial Parameters](#initialize_parameters) for your UGV.
 
 <center>
   <figure>
@@ -39,22 +39,22 @@ is expected that the user modifies a parameter prior to re-testing the controlle
 
 #### Velocity Deadband Tests {#velocity_deadband_tests}
 
-The "**Velocity Deadband?**" condition block asks the user to verify if there is a velocity deadband that the platforms
-motors must overcome in order to move the platform. (ie. what is the minimum velocity that the platform
+The "**Velocity Deadband?**" condition block asks the user to verify if there is a velocity deadband that the UGV
+motors must overcome in order to move the UGV. (ie. what is the minimum velocity that the UGV
 is required to receive, in order for it to move).
 
 To verify this, the user should set up two missions:
 
-1. A single Waypoint that is 10-20 meters directly in front of the platform. This will verify 
-the requried linear motion of the platform.
-2. A single waypoint that is 10-20 meters directly behind the platform. The first part of the 
+1. A single Waypoint that is 10-20 meters directly in front of the UGV. This will verify 
+the requried linear motion of the UGV.
+2. A single waypoint that is 10-20 meters directly behind the UGV. The first part of the 
 navigation to this point (ie. the rotation to face the Waypoint) will verify the required 
-angular motion of the platform.
+angular motion of the UGV.
 
-If the above tests demonstrate that the platform **is stuck** in a velocity deadband and is not moving,
+If the above tests demonstrate that the UGV **is stuck** in a velocity deadband and is not moving,
 then proceed to [Tune Deadband](#tune_deadband).
 
-If the above tests demonstrate that the platform **is NOT stuck** in a velocity deadband (ie. it can
+If the above tests demonstrate that the UGV **is NOT stuck** in a velocity deadband (ie. it can
 smoothly start navigating the mission), proceed to the following condition block: [Oscillation Tests](#oscillation_tests).
 
 #### Oscillation Tests (Straights) {#oscillation_tests}
@@ -68,15 +68,15 @@ To verify the amount of oscilations around the reference path, the user should s
 missions, each of which should pass (or fall within the users requirements) prior to moving on from this section of the tuning. The start
 and end points of each of the tests should be identical and the start position (XY) should
 be noted/marked on the testing area.  Waypoint should be placed 20-30m away from the start 
-position. The four platform orientations for each test are as follows:
+position. The four UGV orientations for each test are as follows:
 
-1. Align the platform with a 0&deg offset from the Waypoint.
-2. Align the platform with a 90&deg offset from the Waypoint.
-3. Align the platform with a -90&deg offset from the Waypoint.
-4. Align the platform with a 180&deg offset from the Waypoint.
+1. Align the UGV with a 0&deg offset from the Waypoint.
+2. Align the UGV with a 90&deg offset from the Waypoint.
+3. Align the UGV with a -90&deg offset from the Waypoint.
+4. Align the UGV with a 180&deg offset from the Waypoint.
 
-See the image below to determine the placement of the platform. The red arrow indicates the
-orientation of the platform with respect to the Waypoint.
+See the image below to determine the placement of the UGV. The red arrow indicates the
+orientation of the UGV with respect to the Waypoint.
 
 <center>
   <figure>
@@ -102,14 +102,14 @@ reasons. They are listed here in order of likelihood of occurence:
 
 | | Cause | Description |
 |-|-------|-------------|
-| **1** | Untuned MPC parameters | The default MPC controller parameters have been tuned for CPR platforms, and may not be the same for third-party OEM platforms. |
-| **2** | Controller delay | There may be delay present in your platform between the time the navigation computes a command velocity and when the velocity is actually executed. This could appear as mechanical delay in your motors or even mechanical delay in the rotational components of platforms control mechanisms . It is rarely noticed when electrical motors are used. The effect of controller delay is most commonly noticed when when entering a straight from a curve or after a pure rotation.|
-| **3** | Deformable Tires | If your tires are deformable, then after coming out of a pure rotation, while the platform may be facing the required direction of travel, a purely linear command velocity would cause the platform to veer off to the left/right. This in turn would cause the controller to correct itself, and place it into an oscillatory motion. |
-| **4** | Uneven weight distribution | If your platform is carrying more weight on one side it may bias the platforms motion when being command straight and veer the platform off to one side. The controller would then consistently try to correct this bias by pulling it back towards the reference path, thus causing oscillations. |
+| **1** | Untuned MPC parameters | The default MPC controller parameters have been tuned for CPR UGVs, and may not be the same for third-party OEM UGVs. |
+| **2** | Controller delay | There may be delay present in your UGV between the time the navigation computes a command velocity and when the velocity is actually executed. This could appear as mechanical delay in your motors or even mechanical delay in the rotational components of UGVs control mechanisms . It is rarely noticed when electrical motors are used. The effect of controller delay is most commonly noticed when when entering a straight from a curve or after a pure rotation.|
+| **3** | Deformable Tires | If your tires are deformable, then after coming out of a pure rotation, while the UGV may be facing the required direction of travel, a purely linear command velocity would cause the UGV to veer off to the left/right. This in turn would cause the controller to correct itself, and place it into an oscillatory motion. |
+| **4** | Uneven weight distribution | If your UGV is carrying more weight on one side it may bias the UGVs motion when being command straight and veer the UGV off to one side. The controller would then consistently try to correct this bias by pulling it back towards the reference path, thus causing oscillations. |
 
 To determine if causes 3 and 4 may apply to you, it is a good idea to run the following test:
 
-1. send the following command to rotate your platform for one full rotation,
+1. send the following command to rotate your UGV for one full rotation,
 ``` bash
 rostopic pub /cmd_vel geometry_msgs/Twist "linear:
   x: 0.0
@@ -121,7 +121,7 @@ angular:
   z: 0.3" -r 10
 ```
 2. stop the rotation by stopping the command.
-3. send the following command to move the platform purely forward,
+3. send the following command to move the UGV purely forward,
 ``` bash
 rostopic pub /cmd_vel geometry_msgs/Twist "linear:
   x: 0.5
@@ -132,41 +132,41 @@ angular:
   y: 0.0
   z: 0.0" -r 10
 ```
-4. Analyse the motion and then stop the stop the linear motion. If the platform drifts left/right
-during step 3, then your platform is likely to suffer from the effect of uneven weight 
+4. Analyse the motion and then stop the stop the linear motion. If the UGV drifts left/right
+during step 3, then your UGV is likely to suffer from the effect of uneven weight 
 distribution or deformable tires. (If not, there may be bigger issues). Further 
 investigation/discussion with Clearpath would be required.
 
-If the above tests demonstrate that the platform **is oscillating** around the reference path,
+If the above tests demonstrate that the UGV **is oscillating** around the reference path,
 then proceed to [Reduce Oscillations](#reduce_oscillations_on_straights).
 
-If the above tests demonstrate that the platform **is NOT oscillating** or **within an acceptable
+If the above tests demonstrate that the UGV **is NOT oscillating** or **within an acceptable
 range of oscillation**, proceed to onto the following condition block: [Velocity Increase](#linear_velocity_condition).
 
 
 #### Linear Velocity Condition/Test {#linear_velocity_condition}
 
 The "Increase Linear Velocity?" condition block asks if the user wants to increase the linear
-velocity that the platform will travel along long straight paths. This does not mean that it will
+velocity that the UGV will travel along long straight paths. This does not mean that it will
 always drive at this velocity, but it is the velocity that it will accelerate to on straights, 
 when starting a mission and/or when coming out of a curve.
 
-To test this we simply want to create a mission that sends the platform to a single Waypoint 
-directly in front of the platform's current position. The Waypoint should be at least 20 meters
+To test this we simply want to create a mission that sends the UGV to a single Waypoint 
+directly in front of the UGVs current position. The Waypoint should be at least 20 meters
 away from the current position and will depend on the linear velocity you wish to acheive.
 
 If during the above test, the velocity **does not** reach the desired velocity, proceed to 
 [Increase Linear Velocity](#increase_linear_velocity) and repeat the above test until the
 desired has been achieved.
 
-If the above test results in the platform's maximum velocity reaching the desired velocity,
+If the above test results in the UGVs maximum velocity reaching the desired velocity,
 then proceed to checking the two subconditions: [Goal Behavior](#goal_overshoot_tests) and 
 [Cornering Behavior](#cornering_tests).
 
 :::note
 
 Only advance to the following condition block: [Collision Avoidance](#collision_avoidance_condition) 
-if the platform's maximum velocity has reached the desired velocity and all subconditions are 
+if the UGVs maximum velocity has reached the desired velocity and all subconditions are 
 also satisfied. Ie. you have tuned the corner and goal behavior to within your allowable limits.
 
 :::
@@ -174,31 +174,31 @@ also satisfied. Ie. you have tuned the corner and goal behavior to within your a
 #### Goal State Tests {#goal_overshoot_tests}
 
 The "Goalpoint Overshoot?" condition block asks the user to check if, at the end of a mission,
-the platform overshoots the goalpoint. This condition should always be checked every time the
+the UGV overshoots the goalpoint. This condition should always be checked every time the
 velocity is increased. A similar test can be used as in the [Velocity Increase](#linear_velocity_condition) section.
 
-If the test results in the platform **overshooting the goal point**, then proceed to 
+If the test results in the UGV **overshooting the goal point**, then proceed to 
 [Tune Goal Behavior](#tune_goal_state).
 
-If the test results in a **smooth deceleration to the goal point, with the platform completing its
+If the test results in a **smooth deceleration to the goal point, with the UGV completing its
 mission within the required tolerance, and NO overshoot**, then proceed to re-verifying that your 
 changes have not caused any oscillations by returning to the [Oscillation Tests](#oscillation_tests).
 
 :::note
 
 Only advance to the following condition block: [Collision Avoidance](#collision_avoidance_condition) 
-if the platform's maximum velocity has reached the desired velocity and all subconditions also
+if the UGVs maximum velocity has reached the desired velocity and all subconditions also
 are also satisfied. Ie. you have tuned the corner and goal behavior to within your allowable limits.
 
 :::
 
 #### Corner State Tests {#cornering_tests}
 
-The "Overshoot/Oscillations in Corners?" condition block asks the user to check if the platform
-overshoots the entry to corners, and/or if the platform oscillates during the cornering. This 
+The "Overshoot/Oscillations in Corners?" condition block asks the user to check if the UGV
+overshoots the entry to corners, and/or if the UGV oscillates during the cornering. This 
 condition should always be checked every time the velocity is increased.
 
-A test should be designed so that the platform will navigate a curve/corner. This type of mission 
+A test should be designed so that the UGV will navigate a curve/corner. This type of mission 
 can be set up regardless of whether or not you have set a specified turn radius for the path planner.
 
 The Waypoints for the test mission should be placed such that there is sufficient change in
@@ -216,24 +216,24 @@ for vehicle with a large turn radius).
   </figure>
 </center>
 
-For the current case of differential drive platforms who are able to turn on the spot, simpler 
-test missions can be used that change the heading of the platform more than 45&deg, at each 
+For the current case of differential drive UGVs who are able to turn on the spot, simpler 
+test missions can be used that change the heading of the UGV more than 45&deg, at each 
 Waypoint.
 
-If the test results in the platform **overshooting the entrance to the corner/curve**, then proceed to
+If the test results in the UGV **overshooting the entrance to the corner/curve**, then proceed to
 the first issue listed in [Tune Corner State](#tune_cornering_state).
 
-If the test results in the platform **oscillating during the corner/curve**, then proceed to
+If the test results in the UGV **oscillating during the corner/curve**, then proceed to
 the second issue listed in [Tune Corner State](#tune_cornering_state).
 
-If the test results in the platform **navigating smoothly through all curves/corners, with no
+If the test results in the UGV **navigating smoothly through all curves/corners, with no
 minimal oscillations and no overshoot**, then proceed to re-verifying that your 
 changes have not caused any oscillations during straights ([Oscillation Tests](#oscillation_tests)).
 
 :::note
 
 Only advance to the following condition block: [Collision Avoidance](#collision_avoidance_condition) 
-if the platform's maximum velocity has reached the desired velocity and all subconditions also
+if the UGVs maximum velocity has reached the desired velocity and all subconditions also
 are also satisfied. Ie. you have tuned the corner and goal behavior to within your allowable limits.
 
 :::
@@ -241,15 +241,15 @@ are also satisfied. Ie. you have tuned the corner and goal behavior to within yo
 #### Collision Avoidance Condition {#collision_avoidance_condition}
 
 The final condition block asks the user if collision avoidance is enabled or disabled on the
-platform. 
+UGV. 
 
-If collision avoidance is DISABLED, then you have completed tuning your platform.
+If collision avoidance is DISABLED, then you have completed tuning your UGV.
 **Congratulations!**
 
 When collision avoidance is ENABLED, it is recommended to begin with a straight line test as in [Velocity Increase](#linear_velocity_condition)
 but with an obstacle placed roughly in the center of the predicted path (ie. at the midpoint 
 between the start and goal locations). This obstacle should be at least 30 cm tall
-and at least 10 cm wide. The user should be ready to emergency stop the platform if they
+and at least 10 cm wide. The user should be ready to emergency stop the UGV if they
 notice it approaching the obstacle too fast or too closely.
 
 If the test results in any unexpected bahvior, such as:
@@ -268,7 +268,7 @@ then proceed to the respective issue listed in
 
 #### Initialize Parameters {#initialize_parameters}
 
-1. Update the footprint offsets of the platform in the `${HOME}/cpr_outdoornav_launch/outdoornav_tuning.env` file.
+1. Update the footprint offsets of the UGV in the `${HOME}/cpr_outdoornav_launch/outdoornav_tuning.env` file.
 
 <center>
   <figure>
@@ -282,16 +282,16 @@ then proceed to the respective issue listed in
 
 | Environment Variable | Description | Sign |
 |----------------------|-------------|------|
-| FOOTPRINT_OFFSET_POS_X | Distance from base_link to the furthest edge of any part/sensor at the front of the platform. | **+** |
-| FOOTPRINT_OFFSET_NEG_X | Distance from base_link to the furthest edge of any part/sensor at the left of the platform. | **-** |
-| FOOTPRINT_OFFSET_POS_Y | Distance from base_link to the furthest edge of any part/sensor at the rear of the platform. | **+** |
-| FOOTPRINT_OFFSET_NEG_Y | Distance from base_link to the furthest edge of any part/sensor at the right of the platform. | **-** |
+| FOOTPRINT_OFFSET_POS_X | Distance from base_link to the furthest edge of any part/sensor at the front of the UGV. | **+** |
+| FOOTPRINT_OFFSET_NEG_X | Distance from base_link to the furthest edge of any part/sensor at the left of the UGV. | **-** |
+| FOOTPRINT_OFFSET_POS_Y | Distance from base_link to the furthest edge of any part/sensor at the rear of the UGV. | **+** |
+| FOOTPRINT_OFFSET_NEG_Y | Distance from base_link to the furthest edge of any part/sensor at the right of the UGV. | **-** |
 
 2. Update the [`vehicle_length`](../tuning_parameters/navigation_parameters#default_state_params) 
-parameter to be the longitudinal length  (ie. along the x-axis) of your platform. This is not 
-the sum of the above footprint x-axis magnitudes, but only the length of the platform body.
+parameter to be the longitudinal length  (ie. along the x-axis) of your UGV. This is not 
+the sum of the above footprint x-axis magnitudes, but only the length of the UGV body.
 
-3. Update the following parameters with your platform specific maximums and minimums:
+3. Update the following parameters with your UGV specific maximums and minimums:
 
     * [`max_fwd_velocity`](../tuning_parameters/navigation_parameters#default_state_params)
     * [`min_fwd_velocity`](../tuning_parameters/navigation_parameters#default_state_params)
@@ -304,18 +304,18 @@ the sum of the above footprint x-axis magnitudes, but only the length of the pla
 
 4. Update the [`stiction_compensator_fwd`](../tuning_parameters/navigation_parameters#default_state_params) 
 and [`stiction_compensator_yaw`](../tuning_parameters/navigation_parameters#default_state_params) to 
-be equivalent to the minimum linear and angular velocities that the platform requires it to move 
+be equivalent to the minimum linear and angular velocities that the UGV requires it to move 
 (eg. `stiction_compensator_fwd` would be equal to `min_fwd_velocity`).
 
 
 #### Tune Velocity Deadband {#tune_deadband}
 
 To tune the velocity deadband, the user should at least start off by knowing the minimum 
-linear and angular velocities that the platform motors can generate.
+linear and angular velocities that the UGV motors can generate.
 
 If not already set from the [Initial Parameters](#initialize_parameters) section, you should set 
 the [`min_fwd_velocity`](../tuning_parameters/navigation_parameters#default_state_params) to the minimum
-forward linear velocity that the platform can handle.
+forward linear velocity that the UGV can handle.
 
 For each iteration of the linear deadband tuning, increment the following parameters by **0.05 m/s**
 , until smooth linear motion is acheived from standstill:
@@ -331,7 +331,7 @@ For each iteration of the angular deadband tuning, increment the following param
 
 #### Reducing Oscillation (Straights) {#reduce_oscillations_on_straights}
 
-To tune the platform behavior on straights when dealing with the simple cause of untuned MPC 
+To tune the UGV behavior on straights when dealing with the simple cause of untuned MPC 
 controller parameters, we list the following parameters along with likely ranges and their initial
 default values. The are listed in order of which parameter will have the most effect of improving
 the performance of the current tuning block. 
@@ -368,9 +368,9 @@ Clearpath customer support at support@clearpathrobotics.com to discuss any relat
 #### Increase Linear Velocity {#increase_linear_velocity}
 
 ** *The following instructions are only relevant if you are planning on
-increasing the velocity of the platform above 2.0 m/s.* **
+increasing the velocity of the UGV above 2.0 m/s.* **
 
-To increase the platform's maximum velocity, the following parameters should be modified.
+To increase the UGVs maximum velocity, the following parameters should be modified.
 
 First, the [`mpc_horizon`](../tuning_parameters/navigation_parameters#default_state_params) parameter
 should be set to: 1.0
@@ -398,7 +398,7 @@ around the goal point.
 
 1) Overshooting the goal point can be caused by a few factors:
 
-* Not decelerating fast enough or soon enough as the platform approaches the goal.
+* Not decelerating fast enough or soon enough as the UGV approaches the goal.
 
 To tune for this issue, some parameters are listed in order in which they will have the most effect of
 improving the performance of the current tuning block:
@@ -421,10 +421,10 @@ To to tune for this issue, modify the following parameter:
 
 | Parameter | Value | Default |
 |-----------|-------|---------|
-| [`max_speed_at_goal`](../tuning_parameters/navigation_parameters#goal_state_params)  | *depends on the deceleration of your platform* | 0.8 |
+| [`max_speed_at_goal`](../tuning_parameters/navigation_parameters#goal_state_params)  | *depends on the deceleration of your UGV* | 0.8 |
 
 2) Oscillations (or jittery behavior) around the goal point are typically caused by the the
-tolerance at the goal point being set too small. If they are too small and the platform is unable
+tolerance at the goal point being set too small. If they are too small and the UGV is unable
 to localize itself within the required position and yaw tolerances, then it will jitter and 
 rotate to attempt to be a precise as you are expecting it to be. To resolve this, it is advised 
 to slightly increase the goal tolerance parameters:
@@ -438,7 +438,7 @@ to slightly increase the goal tolerance parameters:
 
 :::note
 
-If your platform has RTK corrections, then it is only required to modify [`goal_tolerance_xy_rtk`](../tuning_parameters/navigation_parameters#goal_state_params)
+If your UGV has RTK corrections, then it is only required to modify [`goal_tolerance_xy_rtk`](../tuning_parameters/navigation_parameters#goal_state_params)
 and [`goal_tolerance_yaw_rtk`](../tuning_parameters/navigation_parameters#goal_state_params). Otherwise,
 only modify [`goal_tolerance_xy_nortk`](../tuning_parameters/navigation_parameters#goal_state_params)
 and [`goal_tolerance_yaw_nortk`](../tuning_parameters/navigation_parameters#goal_state_params).
@@ -457,7 +457,7 @@ as well as in the corner.
 
 1) Overshooting the corner only to enter the turn late
 
-This issue occurs most often, when the controller is unable to slow the platform down early and/or
+This issue occurs most often, when the controller is unable to slow the UGV down early and/or
 fast enough, prior to entering the corner. A reduction in velocity earlier in the approach to 
 the corner will improve the cornering performance. Below some parameters are listed that will 
 allow the user to improve the behavior entering corners:
@@ -493,7 +493,7 @@ A few different issues may have occured that led you to tuning the collision avo
 few of them and the possible parameters that can be modified to improve the performance approaching
 as well as navigating around detected obstacles.
 
-1) Platform not stopping in front of the obstacle
+1) UGV not stopping in front of the obstacle
 
 This issue would either occur if the collision avoidance has been disabled, or if the detection sensors
 are not populating the costmap with the obstacle(s). To enable/disable collision avoidance:
@@ -506,7 +506,7 @@ For the case where the obstacle that you are using is not being detected by the 
 make sure that it is neither too short nor too thin. Use RViz to check that the local costmap is being populated with
 the obstacle.
 
-2) Platform not navigating after stopping in front of an obstacle
+2) UGV not navigating after stopping in front of an obstacle
 
 This issue is either due to the robot unable to replan around the obstacle, in which case the 
 following parameters may help:
@@ -519,10 +519,10 @@ following parameters may help:
 | [`max_accel`](../tuning_parameters/navigation_parameters#default_state_params)  | 0.5 |
 
 or that the obstacle has gotten inside of the safety footprints causing the navigation to place the
-platform in a collision state:
+UGV in a collision state:
 
 Consult the [Footprint Tuning](footprint_tuning) instructions to increase the safety footprint sets.
-The user can also try increasing the stop distance from the platform to an obstacle as it decelerates 
+The user can also try increasing the stop distance from the UGV to an obstacle as it decelerates 
 to a stop.
 
 | Parameter | Default |
@@ -530,14 +530,14 @@ to a stop.
 | [`enable_stop_distance radius`](../tuning_parameters/navigation_parameters#stop_distance_params)  | false |
 | [`obstacle_stop_distance`](../tuning_parameters/navigation_parameters#stop_distance_params)  | 3.0 |
 
-3) Platform has jittery motion navigating around the obstacle,
+3) UGV has jittery motion navigating around the obstacle,
 
 This issue is typically a problem when the safety footprints collide with the obstacle as it is 
 trying to navigate the replanned path around the obstacle:
 
 Consult the [Footprint Tuning](footprint_tuning) instructions to modify the safety footprint sets.
 
-The user can also try increasing the stop distance of the platform to an obstacle.
+The user can also try increasing the stop distance of the UGV to an obstacle.
 
 | Parameter | Default |
 |-----------|---------|
@@ -545,7 +545,7 @@ The user can also try increasing the stop distance of the platform to an obstacl
 | [`obstacle_stop_distance`](../tuning_parameters/navigation_parameters#stop_distance_params)  | 3.0 |
 
 
-4) Platform suddenly reducing its velocity as it accelerates up to maximum
+4) UGV suddenly reducing its velocity as it accelerates up to maximum
 
 This issue is due to the safety footprints exceeding the length of the local costmap. Since the 
 safety footprints increase in length as the velocity increases, the user must also increase the 

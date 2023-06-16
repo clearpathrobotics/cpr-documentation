@@ -13,16 +13,16 @@ Select the checklist below that corresponds to your hardware kit.
 - [OutdoorNav Starter Kit Hardware Checklist](/docs_outdoornav_user_manual/integration_requirements/hardware_integration_requirements/starter_kit_hardware_checklist)
 - [OutdoorNav Custom Kit Hardware Checklist](/docs_outdoornav_user_manual/integration_requirements/hardware_integration_requirements/custom_kit_hardware_checklist)
 
-In addition, if the OutdoorNav software is not running on the platform computer itself, which is the case with the Starter Kit and some custom integrations, ensure that the platform computer is configured correctly by reviewing the following checklist.
+In addition, if the OutdoorNav software is not running on the UGV computer itself, which is the case with the Starter Kit and some custom integrations, ensure that the UGV computer is configured correctly by reviewing the following checklist.
 
-- [Platform Computer Checklist](/docs_outdoornav_user_manual/integration_requirements/platform_computer_checklist)
+- [UGV Computer Checklist](/docs_outdoornav_user_manual/integration_requirements/platform_computer_checklist)
 
 ## Notes on Measuring Frame Relationships
 
 ### `base_link` Frame {#base-link-frame}
 
-For mobile robots, `base_link` should be rigidly attached to the mobile platform.
-It can be attached at any position of the platform to provide a point of reference.
+For mobile robots, `base_link` should be rigidly attached to the mobile UGV.
+It can be attached at any position of the UGV to provide a point of reference.
 We also expect the orientation of `base_link` to be in the NWU convention.
 ROS standards for `base_link` can be found in [REP-103](https://www.ros.org/reps/rep-0103.html#axis-orientation) and [REP-105](https://www.ros.org/reps/rep-0105.html#base-link).
 
@@ -37,7 +37,7 @@ The sensors frame for each sensor will vary. Please consult the documentation fo
 
 ### Measuring Relative Pose
 
-Consider frame A (eg. `starter_kit_link`) and frame B (eg. `base_link`), rigidly attached to the platform.
+Consider frame A (eg. `starter_kit_link`) and frame B (eg. `base_link`), rigidly attached to the UGV.
 The relationship of A relative to B consists of two parts, the relative position and relative orientation.
 The position of A relative to B can be obtained by measuring the distance (in X, Y, Z axes) from frame B to frame A, and providing that value in frame B's coordinate frame.
 The orientation of A relative to B is obtained by rotating the axes of frame B until they line up with frame A, noting that results in each axis are the rotation angles of the orientation.

@@ -46,9 +46,9 @@ cd ~/cpr_outdoornav_launch/scripts/
 
 The script in the sections below will reboot the computer it is run on.
 
-##### Platform Computer
+##### UGV Computer
 
-For installations of the OutdoorNav software on the platform computer (not a secondary or Starter Kit computer), run the following:
+For installations of the OutdoorNav software on the UGV computer (not a secondary or Starter Kit computer), run the following:
 
 ``` bash
 cd ~/cpr_outdoornav_launch/scripts
@@ -56,7 +56,7 @@ sudo ./setup_computers.sh
 ```
 ##### Secondary or Starter Kit Computer
 
-Prior to running the script on the secondary or Starter Kit computer, ensure that you have the user and IP of the platform computer that the secondary/starter kit computer is connected to. Run the following:
+Prior to running the script on the secondary or Starter Kit computer, ensure that you have the user and IP of the UGV computer that the secondary/starter kit computer is connected to. Run the following:
 
 ``` bash
 cd ~/cpr_outdoornav_launch/scripts
@@ -71,12 +71,12 @@ docker compose --profile outdoornav pull
 ```
 
 :::note
-If you are installing the OutdoorNav software on a secondary or Starter Kit computer, you must also complete the [Platform Computer Checklist](/docs_outdoornav_user_manual/integration_requirements/platform_computer_checklist)
+If you are installing the OutdoorNav software on a secondary or Starter Kit computer, you must also complete the [UGV Computer Checklist](/docs_outdoornav_user_manual/integration_requirements/platform_computer_checklist)
 :::
 
-### Configure Platform Footprint {#configure-platform-footprint}
+### Configure UGV Footprint {#configure-platform-footprint}
 
-If the platform has sensors and/or parts that protrude outside of the platform body, then a few environment variables will need to be modified to adjust the footprint of the robot. Things that could be extending past the footprint could include but are not limited to:
+If the UGV has sensors and/or parts that protrude outside of the UGV body, then a few environment variables will need to be modified to adjust the footprint of the robot. Things that could be extending past the footprint could include but are not limited to:
 
 -   GPS antennae,
 -   Charging receivers,
@@ -108,7 +108,7 @@ docker compose --profile outdoornav up -d
 
 ### Test OutdoorNav Installation
 
-1. Ping all of the network sensors to ensure proper communication with the platform or secondary computer.
+1. Ping all of the network sensors to ensure proper communication with the UGV or secondary computer.
 
 2. Check the following topics and make sure there is data being published to them:
 
