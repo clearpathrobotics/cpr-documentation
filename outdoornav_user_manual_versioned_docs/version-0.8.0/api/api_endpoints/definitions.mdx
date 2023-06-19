@@ -38,39 +38,113 @@ bool enabled
 bool paused
 ```
 
+#### cpr_dock_msgs/DockInfo.msg {#msg-dock-info}
+
+```
+# Message definition containing the information of a single dock. This includes identifiers, lat/lon and orientation of the location of a dock.
+
+string name
+string uuid
+string frame
+string target_template
+
+# ISO 8601 date/time format of last successfull dock location setting
+string last_location_set_time
+
+# maximum allowable distance to allow for predocking. (ie. the distance within which the dock waypoint must be located)
+float32 max_predock_distance
+# the distance from the dock that the robot will navigate to prior to start docking
+float32 predock_distance
+
+# location of the dock
+float64 latitude
+float64 longitude
+float64 heading
+```
+
+#### cpr_dock_msgs/DockProperties.msg {#msg-dock-properties}
+
+```
+# Message definition containing the properties for each of the docks available.
+
+cpr_dock_msgs/DockInfo[] docks
+```
+
+#### cpr_dock_msgs/DockState.msg {#msg-dock-state}
+
+```
+# Message definition containing information on what state the docking process is in.
+
+uint8 UNDOCKED = 0
+uint8 DOCKED = 1
+uint8 IN_PROGRESS = 2
+uint8 FAILED = 3
+uint8 CANCELLED = 4
+
+uint8 state
+```
+
+#### cpr_dock_msgs/TargetTrackerState.msg {#msg-target-tracker-state}
+
+```
+# Message definition containing the state information of the target tracker.
+# This includes whether or not the tracker is active, whether the target is visible/lost, and the target pose and score of that pose.
+
+bool active
+
+# flag indicates if the target is visible or not
+bool target_locked
+
+geometry_msgs/PoseWithCovarianceStamped target_pose
+float32 score
+
+# the distance of the sensor_link to the dock target
+float64 distance_to_target
+```
+
 #### cpr_localization_msgs/LocalizationStatus.msg {#msg-localization-status}
 
 ```
 # Localization status message for all sources of localization
 
-# the localization accuracy as a percentage value (covariance?)
-float32 accuracy
+std_msgs/Header header
+float32 accuracy # IN DEVELOPMENT
 
 # status information related to the GPS receiver units
-GPSStatus[] gps
+GNSSStatus position_gnss
+GNSSStatus heading_gnss
+GNSSStatus base_station_gnss
 
 bool dead_reckoning
-
-uint8 sensors_used  # IN DEVELOPMENT # Bitfield denoting which sensors are used in the localization
 ```
 
-#### cpr_localization_msgs/GPSStatus.msg {#msg-gps-status}
+#### cpr_localization_msgs/GNSSStatus.msg {#msg-gnss-status}
 
 ```
-# GPS receiver status message
+# GNSS receiver status message
 
-uint8 MODE_NO_FIX = 0
-uint8 MODE_SPP = 1
-uint8 MODE_SBAS = 2
-uint8 MODE_FLOAT_RTK = 3
-uint8 MODE_FIXED_RTK = 4
+uint8 POSITION_RECEIVER = 0
+uint8 HEADING_RECEIVER = 1
+uint8 BASE_STATION_RECEIVER = 2
+uint8 receiver_type
 
-uint8 fix_mode            # No Fix, Single Point Position (SPP), SBAS, Float RTK, Fixed RTK according to enum above.
+uint8 POSITION_NO_FIX = 0
+uint8 POSITION_SPP = 1
+uint8 POSITION_SBAS = 2
+uint8 POSITION_RTK_FLOAT = 3
+uint8 POSITION_RTK_FIXED = 4
+uint8 position_fix_type
 
-uint8 num_connected_sats  # Number of satellites connected to the antenna/receiver
-uint8[] cnr_sats          # The carrier-to-noise ratio of each connected satellite
+uint8 HEADING_NOT_APPLICABLE = 0
+uint8 HEADING_NO_SOLUTION = 1
+uint8 HEADING_RTK_FLOAT = 2
+uint8 HEADING_RTK_FIXED = 3
+uint8 heading_fix_type
 
-float64 correction_age    # IN DEVELOPMENT
+uint8 num_connected_sats	# Number of satellites connected to the antenna/receiver
+uint8 num_sats_solution   # Number of sats used in solution
+float32[] cn0			        # The carrier-to-noise ratio of each connected satellite
+float64 correction_age    # Age of RTK corrections. -1 indicates none received
 ```
 
 #### cpr_navigation_msgs/Mission.msg {#msg-navigation-mission}
@@ -405,6 +479,49 @@ onav_ms2_msgs/Task[] tasks
 
 cpr_control_msgs/ControlMode mode
 ---
+```
+
+#### cpr_dock_msgs/srv/AddDock.srv {#srv-add-dock}
+
+```
+# A dock information message that will be added to the docks list
+cpr_dock_msgs/DockInfo dock
+---
+# True if the location was updated/added successfully, otherwise False
+bool success
+```
+
+#### cpr_dock_msgs/srv/RemoveDock.srv {#srv-remove-dock}
+
+```
+# A dock information message that will be added to the docks list
+string uuid
+string name
+---
+# True if the location was updated/added successfully, otherwise False
+bool success
+```
+
+#### cpr_dock_msgs/srv/SetDockLocationById.srv {#srv-set-dock-location-by-id}
+
+```
+# The UUID of the dock we're setting a location for
+# If empty, a new dock is to be added with the location 
+string uuid
+---
+# True if the location was updated/added successfully, otherwise False
+bool success
+```
+
+#### cpr_dock_msgs/srv/SetDockLocationByName.srv {#srv-set-dock-location-by-name}
+
+```
+# The UUID of the dock we're setting a location for
+# If empty, a new dock is to be added with the location 
+string name
+---
+# True if the location was updated/added successfully, otherwise False
+bool success
 ```
 
 #### cpr_localization_msgs/srv/SetDatum.srv {#srv-set-datum}
@@ -771,6 +888,43 @@ onav_ms2_msgs/Waypoint result
 ------------------------------------------------------------------------
 
 ### Action Definitions
+
+#### cpr_dock_msgs/action/Dock.action {#action-dock}
+
+```
+# Action definition for sending a Clearpath UGV to one of its charging dock.
+
+# goal
+string uuid
+bool local_mode
+---
+# result
+bool success
+---
+# feedback
+string state
+
+# the distance of the charger_link to the dock target
+float64 distance_to_dock
+```
+
+#### cpr_dock_msgs/action/Undock.action {#action-undock}
+
+```
+# Action definition for undocking a Clearpath UGV from one of its charging docks.
+
+# goal
+string uuid
+---
+# result
+bool success
+---
+# feedback
+string state
+
+# the distance of the charger_link to the dock target
+float64 distance_to_dock
+```
 
 #### cpr_localization_msgs/action/SurveyBaseStation.action {#action-survey-base-station}
 

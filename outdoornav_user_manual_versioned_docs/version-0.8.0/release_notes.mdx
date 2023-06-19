@@ -10,21 +10,30 @@ toc_max_heading_level: 4
 
 ### New Features
 
--   Docking improvements including: multiple docks, visual represntation of docks on map, 
-    local docking/undocking through teleop view.
+-   Inertial Measurement Units (IMUs) integrated into localization.
+-   Added localization status topic (see see [API Endpoints](/docs_outdoornav_user_manual/api/api_endpoints/autonomy_api)).
+-   Added re-localization service (see [API Endpoints](/docs_outdoornav_user_manual/api/api_endpoints/autonomy_api)).
 -   Additional diagnostic information in the status view.
+-   Docking improvements including: multiple docks, visual represntation of docks on map, 
+    local docking/undocking through teleop view. Docking only functional with 2D LiDARs.
+-   Customization & Tuning Appendix C added. Lists of tuning parameters for navigation
+    and collision avoidance are now available. As well as, instructions/process on how to
+    tune UGVs with differential drive dynamics. Instructions for UGVs with Ackermann dynamics
+    are on their way.
 
 ### Bug Fixes 
 
--   1134: Display/Hide Datum Point not working
--   1137: Refreshing page re-enables edit button while mission running
+-   1134: Display/Hide Datum Point not working.
+-   1139: Issues with non-husky platforms. 
+-   1137: Refreshing page re-enables edit button while mission running.
+-   1276: Feedback added for incorrect first Waypoint placement.
 
 ### Known Issues
 
--   131: Software upgrade process not documented fully
--   609: Realsense D435 collision avoidance not fully tuned
--   751: Wireless icon in UI doesn't work for Ubiquity hardware
--   1138: Issues with greying out Waypoints in edge cases 
+-   131: Software upgrade process not documented fully.
+-   609: Realsense D435 collision avoidance not fully tuned.
+-   751: Wireless icon in UI doesn't work for Ubiquity hardware.
+-   1138: Issues with greying out Waypoints in edge cases .
 
 ## 0.7.0
 
@@ -47,12 +56,12 @@ toc_max_heading_level: 4
 
 ### Known Issues
 
--   131: Software upgrade process not documented fully
--   609: Realsense D435 collision avoidance not fully tuned
--   751: Wireless icon in UI doesn't work for Ubiquity hardware
--   1134: Display/Hide Datum point not working
--   1137: Refreshing page re-enables edit button while mission running
--   1138: Issues with greying out Waypoints in edge cases 
+-   131: Software upgrade process not documented fully.
+-   609: Realsense D435 collision avoidance not fully tuned.
+-   751: Wireless icon in UI doesn't work for Ubiquity hardware.
+-   1134: Display/Hide Datum point not working.
+-   1137: Refreshing page re-enables edit button while mission running.
+-   1138: Issues with greying out Waypoints in edge cases.
 
 ## 0.6.0
 
@@ -62,107 +71,107 @@ toc_max_heading_level: 4
     Autonomy sections. See [API Overview](/docs_outdoornav_user_manual/api/api_overview)
     for more details.
 -   Simulation environment created with charge dock, base station and
-    camera plugins
+    camera plugins.
 -   Added deviation path visualization to UI when constrained replanning
-    is enabled
--   Modified goalpoint icons to reflect tasks assigned to them
--   Added the ability to record rosbags from UI
--   Added GPS signal strength to status page
+    is enabled.
+-   Modified goalpoint icons to reflect tasks assigned to them.
+-   Added the ability to record rosbags from UI.
+-   Added GPS signal strength to status page.
 -   Added improvements to PTZ controls (cosmetic changes, ability to
-    disable zoom, added a reset mark)
+    disable zoom, added a reset mark).
 -   User can set map source from OpenStreet, MapBox, Bing Maps, or
-    custom map tiles through UI
+    custom map tiles through UI.
 
 ### Bug Fixes
 
--   632: Prevent users from changing mission while a mission is running
--   661: Removed map view when no map is provided in default-state.json
-    file
+-   632: Prevent users from changing mission while a mission is running.
+-   661: Removed map view when no map is provided in default-state.json.
+    file.
 -   712: Fixed front end hanging when user opens menu from any view
-    other than main view
--   716: Removed connecting lines from disabled goals
+    other than main view.
+-   716: Removed connecting lines from disabled goals.
 
 ### Known Issues
 
--   131: Software upgrade process not documented fully
--   609: Realsense D435 collision avoidance not fully tuned
--   751: Wireless icon in UI doesn't work for Ubiquity hardware
+-   131: Software upgrade process not documented fully.
+-   609: Realsense D435 collision avoidance not fully tuned.
+-   751: Wireless icon in UI doesn't work for Ubiquity hardware.
 -   756: Waypoints stop turning grey when they are hit if a waypoint is
-    skipped
+    skipped.
 
 ## 0.5.0
 
 ### New Features
 
--   Sensor Kit Options: Starter, Standard, Backpack
--   New localization module
+-   Sensor Kit Options: Starter, Standard, Backpack.
+-   New localization module.
 -   Added support for UBlox F9K and F9P GNSS receivers in the
-    localization module
+    localization module.
 -   Added support for either single or dual Swiftnav Duro/Piksi GNSS
-    receiver(s) in the localization module
+    receiver(s) in the localization module.
 -   Added support for Realsense D435 camera in collision avoidance
-    module
+    module.
 -   New/updated user modifiable environment variables for sensor and
-    navigation tuning
--   Added a Virtual Guided tour of the application for first time users
--   Added StreetView and Bing map tiles (to existing MapBox tile)
--   Allow users to specify custom map tile source
--   Added cosmetic changes to traversed waypoints as well as a robot
-    status icon with ROS topic health information
+    navigation tuning.
+-   Added a Virtual Guided tour of the application for first time users.
+-   Added StreetView and Bing map tiles (to existing MapBox tile).
+-   Allow users to specify custom map tile source.
+-   Added cosmetic changes to traversed waypoints as well as a robot.
+    status icon with ROS topic health information.
 
 ### Bug Fixes
 
 -   253: Replace default camera image for camera views when stream is
-    unavailable
--   281: Fixed navigation latched in a PAUSE state
+    unavailable.
+-   281: Fixed navigation latched in a PAUSE state.
 -   574: Fixed map settings page to not rerender when robots position
-    changes
+    changes.
 
 ### Known Issues
 
--   131: Software upgrade process not documented fully
--   609: Realsense D435 collision avoidance not fully tuned
+-   131: Software upgrade process not documented fully.
+-   609: Realsense D435 collision avoidance not fully tuned.
 
 ## 0.4.0
 
 ### New Features
 
 -   Improved wireless charger docking workflow and added ROS Noetic
-    docking support
--   Added option to record videos from cameras
+    docking support.
+-   Added option to record videos from cameras.
 -   Improved Docker setup to allow concurrent installation with
-    IndoorNav
+    IndoorNav.
 -   Added initial support for integration with
-    [Formant](https://formant.io/)
--   Added Docker installation support for Jackal and Warthog robots
+    [Formant](https://formant.io/).
+-   Added Docker installation support for Jackal and Warthog robots.
 
 ### Bug Fixes
 
--   480: Added rate limiter for continuous planner
--   490: Fixed base station survey pop up to better reflect survey time
+-   480: Added rate limiter for continuous planner.
+-   490: Fixed base station survey pop up to better reflect survey time.
 
 ### Known Issues
 
--   131: Software upgrade process not documented fully
+-   131: Software upgrade process not documented fully.
 
 ## 0.3.0
 
 ### New Features
 
--   Upgraded from ROS Melodic to ROS Noetic
--   Published initial performance metrics
--   Updated system architecture to work in Docker containers
+-   Upgraded from ROS Melodic to ROS Noetic.
+-   Published initial performance metrics.
+-   Updated system architecture to work in Docker containers.
 
 ### Bug Fixes
 
 -   266: Allowed map offsets to be set more than once without needing to
-    reset them back to zero
--   365: Updated costmap to handle large stop distances properly
--   377: Fixed handling of goal tolerances of 0.02m or less
+    reset them back to zero.
+-   365: Updated costmap to handle large stop distances properly.
+-   377: Fixed handling of goal tolerances of 0.02m or less.
 -   389: Fixed issue with goal being skipped in some cases where final
-    heading was specified
+    heading was specified.
 
 ### Known Issues
 
--   131: Software upgrade process not documented fully
--   150: Docking not yet implemented in Noetic
+-   131: Software upgrade process not documented fully.
+-   150: Docking not yet implemented in Noetic.
