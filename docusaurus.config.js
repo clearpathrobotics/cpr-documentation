@@ -37,12 +37,20 @@ const config = {
     [
       "@docusaurus/plugin-content-docs",
       {
+        id: "docs",
         path: "docs",
         routeBasePath: "docs",
         sidebarPath: require.resolve("./sidebars-docs.js"),
         remarkPlugins: [math],
         rehypePlugins: [katex],
         showLastUpdateTime: true,
+        lastVersion: 'current',
+        versions: { 
+          current: {
+            label: 'ROS 2 Humble',
+            // path: 'ros2humble',
+          }
+        },
       },
     ],
     [
@@ -83,19 +91,25 @@ const config = {
         },
         items: [
           {
+            type: "docsVersion",
             to: "/docs/robots",
             label: "Robots",
             position: "left",
+            docsPluginId: "docs",
           },
           {
+            type: "docsVersion",
             to: "/docs/software",
             label: "Software",
             position: "left",
+            docsPluginId: "docs",
           },
           {
+            type: "docsVersion",
             to: "/docs/add-ons",
             label: "Add-ons",
             position: "left",
+            docsPluginId: "docs",
           },
           {
             type: "docsVersion",
@@ -109,6 +123,24 @@ const config = {
             label: "IndoorNav",
             position: "left",
             docsPluginId: "indoornav_user_manual",
+          },
+          {
+            type: 'docsVersionDropdown',
+            position: 'right',
+            dropdownActiveClassDisabled: true,
+            docsPluginId: "docs"
+          },
+          {
+            type: 'docsVersionDropdown',
+            position: 'right',
+            dropdownActiveClassDisabled: true,
+            dropdownItemsAfter: [
+              {
+                to: '/docs/software/navigation_packages',
+                label: 'All versions',
+              },
+            ],
+            docsPluginId: "outdoornav_user_manual",
           },
           {
             to: "about",
@@ -130,10 +162,6 @@ const config = {
             label: "Home",
             position: "right",
           },
-          // {
-          //   type: 'docsVersionDropdown',
-          //   docsPluginId: 'outdoornav_user_manual',
-          // }
         ],
       },
       docs: {
