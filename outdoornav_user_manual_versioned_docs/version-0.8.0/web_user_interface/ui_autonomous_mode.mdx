@@ -321,11 +321,22 @@ To undock the UGV autonomously, the user should follow these steps:
     "Undock UGV" task to the Waypoint that was just created.
 -   Run the Mission.
 
+### Compatibility with a Doghouse
+
+In order for the autonomous docking feature to be compatible with a doghouse, the
+doghouse must conform to a few specifications:
+
+-   Must be installed on a flat surface, and have no elevation change between the
+    charge-deck and the outdoor surface (ie. no ramp into the doghouse).
+-   Must be greater than 1.2 m wide.
+-   Must be between 1.5 and 2.5 m long.
+-   Dock target should be installed centered along the back of the doghouse.
+
 ### Recover from Failed Docking or Undocking
 
 If for any reason, the docking or undocking tasks fail, the user can:
 
--   Manually drive the UGV towards the the dock target, aligning the
+-   Manually drive the UGV towards the dock target, aligning the
     charging unit with the receiver on the UGV.
 -   Manually drive the UGV in reverse away from the dock target. It is
     suggested that the user reverse roughly 2-3 meters away from the target,
