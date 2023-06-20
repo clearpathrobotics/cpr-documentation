@@ -1,0 +1,67 @@
+---
+title: Network IP Addresses
+sidebar_position: 4
+---
+
+These are the standard addresses that Clearpath uses for custom robot configurations.
+The details of your specific integration should have been included with your robot as a _robosmiths memo_ stating the device, serial number, and IP address.
+
+This chart is for reference, to help you decide what address to assign sensors or computers that you are adding to a robot.
+
+| Device Family    | Device Description      | Static IP Address/Range | Comments                               |
+| :--------------- | :---------------------- | :---------------------- | :------------------------------------- |
+| Computers & MCUs | Primary Computer        | 192.168.131.1           | The `roscore` process always runs here |
+|                  | MCU                     | 192.168.131.2           | Used on Dingo, Ridgeback, Warthog      |
+|                  |                         | 192.168.131.3           |                                        |
+|                  |                         | 192.168.131.4           |                                        |
+|                  | Secondary Computer      | 192.168.131.5           |                                        |
+|                  | Tertiary Computer       | 192.168.131.6           |                                        |
+|                  |                         | 192.168.131.8           |                                        |
+|                  |                         | 192.168.131.8           |                                        |
+|                  |                         | 192.168.131.9           |                                        |
+| Cameras & Vision | Primary/front camera    | 192.168.131.10          |                                        |
+|                  | Secondary/rear camera   | 192.168.131.11          |                                        |
+|                  |                         | 192.168.131.12          |                                        |
+|                  |                         | 192.168.131.13          |                                        |
+|                  |                         | 192.168.131.14          |                                        |
+|                  |                         | 192.168.131.15          |                                        |
+|                  |                         | 192.168.131.15          |                                        |
+|                  |                         | 192.168.131.17          |                                        |
+|                  |                         | 192.168.131.18          |                                        |
+|                  |                         | 192.168.131.19          |                                        |
+| 2D & 3D Lidar    | Primary/front lidar     | 192.168.131.20          |                                        |
+|                  | Secondary/rear lidar    | 192.168.131.21          |                                        |
+|                  | Tertiary lidar          | 192.168.131.22          |                                        |
+|                  |                         | 192.168.131.23          |                                        |
+|                  |                         | 192.168.131.24          |                                        |
+|                  |                         | 192.168.131.25          |                                        |
+|                  |                         | 192.168.131.26          |                                        |
+|                  |                         | 192.168.131.27          |                                        |
+|                  |                         | 192.168.131.28          |                                        |
+|                  |                         | 192.168.131.29          |                                        |
+| GPS              | GPS (base station)      | 192.168.131.30          |                                        |
+|                  | GPS (primary/position)  | 192.168.131.31          |                                        |
+|                  | GPS (secondary/heading) | 192.168.131.32          |                                        |
+|                  |                         | 192.168.131.33          |                                        |
+|                  |                         | 192.168.131.34          |                                        |
+| Sonar            | Primary sonar           | 192.168.131.35          |                                        |
+|                  | Secondary sonar         | 192.168.131.36          |                                        |
+|                  |                         | 192.168.131.37          |                                        |
+|                  |                         | 192.168.131.38          |                                        |
+|                  |                         | 192.168.131.39          |                                        |
+| Arms             | Primary/left arm        | 192.168.131.40          |                                        |
+|                  | Secondary/right arm     | 192.168.131.41          |                                        |
+|                  |                         | 192.168.131.42          |                                        |
+|                  |                         | 192.168.131.43          |                                        |
+|                  |                         | 192.168.131.44          |                                        |
+| Grippers         | Primary/left hand       | 192.168.131.45          |                                        |
+|                  | Secondary/right hand    | 192.168.131.46          |                                        |
+|                  |                         | 192.168.131.47          |                                        |
+|                  |                         | 192.168.131.48          |                                        |
+|                  |                         | 192.168.131.49          |                                        |
+|                  | Radio (base station)    | 192.168.131.50          |                                        |
+|                  | Radio (internal)        | 192.168.131.51          |                                        |
+| Networking HW    | Additional radios       | 192.168.131.52 - 69     |                                        |
+| Unassigned       |                         | 192.168.131.70 - 99     | Available as overflow for other ranges |
+| DHCP             |                         | 192.168.131.100 - 254   | DHCP client addresses                  |
+| Broadcast        |                         | 192.168.131.255         |                                        |

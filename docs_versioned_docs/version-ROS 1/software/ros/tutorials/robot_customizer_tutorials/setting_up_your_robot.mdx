@@ -1,0 +1,224 @@
+---
+title: Setting Up Your Robot
+sidebar_label: Setting Up Your Robot
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+## Prerequisites
+
+Before you can use the Robot Customizer ROS package, there are a few
+prerequisites that must be met. The prerequisites are different
+depending on your intended use case, all of which are detailed below.
+
+### Real Robot and Sensors
+
+If you have a physical robot and physical sensors:
+
+:::note
+
+The sensors you have must be on the [list of supported sensors](/docs/software/ros/tutorials/robot_customizer_tutorials/overview#supported-sensor-envars).
+
+:::
+
+1.  Your robot's computer is running Ubuntu 20.04 (Focal) with ROS
+    Noetic.
+2.  You have electromechanically integrated (e.g. mounted and wired) the
+    sensors onto your robot.
+
+### Simulated Robot and Sensors
+
+If you do not have a physical robot and physical sensors, and instead
+wish to simulate them:
+
+1.  Your computer is running Ubuntu 20.04 (Focal) with ROS Noetic.
+
+## Installing
+
+There are two ways to install the Robot Customizer ROS package on your
+robot's computer and/or on your computer, both of which are covered in
+this section.
+
+### Installing the Debian Package
+
+**Add Clearpath Debian Package Repository**
+
+Before you can install the Robot Customizer ROS package, you need to
+configure Ubuntu's APT package manager to add Clearpath's package
+server:
+
+1.  Install the authentication key for the
+    `packages.clearpathrobotics.com` repository. In terminal, run:
+
+    ```bash
+    wget https://packages.clearpathrobotics.com/public.key -O - | sudo apt-key add -
+    ```
+
+2.  Add the debian sources for the repository. In terminal, run:
+
+    ```bash
+    sudo sh -c 'echo "deb https://packages.clearpathrobotics.com/stable/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/clearpath-latest.list'
+    ```
+
+3.  Update the computer's package cache. In terminal, run:
+
+    ```bash
+    sudo apt-get update
+    ```
+
+**Installing Debian Package**
+
+1.  You should now be able to install the Robot Customizer ROS package.
+    In terminal, run:
+
+    ```bash
+    sudo apt-get install ros-noetic-cpr-robot-customizer
+    ```
+
+### Installing from Source
+
+The Robot Customizer ROS package is available on
+[GitHub](https://github.com/clearpathrobotics/cpr_robot_customizer), and
+can be compiled and installed from source if desired:
+
+1.  Create a workspace directory. In terminal, run:
+
+    ```bash
+    mkdir -p ~/catkin_ws/src
+    ```
+
+2.  Clone the Robot Customizer repository into your workspace directory.
+    In terminal, run:
+
+    ```bash
+    cd ~/catkin_ws_ws/src
+    git clone -b noetic-devel https://github.com/clearpathrobotics/cpr_robot_customizer
+    cd ..
+    ```
+
+3.  Install additional dependencies. In terminal, run:
+
+    ```bash
+    rosdep install --from-paths src --ignore-src --rosdistro=$ROS_DISTRO -r -y
+    ```
+
+4.  Build the workspace. In terminal, run:
+
+    ```bash
+    catkin_make
+    ```
+
+5.  You can now source your workspace to make use of the Robot
+    Customizer ROS package you just built. In terminal, run:
+
+    ```bash
+    source devel/setup.bash
+    ```
+
+## Setting Up Your Robot's Model
+
+One of the features of the Robot Customizer ROS package is automatically
+adding models of sensors onto your robot's model.
+
+To use this feature, you will need to build your robot's model, include
+the Robot Customizer ROS package's sensor models in your robot's
+model, and broadcast your robot's updated model in ROS.
+
+### URDF
+
+1.  Create a `.urdf.xacro` file that describes your robot's model.
+
+    :::note
+
+    A `.urdf.xacro` file serves the same purpose as a regular `.urdf` file;
+    that is, describing a robot's model through URDF. However, a
+    `.urdf.xacro` file also enables the usage of `xacro` macros.
+
+    :::
+
+    :::note
+
+    If you are unfamiliar with what URDF is, how URDF works, and/or how to
+    use `xacro` to improve a `.urdf` file, check out [this tutorial on the
+    ROS Wiki](http://wiki.ros.org/urdf/Tutorials).
+
+    :::
+
+    For the purpose of this tutorial, we will be using the example
+    `generic_robot.urdf.xacro` file which can be found
+    [here](https://github.com/clearpathrobotics/cpr_robot_customizer/blob/noetic-devel/example/generic_robot.urdf.xacro).
+    Upon closer inspection, you will notice that this file simply creates
+    the links and joints for a generic robot. This file also leverages
+    `xacro` to reuse properties, create macros, and most importantly,
+    include other `.urdf.xacro` files!
+
+2.  Scroll to the bottom of the example `generic_robot.urdf.xacro` file
+    and notice the following line responsible for including the Robot
+    Customizer ROS package's sensor models:
+
+    ```bash
+    <xacro:include filename="$(find cpr_robot_customizer)/urdf/accessories.urdf.xacro" />
+    ```
+
+3.  Add the line in step 2. to the bottom of your robot's `.urdf.xacro`
+    file.
+
+### Launch {#robot-model-launch}
+
+1.  Create a `.launch` file that loads your robot's `.urdf.xacro` file
+    into the `robot_description` parameter, and launches
+    `robot_state_publisher` to broadcast your robot's `tf` transforms
+    to ROS. If your robot has any non-fixed joints (e.g. wheels), your
+    `.launch` file will also need to launch the `joint_state_publisher`
+    to broadcast your robot's joints information.
+
+    :::note
+
+    If you are unfamiliar with using `robot_state_publisher` to broadcast a
+    robot's model from a `.launch` file, check out
+    [this tutorial on the ROS Wiki](http://wiki.ros.org/robot_state_publisher/Tutorials/Using%20the%20robot%20state%20publisher%20on%20your%20own%20robot).
+
+    :::
+
+    For the purpose of this tutorial, we will be using the example
+    `description.launch` file which can be found
+    [here](https://github.com/clearpathrobotics/cpr_robot_customizer/blob/noetic-devel/example/description.launch).
+    Upon closer inspection, you will notice that this file simply loads the
+    `generic_robot.urdf.xacro` file into the `robot_description` parameter,
+    and launches both `robot_state_publisher` and `joint_state_publisher`.
+
+2.  Scroll to the bottom of the example `description.launch` file and
+    notice the following line responsible for including the Robot
+    Customizer ROS package's sensor driver launch files:
+
+    ```bash
+    <include file="$(find cpr_robot_customizer)/launch/accessories.launch"/>
+    ```
+
+3.  **DO NOT** add the line in step 2. to the bottom of your robot's
+    `.launch` file yet! Please continue to [Sensor Drivers](#sensor-drivers) to
+    learn how to include the sensors' drivers launch files to your
+    robot.
+
+## Including Sensor Driver Launch Files {#sensor-drivers}
+
+One of the features of the Robot Customizer ROS package is automatically
+launching the drivers launch files of the sensors attached to your
+robot.
+
+:::note
+
+You will only be able to use this feature if you have the physical
+sensors electromechnically integrated onto your physical robot! You will
+not be able to launch the sensors' drivers otherwise (e.g. if you are
+simulating your robot and the sensors).
+
+:::
+
+1.  Continuing from the [previous section](#robot-model-launch), add
+    the following line to the bottom of your robot's `.launch` file:
+
+    ```bash
+    <include file="$(find cpr_robot_customizer)/launch/accessories.launch"/>
+    ```

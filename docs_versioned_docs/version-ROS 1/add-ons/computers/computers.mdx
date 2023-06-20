@@ -1,0 +1,67 @@
+---
+title: Computers Overview
+sidebar_label: Computers
+sidebar_position: 1
+---
+
+<center>
+  <figure>
+    <img
+      src="/img/about_images/about_4.jpg"
+      width="1000"
+    />
+    <figcaption>Jackal with a water cooled Intel i9 processor and Nvidia 1050</figcaption>
+  </figure>
+</center>
+
+<br />
+
+Clearpath's robots use ROS or ROS2, which require the robot to have a computer running an Operating System like Ubuntu.
+We mostly use Mini-ITX computers with Intel Core i3 and i7 processors, but we can run ROS on the major architectures including:
+
+- Intel Core i series
+- arm64 (Nvidia Jetson, and Raspberry Pi)
+
+Clearpath Robotics has preconfigured _Standard_ and _Performance_ computer kits for our robots, but we can make a custom computer to meet your project's requirements.
+
+## Computer Selection Considerations
+
+1.  Operating conditions, air temperature
+2.  Operating conditions, shock & vibration
+3.  Amount of compute required, CPU
+4.  Amount of compute required, GPU
+5.  Amount of RAM required
+6.  Amount of memory storage required
+7.  Speed of memory required (for applications with many cameras)
+8.  Number of connected sensors, and their data rates
+9.  Any software specific considerations that impact hardware:
+    - What operating system do you intend to use?
+    - Are there kernel drivers for this component?
+    - Does this software require a GPU?
+    - Does this software require a specific processor architecture?
+10. Can the selected robot power all these devices, and what will the runtime be?
+
+## Computer Selection Process
+
+1.  Choose between a consumer-computer and an industrial-computer.
+    1.  Operating environment's temperature range.
+        Consumer computers are intended for an environment between 0°C - 30°C.
+        Most outdoor robots operate in summer envronments with hotter ambient air, and have extra heat added to the computer through solar radiation.
+        The type of computer and cooling strategy can allow you to use the full compute capability of the computer in these environments.
+    2.  Mechanical shock & vibration in your application.
+2.  Choose between an Intel or arm64 architecture.
+    1.  Amount of compute required for sensor data.
+    2.  Amount of compute required for software, such as Autonomy.
+    3.  Are you planning to run any software specific to arm64, such as tools in [Nvidia JetPack SDK](https://developer.nvidia.com/embedded/jetpack)?
+    4.  Amount of RAM required.
+    5.  Number of sensors, and types of connections, and required speeds
+        - USB 2
+        - USB 3.0 - 3.2
+        - Ethernet (100 Mbit/s, 1 Gbit/s, 10 Gbit/s)
+        - CAN, and other industrial protocols
+        - Serial (RS-232, RS-422, RS-485)
+          Some devices may be connected to the computer through Network Switches, Hubs, or USB-converters.
+          Some devices like cameras can have a large amount of data, and require a dedicated bus on the computer, so it is best to consider the whole application when choosing the computer.
+3.  Amount of hard storage required, and how fast you need to write to this storage.
+    Consider what data you are collecting from sensors, and want to store for later use.
+    There can be a considerable amount of data from sensors like cameras, so write speeds may be a limiting factor depending on your computer configuration.

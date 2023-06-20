@@ -1,0 +1,63 @@
+---
+title: Boxer Maintenance
+sidebar_label: Maintenance
+sidebar_position: 4
+---
+
+import ComponentIntroductionBoxer from "/components/introduction_boxer.mdx";
+import GettingNewPackages from "/components/maintenance/getting_new_packages.mdx";
+import Support from "/components/support.mdx";
+
+<ComponentIntroductionBoxer />
+
+## Battery care
+
+To help extend the life of the batteries, follow the steps below.
+
+- Do not discharge the batteries lower than 10%.
+  Batteries lower than 5% are permanently damaged and cannot be recharged.
+- Recharge batteries to 100% after every use.
+- Recharge batteries and turn the circuit breaker to ”OFF” before putting the system into long-term storage.
+- Batteries that are in long-term storage will need to be recharged every 6 months.
+- Charge batteries when the ambient temperature is between 20 °C to 30 °C.
+  Consult Clearpath Robotics if you need to charge batteries outside these conditions.
+
+---
+
+## Software Maintenance {#software_maintenance}
+
+Boxer is always being improved, both its own software and the many community ROS packages upon which it
+depends! You can use the apt package management system to receive new versions all software running on the
+platform.
+
+### Updating the Base Unit
+
+OTTO Motors periodically releases updates for the OTTO 100, which can be applied to Boxer's Base Unit.
+
+Please refer to [OTTO Motors' documentation](https://docs.ottomotors.com/en/30495-30532-installing-robot-software.html)
+for details on applying software updates.
+
+At the time of writing, the latest version of the OTTO 100 software supported by the Boxer's Noetic backpack is 2.22.3.
+
+### Updating the Backpack Computer
+
+The Backpack Computer can be updated by connecting it to the internet, either using a wired or wireless connection, and
+running the following commands:
+
+```
+sudo apt-get update
+sudo apt-get upgrade
+```
+
+If you see any errors, contact [Support](#support).
+
+### Starting From Scratch
+
+If Boxer's computer has become inoperable, or for any reason you want to restore it to the factory state, you can
+reinstall the operating system by following the steps outlined [Boxer Backpack Computer Software Setup](/docs/robots/indoor_robots/boxer/tutorials_boxer#boxer-software-setup).
+
+---
+
+## Support {#support}
+
+<Support />

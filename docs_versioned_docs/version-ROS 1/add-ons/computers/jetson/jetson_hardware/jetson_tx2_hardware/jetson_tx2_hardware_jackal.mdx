@@ -1,0 +1,78 @@
+---
+title: Jetson TX2 Hardware in Jackal
+sidebar_label: Jackal
+sidebar_position: 2
+---
+
+import ComponentJackalComputerRemoval from "/components/jackal_remove_miniitx.mdx";
+
+## Installation
+
+:::note
+
+This page outlines the steps for installing the TX2 hardware in Jackal. See also
+the instructions for
+[installing the Jetson software](/docs/add-ons/computers/jetson/jetson_software).
+
+:::
+
+### Step 1: Remove Mini-ITX Computer
+
+:::note
+
+Skip this step if you don't have an existing computer.
+
+:::
+
+<ComponentJackalComputerRemoval />
+
+### Step 2: Install the TX2
+
+1. Install the Jetson TX2 using M3 screws or the screws removed from the computer. The holes
+   will only line up in one orientation.
+2. Plug a USB mini cable from the Jetson to the Jackal MCU board. This is beside where the USB
+   header was removed if you had a computer. We recommend using a USB hub to increase the number
+   of connected devices.
+
+3. Plug the power switch cable into the power switch header (J6).
+
+4. If you wish to use the antenna cables attached to the Jackal, remove the U.FL connectors from
+   the Jetson module and connect the antenna cables.
+
+   :::caution
+
+   Take your time with this step as the UF.L connectors are fragile. If you wish not to disconnect the UF.L
+   cables you can replace the antenna mounts on the Jackal with SMA extensions.
+
+   :::
+
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/hardware/tx2/jackal/4.jpg"
+         width="800"
+       />
+       <figcaption>UF.L connectors</figcaption>
+     </figure>
+   </center>
+
+5. Make a power cable that connects to the 12 V user
+   power (Molex connector) to a barrel connector with center positive. Refer
+   to the [Jackal User Manual](/docs/robots/outdoor_robots/jackal/user_manual_jackal) for the
+   pinout of the user power.
+
+   :::warning
+
+   Do NOT plug this into the ITX power plug on the power distribution board.
+
+   :::
+
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/hardware/tx2/jackal/5.jpg"
+         width="400"
+       />
+       <figcaption>12 V user power</figcaption>
+     </figure>
+   </center>
