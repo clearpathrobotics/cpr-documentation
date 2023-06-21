@@ -129,7 +129,7 @@ const config = {
             dropdownActiveClassDisabled: true,
             dropdownItemsAfter: [
               {
-                to: '/docs/ros/navigation_packages',
+                to: '/docs/navigation_packages',
                 label: 'All versions',
               },
             ],
