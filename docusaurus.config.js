@@ -99,8 +99,8 @@ const config = {
           },
           {
             type: "docsVersion",
-            to: "/docs/software",
-            label: "Software",
+            to: "/docs/ros",
+            label: "ROS",
             position: "left",
             docsPluginId: "docs",
           },
@@ -129,7 +129,7 @@ const config = {
             dropdownActiveClassDisabled: true,
             dropdownItemsAfter: [
               {
-                to: '/docs/software/navigation_packages',
+                to: '/docs/ros/navigation_packages',
                 label: 'All versions',
               },
             ],
