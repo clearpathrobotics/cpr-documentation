@@ -106,13 +106,6 @@ const config = {
           },
           {
             type: "docsVersion",
-            to: "/docs/add-ons",
-            label: "Add-ons",
-            position: "left",
-            docsPluginId: "docs",
-          },
-          {
-            type: "docsVersion",
             label: "OutdoorNav",
             position: "left",
             docsPluginId: "outdoornav_user_manual",
