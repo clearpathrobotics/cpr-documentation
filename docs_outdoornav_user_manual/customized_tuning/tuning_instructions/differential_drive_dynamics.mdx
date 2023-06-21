@@ -1,0 +1,360 @@
+---
+title: "Differential Drive"
+sidebar_label: "Differential Drive"
+sidebar_position: 3
+toc_min_heading_level: 2
+toc_max_heading_level: 2
+---
+
+# Tuning Flowchart
+
+When attempting to tune the navigation controller, it is recommended to follow the following
+flowchart. Begin with setting up [Initial Parameters](#initialize_parameters) for your platform.
+
+<center>
+  <figure>
+    <img
+      src="/img/outdoornav_images/diff_drive_tuning_flowchart.png"
+      width="1000"
+    />
+    <figcaption>Differential Drive Tuning Flowchart</figcaption>
+  </figure>
+</center>
+
+## Conditions Blocks {#condition_blocks}
+
+The condition blocks can be seen in the flowchart as **RED** decision blocks and either contain tests needed to be run or features of the software that are enabled/disabled.
+
+
+#### Velocity Deadband Tests {#velocity_deadband_tests}
+
+The "**Velocity Deadband?**" condition block asks the user to verify if there is a velocity deadband that the platforms
+motors must overcome in order to move the platform. (ie. what is the minimum velocity that the platform
+is required to receive, in order for it to move).
+
+To verify this, the user should set up two missions:
+
+1. A single Waypoint that is 10-20 meters directly in front of the platform. This will verify proper linear motion
+of the platform.
+2. A single waypoint that is 10-20 meters directly behind the platform. The first part of the navigation to
+this point (ie. the rotation to face the Waypoint) will verify the angular motion of the platform.
+
+If the above tests demonstrate that the platform **is stuck** in a velocity deadband and is not moving,
+then proceed to [Tune Deadband](#tune_deadband).
+
+If the above tests demonstrate that the platform **is NOT stuck** in a velocity deadband (ie. it can
+smoothly start navigating the mission), proceed to the following condition block: [Oscillation Tests](#oscillation_tests).
+
+#### Oscillation Tests (Straights) {#oscillation_tests}
+
+The "**Oscillations on Straights?**" conditions block asks if there are any oscillations present during
+normal navigation along a straight path.
+
+##### Tests
+
+To verify the amount of oscilations around the reference path, the user should set up four 
+missions, each of which should pass (or fall within the users requirements) prior to moving on from this section of the tuning. The start
+and end points of each of the tests should be identical and the start position (XY) should
+be noted/marked on the testing area.  Waypoint should be placed 20-30m away from the start 
+position. The four platform orientations for each test are as follows:
+
+1. Align the platform with a 0&deg offset from the Waypoint.
+2. Align the platform with a 90&deg offset from the Waypoint.
+3. Align the platform with a -90&deg offset from the Waypoint.
+4. Align the platform with a 180&deg offset from the Waypoint.
+
+See the image below to determine the placement of the platform. The red arrow indicates the
+orientation of the platform with respect to the Waypoint.
+
+<center>
+  <figure>
+    <img
+      src="/img/outdoornav_images/oscillation_tests_straight.png"
+      width="1000"
+    />
+    <figcaption>Oscillation Test Start Orientations</figcaption>
+  </figure>
+</center>
+
+It is not necessary to run all of the offset tests after every parameter change. It is enough 
+to progress systematically through the tests as they succeed. That is if 
+there are no oscillations during a 0&deg offset test, proceed to run the 45&deg test and so on
+and so forth. If the 0&deg offset test fails, then there is no need to run the other three tests before updating a parameter.
+ The conditions has been satisfied when all of the test results in minimal to no
+oscillations (or as is deemed acceptable).
+
+##### Causes
+
+Oscillations during navigation along straight paths can be caused by one or several of the following
+reasons. They are listed here in order of likelihood of occurence:
+
+| | Cause | Description |
+|-|-------|-------------|
+| **1** | Untuned MPC parameters | The default MPC controller parameters have been tuned for CPR platforms, and may not be the same for third party platforms. |
+| **2** | Controller delay | There may be delay present in your platform between the time the navigation computes a command velocity and when the velocity is actually executed. This could appear as mechanical delay in your motors or even mechanical delay in the rotational components of platforms control mechanisms . It is rarely noticed when electrical motors are used. The effect of controller delay is most commonly noticed when when entering a straight from a curve or after a pure rotation.|
+| **3** | Deformable Tires | If your tires are deformable, then after coming out of a pure rotation, while the platform may be facing the required direction of travel, a purely linear command velocity will cause the platform to veer off to the left/right. This in turn would cause the controller to correct itself, and place it into an oscillatory motion. |
+| **4** | Uneven weight distribution | If your platform is carrying more weight on one side it may bias the platforms motion when being command straight and veer the platform off to one side. The controller would then consistently try to correct this bias by pulling it back towards the reference path, thus causing oscillations. |
+
+To determine if causes 3 and 4 may apply to you, it is a good idea to run the following test:
+
+1. send the following command to rotate your platform for one full rotation,
+``` bash
+rostopic pub /cmd_vel geometry_msgs/Twist "linear:
+  x: 0.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.3" -r 10
+```
+2. stop the rotation by stopping the command.
+3. send the following command to move the platform purely forward,
+``` bash
+rostopic pub /cmd_vel geometry_msgs/Twist "linear:
+  x: 0.5
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0" -r 10
+```
+4. Analyse the motion and then stop the stop the linear motion. If the platform drifts left/right during 
+step 3, then your platform is likely to suffer frmo the effect of uneven weight distribution or deformable tires.
+(If not, there may be bigger issues). Further investigation/discussion with clearpath would be required.
+
+
+If the above tests demonstrate that the platform **is oscillating** around the reference path,
+then proceed to [Reduce Oscillations](#reduce_oscillations_on_straights).
+
+If the above tests demonstrate that the platform **is NOT oscillating** or **within an acceptable
+range of oscillation**, proceed to onto the following condition block: [Velocity Increase](#linear_velocity_condition).
+
+
+#### Linear Velocity Condition/Test {#linear_velocity_condition}
+
+The "Increase Linear Velocity?" condition block asks if the user wants to increase the linear
+velocity that the platform will travel along long straight paths. This does not mean that it will
+always drive at this velocity, but it is the velocity that it will accelerate to on straights, 
+when starting a mission and/or coming out of a curve.
+
+To test this we simply want to create a mission that sends the platform to a single Waypoint 
+directly in front of the platform's current position. The Waypoint should be at least 20 meters
+away from the current position and will depend on the linear velocity you wish to acheive.
+
+If during the above test, the velocity **does not** reach the desired velocity, proceed to 
+[Increase Linear Velocity](#increase_linear_velocity) and repeat the above test until the
+desired has been achieved.
+
+If the above test results in the platform's maximum velocity reaching the desired velocity,
+then proceed to checking the two subconditions: [Cornering Behavior](#cornering_tests) and [Goal Behavior](#goal_overshoot_tests).
+
+#### Goal Overshoot Tests {#goal_overshoot_tests}
+
+The "Goalpoint Overshoot?" condition block asks the user to check if, at the end of a mission,
+the platform overshoots the goalpoint. This condition should always be checked every time the
+velocity is increased. A similar test can be used as in the [Velocity Increase](#linear_velocity_condition) section.
+
+If the test results in the platform overshooting the goal point, then proceed to 
+[Tune Goal Behavior](#tune_goal_behavior).
+
+If the test results in a smooth deceleration to the goal point, with the platform completing its
+mission within the requried tolerance, and NO overshoot, then proceed to re-verifying that your 
+changes have not caused any oscillations by returning to the [Oscillation Tests](#oscillation_tests).
+
+#### Cornering Tests {#cornering_tests}
+
+Information incoming in release 0.8.
+
+#### Obstacle Avoidance Condition {obstacle_avoidance_condition}
+
+:::note
+Only advance to the next condition block: [Obstacle Avoidance](#obstacle_avoidance_condition) 
+if the platform's maximum velocity reaching the desired velocity. All other subconditions also
+need to be satisfied. Ie. you have tuned the corner and goal behavior 
+to within your allowable limits.
+:::
+
+
+Information incoming in release 0.8.
+
+## Tuning Blocks {#tuning_blocks}
+
+#### Initialize Parameters {#initialize_parameters}
+
+1. Update the footprint offsets of the platform in the `${HOME}/cpr_outdoornav_launch/outdoornav_tuning.env` file.
+
+<center>
+  <figure>
+    <img
+      src="/img/outdoornav_images/platform_footprint_offsets.png"
+      width="450"
+    />
+    <figcaption>Differential Drive Tuning Flowchart</figcaption>
+  </figure>
+</center>
+
+| Environment Variable | Description | Sign |
+|----------------------|-------------|------|
+| FOOTPRINT_OFFSET_POS_X | Distance from base_link to the furthest edge of any part/sensor at the front of the platform. | **+** |
+| FOOTPRINT_OFFSET_NEG_X | Distance from base_link to the furthest edge of any part/sensor at the left of the platform. | **-** |
+| FOOTPRINT_OFFSET_POS_Y | Distance from base_link to the furthest edge of any part/sensor at the rear of the platform. | **+** |
+| FOOTPRINT_OFFSET_NEG_Y | Distance from base_link to the furthest edge of any part/sensor at the right of the platform. | **-** |
+
+2. Update the [`vehicle_length`](../tuning_parameters/navigation_parameters#normal_behavior) 
+parameter to be the longitudinal length  (ie. along the x-axis) of your platform. This is not 
+the sum of the above footprint x-axis magnitudes, but only the length of the platform body.
+
+3. Update the following parameters with your platform specific maximums and minimums:
+
+    * [`max_fwd_velocity`](../tuning_parameters/navigation_parameters#normal_behavior)
+    * [`min_fwd_velocity`](../tuning_parameters/navigation_parameters#normal_behavior)
+    * [`max_rev_velocity`](../tuning_parameters/navigation_parameters#normal_behavior)
+    * [`max_ang_velocity`](../tuning_parameters/navigation_parameters#normal_behavior)
+    * [`max_accel`](../tuning_parameters/navigation_parameters#normal_behavior)
+    * [`max_decel`](../tuning_parameters/navigation_parameters#normal_behavior)
+    * [`max_ang_accel`](../tuning_parameters/navigation_parameters#normal_behavior)
+    * [`max_lateral_accel`](../tuning_parameters/navigation_parameters#normal_behavior)
+
+4. Update the [`stiction_compensator_fwd`](../tuning_parameters/navigation_parameters#normal_behavior) 
+and [`stiction_compensator_yaw`](../tuning_parameters/navigation_parameters#normal_behavior) to 
+be equivalent to the minimum linear and angular velocities that the platform requires it to move 
+(eg. `stiction_compensator_fwd` would be equal to `min_fwd_velocity`).
+
+
+#### Tune Velocity Deadband {#tune_deadband}
+
+To tune the velocity deadband, the user should at least start off by knowing the minimum 
+linear and angular velocities required to move the platform.
+
+If not already set from the [Initial Parameters](#initialize_parameters) section, you should set 
+the [`min_fwd_velocity`](../tuning_parameters/navigation_parameters#normal_behavior) to the minimum
+forward linear velocity that the platform can handle.
+
+For each iteration of the linear deadband tuning, increment the following parameters by **0.05 m/s**
+, until smooth linear motion is acheived from standstill:
+
+- [`min_fwd_velocity`](../tuning_parameters/navigation_parameters#normal_behavior)
+- [`stiction_compensator_fwd`](../tuning_parameters/navigation_parameters#normal_behavior)
+
+For each iteration of the angular deadband tuning, increment the following parameters by **0.02 rad/s**
+, until smooth angular motion is acheived from standstill:
+
+- [`stiction_compensator_yaw`](../tuning_parameters/navigation_parameters#normal_behavior)
+
+
+#### Reducing Oscillation (Straights) {#reduce_oscillations_on_straights}
+
+To tune the platform behavior on straights when dealing with the simple cause of untuned MPC 
+controller parameters, we list the following parameters along with likely ranges and their initial
+default values. The are listed in order of which parameter will have the most effect of improving
+the performance of the current tuning block. 
+
+| Parameter | Likely Range* | Default |
+|-----------|---------------|---------|
+| [`yaw_weight`](../tuning_parameters/navigation_parameters#normal_behavior)  | 90 - 120 | 18.0 |
+| [`y_weight`](../tuning_parameters/navigation_parameters#normal_behavior)  | 12 - 18 | 14.0 |
+| [`x_weight`](../tuning_parameters/navigation_parameters#normal_behavior) | 14 - 16  | 14.0
+| [`endpoint_multiplier`](../tuning_parameters/navigation_parameters#normal_behavior) | 10 - 20 | 10 |
+| [`max_lookahead`](../tuning_parameters/navigation_parameters#normal_behavior) |2.5 - 3.5  | 2.5 |
+| [`lookahead_factor`](../tuning_parameters/navigation_parameters#normal_behavior) |  1.4 - 1.6  | 1.45 |
+| [`mpc_opt_maxiteration`](../tuning_parameters/navigation_parameters#normal_behavior)* | 10 - 15 | 13 |
+| [`discretization_steps`](../tuning_parameters/navigation_parameters#normal_behavior)* | 6 - 10 | 8 |
+
+\* Note: these parameters should be changed with caution.
+
+When you are experiencing oscilations due to cause \#2 (controller delay) try the following modifying the following parameters:
+
+| Parameter | Likely Range* | Default |
+|-----------|---------------|---------|
+| [`enable_delay_compensation`](../tuning_parameters/navigation_parameters#delay_compensation_params)  | true | false |
+| [`controller_delay`](../tuning_parameters/navigation_parameters#delay_compensation_params)  | depends on your delay in your system. (usually 300 - 1000 will provide changes to the performance) | NA |
+
+
+No available solutions yet to resolve oscillations due to causes \#3 and \#4. Please 
+contact CPR support.
+
+#### Increase Linear Velocity {#increase_linear_velocity}
+
+*The following instructions are only relevant if you are planning on
+increasing the velocity of the platform above 2.0 m/s.*
+
+To increase the platform's maximum velocity, the following parameters should be modified.
+
+First, the [`mpc_horizon`](../tuning_parameters/navigation_parameters#normal_behavior) parameter
+should be set to: 1.0
+
+The following parameters should then be modified to the desired velocity. Ie. if the desired
+velocity is 4.0 m/s, then you should modify both parameters to be 4.0.
+
+| Parameter | Value |
+|-----------|-------|
+| [`max_fwd_velocity`](../tuning_parameters/navigation_parameters#normal_behavior)  | *desired_velocity* |
+| [`max_lookahead`](../tuning_parameters/navigation_parameters#normal_behavior) | *desired_velocity* |
+
+Finally, if you are increasing the velocity a value greater than or equal to 4.0 m/s or if you
+are seeing that the velocity is being cut/limited to even after changing the above parameters, 
+it is possible to try and increase the size (width and height) of the local costmap  in file: `~/cpr_outdoornav_launch/onav_robots/params/platform/navigation/costmap_local.yaml`.
+The limit of the velcoity because the lookahead distance is exceeding the size of the local costmap. By increasing it, we
+allow the controller to lookahead further and increase the velocity.
+
+#### Tune Goal Behavior {#tune_goal_behavior}
+
+A few different issues may arise when tuning the Goal behavior, we list a few of them and the possible
+parameters that can be modified to improve the performance.
+
+1) Overshooting the goal point can be caused by a few factors:
+
+* Not decelerating fast enough or soon enough as the platform approaches the goal.
+
+To tune for this issue, some paraemters are listed in order in which they will have the most effect of
+improving the performance of the current tuning block:
+
+| Parameter | Default |
+|-----------|---------|
+| [`goal_horizon_threshold`](../tuning_parameters/navigation_parameters#goal_behavior)  | 2.0 |
+| [`goal_slowdown_multiplier`](../tuning_parameters/navigation_parameters#goal_behavior) | 1.5 |
+| [`goal_horizon_threshold`](../tuning_parameters/navigation_parameters#goal_behavior)  | 0.8 |
+| [`endpoint_multiplier_goal`](../tuning_parameters/navigation_parameters#goal_behavior)  | 20 |
+| [`x_weight_goal`](../tuning_parameters/navigation_parameters#goal_behavior) | 14.0 |
+| [`fwd_v_weight_goal`](../tuning_parameters/navigation_parameters#goal_behavior) | 0.01 |
+| [`fwd_a_weight_goal`](../tuning_parameters/navigation_parameters#goal_behavior) | 8.0 |
+
+
+* The autonomy core not considering the goal complete because it has too high of a velocity as it
+starts entering the goal tolerance.
+
+To to tune for this issue, modify the following parameter:
+
+| Parameter | Value | Default |
+|-----------|-------|---------|
+| [`max_speed_at_goal`](../tuning_parameters/navigation_parameters#goal_behavior)  | *depends on the deceleration of your platform* | 0.8 |
+
+2) Oscillations (or jittery behavior) around the goal point are typically caused by the the
+tolerance at the goal point being set too small. If they are too small and the platform is unable
+to localize itself within the required position and yaw tolerances, then it will jitter and 
+rotate to attempt to be a precise as you are expecting it to be. To resolve this, it is advised 
+to slightly increase the goal tolerance parameters:
+
+| Parameter | Default |
+|-----------|---------|
+| [`goal_tolerance_xy_rtk`](../tuning_parameters/navigation_parameters#goal_behavior) | 0.1 |
+| [`goal_tolerance_yaw_rtk`](../tuning_parameters/navigation_parameters#goal_behavior) | 0.25 |
+| [`goal_tolerance_xy_nortk`](../tuning_parameters/navigation_parameters#goal_behavior) | 0.3 |
+| [`goal_tolerance_yaw_nortk`](../tuning_parameters/navigation_parameters#goal_behavior) | 0.5 |
+
+:::note
+If your platform has RTK corrections, then it is only required to modify [`goal_tolerance_xy_rtk`](../tuning_parameters/navigation_parameters#goal_behavior)
+and [`goal_tolerance_yaw_rtk`](../tuning_parameters/navigation_parameters#goal_behavior). Otherwise,
+only modify [`goal_tolerance_xy_nortk`](../tuning_parameters/navigation_parameters#goal_behavior)
+and [`goal_tolerance_yaw_nortk`](../tuning_parameters/navigation_parameters#goal_behavior).
+:::
+
+A complete list of parameters that relate to the GOAL state can be found 
+[here](#../tuning_parameters/navigation_parameters#goal_behavior), however, the above set of 
+parameters is likely to satisfy the users requriements.
+
+#### Tune Cornering Behavior {#tune_cornering_behavior}
+
+Information incoming in release 0.9.

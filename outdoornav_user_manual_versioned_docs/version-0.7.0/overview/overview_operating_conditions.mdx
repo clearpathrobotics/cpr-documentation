@@ -1,0 +1,178 @@
+---
+title: Operating Conditions
+sidebar_label: Operating Conditions
+sidebar_position: 3
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+OutdoorNav Software is designed and tested for use in rugged outdoor
+environments.
+
+## Operating Conditions
+
+### Terrain
+
+OutdoorNav Software is compatible with terrains in which the UGV can be
+driven manually without excessive slipping. The performance limits will
+be a function of the base UGV traction.
+
+Using Clearpath Robotics Husky, Jackal, and Warthog as a the base UGV,
+OutdoorNav Software is suitable for use in the following terrains:
+
+-   asphalt
+-   concrete
+-   grass
+-   snow
+
+:::note
+
+Grass should not exceed 30 cm in height if collision avoidance is
+enabled.
+
+:::
+
+:::note
+
+Winter/studded tires may be required for proper traction on snow.
+
+:::
+
+OutdoorNav Software is currently **not** suitable in the following
+terrains:
+
+-   ice
+-   loose gravel
+
+:::note
+
+Support for loose gravel environments is currently being tested and is
+expected to be available in late 2023.
+
+:::
+
+The terrain capabilities of third-party UGVs will be dependent on a
+variety of factors including the vehicle mass, the tire treading, and
+motor power.
+
+### Environment
+
+OutdoorNav Software is suitable for use in the following environmental
+conditions:
+
+-   light rainfall (drizzle)
+-   light snowfall (powdery snow)
+
+:::note
+
+If erratic behavior, such as frequent replanning, is perceived in these
+light precipitation conditions, disabling the "continuous planning"
+feature may help.
+
+:::
+
+OutdoorNav Software is **not** suitable for use in the following
+environmental conditions:
+
+-   heavy rainfall
+-   heavy snowfall
+
+:::note
+
+If navigation is required in heavy rain or snow, disabling the collision
+avoidance feature will allow the UGV to navigate properly. This should
+be done with caution.
+
+![](/img/outdoornav_images/gps_danger.png)
+
+:::
+
+## Performance
+
+The performance of the system is highly dependent on both the base UGV,
+the sensors, the system integration details, and the environment. The
+following table provides typical performance metrics for Clearpath
+Robotics Jackal and Husky UGVs.
+
+_System Performance for Husky/Jackal with Typical Sensors_
+
+|                                        | Starter Sensor Kit                | Standard Sensor Kit (No RTK)     | Standard Sensor Kit (RTK)        |
+|----------------------------------------|-----------------------------------|----------------------------------|----------------------------------|
+| GPS sensors                            | UBlox F9P                         | 2x SwiftNav Duro                 | 2x SwiftNav Duro                 |
+| Location accuracy (position & heading) | Less than 60 cm<br/>Less than 10° | Less than 30 cm<br/>Less than 5° | Less than 5 cm<br/>Less than 2°  |
+| Path tracking accuracy (approximate)   | 20 cm                             | 15 cm                            | 10 cm                            |
+
+## Limitations
+
+While OutdoorNav Software operates effectively in a range of rugged
+outdoor environments, the operator should be aware of the following
+limitations and plan accordingly.
+
+_OutdoorNav System Limitations_
+
+| Limitation                                       | Details                                                                                                                                                                                                                                                                                                                    |
+|--------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| RTK accuracy                                     | Localization accuracy for the Standard (RTK) configuration assumes the base station location has been accurately surveyed.                                                                                                                                                                                                 |
+| Localization accuracy                            | Localization accuracy is influenced by the quality of GNSS data that is available. Navigating in GNSS denied areas (e.g., under bridges, near tall buildings, etc.) will cause degradation in localization performance.                                                                                                    |
+| Negative obstacle detection not present          | Outdoor Navigation Software does not have negative obstacle detection capability. Your UGV will not detect stairs, cliffs, potholes, depressions or edges and may drive into these obstacles causing harm to people or property.                                                                                           |
+| Limited obstacle detection in vertical dimension | The small vertical field of view of 3D LiDARs limits the vertical obstacle detection capability of the OutdoorNav Software. See [Obstacle Detection Limitations](#obstacle-detection-limitations) for details.                                                                                                             |
+| Low traction may cause UGV to get stuck          | Your UGV may navigate itself into a situation where wheels slip or do not make contact with the ground.                                                                                                                                                                                                                    |
+| Rain and snow may affect obstacle detection      | Adverse weather conditions may obscure obstacle detection and avoidance data from the VLP-16 LiDAR. Obstacle detection and avoidance may not function in all weather conditions and must be disabled to navigate in heavy snow or rain.                                                                                    |
+| Maximum distance between two Viapoints           | Distance between any two consecutive Viapoints of a Mission should be less than 20 meters. This will ensure that the global planner can find a valid path to the next Viapoint for the UGV in case there is an obstacle on the path of the UGV.                                                                            |
+| WiFi range limits                                | The current configurations of the OutdoorNav Software will continue navigation if the WiFi disconnects or goes out of range. The Web UI will reconnect once the WiFi has reconnected but certain functions of the UI may be limited such as the ability to issue a pause/stop commands or sending new missions to the UGV. |
+| Wireless e-Stop range limits                     | The UGV will E-Stop if the UGV is driven out of range of the Wireless Emergency Stop device.                                                                                                                                                                                                                               |
+| RTK GPS limited by WiFi range                    | If WiFi goes out of range, your UGV will not receive RTK corrections from the Base Station. This can potentially decrease the accuracy of the GPS signal which can subsequently degrade path following performance of your system.                                                                                         |
+| Obstacle detection may cause UGV to become stuck | The UGV may stop and become stuck if obstacles are detected and not cleared from its path. If obstacle avoidance is enabled, it may not be able to calculate an acceptable path to the next Viapoint or Goal Point under all circumstances. This will result in the UGV becoming stuck and failing its Mission.            |
+| Failure to set Datum causes undefined behavior   | If the Datum is not set or is not synchronized with the navigation module, the UGV’s driven path is undefined and will move unpredictably if Missions are sent in this state.                                                                                                                                              |
+| Zones are not currently supported                | It is not possible to define “keep-out” or “unsafe” zones that the UGV needs to avoid. Rather, careful use of Waypoint placement by the operator can be used to keep the UGV at a safe distance from unsafe zones.                                                                                                         |
+| No collision avoidance during teleoperation mode | When operating in Manual Mode (Teleoperation), no collision avoidance is enabled. The operator is responsible for avoiding collisions.                                                                                                                                                                                     |
+
+### Obstacle Detection Limitations  {#obstacle-detection-limitations}
+
+The maximum collision avoidance range for the OutdoorNav Software is
+UGV-dependent and is related to the maximum speed of the UGV. These
+ranges for Clearpath Robotics UGVs are:
+
+-   Jackal UGV: 4.5 meters
+-   Husky UGV: 4.5 meters
+-   Warthog UGV: 15.0 meters
+
+While the sensors are able to detect objects at further distances, the
+OutdoorNav Software only considers obstacles detected within these
+distances for collision avoidance. That is, the UGV will only begin to
+decelerate as it detects obstacles within this range.
+
+The detection itself is also related to the horizontal size
+(width/diameter) of the obstacle. The limitations in detecting objects
+with small horizontal size are described in the table below.
+
+_Maximum Reliable Obstacle Detection Distance from UGV, according to Obstacle Horizontal Size_
+
+| Object Size (Horizontal) | Starter Sensor Kit                                             | Standard Sensor Kit                                            |
+|--------------------------|----------------------------------------------------------------|----------------------------------------------------------------|
+| Less than 0.6 cm         | No reliable detection                                          | No reliable detection                                          |
+| 0.6 to 1.0 cm            | 0.8 m                                                          | No reliable detection                                          |
+| 1.0 to 3.0 cm            | 2.0 m                                                          | 1.75 m                                                         |
+| Greater than 3.0 cm      | Maximum collision avoidance distance (UGV-specific; see above) | Maximum collision avoidance distance (UGV-specific; see above) |
+
+Finally, the OutdoorNav Software bounds the obstacle detection to
+prevent ground hits and to remove detections above the UGV body. The
+following bounds are relative to the ground, assuming a flat surface.
+Obstacles that are entirely below the lower bound or entirely above the
+upper bound are not considered obstacles and will not be avoided.
+
+_Obstacle Detection Vertical Bounds_
+
+| Vertical Bound        | Jackal UGV | Husky UGV | Warthog UGV |
+|-----------------------|------------|-----------|-------------|
+| Lower Detection Bound | 0.3 m      | 0.3 m     | 0.3 m       |
+| Upper Detection Bound | 0.8 m      | 1.3 m     | 1.8 m       |
+
+:::note
+
+The vertical detection bounds above are for the Standard Sensor Kit or a
+custom sensor configuration that includes a Velodyne. The vertical
+detection bounds for the Starter Sensor Kit have yet to be determined
+for release 0.5.0.
+
+:::
