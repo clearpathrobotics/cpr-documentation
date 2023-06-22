@@ -1,47 +1,84 @@
 ---
-title: Robot Operating System (ROS) Overview
-sidebar_label: ROS Overview
+title: Robot Operating System 2 (ROS 2) Overview
+sidebar_label: ROS 2 Overview
 sidebar_position: 1
 ---
 
-Clearpath Robotics is committed to the [Robot Operating System (ROS)](https://www.ros.org/) and the community of researchers
-and users that support it. Each robot that Clearpath deploys is designed to be used with this open
-source platform. The extensibility of ROS has also allowed Clearpath to use it to develop proprietary
-autonomy software for indoor and outdoor use.
+For [ROS 2 Humble](https://docs.ros.org/en/humble/index.html) and beyond, the software structure of Clearpath robots has changed significantly. Rather than having individual sets of packages for each
+robot, we have opted to create common `clearpath` packages which are used by all supported platforms. Additionally, we are moving away from using environment variables
+to customize the robot, and instead using a YAML configuration file to describe the robot. We have also defined a [ROS 2 API](api/overview) common to all of our supported platforms. As a result,
+our platforms are now more customizable, more modular, and more unified.
 
-:::note
 
-If you are new to ROS, check out our [ROS Tutorials](https://www.clearpathrobotics.com/assets/guides/noetic/ros/index.html).
+## Terminology {#terminology}
 
-See also our [Robot Customizer Tutorials](https://www.clearpathrobotics.com/assets/guides/noetic/cpr-robot-customizer/index.html)
-for details on our easy-to-use interface for adding sensors to your robot in the real world or in simulation.
+***Clearpath Platform***: The *platform* refers to the vehicle that makes up the base of the robot. The platform may be referred to by
+the platform code to indicate the revision.
 
-:::
+***Clearpath Robot***: The *robot* refers to the entire robotic system, including the platform, sensors, and additional accessories.
 
-<!--
+***Clearpath Config***: The *config* refers to the `robot.yaml` configuration file that defines the Clearpath robot.
 
-Future topics
+***Clearpath API***: The *API* refers to the [ROS 2 application programming interface](api/overview). This is a set of ROS 2 topics and services defined
+by Clearpath which are used by all supported Clearpath platforms.
 
-1.  Introducton to ROS architecture
-2.  Installing Clearpath ISO (if they are not using a physical robot)
-3.  reviewing rostopics
-4.  publishing a _rostopic_
-    - with command line
-    - with python
-    - with C++
-5.  subscribing to a _rostopic_
-    - with command line
-    - with python
-    - with C++
-6.  Using _RViz_
-7.  Using _RQT graph_
-8.  using _tf_
-9.  Creating a _catkin workspace_
-10. Launching a _node_
-    - with command line
-    - on startup
-11. Clearpath _Environment Variables_
-12. _UDEV_ rules
-13. remote ROS connection
 
--->
+## Supported Platforms {#supported-platforms}
+
+<table>
+  <tr>
+    <th>Platform</th>
+    <th>Platform code</th>
+    <th>Supports ROS 2 Humble</th>
+  </tr>
+
+  <tr>
+    <td>Husky</td>
+    <td>A200</td>
+    <td>Yes</td>
+  </tr>
+
+  <tr>
+    <td>Jackal</td>
+    <td>J100</td>
+    <td>Yes</td>
+  </tr>
+
+  <tr>
+    <td>Warthog</td>
+    <td>W100</td>
+    <td>No</td>
+  </tr>
+
+  <tr>
+    <td rowspan="5">Dingo</td>
+  </tr>
+  <tr>
+    <td>DD100</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td>DO100</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td>DD150</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td>DO150</td>
+    <td>No</td>
+  </tr>
+
+  <tr>
+    <td>Boxer</td>
+    <td>B250</td>
+    <td>No</td>
+  </tr>
+
+  <tr>
+    <td>Ridgeback</td>
+    <td>R100</td>
+    <td>No</td>
+  </tr>
+</table>
