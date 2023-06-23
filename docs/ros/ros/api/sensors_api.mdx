@@ -24,8 +24,8 @@ toc_max_heading_level: 4
 
 | Topic                                        | Message type                                                                                                     | Description     | QoS                                       |
 | :------------------------------------------- | :--------------------------------------------------------------------------------------------------------------- | :-------------- | :---------------------------------------- |
-| platform/sensors/camera_#/colour/image       | [sensor_msgs/Image](https://github.com/ros2/common_interfaces/blob/humble/sensor_msgs/msg/Image.msg)             | Raw RGB image   | [System Default](overview#system-default) |
-| platform/sensors/camera_#/colour/camera_info | [sensor_msgs/CameraInfo](https://github.com/ros2/common_interfaces/blob/humble/sensor_msgs/msg/CameraInfo.msg)   | Camera Info     | [System Default](overview#system-default) |
+| platform/sensors/camera_#/color/image       | [sensor_msgs/Image](https://github.com/ros2/common_interfaces/blob/humble/sensor_msgs/msg/Image.msg)             | Raw RGB image   | [System Default](overview#system-default) |
+| platform/sensors/camera_#/color/camera_info | [sensor_msgs/CameraInfo](https://github.com/ros2/common_interfaces/blob/humble/sensor_msgs/msg/CameraInfo.msg)   | Camera Info     | [System Default](overview#system-default) |
 | platform/sensors/camera_#/depth/image        | [sensor_msgs/Image](https://github.com/ros2/common_interfaces/blob/humble/sensor_msgs/msg/Image.msg)             | Raw depth image | [System Default](overview#system-default) |
 | platform/sensors/camera_#/depth/camera_info  | [sensor_msgs/CameraInfo](https://github.com/ros2/common_interfaces/blob/humble/sensor_msgs/msg/CameraInfo.msg)   | Camera Info     | [System Default](overview#system-default) |
 | platform/sensors/camera_#/points             | [sensor_msgs/PointCloud2](https://github.com/ros2/common_interfaces/blob/humble/sensor_msgs/msg/PointCloud2.msg) | Pointcloud data | [System Default](overview#system-default) |
@@ -46,3 +46,7 @@ toc_max_heading_level: 4
 | platform/sensors/gps_#/fix | [sensor_msgs/NavSatFix](https://github.com/ros2/common_interfaces/blob/humble/sensor_msgs/msg/NavSatFix.msg) | Navsat Fix information | [System Default](overview#system-default) |
 
 
+:::note
+The '#' in the topic represents the index of the sensor. Indexing begins at 0 and will increment for
+each new sensor of that type that is added. Internal sensors such as IMU's will be indexed first.
+:::

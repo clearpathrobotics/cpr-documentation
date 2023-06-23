@@ -9,12 +9,12 @@ toc_max_heading_level: 4
 ### Operating System (OS) {#operating-system}
 
 ROS 2 Humble uses [Ubuntu 22.04](https://releases.ubuntu.com/jammy/) as its Tier 1 operating system. Though other operating systems are supported,
-it is highly recommended to use Ubuntu 22.04. For the robot PC, Ubuntu 22.04 Server should be installed. The server version of the OS will not install a
+it is highly recommended to use Ubuntu 22.04. For the robot computer, Ubuntu 22.04 Server should be installed. The server version of the OS will not install a
 graphical user interface (GUI).
 
 ### Networking
 
-Once the operating system is installed, the robot PC needs to be connected to the internet. TODO.
+Once the operating system is installed, the robot computer needs to be connected to the internet. TODO.
 
 ### ROS 2 Humble
 
@@ -22,7 +22,7 @@ Follow the [official instructions](https://docs.ros.org/en/humble/Installation/U
 
 ### Clearpath Package Server
 
-The Clearpath package server needs to be added to the robot PC to access robot packages.
+The Clearpath package server needs to be added to the robot computer to access robot packages.
 
 Configure Ubuntu's APT package manager to add the package server:
 
@@ -62,7 +62,7 @@ All platforms with the exception of the A200 will require a firmware update to r
 
 #### J100
 
-Jackal firmware can be flashed from the Jackal's PC.
+Jackal firmware can be flashed from the Jackal's computer.
 
 **1. Download the Jackal Firmware package from the Clearpath package server**
 
@@ -81,10 +81,11 @@ robot on with the power button.
 ```
 jackal_firmware_flash.sh
 ```
-Wait for the firmware to be flashed.
+Flashing progress will be indicated by the flash script. Wait for the firmware to finish flashing.
 
 :::caution
-Do not turn the robot off or unplug the micro-USB cable while flashing firmware.
+Do not turn the robot off or unplug the micro-USB cable while flashing firmware. If an error occurs while
+flashing, you can attempt to run `jackal_firmware_flash.sh` again.
 :::
 
 **4. Place the Jackal MCU into normal mode**

@@ -1,23 +1,34 @@
 ---
-title: Driving a robot
-sidebar_label: Teleop
+title: Driving a Robot
+sidebar_label: Driving a Robot
 sidebar_position: 1
 toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
 :::caution
-Make sure you have successfully [set up](../installation/robot) the robot before attempting to drive the robot.
+Make sure you have successfully [set up](../installation/robot) the robot before attempting to drive it.
 :::
 
-There are several ways to drive a Clearpath robot over ROS 2.
+There are several ways to drive a Clearpath robot using ROS 2.
 
 ### Joystick Teleoperation
 
 Make sure your controller is paired to the robot PC. Visit the [controller pairing](../installation/controller) guide for details.
 
 With the [robot services](../installation/robot#robot-services) running, turn on your controller. Press and hold either **L1** or **R1**, and use
-the left joystick to publish a linear velocity and yaw command. The **L1** button will drive the robot at 'normal' speeds, while **R1** will drive the robot at 'turbo' speeds.
+the left joystick to publish a linear velocity and yaw command. The **L1** button will drive the robot at slow speeds, while **R1** will drive the robot at fast speeds.
+
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/common_images/controller_ps4.png"
+      width="400"
+    />
+    <figcaption>PS4 Contoller</figcaption>
+  </figure>
+</center>
 
 ### Keyboard Teleoperation
 
