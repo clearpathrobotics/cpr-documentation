@@ -89,7 +89,7 @@ which offers system logs.
 
 ## Namespacing
 
-Namespacing is the method of adding a prefix to a robots nodes and topics, to differentiate them from another robot that
+Namespacing is the method of adding a prefix to a robot's nodes and topics, to differentiate them from another robot that
 may be on the same network. For example, every robot will have a `cmd_vel` topic for commanding velocity. If both robots
 used the same topic, then they would both drive when a message is published to that topic. By namespacing, we can remap the topic
 to `robot1/cmd_vel` and `robot2/cmd_vel` for each respective robot. 
