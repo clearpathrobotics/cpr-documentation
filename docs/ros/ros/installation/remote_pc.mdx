@@ -1,0 +1,66 @@
+---
+title: Remote PC setup
+sidebar_label: Remote PC
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+### Operating System (OS) {#operating-system}
+
+ROS 2 Humble uses [Ubuntu 22.04](https://releases.ubuntu.com/jammy/) as its Tier 1 operating system. Though other operating systems are supported,
+it is highly recommended to use Ubuntu 22.04. For the remote PC, Ubuntu 22.04 Desktop should be installed.
+
+### Networking
+
+The remote PC should be connected to the same Wi-Fi network as the robot PC, or should be connected via ethernet. If connected over ethernet,
+set your static IP to the `192.168.131` subnet, with an IP address that won't interfere with other devices on the network, such as `192.168.131.99`.
+
+### ROS 2 Humble
+
+Follow the [official instructions](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html) for installing ROS 2 Humble from debian packages.
+
+### Clearpath Desktop metapackage
+
+Once the ROS 2 Humble has been installed, the [Clearpath Desktop](https://github.com/clearpathrobotics/clearpath_desktop) metapackage can be installed.
+
+```
+sudo apt install ros-humble-clearpath-desktop
+```
+
+This package will install launch and configuration files for visualising and interacting with the robot.
+
+### Setup Folder
+
+The remote PC will need a copy of the [robot.yaml](../config/yaml) file to generate the same `setup.bash` file as the robot.
+
+1. **Create the folder**
+
+For the remote PC we can create the `clearpath` folder in the home directory:
+
+```
+mkdir ~/clearpath/
+```
+2. **Copy the `robot.yaml` file into the setup folder**
+
+```
+cp /path/to/robot.yaml ~/clearpath/
+```
+
+:::note
+If you have workspaces defined in the `robot.yaml` that do not exist on the remote PC, remove them.
+:::
+
+3. **Generate the `setup.bash` file**
+
+```
+source /opt/ros/humble/setup.bash
+ros2 run clearpath_generator_common generate_bash -s ~/clearpath
+```
+
+Add the following line to your `~/.bashrc` file to automatically source the generated `setup.bash` file in new terminals:
+
+```
+source /etc/clearpath/setup.bash
+```
+

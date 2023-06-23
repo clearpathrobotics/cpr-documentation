@@ -1,0 +1,29 @@
+---
+title: ROS 2 MCU API
+sidebar_label: MCU API
+sidebar_position: 3
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+
+## MCU topics
+
+| Topic                     | Message type                                                                                                                                         | Publisher             | Description                             | QoS                                         |
+| :------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------- | :-------------------------------------- | :------------------------------------------ |
+| platform/emergency_stop   | [std_msgs/Bool](https://github.com/ros2/common_interfaces/blob/humble/std_msgs/msg/Bool.msg)                                                         | MCU node              | State of platform emergency stop        | [Sensor Data](overview#sensor-data)         |
+| platform/mcu/status       | [clearpath_platform_msgs/Status](https://github.com/clearpathrobotics/clearpath_msgs/blob/main/clearpath_platform_msgs/msg/Status.msg)               | MCU node              | MCU status                              | [Sensor Data](overview#sensor-data)         |
+| platform/mcu/status/power | [clearpath_platform_msgs/Power](https://github.com/clearpathrobotics/clearpath_msgs/blob/main/clearpath_platform_msgs/msg/Power.msg)                 | MCU node              | Robot Power status                      | [Sensor Data](overview#sensor-data)         |
+| platform/mcu/status/stop  | [clearpath_platform_msgs/StopStatus](https://github.com/clearpathrobotics/clearpath_msgs/blob/main/clearpath_platform_msgs/msg/StopStatus.msg)       | MCU node              | Stop loop status                        | [Sensor Data](overview#sensor-data)         |
+| platform/motors/cmd_drive | [clearpath_platform_msgs/Drive](https://github.com/clearpathrobotics/clearpath_msgs/blob/main/clearpath_platform_msgs/msg/Drive.msg)                 | Control node          | Command velocities to individual wheels | [Sensor Data](overview#sensor-data)         |
+| platform/motors/feedback  | [clearpath_platform_msgs/DriveFeedback](https://github.com/clearpathrobotics/clearpath_msgs/blob/main/clearpath_platform_msgs/msg/DriveFeedback.msg) | MCU node              | Feedback from motor drive unit          | [Sensor Data](overview#sensor-data)         |
+| platform/wifi_connected   | [std_msgs/Bool](https://github.com/ros2/common_interfaces/blob/humble/std_msgs/msg/Bool.msg)                                                         | Wireless Watcher node | Wi-Fi connected status                  | [Sensor Data](overview#sensor-data)         |
+| /rosout                   | [rcl_interfaces/Log](https://github.com/ros2/rcl_interfaces/blob/humble/rcl_interfaces/msg/Log.msg)                                                  | MCU node              | System Logs                             | [Transient Local](overview#transient-local) |
+
+## MCU services
+
+| Service                | Service type                                                                                                                                       | Server   | Description                           | QoS            |
+| :--------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------- | :------- | :------------------------------------ | :------------- |
+| platform/mcu/configure | [clearpath_platform_msgs/ConfigureMcu](https://github.com/clearpathrobotics/clearpath_msgs/blob/main/clearpath_platform_msgs/srv/ConfigureMcu.srv) | MCU node | Configure MCU domain ID and namespace | System default |
+
+

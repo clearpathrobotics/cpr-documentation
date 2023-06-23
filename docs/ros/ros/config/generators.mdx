@@ -1,0 +1,67 @@
+---
+title: Generators
+sidebar_label: Generators
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+Part of the appeal of using the robot YAML configuration file is that it allows us to generate the necessary files
+to operate the robot at runtime. There are 4 types of files that need to be generated: bash shell scripts, URDF description files,
+launch files, and parameter files. Each file type has a generator which will use the Clearpath config to figure out which files need to
+be created, and what the contents should be. Each generator also has a writer class which contains methods for writting formatted
+lines specific to the file type.
+
+:::note
+Generator scripts do not need to be modified by the user. Rather the user should modify their robot YAML file to suit their needs.
+:::
+
+### Bash
+
+The main bash script that needs to be generated is the `setup.bash` file. This file will source the Humble `setup.bash`, as well as any
+additional workspaces. It will also contain environment variables for setting up ROS 2. This file will be sourced by the `robot_upstart` job, as well
+as the user terminal. This way we can ensure that the bash environment of the upstart jobs matches the user's.
+
+### Description
+
+The description generator will generate a `robot.urdf.xacro` file which will define the robot. By parsing the robot YAML file, we can determine which
+platform the robot is using, as well as which mounts, accessories, and sensors will need to be added on top of the platform. This URDF file will later
+be used with the robot state publisher to publish all of the static transforms that make up the robot.
+
+### Launch
+
+The launch generator creates ROS 2 [python launch files](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Creating-Launch-Files.html). It will create both the platform and sensor launch files by parsing the robot config. Typically, the generated launch file will include a default launch file, and pass in launch arguments as appropriate. Python classes have been defined for adding other launch files, nodes, and processes to the generated launch file, making it intuitive to use.
+
+### Parameter
+
+The parameter generator creates `.yaml` ROS parameter files that are used by the corresponding launch file. The parameter file will use the default defined
+parameter file for the specific node, and allows for users to overwrite any parameters using the robot YAML file.
+
+### Setup folder structure
+
+Once all files are generated, the resulting setup folder structure under `/etc/clearpath/` will look like this: 
+
+* **platform**
+  * **launch**
+    * *platform-service.launch.py*
+  * **config**
+    * *control.yaml*
+    * *imu_filter.yaml*
+    * *localization.yaml*
+    * *teleop_interactive_markers.yaml*
+    * *teleop_joy.yaml*
+    * *twist_mux.yaml*
+* **sensors**
+  * **launch**
+    * *sensors-service.launch.py*
+    * *camera_0.launch.py*
+    * *camera_1.launch.py*
+    * ...
+  * **config**
+    * *camera_0.yaml*
+    * *camera_1.yaml*
+    * ...
+* *robot.urdf.xacro*
+* *robot.yaml*
+* *setup.bash*
+

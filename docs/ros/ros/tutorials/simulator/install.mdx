@@ -1,0 +1,36 @@
+---
+title: Installing Clearpath Simulator
+sidebar_label: Installation
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+:::tip
+It is highly recommended to install the simulator on a PC with a dedicated GPU for optimal performance.
+:::
+
+### PC Setup
+
+Follow the [Remote PC](../installation/remote_pc) setup guide.
+
+### Installing Gazebo Fortress
+
+Run the following commands in your terminal:
+
+```
+sudo apt-get update && sudo apt-get install wget
+sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
+wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
+sudo apt-get update && sudo apt-get install ignition-fortress
+```
+
+### Installing Clearpath Simulator
+
+Run the following commands in your terminal:
+
+```
+sudo apt-get update
+sudo apt-get install ros-humble-clearpath-simulator
+```
+

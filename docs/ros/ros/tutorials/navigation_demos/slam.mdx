@@ -1,0 +1,55 @@
+---
+title: SLAM
+sidebar_label: SLAM
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 5
+---
+
+Simultaneous localization and mapping (SLAM) is a method of generating a map and tracking the robots location within the map. It is generally done using
+laser scan data from a 2D LIDAR, and the robots odometry. For this demo we are using the [slam_toolbox](https://github.com/SteveMacenski/slam_toolbox) package to map our environment. This tutorial will use the [Clearpath simulator](../simulator/overview), but will work on a physical robot too. We will be using a J100 with a Hokuyo UST10 attached to the front of the robot. The `robot.yaml` is available here. <---TODO
+
+:::tip
+Make sure you have installed the simulator before starting this tutorial. Take a look at the [installation](../simulator/install) guide for details.
+:::
+
+## Launching the simulation and SLAM
+
+**1. Move the `robot.yaml` file to your setup folder (`$HOME/clearpath` by default).**
+
+**2. Launch the simulation**
+
+```
+ros2 launch clearpath_gz simulation.launch.py
+```
+
+Click on the orange play button in the bottom left corner to start the simulation.
+
+**3. In another terminal, launch RViz**
+
+```
+ros2 launch clearpath_viz view_navigation.launch.py namespace:=j100_0001
+```
+**4. In another terminal, launch SLAM**
+
+```
+ros2 launch clearpath_nav2_demos slam.launch.py setup_path:=$HOME/clearpath/ use_sim_time:=true
+```
+**5. Drive the robot around the world until the entire map has been generated**
+
+<center>
+  <figure>
+    <img
+      src="/img/software_images/ros2/tutorials/navigation/slam.gif"
+      width="900"
+    />
+    <figcaption>SLAM in simulation</figcaption>
+  </figure>
+</center>
+
+**6. Save the map**
+
+```
+ros2 run nav2_map_server map_saver_cli -f "map_name" \
+--ros-args -p map_subscribe_transient_local:=true -r __ns:=/j100_0001
+```

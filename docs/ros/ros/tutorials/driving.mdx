@@ -1,0 +1,59 @@
+---
+title: Driving a robot
+sidebar_label: Teleop
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+:::caution
+Make sure you have successfully [set up](../installation/robot) the robot before attempting to drive the robot.
+:::
+
+There are several ways to drive a Clearpath robot over ROS 2.
+
+### Joystick Teleoperation
+
+Make sure your controller is paired to the robot PC. Visit the [controller pairing](../installation/controller) guide for details.
+
+With the [robot services](../installation/robot#robot-services) running, turn on your controller. Press and hold either **L1** or **R1**, and use
+the left joystick to publish a linear velocity and yaw command. The **L1** button will drive the robot at 'normal' speeds, while **R1** will drive the robot at 'turbo' speeds.
+
+### Keyboard Teleoperation
+
+Install the `teleop_twist_keyboard` ROS 2 package on the robot PC or on a remote PC:
+
+```
+sudo apt-get update
+sudo apt-get install ros-humble-teleop-twist-keyboard
+```
+
+Once installed, run the node:
+
+```
+ros2 run teleop_twist_keyboard teleop_twist_keyboard 
+```
+
+If your robot uses a namespace, the namespace should be applied to `teleop_twist_keyboard`:
+
+```
+ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r __ns:=/j100_0001
+```
+
+### Command Velocity
+
+You can manually publish to the `cmd_vel` topic through the command line by calling:
+
+```
+ros2 topic pub /cmd_vel geometry_msgs/msg/Twist \
+"linear:
+  x: 0.0
+  y: 0.0
+  z: 0.0
+angular:
+  x: 0.0
+  y: 0.0
+  z: 0.0"
+```
+
+Set the `linear.x` value to drive the robot forwards or backwards, and the `angular.z` value to rotate left or right.

@@ -1,0 +1,33 @@
+---
+title: Services
+sidebar_label: Services
+sidebar_position: 3
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+To run all ROS 2 nodes in the background and from boot, we use [robot_upstart](https://github.com/clearpathrobotics/robot_upstart/tree/foxy-devel) to install
+the launch files as [systemd](https://manpages.ubuntu.com/manpages/jammy/en/man5/systemd.service.5.html) services. In ROS 1 there was a single `ros` service that
+ran everything. For ROS 2 Humble, we have split this into three separate services:
+[Platform](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_robot/services/clearpath-platform.service),
+[Sensors](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_robot/services/clearpath-sensors.service), and
+[Robot](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_robot/services/clearpath-robot.service).
+
+
+### Clearpath Platform
+
+The `clearpath-platform` service launches the `clearpath-platform.launch.py` file found under `/etc/clearpath/platform/launch/`. This will launch the nodes
+required to operate the base platform, such as control, teleop, localization, and more. Running this service alone is enough to drive the robot, visualise it
+in Rviz, and get platform data. This service can be stopped or started without interrupting the sensor service.
+
+### Clearpath Sensors
+
+The `clearpath-sensors` service launches the `clearpath-sensors.launch.py` file found under `/etc/clearpath/sensors/launch/`. This will launch any
+sensors defined in the robot YAML. This service can be stopped or started without interrupting the platform service.
+
+### Clearpath Robot
+
+The `clearpath-robot` service is the "parent" service of `clearpath-platform` and `clearpath-sensors`. If it is restarted, then both the platform and sensors services
+will restart. This service will run all of the [generators](generators) in the `PreExec` step, before allowing the two dependent services to start. While
+the platform and sensors services are running, the robot service will periodically check for changes in the `robot.yaml` file. If a change is detected
+the service restarts, re-generating all files and restarting the platform and sensors services.
