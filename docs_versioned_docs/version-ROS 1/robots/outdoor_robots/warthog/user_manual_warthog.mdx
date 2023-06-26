@@ -6,11 +6,11 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-import ComponentIntroductionWarthog from "/components/introduction_warthog.mdx";
-import ComponentNetplanSetup from "/components/netplan_setup.mdx";
-import ComponentUsingRos from "/components/using_ros.mdx";
-import Support from "/components/support.mdx";
-import ComponentCommonSafeWorkProcedures from "/components/common_safe_work_procedures.mdx";
+import ComponentIntroductionWarthog from "/docs_versioned_docs/version-ROS 1/components/introduction_warthog.mdx";
+import ComponentNetplanSetup from "/docs_versioned_docs/version-ROS 1/components/netplan_setup.mdx";
+import ComponentUsingRos from "/docs_versioned_docs/version-ROS 1/components/using_ros.mdx";
+import Support from "/docs_versioned_docs/version-ROS 1/components/support.mdx";
+import ComponentCommonSafeWorkProcedures from "/docs_versioned_docs/version-ROS 1/components/common_safe_work_procedures.mdx";
 
 <ComponentIntroductionWarthog />
 
@@ -108,7 +108,7 @@ To connect a device to the onboard network, it's suggested to give it a static I
 | 192.168.131.2 | Ethernet-connected MCU                        |
 
 Typically addresses numbered 192.168.131.100 and above will not collide with any of Warthog's payloads.
-Please see [Electrical Integration](/docs/robots/outdoor_robots/warthog/integration_warthog/#warthog-electrical-integration) for more information.
+Please see [Electrical Integration](./integration_warthog/#warthog-electrical-integration) for more information.
 
 #### Payload Integration Area
 
@@ -116,7 +116,7 @@ All payloads should be mounted to the central chassis when traversing through wa
 The primary payload of the unit should be placed on the central chassis.
 If necessary loading can be placed on the drive units however payloads should not exceed 23 kg (50 lbs) on each drive unit.
 
-For more information and guidance on mounting payload structures on top of Warthog, please refer to subsection [Mechanical Mounting](/docs/robots/outdoor_robots/warthog/integration_warthog/#warthog-mechanical-mounting).
+For more information and guidance on mounting payload structures on top of Warthog, please refer to subsection [Mechanical Mounting](./integration_warthog/#warthog-mechanical-mounting).
 
 #### Body Lights
 
@@ -186,7 +186,7 @@ These two computers must be set up to communicate with each other.
 ### Onboard Computer Setup
 
 Warthog ships with an Onboard Computer from Clearpath Robotics, which is already installed, connected, and powered.
-If you need to reinstall the software on it, refer to the [Warthog Tutorials](/docs/robots/outdoor_robots/warthog/tutorials_warthog#warthog-software-setup).
+If you need to reinstall the software on it, refer to the [Warthog Tutorials](./tutorials_warthog#warthog-software-setup).
 
 ### Powering Up
 
@@ -335,7 +335,7 @@ The Futaba RC will always publish messages to the `/rc_teleop/cmd_vel` topic whe
 
 To get Warthog connected to your local Wi-Fi network, you must first access the Onboard Computer using a wired connection to the robot.
 Locate the User Breakout Panel on the rear of the chassis and connect to an Ethernet port with a standard
-Ethernet cable. See the [Warthog Tutorials](/docs/robots/outdoor_robots/warthog/tutorials_warthog#warthog-networking) for details
+Ethernet cable. See the [Warthog Tutorials](./tutorials_warthog#warthog-networking) for details
 on completing the Wi-Fi setup.
 
 ### Using ROS

@@ -23,7 +23,7 @@ Installing with the Clearpath Robotics ISO image will completely wipe data on th
 
 The Clearpath Robotics ISO image only targets Intel-family computers (`amd64` architecture).
 If your robot runs on an Nvidia Jetson computer, see
-[Jetson Software](/docs/add-ons/computers/jetson/jetson_software) for software installation details.
+[Jetson Software](../../../accessories/computers/jetson/jetson_software) for software installation details.
 
 :::
 
@@ -65,7 +65,7 @@ To install the software on a physical robot through the Clearpath Robotics ISO i
 8.  To set up a factory-standard robot, ensure all your peripherals are plugged in, and run the following command, which will configure a ros upstart service, that will bring up the base robot launch files on boot.
     The script will also detect any standard peripherals (IMU, GPS, etc.) you have installed and add them to the service.
 
-    <Tabs groupId="ros_versions">
+    <Tabs groupId="robot_platform">
       <TabItem
         value="husky"
         label="Husky"
@@ -166,7 +166,7 @@ need to ensure that the robot's computer is running Ubuntu 20.04 (Focal) and ROS
 
    1. On a physical robot, you should only need the robot packages. In terminal, run:
 
-      <Tabs groupId="ros_versions">
+      <Tabs groupId="robot_platform">
         <TabItem
           value="husky"
           label="Husky"
@@ -208,7 +208,7 @@ need to ensure that the robot's computer is running Ubuntu 20.04 (Focal) and ROS
 
    2. Install the `robot_upstart` job and configure the bringup service so that ROS will launch each time the robot starts. In terminal, run:
 
-      <Tabs groupId="ros_versions">
+      <Tabs groupId="robot_platform">
         <TabItem
           value="husky"
           label="Husky"

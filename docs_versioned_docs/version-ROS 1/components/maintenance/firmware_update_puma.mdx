@@ -1,0 +1,196 @@
+<details><summary>Click to expand</summary><p>
+
+#### 1. Tools required:
+
+- A laptop or development computer running Ubuntu.
+- An internet connection on your development computer.
+- A variety of hand tools to get access to the motor controllers inside your Husky, Dingo, or Ridgeback.
+- A cable to connect your computer to the robot's motor controller.
+  We use an FTDI TTL-232R-3V3 with it's default pinout.
+  You can purchase this cable from Digi-Key as [768-1015-ND](https://www.digikey.ca/en/products/detail/ftdi-future-technology-devices-international-ltd/TTL-232R-3V3/1836393).
+
+  <figure>
+    <center>
+      <img
+        src="/img/accessories_images/puma/puma_motor_controller_1.png"
+        width="300"
+      />
+    </center>
+  </figure>
+
+---
+
+#### 2. Get the firmware tools from GitHub.
+
+You can download the firmware tool, and the firmware binary file from [this GitHub repository](https://github.com/clearpathrobotics/puma-motor-firmware).
+Refer to the README inside that repository to decide which binary file you should use for your robot platform and application.
+
+:::note
+
+You can get these tools by using `git clone`, or by using the GitHub's _Download ZIP_ button.
+
+:::
+
+---
+
+#### 3. Get physical access to the motor controllers
+
+Turn off the robot.
+Use hand tools to remove panels on your robot so you can get access the motor controllers.
+
+---
+
+#### 4. Connect the cable.
+
+Depending on the robot, you will have 2 or 4 motor controllers installed.
+You will need to repeat this installation process for each motor controller, so keep track of which ones you have updated.
+
+Connect the cable with the orientation as shown in the attached image.
+
+:::caution
+
+The wrong orientation will irreparably damage the motor controller.
+
+:::
+
+:::warning
+
+Remove jewlery and similar electrically conductive objects from your hands and arms.
+The capacitors on the motor controllers store energy even after the robot is turned off.
+Conductive objects that electrically-short the motor controller's terminals can cause shocks or burns to your hands.
+
+:::
+
+:::note
+
+Do not change or remove any of the other components on your motor controllers.
+
+- Switches
+- Input power cables
+- Motor power cables
+- RJ11 communication cables
+- DIP switches
+- Terminating resistor switch
+
+:::
+
+<figure>
+  <center>
+    <img
+      src="/img/accessories_images/puma/puma_motor_controller_2.png"
+      width="600"
+    />
+  </center>
+</figure>
+
+---
+
+#### 5. Connect the USB end of the cable to your development computer.
+
+---
+
+#### 6. Place the motor controller in firmware loading mode.
+
+You can do this by pressing the button shown below, and then turning the robot on.
+You may release the button 3 seconds after turning the robot on.
+Notice that the large _Status LED_ is not turned on.
+
+:::note
+
+The other motor controllers' _Status LEDs_ will be orange since they are not in firmware loading mode.
+
+:::
+
+<figure>
+  <center>
+    <img
+      src="/img/accessories_images/puma/puma_motor_controller_3.png"
+      width="600"
+    />
+    <figcaption>
+      Button shown in the top right corner.
+      <br />
+      The <em>Status LED</em> is between the RJ11 connectors.
+    </figcaption>
+  </center>
+</figure>
+
+---
+
+#### 7. Install the new firmware.
+
+Open a new terminal shell on your development computer.
+Navigate to the folder that you cloned of downloaded from GitHub in Step 2.
+For example, if you saved the repository to your _Downloads_ folder:
+
+```
+cd ~/Downloads/puma-motor-firmware
+```
+
+Now install the firmware on the motor controller by running the command:
+
+```
+./sflash motor_controller_firmware_husky_001.bin -c /dev/ttyUSB0
+```
+
+:::note
+
+Replace `motor_controller_firmware_husky_001.bin` with whatever firmware file you have chosen for your application.
+
+:::
+
+:::tip
+
+You may need change the permissions of the `sflash` program.
+You can do this by right-clicking on `sflash` and selecting `properties`.
+Change the permissions to `Allow executing file as a program`.
+
+<figure>
+  <center>
+    <img
+      src="/img/accessories_images/puma/sflash_permissions.png"
+      width="350"
+    />
+  </center>
+</figure>
+
+Alternatively; you can add execute permissions to sflash using a termainal.
+Navigate to the file through a terminal, and running:
+
+```
+chmod +x sflash
+```
+
+:::
+
+You should see the program running in the terminal window.
+You will see the following message when the firmware installation is complete:
+
+```
+Application    : motor_controller_firmware_husky_001.bin
+Program Address: 0x0
+       COM Port: /dev/ttyUSB0
+      Baud Rate: 115200
+Erasing Flash:
+Remaining Bytes: 00000000
+Successfully downloaded to device.
+```
+
+---
+
+#### 8. Repeat the process for the remaining motor controllers.
+
+You can follow Steps 4 - 7 for the remaining motor controllers.
+Make sure you turn off the robot each time.
+
+---
+
+### 9. Reboot the robot and test.
+
+Power-cycle your robot.
+Once it has restarted, use a joystick to drive it around.
+
+The robot's dynamics may be very different than what you are familiar with.
+The new firmware will change how the motor's react to `/cmd_vel` messages, so you should test in a controlled setting.
+
+</p></details>

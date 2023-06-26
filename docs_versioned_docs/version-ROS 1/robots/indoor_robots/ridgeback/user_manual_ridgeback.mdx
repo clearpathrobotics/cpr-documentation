@@ -6,14 +6,14 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-import ComponentIntroductionRidgeback from "/components/introduction_ridgeback.mdx";
-import ComponentSupport from "/components/support.mdx";
-import ComponentUsingRos from "/components/using_ros.mdx";
-import ComponentWiredRobotConnection from "/components/wired_robot_connection.mdx";
-import ComponentWifiRobotConnection from "/components/wifi_robot_connection.mdx";
-import ComponentRemoteRosConnectivity from "/components/remote_ros_connectivity.mdx";
-import ComponentCommonSafeWorkProcedures from "/components/common_safe_work_procedures.mdx";
-import ComponentSafetyWarning from "/components/safety_warning.mdx";
+import ComponentIntroductionRidgeback from "/docs_versioned_docs/version-ROS 1/components/introduction_ridgeback.mdx";
+import ComponentSupport from "/docs_versioned_docs/version-ROS 1/components/support.mdx";
+import ComponentUsingRos from "/docs_versioned_docs/version-ROS 1/components/using_ros.mdx";
+import ComponentWiredRobotConnection from "/docs_versioned_docs/version-ROS 1/components/wired_robot_connection.mdx";
+import ComponentWifiRobotConnection from "/docs_versioned_docs/version-ROS 1/components/wifi_robot_connection.mdx";
+import ComponentRemoteRosConnectivity from "/docs_versioned_docs/version-ROS 1/components/remote_ros_connectivity.mdx";
+import ComponentCommonSafeWorkProcedures from "/docs_versioned_docs/version-ROS 1/components/common_safe_work_procedures.mdx";
+import ComponentSafetyWarning from "/docs_versioned_docs/version-ROS 1/components/safety_warning.mdx";
 
 <ComponentIntroductionRidgeback />
 
@@ -99,7 +99,7 @@ See http://wiki.ros.org/ridgeback_base for information on commanding the body li
 
 The User Bay provides access to the User Power Panel, as well as USB and Ethernet ports, and additional
 space for stowing user equipment. The electrical panel can be used to power your payloads, with further details available
-in [Electrical Integration](/docs/robots/indoor_robots/ridgeback/integration_ridgeback#ridgeback-payload-electrical-integration).
+in [Electrical Integration](./integration_ridgeback#ridgeback-payload-electrical-integration).
 The USB3 ports are connected directly to the Onboard Computer, and the Ethernet ports connect to the onboard network switch. To
 connect a device to the onboard network, it is suggested to give it a static IP in the 192.168.131.x/24 subnet and
 this cannot be changed since the MCU is statically set to 192.168.131.2 and expects the computer to be at
@@ -112,14 +112,14 @@ this cannot be changed since the MCU is statically set to 192.168.131.2 and expe
 | 192.168.131.20 | Front-facing LIDAR                                   |
 | 192.168.131.21 | Rear-facing LIDAR (if present)                       |
 
-See [Network IP Addresses](/docs/tools/network_ip_addresses) for a full list of common IP addresses.
+See [Network IP Addresses](../../../../ros/networking/network_ip_addresses) for a full list of common IP addresses.
 
 #### Payload Integration Plate
 
 The Payload Integration Plate provides a robust foundation for mounting payload structures such as
 UR5/UR10 manipulation arms or any other combination of sensors and manipulators. For more information
 and guidance on mounting payload structures on top of Ridgeback, please refer to
-[Mechanical Integration](/docs/robots/indoor_robots/ridgeback/integration_ridgeback#ridgeback-payload-mechanical-integration).
+[Mechanical Integration](./integration_ridgeback#ridgeback-payload-mechanical-integration).
 
 #### Orientation References
 
@@ -175,7 +175,7 @@ are clear of the ground.
 A standard Ridgeback ships with an integrated Onboard Computer that is directly connected to the Ridgeback MCU. Most users
 will also make use of a Remote Computer, which is used to control Ridgeback and gather data.
 These two computers must be set up to communicate with each other. Details on the Remote Computer setup
-can be found in [Ridgeback Tutorials](/docs/robots/indoor_robots/ridgeback/tutorials_ridgeback).
+can be found in [Ridgeback Tutorials](./tutorials_ridgeback).
 
 ### Powering Up
 
@@ -187,7 +187,7 @@ solid red lights in back, and solid white in front.
 
 To get Ridgeback connected to your local Wi-Fi network, you must first access the Onboard Computer using a wired connection to the robot.
 Open the User Bay, then connect to one of the network ports with a standard Ethernet cable.
-Then, see [Ridgeback Tutorials](/docs/robots/indoor_robots/ridgeback/tutorials_ridgeback#ridgeback-networking) for details
+Then, see [Ridgeback Tutorials](./tutorials_ridgeback#ridgeback-networking) for details
 on completing the networking setup.
 
 ### Connecting and Using the Controller {#controller}
@@ -195,7 +195,7 @@ on completing the networking setup.
 To use your controller, it must be paired with your Ridgeback and powered on.
 For a standard Ridgeback with the Onboard Computer from Clearpath Robotics, the controller is already paired with your Ridgeback.
 If your controller has become unpaired or if you wish to pair a new controller, following the instructions in the
-[Ridgeback Tutorials](/docs/robots/indoor_robots/ridgeback/tutorials_ridgeback#pairing-the-controller).
+[Ridgeback Tutorials](./tutorials_ridgeback#pairing-the-controller).
 
 To teleoperate Ridgeback, first clear the motion-stop.
 Then, power on the controller by pressing the `PS` button on the controller.
@@ -287,7 +287,7 @@ front or rear of Ridgeback and would occlude the Stop buttons.
 
 Note that the Ridgeback MCU board includes a breakout to allow an external motion-stop button/switch to be
 integrated by the end user, which could be used to engage/disengage Stop Mode.
-See [Optional External Motion Stop](/docs/robots/indoor_robots/ridgeback/integration_ridgeback#ridgeback-external-motion-stop)
+See [Optional External Motion Stop](./integration_ridgeback#ridgeback-external-motion-stop)
 for details on adding an external motion-stop button/switch.
 
 ### Electrical System

@@ -1,0 +1,25 @@
+Set your laptop's ethernet port to a static IP such as `192.168.131.101`. To do this in Ubuntu, follow the steps below:
+
+1.  Click on the Wi-Fi icon in the upper-right corner of your screen, and select Edit Connections.
+2.  In the Network Connections window, under Ethernet, select your wired connection and then click Edit.
+3.  Select the IPv4 Settings tab and then change the Method to Manual.
+4.  Click the Add button to add a new address.
+5.  Enter a `192.168.131.101` as the static IP under the Address column, and enter `255.255.255.0` under the Netmask
+    column, and then select Save.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/common_images/wired_connection.png"
+      width="400"
+    />
+    <figcaption>Static IP Configuration (Ubuntu)</figcaption>
+  </figure>
+</center>
+
+The next step is to connect to your robot via SSH. To do so execute the following in a terminal window:
+
+`ssh administrator@192.168.131.1`
+
+You will be promoted to enter a password. The default password is `clearpath` and you set a new password
+on first connection.

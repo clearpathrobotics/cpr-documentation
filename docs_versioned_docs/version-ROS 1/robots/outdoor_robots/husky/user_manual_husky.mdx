@@ -6,11 +6,11 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-import ComponentIntroductionHusky from "/components/introduction_husky.mdx";
-import Support from "/components/support.mdx";
-import ComponentUsingRos from "/components/using_ros.mdx";
-import ComponentCommonSafeWorkProcedures from "/components/common_safe_work_procedures.mdx";
-import ComponentSafetyWarning from "/components/safety_warning.mdx";
+import ComponentIntroductionHusky from "/docs_versioned_docs/version-ROS 1/components/introduction_husky.mdx";
+import Support from "/docs_versioned_docs/version-ROS 1/components/support.mdx";
+import ComponentUsingRos from "/docs_versioned_docs/version-ROS 1/components/using_ros.mdx";
+import ComponentCommonSafeWorkProcedures from "/docs_versioned_docs/version-ROS 1/components/common_safe_work_procedures.mdx";
+import ComponentSafetyWarning from "/docs_versioned_docs/version-ROS 1/components/safety_warning.mdx";
 
 <ComponentIntroductionHusky />
 
@@ -97,8 +97,8 @@ See [Stop button and Lockout](#husky-stop-button-and-lockout) for details of the
 #### Payloads
 
 Additional payloads such IMUs, lidars, cameras, GPS, manipulators and many more can be integrated with Husky, either as part of your Husky purchase or installed after receiving your Husky.
-You can find a list of supported packages and related documentation for payloads in this documention portal, under the [Computers](/docs/add-ons/computers), [Sensors](/docs/add-ons/sensors), [Manipulators](/docs/add-ons/manipulators), and [Accessories](/docs/add-ons/accessories) sections.
-In addition, refer to [Husky Integration](/docs/robots/outdoor_robots/husky/integration_husky) for details on how to integrate your own payload or how to integrate a payload kit from Clearpath Robotics.
+You can find a list of supported packages and related documentation for payloads in this documention portal, under the [Computers](../../accessories/computers), [Sensors](../../accessories/sensors), [Manipulators](../../accessories/manipulators), and [Accessories](../../accessories/accessories) sections.
+In addition, refer to [Husky Integration](./integration_husky) for details on how to integrate your own payload or how to integrate a payload kit from Clearpath Robotics.
 Each payload kit that ships from Clearpath Robotics comes with a custom mounting bracket and cabling for easy attachment to Husky.
 
 #### Orientation References
@@ -184,7 +184,7 @@ These two computers must be set up to communicate with each other.
 ### Onboard Computer Setup
 
 If you purchased an Onboard Computer from Clearpath Robotics with Husky, it is already installed, connected, and powered.
-If not, or to set up your own Onboard Computer, see the [Husky Tutorials](/docs/robots/outdoor_robots/husky/tutorials_husky).
+If not, or to set up your own Onboard Computer, see the [Husky Tutorials](./tutorials_husky).
 
 Note that the Onboard Computer must be connected to Husky's serial port, which is located in the user power panel accessible from the User Bay.
 
@@ -235,16 +235,16 @@ This indicates that ROS is up on the computer and has established communications
 ### Network Configuration
 
 To get Husky connected to your local Wi-Fi network, you must first access the Onboard Computer using a wired connection to the robot.
-See the [Husky ROS1 Tutorials](/docs/robots/outdoor_robots/husky/tutorials_husky/tutorials_husky_ros1#husky-networking) or
-the [Husky ROS2 Tutorials](/docs/robots/outdoor_robots/husky/tutorials_husky/tutorials_husky_ros2#husky-networking) for details.
+See the [Husky ROS1 Tutorials](./tutorials_husky/tutorials_husky_ros1#husky-networking) or
+the [Husky ROS2 Tutorials](./tutorials_husky/tutorials_husky_ros2#husky-networking) for details.
 
 ### Connecting and Using the Controller {#controller}
 
 To use your controller, it must be paired with your Husky and powered on.
 If your purchased the Onboard Computer from Clearpath Robotics, your controller is already paired with your Husky.
 If your controller has become unpaired or if you wish to pair a new controller, following the instructions in the
-[Husky ROS1 Tutorials](/docs/robots/outdoor_robots/husky/tutorials_husky/tutorials_husky_ros1#pairing-the-controller) or the
-[Husky ROS2 Tutorials](/docs/robots/outdoor_robots/husky/tutorials_husky/tutorials_husky_ros2#pairing-the-controller).
+[Husky ROS1 Tutorials](./tutorials_husky/tutorials_husky_ros1#pairing-the-controller) or the
+[Husky ROS2 Tutorials](./tutorials_husky/tutorials_husky_ros2#pairing-the-controller).
 
 To teleoperate Husky, first release the motion stop. Then, referring to the following images, press the enable button (either slow or fast mode) and use the left thumbstick to drive Husky.
 

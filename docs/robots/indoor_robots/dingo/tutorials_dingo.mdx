@@ -4,17 +4,17 @@ sidebar_label: Tutorials
 sidebar_position: 4
 ---
 
-import ComponentIntroductionDingo from "/components/introduction_dingo.mdx";
-import ComponentPs4ControllerPairing from "/components/ps4_controller_pairing.mdx";
-import ComponentChangingDefaultPassword from "/components/changing_default_password.mdx";
-import ComponentWiredRobotConnection from "/components/wired_robot_connection.mdx";
-import ComponentWifiRobotConnection from "/components/wifi_robot_connection.mdx";
-import ComponentConfiguringNetworkBridge from "/components/configuring_network_bridge.mdx";
-import ComponentPerformingABackup from "/components/performing_a_backup.mdx";
-import ComponentInstallingRobotSoftware from "/components/installing_robot_software.mdx";
-import ComponentInstallingRemoteComputerSoftware from "/components/installing_remote_computer_software.mdx";
-import ComponentAddingASourceWorkspace from "/components/adding_a_source_workspace.mdx";
-import ComponentDrivingWithRemoteController from "/components/driving_with_remote_controller.mdx";
+import ComponentIntroductionDingo from "/docs/components/introduction_dingo.mdx";
+import ComponentPs4ControllerPairing from "/docs/components/ps4_controller_pairing.mdx";
+import ComponentChangingDefaultPassword from "/docs/components/changing_default_password.mdx";
+import ComponentWiredRobotConnection from "/docs/components/wired_robot_connection.mdx";
+import ComponentWifiRobotConnection from "/docs/components/wifi_robot_connection.mdx";
+import ComponentConfiguringNetworkBridge from "/docs/components/configuring_network_bridge.mdx";
+import ComponentPerformingABackup from "/docs/components/performing_a_backup.mdx";
+import ComponentInstallingRobotSoftware from "/docs/components/installing_robot_software.mdx";
+import ComponentInstallingRemoteComputerSoftware from "/docs/components/installing_remote_computer_software.mdx";
+import ComponentAddingASourceWorkspace from "/docs/components/adding_a_source_workspace.mdx";
+import ComponentDrivingWithRemoteController from "/docs/components/driving_with_remote_controller.mdx";
 import Support from "/components/support.mdx";
 
 <ComponentIntroductionDingo />
@@ -177,9 +177,9 @@ The most important topics are summarized in the table below.
 | `/odometry/filtered` | `nav_msgs/Odometry`   | Published by `robot_localization`, a filtered localization estimate based on wheel odometry (encoders) and integrated IMU.                                                                                     |
 | `/imu/data`          | `sensor_msgs/IMU`     | Published by `imu_filter_madgwick`, an orientation estimated based on the Dingo's internal IMU.                                                                                                                |
 | `/mcu/status`        | `dingo_msgs/Status`   | Low-frequency status data for Dingo's systems. This information is republished in human readable form on the `diagnostics` topic and is best consumed with the Robot Monitor.                                  |
-| `/mcu/aux_input`     | `dingo_msgs/UInt8`    | User can subscribe to this topic to monitor the MCU user inputs. See [AUX Inputs](/docs/robots/indoor_robots/dingo/integration_dingo#dingo-aux-inputs).                                                        |
-| `/mcu/aux_output`    | `std_msgs/UInt8`      | User can publish to this topic to enable and disable the AUX outputs as well as control relays on the MCU. See [AUX Outputs and Relays](/docs/robots/indoor_robots/dingo/integration_dingo#dingo-aux-outputs). |
-| `/mcu/fans`          | `dingo_msgs/Fans`     | User can publish to this topic to control an optionally installed fan. See details [Optional Fan](/docs/robots/indoor_robots/dingo/integration_dingo#dingo-fan).                                               |
+| `/mcu/aux_input`     | `dingo_msgs/UInt8`    | User can subscribe to this topic to monitor the MCU user inputs. See [AUX Inputs](./integration_dingo#dingo-aux-inputs).                                                        |
+| `/mcu/aux_output`    | `std_msgs/UInt8`      | User can publish to this topic to enable and disable the AUX outputs as well as control relays on the MCU. See [AUX Outputs and Relays](./integration_dingo#dingo-aux-outputs). |
+| `/mcu/fans`          | `dingo_msgs/Fans`     | User can publish to this topic to control an optionally installed fan. See details [Optional Fan](./integration_dingo#dingo-fan).                                               |
 | `/mcu/lights`        | `dingo_msgs/Lights`   | User can publish to this topic to override the default behavior of the Dingo corner LEDs.                                                                                                                      |
 
 ---
@@ -447,7 +447,7 @@ This is the first step toward map making using [Gmapping](#gmapping-demo).
 There are three ways to send your Dingo control commands:
 
 1.  Using the provided PS4 controller.
-    Refer to the [User Manual](/docs/robots/indoor_robots/dingo/user_manual_dingo/#controller) details on how to use the controller.
+    Refer to the [User Manual](./user_manual_dingo/#controller) details on how to use the controller.
 
 2.  Using the RViz instance above.
     If you select the Interact option in the top toolbar, an interactive marker will appear around the Dingo and can be used to control speed.
@@ -569,7 +569,7 @@ The second, more sophisticated way to modify the URDF is to create a _new_ packa
 
 ### Keeping Dingo Updated
 
-For details on updating Dingo software or firmware, refer to [Software Maintenance](/docs/robots/indoor_robots/dingo/maintenance_dingo#software_maintenance).
+For details on updating Dingo software or firmware, refer to [Software Maintenance](./maintenance_dingo#software_maintenance).
 
 ---
 
@@ -812,7 +812,7 @@ rosrun dingo_tests check_can_bus_interface
 
 ### Jetson Installation
 
-Refer to the [Jetson](/docs/add-ons/computers/jetson/jetson_hardware) page for details on installing a Jetson in Dingo.
+Refer to the [Jetson](../../../accessories/computers/jetson/jetson_hardware) page for details on installing a Jetson in Dingo.
 
 ### Additional Simulation Worlds {#additional-sim}
 

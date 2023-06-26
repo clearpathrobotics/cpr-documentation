@@ -6,11 +6,11 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-import ComponentIntroductionJackal from "/components/introduction_jackal.mdx";
-import Support from "/components/support.mdx";
-import ComponentUsingRos from "/components/using_ros.mdx";
-import ComponentCommonSafeWorkProcedures from "/components/common_safe_work_procedures.mdx";
-import ComponentSafetyWarning from "/components/safety_warning.mdx";
+import ComponentIntroductionJackal from "/docs_versioned_docs/version-ROS 1/components/introduction_jackal.mdx";
+import Support from "/docs_versioned_docs/version-ROS 1/components/support.mdx";
+import ComponentUsingRos from "/docs_versioned_docs/version-ROS 1/components/using_ros.mdx";
+import ComponentCommonSafeWorkProcedures from "/docs_versioned_docs/version-ROS 1/components/common_safe_work_procedures.mdx";
+import ComponentSafetyWarning from "/docs_versioned_docs/version-ROS 1/components/safety_warning.mdx";
 
 <ComponentIntroductionJackal />
 
@@ -99,8 +99,8 @@ The human-machine-interface (HMI) panel is shown below and includes from left:
 Additional payloads such IMUs, lidars, cameras, GPS, manipulators and many more can be integrated
 with Jackal, either as part of your Jackal purchase or installed after receiving your Jackal.
 You can find a list of supported packages and related documentation for payloads in this
-documention portal, under the [Computers](/docs/add-ons/computers), [Sensors](/docs/add-ons/sensors), [Manipulators](/docs/add-ons/manipulators),
-and [Accessories](/docs/add-ons/accessories) sections. In addition, refer to [Jackal Integration](/docs/robots/outdoor_robots/jackal/integration_jackal) for
+documention portal, under the [Computers](../../accessories/computers), [Sensors](../../accessories/sensors), [Manipulators](../../accessories/manipulators),
+and [Accessories](../../accessories/accessories) sections. In addition, refer to [Jackal Integration](./integration_jackal) for
 details on how to integrate your own payload or how to integrate a payload kit from Clearpath Robotics.
 Each payload kit that ships from Clearpath Robotics comes with a custom mounting bracket and cabling for
 easy attachment to Jackal.
@@ -129,7 +129,7 @@ revealing Jackal's onboard computer, user power supplies, and internal user hard
 The figures below illustrate the components of the tray and user power supplies.
 Note that the fused user power is available as four-pin Molex connectors, or a plug-in screw terminal
 block. For more information on integrating payloads electrically, see
-[Jackal Integration](/docs/robots/outdoor_robots/jackal/integration_jackal#jackal-payload-electrical-integration).
+[Jackal Integration](./integration_jackal#jackal-payload-electrical-integration).
 
 <center>
   <figure>
@@ -206,8 +206,8 @@ which is used to control Jackal and gather data. These two computers must be set
 
 If you purchased an Onboard Computer from Clearpath Robotics with Jackal, it is already installed, connected, and powered.
 If not, or to set up your own Onboard Computer, see the
-[Jackal ROS1 Tutorials](/docs/robots/outdoor_robots/jackal/tutorials_jackal/tutorials_jackal_ros1#jackal-software-setup) or
-[Jackal ROS2 Tutorials](/docs/robots/outdoor_robots/jackal/tutorials_jackal/tutorials_jackal_ros2#jackal-software-setup).
+[Jackal ROS1 Tutorials](./tutorials_jackal/tutorials_jackal_ros1#jackal-software-setup) or
+[Jackal ROS2 Tutorials](./tutorials_jackal/tutorials_jackal_ros2#jackal-software-setup).
 
 Note that the Onboard Computer must be connected to the USB port on the Jackal MCU, which is accessible inside the Jackal.
 
@@ -224,8 +224,8 @@ This indicates that ROS is up on the computer and has established communications
 
 To get Jackal connected to your local Wi-Fi network, you must first access the Onboard Computer using a wired connection to the robot.
 Open the chassis, lower the computer tray, and connect to the network port labeled STATIC with a standard
-ethernet cable. See the [Jackal ROS1 Tutorials](/docs/robots/outdoor_robots/jackal/tutorials_jackal/tutorials_jackal_ros1#jackal-networking) or
-[Jackal ROS2 Tutorials](/docs/robots/outdoor_robots/jackal/tutorials_jackal/tutorials_jackal_ros2#jackal-networking) for details
+ethernet cable. See the [Jackal ROS1 Tutorials](./tutorials_jackal/tutorials_jackal_ros1#jackal-networking) or
+[Jackal ROS2 Tutorials](./tutorials_jackal/tutorials_jackal_ros2#jackal-networking) for details
 on completing the Wi-Fi setup.
 
 ### Connecting and Using the Controller {#controller}
@@ -233,8 +233,8 @@ on completing the Wi-Fi setup.
 To use your controller, it must be paired with your Jackal and powered on.
 If your purchased the Onboard Computer from Clearpath Robotics, your controller is already paired with your Jackal.
 If your controller has become unpaired or if you wish to pair a new controller, following the instructions in
-the [Jackal ROS1 Tutorials](/docs/robots/outdoor_robots/jackal/tutorials_jackal/tutorials_jackal_ros1#pairing-the-controller) or
-[Jackal ROS2 Tutorials](/docs/robots/outdoor_robots/jackal/tutorials_jackal/tutorials_jackal_ros2#pairing-the-controller).
+the [Jackal ROS1 Tutorials](./tutorials_jackal/tutorials_jackal_ros1#pairing-the-controller) or
+[Jackal ROS2 Tutorials](./tutorials_jackal/tutorials_jackal_ros2#pairing-the-controller).
 
 To teleoperate Jackal, first clear the motion-stop.
 Then, power on the controller by pressing the `PS` button on the controller.
