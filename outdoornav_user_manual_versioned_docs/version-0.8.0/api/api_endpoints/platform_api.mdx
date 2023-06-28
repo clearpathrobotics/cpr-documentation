@@ -1,0 +1,203 @@
+---
+title: Platform API
+sidebar_label: Platform API
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+The Platform API provides topics to communicate with the hardware
+platform (eg. sensor data, command velocity, tfs, etc\...). This API can
+be used by autonomy software packages to interface with the hardware
+platform.
+
+### Topics Published by UGV {#topics-published-by-platform}
+
+The topics in this section are published by the UGV. If available, they
+are used by the OutdoorNav software.
+
+#### /tf
+
+&emsp;&emsp;**Message Type:** tf2_msgs/TFMessage
+
+&emsp;&emsp;**Description:** Transform tree describing the 3D links/frames of the
+robot.
+
+#### /tf_static
+
+&emsp;&emsp;**Message Type:** tf2_msgs/TFMessage
+
+&emsp;&emsp;**Description:** Static links/frames of robot transform tree.
+
+#### /platform/cmd_vel
+
+&emsp;&emsp;**Message Type:** geometry_msgs/Twist
+
+&emsp;&emsp;**Description:** Platform-level velocity used to drive the robot.
+
+#### /platform/description
+
+&emsp;&emsp;**Message Type:** std_msgs/String
+
+&emsp;&emsp;**Description:** String containing robot URDF description.
+
+#### /platform/diagnostics_agg
+
+&emsp;&emsp;**Message Type:** diagnostic_msgs/DiagnosticArray
+
+&emsp;&emsp;**Description:** Provides a list of human-readable diagnostic messages
+from various subsystems (sensors, onboard systems, localization,
+navigation, mapping etc.)
+
+#### /platform/emergency_stop
+
+&emsp;**Message Type:** std_msgs/Bool
+
+&emsp;**Description:** True, if robot is emergency stopped, False, otherwise.
+
+#### /platform/id
+
+&emsp;&emsp;**Message Type:** [cpr_platform_msgs/PlatformID](definitions#msg-platform-id)
+
+&emsp;&emsp;**Description:** Contains model, serial number, and hardware revision of
+the platform
+
+#### /platform/joint_states
+
+&emsp;&emsp;**Message Type:** sensor_msgs/JointState
+
+&emsp;&emsp;**Description:** Position and velocity of robot's joints.
+
+#### /platform/odom
+
+&emsp;&emsp;**Message Type:** nav_msgs/Odometry
+
+&emsp;&emsp;**Description:** Platform-level wheel odometry.
+
+#### /platform/odom_filtered
+
+&emsp;&emsp;**Message Type:** nav_msgs/Odometry
+
+&emsp;&emsp;**Description:** EKF fused odometry from available sources on the
+platform. This may include the wheel odometry, imu data, etc..
+
+------------------------------------------------------------------------
+
+The following table contains the types of sensors that could be
+integrated onto our robot platforms.
+
+| Type | Test |
+| ---- | ----------  |
+| **gps** | A singular GPS (Global Positioning System) antenna/receiver pair. These may also be referred to as GNSS receivers. |
+| **ins** | An inertial navigation system (INS) that consists of an IMU and a GPS unit. |
+| **imu** | An inertial measurement unit consisting of an accelerometer, gyroscope and potentially a magnetometer. |
+| **lidar** | A light emitting sensor that uses this light to determine the distance to obstacles. This includes 1D, 2D and 3D range detection sensors. |
+| **radar** | A radio emitting sensor used to compute distance/velocity of obstacles. |
+| **camera** | A singular lens (ie. mono) camera that produces an ROS image stream. This can therefore include regular mono cameras as well as single lens thermal imagers, etc\... |
+| **stereo** | A type of camera with two or more image sensors. |
+
+#### /sensors/imu_\[0,1,\...\]/data
+
+&emsp;&emsp;**Message Type:** sensor_msgs/Imu
+
+&emsp;&emsp;**Description:** Raw data from IMU (gyro / acceleration)
+
+#### /sensors/imu_\[0,1,\...\]/magnetic_field
+
+&emsp;&emsp;**Message Type:** sensor_msgs/MagneticField
+
+&emsp;&emsp;**Description:** Reports the MPU 9250 Magnetometer sensor information.
+
+#### /sensors/<type\>_\[0,1,\...\]/fix
+
+&emsp;&emsp;**Message Type:** sensor_msgs/NavSatFix
+
+&emsp;&emsp;**Type:** gps, ins
+
+&emsp;&emsp;**Description:** GPS latitude and longitude data. This data can either
+be RTK corrected or regular GPS data.
+
+#### /sensors/<type\>_[0,1,\...\]/heading
+
+&emsp;&emsp;**Message Type:** sensor_msgs/Imu
+
+&emsp;&emsp;**Type:** gps, ins, imu
+
+&emsp;&emsp;**Description:** RTK heading data computed from a dual GPS receiver
+setup.
+
+#### /sensors/<type\>_\[0,1,\...\]/pointcloud
+
+&emsp;&emsp;**Message Type:** Type: sensor_msgs/PointCloud2
+
+&emsp;&emsp;**Type:** lidar, radar, stereo, camera
+
+&emsp;&emsp;**Description:** Raw pointcloud data generated from the specific sensor.
+
+#### /sensors/<type\>_\[0,1,\...\]/scan
+
+&emsp;&emsp;**Message Type:** sensor_msgs/LaserScan
+
+&emsp;&emsp;**Type:** lidar, radar, stereo, camera
+
+&emsp;&emsp;**Description:** Raw scan data generated from the specific sensor.
+
+#### /sensors/<type\>_\[0,1,\...\]/camera_info
+
+&emsp;&emsp;**Message Type:** sensor_msgs/CameraInfo
+
+&emsp;&emsp;**Type:** camera, stereo
+
+&emsp;&emsp;**Description:** Camera information including image dimensions,
+distortion parameters, calibration parameters, etc\...
+
+#### /sensors/<type\>_\[0,1,\...\]/image_raw
+
+&emsp;&emsp;**Message Type:** sensor_msgs/Image
+
+&emsp;&emsp;**Type:** camera, stereo
+
+&emsp;&emsp;**Description:** Raw image data from the specific sensor.
+
+#### /sensors/<type\>_\[0,1,\...\]/depth/camera_info
+
+&emsp;&emsp;**Message Type:** sensor_msgs/CameraInfo
+
+&emsp;&emsp;**Type:** camera, stereo
+
+&emsp;&emsp;**Description:** Camera information for the depth image including image dimensions,
+distortion parameters, calibration parameters, etc\...
+
+#### /sensors/<type\>_\[0,1,\...\]/depth/image_rect_raw
+
+&emsp;&emsp;**Message Type:** sensor_msgs/Image
+
+&emsp;&emsp;**Type:** camera, stereo
+
+&emsp;&emsp;**Description:** Raw depth image from the specific sensor.
+
+#### /onboard_systems/wireless/connection
+
+&emsp;&emsp;**Message Type:** wireless_msgs/Connection
+
+&emsp;&emsp;**Description:** Information about the robot's wireless connection
+including ssid, frequency, bitrate, and signal and noise levels.
+
+#### /onboard_systems/bms/state
+
+&emsp;&emsp;**Message Type:** sensor_msgs/BatteryState
+
+&emsp;&emsp;**Description:** State data for each battery module installed.
+
+------------------------------------------------------------------------
+
+### Topics Subscribed to by UGV {#topics-subscribed-by-platform}
+
+The UGV subscribes to the topics in this section.
+
+#### /cmd_vel
+
+&emsp;&emsp;**Message Type:** geometry_msgs/Twist
+
+&emsp;&emsp;**Description:** The command velocity to the platform layer effectively
+commanding the wheels to spin.
