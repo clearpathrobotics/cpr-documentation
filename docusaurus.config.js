@@ -14,6 +14,7 @@ const config = {
   onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/website_images/favicon.ico",
+  staticDirectories: ['static', 'docs/static'],
 
   i18n: {
     defaultLocale: "en",

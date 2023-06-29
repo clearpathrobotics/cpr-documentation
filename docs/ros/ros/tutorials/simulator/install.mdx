@@ -34,3 +34,32 @@ sudo apt-get update
 sudo apt-get install ros-humble-clearpath-simulator
 ```
 
+#### Source install
+
+**1. Create a workspace on the robot's computer**
+
+```
+mkdir ~/clearpath_ws/src -p
+```
+
+**2. Import dependencies**
+
+```
+source /opt/ros/humble/setup.bash
+sudo apt install python3-vcstool
+cd ~/clearpath_ws
+wget https://raw.githubusercontent.com/clearpathrobotics/clearpath_simulator/main/dependencies.repos
+vcs import src < dependencies.repos
+rosdep install -r --from-paths src -i -y
+```
+
+**3. Build packages**
+
+```
+colcon build --symlink-install
+```
+
+:::note
+Make sure to add the workspace to your `robot.yaml` file. TODO: Add link to robot yaml documentation
+:::
+
