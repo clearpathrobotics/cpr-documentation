@@ -1,0 +1,1054 @@
+---
+title: Jackal Tutorials (ROS1)
+sidebar_label: ROS1
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+import ComponentIntroductionJackal from "/docs_versioned_docs/version-ros1noetic/components/introduction_jackal.mdx";
+import ComponentPs4ControllerPairing from "/docs_versioned_docs/version-ros1noetic/components/ps4_controller_pairing.mdx";
+import ComponentChangingDefaultPassword from "/docs_versioned_docs/version-ros1noetic/components/changing_default_password.mdx";
+import ComponentWiredRobotConnection from "/docs_versioned_docs/version-ros1noetic/components/wired_robot_connection.mdx";
+import ComponentWifiRobotConnection from "/docs_versioned_docs/version-ros1noetic/components/wifi_robot_connection.mdx";
+import ComponentConfiguringNetworkBridge from "/docs_versioned_docs/version-ros1noetic/components/configuring_network_bridge.mdx";
+import ComponentPerformingABackup from "/docs_versioned_docs/version-ros1noetic/components/performing_a_backup.mdx";
+import ComponentInstallingRobotSoftware from "/docs_versioned_docs/version-ros1noetic/components/installing_robot_software.mdx";
+import ComponentInstallingRemoteComputerSoftware from "/docs_versioned_docs/version-ros1noetic/components/installing_remote_computer_software.mdx";
+import ComponentAddingASourceWorkspace from "/docs_versioned_docs/version-ros1noetic/components/adding_a_source_workspace.mdx";
+import ComponentDrivingWithRemoteController from "/docs_versioned_docs/version-ros1noetic/components/driving_with_remote_controller.mdx";
+import Support from "/docs_versioned_docs/version-ros1noetic/components/support.mdx";
+
+<ComponentIntroductionJackal />
+
+## Jackal Overview
+
+### Introduction
+
+Jackal is a rugged, lightweight, fast and easy-to-use unmanned ground robot for rapid prototyping
+and research applications. These tutorials will assist you with setting up and operating your Jackal.
+The tutorial topics are listed in the right column and presented in the suggested reading order.
+
+For more information or to receive a quote, please [visit us online](http://clearpathrobotics.com/jackal).
+
+:::note
+
+These tutorials assume that you are comfortable working with ROS.
+We recommend starting with our [ROS tutorial](https://www.clearpathrobotics.com/assets/guides/noetic/ros/index.html) if you are not familiar with ROS already.
+
+:::
+
+:::note
+
+These tutorials specifically target Jackal robots running Ubuntu 20.04 with ROS Noetic, as it is the standard OS environment for Jackal.
+If instead you have an older Jackal robot running Ubuntu 18.04 with ROS Melodic, please follow [this tutorial](https://www.clearpathrobotics.com/assets/guides/melodic/melodic-to-noetic/index.html) to upgrade the robot OS environment to Ubuntu 20.04 with ROS Noetic.
+
+:::
+
+[Jackal ROS Packages](#jackal-ros-packages) provides the references for the software packages and key ROS topics.
+
+[Jackal Software Setup](#jackal-software-setup) outlines the steps for setting up the software on your Jackal robot and optionally on a remote computer.
+
+[Using Jackal](#using-jackal) describes how to simulate and drive your Jackal. [Simuation](#simulating-jackal) is a great way for most users to learn more about their Jackal;
+understanding how to effectively operate Jackal in simulation is valuable whether you are in the testing phase with software you intend to ultimately deploy on a physical Jackal or you do not have one and are simply exploring the platform's capabilities.
+[Driving Jackal](#driving-jackal) covers how to teleoperate Jackal using the remote control, as well as safety procedures for operating the physical robot.
+Anyone working with a physical robot should be familiar with this section.
+
+[Navigating Jackal](#navigating-jackal) is a follow-on to what is learned in the [Simuation](#simulating-jackal) tutorial, as navigation and map-making may be run in the simulated environment.
+However, this content is applicable to both the simulator and the real platform, if your Jackal is equipped with a laser scanner.
+
+[Jackal Tests](#testing-jackal) outlines how to validate that your physical Jackal is working correctly.
+
+[Advanced Topics](#advanced-topics) covers items that are only required in atypical situations.
+
+---
+
+## Jackal ROS Packages {#jackal-ros-packages}
+
+Jackal fully supports ROS; all of the packages are available in [Jackal Github](https://github.com/jackal).
+
+### Description Package {#description-package}
+
+The [jackal_description](https://github.com/jackal/jackal/tree/noetic-devel/jackal_description) repository provides a [URDF](http://wiki.ros.org/urdf) model of Jackal.
+
+Jackal's URDF model can be visualized in RViz.
+Once you have installed the desktop software in an upcoming tutorial, you will be able to run:
+
+```
+roslaunch jackal_viz view_model.launch
+```
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/jackal-urdf.png"
+      width="400"
+    />
+    <figcaption>Jackal model</figcaption>
+  </figure>
+</center>
+
+### Environment Variables
+
+Jackal can be customized and extended through the use of several environment variables.
+These are summarized in the [accessories.urdf.xacro](https://github.com/jackal/jackal/blob/noetic-devel/jackal_description/urdf/accessories.urdf.xacro) file.
+Some of the most important ones are listed below.
+
+| Variable                        | Default | Description                                                                                                 |
+| :------------------------------ | :------ | :---------------------------------------------------------------------------------------------------------- |
+| `JACKAL_LASER`                  | `0`     | Set to 1 to equip Jackal with a primary lidar unit, normally front-facing                                   |
+| `JACKAL_LASER_SECONDARY`        | `0`     | Set to 1 to equip Jackal with a secondary lidar unit, normally rear-facing                                  |
+| `JACKAL_LASER_3D`               | `0`     | Set to 1 to equip Jackal with a primary 3D lidar unit, normally front-facing                                |
+| `JACKAL_BLACKFLY`               | `0`     | Set to 1 to equip Jackal with a Blackfly camera                                                             |
+| `JACKAL_IMU_MICROSTRAIN`        | `0`     | Set to 1 to equip Jackal with a Microstrain IMU                                                             |
+| `JACKAL_FRONT_ACCESSORY_FENDER` | `0`     | Set to 1 to equip Jackal with extended front fender for mounting additional sensors such as laser scanners. |
+| `JACKAL_REAR_ACCESSORY_FENDER`  | `0`     | Set to 1 to equip Jackal with extended rear fender for mounting additional sensors such as laser scanners.  |
+
+### Configurations
+
+As an alternative to individually specifying each accessory, some fixed configurations are provided in the package.
+These can be specified using the `config` arg to `description.launch`, and are intended especially as a convenience for simulation launch.
+
+| Config        | Description                                          |
+| :------------ | :--------------------------------------------------- |
+| `base`        | Base Jackal                                          |
+| `front_laser` | Adds a SICK LMS1xx lidar to the Jackal's front mount |
+
+:::note
+
+Additional configurations coming soon
+
+:::
+
+### Key ROS Topics
+
+You can view all topics that are active using `rostopic list`.
+The most important topics are summarized in the table below.
+
+| Topic                | Message Type                 | Purpose                                                                                                                                                                      |
+| :------------------- | :--------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/cmd_vel`           | `geometry_msgs/Twist`        | Input to Jackal's kinematic controller. Publish here to make Jackal go.                                                                                                      |
+| `/odometry/filtered` | `nav_msgs/Odometry`          | Published by `robot_localization`, a filtered localization estimate based on wheel odometry (encoders) and integrated IMU.                                                   |
+| `/imu/data`          | `sensor_msgs/IMU`            | Published by `imu_filter_madgwick`, an orientation estimated based on the Jackal's internal IMU.                                                                             |
+| `/navsat/fix`        | `sensors_msgs/NavSatFix`     | Position fix from Jackal's built in GPS receiver.                                                                                                                            |
+| `/navsat/vel`        | `geometry_msgs/TwistStamped` | Velocity over ground according to the integrated GPS receiver.                                                                                                               |
+| `/cmd_drive `        | `jackal_msgs/Drive`          | Output from Jackal's kinematic controller, input to the motor controllers. Subscribe here for a lower-level look at what's going on.                                         |
+| `/feedback`          | `jackal_msgs/Feedback`       | High-frequency inputs from Jackal's encoders and motor current sensors.                                                                                                      |
+| `/status`            | `jackal_msgs/Status`         | Low-frequency status data for Jackal's systems. This information is republished in human readable form on the diagnostics topic and is best consumed with the Robot Monitor. |
+
+---
+
+## Jackal Software Setup {#jackal-software-setup}
+
+### Backing Up Robot Configuration
+
+Upgrading your Clearpath Jackal to ROS Noetic from older ROS distributions is a straightforward process;
+however it's important to understand that each Jackal is different, having undergone customization to your specifications.
+For more complete upgrade instructions see [this guide](https://clearpathrobotics.com/assets/guides/melodic/melodic-to-noetic/index.html).
+
+Please take the time to understand what these modifications are, and how to recreate them on your fresh install of Ubuntu Focal/ROS Noetic.
+
+#### Performing a Backup {#performing-a-backup}
+
+<ComponentPerformingABackup />
+
+### Installing and Configuring Robot Software
+
+:::note
+
+If you are upgrading your Jackal from an older version of ROS, please refer to our upgrade instructions [here](https://clearpathrobotics.com/assets/guides/kinetic/kinetic-to-melodic/index.html)
+and [here](https://clearpathrobotics.com/assets/guides/melodic/melodic-to-noetic/index.html).
+
+:::
+
+#### Installing Jackal Software
+
+:::note
+
+The physical Jackal robot comes pre-configured with ROS and the necessary Jackal packages already installed;
+therefore, you will only need to follow the instructions below if you are re-installing software on the Jackal.
+
+:::
+
+<ComponentInstallingRobotSoftware />
+
+#### Testing Base Configuration
+
+1. To test your configuration, start the background service with the following command:
+
+   ```
+   sudo systemctl start ros
+   ```
+
+2. The Comms indicator <img src="/img/robot_images/dingo_images/icon-comms.png" width="20" />
+   should turn green. You can check that the service has started correctly by checking the logs:
+
+   ```
+   sudo journalctl -u ros
+   ```
+
+3. Your Jackal should now be accepting commands from your joystick (see next section).
+   The service will automatically start each time you boot your Jackal's computer.
+
+#### Pairing the Controller {#pairing-the-controller}
+
+##### PS4 Controller
+
+<ComponentPs4ControllerPairing />
+
+### Setting up Jackal's Network Configuration {#jackal-networking}
+
+Jackal is normally equipped with a combination Wi-Fi + Bluetooth module.
+If this is your first unboxing, ensure that Jackal's wireless antennae are firmly screwed to the chassis.
+
+#### First Connection
+
+By default, Jackal's Wi-Fi is in client mode, looking for the wireless network at the Clearpath factory.
+
+<ComponentWiredRobotConnection />
+
+#### Changing the Default Password
+
+<ComponentChangingDefaultPassword />
+
+#### Wi-Fi Setup
+
+<ComponentWifiRobotConnection />
+
+### Installing Remote Computer Software {#remote-computer-software}
+
+:::note
+
+This step is optional.
+
+:::
+
+<ComponentInstallingRemoteComputerSoftware />
+
+#### Adding a Source Workspace
+
+<ComponentAddingASourceWorkspace />
+
+---
+
+## Using Jackal {#using-jackal}
+
+### Simulating Jackal {#simulating-jackal}
+
+Whether you actually have a Jackal robot or not, the Jackal simulator is a great way to get started with ROS robot development.
+In this tutorial, we will go through the basics of starting Gazebo and RViz and how to drive your Jackal around.
+
+#### Installation
+
+To get started with the Jackal simulation, make sure you have a [working ROS installation](#remote-computer-software) set up on your Ubuntu desktop, and install the Jackal-specific metapackages for desktop and simulation:
+
+```
+sudo apt-get install ros-noetic-jackal-simulator ros-noetic-jackal-desktop
+```
+
+#### Launching Gazebo
+
+[Gazebo](https://gazebosim.org/home) is the most common simulation tool used in ROS. Jackal's model in Gazebo include reasonable approximations of its dynamics, including wheel slippage, skidding, and inertia.
+To launch simulated Jackal in a simple example world, run the following command:
+
+```
+roslaunch jackal_gazebo jackal_world.launch
+```
+
+You should see the following window appear, or something like it.
+You will see a base Jackal spawned with no additional sensors.
+You can adjust the camera angle by clicking and dragging while holding CTRL, ALT, or the Shift key.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/gazebo-jackal-race.png"
+      width="800"
+    />
+    <figcaption>Simulated Jackal in the Race World</figcaption>
+  </figure>
+</center>
+
+The window which you are looking at is the Gazebo Client.
+This window shows you the "true" state of the simulated world which the robot exists in.
+It communicates on the backend with the Gazebo Server, which is doing the heavy lifting of actually maintaining the simulated world.
+At the moment, you are running both the client and server locally on your own machine, but some advanced users may choose to run heavy duty simulations on separate hardware and connect to them over the network.
+
+:::note
+
+When simulating, you must leave Gazebo running.
+Closing Gazebo will prevent other tools, such as RViz (see below) from working correctly.
+
+:::
+
+:::note
+
+See also [Additional Simulation Worlds](#additional-sim).
+
+:::
+
+##### Simulation Configs
+
+Note that like Jackal itself, Jackal's simulator comes in multiple flavours called configs.
+A common one which you will need often is the `front_laser` config.
+If you close the Gazebo window, and then CTRL-C out of the terminal process, you can re-launch the simulator with a specific config.
+
+```
+roslaunch jackal_gazebo jackal_world.launch config:=front_laser
+```
+
+You should now see the simulator running with the simulated SICK LMS-111 laser present.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/gazebo-jackal-race-laser.png"
+      width="800"
+    />
+    <figcaption>Simulated Jackal in the Race World with SICK LMS-111</figcaption>
+  </figure>
+</center>
+
+Gazebo not only simulates the physical presence of the laser scanner, it also provides simulated data which reflects the robot's surroundings in its simulated world.
+We will visualize the simulated laser scanner data shortly.
+
+### Interfacing with Jackal
+
+Both simulated and real Jackal robots expose the same ROS interface and can be interacted with in the same way.
+
+:::note
+
+Please make sure that the desktop packages for Jackal are installed:
+
+```
+sudo apt-get install ros-noetic-jackal-desktop
+```
+
+:::
+
+#### Launching RViz
+
+The next tool we will encounter is [RViz](http://wiki.ros.org/rviz).
+Although superficially similar in appearance to Gazebo, RViz has a very different purpose. Unlike Gazebo, which shows the reality of the simulated world, RViz shows the robot's _perception_ of its world, whether real or simulated.
+So while Gazebo won't be used with your real Jackal, RViz is used with both.
+
+You can use the following launch invocation to start RViz with a predefined configuration suitable for visualizing any standard Jackal config.
+
+```
+roslaunch jackal_viz view_robot.launch
+```
+
+You should see RViz appear.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/rviz-jackal-laser.png"
+      width="800"
+    />
+    <figcaption>Jackal RViz</figcaption>
+  </figure>
+</center>
+
+The RViz display only shows what the robot knows about its world, which presently, is nothing.
+Because the robot doesn't yet know about the barriers which exist in its Gazebo world, they are not shown here.
+
+#### Driving with Interactive Controller
+
+RViz will also show Jackal's interactive markers around your Jackal's model.
+These will appear as a blue ring and red arrows.
+Depending on your robot, there will also be green arrows.
+If you don't see them in your RViz display, select the Interact tool from the top toolbar and they should appear.
+
+Drag the red arrows in RViz to move in the linear X direction, and the blue circle to move in the angular Z direction.
+If your robot supports lateral/sideways movement, you can drag the green arrows to move in the linear Y direction.
+RViz shows you Jackal moving relative to its odometric frame, but it is also moving relative to the simulated world supplied by Gazebo.
+If you click over to the Gazebo window, you will see Jackal moving within its simulated world.
+Or, if you drive real Jackal using this method, it will have moved in the real world.
+
+#### Visualizing Sensors
+
+The RViz tool is capable of visualizing many common robotic sensors, as well as other data feeds which can give us clues as to what the robot is doing and why.
+A great place to start with this is adding the [LaserScan](http://wiki.ros.org/rviz/DisplayTypes/LaserScan) plugin to visualize the laser scans being produced by the simulated LMS-111. In the left panel, click the "Add" button, then select the "Topics" tab, and then select the `front/scan` topic:
+
+<!--- The Dingo image works here for Jackal since the robot is hidden in the image --->
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/dingo_images/dingo_rviz_add_laser.png"
+      width="800"
+    />
+    <figcaption>Adding a laser scan visualization to Jackal</figcaption>
+  </figure>
+</center>
+
+Click "OK" and you should see laser scan points now visible in the RViz window, relative to the robot.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/rviz-laser-scan.png"
+      width="800"
+    />
+    <figcaption>Visualizing Jackal with simulated laser scans</figcaption>
+  </figure>
+</center>
+
+If you use the interactive markers to drive around, you'll notice that the laser scan points move a little bit but generally stay where they are.
+This is the first step toward map making using [Gmapping](#gmapping-demo).
+
+#### Control
+
+There are three ways to send your Jackal control commands:
+
+1.  Using the provided PS4 controller.
+    Refer to the [User Manual](../user_manual_jackal#controller) details on how to use the controller.
+
+2.  Using the RViz instance above.
+    If you select the Interact option in the top toolbar, an interactive marker will appear around the Jackal and can be used to control speed.
+
+3.  The [rqt_robot_steering plugin](http://wiki.ros.org/rqt_robot_steering).
+    Run the `rqt` command, and select **Plugins→Robot Tools→Robot Steering** from the top menu.
+
+Jackal uses [twist_mux](http://wiki.ros.org/twist_mux) to mix separate [geometry_msgs/Twist](http://docs.ros.org/api/geometry_msgs/html/msg/Twist.html) control channels into the `jackal_velocity_controller/cmd_vel` topic.
+
+Additional velocity channels can be defined in [twist_mux.yaml](https://github.com/jackal/jackal/blob/noetic-devel/jackal_control/config/twist_mux.yaml), or can be piped into the lowest-priority `cmd_vel` topic.
+
+#### Odometry
+
+Jackal publishes odometry information on the `odometry/filtered` topic, as [nav_msgs/Odometry messages](http://docs.ros.org/api/nav_msgs/html/msg/Odometry.html).
+These are generated by [ekf_localization_node](http://wiki.ros.org/robot_localization), which processes data from several sensor sources using an Extended Kalman filter (EKF).
+This includes data from the wheel encoders and IMU (if available).
+
+Additional odometry information sources can be added to the EKF in [robot_localization.yaml](https://github.com/jackal/jackal/blob/noetic-devel/jackal_control/config/robot_localization.yaml).
+
+#### Diagnostics
+
+:::note
+
+Diagnostics are only applicable to real Jackal robots, not simulation.
+
+:::
+
+Jackal provides hardware and software system [diagnostics](http://wiki.ros.org/diagnostics) on the ROS standard `/diagnostics` topic.
+The best way to view these messages is using the [rqt_runtime_monitor](http://wiki.ros.org/rqt_runtime_monitor) plugin.
+Run the `rqt` command, and select **Plugins→Robot Tools→Runtime Monitor** from the top menu.
+
+The same information is also published as a [jackal_msgs/Status](https://docs.ros.org/en/api/jackal_msgs/html/msg/Status.html) message on the `/status` topic.
+
+### Driving Jackal {#driving-jackal}
+
+There are four ways to drive Jackal and each way will work on a physical Jackal robot as well as on a simulated Jackal.
+
+1.  Using the interactive remote controller in RViz. See [Simulating Jackal](#simulating-jackal).
+2.  Using autonomous navigation. See [Navigating Jackal](#navigating-jackal).
+3.  Using the controller for teleoperation. See below.
+4.  Publishing ROS messages. See below.
+
+:::warning
+
+Jackal is capable of reaching high speeds.
+Careless driving can cause harm to the operator, bystanders, the robot, or other property.
+Always remain vigilant, ensure you have a clear line of sight to the robot, and operate the robot at safe speeds.
+We strongly recommend driving in normal (slow) mode first, and only enabling turbo in large, open areas that are free of people and obstacles.
+
+:::
+
+#### Driving with Remote Controller
+
+:::note
+
+For instructions on controller pairing, [Pairing the Controller](#pairing-the-controller).
+
+:::
+
+:::note
+
+If using your controller to drive your simulated robot, connect your controller using either a USB cable or Bluetooth
+to your computer as appropriate and then launch the teleop node by running:
+
+```
+roslaunch jackal_control teleop.launch joy_dev:=/dev/input/js0
+```
+
+Replace `/dev/input/js0` with the joy device you wish to use as input. By default `jackal_control` accepts input
+from `/dev/input/ps4` unless another device is specified. If you use a PS4 controller, you can add the following udev
+rule to automatically symlink your `js*` device to `/dev/input/ps4`:
+
+```
+KERNEL=="js*", SUBSYSTEM=="input", ATTRS{name}=="Wireless Controller", MODE="0666", SYMLINK+="input/ps4"
+```
+
+Put the above in `/etc/udev/rules.d/41-playstation.rules` and then run:
+
+```
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+```
+
+If you use a different game controller, e.g. an Xbox controller or Logitech F710 you will need to specify the device
+using the `joy_dev:=/dev/input/js*` argument, described earlier.
+
+:::
+
+<ComponentDrivingWithRemoteController />
+
+#### Driving with ROS Messages
+
+You can manually publish `geometry_msgs/Twist` ROS messages to either the `/jackal_velocity_controller/cmd_vel` or the `/cmd_vel` ROS topics to drive Jackal.
+
+For example, in terminal, run:
+
+```
+rostopic pub /jackal_velocity_controller/cmd_vel geometry_msgs/Twist '{linear: {x: 0.5, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}'
+```
+
+The command above makes Jackal drive forward momentarily at 0.5 m/s without any rotation.
+
+### Extending Jackal Startup
+
+Now that you've had Jackal for a while, you may be interested in how to extend it, perhaps add some more payloads, or augment the URDF.
+
+#### Startup Launch Context
+
+When ROS packages are grouped together in a directory and then built as one, the result is referred to as a workspace.
+Each workspace generates a `setup.bash` file which the user may source in order to correctly set up important environment variables such as `PATH`, `PYTHONPATH`, and `CMAKE_PREFIX_PATH`.
+
+The standard system-wide setup file is in `/opt`:
+
+```
+source /opt/ros/noetic/setup.bash
+```
+
+When you run this command, you'll have access to `rosrun`, `roslaunch`, and all the other tools and packages installed on your system from Debian packages.
+
+However, sometimes you want to add additional system-specific environment variables, or perhaps packages built from source.
+For this reason, Clearpath platforms use a wrapper setup file, located in `/etc/ros`:
+
+```
+source /etc/ros/setup.bash
+```
+
+This is the setup file which gets sourced by Jackal's background launch job, and in the default configuration, it is also sourced on your login session.
+For this reason it can be considered the "global" setup file for Jackal's ROS installation.
+
+This file sets some environment variables and then sources a chosen ROS workspace, so it is one of your primary modification points for altering how Jackal launches.
+
+#### Launch Files
+
+The second major modification point is the `/etc/ros/noetic/ros.d` directory.
+This location contains the launch files associated with the `ros` background job.
+If you add launch files here, they will be launched with Jackal's startup.
+
+However, it's important to note that in the default configuration, any launch files you add may only reference ROS software installed in `/opt/ros/noetic`.
+If you want to launch something from workspace in the home directory, you must change `/etc/ros/setup.bash` to source that workspace's setup file rather than the one from `opt`.
+
+#### Adding URDF
+
+There are two possible approaches to augmenting Jackal's URDF.
+The first is that you may simply set the `Jackal_URDF_EXTRAS` environment variable in `/etc/ros/setup.bash`.
+By default, it points to an empty dummy file, but you can point it to a file of additional links and joints which you would like mixed into Jackal's URDF (via xacro) at runtime.
+
+The second, more sophisticated way to modify the URDF is to create a _new_ package for your own robot, and build your own URDF which wraps the one provided by [jackal_description](https://github.com/jackal/jackal/tree/noetic-devel/jackal_description).
+
+### Keeping Jackal Updated
+
+For details on updating Jackal software or firmware, refer to [Software Maintenance](../maintenance_jackal#software_maintenance).
+
+---
+
+## Navigating Jackal {#navigating-jackal}
+
+To get all Navigation related files for Jackal, run:
+
+```
+sudo apt-get install ros-noetic-jackal-navigation
+```
+
+Below are the example launch files for three different configurations for navigating Jackal:
+
+- Navigation in an odometric frame without a map, using only [move_base](http://wiki.ros.org/move_base).
+- Generating a map using [gmapping](http://wiki.ros.org/gmapping).
+- Localization with a known map using [amcl](http://wiki.ros.org/amcl).
+
+:::note
+
+Jackal also works with [Cartographer](https://google-cartographer-ros.readthedocs.io/en/latest/).
+See the Jackal Cartographer [README](https://github.com/jackal/jackal_cartographer_navigation/blob/melodic-devel/README.md) file for demo details.
+
+:::
+
+Referring to the [Simulating Jackal](#simulating-jackal) instructions, bring up Jackal with the front laser enabled for the following demos:
+
+```
+roslaunch jackal_gazebo jackal_world.launch config:=front_laser
+```
+
+If you're working with a real Jackal, it's suggested to connect via SSH and launch the [jackal_navigation](https://github.com/jackal/jackal/tree/noetic-devel/jackal_navigation) launch files from onboard the robot.
+You'll need to have bidirectional communication with the robot's roscore in order to launch RViz on your workstation (see [here](#remote-computer-software)).
+
+### Navigation without a Map
+
+In the odometry navigation demo Jackal attempts to reach a given goal in the world within a user-specified tolerance.
+The 2D navigation, generated by `move_base`, takes in information from odometry, laser scanner, and a goal pose and outputs safe velocity commands.
+In this demo the configuration of move_base is set for navigation without a map in an odometric frame (that is, without reference to a map).
+
+To launch the navigation demo, run:
+
+```
+roslaunch jackal_navigation odom_navigation_demo.launch
+```
+
+To visualize with the suggested RViz configuration launch:
+
+```
+roslaunch jackal_viz view_robot.launch config:=navigation
+```
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/rviz-odom-navigation.png"
+      width="800"
+    />
+    <figcaption>RViz with Jackal's odom navigation configuration</figcaption>
+  </figure>
+</center>
+
+To send goals to the robot, select the _2D Nav Goal_ tool from the top toolbar, and then click anywhere in the RViz view to set the position.
+Alternatively, click and drag slightly to set the goal position and orientation.
+
+If you wish to customize the parameters of move_base, local costmap, global costmap and base_local_planner, clone [jackal_navigation](https://github.com/jackal/jackal/tree/noetic-devel/jackal_navigation) into your own workspace and modify the corresponding files in the `params` subfolder.
+
+### Making a Map {#gmapping-demo}
+
+In this demonstration, Jackal generates a map using Gmapping. Begin by launch the Gmapping launch file on the robot:
+
+```
+roslaunch jackal_navigation gmapping_demo.launch
+```
+
+:::note
+
+If your robot's lidar does not publish on `/front/scan` you can specify the correct topic by setting the
+`scan_topic` argument: `scan_topic:=my_scan_topic`
+
+:::
+
+And on your workstation, launch RViz with the suggested configuration:
+
+```
+roslaunch jackal_viz view_robot.launch config:=gmapping
+```
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/rviz-gmapping.png"
+      width="800"
+    />
+    <figcaption>RViz with Jackal's Gmapping configuration</figcaption>
+  </figure>
+</center>
+
+You must slowly drive Jackal around to build the map.
+As obstacles come into view of the laser scanner, they will be added to the map, which is shown in RViz.
+You can either drive manually using the interactive markers, or semi-autonomously by sending navigation goals (as above).
+
+When you're satisfied, you can save the produced map using [map_saver](http://wiki.ros.org/map_server#map_saver):
+
+```
+rosrun map_server map_saver -f mymap
+```
+
+This will create a `mymap.yaml` and `mymap.pgm` file in your current directory.
+
+### Navigation with a Map
+
+Using [amcl](http://wiki.ros.org/amcl), Jackal is able to globally localize itself in a known map.
+AMCL takes in information from odometry, laser scanner and an existing map and estimates the robot's pose.
+
+To start the AMCL demo:
+
+```
+roslaunch jackal_navigation amcl_demo.launch map_file:=/path/to/my/map.yaml
+```
+
+:::note
+
+If your robot's lidar does not publish on `/front/scan` you can specify the correct topic by setting the
+`scan_topic` argument: `scan_topic:=my_scan_topic`
+
+:::
+
+If you don't specify `map_file`, it defaults to an included pre-made map of the default "Jackal Race" environment which Jackal's simulator spawns in.
+If you're using a real Jackal in your own environment, you'll definitely want to override this with the map created using the Gmapping demo.
+
+Before navigating, you need to initialize the localization system by setting the pose of the robot in the map.
+This can be done using 2D Pose Estimate in RViz or by setting the amcl `initial_pose` parameters. To visualize with the suggested RViz configuration launch:
+
+```
+roslaunch jackal_viz view_robot.launch config:=localization
+```
+
+When RViz appears, select the _Set 2D Pose tool_ from the toolbar, and click on the map to indicate to the robot approximately where it is.
+
+---
+
+## Jackal Tests
+
+Jackal robots come preinstalled with a set of test scripts as part of the `jackal_tests` ROS package, which can be run to verify robot functionality at the component and system levels.
+
+If your Jackal does not have the `jackal_tests` ROS package installed already, you can manually install it by opening terminal and running:
+
+```
+sudo apt-get install ros-noetic-jackal-tests
+```
+
+### ROS Tests
+
+The `ros_tests` script exposes a set of interactive tests to verify the functionality of core features.
+These tests run at the ROS-level via ROS topics, and serve as a useful robot-level diagnostic tool for identifying the root cause of problems, or at the very least, narrowing down on where the root cause(s) may be.
+
+#### Running ROS Tests
+
+To run `ros_tests` on a Jackal robot, open terminal and run:
+
+```
+rosrun jackal_tests ros_tests
+```
+
+Upon running `ros_tests`, a list of available tests will be shown in a menu.
+From the menu, you can choose individual tests to run, or simply choose the option to automatically run all the tests.
+
+The details of each test are shown below.
+
+- **Motion Stop Test**
+
+  The **Motion Stop Test** checks that the robot's motion-stop is working properly.
+
+  This test subscribes to the `/status` ROS topic and checks that when the motion-stop is manually engaged by the user, the motion-stop state is correctly reported on the `/status` ROS topic.
+
+- **ADC Test**
+
+  The **ADC Test** checks that the robot's voltage and current values across its internal hardware components are within expected tolerances.
+
+  This test subscribes to the `/status` ROS topic and checks that the voltage and current values across the internal hardware are within expected tolerances.
+
+- **Rotate Test**
+
+  The **Rotate Test** rotates the robot counter clockwise 2 full revolutions and checks that the motors, IMU, and EKF odometry are working properly.
+
+  This test:
+
+  - Subscribes to the `/imu/data` ROS topic to receive angular velocity measurements from the IMU's Gyroscope.
+    These measurements are converted into angular displacement estimations, and the robot will rotate until 2 full revolutions are estimated.
+  - Subscribes to the `/odometry/filtered` ROS topic to receive angular velocity estimations from the EKF odometry.
+    These measurements are converted into angular displacement estimations, and are output as comparison to the angular displacement estimations from the IMU's Gyroscope.
+  - Publishes to the `/cmd_vel` ROS topic to send drive commands to rotate the robot.
+  - The user will be asked to verify that the robot rotates 2 full revolutions.
+
+  :::note
+
+  The **Rotate Test** rotates the robot using the IMU's Gyroscope data, which inherently will not be 100% accurate.
+  Therefore, some undershoot/overshoot is to be expected.
+
+  :::
+
+- **Drive Test**
+
+  The **Drive Test** drives the robot forward 1 metre and checks that the motors, encoders, and encoder-fused odometry are working properly.
+
+  This test:
+
+  - Subscribes to the `/jackal_velocity_controller/odom` ROS topic to receive linear displacement estimations from the encoder-fused odometry.
+    The robot will drive forward until 1 metre is estimated.
+  - Subscribes to the `/feedback` ROS topic to receive linear displacement measurements from the individual encoders.
+    These measurements are output as comparison to the linear displacement estimations from the encoder-fused odometry.
+  - Subscribes to the `/joint_state` ROS topic to receive linear displacement measurements from individual the encoders.
+    These measurements are output as comparison to the linear displacement estimations from the encoder-fused odometry.
+  - Publishes to the `/cmd_vel` ROS topic to send drive commands to drive the robot.
+  - The user will be asked to verify that the robot drives forward 1 metre.
+
+  :::note
+
+  The **Drive Test** drives the robot using the Odometry data, which inherently will not be 100% accurate.
+  Therefore, some undershoot/overshoot is to be expected.
+
+  :::
+
+---
+
+## Advanced Topics
+
+### Configuring the Network Bridge
+
+<ComponentConfiguringNetworkBridge />
+
+### Jetson Installation
+
+Refer to the [Jetson](../../../accessories/computers/jetson/jetson_hardware) page for details on installing a Jetson in Jackal.
+
+### Additional Simulation Worlds {#additional-sim}
+
+In addtion to the default `jackal_world.launch` file, `jackal_gazebo` contains three additional launch files:
+
+- `empty_world.launch`, which spawns Jackal in a featureless, infinite plane;
+- `hrtac_world.launch`, which is a scenario from the [HRTAC](https://github.com/phir2-lab/hratc2017_framework) competition; and
+- `spawn_jackal.launch`, which is intended to be included in any custom world to add a Jackal simulation to it.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/jackal_hrtac_world.png"
+      width="800"
+    />
+    <figcaption>Jackal in the HRTAC World environment</figcaption>
+  </figure>
+</center>
+
+To add a Jackal to any of your own worlds, simply include the `spawn_jackal.launch` file in your own world's launch:
+
+```markup
+<include file="$(find jackal_gazebo)/launch/spawn_jackal.launch">
+  <!-- Optionally configure the spawn position -->
+  <arg name="x" value="$(arg x)"/>
+  <arg name="y" value="$(arg y)"/>
+  <arg name="z" value="$(arg z)"/>
+  <arg name="yaw" value="$(arg yaw)"/>
+</include>
+```
+
+Finally, Clearpath provides an additional suite of simulation environments that can be downloaded separately and used with Jackal, as described below.
+
+#### Clearpath Gazebo Worlds
+
+The Clearpath Gazebo Worlds collection contains 4 different simulation worlds, representative of different environments our robots are designed to operate in:
+
+- Inspection World: a hilly outdoor world with water and a cave
+- Agriculture World: a flat outdoor world with a barn, fences, and solar farm
+- Office World: a flat indoor world with enclosed rooms and furniture
+- Construction World: office world, under construction with small piles of debris and partial walls
+
+Jackal is supported in all four environments.
+
+#### Installation
+
+To download the Clearpath Gazebo Worlds, clone the repository from github into the same workspace as your Jackal:
+
+```
+cd ~/catkin_ws/src
+git clone https://github.com/clearpathrobotics/cpr_gazebo.git
+```
+
+Before you can build the package, make sure to install dependencies.
+Because Clearpath Gazebo Worlds depends on all of our robot's simulation packages, and some of these are currently only available
+as source code, installing dependencies with `rosdep install --from-paths [...]` will likely fail.
+
+To simulate Jackal in the Office and Construction worlds the only additional dependency is the `gazebo_ros` package.
+The Inspection World also needs the uuv_gazebo_worlds package, which can be installed by running
+
+```
+sudo apt-get install ros-$ROS_DISTRO-uuv-gazebo-worlds
+```
+
+Once the dependencies are installed, you can build the package:
+
+```
+cd ~/catkin_ws
+catkin_make
+source devel/setup.bash
+```
+
+#### Running the Inspection Simulation
+
+Inspection World is a hilly, outdoor world that includes a water feature, bridge, pipeline, small cave/mine,
+and a small solar farm. It is intended to simulate a variety of missions, including pipeline inspection,
+cave/underground navigation, and localization on non-planar terrain.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/jackal_inspection_bridge.png"
+      width="800"
+    />
+    <figcaption>Jackal in the Inspection World</figcaption>
+  </figure>
+</center>
+
+To launch the inspection simulation, run
+
+```
+roslaunch cpr_inspection_gazebo inspection_world.launch platform:=jackal
+```
+
+To add sensors to Jackal, use the environment variables described in [Description Package](#description-package).
+
+Once the simulation is running you can use RViz and other tools as described in [Simulating Jackal](#simulating-jackal)
+and [Navigating Jackal](#navigating-jackal) to control and monitor the robot. For example, below we can see Jackal exploring the cave:
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/jackal_inspection_cave.png"
+      width="800"
+    />
+    <figcaption>Jackal exploring the cave</figcaption>
+  </figure>
+</center>
+
+and Jackal's perception of the inside of the cave as a 3D pointcloud in RViz:
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/jackal_rviz_inspection_cave.png"
+      width="800"
+    />
+    <figcaption>Jackal in RViz exploring the cave</figcaption>
+  </figure>
+</center>
+
+You can see the complete layout of the Inspection World below:
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/inspection_world.png"
+      width="800"
+    />
+    <figcaption>Inspection World</figcaption>
+  </figure>
+</center>
+
+#### Running the Agriculture Simulation
+
+Agriculture World is a flat, mixed indoor/outdoor world that include a large barn, open fields surrounded by fences,
+and a large solar farm. It is intended to simulate missions such as solar panel inspection and area coverage.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/jackal_agriculture_world.png"
+      width="800"
+    />
+    <figcaption>Jackal in Agriculture World</figcaption>
+  </figure>
+</center>
+
+To launch the agriculture simulation, run
+
+```
+roslaunch cpr_agriculture_gazebo agriculture_world.launch platform:=jackal
+```
+
+To add sensors to Jackal, use the environment variables described in [Description Package](#description-package).
+
+Once the simulation is running you can use RViz and other tools as described in [Simulating Jackal](#simulating-jackal)
+and [Navigating Jackal](#navigating-jackal) to control and monitor the robot.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/agriculture_world.png"
+      width="800"
+    />
+    <figcaption>Agriculture World</figcaption>
+  </figure>
+</center>
+
+#### Running the Office Simulation
+
+Office World is a small indoor environment representing a commercial office space. It features several large, open
+areas with furniture, as well as a narrow hallway with smaller offices and meeting rooms. It is intended to simulate
+missions in commercial spaces, such as facilitating deliveries, security monitoring, and inspecting equipment.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/jackal_office_world.png"
+      width="800"
+    />
+    <figcaption>Jackal in the Office World</figcaption>
+  </figure>
+</center>
+
+To launch Office World with a Jackal, run the following command:
+
+```
+roslaunch cpr_office_gazebo office_world.launch platform:=jackal
+```
+
+To add sensors to Jackal, use the environment variables described in [Description Package](#description-package).
+
+Once the simulation is running you can use RViz and other tools as described in [Simulating Jackal](#simulating-jackal)
+and [Navigating Jackal](#navigating-jackal) to control and monitor the robot. For example, below we can see the
+`gmapping_demo` from `jackal_navigation` being used to build a map of the Office World:
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/jackal_rviz_office_gmap.png"
+      width="800"
+    />
+    <figcaption>Jackal building a map of the office with Gmapping</figcaption>
+  </figure>
+</center>
+
+You can see the complete layout of the Office World below:
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/office_world.png"
+      width="800"
+    />
+    <figcaption>Office World</figcaption>
+  </figure>
+</center>
+
+#### Running the Construction Simulation
+
+Construction World is the same basic layout as Office World, representing the same office space under construction/renovation.
+It is an indoor environment with small hills of debris/rubble, partial walls, and piles of construction supplies. It
+is designed to simulate missions in any sort of construction site.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/jackal_construction_world.png"
+      width="800"
+    />
+    <figcaption>Jackal in the Construction World</figcaption>
+  </figure>
+</center>
+
+To launch Construction World with a Jackal, run the following command:
+
+```
+roslaunch cpr_office_gazebo office_construction_world.launch platform:=jackal
+```
+
+To add sensors to Jackal, use the environment variables described in [Description Package](#description-package).
+
+Once the simulation is running you can use RViz and other tools as described in [Simulating Jackal](#simulating-jackal)
+and [Navigating Jackal](#navigating-jackal) to control and monitor the robot.
+
+You can see the complete layout of the office below:
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/construction_world.png"
+      width="800"
+    />
+    <figcaption>Construction World</figcaption>
+  </figure>
+</center>
+
+---
+
+## Support {#support}
+
+<Support />

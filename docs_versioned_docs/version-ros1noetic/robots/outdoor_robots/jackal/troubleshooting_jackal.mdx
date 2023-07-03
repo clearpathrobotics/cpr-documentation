@@ -1,0 +1,54 @@
+---
+title: Jackal Troubleshooting
+sidebar_label: Troubleshooting
+sidebar_position: 5
+---
+
+import ComponentIntroductionJackal from "/docs_versioned_docs/version-ros1noetic/components/introduction_jackal.mdx";
+import ComponentSupportIntroduction from "/docs_versioned_docs/version-ros1noetic/components/support_introduction.mdx";
+import Support from "/docs_versioned_docs/version-ros1noetic/components/support.mdx";
+
+<ComponentIntroductionJackal />
+
+<ComponentSupportIntroduction />
+
+---
+
+## Networking
+
+### Not getting Wi-Fi internet connection
+
+Refer to the [Networking page](../../../ros/networking).
+
+### Cannot connect to the robot's computer over a network cable
+
+Reter to the [Networking page](../../../ros/networking).
+
+---
+
+## Computer
+
+### The computer does not automatically start
+
+Refer to the [Mini ITX troubleshooting page](../../accessories/computers/mini_itx).
+
+### The computer keeps reverting to old BIOS settings
+
+Refer to the [Mini ITX troubleshooting page](../../accessories/computers/mini_itx).
+
+---
+
+## ROS
+
+### ROS package is not starting
+
+Verify the upstart logs, `/var/log/upstart/husky_core.log`, to see if there are any error during upstart.
+
+### Sensors are not turning on
+
+1.  Check that the sensor's User Power connector has the correct voltage.
+2.  If the voltage is correct, then review the [Troubleshooting section for the related sensor](../../accessories/sensors).
+
+## If the Issue Persists
+
+<Support />

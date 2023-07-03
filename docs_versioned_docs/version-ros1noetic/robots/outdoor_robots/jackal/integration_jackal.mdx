@@ -1,0 +1,110 @@
+---
+title: Jackal Integration
+sidebar_label: Integration
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+import ComponentIntroductionJackal from "/docs_versioned_docs/version-ros1noetic/components/introduction_jackal.mdx";
+import ComponentCommonSoftwareIntegration from "/docs_versioned_docs/version-ros1noetic/components/common_software_integration.mdx";
+import Support from "/docs_versioned_docs/version-ros1noetic/components/support.mdx";
+
+<ComponentIntroductionJackal />
+
+To attach custom hardware to Jackal, you will have to take care of mechanical mounting, electrical
+supply, and software integration. This guide aims to equip you with respect to these challenges.
+
+---
+
+### Mechanical Mounting
+
+When determining mechanical mounting, you can use the Standard square mounting pattern on the lid of the Jackal.
+At this time, the "PACS&trade;" mounting system is not available for Jackal.
+
+#### Mechanical, Standard
+
+A standard Jackal is delivered with an 80 mm square mounting pattern of M5 threaded holes on its lid, which can be
+used for attaching external payloads. The mounting holes come with M5 screws pre-installed.
+You may mount your hardware directly onto the lid or you may design and mount a new plate to the lid and secure
+it to the lid using M5 screws.
+
+### Electrical Integration {#jackal-payload-electrical-integration}
+
+Except for bus-powered USB cameras, most payloads have separate leads for power and data.
+
+#### Data Connections
+
+Data connections may be brought through the hatch and connected directly to the internal computer. Both
+of Jackal's internal computer options support USB3 and Ethernet connectivity. With the performance
+PC, the PCIe slot may be used to supply Firewire, Thunderbolt, or additional USB3 ports, as necessary.
+
+Additionally, the internal mounting area may be used for an Ethernet switch, when attaching multiple
+Ethernet payloads, or for a PoE power injector as required.
+
+#### Connector Summary
+
+The Jackal User Power Board (UPB) board provides a number of connections for power.
+These are summarized in the following table and described in more detail in the following sections.
+
+- For the High Current VBAT User Power, terminate your payload's power lead with the appropriate terminals.
+- For the User Power Ports, terminate your payload's power lead with the appropriate crimps and pins.
+  for the four pin Molex connector. This option may be best if you are removing your payload from Jackal frequently.
+- For the User Power Screw Terminals, pull out the black terminal block, and use a small screwdriver to securely attach power leads to it.
+  Confirm voltage and polarity before reconnecting the terminal block.
+
+| Port (see Figure)            | MCU board connector                                                                                 | Mating connector                                   | Crimp terminals                                              | Crimping tool    |
+| :--------------------------- | :-------------------------------------------------------------------------------------------------- | :------------------------------------------------- | :----------------------------------------------------------- | :--------------- |
+| High Current VBAT User Power | Anderson PP15/45 1327-BK (red) + 1327G6-BK (black) + Anderson PCB45 1336G1 (lower) + 1337G1 (upper) | Anderson PP15/45 1327-BK (red) + 1327G6-BK (black) | Anderson 262G2-LPBK (AWG 16-20) or 261G3-LPBK (AWG 10-14)    | Anderson 1309G8  |
+| User Power Ports             | Molex 0039301040                                                                                    | Molex 0039012040                                   | Molex 0507528200 (AWG 20-22) or Molex 0503518100 (AWG 22-28) | Molex 2002184900 |
+| User Power Screw Terminals   | Molex 39522-1006                                                                                    | Molex 39520-0706                                   | N/A                                                          | N/A              |
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/user-power.png"
+      width="600"
+    />
+    <figcaption>User power board</figcaption>
+  </figure>
+</center>
+
+#### User Power Connections
+
+Similar to the data connections, power leads may be brought through the hatch, and connected to the User Power Board.
+The following are available as user power:
+
+- Unregulated VBAT power (25.6 V nominal, 16 A max), shared across the High Current VBAT User Power (16 A max),
+  User Power Ports (8 A max per port) and the User Power Screw Terminals (15 A max)
+- Regulated 12 V power (7 A max), shared across the User Power ports (7 A max per port) and the User Power
+  Screw Terminals (7 A max)
+- Regulated 5 V power (5 A max), shared across the User Power ports (5 A max per port) and the User Power
+  Screw Terminals (5 A max).
+
+:::caution
+
+Each User Power Port (Molex 0039301040) has a shared ground (GND) pin with a maximum current rating of 8 A. Ensure
+that the combined current draw for the VBAT, 12V, and 5V pins for the corresponding GND
+pin does not exceed 8 A.
+
+:::
+
+#### MCU Debug LEDs
+
+The Jackal MCU circuit board comes equipped with four LEDs controlled by Jackal firmware for debugging.
+If the system is working properly, these LEDs functions as follows:
+
+- **DBG1**: toggles every 500 ms when main loop on MCU is running
+- **DBG2**: not used in normal operation; LED should be off
+- **DBG3**: not used in normal operation; LED should be off
+- **DBG4**: not used in normal operation; LED should be off
+
+### Software Integration
+
+<ComponentCommonSoftwareIntegration />
+
+---
+
+## Support {#support}
+
+<Support />

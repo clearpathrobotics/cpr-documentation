@@ -1,0 +1,336 @@
+---
+title: Kinova Gen3 Lite
+sidebar_position: 3
+---
+
+import Support from "/docs_versioned_docs/version-ros1noetic/components/support.mdx";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<center>
+  <img
+    src="/img/manipulator_images/manipulator_kinova_gen3_lite_1.png"
+    width="400"
+  />
+</center>
+
+## Item Numbers
+
+| Description                |                         CPR Item                         |
+| :------------------------- | :------------------------------------------------------: |
+| Kinova Gen3 lite Bundle    | [022586](/assets/pdf/clearpath_robotics_015822-TDS1.pdf) |
+| Kinova Gen3 lite, PACS&trade; kit |                          027219                          |
+
+---
+
+## Specifications
+
+### Overview
+
+| Description                 | Value                |
+| :-------------------------- | :------------------- |
+| Mass                        | 5.4 kg               |
+| Voltage, Minimum            | 21 V                 |
+| Voltage, Maximum            | 30 V                 |
+| Voltage, Sensor             | 24 V                 |
+| Power, Average              | 20 W                 |
+| Power, Peak                 | 100 W                |
+| Data                        | Ethernet, 100 Mbit/s |
+| Reach                       | 760 mm               |
+| Payload                     | 0.5 kg               |
+| Speed                       | 250 mm/s             |
+| Range                       | ±155°                |
+| Ingress Protection, Solids  | 2                    |
+| Ingress Protection, Liquids | 2                    |
+| Operating Temperature, Min  | 0°C                  |
+| Operating Temperature, Max  | 40°C                 |
+
+### IP addresses
+
+| Description                          | IP address   |
+| :----------------------------------- | :----------- |
+| Default from Manufacturer, USB - USB | 192.168.1.10 |
+
+---
+
+## Hardware Build
+
+### Parts List
+
+The PACS&trade; kit for this sensor includes:
+
+| ID  | Description                                         |                         CPR Item                         | Quantity |
+| :-: | :-------------------------------------------------- | :------------------------------------------------------: | :------: |
+|  1  | Plate—80 X 80, Attachment Interface                 |   [026914](/assets/pdf/clearpath_robotics_026914.pdf)    |    1     |
+|  2  | Manipulator Bundle                                  | [022586](/assets/pdf/clearpath_robotics_022586-TDS1.pdf) |    1     |
+|  3  | Screw, Cap, Round Head—M6×1 X 8, Stainless Steel    |                          023326                          |    4     |
+|  4  | Spacer, Round—Ø5.3 X Ø8 X 7, Aluminum Alloy         |                          026612                          |    4     |
+|  5  | Screw, Cap, Round Head—M5×0.8 X 16, Stainless Steel |                          023257                          |    4     |
+
+### Instructions
+
+1.  Remove the Kinova arm from it's packaging.
+2.  There is a _Quick Connect Mounting Knob_ on the bottom of the arm.
+    You will need to remove this to mount the arm to the PACS&trade; bracket.
+    Hold the _Mounting Knob's_ square body using an adjustable wrench.
+    Then use a hex key to turn the _Mounting Knob's_ screw counerclockwise.
+    Then remove the _Mounting Knob_ from the arm.
+3.  Refer to the attachment-plate's (ID 1) drawing [026914](/assets/pdf/clearpath_robotics_026914.pdf).
+    The notes indicate which holes are for the Kinova arm.
+    You will need to enlarge the four holes to Ø6.3 mm with a drill.
+4.  Mount the arm (ID 2) to the attachment-plate (ID 1) using four M6×1 screws (ID 3).
+5.  Mount this assembly onto your robot, using the included spacers (ID 4) and screws (ID 5).
+
+---
+
+## Software Bringup
+
+### Installing packages
+
+<Tabs groupId="robot_platform">
+  <TabItem
+    value="husky"
+    label="Husky"
+    default
+  >
+    <p>1. Download packages:</p>
+    <code>cd ~/catkin_ws/src</code>
+    <br />
+    <code>git clone --single-branch --branch noetic-devel https://github.com/Kinovarobotics/ros_kortex.git</code>
+    <br />
+    <code>git clone --single-branch --branch noetic-devel https://github.com/husky/husky_manipulation.git</code>
+    <br />
+    <code>rosdep install --from-paths . --ignore-src -r -y</code>
+    <br />
+    <br />
+    <p>Rosdep may give warnings about unsatisfied dependencies. This is okay if you are only trying to install a single Kinova Gen3 lite on the robot.</p>
+    <br />
+    <p>2. Install dependencies per Kinova's github instructions:</p>
+    <code>sudo apt install python3 python3-pip</code>
+    <br />
+    <code>sudo python3 -m pip install conan</code>
+    <br />
+    <br />
+    <p>3. Build the workspace</p>
+    <code>cd ~/catkin_ws/</code>
+    <br />
+    <code>catkin_make</code>
+    <br />
+    <code>source devel/setup.bash</code>
+    <br />
+  </TabItem>
+  <TabItem
+    value="dingo"
+    label="Dingo"
+  >
+    <p>1. Download packages:</p>
+    <code>cd ~/catkin_ws/src</code>
+    <br />
+    <code>git clone --single-branch --branch noetic-devel https://github.com/Kinovarobotics/ros_kortex.git</code>
+    <br />
+    <code>git clone https://github.com/dingo-cpr/dingo_manipulation.git --recursive</code>
+    <br />
+    <code>rosdep install --from-paths . --ignore-src -r -y</code>
+    <br />
+    <br />
+    <p>Rosdep may give warnings about unsatisfied dependencies. This is okay if you are only trying to install a single Kinova Gen3 lite on the robot.</p>
+    <br />
+    <p>2. Install dependencies per Kinova's github instructions:</p>
+    <code>sudo apt install python3 python3-pip</code>
+    <br />
+    <code>sudo python3 -m pip install conan</code>
+    <br />
+    <br />
+    <p>3. Build the workspace</p>
+    <code>cd ~/catkin_ws/</code>
+    <br />
+    <code>catkin_make</code>
+    <br />
+    <code>source devel/setup.bash</code>
+    <br />
+  </TabItem>
+</Tabs>
+
+### Networking, with netplan
+
+The _Kinova Gen3 lite_ does not let you change its static IP address.
+Its address is always _192.168.1.10._ when you connect using a USB - USB cable.
+
+You will need to extend the network bridge to the _192.168.1.x_ subnet to interface with the _Kinova Gen3 lite_ arm.
+
+Open the netplan configuration file with `/etc/netplan/50-clearpath-bridge.yaml`.
+You will be adding a bridge*usb section to the file, and an additional \_192.168.1.1/24* address to the network bridge.
+Your file should look like this:
+
+```
+
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    bridge_en:
+      dhcp4: no
+      dhcp6: no
+      match:
+        name: en*
+    bridge_eth:
+      dhcp4: no
+      dhcp6: no
+      match:
+        name: eth*
+    bridge_usb:
+      dhcp4: no
+      dhcp6: no
+      match:
+        name: usb*
+  bridges:
+    br0:
+      dhcp4: yes
+      dhcp6: no
+      interfaces: [bridge_en, bridge_eth, bridge_usb]
+      addresses:
+        - 192.168.131.1/24
+        - 192.168.1.1/24
+```
+
+Close and save the file be pressing `ctrl + x`, then typing `y`, and pressing `Enter`.
+
+Now apply your new netplan changes by running `sudo netplan apply`.
+
+You can test the netplan settings by pinging the robot's computer, and pinging the Kinova arm:
+
+```
+ping 192.168.131.1
+ping 192.168.1.10
+```
+
+:::tip
+
+If you cannot ping the computer or arm, try rebooting and replugging the Kinoca Gen3 lite arm before reviewing your installation steps.
+
+:::
+
+### Launching the ROS Driver {#kinova_gen3_lite_launch}
+
+<Tabs groupId="robot_platform">
+  <TabItem
+    value="husky"
+    label="Husky"
+    default
+  >
+    <code>roslaunch husky_kinova_bringup husky_gen3_lite_bringup.launch</code>
+    <br />
+    <code>roslaunch husky_gen3_lite_moveit_config husky_gen3_lite_moveit_planning_execution.launch</code>
+    <br />
+  </TabItem>
+  <TabItem
+    value="dingo"
+    label="Dingo"
+  >
+    <code>roslaunch dingo_kinova_bringup dingo_gen3_lite_bringup.launch</code>
+    <br />
+    <code> roslaunch dingo_gen3_lite_moveit_config dingo _gen3_lite_moveit_planning_execution.launch</code>
+    <br />
+  </TabItem>
+</Tabs>
+
+### URDF
+
+<Tabs groupId="robot_platform">
+  <TabItem
+    value="husky"
+    label="Husky"
+    default
+  >
+    <p>
+      Refer to Clearpath's GitHub repository for Husky Manipulation, <a href="https://github.com/husky/husky_manipulation">https://github.com/husky/husky_manipulation</a>.
+    </p>
+  </TabItem>
+  <TabItem
+    value="dingo"
+    label="Dingo"
+  >
+    <p>
+      Refer to Clearpath's GitHub repository for Dingo Manipulation, <a href="https://github.com/dingo-cpr/dingo_manipulation">https://github.com/dingo-cpr/dingo_manipulation</a>.
+    </p>
+  </TabItem>
+</Tabs>
+
+### MoveIt!
+
+MoveIt! should be used on the robot whenever possible.
+MoveIt! tracks arm movements with regards to the robot's _base_link_.
+MoveIt! will prevent the arm from colliding with the robot's base, assuming you have a detailed URDF that includes all the surfaces of the robot.
+
+<Tabs groupId="robot_platform">
+  <TabItem
+    value="husky"
+    label="Husky"
+    default
+  >
+    <p>
+      Refer to Clearpath's GitHub repository for Husky Manipulation, <a href="https://github.com/husky/husky_manipulation">https://github.com/husky/husky_manipulation</a>.
+    </p>
+  </TabItem>
+  <TabItem
+    value="dingo"
+    label="Dingo"
+  >
+    <p>
+      Refer to Clearpath's GitHub repository for Dingo Manipulation, <a href="https://github.com/dingo-cpr/dingo_manipulation">https://github.com/dingo-cpr/dingo_manipulation</a>.
+    </p>
+  </TabItem>
+</Tabs>
+
+---
+
+## Troubleshooting
+
+#### Arm is not turning on
+
+1.  Turn off the robot.
+2.  Remove the Kinova's circular power connector.
+3.  Turn the robot back on.
+4.  Use a multimeter to check that the voltage is 24 V between:
+    - Position 2 and Position 3
+    - Position 5 and Position 8
+5.  If you are not reading 24 V, then:
+    - An upstream connector may not be fully seated.
+    - A fuse may be blown.
+    - A power supply may have failed.
+
+#### ROS driver won't start
+
+1.  Restart the robot, or run the command `sudo systemctl restart ros`.
+2.  Make sure your _catkin_ws_ is sourced.
+
+    :::note
+
+    You can source your _catkin_ws_ in every terminal shell by adding a line to the file `~/.bashrc`.
+
+    :::
+
+3.  Run the commands mentioned in the [Launch section](#kinova_gen3_lite_launch) of this page.
+
+#### Cannot see the Kinova in RViz
+
+1.  Make sure the Kinova node is running.
+    You can check this with RQT, `rosnode list`, or reviewing the rostopics.
+2.  Start RViz.
+3.  Add in the robot's models.
+4.  Add the arm's rostopics.
+
+### If the Issue Persists
+
+<Support />
+
+---
+
+## Further Reading
+
+1.  [Clearpath Robotics Store](https://store.clearpathrobotics.com/collections/manipulators/products/gen3-lite)
+2.  [Datasheet](/assets/pdf/clearpath_robotics_022586-TDS1.pdf)
+3.  [Installation Guide](/assets/pdf/clearpath_robotics_022586-TDS3.pdf)
+4.  [User Manual](/assets/pdf/clearpath_robotics_022586-TDS2.pdf)
+5.  [Kinova Website](https://www.kinovarobotics.com/product/gen3-lite-robots)
+6.  [ROS webpage](https://github.com/Kinovarobotics/ros_kortex)

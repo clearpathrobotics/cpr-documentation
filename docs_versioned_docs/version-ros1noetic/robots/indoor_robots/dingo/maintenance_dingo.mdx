@@ -1,0 +1,91 @@
+---
+title: Dingo Maintenance
+sidebar_label: Maintenance
+sidebar_position: 5
+---
+
+import ComponentIntroductionDingo from "/docs_versioned_docs/version-ros1noetic/components/introduction_dingo.mdx";
+import ComponentLeadAcidBatteryCare from "/docs_versioned_docs/version-ros1noetic/components/maintenance/lead_acid_battery_care.mdx";
+import ComponentLeadAcidBatteryCareTips from "/docs_versioned_docs/version-ros1noetic/components/maintenance/lead_acid_battery_care_tips.mdx";
+import ComponentLifepo4BatteryCareTips from "/docs_versioned_docs/version-ros1noetic/components/maintenance/lifepo4_battery_care_tips.mdx";
+import GettingNewPackages from "/docs_versioned_docs/version-ros1noetic/components/maintenance/getting_new_packages.mdx";
+import Support from "/docs_versioned_docs/version-ros1noetic/components/support.mdx";
+
+<ComponentIntroductionDingo />
+
+## Battery Care
+
+### Lead-Acid Battery Care
+
+Dingo's default power supply is a sealed 12 V lead-acid battery pack (VRLA), providing 20 Ah of charge.
+These tips are intended to help keep your Dingo Lead-Acid Battery in tip-top shape.
+With proper maintenance, the battery should maintain the majority of its capacity for hundreds of cycles.
+
+<ComponentLeadAcidBatteryCare />
+
+Your robot's battery charger works in 3 stages:
+
+1.  Constant current charging or bulk charge (9 to 14.6 V @ 6 A): indicator LED is red
+2.  Constant voltage charging or topping charge (14.6 V @ 6 A down to 2 A): indicator LED is red
+3.  Trickle or Float charge (14.6 V @ 2 A down to 0 A): indicator LED is green
+
+The bulk of the capacity (70%) is regained during the first stage.
+
+It is important to let the charger complete all 3 stages whenever possible, to help maintain the life of the battery.
+The initial stage will take 3 - 5 hours, and a complete charge may take up to 10 hours, depending on the
+depth of discharge.
+
+<ComponentLeadAcidBatteryCareTips />
+
+Your robot's battery charger works in 3 stages:
+
+1. Constant current charging or bulk charge (9 to 14.6 V @ 6 A): indicator LED is red
+2. Constant voltage charging or topping charge (14.6 V @ 6 A down to 2 A): indicator LED is red
+3. Trickle or Float charge (14.6 V @ 2 A down to 0 A): indicator LED is green
+
+The initial stage will take 5 - 7 hours, and a complete charge may take up to 14 hours.
+
+### LiFEPO<sub>4</sub> Battery Care
+
+:::note
+
+LiFEPO<sub>4</sub> are not available for Dingo 1.0. They are only available for Dingo 1.5 and newer.
+
+:::
+
+Dingo's optional power supply is a Lithium Iron Phosphate battery pack (LiFEPO<sub>4</sub>),
+providing minimum 20 Ah of charge. These tips are intended to help keep your Dingo LiFEPO<sub>4</sub> Battery
+in tip-top shape. With proper maintenance, the battery should maintain the majority of its capacity for
+thousands of cycles, typically a 10x increase over SLA batteries.
+
+The LiFEPO<sub>4</sub> battery charger works in 3 stages:
+
+1. Constant current charging or bulk charge (9 to 14.6 V @ 7 A): indicator LED is red
+2. Constant voltage charging or topping charge (14.6 V @ 7 A down to 0.7 A): indicator LED is red
+3. Balancing or Float charge (14.6 V @ 0.7 A down to 0 A): indicator LED is green
+
+The bulk of the capacity (70%) is regained during the first stage.
+
+It is important to let the charger complete all 3 stages whenever possible, to help maintain the life of the battery.
+The initial stage will take 2 - 4 hours, and a complete charge may take up to 8 hours, depending on the depth of discharge.
+
+<ComponentLifepo4BatteryCareTips />
+
+---
+
+## Software Maintenance {#software_maintenance}
+
+<GettingNewPackages />
+
+### MCU Firmware Update
+
+Customer updates of Dingo firmware are not supported at this time.
+Contact [Support](#support) if Dingo firmware updates are needed.
+
+---
+
+## Support {#support}
+
+<Support />
+
+---

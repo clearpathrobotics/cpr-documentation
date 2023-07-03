@@ -48,7 +48,11 @@ const config = {
         versions: { 
           current: {
             label: 'ROS 2 Humble',
-            // path: 'ros2humble',
+            path: 'ros2humble',
+          },
+          ros1noetic: {
+            label: 'ROS 1 Noetic',
+            path: 'ros1-noetic'
           }
         },
       },

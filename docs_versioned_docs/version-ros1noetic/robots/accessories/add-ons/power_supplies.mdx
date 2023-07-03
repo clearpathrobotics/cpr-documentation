@@ -1,0 +1,98 @@
+---
+title: Power Supplies
+sidebar_position: 7
+---
+
+import ComponentPacsExplanation from "/docs_versioned_docs/version-ros1noetic/components/pacs_explanation_and_link.mdx";
+
+Clearpath's robots include User Power connectors with regulated 5 V, 12 V, and 24 V depending on the robot platorm.
+Refer to your robot platform's user manual for more details about these User Power connections:
+
+- [Boxer](../../indoor_robots/boxer/user_manual_boxer)
+- [Dingo](../../indoor_robots/dingo/user_manual_dingo)
+- [Husky](../../outdoor_robots/husky/user_manual_husky)
+- [Jackal](../../outdoor_robots/jackal/user_manual_jackal)
+- [Ridgeback](../../indoor_robots/ridgeback/user_manual_ridgeback)
+- [Warthog](../../outdoor_robots/warthog/user_manual_warthog)
+
+If you need more power, or at a different output voltage, you can add an enclosed DC-DC power supply.
+This is our process for choosing a new enclosed power supply.
+
+## Process For Choosing A Power Supply {#choosing_a_power_supply}
+
+1. Go to [Digi-Key](https://www.digikey.ca/en/products/filter/dc-dc-converters/132) or [Mouser](https://www.mouser.ca/c/power/dc-dc-converters/?orgKeyword=dc-dc%20converter), and search for _DC-DC Converter_
+2. Filter the results for _Active_ items.
+3. Filter for your preferred Manufacturer, such as:
+   - CUI Inc.
+   - Delta Electronics
+   - MEAN WELL
+   - Murata
+   - Traco Power
+4. Filter for your intended output voltage.
+5. Filter for your required minimum output current or power.
+6. Review the results, and find options that have an input voltage range matching your robot's battery.
+   For example, a Power Supply with an input voltage range of 18 - 36 VDC is acceptable for a Husky with a lead-acid battery, since the Husky's battery volage will be between 24 - 29 VDC.
+7. Review the allowable operating temperature range, and confirm that it is acceptable for your applicaiton.
+8. Review the Power Supply's datasheet, looking for mechanical mounting as well as shock & vibration requirements.
+
+   :::tip
+
+   1. Consider using one of the following [PACS&trade; Kits](#power_supplies_pacs_kits).
+      - **15 Watt**: 028901 | Installation, Kit, Sensor—80 X 80, Power Supply, SB-15
+      - **25 Watt**: 028903 | Installation, Kit, Sensor—80 X 80, Power Supply, SB-25
+      - **150 Watt**: 028941 | Installation, Kit, Sensor—80 X 80, Power Supply, TEP 150
+   2. There are Power Supplies that include mounting brackets for [DIN Rails](../add-ons/din_rail), which could simplify your integration.
+
+   :::
+
+9. Review the electrical termination method to see if it is ideal for your application. It is common to see screw terminals for [Ring Terminals](../components/connectors/ring_terminal), though there are other options.
+
+<center>
+  <figure>
+    <img
+      src="/img/accessories_images/power_supplies_1.png"
+      width="1000"
+    />
+    <figcaption>Example filtering for a 12 VDC power supply on Digi-Key</figcaption>
+  </figure>
+</center>
+
+---
+
+## PACS&trade; Kits {#power_supplies_pacs_kits}
+
+<ComponentPacsExplanation />
+
+<center>
+  <figure>
+    <img
+      src="/img/accessories_images/power_supplies_2.png"
+      width="400"
+    />
+    <figcaption>028901 | Installation, Kit, Sensor—80 X 80, Power Supply, SB-15</figcaption>
+  </figure>
+</center>
+
+<br />
+
+<center>
+  <figure>
+    <img
+      src="/img/accessories_images/power_supplies_3.png"
+      width="400"
+    />
+    <figcaption>028903 | Installation, Kit, Sensor—80 X 80, Power Supply, SB-25</figcaption>
+  </figure>
+</center>
+
+<br />
+
+<center>
+  <figure>
+    <img
+      src="/img/accessories_images/power_supplies_4.png"
+      width="400"
+    />
+    <figcaption>028941 | Installation, Kit, Sensor—80 X 80, Power Supply, TEP 150</figcaption>
+  </figure>
+</center>

@@ -1,0 +1,73 @@
+---
+title: Boxer Integration
+sidebar_label: Integration
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+import ComponentIntroductionBoxer from "/docs_versioned_docs/version-ros1noetic/components/introduction_boxer.mdx";
+import ComponentCommonSoftwareIntegration from "/docs_versioned_docs/version-ros1noetic/components/common_software_integration.mdx";
+import Support from "/docs_versioned_docs/version-ros1noetic/components/support.mdx";
+
+<ComponentIntroductionBoxer />
+
+To attach custom hardware to Boxer, you will have to take care of mechanical mounting, electrical
+supply, and software integration. This guide aims to equip you with respect to these challenges.
+
+---
+
+### Mechanical Mounting
+
+When determining mechanical mounting, you can use the Standard mounting pattern on the top plate of the Boxer.
+At this time, the "PACS&trade;" mounting system is not available for Boxer.
+
+#### Mechanical, Standard
+
+External payloads can be attached to the mounting plate of the Boxer by using the Ø8 mm countersunk through holes on the underside, or adding new holes.
+Whichever method you choose, the method for removing the top plate is the same and outlined below.
+
+1. Ensure the robot is shut off, and the circuit breaker is turned to the _off_ position.
+2. Disconnect and remove all existing payloads on the top plate.
+3. Using a 2 mm hex key, remove the twelve M3 round head screws holding the connection covers in place.
+   Remove the panels.
+   Take care to disconnect the network cable and attachment cable from the robot when removing the connection covers.
+4. Using a 4 mm hex key, remove the eleven M5 socket head screws holding the plate down.
+5. Remove the plate from the Boxer.
+
+The Boxer plate is made from 8 mm aluminum and can be easily machined according to your customization needs.
+
+The plate also has eight Ø8 mm holes in the corners which are countersunk from the underside of the plate, making them ideal for flathead screws installed to protrude from the plate.
+
+<center>
+  <img
+    src="/img/robot_images/boxer_images/robot_boxer_19.png"
+    width="600"
+  />
+</center>
+
+### Electrical Integration
+
+For connecting with any external payloads, such as a backpack computer, refer to the product's datasheet or manual.
+If your robot was equipped with these payloads by Clearpath Robotics this documentation is provided along with your Boxer.
+Contact [Support](#support) if you need more information.
+
+Ensure that the Boxer is shut off and the circuit breaker is turned to the _off_ position before performing any electrical work on the Boxer.
+
+The Boxer is equipped with an attachment interface that consists of a Power-over-Ethernet (PoE) RJ45 bulkhead connector, a USB Type-A bulkhead connector, and a 37-position panel receptacle and mated plug.
+To connect with the Boxer attachment interface see Section 10 of the [OTTO 100 V2.5 Operation and Maintenance Manual](https://docs.ottomotors.com/PDFs/100-v2.5-OMM.pdf).
+
+To add wires to the 37-position connector for you application, follow the TE Connectivity documentation for [connector 206305-1](https://www.te.com/usa-en/product-206305-1.html) to use appropriate crimp pins.
+Note that the 37-position connector will come pre-populated from Clearpath Robotics with 2 wires.
+These 2 wires complete the base Boxer's Motion Stop loop, allowing the robot to move.
+Other positions of the connector may be pre-populated, well as the PoE and USB, if your robot was equipped with payloads according to your Clearpath Robotics customizations.
+
+### Software Integration
+
+<ComponentCommonSoftwareIntegration />
+
+---
+
+## Support
+
+<Support />
