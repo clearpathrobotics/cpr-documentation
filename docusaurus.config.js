@@ -48,13 +48,12 @@ const config = {
         versions: { 
           current: {
             label: 'ROS 2 Humble',
-            path: 'ros2humble',
           },
           ros1noetic: {
             label: 'ROS 1 Noetic',
-            path: 'ros1-noetic'
           }
         },
+        // includeCurrentVersion: false,
       },
     ],
     [
@@ -79,6 +78,7 @@ const config = {
         remarkPlugins: [math],
         rehypePlugins: [katex],
         showLastUpdateTime: true,
+        includeCurrentVersion: false,
       },
     ],
   ],
