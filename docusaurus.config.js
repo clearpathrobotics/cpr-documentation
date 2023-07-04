@@ -131,12 +131,6 @@ const config = {
             type: 'docsVersionDropdown',
             position: 'right',
             dropdownActiveClassDisabled: true,
-            dropdownItemsAfter: [
-              {
-                to: '/docs/navigation_packages',
-                label: 'All versions',
-              },
-            ],
             docsPluginId: "outdoornav_user_manual",
           },
           {
