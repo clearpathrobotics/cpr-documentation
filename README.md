@@ -237,9 +237,9 @@ This helps User's know where they downloaded the file from later, as the asset i
 
         /static/assets
 
-5.  Versioned Images (only used in 1 version of the documentation)
+5.  Versioned Images
 
-    Next to the markdown files where it will be used in an `img/` folder
+    In an `img/` folder next to the markdown files where it will be used.
 
 ## How does the deployed website get updated?
 
