@@ -6,3 +6,193 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
+Our robots provide users with a wide range of customization options: sensors, sensor mounting structures, and custom-made parts. Matching the flexibility of our hardware, Clearpath's ROS2 system is designed to keep all these customization decisions in a single configuration file.
+
+The **Clearpath Robot Configuration YAML**, or `robot.yaml` for short, contains all information pertinent to the entire robot system, allowing robot builders and users to quickly and easily modify any ROS2 component.
+
+## Overview
+
+The `robot.yaml` is composed of five major sections:
+1. [**system**](#system) level information such as the robot's hostname, IP, and ROS middleware implementation.
+2. **platform** level configurations such as robot specific mounting structures and specifying an extra URDF to attach.
+3. **accessories** that are URDF primitives: boxes, cylinders, and meshes.
+4. **mounts** that are predefined, generic, sensor mounting structures.
+5. **sensors** that are an inventory of Clearpath supported sensors.
+
+Additionally, there are two other, required parameters:
+1. The robot's [**serial_number**](#serial-number); which is used to determine the model and version.
+2. The YAML **version** to use, as future updates are released.
+
+#### Sample
+Below is a sample **J100 Jackal** robot YAML. In the following sections, we will reference each and every component of this sample file.
+<details><summary>Sample J100 YAML</summary>
+<p>
+
+```YAML
+serial_number: j100-0000
+version: 0
+system:
+  hosts:
+    self: cpr-j100-0000
+    platform:
+      cpr-j100-0000: 192.168.131.1
+    onboard: {}
+    remote: {}
+  ros2:
+    username: administrator
+    namespace: j100_0000
+    domain_id: 0
+    rmw_implementation: rmw_fastrtps_cpp
+platform:
+  controller: ps4
+  decorations:
+    front_bumper:
+      enabled: true
+      model: default
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      extension: 0.0
+    rear_bumper:
+      enabled: true
+      model: default
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      extension: 0.0
+  extras:
+    urdf: null
+    control: null
+accessories:
+  box: []
+  cylinder:
+  - name: cylinder
+    parent: mid_mount
+    xyz: [0.0, 0.0, 0.05]
+    rpy: [0.0, 0.0, 0.0]
+    radius: 0.05
+    length: 0.1
+  link: []
+  mesh: []
+  sphere: []
+mounts:
+  bracket:
+  - parent: front_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    model: horizontal
+  - parent: rear_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    model: horizontal
+  fath_pivot: []
+  riser: []
+sensors:
+  camera: []
+  gps: []
+  imu: []
+  lidar2d:
+  - model: hokuyo_ust10
+    urdf_enabled: true
+    launch_enabled: true
+    parent: bracket_0_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      laser_frame_id: lidar2d_0_laser
+      ip_address: 192.168.131.20
+      ip_port: 10940
+      angle_min: -3.141592653589793
+      angle_max: 3.141592653589793
+  - model: hokuyo_ust10
+    urdf_enabled: true
+    launch_enabled: true
+    parent: bracket_1_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 3.1415]
+    ros_parameters:
+      laser_frame_id: lidar2d_1_laser
+      ip_address: 192.168.131.21
+      ip_port: 10940
+      angle_min: -3.141592653589793
+      angle_max: 3.141592653589793
+  lidar3d:
+  - model: velodyne_lidar
+    urdf_enabled: true
+    launch_enabled: true
+    parent: mid_mount
+    xyz: [0.0, 0.0, 0.1]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      frame_id: lidar3d_0_laser
+      device_ip: 192.168.131.25
+      port: 2368
+      model: VLP16
+      fixed_frame: lidar3d_0_laser
+      target_frame: lidar3d_0_laser
+```
+</p>
+</details>
+
+## Serial Number
+The Clearpath serial number is composed of two sections: an alpha-numerical code corresponding to the robot platform, followed by an integer corresponding to the unit number, separated by a hyphen, `-`. e.g. `a200-0001`.
+
+At this moment, the supported robot platforms are:
+1. [A200 Husky](/docs/robots/outdoor_robots/husky/user_manual_husky/#introduction): `a200-0000`
+2. [J100 Jackal](/docs/robots/outdoor_robots/jackal/user_manual_jackal/#introduction): `j100-0000`
+
+Every robot platform has specific decorations, i.e. platform specific parts, that are selected based on the serial number passed. Therefore, it is required that a serial number is specified in the `robot.yaml`.
+
+#### Sample
+In our sample, we use a **J100 Jackal** and therefore have set our serial number to:
+```yaml
+serial_number: "j100-0000"
+```
+
+
+## System
+Proper networking setup is crucial in setting up the ROS2 middleware and ensure other onboard computers communicate reliably.
+
+
+### Hosts
+The **hosts** section serves as a way to match IP addresses to hostnames. By default, Clearpath robots use the serial number as the hostname and have a default IP of `192.168.131.1`.
+
+- the **self** entry refers to what hostname is this configuration file on.
+- the **platform** entry refers to the hostname and IP of the robot platform's main computer.
+- the **onboard** entry is used to define the hostname and IP of other computers on the robot.
+- the **remote** entry is used to define the hostname and IP of computers in the system that are not on the robot, such as a user's PC.
+
+### ROS2 Environment
+The **ros2** sections is necessary to setup the ROS2 middleware.
+- **username** must match the username of the user that is to run all ROS nodes.
+- **namespace** specified will be appended as a prefix to all sensor topics to prevent topic cloberring when multiple robots are on the same network and domain ID.
+- **domain_id** specifies the ROS2 domain ID to use.
+- **rmw_implementation** specifies the ROS2 middleware to use. **Currently, it only supports `rmw_fastrtps_cpp`.**
+
+
+#### Sample
+In our sample, we have a *J100 Jackal* platform whose primary computer has hostname: `cpr-j100-0000` and IP: `192.168.131.1`.
+
+And, note that this configuration YAML is meant to be on that primary computer, hence `self: cpr-j100-0000`.
+
+By default, all Clearpath robots use username `administrator` and the robot's namespace matches the `serial_number`.
+
+<details><summary>Sample J100 System Section</summary>
+<p>
+
+```yaml
+system:
+  hosts:
+    self: "cpr-j100-0000"
+    platform:
+      cpr-j100-0000: "192.168.131.1"
+    onboard: {}
+    remote: {}
+  ros2:
+    username: "administrator"
+    namespace: "j100_0000"
+    domain_id: 0
+    rmw_implementation: "rmw_fastrtps_cpp"
+```
+
+</p>
+</details>
+
