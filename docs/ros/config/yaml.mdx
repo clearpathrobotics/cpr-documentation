@@ -14,10 +14,10 @@ The **Clearpath Robot Configuration YAML**, or `robot.yaml` for short, contains 
 
 The `robot.yaml` is composed of five major sections:
 1. [**system**](#system) level information such as the robot's hostname, IP, and ROS middleware implementation.
-2. **platform** level configurations such as robot specific mounting structures and specifying an extra URDF to attach.
-3. **accessories** that are URDF primitives: boxes, cylinders, and meshes.
-4. **mounts** that are predefined, generic, sensor mounting structures.
-5. **sensors** that are an inventory of Clearpath supported sensors.
+2. [**platform**](#platform) level configurations such as robot specific mounting structures and specifying an extra URDF to attach.
+3. [**accessories**](#accessories) that are URDF primitives: boxes, cylinders, and meshes.
+4. [**mounts**](#mounts) that are predefined, generic, sensor mounting structures.
+5. [**sensors**](#sensors) that are an inventory of Clearpath supported sensors.
 
 Additionally, there are two other, required parameters:
 1. The robot's [**serial_number**](#serial-number); which is used to determine the model and version.
@@ -48,7 +48,7 @@ platform:
   decorations:
     front_bumper:
       enabled: true
-      model: default
+      model: wibotic
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
       extension: 0.0
@@ -141,7 +141,7 @@ At this moment, the supported robot platforms are:
 
 Every robot platform has specific decorations, i.e. platform specific parts, that are selected based on the serial number passed. Therefore, it is required that a serial number is specified in the `robot.yaml`.
 
-#### Sample
+### Sample
 In our sample, we use a **J100 Jackal** and therefore have set our serial number to:
 ```yaml
 serial_number: "j100-0000"
@@ -168,7 +168,7 @@ The **ros2** sections is necessary to setup the ROS2 middleware.
 - **rmw_implementation** specifies the ROS2 middleware to use. **Currently, it only supports `rmw_fastrtps_cpp`.**
 
 
-#### Sample
+### Sample
 In our sample, we have a *J100 Jackal* platform whose primary computer has hostname: `cpr-j100-0000` and IP: `192.168.131.1`.
 
 And, note that this configuration YAML is meant to be on that primary computer, hence `self: cpr-j100-0000`.
@@ -196,3 +196,150 @@ system:
 </p>
 </details>
 
+## Platform
+Every robot platform has unique structures just as versatile sensor mounting solutions, wireless charging receivers, and waterproofing enclosures; we refer to these as decorations.
+
+#### Decorations
+There are three types of decorations:
+1. **bumpers** modify the front and rear of the robot platform.
+2. **top_plates** modify the top of the robot platform.
+3. **structures** are large custom parts that are added atop the top plate.
+
+#### Sample
+On the **J100 Jackal**, bumpers are the only decorations that can be modified.
+
+In this sample, we swapped the front bumper for the Wibotic Charging Kit receiver bumper.
+<details><summary>Sample J100 Platform Section</summary>
+<p>
+
+```yaml
+platform:
+  controller: ps4
+  decorations:
+    front_bumper:
+      enabled: true
+      model: wibotic
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      extension: 0.0
+    rear_bumper:
+      enabled: true
+      model: default
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      extension: 0.0
+  extras:
+    urdf: null
+    control: null
+```
+</p>
+</details>
+
+## Accessories
+Accessories are any URDF primitive:
+1. **link** in the URDF without any geometry, i.e. just a frame.
+2. **box** of given length, width, and height.
+3. **cylinder** of given radius and height.
+4. **sphere** of given radius.
+5. **mesh** from a given absolute path to STL or OBJ file.
+
+If a user needs to add a mesh or primitive to represent a payload on their robot, they can either create a URDF and use the platform extras, or they can add an accessory directly through the `robot.yaml`.
+
+### Sample
+In this sample, we use a cylinder primitive as a mounting tower for the Velodyne Lidar (see the [sensors](#sensors) section).
+
+<details><summary>Sample J100 Accessories Section</summary>
+<p>
+
+```yaml
+accessories:
+  box: []
+  cylinder:
+  - name: cylinder
+    parent: mid_mount
+    xyz: [0.0, 0.0, 0.05]
+    rpy: [0.0, 0.0, 0.0]
+    radius: 0.05
+    length: 0.1
+  link: []
+  mesh: []
+  sphere: []
+```
+</p>
+</details>
+
+
+## Mounts
+### Sample
+<details><summary>Sample J100 Mounts Section</summary>
+<p>
+
+```yaml
+mounts:
+  bracket:
+  - parent: front_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    model: horizontal
+  - parent: rear_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    model: horizontal
+  fath_pivot: []
+  riser: []
+```
+</p>
+</details>
+
+## Sensors
+### Sample
+<details><summary>Sample J100 Mounts Section</summary>
+<p>
+
+```yaml
+sensors:
+  camera: []
+  gps: []
+  imu: []
+  lidar2d:
+  - model: hokuyo_ust10
+    urdf_enabled: true
+    launch_enabled: true
+    parent: bracket_0_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      laser_frame_id: lidar2d_0_laser
+      ip_address: 192.168.131.20
+      ip_port: 10940
+      angle_min: -3.141592653589793
+      angle_max: 3.141592653589793
+  - model: hokuyo_ust10
+    urdf_enabled: true
+    launch_enabled: true
+    parent: bracket_1_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 3.1415]
+    ros_parameters:
+      laser_frame_id: lidar2d_1_laser
+      ip_address: 192.168.131.21
+      ip_port: 10940
+      angle_min: -3.141592653589793
+      angle_max: 3.141592653589793
+  lidar3d:
+  - model: velodyne_lidar
+    urdf_enabled: true
+    launch_enabled: true
+    parent: mid_mount
+    xyz: [0.0, 0.0, 0.1]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      frame_id: lidar3d_0_laser
+      device_ip: 192.168.131.25
+      port: 2368
+      model: VLP16
+      fixed_frame: lidar3d_0_laser
+      target_frame: lidar3d_0_laser
+```
+</p>
+</details>
