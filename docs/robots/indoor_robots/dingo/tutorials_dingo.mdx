@@ -171,16 +171,16 @@ Additional configurations coming soon
 You can view all topics that are active using `rostopic list`.
 The most important topics are summarized in the table below.
 
-| Topic                | Message Type          | Purpose                                                                                                                                                                                                        |
-| :------------------- | :-------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `/cmd_vel`           | `geometry_msgs/Twist` | Input to Dingo's kinematic controller. Publish here to make Dingo go.                                                                                                                                          |
-| `/odometry/filtered` | `nav_msgs/Odometry`   | Published by `robot_localization`, a filtered localization estimate based on wheel odometry (encoders) and integrated IMU.                                                                                     |
-| `/imu/data`          | `sensor_msgs/IMU`     | Published by `imu_filter_madgwick`, an orientation estimated based on the Dingo's internal IMU.                                                                                                                |
-| `/mcu/status`        | `dingo_msgs/Status`   | Low-frequency status data for Dingo's systems. This information is republished in human readable form on the `diagnostics` topic and is best consumed with the Robot Monitor.                                  |
+| Topic                | Message Type          | Purpose                                                                                                                                                                         |
+| :------------------- | :-------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `/cmd_vel`           | `geometry_msgs/Twist` | Input to Dingo's kinematic controller. Publish here to make Dingo go.                                                                                                           |
+| `/odometry/filtered` | `nav_msgs/Odometry`   | Published by `robot_localization`, a filtered localization estimate based on wheel odometry (encoders) and integrated IMU.                                                      |
+| `/imu/data`          | `sensor_msgs/IMU`     | Published by `imu_filter_madgwick`, an orientation estimated based on the Dingo's internal IMU.                                                                                 |
+| `/mcu/status`        | `dingo_msgs/Status`   | Low-frequency status data for Dingo's systems. This information is republished in human readable form on the `diagnostics` topic and is best consumed with the Robot Monitor.   |
 | `/mcu/aux_input`     | `dingo_msgs/UInt8`    | User can subscribe to this topic to monitor the MCU user inputs. See [AUX Inputs](./integration_dingo#dingo-aux-inputs).                                                        |
 | `/mcu/aux_output`    | `std_msgs/UInt8`      | User can publish to this topic to enable and disable the AUX outputs as well as control relays on the MCU. See [AUX Outputs and Relays](./integration_dingo#dingo-aux-outputs). |
 | `/mcu/fans`          | `dingo_msgs/Fans`     | User can publish to this topic to control an optionally installed fan. See details [Optional Fan](./integration_dingo#dingo-fan).                                               |
-| `/mcu/lights`        | `dingo_msgs/Lights`   | User can publish to this topic to override the default behavior of the Dingo corner LEDs.                                                                                                                      |
+| `/mcu/lights`        | `dingo_msgs/Lights`   | User can publish to this topic to override the default behavior of the Dingo corner LEDs.                                                                                       |
 
 ---
 
