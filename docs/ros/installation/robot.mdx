@@ -1,7 +1,7 @@
 ---
-title: Robot installation
+title: Robot Installation
 sidebar_label: Robot
-sidebar_position: 1
+sidebar_position: 2
 toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
@@ -74,6 +74,13 @@ Save the file and call `sudo netplan apply` to apply the changes. Check `ip a` a
 
 The robot's computer can also be connected to a dhcp network over ethernet. Connect an ethernet cable to the built-in ethernet port on the robot's computer and check that an IP has been assigned with `ip a`.
 
+
+:::note
+
+You should now be able to SSH into the robot by calling `ssh administrator@<robot_ip>` from a remote computer.
+
+:::
+
 ### ROS 2 Humble
 
 Follow the [official instructions](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html) for installing ROS 2 Humble from debian packages.
@@ -104,7 +111,7 @@ sudo apt-get update
 
 ### Network Configuration
 
-Once the Clearpath package server is set up, follow the [Clearpath Computer Setup](../networking/computer_setup.mdx) instructions to configure the network interfaces.
+Once the Clearpath package server is set up, follow the [Clearpath Computer Setup](../networking/computer_setup) instructions to configure the network interfaces.
 
 ### Clearpath Robot metapackage
 
