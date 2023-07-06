@@ -12,7 +12,6 @@ ROS 2 Humble uses [Ubuntu 22.04](https://releases.ubuntu.com/jammy/) as its Tier
 it is highly recommended to use Ubuntu 22.04. For the robot computer, Ubuntu 22.04 Server should be installed. The server version of the OS will not install a
 graphical user interface (GUI).
 
-
 ### First login
 
 Connect the robot's computer to a monitor using an HDMI or DisplayPort cable. Then, connect a USB keyboard. Power the robot on and wait for the Ubuntu login prompt to show up. On a fresh install, the default username and password are both `ubuntu`. You will be prompted to change your password.
@@ -40,7 +39,7 @@ Once logged in, find the name of your Wi-Fi interface by calling `ip a`. Wi-Fi i
 <center>
   <figure>
     <img
-      src={require('./img/wifi_interface.jpg').default}
+      src={require("./img/wifi_interface.jpg").default}
       width="900"
     />
   </figure>
@@ -91,15 +90,13 @@ Configure Ubuntu's APT package manager to add the package server:
 wget https://packages.clearpathrobotics.com/public.key -O - | sudo apt-key add -
 ```
 
-**2. Add the debian sources for the repository** 
-
+**2. Add the debian sources for the repository**
 
 ```
 sudo sh -c 'echo "deb https://packages.clearpathrobotics.com/stable/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/clearpath-latest.list'
 ```
 
 **3. Update your computer’s package cache**
-
 
 ```
 sudo apt-get update
@@ -165,7 +162,7 @@ sudo apt-get install ros-humble-jackal-firmware
 
 **2. Place the Jackal MCU into bootloader mode**
 
-Switch the *PWR_MODE* switch from *NORM* to *ALT*. If the robot is on, press the *M_RST* button. Otherwise, turn the
+Switch the _PWR_MODE_ switch from _NORM_ to _ALT_. If the robot is on, press the _M_RST_ button. Otherwise, turn the
 robot on with the power button.
 
 **3. Flash the firmware**
@@ -173,6 +170,7 @@ robot on with the power button.
 ```
 jackal_firmware_flash.sh
 ```
+
 Flashing progress will be indicated by the flash script. Wait for the firmware to finish flashing.
 
 :::caution

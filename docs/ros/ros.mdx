@@ -9,19 +9,17 @@ robot, we have opted to create common `clearpath` packages which are used by all
 to customize the robot, and instead using a YAML configuration file to describe the robot. We have also defined a [ROS 2 API](api/overview) common to all of our supported platforms. As a result,
 our platforms are now more customizable, more modular, and more unified.
 
-
 ## Terminology {#terminology}
 
-***Clearpath Platform***: The *platform* refers to the vehicle that makes up the base of the robot. The platform may be referred to by
+**_Clearpath Platform_**: The _platform_ refers to the vehicle that makes up the base of the robot. The platform may be referred to by
 the platform code to indicate the revision.
 
-***Clearpath Robot***: The *robot* refers to the entire robotic system, including the platform, sensors, and additional accessories.
+**_Clearpath Robot_**: The _robot_ refers to the entire robotic system, including the platform, sensors, and additional accessories.
 
-***Clearpath Config***: The *config* refers to the `robot.yaml` configuration file that defines the Clearpath robot.
+**_Clearpath Config_**: The _config_ refers to the `robot.yaml` configuration file that defines the Clearpath robot.
 
-***Clearpath API***: The *API* refers to the [ROS 2 application programming interface](api/overview). This is a set of ROS 2 topics and services defined
+**_Clearpath API_**: The _API_ refers to the [ROS 2 application programming interface](api/overview). This is a set of ROS 2 topics and services defined
 by Clearpath which are used by all supported Clearpath platforms.
-
 
 ## Supported Platforms {#supported-platforms}
 
@@ -32,49 +30,54 @@ by Clearpath which are used by all supported Clearpath platforms.
     <th>Supports ROS 2 Humble</th>
   </tr>
 
-  <tr>
-    <td>Husky</td>
-    <td>A200</td>
-    <td>Yes</td>
-  </tr>
+{" "}
+<tr>
+  <td>Husky</td>
+  <td>A200</td>
+  <td>Yes</td>
+</tr>
 
-  <tr>
-    <td>Jackal</td>
-    <td>J100</td>
-    <td>Yes</td>
-  </tr>
+{" "}
+<tr>
+  <td>Jackal</td>
+  <td>J100</td>
+  <td>Yes</td>
+</tr>
 
-  <tr>
-    <td>Warthog</td>
-    <td>W100</td>
-    <td>Coming soon</td>
-  </tr>
+{" "}
+<tr>
+  <td>Warthog</td>
+  <td>W100</td>
+  <td>Coming soon</td>
+</tr>
 
-  <tr>
-    <td rowspan="5">Dingo</td>
-  </tr>
-  <tr>
-    <td>DD100</td>
-    <td>No</td>
-  </tr>
-  <tr>
-    <td>DO100</td>
-    <td>No</td>
-  </tr>
-  <tr>
-    <td>DD150</td>
-    <td>No</td>
-  </tr>
-  <tr>
-    <td>DO150</td>
-    <td>No</td>
-  </tr>
+{" "}
+<tr>
+  <td rowspan="5">Dingo</td>
+</tr>
+<tr>
+  <td>DD100</td>
+  <td>No</td>
+</tr>
+<tr>
+  <td>DO100</td>
+  <td>No</td>
+</tr>
+<tr>
+  <td>DD150</td>
+  <td>No</td>
+</tr>
+<tr>
+  <td>DO150</td>
+  <td>No</td>
+</tr>
 
-  <tr>
-    <td>Boxer</td>
-    <td>B250</td>
-    <td>No</td>
-  </tr>
+{" "}
+<tr>
+  <td>Boxer</td>
+  <td>B250</td>
+  <td>No</td>
+</tr>
 
   <tr>
     <td>Ridgeback</td>
@@ -100,40 +103,65 @@ sensors that have been validated by Clearpath.
     <th>Driver</th>
   </tr>
 
-  <tr>
-    <td><a href="../docs/robots/accessories/sensors/lidar_2d/hokuyo_ust10_lx">Hokuyo UST10-LX</a></td>
-    <td>2D Lidar</td>
-    <td>Source or Debian</td>
-    <td><a href="https://github.com/ros-drivers/urg_node">urg_node</a></td>
-  </tr>
+{" "}
+<tr>
+  <td>
+    <a href="../docs/robots/accessories/sensors/lidar_2d/hokuyo_ust10_lx">Hokuyo UST10-LX</a>
+  </td>
+  <td>2D Lidar</td>
+  <td>Source or Debian</td>
+  <td>
+    <a href="https://github.com/ros-drivers/urg_node">urg_node</a>
+  </td>
+</tr>
 
-  <tr>
-    <td><a href="../docs/robots/accessories/sensors/cameras/realsense_d435">Intel Realsense D435</a></td>
-    <td>Depth Camera</td>
-    <td>Source or Debian</td>
-    <td><a href="https://github.com/IntelRealSense/realsense-ros/tree/ros2-development">realsense-ros</a></td>
-  </tr>
+{" "}
+<tr>
+  <td>
+    <a href="../docs/robots/accessories/sensors/cameras/realsense_d435">Intel Realsense D435</a>
+  </td>
+  <td>Depth Camera</td>
+  <td>Source or Debian</td>
+  <td>
+    <a href="https://github.com/IntelRealSense/realsense-ros/tree/ros2-development">realsense-ros</a>
+  </td>
+</tr>
 
-  <tr>
-    <td><a href="../docs/robots/accessories/sensors/imu/microstrain_3dm_gx5">MicroStrain 3DM-GX5</a></td>
-    <td>IMU</td>
-    <td>Source or Debian</td>
-    <td><a href="https://github.com/LORD-MicroStrain/microstrain_inertial/tree/ros2">microstrain_intertial</a></td>
-  </tr>
+{" "}
+<tr>
+  <td>
+    <a href="../docs/robots/accessories/sensors/imu/microstrain_3dm_gx5">MicroStrain 3DM-GX5</a>
+  </td>
+  <td>IMU</td>
+  <td>Source or Debian</td>
+  <td>
+    <a href="https://github.com/LORD-MicroStrain/microstrain_inertial/tree/ros2">microstrain_intertial</a>
+  </td>
+</tr>
 
-  <tr>
-    <td><a href="../docs/robots/accessories/sensors/lidar_2d/sick_lms111">SICK LMS-111</a></td>
-    <td>2D Lidar</td>
-    <td>Source or Debian</td>
-    <td><a href="https://github.com/clearpathrobotics/LMS1xx">LMS1xx</a></td>
-  </tr>
+{" "}
+<tr>
+  <td>
+    <a href="../docs/robots/accessories/sensors/lidar_2d/sick_lms111">SICK LMS-111</a>
+  </td>
+  <td>2D Lidar</td>
+  <td>Source or Debian</td>
+  <td>
+    <a href="https://github.com/clearpathrobotics/LMS1xx">LMS1xx</a>
+  </td>
+</tr>
 
-  <tr>
-    <td><a href="../docs/robots/accessories/sensors/gps/swift_navigation_duro">Swift Navigation Duro</a></td>
-    <td>GPS</td>
-    <td>Source</td>
-    <td><a href="https://github.com/szenergy/duro_gps_driver/tree/ros2-humble">duro_gps_driver</a></td>
-  </tr>
+{" "}
+<tr>
+  <td>
+    <a href="../docs/robots/accessories/sensors/gps/swift_navigation_duro">Swift Navigation Duro</a>
+  </td>
+  <td>GPS</td>
+  <td>Source</td>
+  <td>
+    <a href="https://github.com/szenergy/duro_gps_driver/tree/ros2-humble">duro_gps_driver</a>
+  </td>
+</tr>
 
   <tr>
     <td><a href="../docs/robots/accessories/sensors/lidar_3d/velodyne_puck">Velodyne Puck</a></td>

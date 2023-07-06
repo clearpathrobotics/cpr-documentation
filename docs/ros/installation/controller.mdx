@@ -10,7 +10,6 @@ Joystick controllers are used for teleoperation; they allow you to remotely driv
 or a simulated robot. The following instructions below detail how to pair different controllers to the robot's computer; however,
 these instructions can also be used to pair these controllers to your own computer.
 
-
 ### PS4 Controller
 
 :::note
@@ -24,12 +23,14 @@ To re-pair the PS4 controller or pair a new PS4 controller:
 ```
 sudo apt-get install python-ds4drv
 ```
+
 2. Put the controller in pairing mode. Press and hold the PS and Share buttons on your controller until the LED begins rapidly flashing white.
 3. Run the `ds4drv-pair` script to pair the controller to the computer. In terminal, run:
 
 ```
 sudo ds4drv-pair
 ```
+
 This script will scan for nearby Bluetooth devices, and pair automatically to the controller.
 
 Alternatively, if ds4drv-pair fails to detect the controller, you can pair the controller using `bluetoothctl`:
@@ -39,17 +40,20 @@ Alternatively, if ds4drv-pair fails to detect the controller, you can pair the c
 ```
 sudo apt-get install bluez
 ```
+
 2. Run the `bluetoothctl` command. In terminal, run:
 
 ```
 sudo bluetoothctl
 ```
+
 3. Use `bluetoothctl` to scan for nearby devices. In the bluetooth control application, run:
 
 ```
 agent on
 scan on
 ```
+
 4. Put the controller in pairing mode. Press and hold the PS and Share buttons on your controller until the LED begins rapidly flashing white.
 5. The bluetooth scan will display the MAC addresses of nearby devices. Determine which MAC address corresponds to the controller and copy it. In the bluetooth control application, run:
 

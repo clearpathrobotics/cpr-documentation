@@ -30,6 +30,7 @@ Click on the orange play button in the bottom left corner to start the simulatio
 ```
 ros2 launch clearpath_viz view_navigation.launch.py namespace:=j100_0001
 ```
+
 **4. In another terminal, launch SLAM**
 
 ```
@@ -41,7 +42,7 @@ ros2 launch clearpath_nav2_demos slam.launch.py setup_path:=$HOME/clearpath/ use
 <center>
   <figure>
     <img
-      src={require('./img/slam.gif').default}
+      src={require("./img/slam.gif").default}
       width="900"
     />
     <figcaption>SLAM in simulation</figcaption>

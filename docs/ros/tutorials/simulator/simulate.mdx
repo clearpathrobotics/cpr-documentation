@@ -20,7 +20,6 @@ ros2 launch clearpath_gz simulation.launch.py
 
 The launch file will run all of the necessary [generators](../config/generators) to generate launch and parameter files for the simulation before launching Gazebo and spawning the robot. These will be placed under the setup path (defaults to `$HOME/clearpath/`).
 
-
 ### Launch arguments
 
 If you are using a different setup path, use the `setup_path` launch argument to change it:
@@ -58,7 +57,7 @@ The simulated robot can be driven in the same ways as the physical robot. Take a
 <center>
   <figure>
     <img
-      src={require('./img/driving.gif').default}
+      src={require("./img/driving.gif").default}
       width="900"
     />
     <figcaption>Driving Jackal in simulation</figcaption>
