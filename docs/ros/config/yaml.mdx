@@ -181,7 +181,7 @@ serial_number: "a200-0000"
 
 
 ## System
-Proper networking setup is crucial in setting up the ROS2 middleware and ensure other onboard computers communicate reliably.
+Proper networking setup is crucial in setting up the ROS 2 middleware and ensure other onboard computers communicate reliably.
 
 
 ### Hosts
@@ -192,12 +192,12 @@ The **hosts** section serves as a way to match IP addresses to hostnames. By def
 - the **onboard** entry is used to define the hostname and IP of other computers on the robot.
 - the **remote** entry is used to define the hostname and IP of computers in the system that are not on the robot, such as a user's PC.
 
-### ROS2 Environment
-The **ros2** sections is necessary to setup the ROS2 middleware.
+### ROS 2 Environment
+The **ros2** sections is necessary to setup the ROS 2 middleware.
 - **username** must match the username of the user that is to run all ROS nodes.
 - **namespace** specified will be appended as a prefix to all sensor topics to prevent topic cloberring when multiple robots are on the same network and domain ID.
-- **domain_id** specifies the ROS2 domain ID to use.
-- **rmw_implementation** specifies the ROS2 middleware to use. **Currently, it only supports `rmw_fastrtps_cpp`.**
+- **domain_id** specifies the ROS 2 domain ID to use.
+- **rmw_implementation** specifies the ROS 2 middleware to use. **Currently, it only supports `rmw_fastrtps_cpp`.**
 
 
 ### Sample {#system-sample}
