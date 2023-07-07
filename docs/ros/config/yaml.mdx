@@ -195,10 +195,10 @@ Proper networking setup is crucial in setting up the ROS 2 middleware and ensure
 
 The **hosts** section serves as a way to match IP addresses to hostnames. By default, Clearpath robots use the serial number as the hostname and have a default IP of `192.168.131.1`.
 
-- the **self** entry refers to what hostname is this configuration file on.
-- the **platform** entry refers to the hostname and IP of the robot platform's main computer.
-- the **onboard** entry is used to define the hostname and IP of other computers on the robot.
-- the **remote** entry is used to define the hostname and IP of computers in the system that are not on the robot, such as a user's PC.
+- The **self** entry refers to what hostname is this configuration file on.
+- The **platform** entry refers to the hostname and IP of the robot platform's main computer.
+- The **onboard** entry is used to define the hostname and IP of other computers on the robot.
+- The **remote** entry is used to define the hostname and IP of computers in the system that are not on the robot, such as a user's PC.
 
 ### ROS 2 Environment
 
@@ -235,7 +235,7 @@ system:
     rmw_implementation: rmw_fastrtps_cpp
 ```
 
-At this point, with just the **serial_number** and **system** defined: our robot is just the standard **Husky A200** platofrm, and looks like this:
+At this point, with just the **serial_number** and **system** defined: our robot is just the standard **Husky A200** platform, and looks like this:
 
 <center>
   <figure>
@@ -252,7 +252,7 @@ At this point, with just the **serial_number** and **system** defined: our robot
 
 ## Platform
 
-Every robot platform has unique structures just as versatile sensor mounting solutions, wireless charging receivers, and waterproofing enclosures; we refer to these as decorations.
+Every robot platform has unique structures such as versatile sensor mounting solutions, wireless charging receivers, and waterproofing enclosures; we refer to these as decorations.
 
 #### Decorations
 
@@ -299,8 +299,8 @@ top_plate:
 ```
 
 - **struture**:
-  - **_sensor_arch_300:_** 310mm tall extrusion sensor arch.
-  - **_sensor_arch_510:_** 500mm tall extrusion sensor arch.
+  - **_sensor_arch_300:_** 300mm tall extrusion sensor arch.
+  - **_sensor_arch_510:_** 510mm tall extrusion sensor arch.
 
 ```yaml
 structure:
