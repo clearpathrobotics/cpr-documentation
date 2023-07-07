@@ -34,34 +34,33 @@ The launch generator creates ROS 2 [python launch files](https://docs.ros.org/en
 
 ### Parameter
 
-The parameter generator creates `.yaml` ROS parameter files that are used by the corresponding launch file. The parameter file will use the default defined
-parameter file for the specific node, and allows for users to overwrite any parameters using the robot YAML file.
+The parameter generator creates `.yaml` ROS parameter files that are used by the corresponding launch file. Each node has default parameters set that the user can overwrite by setting them in the robot configuration YAML.
+
 
 ### Setup folder structure
 
-Once all files are generated, the resulting setup folder structure under `/etc/clearpath/` will look like this: 
+Once all files are generated, the resulting setup folder structure under `/etc/clearpath/` will look like this:
 
-* **platform**
-  * **launch**
-    * *platform-service.launch.py*
-  * **config**
-    * *control.yaml*
-    * *imu_filter.yaml*
-    * *localization.yaml*
-    * *teleop_interactive_markers.yaml*
-    * *teleop_joy.yaml*
-    * *twist_mux.yaml*
-* **sensors**
-  * **launch**
-    * *sensors-service.launch.py*
-    * *camera_0.launch.py*
-    * *camera_1.launch.py*
-    * ...
-  * **config**
-    * *camera_0.yaml*
-    * *camera_1.yaml*
-    * ...
-* *robot.urdf.xacro*
-* *robot.yaml*
-* *setup.bash*
-
+- **platform**
+  - **launch**
+    - _platform-service.launch.py_
+  - **config**
+    - _control.yaml_
+    - _imu_filter.yaml_
+    - _localization.yaml_
+    - _teleop_interactive_markers.yaml_
+    - _teleop_joy.yaml_
+    - _twist_mux.yaml_
+- **sensors**
+  - **launch**
+    - _sensors-service.launch.py_
+    - _camera_0.launch.py_
+    - _camera_1.launch.py_
+    - ...
+  - **config**
+    - _camera_0.yaml_
+    - _camera_1.yaml_
+    - ...
+- _robot.urdf.xacro_
+- _robot.yaml_
+- _setup.bash_

@@ -19,7 +19,6 @@ Make sure your controller is paired to the robot PC. Visit the [controller pairi
 With the [robot services](../installation/robot#robot-services) running, turn on your controller. Press and hold either **L1** or **R1**, and use
 the left joystick to publish a linear velocity and yaw command. The **L1** button will drive the robot at slow speeds, while **R1** will drive the robot at fast speeds.
 
-
 <center>
   <figure>
     <img
@@ -42,7 +41,7 @@ sudo apt-get install ros-humble-teleop-twist-keyboard
 Once installed, run the node:
 
 ```
-ros2 run teleop_twist_keyboard teleop_twist_keyboard 
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
 ```
 
 If your robot uses a namespace, the namespace should be applied to `teleop_twist_keyboard`:
