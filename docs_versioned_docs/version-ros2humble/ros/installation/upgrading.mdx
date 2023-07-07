@@ -1,0 +1,111 @@
+---
+title: Upgrading to Humble
+sidebar_label: Upgrading to Humble
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+:::note
+
+Users who are installing ROS 2 Humble onto a new robot computer can skip to [Robot Installation](./robot).
+
+:::
+
+:::note
+
+Check the [list of supported platforms](../#supported-platforms) to make sure that your robot is currently supported on ROS 2 Humble.
+
+:::
+
+ROS 2 Humble is the first ROS distribution that runs on Ubuntu 22.04. As a result, any robots running ROS 1 or
+ROS 2 Foxy will have upgrade their operating system. It is highly recommended to back up any important files on the robot
+before proceeding, especially for highly customized robots.
+
+:::caution
+
+It is the user’s responsibility to ensure that any essential files are properly backed-up before upgrading their robot.
+
+:::
+
+### Saving a hard drive image
+
+As a fail-safe, please make an image of your robot's hard drive. You should always be able to restore this image if you need to revert back to your previous configuration. The easiest approach may be to either connect a removable (USB or similar) hard drive to the robot's computer, or to unplug the robot's hard drive and insert it into a computer or workstation. You can then use a tool such as [CloneZilla](https://clonezilla.org/) or `dd` to write a backup image of your robot's hard drive onto another hard drive. Alternatively, you can simply replace the robot computer's hard drive, reserving the drive and installing a new one to use with Humble.
+
+### Saving important files
+
+There are several places in the filesystem you should specifically look for customizations for your robot:
+
+| **Location**                                  | **Description**                                                                                                                                           |
+| :-------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/etc/network/interfaces` or `/etc/netplan/*` | Your robot may have a custom network configuration in this file.                                                                                          |
+| `/etc/ros/*/*-core.d/*.launch`                | Will contain `base.launch` and `description.launch`, may contain custom launch files for your robot configuration. Replaced by `ros.d` in newer versions. |
+| `/etc/ros/*/ros.d/*.launch `                  | Will contain `base.launch` and `description.launch`, may contain custom launch files for your robot configuration. Replaces `*-core.d` in newer versions. |
+| `/etc/ros/setup.bash`                         | May contain environment variables for your configuration.                                                                                                 |
+| `~/catkin_ws/` or `~/colcon_ws/`              | ROS workspace that may contain custom ROS packages.                                                                                                       |
+
+Please save the files listed above and use them as a reference during Humble configuration.
+
+### Backup Software (ROS 1 only)
+
+Clearpath Robotics provides a package containing several shell scripts to help you back up, upgrade, and/or restore your ROS 1 robot’s important data. You can use these scripts by downloading the `robot-backup` repository by running the following command on your computer:
+
+```
+git clone https://github.com/clearpathrobotics/robot-backup
+```
+
+You will need to install dependencies to be able to use these scripts. The instructions for installing dependencies can be found in the `README.md` file of the repository, or run the following command on your computer:
+
+```
+sudo apt-get install sshpass sudo apt-get install rsync
+```
+
+#### Running the backup script
+
+Ensure that the robot is turned on and that you can SSH into it from your computer. Then run the following from your computer:
+
+```
+cd robot-backup
+bash backup.sh <backup-name> <robot-hostname OR robot-ip-address>
+```
+
+For example, if your robot’s IP address is 192.168.1.103, you would run something like:
+
+```
+bash backup.sh melodic-final-backup 192.168.1.103
+```
+
+This will produce a backup file called `melodic-final-backup.tar.gz`. Keep this file for when you need to access your backed-up data.
+
+By default all Clearpath robots use the username `administrator` and the password `clearpath`. The backup.sh script will use these credentials by default, but you can override them easily.
+
+For example, if your robot’s username and password have been set to `my_robot_username` and `my_robot_password` you should run:
+
+```
+bash backup.sh melodic-final-backup my_robot_username@192.168.1.103 my_robot_password
+```
+
+#### Backed up contents
+
+The backup script will copy the following data:
+
+- Home Folder: `~/`
+- `udev` Rules: `/etc/udev/rules.d`
+- Network Setup: - `/etc/network/interfaces` - `/etc/netplan` - `/etc/hostname` - `/etc/hosts`
+- IP Tables: `/etc/iptables`
+- Bringup Files: - `/etc/ros/setup.bash` - `/etc/ros/$ROSDISTRO/ros.d` - `/usr/sbin/*start` - `/usr/sbin/*stop`
+- `rosdep` sources: `/etc/ros/rosdep`
+- `rc.local` File: `/etc/rc.local`
+- `pip` packages
+- `systemd` configuration: `/etc/systemd/system`
+- `apt` sources: `/etc/apt/sources.list.d`
+- `apt` packages
+- User Permission Groups
+
+#### Backing up non-standard data
+
+The `backup.sh` script assumes that your robot is in a roughly-standard configuration; it uses a single user account and no files within `/opt/ros/melodic`have been modified.
+
+If this is not the case, it is the responsibility of the user to ensure that any modified files and files in other users’ home folders is backed up correctly.
+
+A common example of this might be if you have created customized URDF files to be loaded via environment variables (e.g. `JACKAL_URDF_EXTRAS`) and have stored them outside any of the folders specified above, you must back these up yourself; `backup.sh` will not do this for you.
