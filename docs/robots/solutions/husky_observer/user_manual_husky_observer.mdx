@@ -1355,7 +1355,7 @@ TCP port 8022 on the Base Station, which gets mapped to TCP port 22 on the robot
 | ------------------------------------------------------ | -------------------------------- | --------------------------------------------------- |
 | Main Computer                                          | 192.168.131.1<br/>10.252.252.100 | **user:** administrator<br/>**password:** clearpath |
 | IndoorNav Computer (optional)                          | 10.252.252.1                     | **user:** administrator<br/>**password:** clearpath |
-| Camera, Axis, PTZ                                      | 192.168.131.10                   | **user:** root<br/>**password:** clearpath |
+| Camera, Axis, PTZ                                      | 192.168.131.10                   | **user:** root<br/>**password:** clearpath          |
 | Camera, FLIR, Thermal (optional)                       | 192.168.131.11                   | **user:** administrator<br/>**password:** clearpath |
 | 3D LiDAR, Velodyne                                     | 192.168.131.20                   | n/a                                                 |
 | 2D LiDAR, Hokuyo, front                                | 192.168.131.21                   | n/a                                                 |
@@ -1393,13 +1393,13 @@ colour and low-light capabilities, defogger, and lens wiper.
 
 #### Key Settings
 
-- Resolution: Max: 1920x1080.  ROS driver defaults: 640x480
+- Resolution: Max: 1920x1080. ROS driver defaults: 640x480
 - Frame rate: 60Hz
 
 #### Where to make adjustments
 
 Global camera settings (like pan & tilt limits) can be set by logging into the Axis setup tool on the camera. Connect
-a laptop to the robot and assign the laptop a static IP address in the range `192.168.131.100-200`.  Then open a
+a laptop to the robot and assign the laptop a static IP address in the range `192.168.131.100-200`. Then open a
 browser and navigate to [http://192.168.131.10](http://192.168.131.10).
 
 ROS driver settings can be edited in `/etc/ros/noetic/ros.d/axis_ptz.launch` or by changing the environment variables
@@ -1412,12 +1412,12 @@ take the shortest trajectory to reach any given pan angle. However, if you have 
 the camera, for example a Flir thermal camera or a microphone, this behaviour may cause the wires to get tangled around
 the PTZ camera and potentially cause damage to the robot.
 
-To prevent damage to the robot, Clearpath recommends setting pan limits on the Axis camera.  This will restrict the
+To prevent damage to the robot, Clearpath recommends setting pan limits on the Axis camera. This will restrict the
 camera's range of motion to less than 180 degrees in either direction, eliminating the risk of the camera making
 continuous rotations.
 
 To set pan limits, connect your laptop to one of the robot's exposed ethernet ports and assign your laptop a static
-IP address in the range `192.168.131.100-200`.  Open your web browser and navigate to
+IP address in the range `192.168.131.100-200`. Open your web browser and navigate to
 [http://192.168.131.10](http://192.168.131.10). Log into the Axis configuration website using the credentials found
 in [Appendix A](#networking-configuration).
 
@@ -1496,8 +1496,8 @@ Once the camera finishes moving, click on the right pan limit button to set the 
   </figure>
 </center>
 
-Click the Done button to apply the new limits.  Note that the camera will now have a 2-degree deadzone at the rear where
-it cannot point.  This is an unfortunate but unavoidable side-effect of setting the limits this way.
+Click the Done button to apply the new limits. Note that the camera will now have a 2-degree deadzone at the rear where
+it cannot point. This is an unfortunate but unavoidable side-effect of setting the limits this way.
 
 ### RealSense Front and Rear Rear Driving Camera Configuration
 
