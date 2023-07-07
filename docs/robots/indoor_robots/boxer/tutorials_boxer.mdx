@@ -65,7 +65,7 @@ larger sensor arrays, and structural elements.
   </figure>
 </center>
 
-Finally, the OTTO 100's attachment interface and ROS2 API have been enabled. This is necessary to allow the
+Finally, the OTTO 100's attachment interface and ROS 2 API have been enabled. This is necessary to allow the
 Backpack Computer to communicate with and control the robot.
 
 ### Operating Boxer
@@ -83,12 +83,12 @@ port identified as `eno1`, labelled "LAN1" on most computers. All other ethernet
 bridged together and may be used for diagnostics, connecting external computers, or adding IP-based accessories such as
 lidar sensors, cameras, or robotic arms.
 
-### ROS2 API
+### ROS 2 API
 
-OTTO Motors has developed a ROS2 API that is available to monitor and control the Base Unit. When using ROS Noetic,
-Boxer uses `ros1_bridge` nodes to translate this ROS2 API into ROS1 compatible messages.
+OTTO Motors has developed a ROS 2 API that is available to monitor and control the Base Unit. When using ROS Noetic,
+Boxer uses `ros1_bridge` nodes to translate this ROS 2 API into ROS 1 compatible messages.
 
-The ROS2 API operates on 3 domains:
+The ROS 2 API operates on 3 domains:
 
 | Domain ID | Description  |
 | :-------- | :----------- |
@@ -96,7 +96,7 @@ The ROS2 API operates on 3 domains:
 | 110       | Autonomy API |
 | 95        | Platform API |
 
-Refer to the [OTTO 100 documentation](https://ottomotors.com) for more details on the ROS2 API.
+Refer to the [OTTO 100 documentation](https://ottomotors.com) for more details on the ROS 2 API.
 
 ### Standard Sensors
 
@@ -109,7 +109,7 @@ The Base Unit includes a number of sensors whose data can be consumed by ROS nod
   - depth data available as `/realsense/depth/image_rect_raw`
   - depth camera info available as `/realsense/depth/camera_info`
 
-At the time of writing OTTO Motors' ROS2 API does not expose pointcloud or RGB data from the RealSense camera
+At the time of writing OTTO Motors' ROS 2 API does not expose pointcloud or RGB data from the RealSense camera
 
 ---
 
@@ -159,7 +159,7 @@ export BOXER_API_VERSION=v1_3
 ```
 
 The `BOXER_API_VERSION` environment variable must be set on the robot's Backpack Computer. This version is determined by
-the version of the ROS2 API running on the Base Unit.
+the version of the ROS 2 API running on the Base Unit.
 
 At the time of writing the latest version of the OTTO software uses `v1_3`
 
