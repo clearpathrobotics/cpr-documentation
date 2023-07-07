@@ -1,0 +1,224 @@
+---
+title: Troubleshooting
+sidebar_position: 6
+---
+
+import ComponentSupportIntroduction from "/components/support_introduction.mdx";
+import Support from "/components/support.mdx";
+
+<figure>
+  <center>
+    <img
+      src="/img/robot_images/husky_images/robot_husky_32.jpg"
+      width="1000"
+    />
+    <figcaption>Rear of a Husky</figcaption>
+  </center>
+</figure>
+
+<ComponentSupportIntroduction />
+
+---
+
+## Status lights
+
+### `COMM` light on the rear panel is red
+
+A red COMM light means the Husky's computer to microcontroller serial connection is not established.
+This serial connection requires:
+
+- The computer to be on
+- The USB-Serial cable to be functioning properly.
+  A functioning cable will appear in Ubuntu as `/dev/ttyUSB` or `/dev/ttyACM`
+- The serial port has been given permissions in Linux.
+- The MCU's microcontroller is on.
+- The MCU has Husky's firmware installed on it.
+- Functioning connections from the USB-Serial cable to the MCU's microcontroller.
+  (soldered connectors, PCBA traces, microcontroller's soldered pins)
+
+If your robot was functioning recently, the most common causes are:
+
+- The robot's computer is not powered, or is still booting.
+  Wait 60 seconds after startup to see if the computer-to-MCU connection starts after the computer turns on.
+  If not, connect to the computer with SSH, or using a computer monitor to see if the computer is running.
+- The USB-Serial cable is not connected.
+  Check that the USB end is seated in the robot's computer.
+  Check that the DE-9 end is seated on it's [jack in the Husky user bay](./user_manual_husky/#onboard-computer-setup).
+- Someone has changed ROS environment variables. You can review Husky's environment variables by running:
+  ```
+  nano /etc/ros/setup.bash
+  ```
+
+### `COMM` light is yellow
+
+A yellow COMM light indicates that there is a functioning Serial connection between the robot's computer and MCU's microcontroller, but there is a ROS software error on the computer.
+The common causes for this error are:
+
+- The Husky's motion-stop button has been pressed. Twist the red button on the back of the Husky clockwise to release the motion-stop.
+  You can confirm the motion-stop state in ROS by running:
+  ```
+  rostopic echo /status
+  ```
+- The Husky's lockout keyswitch is in the _Locked_ position.
+  Use the included key to turn the lockout to the _Unlocked_ position.
+
+### `COMM` light flickers
+
+This frequently happens when the MCU is not receiving motion commands fast enough.
+Increase your published motion command in ROS to at least 10 Hz.
+
+```
+rostopic pub -r 10 /cmd_vel ...
+```
+
+:::note
+
+The maximum command frequency that Husky accepts is 50 Hz.
+
+:::
+
+### `ERR` light is on
+
+This light indicates a General Error.
+It is red when the Husky is in a motion-stop state, has insufficient battery voltage, or an if there is unspecified software error.
+
+### `STOP` status light is on
+
+1.  Twist the red stop button at the back of the Husky.
+2.  Confirm that the robot is not locked out.
+3.  Confirm that all external stop devices are functioning, and that their related switches and relays are closed.
+    You may need to use a multimeter to test voltage between the external stop connector and each of these external stop switches.
+    Refer to the [External Stop](integration_husky/#husky_external_stop) section for details.
+
+:::note
+
+You can confirm the motion-stop state in ROS by running:
+
+```
+rostopic echo /status
+```
+
+:::
+
+### Power button's blue light is not on
+
+The power button on the back of Husky has a blue light that turns on when the button is pressed, indicating that the Husky is receiving power.
+This light will turn on if the switch is receiving power, there is no sofware controlling it.
+For the button to turn on:
+
+1.  The Husky needs to have a charged battery installed.
+2.  The main fuse on the Husky's MCU needs to be functioning.
+3.  The ribbon cable between the MCU and switch PCBA needs to be fully seated on both ends.
+4.  The connector on the switch's cable needs to be fully seated on the switch's PCBA.
+
+We have not seen these connections fail, even in applications with lots of vibration.
+The most common fix for this issue is to check that battery is charged, and that it's power cable is seated in the Husky's MCU.
+
+### Battery indicator is flashing
+
+1. Battery voltage is too low for Husky to drive the motors.
+2. Charge the battery and try again.
+
+### Battery indicator only shows 50% charge with a fresh battery
+
+The battery indicator is controlled by the Husky MCU's microcontroller, based on a voltage measurement of the battery.
+The controls program was designed for a lithium battery.
+_24 V lithium batteries_ reach a peak voltage of 29 V.
+Our Standard _24 V lead-acid battery_ does not reach as high of a voltage, so the MCU's microcontroller thinks the battery is not fully charged.
+
+There is no way to change this behaviour on your Husky.
+
+---
+
+## Mobility
+
+### Husky experiences momentary drops in communication, or Husky's velocity has an inconsistent jumping motion
+
+It's possible the robot has reached the thermal limit, or current limit.
+The maximum current limits are set to 26 A, however, as the motors are only rated for 10.7 A continuous, anything above that will trigger the current limit eventually, the higher above this limit, the more quickly it will trigger.
+If you are unsure whether this is the case, feel free to contact <support@clearpathrobotics.com> with a rosbag of your system.
+
+:::note
+
+Clearpath Robotics also offers a high torque upgrade if more torque is required for your project.
+
+:::
+
+### Husky rolls on a slope
+
+Husky's wheels are always connected to the motors.
+When you send a motion command with `/cmd_vel`, the Husky's MCU subscribes to that message, and relays a command to the Husky's motor controllers.
+These motor controllers change the voltage across the DC brushed motors, causing a mechanical torque at the wheels.
+
+When you stop publishing to `/cmd_vel`, ROS starts publishing a default value to `/cmd_vel` of zero velocity.
+At this point, the motor controllers are not attempting to change the Husky's velocity using electrical power.
+When the Husky's velocity is near 0 m/s, the motor controllers will use the motor's copper windings as a resistor.
+This is why your Husky will roll on a slope, since the resistive torque of the copper windings is less than the gravitational force on the robot.
+
+:::note
+
+The `/twist_mux` topic controls to priority of `/cmd_vel` messages.
+
+:::
+
+:::tip
+
+If this amount of rolling is unacceptable, you can update the motor controller's firmware to a version that applies holding torque.
+The process to update the firmware is detailed on our [Husky Maintenance page](maintenance_husky/#maintenance_husky_motor_controller_firmware).
+
+:::
+
+Your Husky will roll if:
+
+- The Husky's motion-stop button is pressed.
+- Husky's motor controllers are receiving a zero velocity command, rather than a small value like 0.01 m/s.
+- The MCU is not functioning.
+  This will appear as other issues, such as the status lights not illuminating.
+- The computer is not communicating with the MCU.
+  This will appear as a red COMM light on the rear panel.
+- A motor shaft is broken.
+
+---
+
+## Networking
+
+### Not getting Wi-Fi internet connection
+
+Refer to the [Networking page](../../../ros/networking).
+
+### Cannot connect to the robot's computer over a network cable
+
+Reter to the [Networking page](../../../ros/networking).
+
+---
+
+## Computer
+
+### The computer does not automatically start
+
+Refer to the [Mini ITX troubleshooting page](../../accessories/computers/mini_itx).
+
+### The computer keeps reverting to old BIOS settings
+
+Refer to the [Mini ITX troubleshooting page](../../accessories/computers/mini_itx).
+
+---
+
+## ROS
+
+### ROS package is not starting
+
+Verify the upstart logs, `/var/log/upstart/husky_core.log`, to see if there are any error during upstart.
+
+### Sensors are not turning on
+
+1.  Check that the sensor's User Power connector has the correct voltage.
+2.  If the voltage is correct, then review the [Troubleshooting section for the related sensor](../../accessories/sensors).
+
+### A ROS package isn't starting
+
+1.  Verify the upstart logs, `/var/log/upstart/husky_core.log` to see if there are any error during upstart.
+
+## If the Issue Persists
+
+<Support />

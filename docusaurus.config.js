@@ -44,16 +44,15 @@ const config = {
         remarkPlugins: [math],
         rehypePlugins: [katex],
         showLastUpdateTime: true,
-        lastVersion: 'current',
         versions: { 
-          current: {
+          ros2humble: {
             label: 'ROS 2 Humble',
           },
           ros1noetic: {
             label: 'ROS 1 Noetic',
           }
         },
-        // includeCurrentVersion: false,
+        includeCurrentVersion: false,
       },
     ],
     [
