@@ -1,12 +1,12 @@
 ---
-title: "Appendix A: IndoorNav ROS2 API"
-sidebar_label: "Appendix A: IndoorNav ROS2 API"
+title: "Appendix A: IndoorNav ROS 2 API"
+sidebar_label: "Appendix A: IndoorNav ROS 2 API"
 sidebar_position: 6
 toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-In addition to the Web GUI, IndoorNav provides a ROS2 API for
+In addition to the Web GUI, IndoorNav provides a ROS 2 API for
 programmatic interactions. Documentation for this API is included in the
 `clearpath-api` package, installable with `apt`:
 
@@ -22,10 +22,10 @@ documentation can be downloaded directly from
 
 ## API Summary
 
-The ROS2 API is separated into 3 main categories, each operating on a
-separate ROS2 Domain, as outlined in the table below:
+The ROS 2 API is separated into 3 main categories, each operating on a
+separate ROS 2 Domain, as outlined in the table below:
 
-_ROS2 API Domain IDs_
+_ROS 2 API Domain IDs_
 
 | Domain ID   | Description  |
 |-------------|--------------|
@@ -40,7 +40,7 @@ The Autonomy API enables control of a single robot's autonomy and
 navigation.
 
 The Platform API is not available for use with IndoorNav. Instead of
-using the Platform API, developers should use the base robot's ROS1
+using the Platform API, developers should use the base robot's ROS 1
 nodes to interact with the robot hardware.
 
 Additional details on the Fleet, Autonomy, and Platform APIs can be
@@ -49,7 +49,7 @@ found on
 
 ## API Examples
 
-OTTO Motors provides examples of working with their ROS2 API. These
+OTTO Motors provides examples of working with their ROS 2 API. These
 examples can be found in
 `/opt/clearpath/ros2-api-1.3.3/share/clearpath_api/examples/`
 
@@ -83,11 +83,11 @@ example; it always returns an empty array. This will be corrected ASAP.
 Refer to the source code for the examples for more information about
 their use. All examples should be run using the Fleet API domain ID.
 
-## Accessing Noetic Topics in ROS2
+## Accessing Noetic Topics in ROS 2
 
 The Clearpath Robotics base platform is configured to bridge sensor
 data, velocity control, wireless connection status, power information,
-and other basic topics into ROS2 on domain ID 121. The bridged topics
+and other basic topics into ROS 2 on domain ID 121. The bridged topics
 are prefaced with the robot's hostname (with any hyphens replaced with
 underscores). For example:
 
@@ -111,19 +111,19 @@ ros2 topic pub /cpr_dora/cmd_vel geometry_msgs/msg/Twist '{linear: {x: 0.1}}' -r
 ```
 
 All other topics are read-only and will publish sensor/power/wireless
-information at the same rate as their ROS1 topics.
+information at the same rate as their ROS 1 topics.
 
-## Using the ROS2 API with ROS Noetic
+## Using the ROS 2 API with ROS Noetic
 
 :::note
 
-At present the ROS2 API is unstable when bridged into ROS1 Noetic. You
-are welcome to experiment with developing ROS1 nodes that use the
+At present the ROS 2 API is unstable when bridged into ROS 1 Noetic. You
+are welcome to experiment with developing ROS 1 nodes that use the
 bridged topics, but Clearpath Robotics can only offer minimal support.
 
 :::
 
-To enable bridging the ROS2 Fleet and Platform APIs into the ROS1 Noetic
+To enable bridging the ROS 2 Fleet and Platform APIs into the ROS 1 Noetic
 master, set the `INDOORNAV_ENABLE_ROS2_TO_ROS1_BRIDGE` envar to `1` in
 `/etc/ros/setup.bash`:
 

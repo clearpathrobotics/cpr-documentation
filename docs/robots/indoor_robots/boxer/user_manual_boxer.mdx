@@ -8,7 +8,7 @@ toc_max_heading_level: 4
 
 import ComponentIntroductionBoxer from "/components/introduction_boxer.mdx";
 import Support from "/components/support.mdx";
-import ComponentUsingRos from "/docs/components/using_ros.mdx";
+import ComponentUsingRos from "/components/using_ros.mdx";
 import ComponentCommonSafeWorkProcedures from "/components/common_safe_work_procedures.mdx";
 import ComponentSafetyWarning from "/components/safety_warning.mdx";
 
@@ -457,6 +457,8 @@ To use the controller:
 
 <ComponentUsingRos />
 
+<!-- TODO: Update this when this comes out in ROS 2
+
 To quickly get started running ROS with your Boxer follow the instructions below.
 
 Upon booting the Boxer, ROS will begin running on both the Base Unit computer and the Backpack Computer.
@@ -483,7 +485,7 @@ ssh administrator@<computer ip>
 The ROS topics on Boxer can be seen by running:
 
 ```
-rostopic list
+ros2 topic list
 ```
 
 Data from sensors such as the camera, internal IMU, front laser, and rear laser can be seen with:
@@ -526,7 +528,7 @@ To restart ROS without having to reboot the Boxer:
 sudo systemctl restart ros
 sudo systemctl restart ros-bridge
 ```
-
+-->
 ---
 
 ## Safety Considerations {#safety}

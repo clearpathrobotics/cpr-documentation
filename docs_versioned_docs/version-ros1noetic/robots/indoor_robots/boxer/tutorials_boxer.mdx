@@ -98,7 +98,7 @@ larger sensor arrays, and structural elements.
   </figure>
 </center>
 
-Finally, the OTTO 100's attachment interface and ROS2 API have been enabled. This is necessary to allow the
+Finally, the OTTO 100's attachment interface and ROS 2 API have been enabled. This is necessary to allow the
 Backpack Computer to communicate with and control the robot.
 
 ### Operating Boxer
@@ -116,12 +116,12 @@ port identified as `eno1`, labelled "LAN1" on most computers. All other ethernet
 bridged together and may be used for diagnostics, connecting external computers, or adding IP-based accessories such as
 lidar sensors, cameras, or robotic arms.
 
-### ROS2 API
+### ROS 2 API
 
-OTTO Motors has developed a ROS2 API that is available to monitor and control the Base Unit. When using ROS Noetic,
-Boxer uses `ros1_bridge` nodes to translate this ROS2 API into ROS1 compatible messages.
+OTTO Motors has developed a ROS 2 API that is available to monitor and control the Base Unit. When using ROS Noetic,
+Boxer uses `ros1_bridge` nodes to translate this ROS 2 API into ROS 1 compatible messages.
 
-The ROS2 API operates on 3 domains:
+The ROS 2 API operates on 3 domains:
 
 | Domain ID | Description  |
 | :-------- | :----------- |
@@ -129,7 +129,7 @@ The ROS2 API operates on 3 domains:
 | 110       | Autonomy API |
 | 95        | Platform API |
 
-Refer to the [OTTO 100 documentation](https://ottomotors.com) for more details on the ROS2 API.
+Refer to the [OTTO 100 documentation](https://ottomotors.com) for more details on the ROS 2 API.
 
 ### Standard Sensors
 
@@ -142,7 +142,7 @@ The Base Unit includes a number of sensors whose data can be consumed by ROS nod
   - depth data available as `/realsense/depth/image_rect_raw`
   - depth camera info available as `/realsense/depth/camera_info`
 
-At the time of writing OTTO Motors' ROS2 API does not expose pointcloud or RGB data from the RealSense camera
+At the time of writing OTTO Motors' ROS 2 API does not expose pointcloud or RGB data from the RealSense camera
 
 ---
 
@@ -199,9 +199,9 @@ Some of the most important ones are listed below.
 
 You can view all topics that are active using `rostopic list`.
 
-Your Boxer can be controlled through ROS, either through a ROS2 API on the Base Unit or through a ROS1 API on the optional Backpack Computer.
-Some key topics that comprise the Boxer's ROS1 API are listed below.
-For details on the ROS2 API, please contact Support.
+Your Boxer can be controlled through ROS, either through a ROS 2 API on the Base Unit or through a ROS 1 API on the optional Backpack Computer.
+Some key topics that comprise the Boxer's ROS 1 API are listed below.
+For details on the ROS 2 API, please contact Support.
 
 | Topic                             | Message Type            | Purpose                                                                                                                                                                |
 | :-------------------------------- | :---------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -247,14 +247,14 @@ therefore, you will only need to follow the instructions below if you are re-ins
 
 :::note
 
-To install these packages on your computer, ensure that you have added the ROS1 Noetic and ROS2 Foxy sources to your
+To install these packages on your computer, ensure that you have added the ROS 1 Noetic and ROS 2 Foxy sources to your
 `apt` configuration, as well as Clearpath's package server:
 
-- [ROS1 Noetic](http://wiki.ros.org/noetic/Installation/Ubuntu)
-- [ROS2 Foxy](https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html)
+- [ROS 1 Noetic](http://wiki.ros.org/noetic/Installation/Ubuntu)
+- [ROS 2 Foxy](https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html)
 - [Clearpath Packages](http://packages.clearpathrobotics.com)
 
-Note that Foxy is only needed if you plan on installing the `boxer_robot` packages; because of the OTTO 100's ROS2
+Note that Foxy is only needed if you plan on installing the `boxer_robot` packages; because of the OTTO 100's ROS 2
 API the Foxy version of `ros_bridge` is required to operate the physical robot.
 
 :::
@@ -272,7 +272,7 @@ these packages.
 
 During the installation process, you will be asked to enter the robot's serial number. This is stamped on the
 back of the robot, and will be of the form `A31_` followed by a series of numbers. It is important that this serial
-number be entered correctly. Otherwise you may have errors communicating with the ROS2 API published by the Base Unit.
+number be entered correctly. Otherwise you may have errors communicating with the ROS 2 API published by the Base Unit.
 
 :::
 
@@ -325,7 +325,7 @@ export BOXER_API_VERSION=v1_3
 ```
 
 The `BOXER_API_VERSION` environment variable must be set on the robot's Backpack Computer. This version is determined by
-the version of the ROS2 API running on the Base Unit.
+the version of the ROS 2 API running on the Base Unit.
 
 At the time of writing the latest version of the OTTO software uses `v1_3`
 
