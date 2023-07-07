@@ -90,13 +90,13 @@ documentation.
 
 During the development phase, follow steps 1-10 of the workflow above. Note that the updates will not affect
 the default view of the user manual, only the "next" version of the manual
-(eg. http://docs.clearpathrobotics.com/docs_outdoornav_user_manual/next/index). You can enable the visibility of the "next" version by setting 
+(eg. http://docs.clearpathrobotics.com/docs_outdoornav_user_manual/next/index). You can enable the visibility of the "next" version by setting
 
 ```
 includeCurrentVersion: true,
 ```
 
- in `docusaurus.config.js` alongside `id: "outdoornav_user_manual",` section. Ensure to reset this to false before releasing the changes.
+in `docusaurus.config.js` alongside `id: "outdoornav_user_manual",` section. Ensure to reset this to false before releasing the changes.
 
 ### Release Phase
 
@@ -135,6 +135,7 @@ made to align with each ROS version. This allows users to access version-specifi
 documentation.
 
 ### Maintenance Phase (For Existing Version)
+
 Follow steps 1-10 from [above](#workflow-for-making-updates). However, all changes will be made to the files within `docs_versioned_docs/` for the particular version that needs to be changed. E.g. any changes to the ROS 2 Humble documentation would be made to the files within `docs_versioned_docs/version-ros2humble/`.
 
 ### Development Phase (For New Version)
@@ -147,15 +148,15 @@ For Example, for making a new release after humble, the contents of `docs_versio
 
 Continue through to step 10 of the workflow above. Note that the updates will not affect
 the default view of the user manual, only the "next" version of the manual
-(eg. http://docs.clearpathrobotics.com/docs_outdoornav_user_manual/next/index). You can enable the visibility of the "next" version by setting 
+(eg. http://docs.clearpathrobotics.com/docs_outdoornav_user_manual/next/index). You can enable the visibility of the "next" version by setting
 
 ```
 includeCurrentVersion: true,
 ```
 
- in `docusaurus.config.js` alongside `id: "docs",`. Ensure to reset this to false before releasing the changes.
+in `docusaurus.config.js` alongside `id: "docs",`. Ensure to reset this to false before releasing the changes.
 
- Once complete, continue to the release phase.
+Once complete, continue to the release phase.
 
 > **Note**
 > The documentation includes unversioned mdx components from `components/` and versioned components from `docs/components/`. If versioning needs to be added move the component into the versioned folder for each version and remap the imports (using relative links).
@@ -167,13 +168,13 @@ When it is time to publish a new version of the manual:
 1.  After developing the changes, run the versioning command, where _new_version_ is aligned with the corresponding software release:
 
         npm run docusaurus docs:version:docs <new_version>
-    
-    where the `<new_version>` has no spaces or dashes (E.g. for ROS 2 Humble the version should be set as `ros2humble`) 
 
-2.  Update the `docusaurus.config.js` file, adding an entry within versions to map the version name to the display label. 
+    where the `<new_version>` has no spaces or dashes (E.g. for ROS 2 Humble the version should be set as `ros2humble`)
+
+2.  Update the `docusaurus.config.js` file, adding an entry within versions to map the version name to the display label.
 
 ```js
-  versions: { 
+  versions: {
     ros2humble: {
       label: 'ROS 2 Humble',
     },
@@ -300,7 +301,8 @@ The list below are not strict rules, but are considered good practice to keep im
     Note: icons, logos, and symbols that are part of the physical product are exempt from this suggestion.
 
 ## Links and Imports
-All links to, or imports of versioned elements (images, markdown files etc.) must be referred to using relative links (`./img/image-name.png`). These versioned pages will be moved together and ensures that the correct version is used. 
+
+All links to, or imports of versioned elements (images, markdown files etc.) must be referred to using relative links (`./img/image-name.png`). These versioned pages will be moved together and ensures that the correct version is used.
 
 All links to, or imports of unversioned static elements must be referred to using absolute paths (`/static/img/image-name.png`). This allows these assets to be found irrelevant of the location of the particular page.
 
