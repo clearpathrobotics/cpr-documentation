@@ -25,7 +25,7 @@ The schedule must be in one of 3 modes:
   be used for deferred execution of a mission (e.g. `execute mission X in 5 minutes` would use a transient schedule)
 
 Deleting a mission from the Mission Manager will result in that mission being automatically removed from any schedules
-it was part of. If a schedule has no missions is is automatically disabled, and cannot be re-enabled until it contains
+it was part of. If a schedule has no missions it is automatically disabled, and cannot be re-enabled until it contains
 at least one mission.
 
 ### A Note on Schedule Timing
@@ -74,7 +74,7 @@ schedules should subscribe to this topic
 
 **Description:** Create a new schedule
 
-### mission_scheduler/delete_everything
+### mission_scheduler/delete_all_schedules
 
 **Service Type:** [cpr_mission_manager_msgs/srv/DeleteEverything](definitions#storage-deleteeverything)
 
