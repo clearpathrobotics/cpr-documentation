@@ -23,68 +23,18 @@ by Clearpath which are used by all supported Clearpath platforms.
 
 ## Supported Platforms {#supported-platforms}
 
-<table>
-  <tr>
-    <th>Platform</th>
-    <th>Platform code</th>
-    <th>Supports ROS 2 Humble</th>
-  </tr>
+| Platform  | Platform code | Supports ROS 2 Humble |
+| :-------- | :------------ | :-------------------- |
+| Husky     | A200          | Yes                   |
+| Jackal    | J100          | Yes                   |
+| Warthog   | W200          | Coming soon           |
+| Dingo     | DD100         | No                    |
+|           | DO100         | No                    |
+|           | DD150         | No                    |
+|           | DO150         | No                    |
+| Boxer     | B250          | No                    |
+| Ridgeback | R100          | No                    |
 
-{" "}
-<tr>
-  <td>Husky</td>
-  <td>A200</td>
-  <td>Yes</td>
-</tr>
-
-{" "}
-<tr>
-  <td>Jackal</td>
-  <td>J100</td>
-  <td>Yes</td>
-</tr>
-
-{" "}
-<tr>
-  <td>Warthog</td>
-  <td>W100</td>
-  <td>Coming soon</td>
-</tr>
-
-{" "}
-<tr>
-  <td rowspan="5">Dingo</td>
-</tr>
-<tr>
-  <td>DD100</td>
-  <td>No</td>
-</tr>
-<tr>
-  <td>DO100</td>
-  <td>No</td>
-</tr>
-<tr>
-  <td>DD150</td>
-  <td>No</td>
-</tr>
-<tr>
-  <td>DO150</td>
-  <td>No</td>
-</tr>
-
-{" "}
-<tr>
-  <td>Boxer</td>
-  <td>B250</td>
-  <td>No</td>
-</tr>
-
-  <tr>
-    <td>Ridgeback</td>
-    <td>R100</td>
-    <td>No</td>
-  </tr>
-</table>
 
 ## Supported Sensors {#supported-sensors}
 
@@ -95,81 +45,15 @@ sensors that have been validated by Clearpath.
 
 :::
 
-<table>
-  <tr>
-    <th>Sensor</th>
-    <th>Type</th>
-    <th>Installation</th>
-    <th>Driver</th>
-  </tr>
+| Sensor                                                                           | Type         | Installation     | Driver                                                                                      |
+| :------------------------------------------------------------------------------- | :----------- | :--------------- | :------------------------------------------------------------------------------------------ |
+| [Hokuyo UST10-LX](../robots/accessories/sensors/lidar_2d/hokuyo_ust10_lx.mdx)        | 2D Lidar     | Source or Debian | [urg_node](https://github.com/ros-drivers/urg_node)                                         |
+| [Intel Realsense D435](../robots/accessories/sensors/cameras/realsense_d435.mdx)     | Depth Camera | Source or Debian | [realsense-ros](https://github.com/IntelRealSense/realsense-ros/tree/ros2-development)      |
+| [MicroStrain 3DM-GX5](../robots/accessories/sensors/imu/microstrain_3dm_gx5.mdx)     | IMU          | Source or Debian | [microstrain_intertial](https://github.com/LORD-MicroStrain/microstrain_inertial/tree/ros2) |
+| [SICK LMS-111](../robots/accessories/sensors/lidar_2d/sick_lms111.mdx)               | 2D Lidar     | Source or Debian | [LMS1xx](https://github.com/clearpathrobotics/LMS1xx)                                       |
+| [Swift Navigation Duro](../robots/accessories/sensors/gps/swift_navigation_duro.mdx) | GPS          | Source           | [duro_gps_driver](https://github.com/szenergy/duro_gps_driver/tree/ros2-humble)             |
+| [Velodyne Puck](../robots/accessories/sensors/lidar_3d/velodyne_puck.mdx)            | 3D Lidar     | Source or Debian | [velodyne](https://github.com/ros-drivers/velodyne/tree/ros2)                               |
 
-{" "}
-<tr>
-  <td>
-    <a href="../robots/accessories/sensors/lidar_2d/hokuyo_ust10_lx">Hokuyo UST10-LX</a>
-  </td>
-  <td>2D Lidar</td>
-  <td>Source or Debian</td>
-  <td>
-    <a href="https://github.com/ros-drivers/urg_node">urg_node</a>
-  </td>
-</tr>
-
-{" "}
-<tr>
-  <td>
-    <a href="../robots/accessories/sensors/cameras/realsense_d435">Intel Realsense D435</a>
-  </td>
-  <td>Depth Camera</td>
-  <td>Source or Debian</td>
-  <td>
-    <a href="https://github.com/IntelRealSense/realsense-ros/tree/ros2-development">realsense-ros</a>
-  </td>
-</tr>
-
-{" "}
-<tr>
-  <td>
-    <a href="../robots/accessories/sensors/imu/microstrain_3dm_gx5">MicroStrain 3DM-GX5</a>
-  </td>
-  <td>IMU</td>
-  <td>Source or Debian</td>
-  <td>
-    <a href="https://github.com/LORD-MicroStrain/microstrain_inertial/tree/ros2">microstrain_intertial</a>
-  </td>
-</tr>
-
-{" "}
-<tr>
-  <td>
-    <a href="../robots/accessories/sensors/lidar_2d/sick_lms111">SICK LMS-111</a>
-  </td>
-  <td>2D Lidar</td>
-  <td>Source or Debian</td>
-  <td>
-    <a href="https://github.com/clearpathrobotics/LMS1xx">LMS1xx</a>
-  </td>
-</tr>
-
-{" "}
-<tr>
-  <td>
-    <a href="../robots/accessories/sensors/gps/swift_navigation_duro">Swift Navigation Duro</a>
-  </td>
-  <td>GPS</td>
-  <td>Source</td>
-  <td>
-    <a href="https://github.com/szenergy/duro_gps_driver/tree/ros2-humble">duro_gps_driver</a>
-  </td>
-</tr>
-
-  <tr>
-    <td><a href="../robots/accessories/sensors/lidar_3d/velodyne_puck">Velodyne Puck</a></td>
-    <td>3D Lidar</td>
-    <td>Source or Debian</td>
-    <td><a href="https://github.com/ros-drivers/velodyne/tree/ros2">velodyne</a></td>
-  </tr>
-</table>
 
 :::note
 
