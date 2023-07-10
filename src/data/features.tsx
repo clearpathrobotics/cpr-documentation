@@ -60,7 +60,7 @@ const FEATURES: FeatureItem[] = [
       src: "/img/website_images/turtlebot_thumbnail.png",
       width: 250,
       height: 150,
-      hyperlink: "/docs/robots/learing_platforms/turtlebot4/user_manual_turtlebot4",
+      hyperlink: "/docs/robots/learning_platforms/turtlebot4/user_manual_turtlebot4",
     },
     text: <Translate id="homepage_turtlebot">Classroom Indoor Differential Platform</Translate>,
   },

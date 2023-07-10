@@ -1,0 +1,224 @@
+---
+title: Robot Installation
+sidebar_label: Robot
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+### Operating System (OS) {#operating-system}
+
+ROS 2 Humble uses [Ubuntu 22.04](https://releases.ubuntu.com/jammy/) as its Tier 1 operating system. Though other operating systems are supported,
+it is highly recommended to use Ubuntu 22.04. For the robot computer, Ubuntu 22.04 Server should be installed. The server version of the OS will not install a
+graphical user interface (GUI).
+
+### First login
+
+Connect the robot's computer to a monitor using an HDMI or DisplayPort cable. Then, connect a USB keyboard. Power the robot on and wait for the Ubuntu login prompt to show up. On a fresh install, the default username and password are both `ubuntu`. You will be prompted to change your password.
+
+Once logged in, create the `administrator` user:
+
+```
+sudo adduser --ingroup administrator administrator
+```
+
+Follow the prompts, then add `administrator` to the `sudo` group:
+
+```
+sudo usermod -aG sudo administrator
+```
+
+### Internet Connection
+
+#### Wi-Fi
+
+To configure Wi-Fi, first log in to the robot's computer. This can be done by connecting the computer to a monitor using an HDMI or DisplayPort cable, and connecting a USB keyboard. Power the robot on and wait for the Ubuntu login prompt to show up. On a fresh install, the default username and password are both `ubuntu`. You will be prompted to change your password.
+
+Once logged in, find the name of your Wi-Fi interface by calling `ip a`. Wi-Fi interface names begin with `wl`.
+
+<center>
+  <figure>
+    <img
+      src={require("./img/wifi_interface.jpg").default}
+      width="900"
+    />
+  </figure>
+</center>
+
+Next, create the file `/etc/netplan/60-wireless.yaml`, and paste the following contents:
+
+```
+network:
+  wifis:
+    # Replace WIRELESS_INTERFACE with the name of the wireless network device, e.g. wlan0 or wlp3s0
+    # Fill in the SSID and PASSWORD fields as appropriate.  The password may be included as plain-text
+    # or as a password hash.  To generate the hashed password, run
+    #   echo -n 'WIFI_PASSWORD' | iconv -t UTF-16LE | openssl md4 -binary | xxd -p
+    # If you have multiple wireless cards you may include a block for each device.
+    # For more options, see https://netplan.io/reference/
+    WIRELESS_INTERFACE:
+      optional: true
+      access-points:
+        SSID_GOES_HERE:
+          password: PASSWORD_GOES_HERE
+      dhcp4: true
+      dhcp4-overrides:
+        send-hostname: true
+```
+
+Replace `WIRELESS_INTERFACE` with the name of your Wi-Fi interface, `SSID_GOES_HERE` with your Wi-Fi SSID, and `PASSWORD_GOES_HERE` with your Wi-Fi password.
+
+Save the file and call `sudo netplan apply` to apply the changes. Check `ip a` again to make sure that an IP address has been assigned to your Wi-Fi interface.
+
+#### Ethernet
+
+The robot's computer can also be connected to a dhcp network over ethernet. Connect an ethernet cable to the built-in ethernet port on the robot's computer and check that an IP has been assigned with `ip a`.
+
+:::note
+
+You should now be able to SSH into the robot by calling `ssh administrator@<robot_ip>` from a remote computer.
+
+:::
+
+### ROS 2 Humble
+
+Follow the [official instructions](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html) for installing ROS 2 Humble from debian packages.
+
+### Clearpath Package Server
+
+The Clearpath package server needs to be added to the robot computer to access robot packages.
+
+Configure Ubuntu's APT package manager to add the package server:
+
+**1. Install the authentication key for the packages.clearpathrobotics.com repository**
+
+```
+wget https://packages.clearpathrobotics.com/public.key -O - | sudo apt-key add -
+```
+
+**2. Add the debian sources for the repository**
+
+```
+sudo sh -c 'echo "deb https://packages.clearpathrobotics.com/stable/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/clearpath-latest.list'
+```
+
+**3. Update your computer’s package cache**
+
+```
+sudo apt-get update
+```
+
+### Network Configuration
+
+Once the Clearpath package server is set up, follow the [Clearpath Computer Setup](../networking/computer_setup) instructions to configure the network interfaces.
+
+### Clearpath Robot metapackage
+
+Once the Clearpath package server has been added, the [Clearpath Robot](https://github.com/clearpathrobotics/clearpath_robot) metapackage can be installed.
+
+```
+sudo apt install ros-humble-clearpath-robot
+```
+
+Installing this package will also install all dependencies required to run any Clearpath robot and supported sensors, other than Clearpath firmware packages.
+
+#### Source install
+
+**1. Create a workspace on the robot's computer**
+
+```
+mkdir ~/clearpath_ws/src -p
+```
+
+**2. Import dependencies**
+
+```
+source /opt/ros/humble/setup.bash
+sudo apt install python3-vcstool
+cd ~/clearpath_ws
+wget https://raw.githubusercontent.com/clearpathrobotics/clearpath_robot/main/dependencies.repos
+vcs import src < dependencies.repos
+rosdep install -r --from-paths src -i -y
+```
+
+**3. Build packages**
+
+```
+colcon build --symlink-install
+```
+
+:::note
+Make sure to add the workspace to your `robot.yaml` file. TODO: Add link to robot yaml documentation
+:::
+
+### Firmware Update
+
+All platforms with the exception of the A200 will require a firmware update to run ROS 2 Humble.
+
+#### J100
+
+Jackal firmware can be flashed from the Jackal's computer.
+
+**1. Download the Jackal Firmware package from the Clearpath package server**
+
+```
+sudo apt-get update
+sudo apt-get install ros-humble-jackal-firmware
+```
+
+**2. Place the Jackal MCU into bootloader mode**
+
+Switch the _PWR_MODE_ switch from _NORM_ to _ALT_. If the robot is on, press the _M_RST_ button. Otherwise, turn the
+robot on with the power button.
+
+**3. Flash the firmware**
+
+```
+jackal_firmware_flash.sh
+```
+
+Flashing progress will be indicated by the flash script. Wait for the firmware to finish flashing.
+
+:::caution
+Do not turn the robot off or unplug the micro-USB cable while flashing firmware. If an error occurs while
+flashing, you can attempt to run `jackal_firmware_flash.sh` again.
+:::
+
+**4. Place the Jackal MCU into normal mode**
+
+Once the firmware has been flashed, place the Jackal MCU back into normal mode by switching the PWR_MODE switch from ALT to NORM.
+The robot will power off. Turn the robot back on by pressing the power button.
+
+### Setup folder
+
+Create the setup folder where the [robot.yaml](../config/yaml) file will be stored, and where files will be generated:
+
+```
+sudo mkdir /etc/clearpath/ -p && sudo chmod 666 /etc/clearpath/
+```
+
+Copy your `robot.yaml` file into `/etc/clearpath/`.
+
+### Robot services
+
+Clearpath robot services can now be installed with the following command:
+
+```
+source /opt/ros/humble/setup.bash
+ros2 run clearpath_robot install
+```
+
+This script uses [robot_upstart](https://github.com/clearpathrobotics/robot_upstart/tree/foxy-devel) to install the `systemd` services
+that will launch platform and sensor launch files as background processes.
+
+To start the services, call
+
+```
+sudo systemctl daemon-reload && sudo systemctl start clearpath-robot.service
+```
+
+Add the following line to your `~/.bashrc` file to automatically source the generated `setup.bash` file in new terminals:
+
+```
+source /etc/clearpath/setup.bash
+```

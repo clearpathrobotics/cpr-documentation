@@ -1,0 +1,104 @@
+---
+title: Controllers
+sidebar_position: 3
+---
+
+| Description                                                         | CPR Item |
+| :------------------------------------------------------------------ | :------- |
+| [Logitech F710](#controllers_logitech_f710)                         | 002071   |
+| [Sony Dualshock](#controllers_sony_dualshock)                       | 011756   |
+| [Futaba 4GRS](#controllers_futaba_4grs)                             | 011389   |
+| [FORT Robotics Safe Remote Control](#controllers_fort_robotics_src) | 025725   |
+
+Controllers appear in Ubuntu in the _/dev/input/_ directory.
+Navigate to that directory,and then run `ls` to list the controllers.
+You can view the data stream of the controller by running `jstest /dev/input/js0`, changing the final value to the relevent controller.
+
+:::note
+
+You may need to install _jstest_ with `sudo apt-get install jstest-gtk`
+
+:::
+
+Clearpath uses the _/bluetooth_teleop_ ROS node to publish velocity commands from the joystick to _/twist_mux_.
+_/twist_mux_ Takes in multiple sources of velocity commands, and prioritizes what actually gets sent to _/cmd_vel_ to drive the robot.
+
+Depending on the robot platform and related controller, you will need to configure your robot's environment variables in _/etc/ros/setup.bash_.
+
+---
+
+## Logitech F710 {#controllers_logitech_f710}
+
+<center>
+  <img
+    src="/img/accessories_images/controller_1.png"
+    width="400"
+  />
+</center>
+
+<br />
+
+Drivers are included in the current Linux Kernels that Clearpath Robotics uses.
+
+The included USB dongle requires a line-of-sight connection with the handheld controller.
+
+---
+
+## Sony Dualshock {#controllers_sony_dualshock}
+
+<center>
+  <img
+    src="/img/accessories_images/controller_2.png"
+    width="400"
+  />
+</center>
+
+<br />
+
+This conroller requires a Bluetooth connection to the robot's computer.
+
+Linux Driver: https://github.com/clearpathrobotics/ds4drv
+
+---
+
+## Futaba 4GRS {#controllers_futaba_4grs}
+
+<center>
+  <img
+    src="/img/accessories_images/controller_3.jpg"
+    width="400"
+  />
+</center>
+
+<br />
+
+This controller includes a PCBA that sends data to the ROS computer with a serial connection.
+
+The controller communicates with the PCBA receiver over a 2.4 GHz radio.
+
+Clearpath Robotics has built this controller into the Warthog and Moose platforms.
+
+It can be integrated on other robots, but requires custom integration as there is not an Open Source ROS driver at this time.
+
+---
+
+## FORT Robotics controller {#controllers_fort_robotics_src}
+
+<center>
+  <img
+    src="/img/accessories_images/controller_4.png"
+    width="450"
+  />
+</center>
+
+<br />
+
+Similar to the Logitech controller listed above, the FORT Robotics controller data appears in _/dev/input/_ and uses a Linux Driver included in the current Ubuntu LTS release.
+
+The controller and receiver communicate over a 900 MHz radio, with the specific band configured based on your country.
+
+:::note
+
+The status of the motion-stop button does appear in the data, as well as the other buttons and joysticks.
+
+:::

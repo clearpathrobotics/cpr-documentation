@@ -1,0 +1,85 @@
+---
+title: Jetson Nano Hardware in Husky
+sidebar_label: Husky
+sidebar_position: 1
+---
+
+import ComponentHuskyComputerRemoval from "/components/husky_remove_miniitx.mdx";
+
+## Installation
+
+:::note
+
+This page outlines the steps for installing the Nano hardware in Husky. See also
+the instructions for
+[installing the Jetson software](../../jetson_software).
+
+:::
+
+### Step 1: Remove Mini-ITX Computer
+
+:::note
+
+Skip this step if you don't have an existing computer.
+
+:::
+
+<ComponentHuskyComputerRemoval />
+
+### Step 2: Install the Nano
+
+:::note
+
+Custom mounting brackets are available on
+[GitHub](https://github.com/clearpathrobotics/jetson_setup/raw/melodic/models/JetsonNanoXavierHuskyMount.stl).
+
+:::
+
+1. Print off the mount from above using a 3D printer. A 0.2 mm layer thickness should be sufficient.
+
+2. Add 4X M3 stand-offs to the board mount points. A 6 mm height is recommended.
+
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/hardware/nano/husky/1.jpg"
+         width="800"
+       />
+       <figcaption>Installing the standoffs</figcaption>
+     </figure>
+   </center>
+
+3. Use M3 screws to fasten the Nano to the mount.
+
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/hardware/nano/husky/2.jpg"
+         width="800"
+       />
+       <figcaption>Fastening the Nano to the mount</figcaption>
+     </figure>
+   </center>
+
+4. Attach the Nano and mount to the two M3 holes opposite the platform serial connector.
+
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/hardware/nano/husky/3.jpg"
+         width="800"
+       />
+       <figcaption>Attaching the mount to Husky</figcaption>
+     </figure>
+   </center>
+
+5. Re-attach the power and serial cables from the platform to the Jetson.
+   <center>
+     <figure>
+       <img
+         src="/img/computer_images/jetson/hardware/nano/husky/4.jpg"
+         width="800"
+       />
+       <figcaption>Attaching the cables</figcaption>
+     </figure>
+   </center>

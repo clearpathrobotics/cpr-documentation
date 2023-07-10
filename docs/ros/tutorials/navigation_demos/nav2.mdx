@@ -1,0 +1,70 @@
+---
+title: Nav2
+sidebar_label: Nav2
+sidebar_position: 3
+toc_min_heading_level: 2
+toc_max_heading_level: 5
+---
+
+The [Nav2](https://github.com/ros-planning/navigation2) package provides open source navigation controllers, planners, and utilities. The [clearpath_nav2_demos](https://github.com/clearpathrobotics/clearpath_nav2_demos/tree/main) package
+provides default configurations for supported robots, but these can be customized for your use case. This tutorial will use the [Clearpath simulator](../simulator/overview), but will work on a physical robot too.
+We will be using a J100 with a Hokuyo UST10 attached to the front of the robot. The `robot.yaml` is available here. <---TODO
+
+:::tip
+Make sure you have installed the simulator before starting this tutorial. Take a look at the [installation](../simulator/install) guide for details.
+:::
+
+## Launching the simulation and Nav2
+
+**1. Move the `robot.yaml` file to your setup folder (`$HOME/clearpath` by default).**
+
+**2. Launch the simulation**
+
+```
+ros2 launch clearpath_gz simulation.launch.py
+```
+
+Click on the orange play button in the bottom left corner to start the simulation.
+
+**3. In another terminal, launch RViz**
+
+```
+ros2 launch clearpath_viz view_navigation.launch.py namespace:=j100_0001
+```
+
+**4. In another terminal, launch localization**
+
+```
+ros2 launch clearpath_nav2_demos localization.launch.py setup_path:=$HOME/clearpath/ use_sim_time:=true
+```
+
+The default map used by `localization.launch.py` is a [map](https://github.com/clearpathrobotics/clearpath_nav2_demos/blob/main/maps/warehouse.yaml) of the simulated warehouse world.
+If you are using a custom map, pass it in with the `map` launch argument:
+
+```
+ros2 launch clearpath_nav2_demos localization.launch.py setup_path:=$HOME/clearpath/ use_sim_time:=true map:=/path/to/my/map.yaml
+```
+
+**5. In another terminal, launch Nav2**
+
+```
+ros2 launch clearpath_nav2_demos nav2.launch.py setup_path:=$HOME/clearpath/ use_sim_time:=true
+```
+
+**6. Set the initial pose of the robot**
+
+Use the **2D Pose Estimate** tool in RViz to set the initial pose of the robot.
+
+7. Give the robot a navigation goal
+
+Use the **Nav2 Goal** tool in RViz to set a navigation goal pose.
+
+<center>
+  <figure>
+    <img
+      src={require("./img/nav2.gif").default}
+      width="900"
+    />
+    <figcaption>Navigation in simulation</figcaption>
+  </figure>
+</center>

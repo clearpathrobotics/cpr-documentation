@@ -6,13 +6,13 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-To install the IndoorNav software on your robot you must add the ROS1,
-ROS2, and Clearpath Robotics package servers to your apt configuration.
+To install the IndoorNav software on your robot you must add the ROS 1,
+ROS 2, and Clearpath Robotics package servers to your apt configuration.
 This is normally done automatically by Clearpath's OS installation
 media, but if you are missing any of these sources, use the following
 commands to add them
 
-**ROS1 Noetic**
+**ROS 1 Noetic**
 
 ```bash
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
@@ -20,7 +20,7 @@ curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | sudo ap
 sudo apt-get update
 ```
 
-**ROS2 Foxy**
+**ROS 2 Foxy**
 
 ```bash
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(source /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
@@ -53,7 +53,7 @@ Complete ROS Noetic installation instructions can be found at
 
 :::note
 
-Complete ROS2 Foxy installation instructions can be found at
+Complete ROS 2 Foxy installation instructions can be found at
 <https://docs.ros.org/en/foxy/Installation/Ubuntu-Install-Debians.html>
 
 :::
