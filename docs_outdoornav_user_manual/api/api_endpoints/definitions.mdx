@@ -1008,6 +1008,18 @@ bool enable
 bool ok
 ```
 
+#### cpr_mission_scheduler_msgs/srv/ExportData.srv {#scheduler-exportdata}
+
+```
+---
+# A base-64 encoded string representing a compressed version of
+# the database contents.
+# The data itself is a gzipped JSON string representing the database contents
+# This can be written to a file or used with the ImportData.srv
+# to back-up/restore the database contents
+string data
+```
+
 #### cpr_mission_scheduler_msgs/srv/GetAllSchedules.srv {#scheduler-getallschedules}
 
 ```
@@ -1033,6 +1045,20 @@ duration time_to_start
 string uuid
 ---
 cpr_mission_scheduler_msgs/Schedule schedule
+```
+
+#### cpr_mission_scheduler_msgs/srv/ImportData.srv {#scheduler-importdata}
+
+```
+# A base-64 encoded string representing a compressed version of
+# the database contents.
+# The data itself is a gzipped JSON string representing the database contents
+# This is the same as the data output by the ExportData service, and is intended
+# to be used to restore the database to a previous state
+string data
+---
+# The state of the database after importing the data
+cpr_mission_scheduler_msgs/StorageState state
 ```
 
 #### cpr_mission_scheduler_msgs/srv/UpdateSchedule.srv {scheduler-updateschedule}

@@ -111,6 +111,19 @@ be run automatically.
 
 :::
 
+### mission_scheduler/export_data
+
+**Service Type:** [cpr_mission_scheduler_msgs/srv/ExportData](definitions#scheduler-exportdata)
+
+**Description:** Export all schedule data to a base64 string to it can be backed-up or copied to another robot.
+
+:::note
+
+This service is intended to be used in combination with the `import_data` service to facilitate backups or
+synchronizing schedules across multiple robots.
+
+:::
+
 ### mission_scheduler/get_all_schedules
 
 **Service Type:** [mission_scheduler/srv/GetAllSchedules](definitions#scheduler-getallschedules)
@@ -137,6 +150,20 @@ their designated start time +/- 10 seconds.
 
 **Description:** Get the schedule with the provided UUID. If an error occurred, or no schedule with the provided UUID
 exists, the returned object will have a blank UUID.
+
+### mission_scheduler/import_data
+
+**Service Type:** [cpr_mission_scheduler_msgs/srv/ImportData](definitions#scheduler-importdata)
+
+**Description:** Import data exported by the `export_data` service.  This will delete all schedules and replace the
+database contents with the imported data.
+
+:::note
+
+This service is intended to be used in combination with the `export_data` service to facilitate backups or
+synchronizing schedules across multiple robots.
+
+:::
 
 ### mission_scheduler/remove_mission
 
