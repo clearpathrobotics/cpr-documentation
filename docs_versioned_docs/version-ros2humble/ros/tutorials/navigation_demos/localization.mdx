@@ -8,7 +8,65 @@ toc_max_heading_level: 4
 
 Localization is a method of tracking the robot's location within an existing map. It is generally done using
 laser scan data from a 2D LIDAR, and the robot's odometry. For this demo we are using the [Nav2](https://github.com/ros-planning/navigation2) package launch localization.
-This tutorial will use the [Clearpath simulator](../simulator/overview), but will work on a physical robot too. We will be using a J100 with a Hokuyo UST10 attached to the front of the robot. The `robot.yaml` is available here. <---TODO
+
+This tutorial will use the [Clearpath simulator](../simulator/overview), but will work on a physical robot too. We will be using a J100 with a Hokuyo UST10 attached to the front of the robot.
+
+<details><summary>J100 YAML</summary>
+<p>
+
+```yaml
+serial_number: j100-0001
+version: 0
+system:
+  hosts:
+    self: cpr-j100-0001
+    platform:
+      cpr-j100-0001: 192.168.131.1
+    onboard: {}
+    remote: {}
+  ros2:
+    username: administrator
+    namespace: j100_0001
+    domain_id: 0
+    rmw_implementation: rmw_fastrtps_cpp
+platform:
+  controller: ps4
+  decorations:
+    front_bumper:
+      enabled: true
+      model: default
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      extension: 0.0
+    rear_bumper:
+      enabled: true
+      model: default
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      extension: 0.0
+    top_plate:
+      enabled: true
+      model: default
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+  extras:
+    urdf: null
+    control: null
+sensors:
+  lidar2d:
+    - model: hokuyo_ust10
+      urdf_enabled: true
+      launch_enabled: true
+      parent: front_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ros_parameters:
+        angle_min: -1.5707
+        angle_max: 1.5707
+```
+
+</p>
+</details>
 
 :::tip
 Make sure you have installed the simulator before starting this tutorial. Take a look at the [installation](../simulator/install) guide for details.
