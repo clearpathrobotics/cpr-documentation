@@ -162,7 +162,7 @@ To add a Task to the end of a Mission:
     assigned to them based on placement).
 
     -   <img src="/img/outdoornav_images/dockTask_40px.png" width="30px"/> <strong>Dock UGV: </strong>
-        Will dock the UGV to begin charging the UGVs
+        Will dock the UGV to begin charging the UGV's
         battery. See [Autonomous Docking](#autonomous-docking)
         for more information on the autonomous docking feature.
 
@@ -191,7 +191,7 @@ To add a Task to the end of a Mission:
     -   <img src="/img/outdoornav_images/undockTask_40px.png" width="30px"/> <strong>Undock UGV: </strong>
         Will undock the UGV from the autocharge dock. Once
         completed, the UGV can be sent on autonomous missions. It is
-        often recommended to place the undock Task first in the list of Waypoints;
+        often recommended to place the undock task first in the list of Waypoints;
         that way, the UGV will automatically continue towards its next
         Waypoint once undocked. See Section
         [Autonomous Docking](#autonomous-docking) for more
@@ -230,26 +230,35 @@ To add a Task to the end of a Mission:
 
 ### Custom Tasks  {#custom-task}
 
-Users can create their own tasks following a specific template and place them within the **/onav_log/custom_tasks** directory.
-Restarting the UGV or dockers will trigger the system to load the custom task that was created, making it available for mission use.
-Below is a sample template file named "log_inputs.py" which is elaborated further in the following section.
+Users can create their own tasks following a specific template and place them within the **~/cpr_outdoornav_launch/custom_tasks** directory.
+Restarting the UGV will trigger the system to load the custom task that was created, making it available for mission use.
+Below is a sample template file named "input_looper.py" which iterates throught the two data variables and publishes them to the feedback 
+topics. The purpose of this task is to simply outline what is available to the user when they decide to create their own tasks.
 
 #### Sample Custom Task
+
+This sample custom task iterates through the two available data variables and outputs them to the feedback topic. If neither of the 
+variables have any data in them the task is aborted.  Each section will be elaborated further in the document.
 
 ```py
 #!/usr/bin/python3
 
-from onav_custom_tasks.custom_task_base import *
+from onav_tasks.custom_task_base import *
 
-class CustomTask(CustomTaskBase):
+class InputLooperTask(CustomTaskBase):
   def __init__(self):
-      super().__init__("log_inputs")
+    # The derived class must always call the super() and proved the action server name.
+    # This name will need to be unique among custom tasks and must match what is in the 
+    # UI. 
+    super().__init__("input_looper")
 
   def run_task(self, goal):
-    if len(goal.strings) == 0 or len(goal.floats) == 0:
+    if len(goal.strings) == 0 and len(goal.floats) == 0:
+      # Task and running mission will be aborted in this case
       self._as.set_aborted()
       return False
 
+    # Loop through the strings and float values and publish them each to the /input_looper/feedback topic
     for string in goal.strings:
       self._feedback.state = string      
       self._as.publish_feedback(self._feedback)
@@ -259,39 +268,45 @@ class CustomTask(CustomTaskBase):
       self._as.publish_feedback(self._feedback)
 
     return True
-```
 
-This sample custom task iterates through the two available data variables and outputs them to the feedback topic. If neither of the 
-variables have any data in them the task is aborted.
+def __create_task__():
+	return InputLooperTask()
+```
 
 ##### Custom Task Class
 
+To leverage custom tasks users will need to create a new file that defines a new class which inherits from `CustomTaskBase`. The `CustomTaskBase` class is 
+found in the `onav_Itasks.custom_task_base` package. It exposes a `SimpleActionServer` (see <a href="http://wiki.ros.org/actionlib_tutorials/Tutorials/Writing%20a%20Simple%20Action%20Server%20using%20the%20Execute%20Callback%20%28Python%29">here</a> 
+for further details) object as `_as`, a `UITaskFeedback` object as `_feedback` and a `UITaskResults` object as `_result` to be used as part of 
+the tasks functionality. The custom task manager requires the user to also define a `run_task` method that takes a `UITaskGoal` object as a parameter.
+
 ```py 
-from onav_custom_tasks.custom_task_base import *
+from onav_tasks.custom_task_base import *
 
 class CustomTask(CustomTaskBase):
   def __init__(self):
-      super().__init__("log_inputs")
+      super().__init__("input_looper")
 
   def run_task(self, goal):
 ```
 
-To leverage custom tasks users will need to create a new file that defines a new class called `CustomTask` which inherits from 
-`CustomTaskBase`. The `CustomTaskBase` class is found in the `onav_custom_tasks.custom_task_base` package. It exposes a `SimpleActionServer` 
-object as `_as`, a `UITaskFeedback` object as `_feedback` and a `UITaskResults` object as `_result` to be used as part of the tasks functionality. The custom 
-task manager requires the user to also define a `run_task` method that takes a `UITaskGoal` object as a parameter.
-
 ##### Aborting Tasks 
-```py 
-if len(goal.strings) == 0 or len(goal.floats) == 0:
-  self._as.set_aborted()
-  return False
-```
 
 When running the task users may handle errors through the action servers `set_aborted()` function.  When this function is called the entire mission 
 will be aborted. In this sample the task is aborted if neither of the lists have any values.
 
+```py 
+if len(goal.strings) == 0 and len(goal.floats) == 0:
+  # Task and running mission will be aborted in this case
+  self._as.set_aborted()
+  return False
+```
+
 ##### Setting feedback
+
+Users can set the feedback state using the `SimpleActionServer` class's standard methods. In this case the task iterates through the comma deliminated
+strings and floats and writes them to the feedback state before publishing them.  Upon success the `run_task` method returns True.
+
 ```py 
 for string in goal.strings:
   self._feedback.state = string      
@@ -304,8 +319,17 @@ for num in goal.floats:
   return True
 ```
 
-Users can set the feedback state using the `SimpleActionServer` class's standard methods. In this case the task iterates through the comma deliminated
-strings and floats and writes them to the feedback state before publishing them.  Upon success the run_task method returns True.
+##### Creating the Task 
+
+All custom tasks will need to expose a `__create_task__()` method that returns a new instance of their class. If this isn't provided the custom task manager 
+will not load in the module.
+
+```py
+def __create_task__():
+  return InputLooperTask()
+```
+
+If a custom task is not configured properly the custom task manager will ignore the task and proceed loading in the next task while logging an error with ROS. 
 
 ### Advanced Settings
 
