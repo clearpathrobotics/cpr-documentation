@@ -247,7 +247,7 @@ from onav_tasks.custom_task_base import *
 
 class InputLooperTask(CustomTaskBase):
   def __init__(self):
-    # The derived class must always call the super() and proved the action server name.
+    # The derived class must always call the super() and provide the action server name.
     # This name will need to be unique among custom tasks and must match what is in the 
     # UI. 
     super().__init__("input_looper")
@@ -267,6 +267,8 @@ class InputLooperTask(CustomTaskBase):
       self._feedback.state = str(num)
       self._as.publish_feedback(self._feedback)
 
+    # Returning True or False will not currently impact the mission but will write the current state to the 
+    # /task/result topic accordingly.  
     return True
 
 def __create_task__():
@@ -275,7 +277,7 @@ def __create_task__():
 
 ##### Custom Task Class
 
-To leverage custom tasks users will need to create a new file that defines a new class which inherits from `CustomTaskBase`. The `CustomTaskBase` class is 
+To leverage custom tasks, users will need to create a new file that defines a new class which inherits from `CustomTaskBase`. The `CustomTaskBase` class is 
 found in the `onav_Itasks.custom_task_base` package. It exposes a `SimpleActionServer` (see <a href="http://wiki.ros.org/actionlib_tutorials/Tutorials/Writing%20a%20Simple%20Action%20Server%20using%20the%20Execute%20Callback%20%28Python%29">here</a> 
 for further details) object as `_as`, a `UITaskFeedback` object as `_feedback` and a `UITaskResults` object as `_result` to be used as part of 
 the tasks functionality. The custom task manager requires the user to also define a `run_task` method that takes a `UITaskGoal` object as a parameter.
@@ -304,7 +306,7 @@ if len(goal.strings) == 0 and len(goal.floats) == 0:
 
 ##### Setting feedback
 
-Users can set the feedback state using the `SimpleActionServer` class's standard methods. In this case the task iterates through the comma deliminated
+Users can set the feedback state using the `SimpleActionServer` class's standard methods. In this case the task iterates through the comma delimited
 strings and floats and writes them to the feedback state before publishing them.  Upon success the `run_task` method returns True.
 
 ```py 
