@@ -6,8 +6,10 @@ toc_min_heading_level: 2
 toc_max_heading_level: 5
 ---
 
-The [Nav2](https://github.com/ros-planning/navigation2) package provides open source navigation controllers, planners, and utilities. The [clearpath_nav2_demos](https://github.com/clearpathrobotics/clearpath_nav2_demos/tree/main) package
-provides default configurations for supported robots, but these can be customized for your use case. This tutorial will use the [Clearpath simulator](../simulator/overview), but will work on a physical robot too.
+The [Nav2](https://github.com/ros-planning/navigation2) package provides open source navigation controllers,
+planners, and utilities. The [clearpath_nav2_demos](https://github.com/clearpathrobotics/clearpath_nav2_demos/tree/main) package
+provides default configurations for supported robots, but these can be customized for your use case. This
+tutorial will use the [Clearpath simulator](../simulator/overview), but will work on a physical robot too.
 We will be using a J100 with a Hokuyo UST10 attached to the front of the robot.
 
 <details><summary>J100 YAML</summary>
@@ -68,7 +70,8 @@ sensors:
 </details>
 
 :::tip
-Make sure you have installed the simulator before starting this tutorial. Take a look at the [installation](../simulator/install) guide for details.
+Make sure you have installed the simulator before starting this tutorial. Take a look at the
+[installation](../simulator/install) guide for details.
 :::
 
 ## Launching the simulation and Nav2
@@ -95,7 +98,8 @@ ros2 launch clearpath_viz view_navigation.launch.py namespace:=j100_0001
 ros2 launch clearpath_nav2_demos localization.launch.py setup_path:=$HOME/clearpath/ use_sim_time:=true
 ```
 
-The default map used by `localization.launch.py` is a [map](https://github.com/clearpathrobotics/clearpath_nav2_demos/blob/main/maps/warehouse.yaml) of the simulated warehouse world.
+The default map used by `localization.launch.py` is a
+[map](https://github.com/clearpathrobotics/clearpath_nav2_demos/blob/main/maps/warehouse.yaml) of the simulated warehouse world.
 If you are using a custom map, pass it in with the `map` launch argument:
 
 ```

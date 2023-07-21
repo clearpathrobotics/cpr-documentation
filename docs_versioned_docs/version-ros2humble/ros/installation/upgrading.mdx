@@ -17,7 +17,8 @@ Users who are installing ROS 2 Humble onto a new robot computer can skip to [Rob
 
 :::note
 
-Check the [list of supported platforms](../#supported-platforms) to make sure that your robot is currently supported on ROS 2 Humble.
+Check the [list of supported platforms](../#supported-platforms) to make sure that your robot is currently
+supported on ROS 2 Humble.
 
 :::
 
@@ -33,7 +34,12 @@ It is the user’s responsibility to ensure that any essential files are properl
 
 ## Saving a hard drive image
 
-As a fail-safe, please make an image of your robot's hard drive. You should always be able to restore this image if you need to revert back to your previous configuration. The easiest approach may be to either connect a removable (USB or similar) hard drive to the robot's computer, or to unplug the robot's hard drive and insert it into a computer or workstation. You can then use a tool such as [CloneZilla](https://clonezilla.org/) or `dd` to write a backup image of your robot's hard drive onto another hard drive. Alternatively, you can simply replace the robot computer's hard drive, reserving the drive and installing a new one to use with Humble.
+As a fail-safe, please make an image of your robot's hard drive. You should always be able to restore this
+image if you need to revert back to your previous configuration. The easiest approach may be to either connect
+a removable (USB or similar) hard drive to the robot's computer, or to unplug the robot's hard drive and insert
+it into a computer or workstation. You can then use a tool such as [CloneZilla](https://clonezilla.org/) or `dd`
+to write a backup image of your robot's hard drive onto another hard drive. Alternatively, you can simply replace
+the robot computer's hard drive, reserving the drive and installing a new one to use with Humble.
 
 ## Saving important files
 
@@ -51,13 +57,16 @@ Please save the files listed above and use them as a reference during Humble con
 
 ## Backup Software (ROS 1 only)
 
-Clearpath Robotics provides a package containing several shell scripts to help you back up, upgrade, and/or restore your ROS 1 robot’s important data. You can use these scripts by downloading the `robot-backup` repository by running the following command on your computer:
+Clearpath Robotics provides a package containing several shell scripts to help you back up, upgrade, and/or
+restore your ROS 1 robot’s important data. You can use these scripts by downloading the `robot-backup` repository
+by running the following command on your computer:
 
 ```
 git clone https://github.com/clearpathrobotics/robot-backup
 ```
 
-You will need to install dependencies to be able to use these scripts. The instructions for installing dependencies can be found in the `README.md` file of the repository, or run the following command on your computer:
+You will need to install dependencies to be able to use these scripts. The instructions for installing dependencies
+can be found in the `README.md` file of the repository, or run the following command on your computer:
 
 ```
 sudo apt-get install sshpass sudo apt-get install rsync
@@ -80,7 +89,8 @@ bash backup.sh melodic-final-backup 192.168.1.103
 
 This will produce a backup file called `melodic-final-backup.tar.gz`. Keep this file for when you need to access your backed-up data.
 
-By default all Clearpath robots use the username `administrator` and the password `clearpath`. The backup.sh script will use these credentials by default, but you can override them easily.
+By default all Clearpath robots use the username `administrator` and the password `clearpath`. The backup.sh
+script will use these credentials by default, but you can override them easily.
 
 For example, if your robot’s username and password have been set to `my_robot_username` and `my_robot_password` you should run:
 
@@ -107,20 +117,26 @@ The backup script will copy the following data:
 
 ### Backing up non-standard data
 
-The `backup.sh` script assumes that your robot is in a roughly-standard configuration; it uses a single user account and no files within `/opt/ros/$ROS_DISTRO`have been modified.
+The `backup.sh` script assumes that your robot is in a roughly-standard configuration; it uses a single user
+account and no files within `/opt/ros/$ROS_DISTRO`have been modified.
 
-If this is not the case, it is the responsibility of the user to ensure that any modified files and files in other users’ home folders is backed up correctly.
+If this is not the case, it is the responsibility of the user to ensure that any modified files and files in
+other users’ home folders is backed up correctly.
 
-A common example of this might be if you have created customized URDF files to be loaded via environment variables (e.g. `JACKAL_URDF_EXTRAS`) and have stored them outside any of the folders specified above, you must back these up yourself; `backup.sh` will not do this for you.
+A common example of this might be if you have created customized URDF files to be loaded via environment
+variables (e.g. `JACKAL_URDF_EXTRAS`) and have stored them outside any of the folders specified above, you must
+back these up yourself; `backup.sh` will not do this for you.
 
 ## Converting Environment Variables to Clearpath Config
 
-The environment variables used to define your robot in ROS 1 and ROS 2 Foxy can be converted to the `robot.yaml` format to maintain the same robot description when you upgrade to ROS 2 Humble.
+The environment variables used to define your robot in ROS 1 and ROS 2 Foxy can be converted to the `robot.yaml`
+format to maintain the same robot description when you upgrade to ROS 2 Humble.
 Below are some common examples. Visit the [robot.yaml documentation](../config/yaml.mdx) for more details.
 
 ### Attachments
 
-Each platform has platform-specific attachments (formerly decorations) such as bumpers and top plates. These now reside under the [platform](../config/yaml.mdx#platform) section of the `robot.yaml` file.
+Each platform has platform-specific attachments (formerly decorations) such as bumpers and top plates. These
+now reside under the [platform](../config/yaml.mdx#platform) section of the `robot.yaml` file.
 
 <Tabs groupId="platform_codes">
   <TabItem
@@ -209,7 +225,8 @@ platform:
 
 ### Sensors
 
-Sensors can be added under the [sensors](../config/yaml.mdx#sensors) key in the `robot.yaml` file. There is no longer a concept of primary, secondary, etc. sensors. Rather, sensors are enumerated in the order that they are added to the config.
+Sensors can be added under the [sensors](../config/yaml.mdx#sensors) key in the `robot.yaml` file. There is no longer
+a concept of primary, secondary, etc. sensors. Rather, sensors are enumerated in the order that they are added to the config.
 Sensor topics will be automatically set to match the [Clearpath API](../api/sensors_api.mdx#2d-lidar-topics).
 
 

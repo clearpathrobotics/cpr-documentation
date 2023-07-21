@@ -4,22 +4,24 @@ sidebar_label: ROS 2 Overview
 sidebar_position: 1
 ---
 
-For [ROS 2 Humble](https://docs.ros.org/en/humble/index.html) and beyond, the software structure of Clearpath robots has changed significantly. Rather than having individual sets of packages for each
-robot, we have opted to create common `clearpath` packages which are used by all supported platforms. Additionally, we are moving away from using environment variables
-to customize the robot, and instead using a YAML configuration file to describe the robot. We have also defined a [ROS 2 API](api/overview) common to all of our supported platforms. As a result,
+For [ROS 2 Humble](https://docs.ros.org/en/humble/index.html) and beyond, the software structure of Clearpath
+robots has changed significantly. Rather than having individual sets of packages for each robot, we have opted to
+create common `clearpath` packages which are used by all supported platforms. Additionally, we are moving away from
+using environment variables to customize the robot, and instead using a YAML configuration file to describe the
+robot. We have also defined a [ROS 2 API](api/overview) common to all of our supported platforms. As a result,
 our platforms are now more customizable, more modular, and more unified.
 
 ## Terminology {#terminology}
 
-**_Clearpath Platform_**: The _platform_ refers to the vehicle that makes up the base of the robot. The platform may be referred to by
-the platform code to indicate the revision.
+**_Clearpath Platform_**: The _platform_ refers to the vehicle that makes up the base of the robot. The platform
+may be referred to by the platform code to indicate the revision.
 
 **_Clearpath Robot_**: The _robot_ refers to the entire robotic system, including the platform, sensors, and additional accessories.
 
 **_Clearpath Config_**: The _config_ refers to the `robot.yaml` configuration file that defines the Clearpath robot.
 
-**_Clearpath API_**: The _API_ refers to the [ROS 2 application programming interface](api/overview). This is a set of ROS 2 topics and services defined
-by Clearpath which are used by all supported Clearpath platforms.
+**_Clearpath API_**: The _API_ refers to the [ROS 2 application programming interface](api/overview). This is a set
+of ROS 2 topics and services defined by Clearpath which are used by all supported Clearpath platforms.
 
 ## Supported Platforms {#supported-platforms}
 
@@ -64,6 +66,7 @@ sensors that have been validated by Clearpath.
 
 :::note
 
-Debian drivers are automatically installed on robots as part of the [Clearpath Robot Metapackage](../ros/installation/robot.mdx#clearpath-robot-metapackage).
+Debian drivers are automatically installed on robots as part of the
+[Clearpath Robot Metapackage](../ros/installation/robot.mdx#clearpath-robot-metapackage).
 
 :::

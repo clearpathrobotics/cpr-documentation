@@ -6,25 +6,31 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-A remote computer can be used to visualise and interact with the robot. The robot can also be [simulated](../tutorials/simulator/overview) on
-a remote computer to safely test software before deploying to a physical robot.
+A remote computer can be used to visualise and interact with the robot. The robot can also be
+[simulated](../tutorials/simulator/overview) on a remote computer to safely test software before
+deploying to a physical robot.
 
 ### Operating System (OS) {#operating-system}
 
-ROS 2 Humble uses [Ubuntu 22.04](https://releases.ubuntu.com/jammy/) as its Tier 1 operating system. Though other operating systems are supported,
+ROS 2 Humble uses [Ubuntu 22.04](https://releases.ubuntu.com/jammy/) as its Tier 1 operating system. Though other
+operating systems are supported,
 it is highly recommended to use Ubuntu 22.04. For the remote computer, Ubuntu 22.04 Desktop should be installed.
 
 ### Networking
 
-The remote computer should be connected to the same Wi-Fi network as the robot computer, or should be connected via ethernet. If connected over ethernet, set the static IP of the remote computer to use the `192.168.131.1/24` network with an IP address that won't interfere with other devices on the network, such as `192.168.131.99`.
+The remote computer should be connected to the same Wi-Fi network as the robot computer, or should be connected via
+ethernet. If connected over ethernet, set the static IP of the remote computer to use the `192.168.131.1/24` network
+with an IP address that won't interfere with other devices on the network, such as `192.168.131.99`.
 
 ### ROS 2 Humble
 
-Follow the [official instructions](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html) for installing ROS 2 Humble from debian packages.
+Follow the [official instructions](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html) for
+installing ROS 2 Humble from debian packages.
 
 ### Clearpath Desktop metapackage
 
-Once the ROS 2 Humble has been installed, the [Clearpath Desktop](https://github.com/clearpathrobotics/clearpath_desktop) metapackage can be installed.
+Once the ROS 2 Humble has been installed, the [Clearpath Desktop](https://github.com/clearpathrobotics/clearpath_desktop)
+metapackage can be installed.
 
 ```
 sudo apt install ros-humble-clearpath-desktop
@@ -34,7 +40,8 @@ This package will install launch and configuration files for visualising and int
 
 ### Setup Folder
 
-The remote computer will need a copy of the [robot.yaml](../config/yaml) file to generate the same `setup.bash` file as the robot.
+The remote computer will need a copy of the [robot.yaml](../config/yaml) file to generate the same `setup.bash`
+file as the robot.
 
 1. **Create the folder**
 

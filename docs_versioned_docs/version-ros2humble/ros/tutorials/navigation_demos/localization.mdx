@@ -7,9 +7,11 @@ toc_max_heading_level: 4
 ---
 
 Localization is a method of tracking the robot's location within an existing map. It is generally done using
-laser scan data from a 2D LIDAR, and the robot's odometry. For this demo we are using the [Nav2](https://github.com/ros-planning/navigation2) package launch localization.
+laser scan data from a 2D LIDAR, and the robot's odometry. For this demo we are using the
+[Nav2](https://github.com/ros-planning/navigation2) package launch localization.
 
-This tutorial will use the [Clearpath simulator](../simulator/overview), but will work on a physical robot too. We will be using a J100 with a Hokuyo UST10 attached to the front of the robot.
+This tutorial will use the [Clearpath simulator](../simulator/overview), but will work on a physical
+robot too. We will be using a J100 with a Hokuyo UST10 attached to the front of the robot.
 
 <details><summary>J100 YAML</summary>
 <p>
@@ -69,7 +71,8 @@ sensors:
 </details>
 
 :::tip
-Make sure you have installed the simulator before starting this tutorial. Take a look at the [installation](../simulator/install) guide for details.
+Make sure you have installed the simulator before starting this tutorial. Take a look at the
+[installation](../simulator/install) guide for details.
 :::
 
 ## Launching the simulation and localization
@@ -96,7 +99,8 @@ ros2 launch clearpath_viz view_navigation.launch.py namespace:=j100_0001
 ros2 launch clearpath_nav2_demos localization.launch.py setup_path:=$HOME/clearpath/ use_sim_time:=true
 ```
 
-The default map used by `localization.launch.py` is a [map](https://github.com/clearpathrobotics/clearpath_nav2_demos/blob/main/maps/warehouse.yaml) of the simulated warehouse world.
+The default map used by `localization.launch.py` is a
+[map](https://github.com/clearpathrobotics/clearpath_nav2_demos/blob/main/maps/warehouse.yaml) of the simulated warehouse world.
 If you are using a custom map, pass it in with the `map` launch argument:
 
 ```

@@ -8,9 +8,10 @@ toc_max_heading_level: 4
 
 ### Operating System (OS) {#operating-system}
 
-ROS 2 Humble uses [Ubuntu 22.04](https://releases.ubuntu.com/jammy/) as its Tier 1 operating system. Though other operating systems are supported,
-it is highly recommended to use Ubuntu 22.04. For the robot computer, Ubuntu 22.04 Server should be installed. The server version of the OS will not install a
-graphical user interface (GUI).
+ROS 2 Humble uses [Ubuntu 22.04](https://releases.ubuntu.com/jammy/) as its Tier 1 operating system.
+Though other operating systems are supported,
+it is highly recommended to use Ubuntu 22.04. For the robot computer, Ubuntu 22.04 Server should be
+installed. The server version of the OS will not install a graphical user interface (GUI).
 
 When prompted to set the username to `administrator`.
 
@@ -18,7 +19,10 @@ When prompted to set the username to `administrator`.
 
 #### Wi-Fi
 
-To configure Wi-Fi, first log in to the robot's computer. This can be done by connecting the computer to a monitor using an HDMI or DisplayPort cable, and connecting a USB keyboard. Power the robot on and wait for the Ubuntu login prompt to show up. On a fresh install, the default username and password are both `ubuntu`. You will be prompted to change your password.
+To configure Wi-Fi, first log in to the robot's computer. This can be done by connecting the computer
+to a monitor using an HDMI or DisplayPort cable, and connecting a USB keyboard. Power the robot on and
+wait for the Ubuntu login prompt to show up. On a fresh install, the default username and password are
+both `ubuntu`. You will be prompted to change your password.
 
 Once logged in, find the name of your Wi-Fi interface by calling `ip a`. Wi-Fi interface names begin with `wl`.
 
@@ -52,13 +56,16 @@ network:
         send-hostname: true
 ```
 
-Replace `WIRELESS_INTERFACE` with the name of your Wi-Fi interface, `SSID_GOES_HERE` with your Wi-Fi SSID, and `PASSWORD_GOES_HERE` with your Wi-Fi password.
+Replace `WIRELESS_INTERFACE` with the name of your Wi-Fi interface, `SSID_GOES_HERE` with your Wi-Fi
+SSID, and `PASSWORD_GOES_HERE` with your Wi-Fi password.
 
-Save the file and call `sudo netplan apply` to apply the changes. Check `ip a` again to make sure that an IP address has been assigned to your Wi-Fi interface.
+Save the file and call `sudo netplan apply` to apply the changes. Check `ip a` again to make sure that
+an IP address has been assigned to your Wi-Fi interface.
 
 #### Ethernet
 
-The robot's computer can also be connected to a dhcp network over ethernet. Connect an ethernet cable to the built-in ethernet port on the robot's computer and check that an IP has been assigned with `ip a`.
+The robot's computer can also be connected to a dhcp network over ethernet. Connect an ethernet cable
+to the built-in ethernet port on the robot's computer and check that an IP has been assigned with `ip a`.
 
 :::note
 
@@ -68,7 +75,8 @@ You should now be able to SSH into the robot by calling `ssh administrator@<robo
 
 ### ROS 2 Humble
 
-Follow the [official instructions](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html) for installing ROS 2 Humble from debian packages.
+Follow the [official instructions](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html)
+for installing ROS 2 Humble from debian packages.
 
 ### Clearpath Package Server
 
@@ -96,17 +104,20 @@ sudo apt-get update
 
 ### Network Configuration
 
-Once the Clearpath package server is set up, follow the [Clearpath Computer Setup](../networking/computer_setup) instructions to configure the network interfaces.
+Once the Clearpath package server is set up, follow the [Clearpath Computer Setup](../networking/computer_setup)
+instructions to configure the network interfaces.
 
 ### Clearpath Robot metapackage
 
-Once the Clearpath package server has been added, the [Clearpath Robot](https://github.com/clearpathrobotics/clearpath_robot) metapackage can be installed.
+Once the Clearpath package server has been added, the [Clearpath Robot](https://github.com/clearpathrobotics/clearpath_robot)
+metapackage can be installed.
 
 ```
 sudo apt install ros-humble-clearpath-robot
 ```
 
-Installing this package will also install all dependencies required to run any Clearpath robot and supported sensors, other than Clearpath firmware packages.
+Installing this package will also install all dependencies required to run any Clearpath robot and supported sensors,
+other than Clearpath firmware packages.
 
 #### Source install
 
@@ -172,7 +183,7 @@ flashing, you can attempt to run `jackal_firmware_flash.sh` again.
 
 **4. Place the Jackal MCU into normal mode**
 
-Once the firmware has been flashed, place the Jackal MCU back into normal mode by switching the PWR_MODE switch from ALT to NORM.
+Once the firmware has been flashed, place the Jackal MCU back into normal mode by switching the PWR_MODE switch fromALT to NORM.
 The robot will power off. Turn the robot back on by pressing the power button.
 
 ### Setup folder
