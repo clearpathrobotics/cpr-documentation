@@ -33,7 +33,7 @@
     Your terminal session should show the port the webpage is running on.
     The default address is http://localhost:3000/ but this may change if you are already using that port for another site.
 7.  If you want to test something on a mobile screensize; you can do this within your desktop's Chrome browser.
-    When the site is running locally; enter Chrome's developer tools by selecting: _3 dots in the top right_ → _More tools_ → _Developer tools_.
+    When the site is running locally; enter Chrome's developer tools by selecting: The _vertical ellipsis (3 dots) in the top right_ → _More tools_ → _Developer tools_.
     You can then select the _Device Toolbar_ button, and change the screensize, as shown in the two images below.
     We are designing to a smallest screen width of 320 px.
 
