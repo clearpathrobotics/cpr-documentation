@@ -204,39 +204,6 @@ reset the location of the dock. This is done in the following manner:
 3.  After approximately 5 - 10 seconds the dock location should be updated and the UI will 
     reflect the change accordingly.
 
-## Set the Magnetic Declination of the IMU
-
-Before using OutdoorNav Software, the `MAGNETIC_DECLINATION` variable
-must be set. This parameter is in degrees and in ENU convention. Use the
-online calculator on this website to find out the magnetic declination
-at your location.
-
-<https://www.magnetic-declination.com/countries.php>
-
-From this website, navigate to your city and note the **decimal** value
-given. Once the magnetic declination of your location is determined,
-modify the `MAGNETIC_DECLINATION` environment variable in the
-`/etc/ros/setup.bash` on the OutdoorNav Computer. Refer to
-[Connecting to the OutdoorNav Computer](/docs_outdoornav_user_manual/navigation#connecting-to-outdoornav-computer) for
-details on connecting to the OutdoorNav Computer. Then execute the
-following command to open the required file:
-
-``` 
-sudo nano /etc/ros/setup.bash
-```
-
-Once the file has been opened, find the line that exports the
-`MAGNETIC_DECLINATION` variable and modify its value. Once done, use
-`ctrl+x` to close and save your changes. Next reboot the robot using
-`sudo reboot`. commands:
-
-To make sure that your changes have been applied, echo the value of
-`MAGNETIC_DECLINATION` and make sure it has the correct value.
-
-``` bash
-echo $MAGNETIC_DECLINATION
-```
-
 ## Checking GPS RTK Fix {#checking-gpt-rtk-fix}
 
 Each time the UGV has been powered up (or moved from a GPS-denied
