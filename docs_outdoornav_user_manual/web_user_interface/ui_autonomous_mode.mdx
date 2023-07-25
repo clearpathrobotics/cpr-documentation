@@ -270,15 +270,12 @@ class InputLooperTask(CustomTaskBase):
     # Returning True or False will not currently impact the mission but will write the current state to the 
     # /task/result topic accordingly.  
     return True
-
-def __create_task__():
-	return InputLooperTask()
 ```
 
 ##### Custom Task Class
 
 To leverage custom tasks, users will need to create a new file that defines a new class which inherits from `CustomTaskBase`. The `CustomTaskBase` class is 
-found in the `onav_Itasks.custom_task_base` package. It exposes a `SimpleActionServer` (see <a href="http://wiki.ros.org/actionlib_tutorials/Tutorials/Writing%20a%20Simple%20Action%20Server%20using%20the%20Execute%20Callback%20%28Python%29">here</a> 
+found in the `onav_tasks.custom_task_base` package. It exposes a `SimpleActionServer` (see <a href="http://wiki.ros.org/actionlib_tutorials/Tutorials/Writing%20a%20Simple%20Action%20Server%20using%20the%20Execute%20Callback%20%28Python%29">here</a> 
 for further details) object as `_as`, a `UITaskFeedback` object as `_feedback` and a `UITaskResults` object as `_result` to be used as part of 
 the tasks functionality. The custom task manager requires the user to also define a `run_task` method that takes a `UITaskGoal` object as a parameter.
 
@@ -319,16 +316,6 @@ for num in goal.floats:
   self._as.publish_feedback(self._feedback)
 
   return True
-```
-
-##### Creating the Task 
-
-All custom tasks will need to expose a `__create_task__()` method that returns a new instance of their class. If this isn't provided the custom task manager 
-will not load in the module.
-
-```py
-def __create_task__():
-  return InputLooperTask()
 ```
 
 If a custom task is not configured properly the custom task manager will ignore the task and proceed loading in the next task while logging an error with ROS. 
