@@ -144,8 +144,19 @@ rosdep install -r --from-paths src -i -y
 colcon build --symlink-install
 ```
 
+**4. Link the workspace**
+
+Add the following line to your `~/clearpath_ws/src/clearpath_robot/clearpath_robot/scripts/generate` file,
+right under where ros is sourced:
+
+```
+source /home/administrator/clearpath_ws/install/setup.bash
+```
+
+
 :::note
-Make sure to add the workspace to your [robot.yaml](../config/yaml.mdx#system) file.
+This workspace will also need to be sourced in your [robot.yaml](#robot-yaml) file as described 
+in the [ROS2 Environment](../config/yaml#ros-2-environment) section.
 :::
 
 ### Firmware Update

@@ -208,6 +208,7 @@ The **ros2** sections is necessary to setup the ROS 2 middleware.
 - **namespace** specified will be appended as a prefix to all sensor topics to prevent topic cloberring when multiple robots are on the same network and domain ID.
 - **domain_id** specifies the ROS 2 domain ID to use.
 - **rmw_implementation** specifies the ROS 2 middleware to use. **Currently, it only supports `rmw_fastrtps_cpp`.**
+- **workspaces** indicates a list of workspaces that need to be sourced by specifying the path to the setup.py
 
 ### Sample {#system-sample}
 
@@ -233,6 +234,7 @@ system:
     namespace: a200_0000
     domain_id: 0
     rmw_implementation: rmw_fastrtps_cpp
+    workspaces: [/home/administrator/clearpath_ws/install/setup.bash]
 ```
 
 At this point, with just the **serial_number** and **system** defined: our robot is just the standard **Husky A200** platform, and looks like this:
