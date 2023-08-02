@@ -61,16 +61,19 @@ SSID, and `PASSWORD_GOES_HERE` with your Wi-Fi password.
 Save the file and call `sudo netplan apply` to apply the changes. Check `ip a` again to make sure that
 an IP address has been assigned to your Wi-Fi interface.
 
+You should now be able to SSH into the robot by calling `ssh administrator@<robot_ip>` from a remote computer.
+
+:::note
+If the wifi interface indicates down (disabled), enable it using `sudo ip link set dev <interface> up`.
+Replace `<interface>` with the name of your disabled Wi-Fi interface.
+:::
+
 #### Ethernet
 
 The robot's computer can also be connected to a dhcp network over ethernet. Connect an ethernet cable
 to the built-in ethernet port on the robot's computer and check that an IP has been assigned with `ip a`.
 
-:::note
-
 You should now be able to SSH into the robot by calling `ssh administrator@<robot_ip>` from a remote computer.
-
-:::
 
 ### ROS 2 Humble
 
