@@ -206,8 +206,14 @@ Create the setup folder where the [robot.yaml](../config/yaml) file will be stor
 ```
 sudo mkdir /etc/clearpath/ -p && sudo chmod 666 /etc/clearpath/
 ```
+### Robot YAML
 
-Copy your `robot.yaml` file into `/etc/clearpath/`.
+The `robot.yaml` file defines the configuration of the robot including the robot model, all
+supported accessories and any extra urdf elements or ros parameters. Information about the Robot YAML
+is found in the [Robot Configuration](../config/yaml) section. This YAML is used to generate the launch,
+urdf and ros parameter files during runtime.
+
+Create your `robot.yaml` file and then copy it into `/etc/clearpath/`.
 
 ### Robot services
 
