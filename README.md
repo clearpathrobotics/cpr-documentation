@@ -92,13 +92,6 @@ documentation.
 
 During the development phase, follow steps 1-10 of the workflow above. Note that the updates will not affect
 the default view of the user manual, only the "next" version of the manual
-(eg. http://docs.clearpathrobotics.com/docs_outdoornav_user_manual/next/index). You can enable the visibility of the "next" version by setting
-
-```
-includeCurrentVersion: true,
-```
-
-in `docusaurus.config.js` alongside `id: "outdoornav_user_manual",` section. Ensure to reset this to false before releasing the changes.
 
 ### Release Phase
 
