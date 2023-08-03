@@ -77,7 +77,7 @@ const config = {
         remarkPlugins: [math],
         rehypePlugins: [katex],
         showLastUpdateTime: true,
-        includeCurrentVersion: false,
+        includeCurrentVersion: true,
       },
     ],
   ],
