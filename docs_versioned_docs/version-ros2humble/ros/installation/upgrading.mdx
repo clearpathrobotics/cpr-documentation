@@ -581,3 +581,77 @@ sensors:
 ```
   </TabItem>
 </Tabs>
+
+#### GPS
+
+<Tabs groupId="platform_codes">
+  <TabItem
+    value="A200"
+    label="A200"
+  >
+
+Environment variables:
+
+```
+export HUSKY_NAVSAT_PORT=/dev/clearpath/gps
+export HUSKY_NAVSAT_BAUD=19200
+```
+
+`robot.yaml` configuration:
+
+```
+sensors:
+  gps:
+  - model: novatel_smart6
+    urdf_enabled: true
+    launch_enabled: true
+    parent: top_plate_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      nmea_navsat_driver:
+        port:"/dev/clearpath/gps"
+        baud: 19200
+```
+  </TabItem>
+  <TabItem
+    value="J100"
+    label="J100"
+    default
+  >
+
+Environment variables:
+
+```
+export JACKAL_NAVSAT=1
+export JACKAL_NAVSAT_PORT="/dev/clearpath/gps"
+export JACKAL_NAVSAT_BAUD=57600
+export JACKAL_NAVSAT_RTK=0
+export JACKAL_NAVSAT_RTK_DEVICE=wlan0
+export JACKAL_NAVSAT_RTK_BAUD=57600
+export JACKAL_NAVSAT_MOUNT="rear"
+export JACKAL_NAVSAT_PREFIX="rear"
+export JACKAL_NAVSAT_PARENT="rear_mount"
+export JACKAL_NAVSAT_MODEL="smart6"
+export JACKAL_NAVSAT_OFFSET="0 0 0"
+export JACKAL_NAVSAT_RPY="0 0 0"
+```
+
+`robot.yaml` configuration:
+
+```
+sensors:
+  gps:
+  - model: novatel_smart6
+    urdf_enabled: true
+    launch_enabled: true
+    parent: rear_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      nmea_navsat_driver:
+        port:"/dev/clearpath/gps"
+        baud: 57600
+```
+  </TabItem>
+</Tabs>
