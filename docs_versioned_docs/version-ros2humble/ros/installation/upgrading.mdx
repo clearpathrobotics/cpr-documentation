@@ -180,6 +180,29 @@ platform:
     default
   >
 
+Environment variables:
+
+```
+export JACKAL_FRONT_ACCESSORY_FENDER=1
+export JACKAL_REAR_ACCESSORY_FENDER=0
+```
+
+`robot.yaml` configuration:
+
+```
+platform:
+  attachments:
+    front_fender:
+      enabled: true
+      model: sensor
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+    rear_fender:
+      enabled: true
+      model: default
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+```
   </TabItem>
 </Tabs>
 
