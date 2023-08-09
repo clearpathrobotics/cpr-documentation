@@ -6,6 +6,11 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
+:::note
+The '#' in the topic represents the index of the sensor. Indexing begins at 0 and will increment for
+each new sensor of that type that is added. Internal sensors such as IMU's will be indexed first.
+:::
+
 ## 2D Lidar topics
 
 | Topic                            | Message type                                                                                                 | Description     | QoS                                       |
@@ -44,7 +49,4 @@ toc_max_heading_level: 4
 | :-------------------------- | :----------------------------------------------------------------------------------------------------------- | :--------------------- | :---------------------------------------- |
 | sensors/gps\_#/fix | [sensor_msgs/NavSatFix](https://github.com/ros2/common_interfaces/blob/humble/sensor_msgs/msg/NavSatFix.msg) | Navsat Fix information | [System Default](overview#system-default) |
 
-:::note
-The '#' in the topic represents the index of the sensor. Indexing begins at 0 and will increment for
-each new sensor of that type that is added. Internal sensors such as IMU's will be indexed first.
-:::
+

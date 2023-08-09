@@ -151,27 +151,27 @@ export HUSKY_SENSOR_ARCH_RPY='0 0 0'
 platform:
   attachments:
     front_bumper:
-      enabled: true
-      model: wibotic
+      enabled: true           # HUSKY_FRONT_BUMPER=1
+      model: wibotic          # HUSKY_WIBOTIC_BUMPER=1
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
-      extension: 0.0
+      extension: 0.0          # HUSKY_FRONT_BUMPER_EXTEND=0
     rear_bumper:
-      enabled: true
+      enabled: true           # HUSKY_REAR_BUMPER=1
       model: default
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
-      extension: 0.1
+      extension: 0.1          # HUSKY_REAR_BUMPER_EXTEND=0.1
     top_plate:
-      enabled: true
-      model: large
+      enabled: true           # HUSKY_TOP_PLATE_ENABLED=1
+      model: large            # HUSKY_LARGE_TOP_PLATE=1
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
     structure:
-      enabled: true
-      model: sensor_arch_510
-      xyz: [0.0, 0.0, 0.0]
-      rpy: [0.0, 0.0, 0.0]
+      enabled: true           # HUSKY_SENSOR_ARCH=1
+      model: sensor_arch_510  # HUSKY_SENSOR_ARCH_HEIGHT='510'
+      xyz: [0.0, 0.0, 0.0]    # HUSKY_SENSOR_ARCH_OFFSET='0 0 0'
+      rpy: [0.0, 0.0, 0.0]    # HUSKY_SENSOR_ARCH_RPY='0 0 0'
 ```
   </TabItem>
   <TabItem
@@ -194,12 +194,12 @@ platform:
   attachments:
     front_fender:
       enabled: true
-      model: sensor
+      model: sensor         # JACKAL_FRONT_ACCESSORY_FENDER=1
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
     rear_fender:
       enabled: true
-      model: default
+      model: default        # JACKAL_REAR_ACCESSORY_FENDER=0
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
 ```
@@ -248,30 +248,32 @@ export HUSKY_LMS1XX_SECONDARY_RPY='0.0 0.0 3.14159'
 ```
 sensors:
   lidar2d:
-  - model: sick_lms1xx
+  - model: sick_lms1xx            # HUSKY_LMS1XX_ENABLED=1
     urdf_enabled: true
     launch_enabled: true
-    parent: top_plate_link
-    xyz: [0.2206, 0.0, 0.00635]
-    rpy: [0.0, 0.0, 0.0]
+    parent: top_plate_link        # HUSKY_LMS1XX_PARENT='top_plate_link'
+    xyz: [0.2206, 0.0, 0.00635]   # HUSKY_LMS1XX_XYZ='0.2206 0.0 0.00635'
+    rpy: [0.0, 0.0, 0.0]          # HUSKY_LMS1XX_RPY='0.0 0.0 0.0'
     ros_parameters:
-      frame_id: lidar2d_0_laser
-      hostname: 192.168.131.20
-      port: 2112
-      min_ang: -2.391
-      max_ang: 2.391
-  - model: sick_lms1xx
+      lms1xx:
+        frame_id: lidar2d_0_laser
+        hostname: 192.168.131.20    # HUSKY_LMS1XX_IP='192.168.131.20'
+        port: 2112
+        min_ang: -2.391
+        max_ang: 2.391
+  - model: sick_lms1xx            # HUSKY_LMS1XX_SECONDARY_ENABLED=1
     urdf_enabled: true
     launch_enabled: true
-    parent: top_plate_link
-    xyz: [-0.2206, 0.0, 0.00635]
-    rpy: [0.0, 0.0, 3.14159]
+    parent: top_plate_link        # HUSKY_LMS1XX_SECONDARY_PARENT='top_plate_link'
+    xyz: [-0.2206, 0.0, 0.00635]  # HUSKY_LMS1XX_SECONDARY_XYZ='-0.2206 0.0 0.00635'
+    rpy: [0.0, 0.0, 3.14159]      # HUSKY_LMS1XX_SECONDARY_RPY='0.0 0.0 3.14159'
     ros_parameters:
-      frame_id: lidar2d_1_laser
-      hostname: 192.168.131.21
-      port: 2112
-      min_ang: -2.391
-      max_ang: 2.391
+      lms1xx:
+        frame_id: lidar2d_1_laser
+        hostname: 192.168.131.21    # HUSKy_LMS1XX_SECONDARY_IP='192.168.131.21'
+        port: 2112
+        min_ang: -2.391
+        max_ang: 2.391
 ```
   </TabItem>
   <TabItem
@@ -311,30 +313,32 @@ export JACKAL_LASER_SECONDARY_RPY="0 0 3.14159"
 ```
 sensors:
   lidar2d:
-  - model: sick_lms1xx
+  - model: sick_lms1xx            # JACKAL_LASER_MODEL=lms1xx
     urdf_enabled: true
-    launch_enabled: true
-    parent: front_mount
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
+    launch_enabled: true          # JACKAL_LASER=1
+    parent: front_mount           # JACKAL_LASER_PARENT="front_mount"
+    xyz: [0.0, 0.0, 0.0]          # JACKAL_LASER_OFFSET="0 0 0"
+    rpy: [0.0, 0.0, 0.0]          # JACKAL_LASER_RPY="0 0 0"
     ros_parameters:
-      frame_id: lidar2d_0_laser
-      hostname: 192.168.131.20
-      port: 2112
-      min_ang: -2.391
-      max_ang: 2.391
-  - model: sick_lms1xx
+      lms1xx:
+        frame_id: lidar2d_0_laser
+        hostname: 192.168.131.20  # JACKAL_LASER_HOST="192.168.131.20"
+        port: 2112
+        min_ang: -2.391
+        max_ang: 2.391
+  - model: sick_lms1xx            # JACKAL_LASER_SECONDARY_MODEL="lms1xx"
     urdf_enabled: true
-    launch_enabled: true
-    parent: rear_mount
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 3.14159]
+    launch_enabled: true          # JACKAL_LASER_SECONDARY=1
+    parent: rear_mount            # JACKAL_LASER_SECONDARY_PARENT="rear_mount"
+    xyz: [0.0, 0.0, 0.0]          # JACKAL_LASER_SECONDARY_OFFSET="0 0 0"
+    rpy: [0.0, 0.0, 3.14159]      # JACKAL_LASER_SECONDARY_RPY="0 0 3.14159"
     ros_parameters:
-      frame_id: lidar2d_1_laser
-      hostname: 192.168.131.21
-      port: 2112
-      min_ang: -2.391
-      max_ang: 2.391
+      lms1xx:
+        frame_id: lidar2d_1_laser
+        hostname: 192.168.131.21  # JACKAL_LASER_SECONDARY_HOST="192.168.131.21"
+        port: 2112
+        min_ang: -2.391
+        max_ang: 2.391
 ```
   </TabItem>
 </Tabs>
@@ -378,30 +382,28 @@ sensors:
   lidar3d:
   - model: velodyne_lidar
     urdf_enabled: true
-    launch_enabled: true
-    parent: top_plate_link
-    xyz: [0.2206, 0.0, 0.00635]
-    rpy: [0.0, 0.0, 0.0]
+    launch_enabled: true            # HUSKY_LASER_3D_ENABLED=1
+    parent: top_plate_link          # HUSKY_LASER_3D_PARENT='top_plate_link'
+    xyz: [0.2206, 0.0, 0.00635]     # HUSKY_LASER_3D_XYZ='0.2206 0.0 0.00635'
+    rpy: [0.0, 0.0, 0.0]            # HUSKY_LASER_3D_RPY='0 0 0'
     ros_parameters:
-      frame_id: lidar3d_0_laser
-      device_ip: 192.168.131.20
-      port: 2368
-      model: VLP16
-      fixed_frame: lidar3d_0_laser
-      target_frame: lidar3d_0_laser
+      velodyne_driver_node:
+        frame_id: lidar3d_0_laser
+        device_ip: 192.168.131.20   # HUSKY_LASER_3D_HOST='192.168.131.20'
+        port: 2368
+        model: VLP16
   - model: velodyne_lidar
     urdf_enabled: true
-    launch_enabled: true
-    parent: top_plate_link
-    xyz: [-0.2206, 0.0, 0.00635]
-    rpy: [0.0, 0.0, 3.14159]
+    launch_enabled: true            # HUSKY_LASER_3D_SECONDARY_ENABLED=1
+    parent: top_plate_link          # HUSKY_LASER_3D_SECONDARY_PARENT='top_plate_link'
+    xyz: [-0.2206, 0.0, 0.00635]    # HUSKY_LASER_3D_SECONDARY_XYZ='-0.2206 0.0 0.00635'
+    rpy: [0.0, 0.0, 3.14159]        # HUSKY_LASER_3D_SECONDARY_RPY='0 0 3.14159'
     ros_parameters:
-      frame_id: lidar3d_1_laser
-      device_ip: 192.168.131.21
-      port: 2368
-      model: VLP16
-      fixed_frame: lidar3d_1_laser
-      target_frame: lidar3d_1_laser
+      velodyne_driver_node:
+        frame_id: lidar3d_1_laser
+        device_ip: 192.168.131.21   # HUSKY_LASER_3D_SECONDARY_HOST='192.168.131.21'
+        port: 2368
+        model: VLP16
 ```
   </TabItem>
   <TabItem
@@ -432,17 +434,16 @@ sensors:
   lidar3d:
   - model: velodyne_lidar
     urdf_enabled: true
-    launch_enabled: true
-    parent: mid_mount
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
+    launch_enabled: true            # JACKAL_LASER_3D=1
+    parent: mid_mount               # JACKAL_LASER_3D_PARENT="mid_mount"
+    xyz: [0.0, 0.0, 0.0]            # JACKAL_LASER_3D_OFFSET="0 0 0"
+    rpy: [0.0, 0.0, 0.0]            # JACKAL_LASER_3D_RPY="0 0 0"
     ros_parameters:
-      frame_id: lidar3d_0_laser
-      device_ip: 192.168.131.20
-      port: 2368
-      model: VLP16
-      fixed_frame: lidar3d_0_laser
-      target_frame: lidar3d_0_laser
+      velodyne_driver_node:
+        frame_id: lidar3d_0_laser
+        device_ip: 192.168.131.20   # JACKAL_LASER_3D_HOST="192.168.131.20"
+        port: 2368
+        model: VLP16
 ```
   </TabItem>
 </Tabs>
@@ -481,14 +482,14 @@ export HUSKY_REALSENSE_SECONDARY_ENABLED=1
 export HUSKY_REALSENSE_SECONDARY_SERIAL='1'
 export HUSKY_REALSENSE_SECONDARY_TOPIC='realsense_secondary'
 export HUSKY_REALSENSE_SECONDARY_POINTCLOUD_ENABLED=1
-export HUSKY_REALSENSE_DEPTH_ENABLED=1
-export HUSKY_REALSENSE_DEPTH_FRAMERATE='30'
-export HUSKY_REALSENSE_DEPTH_HEIGHT='480'
-export HUSKY_REALSENSE_DEPTH_WIDTH='640'
-export HUSKY_REALSENSE_COLOR_ENABLED=1
-export HUSKY_REALSENSE_COLOR_FRAMERATE='30'
-export HUSKY_REALSENSE_COLOR_HEIGHT='480'
-export HUSKY_REALSENSE_COLOR_WIDTH='640'
+export HUSKY_REALSENSE_SECONDARY_DEPTH_ENABLED=1
+export HUSKY_REALSENSE_SECONDARY_DEPTH_FRAMERATE='30'
+export HUSKY_REALSENSE_SECONDARY_DEPTH_HEIGHT='480'
+export HUSKY_REALSENSE_SECONDARY_DEPTH_WIDTH='640'
+export HUSKY_REALSENSE_SECONDARY_COLOR_ENABLED=1
+export HUSKY_REALSENSE_SECONDARY_COLOR_FRAMERATE='30'
+export HUSKY_REALSENSE_SECONDARY_COLOR_HEIGHT='480'
+export HUSKY_REALSENSE_SECONDARY_COLOR_WIDTH='640'
 export HUSKY_REALSENSE_SECONDARY_PREFIX='secondary_camera'
 export HUSKY_REALSENSE_SECONDARY_PARENT='top_plate_link'
 export HUSKY_REALSENSE_SECONDARY_XYZ='0 0 0'
@@ -502,34 +503,44 @@ sensors:
   camera:
   - model: intel_realsense
     urdf_enabled: true
-    launch_enabled: true
-    parent: top_plate_link
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
+    launch_enabled: true                  # HUSKY_REALSENSE_ENABLED=1
+    parent: top_plate_link                # HUSKY_REALSENSE_PARENT='top_plate_link'
+    xyz: [0.0, 0.0, 0.0]                  # HUSKY_REALSENSE_XYZ='0 0 0'
+    rpy: [0.0, 0.0, 0.0]                  # HUSKY_REALSENSE_RPY='0 0 0'
     ros_parameters:
-      camera_name: camera_0
-      device_type: d435
-      serial_no: "0"
-      enable_color: true
-      rgb_camera.profile: 640,480,30
-      enable_depth: true
-      depth_module.profile: 640,480,30
-      pointcloud.enable: true
+      camera:
+        camera_name: camera_0
+        device_type: d435
+        serial_no: "0"                    # HUSKY_REALSENSE_SERIAL='0'
+        enable_color: true                # HUSKY_REALSENSE_COLOR_ENABLED=1
+        rgb_camera.profile: 640,480,30    # HUSKY_REALSENSE_COLOR_WIDTH='640'
+                                          # HUSKY_REALSENSE_COLOR_HEIGHT='480'
+                                          # HUSKY_REALSENSE_COLOR_FRAMERATE='30'
+        enable_depth: true                # HUSKY_REALSENSE_DEPTH_ENABLED=1
+        depth_module.profile: 640,480,30  # HUSKY_REALSENSE_DEPTH_WIDTH='640'
+                                          # HUSKY_REALSENSE_DEPTH_HEIGHT='480'
+                                          # HUSKY_REALSENSE_DEPTH_FRAMERATE='30'
+        pointcloud.enable: true           # HUSKY_REALSENSE_POINTCLOUD_ENABLED=1
   - model: intel_realsense
     urdf_enabled: true
-    launch_enabled: true
-    parent: top_plate_link
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
+    launch_enabled: true                  # HUSKY_REALSENSE_SECONDARY_ENABLED=1
+    parent: top_plate_link                # HUSKY_REALSENSE_SECONDARY_PARENT='top_plate_link'
+    xyz: [0.0, 0.0, 0.0]                  # HUSKY_REALSENSE_SECONDARY_XYZ='0 0 0'
+    rpy: [0.0, 0.0, 0.0]                  # HUSKY_REALSENSE_SECONDARY_RPY='0 0 0'
     ros_parameters:
-      camera_name: camera_1
-      device_type: d435
-      serial_no: "1"
-      enable_color: true
-      rgb_camera.profile: 640,480,30
-      enable_depth: true
-      depth_module.profile: 640,480,30
-      pointcloud.enable: true
+      camera:
+        camera_name: camera_1
+        device_type: d435
+        serial_no: "1"                    # HUSKY_REALSENSE_SECONDARY_SERIAL='1'
+        enable_color: true                # HUSKY_REALSENSE_SECONDARY_COLOR_ENABLED=1
+        rgb_camera.profile: 640,480,30    # HUSKY_REALSENSE_SECONDARY_COLOR_WIDTH='640'
+                                          # HUSKY_REALSENSE_SECONDARY_COLOR_HEIGHT='480'
+                                          # HUSKY_REALSENSE_SECONDARY_COLOR_FRAMERATE='30'
+        enable_depth: true                # HUSKY_REALSENSE_SECONDARY_DEPTH_ENABLED=1
+        depth_module.profile: 640,480,30  # HUSKY_REALSENSE_SECONDARY_DEPTH_WIDTH='640'
+                                          # HUSKY_REALSENSE_SECONDARY_DEPTH_HEIGHT='480'
+                                          # HUSKY_REALSENSE_SECONDARY_DEPTH_FRAMERATE='30'
+        pointcloud.enable: true           # HUSKY_REALSENSE_SECONDARY_POINTCLOUD_ENABLED=1
 ```
   </TabItem>
 </Tabs>
@@ -548,7 +559,7 @@ Environment variables:
 export HUSKY_IMU_XYZ='0.19 0 0.149'
 export HUSKY_IMU_RPY='0 -1.5708 3.1416'
 export HUSKY_IMU_PARENT='base_link'
-export HUSKY_IMU_PORT='/dev/microstrain '
+export HUSKY_IMU_PORT='/dev/microstrain'
 export HUSKY_MAG_CONFIG="$(catkin_find 'husky_bringup' --first-only)/config/mag_config_default.yaml"
 ```
 
@@ -560,12 +571,12 @@ sensors:
   - model: microstrain_imu
     urdf_enabled: true
     launch_enabled: true
-    parent: base_link
-    xyz: [0.19, 0.0, 0.149]
-    rpy: [0, -1.5708, 3.1416]
+    parent: base_link           # HUSKY_IMU_PARENT='base_link'
+    xyz: [0.19, 0.0, 0.149]     # HUSKY_IMU_XYZ='0.19 0 0.149'
+    rpy: [0, -1.5708, 3.1416]   # HUSKY_IMU_RPY='0 -1.5708 3.1416'
     ros_parameters:
       imu_frame_id: imu_0_link
-      port: /dev/microstrain
+      port: /dev/microstrain    # HUSKY_IMU_PORT='/dev/microstrain'
       use_enu_frame: true
 ```
   </TabItem>
@@ -591,12 +602,12 @@ export JACKAL_IMU_MICROSTRAIN_RPY="3.14159 0 -1.5707"
 ```
 sensors:
   imu:
-  - model: microstrain_imu
+  - model: microstrain_imu        # JACKAL_IMU_MICROSTRAIN=1
     urdf_enabled: true
     launch_enabled: true
-    parent: base_link
-    xyz: [-0.139, 0.096, 0.100]
-    rpy: [3.14159, 0.0, -1.5707]
+    parent: base_link             # JACKAL_IMU_MICROSTRAIN_PARENT="base_link"
+    xyz: [-0.139, 0.096, 0.100]   # JACKAL_IMU_MICROSTRAIN_OFFSET="-0.139 0.096 0.100"
+    rpy: [3.14159, 0.0, -1.5707]  # JACKAL_IMU_MICROSTRAIN_RPY="3.14159 0 -1.5707"
     ros_parameters:
       imu_frame_id: imu_0_link
       port: /dev/microstrain
@@ -633,8 +644,8 @@ sensors:
     rpy: [0.0, 0.0, 0.0]
     ros_parameters:
       nmea_navsat_driver:
-        port:"/dev/clearpath/gps"
-        baud: 19200
+        port:"/dev/clearpath/gps"   # HUSKY_NAVSAT_PORT=/dev/clearpath/gps
+        baud: 19200                 # HUSKY_NAVSAT_BAUD=19200
 ```
   </TabItem>
   <TabItem
@@ -665,16 +676,16 @@ export JACKAL_NAVSAT_RPY="0 0 0"
 ```
 sensors:
   gps:
-  - model: novatel_smart6
+  - model: novatel_smart6           # JACKAL_NAVSAT_MODEL="smart6"
     urdf_enabled: true
-    launch_enabled: true
-    parent: rear_mount
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
+    launch_enabled: true            # JACKAL_NAVSAT=1
+    parent: rear_mount              # JACKAL_NAVSAT_PARENT="rear_mount"
+    xyz: [0.0, 0.0, 0.0]            # JACKAL_NAVSAT_OFFSET="0 0 0"
+    rpy: [0.0, 0.0, 0.0]            # JACKAL_NAVSAT_RPY="0 0 0"
     ros_parameters:
       nmea_navsat_driver:
-        port:"/dev/clearpath/gps"
-        baud: 57600
+        port:"/dev/clearpath/gps"   # JACKAL_NAVSAT_PORT="/dev/clearpath/gps"
+        baud: 57600                 # JACKAL_NAVSAT_BAUD=57600
 ```
   </TabItem>
 </Tabs>
