@@ -20,7 +20,9 @@
         - Extension: _Prettier_
         - Extension: _MDX_
     2.  Terminal configured to work with this GitHub repository
-    3.  Node.js is installed
+    3.  Node.js (16.x or newer) is installed
+        1.  To install `nodejs` LTS (18.x currently) on Ubuntu run: `curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - && sudo apt-get install -y nodejs`
+        2.  For all other platforms use: https://nodejs.org/en/download
 2.  Clone this repository,
 
         git clone https://github.com/clearpathrobotics/cpr-documentation.git
@@ -32,7 +34,7 @@
     Your terminal session should show the port the webpage is running on.
     The default address is http://localhost:3000/ but this may change if you are already using that port for another site.
 7.  If you want to test something on a mobile screensize; you can do this within your desktop's Chrome browser.
-    When the site is running locally; enter Chrome's developer tools by selecting: _3 dots in the top right_ → _More tools_ → _Developer tools_.
+    When the site is running locally; enter Chrome's developer tools by selecting: The _vertical ellipsis (3 dots) in the top right_ → _More tools_ → _Developer tools_.
     You can then select the _Device Toolbar_ button, and change the screensize, as shown in the two images below.
     We are designing to a smallest screen width of 320 px.
 
@@ -80,6 +82,8 @@
 
 ## Workflow for publishing OutdoorNav User Manual updates
 
+<details>
+
 The OutdoorNav User Manual is a "versioned" document, which means that a snapshot of the content is
 made to align with a release. This allows users to access version-specific copies of the
 documentation.
@@ -88,7 +92,6 @@ documentation.
 
 During the development phase, follow steps 1-10 of the workflow above. Note that the updates will not affect
 the default view of the user manual, only the "next" version of the manual
-(eg. http://docs.clearpathrobotics.com/docs_outdoornav_user_manual/next/index).
 
 ### Release Phase
 
@@ -99,21 +102,97 @@ When it is time to publish a numbered release of the user manual:
 
         npm run docusaurus docs:version:outdoornav_user_manual <new_version>
 
-3.  Update /docs/software/navigation_packages.mdx to:
-    - Update the version number for the "Latest".
-    - Add an entry for the previous release.
-4.  Update /static/versions.js to update the outdoornav version to match the GitHub tag.
-5.  Build and test the changes (see steps 4-8 from the standard workflow above).
-6.  When ready, publish your branch on GitHub, and submit a Pull Request to merge your changes into the _development_ branch.
+3.  Update /static/versions.js to update the outdoornav version to match the GitHub tag.
+4.  Build and test the changes (see steps 4-8 from the standard workflow above).
+5.  When ready, publish your branch on GitHub, and submit a Pull Request to merge your changes into the _development_ branch.
     Be sure to include the updates to the following:
     - outdoornav_user_manual_versioned_docs/
     - outdoornav_user_manual_versioned_sidebars/
     - outdoornav_user_manual_versions.json
 
-## Workflow for publishing OutdoorNav User Manual updates
+</details>
+
+## Workflow for publishing IndoorNav User Manual updates
+
+<details>
 
 Follow the steps for the OutdoorNav User Manual workflow above, replacing
 **outdoornav** with **indoornav**.
+
+</details>
+
+## Workflow for publishing Robots / ROS User Manual updates
+
+<details>
+
+The Robots / ROS sections of the website are a "versioned" document called `docs`, which means that a snapshot of the content is
+made to align with each ROS version. This allows users to access version-specific copies of the
+documentation.
+
+### Maintenance Phase (For Existing Version)
+
+Follow steps 1-10 from [above](#workflow-for-making-updates). However, all changes will be made to the files within `docs_versioned_docs/` for the particular version that needs to be changed. E.g. any changes to the ROS 2 Humble documentation would be made to the files within `docs_versioned_docs/version-ros2humble/`.
+
+### Development Phase (For New Version)
+
+Start by following step 1 & 2 [above](#workflow-for-making-updates).
+
+Next, to start the development of a new version, the latest released version of the documentation must be copied over into the `docs/` folder.
+
+For Example, for making a new release after humble, the contents of `docs_versioned_docs/version-ros2humble/` would be copied to replace the contents of `docs/`.
+
+Continue through to step 10 of the workflow above. Note that the updates will not affect
+the default view of the user manual, only the "next" version of the manual
+(eg. http://docs.clearpathrobotics.com/docs_outdoornav_user_manual/next/index). You can enable the visibility of the "next" version by setting
+
+```
+includeCurrentVersion: true,
+```
+
+in `docusaurus.config.js` alongside `id: "docs",`. Ensure to reset this to false before releasing the changes.
+
+Once complete, continue to the release phase.
+
+> **Note**
+> The documentation includes unversioned mdx components from `components/` and versioned components from `docs/components/`. If versioning needs to be added move the component into the versioned folder for each version and remap the imports (using relative links).
+
+### Release Phase (For New Version)
+
+When it is time to publish a new version of the manual:
+
+1.  After developing the changes, run the versioning command, where _new_version_ is aligned with the corresponding software release:
+
+        npm run docusaurus docs:version:docs <new_version>
+
+    where the `<new_version>` has no spaces or dashes (E.g. for ROS 2 Humble the version should be set as `ros2humble`)
+
+2.  Update the `docusaurus.config.js` file, adding an entry within versions to map the version name to the display label.
+
+```js
+  versions: {
+    ros2humble: {
+      label: 'ROS 2 Humble',
+    },
+    ros1noetic: {
+      label: 'ROS 1 Noetic',
+    }
+  },
+```
+
+3. Ensure that the "next" version is disabled in the following line in the config:
+
+```
+includeCurrentVersion: false,
+```
+
+4.  Build and test the changes (see steps 4-8 from the standard workflow above).
+5.  When ready, publish your branch on GitHub, and submit a Pull Request to merge your changes into the _development_ branch.
+    Be sure to include the updates to the following:
+    - docs_versioned_docs/
+    - docs_versioned_sidebars/
+    - docs_versions.json
+
+</details>
 
 ## How should I write pages?
 
@@ -142,17 +221,21 @@ This helps User's know where they downloaded the file from later, as the asset i
 
         /docs
 
-2.  Markdown component, like a section to be reused in multiple pages
+2.  Markdown component, like a section to be reused in multiple pages (unversioned)
 
         /components
 
-3.  Images
+3.  Unversioned Images
 
         /static/img
 
 4.  PDFs and similar customer facing files
 
         /static/assets
+
+5.  Versioned Images
+
+    In an `img/` folder next to the markdown files where it will be used.
 
 ## How does the deployed website get updated?
 
@@ -211,6 +294,12 @@ The list below are not strict rules, but are considered good practice to keep im
     Consider using arrows and circles to notate images, with the text included in your Markdown file.
 
     Note: icons, logos, and symbols that are part of the physical product are exempt from this suggestion.
+
+## Links and Imports
+
+All links to, or imports of versioned elements (images, markdown files etc.) must be referred to using relative links (`./img/image-name.png`). These versioned pages will be moved together and ensures that the correct version is used.
+
+All links to, or imports of unversioned static elements must be referred to using absolute paths (`/static/img/image-name.png`). This allows these assets to be found irrelevant of the location of the particular page.
 
 ## SolidWorks image exports
 

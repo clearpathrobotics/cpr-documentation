@@ -1,0 +1,182 @@
+---
+title: Localization
+sidebar_label: Localization
+sidebar_position: 3
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+Localization is a method of tracking the robot's location within an existing map. It is generally done using
+laser scan data from a 2D LIDAR, and the robot's odometry. For this demo we are using the [Nav2](https://github.com/ros-planning/navigation2) package launch localization.
+
+This tutorial will use the [Clearpath simulator](../simulator/overview), but will work on a physical robot too. We will be using a J100 with a Hokuyo UST10 attached to the front of the robot.
+
+<details><summary>J100 YAML</summary>
+<p>
+
+```yaml
+serial_number: a200-0000
+version: 0
+system:
+  hosts:
+    self: cpr-a200-0000
+    platform:
+      cpr-a200-0000: 192.168.131.1
+    onboard: {}
+    remote: {}
+  ros2:
+    username: administrator
+    namespace: a200_0000
+    domain_id: 0
+    rmw_implementation: rmw_fastrtps_cpp
+platform:
+  controller: ps4
+  decorations:
+    front_bumper:
+      enabled: true
+      model: default
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      extension: 0.0
+    rear_bumper:
+      enabled: true
+      model: default
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      extension: 0.0
+    structure:
+      enabled: true
+      model: sensor_arch_300
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+    top_plate:
+      enabled: true
+      model: pacs
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+  extras:
+    urdf: null
+    control: null
+accessories:
+  box:
+    - name: user_bay_cover
+      parent: top_plate_link
+      xyz: [0.0, 0.0, 0.00735]
+      rpy: [0.0, 0.0, 0.0]
+      size: [0.4, 0.4, 0.002]
+  cylinder: []
+  link: []
+  mesh: []
+  sphere: []
+mounts:
+  bracket:
+    - parent: top_plate_mount_d1
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      model: horizontal
+  fath_pivot:
+    - parent: sensor_arch_mount
+      xyz: [0.0, 0.0, -0.021]
+      rpy: [3.1415, 0.0, 0.0]
+      angle: 0.0
+  riser: []
+sensors:
+  camera:
+    - model: intel_realsense
+      urdf_enabled: true
+      launch_enabled: true
+      parent: fath_pivot_0_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ros_parameters:
+        camera_name: camera_0
+        device_type: d435
+        serial_no: "0"
+        enable_color: true
+        rgb_camera.profile: 640,480,30
+        enable_depth: true
+        depth_module.profile: 640,480,30
+        pointcloud.enable: true
+  gps: []
+  imu: []
+  lidar2d:
+    - model: hokuyo_ust10
+      urdf_enabled: true
+      launch_enabled: true
+      parent: bracket_0_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ros_parameters:
+        laser_frame_id: lidar2d_0_laser
+        ip_address: 192.168.131.20
+        ip_port: 10940
+        angle_min: -3.141592653589793
+        angle_max: 3.141592653589793
+  lidar3d:
+    - model: velodyne_lidar
+      urdf_enabled: true
+      launch_enabled: true
+      parent: sensor_arch_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ros_parameters:
+        frame_id: lidar3d_0_laser
+        device_ip: 192.168.131.25
+        port: 2368
+        model: VLP16
+        fixed_frame: lidar3d_0_laser
+        target_frame: lidar3d_0_laser
+```
+
+</p>
+</details>
+
+:::tip
+Make sure you have installed the simulator before starting this tutorial. Take a look at the [installation](../simulator/install) guide for details.
+:::
+
+## Launching the simulation and localization
+
+**1. Move the `robot.yaml` file to your setup folder (`$HOME/clearpath` by default).**
+
+**2. Launch the simulation**
+
+```
+ros2 launch clearpath_gz simulation.launch.py
+```
+
+Click on the orange play button in the bottom left corner to start the simulation.
+
+**3. In another terminal, launch RViz**
+
+```
+ros2 launch clearpath_viz view_navigation.launch.py namespace:=j100_0001
+```
+
+**4. In another terminal, launch localization**
+
+```
+ros2 launch clearpath_nav2_demos localization.launch.py setup_path:=$HOME/clearpath/ use_sim_time:=true
+```
+
+The default map used by `localization.launch.py` is a [map](https://github.com/clearpathrobotics/clearpath_nav2_demos/blob/main/maps/warehouse.yaml) of the simulated warehouse world.
+If you are using a custom map, pass it in with the `map` launch argument:
+
+```
+ros2 launch clearpath_nav2_demos localization.launch.py setup_path:=$HOME/clearpath/ use_sim_time:=true map:=/path/to/my/map.yaml
+```
+
+**5. Set the initial pose of the robot**
+
+Use the **2D Pose Estimate** tool in RViz to set the initial pose of the robot. You can now drive the robot
+and it will calculate its position on the map.
+
+<center>
+  <figure>
+    <img
+      src={require("./img/localization.gif").default}
+      width="900"
+    />
+    <figcaption>Localization in simulation</figcaption>
+  </figure>
+</center>

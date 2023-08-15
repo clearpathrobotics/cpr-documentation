@@ -432,7 +432,7 @@ Detailed instructions for mapping can be found here:
 To use your controller, it must be paired with your Boxer and powered on.
 If your purchased the Backpack Computer from Clearpath Robotics, your controller is already paired with your Boxer.
 If your controller has become unpaired or if you wish to pair a new controller, following the instructions in the
-[Boxer Tutorials](/docs/robots/indoor_robots/boxer/tutorials_boxer#pairing-the-controller).
+[Boxer Tutorials](./tutorials_boxer#pairing-the-controller).
 
 To use the controller:
 
@@ -456,6 +456,8 @@ To use the controller:
 ### Using ROS
 
 <ComponentUsingRos />
+
+<!-- TODO: Update this when this comes out in ROS 2
 
 To quickly get started running ROS with your Boxer follow the instructions below.
 
@@ -483,7 +485,7 @@ ssh administrator@<computer ip>
 The ROS topics on Boxer can be seen by running:
 
 ```
-rostopic list
+ros2 topic list
 ```
 
 Data from sensors such as the camera, internal IMU, front laser, and rear laser can be seen with:
@@ -526,6 +528,7 @@ To restart ROS without having to reboot the Boxer:
 sudo systemctl restart ros
 sudo systemctl restart ros-bridge
 ```
+-->
 
 ---
 

@@ -8,7 +8,7 @@ toc_max_heading_level: 4
 
 ### Message Definitions
 
-#### cpr_control_msgs/ControlMode.msg {#msg-control-mode}
+#### clearpath_control_msgs/ControlMode.msg {#msg-control-mode}
 
 ```
 # Control mode message
@@ -20,7 +20,7 @@ int8 AUTONOMY=2
 int8 mode
 ```
 
-#### cpr_control_msgs/ControlSelectionState.msg {#msg-control-selection-state}
+#### clearpath_control_msgs/ControlSelectionState.msg {#msg-control-selection-state}
 
 ```
 # The complete state of the control selection module. This message includes the autonomy state as well as the navigation mode.
@@ -29,7 +29,7 @@ ControlState autonomy
 ControlMode mode
 ```
 
-#### cpr_control_msgs/ControlState.msg {#msg-control-state}
+#### clearpath_control_msgs/ControlState.msg {#msg-control-state}
 
 ```
 # The autonomy state message, The autonomy can be either enabled/disabled and active/paused.
@@ -38,7 +38,7 @@ bool enabled
 bool paused
 ```
 
-#### cpr_dock_msgs/DockInfo.msg {#msg-dock-info}
+#### clearpath_dock_msgs/DockInfo.msg {#msg-dock-info}
 
 ```
 # Message definition containing the information of a single dock. This includes identifiers, lat/lon and orientation of the location of a dock.
@@ -62,15 +62,15 @@ float64 longitude
 float64 heading
 ```
 
-#### cpr_dock_msgs/DockProperties.msg {#msg-dock-properties}
+#### clearpath_dock_msgs/DockProperties.msg {#msg-dock-properties}
 
 ```
 # Message definition containing the properties for each of the docks available.
 
-cpr_dock_msgs/DockInfo[] docks
+clearpath_dock_msgs/DockInfo[] docks
 ```
 
-#### cpr_dock_msgs/DockState.msg {#msg-dock-state}
+#### clearpath_dock_msgs/DockState.msg {#msg-dock-state}
 
 ```
 # Message definition containing information on what state the docking process is in.
@@ -84,7 +84,7 @@ uint8 CANCELLED = 4
 uint8 state
 ```
 
-#### cpr_dock_msgs/TargetTrackerState.msg {#msg-target-tracker-state}
+#### clearpath_dock_msgs/TargetTrackerState.msg {#msg-target-tracker-state}
 
 ```
 # Message definition containing the state information of the target tracker.
@@ -102,7 +102,7 @@ float32 score
 float64 distance_to_target
 ```
 
-#### cpr_localization_msgs/LocalizationStatus.msg {#msg-localization-status}
+#### clearpath_localization_msgs/LocalizationStatus.msg {#msg-localization-status}
 
 ```
 # Localization status message for all sources of localization
@@ -118,7 +118,7 @@ GNSSStatus base_station_gnss
 bool dead_reckoning
 ```
 
-#### cpr_localization_msgs/GNSSStatus.msg {#msg-gnss-status}
+#### clearpath_localization_msgs/GNSSStatus.msg {#msg-gnss-status}
 
 ```
 # GNSS receiver status message
@@ -147,7 +147,7 @@ float32[] cn0			        # The carrier-to-noise ratio of each connected satellite
 float64 correction_age    # Age of RTK corrections. -1 indicates none received
 ```
 
-#### cpr_navigation_msgs/Mission.msg {#msg-navigation-mission}
+#### clearpath_navigation_msgs/Mission.msg {#msg-navigation-mission}
 
 ```
 # Message definition for an OutdoorNav mission
@@ -155,7 +155,7 @@ float64 correction_age    # Age of RTK corrections. -1 indicates none received
 std_msgs/Header header
 
 # The goal's final waypoint
-cpr_navigation_msgs/Waypoint goalpoint
+clearpath_navigation_msgs/Waypoint goalpoint
 
 # If a final heading is to be set for the goal, the following fields are required
 bool enable_final_heading
@@ -167,29 +167,29 @@ float64 position_tolerance
 float64 yaw_tolerance
 
 # The intermediate waypoints on the way to the goal
-cpr_navigation_msgs/Waypoint[] viapoints
+clearpath_navigation_msgs/Waypoint[] viapoints
 
 # The list of internal/external software calls that can be assigned to the goal. These will be called in the order that they are added to the list.
-cpr_navigation_msgs/Task[] tasks
+clearpath_navigation_msgs/Task[] tasks
 ```
 
-#### cpr_navigation_msgs/CurrentGoalInfo.msg {#msg-current-goal-info}
+#### clearpath_navigation_msgs/CurrentGoalInfo.msg {#msg-current-goal-info}
 
 ```
 # Message contains an identifier for the goal, as well as the final goal heading and tolerances
 
 string goal_id
-cpr_navigation_msgs/Waypoint goal
+clearpath_navigation_msgs/Waypoint goal
 float64 goal_heading
 float64 goal_position_tolerance
 float64 goal_heading_tolerance
-cpr_navigation_msgs/Waypoint[] viapoints
+clearpath_navigation_msgs/Waypoint[] viapoints
 float64[] viapoint_headings
 float64[] viapoint_position_tolerances
 float64[] viapoint_heading_tolerances
 ```
 
-#### cpr_navigation_msgs/DistanceToGoal.msg {#msg-distance-to-goal}
+#### clearpath_navigation_msgs/DistanceToGoal.msg {#msg-distance-to-goal}
 
 ```
 # Message includes Euclidean and Path distance to goal
@@ -198,16 +198,31 @@ float32 euclidean
 float32 path
 ```
 
-#### cpr_navigation_msgs/MotionState.msg {#msg-motion-state}
+#### clearpath_navigation_msgs/Metrics.msg {#msg-metrics}
+
+```
+# Message containing some metric information related to the autonomy metrics.
+
+float64 total_distance_travelled    # [m]
+float64 total_duration              # [s]
+
+uint64 num_missions_sent
+uint64 num_missions_completed
+uint64 num_replans
+uint64 num_recoveries
+uint64 num_tasks_executed
+```
+
+#### clearpath_navigation_msgs/MotionState.msg {#msg-motion-state}
 
 ```
 # Motion state message to indicate the current motion, expected motion and the direction of travel of the robot.
 
 # State pertaining to current motion of the robot.
 uint8 MOTION_NORMAL=10
-uint8 MOTION_SLOWING=11
-uint8 MOTION_STOPPED=12
-uint8 MOTION_REVERSE=13
+uint8 MOTION_STOPPED=11
+uint8 MOTION_REVERSE=12
+uint8 MOTION_SLOWING=13 # Currently unused
 uint8 motion
 
 # State pertaining to the robot's movement along the path. Predictive, ie state
@@ -217,7 +232,7 @@ uint8 INDICATOR_LEFT_TURN=21
 uint8 INDICATOR_RIGHT_TURN=22
 uint8 INDICATOR_CLOCKWISE=23
 uint8 INDICATOR_COUNTERCLOCKWISE=24
-uint8 INDICATOR_HAZARD=25
+uint8 INDICATOR_HAZARD=25 # Currently unused
 uint8 indicator
 
 # Direction of travel of the robot relative to its physical forward direction.
@@ -226,7 +241,7 @@ uint8 DIRECTION_REVERSE=31
 uint8 direction
 ```
 
-#### cpr_navigation_msgs/NavigationState.msg {#msg-navigation-state}
+#### clearpath_navigation_msgs/NavigationState.msg {#msg-navigation-state}
 
 ```
 # Message containing the current navigation state(s). Navigation may be in multiple states.
@@ -246,7 +261,7 @@ uint8 STATE_DISABLE = 10
 uint8[] states
 ```
 
-#### cpr_navigation_msgs/OdomIntent.msg {#msg-odom-intent}
+#### clearpath_navigation_msgs/OdomIntent.msg {#msg-odom-intent}
 
 ```
 # Message containing current and predicted odom related information
@@ -261,16 +276,16 @@ perception_navigation_msgs/Odom2DLean predicted_odom
 float32 dt
 ```
 
-#### cpr_navigation_msgs/PointVector.msg {#msg-point-vector}
+#### clearpath_navigation_msgs/PointVector.msg {#msg-point-vector}
 
 ```
 # Vector of point vectors (for GUI)
 std_msgs/Header header
 
-cpr_navigation_msgs/Vector2D[] cloud
+clearpath_navigation_msgs/Vector2D[] cloud
 ```
 
-#### cpr_navigation_msgs/Progress.msg (BETA) {#msg-navigation-progress}
+#### clearpath_navigation_msgs/Progress.msg (BETA) {#msg-navigation-progress}
 
 ```
 # Message containing the completion percentage of the currently executed path and the current goal.
@@ -280,7 +295,7 @@ float32 goal_progress
 float32 mission_progress
 ```
 
-#### cpr_navigation_msgs/ScanPoints.msg {#msg-scan-points}
+#### clearpath_navigation_msgs/ScanPoints.msg {#msg-scan-points}
 
 ```
 # Message definition for the detection points used by the navigation that relate to the detected obstacles.
@@ -288,10 +303,10 @@ float32 mission_progress
 std_msgs/Header header
 
 string[] frames_vector
-cpr_navigation_msgs/PointVector[] cloud_vector
+clearpath_navigation_msgs/PointVector[] cloud_vector
 ```
 
-#### cpr_navigation_msgs/Task.msg {#msg-navigation-task}
+#### clearpath_navigation_msgs/Task.msg {#msg-navigation-task}
 
 ```
 # Message definition for the tasks (ie. internal/external software calls) that can be assigned to an OutdoorNav mission.
@@ -304,7 +319,7 @@ float64[] floats
 string[] strings
 ```
 
-#### cpr_navigation_msgs/TrackError.msg {#msg-track-error}
+#### clearpath_navigation_msgs/TrackError.msg {#msg-track-error}
 
 ```
 # The path error message containing the off-path cross track error and the relative heading error to the path direction
@@ -314,7 +329,7 @@ float32 cross_track_error
 float32 heading_error
 ```
 
-#### cpr_navigation_msgs/Vector2D.msg {#msg-vector-2d}
+#### clearpath_navigation_msgs/Vector2D.msg {#msg-vector-2d}
 
 ```
 # 2D Vector of floats (used for GUI)
@@ -322,14 +337,14 @@ float32 heading_error
 float32[2] point
 ```
 
-#### cpr_navigation_msgs/Waypoints.msg {#msg-navigation-waypoints}
+#### clearpath_navigation_msgs/Waypoints.msg {#msg-navigation-waypoints}
 
 ```
 float64 x
 float64 y
 ```
 
-#### cpr_platform_msgs/PlatformID.msg {#msg-platform-id}
+#### clearpath_platform_msgs/PlatformID.msg {#msg-platform-id}
 
 ```
 # Platform ID message containing the model, serial #, hardware and firmware versions
@@ -340,7 +355,7 @@ string hardware_revision
 string firmware_revision
 ```
 
-#### cpr_safety_msgs/WatchdogStatus.msg {#msg-safety-watchdog}
+#### clearpath_safety_msgs/WatchdogStatus.msg {#msg-safety-watchdog}
 
 ```
 # Watchdog status message containing information related to sensor monitoring, emergency stop and safety stops
@@ -524,26 +539,26 @@ uint16 millisecond
 
 ### Service Definitions
 
-#### cpr_control_msgs/srv/SetControlMode.srv {#srv-set-control-mode}
+#### clearpath_control_msgs/srv/SetControlMode.srv {#srv-set-control-mode}
 
 ```
 # Service definition to set the control mode
 
-cpr_control_msgs/ControlMode mode
+clearpath_control_msgs/ControlMode mode
 ---
 ```
 
-#### cpr_dock_msgs/srv/AddDock.srv {#srv-add-dock}
+#### clearpath_dock_msgs/srv/AddDock.srv {#srv-add-dock}
 
 ```
 # A dock information message that will be added to the docks list
-cpr_dock_msgs/DockInfo dock
+clearpath_dock_msgs/DockInfo dock
 ---
 # True if the location was updated/added successfully, otherwise False
 bool success
 ```
 
-#### cpr_dock_msgs/srv/RemoveDock.srv {#srv-remove-dock}
+#### clearpath_dock_msgs/srv/RemoveDock.srv {#srv-remove-dock}
 
 ```
 # A dock information message that will be added to the docks list
@@ -554,7 +569,7 @@ string name
 bool success
 ```
 
-#### cpr_dock_msgs/srv/SetDockLocationById.srv {#srv-set-dock-location-by-id}
+#### clearpath_dock_msgs/srv/SetDockLocationById.srv {#srv-set-dock-location-by-id}
 
 ```
 # The UUID of the dock we're setting a location for
@@ -565,7 +580,7 @@ string uuid
 bool success
 ```
 
-#### cpr_dock_msgs/srv/SetDockLocationByName.srv {#srv-set-dock-location-by-name}
+#### clearpath_dock_msgs/srv/SetDockLocationByName.srv {#srv-set-dock-location-by-name}
 
 ```
 # The UUID of the dock we're setting a location for
@@ -576,7 +591,7 @@ string name
 bool success
 ```
 
-#### cpr_localization_msgs/srv/SetDatum.srv {#srv-set-datum}
+#### clearpath_localization_msgs/srv/SetDatum.srv {#srv-set-datum}
 
 ```
 # Service definition to set the datum with a latitude (lat) and longitude (lon)
@@ -587,7 +602,7 @@ float32 lon
 bool success
 ```
 
-#### cpr_navigation_msgs/srv/SetDelayCompensation.srv {#srv-set-delay-compensation}
+#### clearpath_navigation_msgs/srv/SetDelayCompensation.srv {#srv-set-delay-compensation}
 
 ```
 # Service definition to enable/disable the delay compensation feature. If enabling, the delay to compensate for must be specified in the request.
@@ -599,7 +614,7 @@ bool success
 string message
 ```
 
-#### cpr_navigation_msgs/srv/SetPathSmoother.srv {#srv-set-path-smoother}
+#### clearpath_navigation_msgs/srv/SetPathSmoother.srv {#srv-set-path-smoother}
 
 ```
 # Service definition to enable/disable the path smoothing feature. If enabling, minimum turning radius must be specified in the request.
@@ -612,7 +627,7 @@ bool success
 string message
 ```
 
-#### cpr_navigation_msgs/srv/SetPathShifter.srv {#srv-set-path-shifter}
+#### clearpath_navigation_msgs/srv/SetPathShifter.srv {#srv-set-path-shifter}
 
 ```
 # Service definition to enable/disable the path smoothing feature. If enabling, minimum turning radius must be specified in the request.
@@ -625,7 +640,7 @@ bool success
 string message
 ```
 
-#### cpr_navigation_msgs/srv/SetStopDistance.srv {#srv-set-stop-distance}
+#### clearpath_navigation_msgs/srv/SetStopDistance.srv {#srv-set-stop-distance}
 
 ```
 # Service definition to enable/disable the stop distance. If enabling, the stop distance must be specified in the request.
@@ -1113,7 +1128,7 @@ cpr_mission_scheduler_msgs/Schedule result
 
 ### Action Definitions
 
-#### cpr_dock_msgs/action/Dock.action {#action-dock}
+#### clearpath_dock_msgs/action/Dock.action {#action-dock}
 
 ```
 # Action definition for sending a Clearpath UGV to one of its charging dock.
@@ -1132,7 +1147,7 @@ string state
 float64 distance_to_dock
 ```
 
-#### cpr_dock_msgs/action/Undock.action {#action-undock}
+#### clearpath_dock_msgs/action/Undock.action {#action-undock}
 
 ```
 # Action definition for undocking a Clearpath UGV from one of its charging docks.
@@ -1150,7 +1165,7 @@ string state
 float64 distance_to_dock
 ```
 
-#### cpr_localization_msgs/action/SurveyBaseStation.action {#action-survey-base-station}
+#### clearpath_localization_msgs/action/SurveyBaseStation.action {#action-survey-base-station}
 
 ```
 # Action definition for surveying the base station
@@ -1167,13 +1182,13 @@ bool success
 float32 percent_complete
 ```
 
-#### cpr_navigation_msgs/action/Mission.action {#action-mission}
+#### clearpath_navigation_msgs/action/Mission.action {#action-mission}
 
 ```
 # Action definition for sending a mission to the Clearpath OutdoorNav software
 
 # goal
-cpr_navigation_msgs/Mission mission
+clearpath_navigation_msgs/Mission mission
 ---
 # result
 bool success
@@ -1182,7 +1197,7 @@ bool success
 string state
 ```
 
-#### cpr_dock_msgs/action/Dock.action {#action-dock}
+#### clearpath_dock_msgs/action/Dock.action {#action-dock}
 
 ```
 # Action definition for sending a Clearpath UGV to its charging dock.

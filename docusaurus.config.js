@@ -37,12 +37,22 @@ const config = {
     [
       "@docusaurus/plugin-content-docs",
       {
+        id: "docs",
         path: "docs",
         routeBasePath: "docs",
-        sidebarPath: require.resolve("./sidebars.js"),
+        sidebarPath: require.resolve("./sidebars-docs.js"),
         remarkPlugins: [math],
         rehypePlugins: [katex],
         showLastUpdateTime: true,
+        versions: { 
+          ros2humble: {
+            label: 'ROS 2 Humble',
+          },
+          ros1noetic: {
+            label: 'ROS 1 Noetic',
+          }
+        },
+        includeCurrentVersion: false,
       },
     ],
     [
@@ -67,6 +77,7 @@ const config = {
         remarkPlugins: [math],
         rehypePlugins: [katex],
         showLastUpdateTime: true,
+        includeCurrentVersion: true,
       },
     ],
   ],
@@ -83,44 +94,43 @@ const config = {
         },
         items: [
           {
+            type: "docsVersion",
             to: "/docs/robots",
             label: "Robots",
             position: "left",
+            docsPluginId: "docs",
           },
           {
-            to: "/docs/computers",
-            label: "Computers",
+            type: "docsVersion",
+            to: "/docs/ros",
+            label: "ROS",
             position: "left",
+            docsPluginId: "docs",
           },
           {
-            to: "/docs/sensors",
-            label: "Sensors",
+            type: "docsVersion",
+            label: "OutdoorNav",
             position: "left",
+            docsPluginId: "outdoornav_user_manual",
           },
           {
-            to: "/docs/manipulators",
-            label: "Manipulators",
+            type: "doc",
+            docId: "index",
+            label: "IndoorNav",
             position: "left",
+            docsPluginId: "indoornav_user_manual",
           },
           {
-            to: "/docs/accessories",
-            label: "Accessories",
-            position: "left",
+            type: 'docsVersionDropdown',
+            position: 'right',
+            dropdownActiveClassDisabled: true,
+            docsPluginId: "docs"
           },
           {
-            to: "/docs/components",
-            label: "Components",
-            position: "left",
-          },
-          {
-            to: "/docs/software",
-            label: "Software",
-            position: "left",
-          },
-          {
-            to: "/docs/tools",
-            label: "Tools",
-            position: "left",
+            type: 'docsVersionDropdown',
+            position: 'right',
+            dropdownActiveClassDisabled: true,
+            docsPluginId: "outdoornav_user_manual",
           },
           {
             to: "about",
@@ -142,10 +152,6 @@ const config = {
             label: "Home",
             position: "right",
           },
-          // {
-          //   type: 'docsVersionDropdown',
-          //   docsPluginId: 'outdoornav_user_manual',
-          // }
         ],
       },
       docs: {
