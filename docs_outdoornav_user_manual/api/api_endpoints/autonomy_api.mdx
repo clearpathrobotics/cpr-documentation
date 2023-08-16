@@ -79,13 +79,6 @@ status, and whether the robot is dead reckoning.
 
 &emsp;&emsp;**Description:** Result topic from the mission action.
 
-#### /navigation/current_goal_info
-
-&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/CurrentGoalInfo](definitions#msg-current-goal-info)
-
-&emsp;&emsp;**Description:** string identifier (id), goal and viapoint positions,
-headings, pose/yaw tolerances, etc\...
-
 #### /navigation/distance_to_goal
 
 &emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/DistanceToGoal](definitions#msg-distance-to-goal)
@@ -98,6 +91,13 @@ in meters, from the robot to its current goal.
 &emsp;&emsp;**Message Type:** geometry_msgs/Polygon
 
 &emsp;&emsp;**Description:** The footprint of the robot.
+
+#### /navigation/global_costmap
+
+&emsp;&emsp;**Message Type:** nav_msgs/OccupancyGrid
+
+&emsp;&emsp;**Description:** An occupancy grid consisting of the Free, Occupied or
+Unknown space that the robot uses to plan paths in the environment.
 
 #### /navigation/local_costmap
 
@@ -122,7 +122,7 @@ the navigation. This includes the total distance travelled, duration run, as wel
 information such as how many missions have been sent, how many have been completed and the number
 of replanning maneuvers, recoveries and number of tasks executed.
 
-#### /navigation/motion_state (IN DEVELOPMENT)
+#### /navigation/motion_state
 
 &emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/MotionState](definitions#msg-motion-state)
 

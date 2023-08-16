@@ -173,22 +173,6 @@ clearpath_navigation_msgs/Waypoint[] viapoints
 clearpath_navigation_msgs/Task[] tasks
 ```
 
-#### clearpath_navigation_msgs/CurrentGoalInfo.msg {#msg-current-goal-info}
-
-```
-# Message contains an identifier for the goal, as well as the final goal heading and tolerances
-
-string goal_id
-clearpath_navigation_msgs/Waypoint goal
-float64 goal_heading
-float64 goal_position_tolerance
-float64 goal_heading_tolerance
-clearpath_navigation_msgs/Waypoint[] viapoints
-float64[] viapoint_headings
-float64[] viapoint_position_tolerances
-float64[] viapoint_heading_tolerances
-```
-
 #### clearpath_navigation_msgs/DistanceToGoal.msg {#msg-distance-to-goal}
 
 ```
