@@ -1,0 +1,59 @@
+:::note
+
+Jackal's MCU is mounted to the rear inside wall of the robot. To access it, open the lid, keeping the computer
+tray secured to the underside of the lid.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/jackal_images/mcu-annotated.jpg"
+      width="800"
+    />
+    <figcaption>Jackal's MCU</figcaption>
+  </figure>
+</center>
+
+1. The `M_RST` button, used to reset the MCU.
+2. The MCU mode switch. Left is `NORM` or normal mode, right is `ALT` used for flashing the firmware.
+3. The mini-USB port used for transmitting data. This should be connected to Jackal's PC for both normal operation and firmware flashing.
+
+:::
+
+Jackal firmware can be flashed from the Jackal's computer.
+
+**1. Download the Jackal Firmware package from the Clearpath package server**
+
+```
+sudo apt-get update
+sudo apt-get install ros-humble-jackal-firmware
+```
+
+**2. Prepare the Robot**
+Place Jackal up on blocks. Firmware loading does not usually result in unintended motion, but it's safest when
+off the ground. 
+Open the lid of the robot to expose the MCU and connect the mini-USB cable (`3` in the image above).
+
+**3. Place the Jackal MCU into bootloader mode**
+
+Switch the _PWR_MODE_ switch (`2` in the image above) from _NORM_ to _ALT_. If the robot is on, press the _M_RST_ button. Otherwise, turn the
+robot on with the power button.
+
+**4. Flash the firmware**
+
+```
+jackal_firmware_flash.sh
+```
+
+Flashing progress will be indicated by the flash script. Wait for the firmware to finish flashing.
+
+:::caution
+Do not turn the robot off or unplug the mini-USB cable while flashing firmware. If an error occurs while
+flashing, you can attempt to run `jackal_firmware_flash.sh` again.
+:::
+
+**4. Place the Jackal MCU into normal mode**
+
+Once the firmware has been flashed, place the Jackal MCU back into normal mode by switching the PWR_MODE switch from _ALT_ to _NORM_.
+The robot will power off. Turn the robot back on by pressing the power button.
+
+Jackal will now be using the new firmware you installed.
