@@ -139,7 +139,7 @@ sensors:
   gps: []
   imu: []
   lidar2d:
-    - model: hokuyo_ust10
+    - model: hokuyo_ust
       urdf_enabled: true
       launch_enabled: true
       parent: bracket_0_mount
@@ -758,11 +758,11 @@ imu:
 
 ### LiDAR 2D
 
-- **_hokuyo_ust10:_**
+- **_hokuyo_ust:_**
 
 ```yaml
 lidar2d:
-  - model: hokuyo_ust10
+  - model: hokuyo_ust
     urdf_enabled: true
     launch_enabled: true
     parent: base_link
@@ -859,11 +859,11 @@ lidar3d:
   </figure>
 </center>
 
-Next, we will add a `hokuyo_ust10` to the **bracket** we added earlier. Since that is the first **bracket**, then it's mounting location will be: `bracket_0_mount`; setting the parent link of the sensor, we get:
+Next, we will add a `hokuyo_ust` to the **bracket** we added earlier. Since that is the first **bracket**, then it's mounting location will be: `bracket_0_mount`; setting the parent link of the sensor, we get:
 
 ```yaml
 lidar2d:
-  - model: hokuyo_ust10
+  - model: hokuyo_ust
     urdf_enabled: true
     launch_enabled: true
     parent: bracket_0_mount
@@ -941,7 +941,7 @@ sensors:
   gps: []
   imu: []
   lidar2d:
-    - model: hokuyo_ust10
+    - model: hokuyo_ust
       urdf_enabled: true
       launch_enabled: true
       parent: bracket_0_mount

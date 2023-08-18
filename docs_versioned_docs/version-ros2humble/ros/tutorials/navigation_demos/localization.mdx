@@ -31,6 +31,8 @@ system:
     namespace: j100_0001
     domain_id: 0
     rmw_implementation: rmw_fastrtps_cpp
+    workspaces:
+      - /home/administrator/micro_ros_ws/install/setup.bash
 platform:
   controller: ps4
   decorations:
@@ -56,7 +58,7 @@ platform:
     control: null
 sensors:
   lidar2d:
-    - model: hokuyo_ust10
+    - model: hokuyo_ust
       urdf_enabled: true
       launch_enabled: true
       parent: front_mount
