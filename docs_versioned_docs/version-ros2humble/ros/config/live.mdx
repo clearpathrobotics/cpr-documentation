@@ -13,7 +13,7 @@ This functionality requires a desktop manager to be installed, i.e. these comman
 # Installation
 Install the desktop packages using `apt`. Make sure to have [added Clearpath packages](https://packages.clearpathrobotics.com/) to the source list before installation.
 ```bash
-sudo apt install ros-humble-clearpath-desktop
+sudo apt install ros-humble-clearpath-desktop ros-humble-clearpath-config-live
 ```
 
 # Setup
@@ -26,5 +26,22 @@ Running `view_model.launch.py` will generate the URDF of the robot from the `/et
 
 It will then monitor the `/etc/clearpath/robot.yaml` for changes. Whenever changes are detected, the URDF will be regenerated and the RViz model will be updated.
 
+To run the node:
+```bash
+ros2 launch clearpath_viz view_model.launch.py
+```
 
+# Example
+Starting off with the default A200 Husky YAML, we switch the top plate, add the sensor arch, a fath pivot mount, and finally a Realsense. Everytime we want changes to take effect, we save the file. If after saving no changes take place, then its a indication that these were invalid.
 
+<center>
+  <figure>
+    <img
+      src={require("./img/live_yaml.gif").default}
+      width="900"
+    />
+    <figcaption>Live yaml</figcaption>
+  </figure>
+</center>
+
+> A drawback of using `tf_static` is that these static `TF` frames cannot be removed. Therefore, if you find yourself removing/deleting sections of the model, the mesh will be removed from the model, but the old TF frames will remain unchanged.
