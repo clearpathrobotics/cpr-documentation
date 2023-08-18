@@ -66,6 +66,8 @@ system:
     namespace: a200_0000
     domain_id: 0
     rmw_implementation: rmw_fastrtps_cpp
+    workspaces:
+      - /home/administrator/micro_ros_ws/install/setup.bash
 platform:
   controller: ps4
   decorations:
@@ -234,7 +236,8 @@ system:
     namespace: a200_0000
     domain_id: 0
     rmw_implementation: rmw_fastrtps_cpp
-    workspaces: [/home/administrator/clearpath_ws/install/setup.bash]
+    workspaces:
+      - /home/administrator/micro_ros_ws/install/setup.bash
 ```
 
 At this point, with just the **serial_number** and **system** defined: our robot is just the standard **Husky A200** platform, and looks like this:
