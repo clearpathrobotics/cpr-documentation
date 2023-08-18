@@ -16,7 +16,7 @@ The `robot.yaml` is composed of five major sections:
 
 1. [**system**](#system) level information such as the robot's hostname, IP, and ROS middleware implementation.
 2. [**platform**](#platform) level configurations such as robot specific mounting structures and specifying an extra URDF to attach.
-3. [**accessories**](#accessories) that are URDF primitives: boxes, cylinders, and meshes.
+3. [**links**](#links) that are URDF primitives: boxes, cylinders, and meshes.
 4. [**mounts**](#mounts) that are predefined, generic, sensor mounting structures.
 5. [**sensors**](#sensors) that are selected from an inventory of Clearpath supported sensors.
 
@@ -44,7 +44,7 @@ You can also skip to each section to get an explanation of each part of the samp
 1. [**Serial Number Sample**](#serial-sample)
 2. [**System Sample**](#system-sample)
 3. [**Platform Sample**](#platform-sample)
-4. [**Accessories Sample**](#accessories-sample)
+4. [**Links Sample**](#links-sample)
 5. [**Mounts Sample**](#mounts-sample)
 6. [**Sensors Sample**](#sensors-sample)
 
@@ -68,7 +68,7 @@ system:
     rmw_implementation: rmw_fastrtps_cpp
 platform:
   controller: ps4
-  decorations:
+  attachments:
     front_bumper:
       enabled: true
       model: default
@@ -93,8 +93,7 @@ platform:
       rpy: [0.0, 0.0, 0.0]
   extras:
     urdf: null
-    control: null
-accessories:
+links:
   box:
     - name: user_bay_cover
       parent: top_plate_link
@@ -102,7 +101,7 @@ accessories:
       rpy: [0.0, 0.0, 0.0]
       size: [0.4, 0.4, 0.002]
   cylinder: []
-  link: []
+  frame: []
   mesh: []
   sphere: []
 mounts:
@@ -117,6 +116,9 @@ mounts:
       rpy: [3.1415, 0.0, 0.0]
       angle: 0.0
   riser: []
+  sick: []
+  post: []
+  disk: []
 sensors:
   camera:
     - model: intel_realsense
@@ -126,14 +128,15 @@ sensors:
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
       ros_parameters:
-        camera_name: camera_0
-        device_type: d435
-        serial_no: "0"
-        enable_color: true
-        rgb_camera.profile: 640,480,30
-        enable_depth: true
-        depth_module.profile: 640,480,30
-        pointcloud.enable: true
+        camera:
+          camera_name: camera_0
+          device_type: d435
+          serial_no: '0'
+          enable_color: true
+          rgb_camera.profile: 640,480,30
+          enable_depth: true
+          depth_module.profile: 640,480,30
+          pointcloud.enable: true
   gps: []
   imu: []
   lidar2d:
@@ -144,11 +147,12 @@ sensors:
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
       ros_parameters:
-        laser_frame_id: lidar2d_0_laser
-        ip_address: 192.168.131.20
-        ip_port: 10940
-        angle_min: -3.141592653589793
-        angle_max: 3.141592653589793
+        urg_node:
+          laser_frame_id: lidar2d_0_laser
+          ip_address: 192.168.131.20
+          ip_port: 10940
+          angle_min: -3.141592653589793
+          angle_max: 3.141592653589793
   lidar3d:
     - model: velodyne_lidar
       urdf_enabled: true
@@ -157,12 +161,15 @@ sensors:
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
       ros_parameters:
-        frame_id: lidar3d_0_laser
-        device_ip: 192.168.131.25
-        port: 2368
-        model: VLP16
-        fixed_frame: lidar3d_0_laser
-        target_frame: lidar3d_0_laser
+        velodyne_driver_node:
+          frame_id: lidar3d_0_laser
+          device_ip: 192.168.131.25
+          port: 2368
+          model: VLP16
+        velodyne_convert_node:
+          model: VLP16
+          fixed_frame: lidar3d_0_laser
+          target_frame: lidar3d_0_laser
 ```
 
 </p>
@@ -177,7 +184,7 @@ At this moment, the supported robot platforms are:
 1. [Husky A200](../../robots/outdoor_robots/husky/user_manual_husky/#introduction): `a200-0000`
 2. [Jackal J100](../../robots/outdoor_robots/jackal/user_manual_jackal/#introduction): `j100-0000`
 
-Every robot platform has specific [decorations](#decorations), i.e. platform specific parts, that are selected based on the serial number passed. Therefore, it is required that a serial number is specified in the `robot.yaml`.
+Every robot platform has specific [attachments](#attachments), i.e. platform specific parts, that are selected based on the serial number passed. Therefore, it is required that a serial number is specified in the `robot.yaml`.
 
 ### Sample {#serial-sample}
 
@@ -252,19 +259,20 @@ At this point, with just the **serial_number** and **system** defined: our robot
 
 ## Platform
 
-Every robot platform has unique structures such as versatile sensor mounting solutions, wireless charging receivers, and waterproofing enclosures; we refer to these as decorations.
+Every robot platform has unique structures such as versatile sensor mounting solutions, wireless charging receivers, and waterproofing enclosures; we refer to these as attachments.
 
-#### Decorations
+#### Attachments
 
-There are three types of decorations:
+There are three types of attachments:
 
-1. **bumpers** modify the front and rear of the robot platform.
-2. **top_plates** modify the top of the robot platform.
+1. **bumpers** modify the front face and rear face of the robot platform.
+2. **fenders** modify the area above the wheels on the front and rear of the platform.
+2. **top_plates** modify the top face of the robot platform.
 3. **structures** are large custom parts that are added atop the top plate.
 
-#### Husky A200 {#decorations-a200}
+#### Husky A200 {#attachments-a200}
 
-The **Husky A200** has a few models for each of it's decorations:
+The **Husky A200** has a few models for each of it's attachments:
 
 - **bumpers**:
   - **_default:_** standard bumpers.
@@ -310,39 +318,77 @@ structure:
   rpy: [0.0, 0.0, 0.0]
 ```
 
-#### Jackal J100 {#decorations-j100}
+#### Jackal J100 {#attachments-j100}
 
 The **Jackal J100** currently only has customization options with it's fenders.
 
-- **bumpers**, which correspond to the fenders, can be enabled and disabled.
+- **fenders** can be swapped from the `default` model to the `sensor` model that has a mounting location for a small lidar or camera.
 
 ```yaml
-front_bumper:
+front_fender:
   enabled: true # or false
-  model: default
+  model: default # or sensor
   xyz: [0.0, 0.0, 0.0]
   rpy: [0.0, 0.0, 0.0]
-  extension: 0.0
-rear_bumper:
+rear_fender:
   enabled: true # or false
-  model: default
+  model: default #  or sensor
   xyz: [0.0, 0.0, 0.0]
   rpy: [0.0, 0.0, 0.0]
-  extension: 0.0
 ```
 
 #### Extras
 
-Despite all current customization options, we still would like our users to be able to add in their existing custom URDF to the robot platform URDF.
+Despite all current customization options, we still would like our users to be able to add-in their existing custom URDF to the robot platform URDF and pass in and overwrite parameters to all platform nodes.
 Extras have the following entries:
 
 - **urdf:** absolute path to URDF to add to robot platform URDF.
-- **config:** absolute path to ROS parameters to load for all robot platform nodes, e.g. overwrite control, teleop, and localization parameters.
+- **ros_parameters:** in YAML to pass in parameters to platform nodes. This is useful to change parameters such as the robot's velocity and acceleration.
 
 ```yaml
 extras:
   urdf: null # /absolute/path/to/urdf
-  control: null # /absolute/path/to/ros_parameters
+  ros_parameters: {} # node parameter
+```
+
+#### ROS Parameters
+A common use case is to set and update the parameters to the `platform_velocity_controller` node. These can be used to modify the linear and angular velocity and acceleratation.
+
+These can be passed in as follows:
+
+**A200 Husky Controller Defaults:**
+```yaml
+platform:
+  extras:
+    ros_parameters:
+      platform_velocity_controller:
+        platform_velocity_controller.wheel_radius": 0.1651
+        platform_velocity_controller.linear.x.max_velocity": 1.0
+        platform_velocity_controller.linear.x.min_velocity": -1.0
+        platform_velocity_controller.linear.x.max_acceleration": 3.0
+        platform_velocity_controller.linear.x.min_acceleration": -3.0
+        platform_velocity_controller.angular.z.max_velocity": 2.0
+        platform_velocity_controller.angular.z.min_velocity": -2.0
+        platform_velocity_controller.angular.z.max_acceleration": 6.0
+        platform_velocity_controller.angular.z.min_acceleration": -6.0
+```
+
+
+**J100 Jackal Controller Defaults:**
+```yaml
+platform:
+  extras:
+    ros_parameters:
+      platform_velocity_controller:
+        platform_velocity_controller.wheel_radius": 0.098
+        platform_velocity_controller.linear.x.max_velocity": 2.0
+        platform_velocity_controller.linear.x.min_velocity": -2.0
+        platform_velocity_controller.linear.x.max_acceleration": 20.0
+        platform_velocity_controller.linear.x.min_acceleration": -20.0
+        platform_velocity_controller.angular.z.max_velocity": 4.0
+        platform_velocity_controller.angular.z.min_velocity": -4.0
+        platform_velocity_controller.angular.z.max_acceleration": 25.0
+        platform_velocity_controller.angular.z.min_acceleration": -25.0
 ```
 
 #### Sample {#platform-sample}
@@ -405,7 +451,7 @@ In terms of the **front_bumper** and **rear_bumper**, we left these as defaults.
 ```yaml
 platform:
   controller: ps4
-  decorations:
+  attachments:
     front_bumper:
       enabled: true
       model: default
@@ -430,20 +476,20 @@ platform:
       rpy: [0.0, 0.0, 0.0]
   extras:
     urdf: null
-    control: null
+    ros_parameters: {}
 ```
 
 </p>
 </details>
 
-## Accessories
+## Links
 
-Accessories are any URDF primitive:
+Links are any URDF primitive:
 
-1. **link** in the URDF without any geometry, i.e. just a frame.
+1. **frame** in the URDF without any geometry, i.e. just a frame.
 
 ```yaml
-link:
+frame:
   - name: link_name
     parent: base_link
     xyz: [0.0, 0.0, 0.0]
@@ -495,13 +541,13 @@ mesh:
     visual: /absolute/path/to/mesh.stl
 ```
 
-If a user needs to add a mesh or primitive to represent a payload on their robot, they can either create a URDF and use the platform extras, or they can add an accessory directly through the `robot.yaml`.
+If a user needs to add a mesh or primitive to represent a payload on their robot, they can either create a URDF and use the platform extras, or they can add an link directly through the `robot.yaml`.
 
-Just as is the case in URDF, accessories are added at the center of the primitive. In other words, you will need to slide up all accessories by half their height to have it "sit" on its parent link.
+Just as is the case in URDF, links are added at the center of the primitive. In other words, you will need to slide up all links by half their height to have it "sit" on its parent link.
 
-### Sample {#accessories-sample}
+### Sample {#links-sample}
 
-<details><summary>Sample A200 Accessories Section</summary>
+<details><summary>Sample A200 Links Section</summary>
 <p>
 
 <center>
@@ -514,7 +560,7 @@ Just as is the case in URDF, accessories are added at the center of the primitiv
   </figure>
 </center>
 
-In this sample, we will use accessories to add thin **box** to cover up the user bay.
+In this sample, we will use links to add thin **box** to cover up the user bay.
 
 We add an entry under the **box** list:
 
@@ -537,10 +583,10 @@ box:
   </figure>
 </center>
 
-We leave the rest of the lists all empty, for the resulting accessories section:
+We leave the rest of the lists all empty, for the resulting links section:
 
 ```yaml
-accessories:
+links:
   box:
     - name: user_bay_cover
       parent: top_plate_link
@@ -548,7 +594,7 @@ accessories:
       rpy: [0.0, 0.0, 0.0]
       size: [0.4, 0.4, 0.002]
   cylinder: []
-  link: []
+  frame: []
   mesh: []
   sphere: []
 ```
@@ -592,6 +638,34 @@ fath_pivot:
     xyz: [0.0, 0.0, 0.0]
     rpy: [0.0, 0.0, 0.0]
     angle: 0.0 # in radian
+```
+
+- **sick:** are mounts specifically designed to mount SICK LiDARs. The orientation of the LiDAR on the mount can be set to either `upright` or `inverted`.
+```yaml
+sick:
+  - parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    model: inverted # or upright
+```
+
+- **post:** are vertical extrusion rails to which sensors can be added.
+```yaml
+post:
+  - parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    model: single # or dual or quad
+    spacing: 0.08 # distance between multiple posts if model is dual or quad
+    height: 0.075 # height of post
+```
+
+- **disk:** are circular plates which are used to mount circular sensors, i.e. the Velodyne
+```yaml
+disk:
+  - parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
 ```
 
 ### Sample {#mounts-sample}
@@ -670,6 +744,9 @@ mounts:
       rpy: [3.1415, 0.0, 0.0]
       angle: 0.0
   riser: []
+  sick: []
+  post: []
+  disk: []
 ```
 
 </p>
@@ -704,14 +781,15 @@ camera:
     xyz: [0.0, 0.0, 0.0]
     rpy: [0.0, 0.0, 0.0]
     ros_parameters:
-      camera_name: camera_0
-      device_type: d435
-      serial_no: "0"
-      enable_color: true
-      rgb_camera.profile: 640,480,30
-      enable_depth: true
-      depth_module.profile: 640,480,30
-      pointcloud.enable: true
+      camera:
+        camera_name: camera_0
+        device_type: d435
+        serial_no: "0"
+        enable_color: true
+        rgb_camera.profile: 640,480,30
+        enable_depth: true
+        depth_module.profile: 640,480,30
+        pointcloud.enable: true
 ```
 
 ### GPS
@@ -727,10 +805,59 @@ gps:
     xyz: [0.0, 0.0, 0.0]
     rpy: [0.0, 0.0, 0.0]
     ros_parameters:
-      gps_receiver_frame_id: gps_0_link
-      ip_address: 192.168.131.30
-      ip_port: 55555
-      imu_frame_id: gps_0_link
+      duro_node:
+        gps_receiver_frame_id: gps_0_link
+        ip_address: 192.168.131.30
+        ip_port: 55555
+        imu_frame_id: gps_0_link
+```
+
+- **_garmin_18x_**
+```yaml
+gps:
+  - model: garmin_18x
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      nmea_navsat_driver:
+        frame_id: gps_0_link
+        port: /dev/ttyACM0
+        baud: 115200
+```
+
+- **_novatel_smart6_**
+```yaml
+gps:
+  - model: novatel_smart6
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      nmea_navsat_driver:
+        frame_id: gps_0_link
+        port: /dev/ttyACM0
+        baud: 115200
+```
+
+- **_novatel_smart7_**
+```yaml
+gps:
+  - model: novatel_smart7
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      nmea_navsat_driver:
+        frame_id: gps_0_link
+        port: /dev/ttyACM0
+        baud: 115200
 ```
 
 ### IMU
@@ -746,9 +873,43 @@ imu:
     xyz: [0.0, 0.0, 0.0]
     rpy: [0.0, 0.0, 0.0]
     ros_parameters:
-      imu_frame_id: imu_0_link
-      port: /dev/microstrain_main
-      use_enu_frame: true
+      microstrain_inertial_driver:
+        imu_frame_id: imu_0_link
+        port: /dev/microstrain_main
+        use_enu_frame: true
+```
+
+- **_chrobotics_um6:_**
+
+```yaml
+imu:
+  - model: chrobotics_um6
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      um6_driver:
+        port: /dev/clearpath/imu
+        frame_id: imu_0_link
+        tf_ned_to_enu: true
+```
+
+- **_redshift_um7:_**
+```yaml
+imu:
+  - model: redshift_um7
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      um7_driver:
+        port: /dev/clearpath/imu
+        frame_id: imu_0_link
+        tf_ned_to_enu: true
 ```
 
 ### LiDAR 2D
@@ -764,11 +925,12 @@ lidar2d:
     xyz: [0.0, 0.0, 0.0]
     rpy: [0.0, 0.0, 0.0]
     ros_parameters:
-      laser_frame_id: lidar2d_0_laser
-      ip_address: 192.168.131.20
-      ip_port: 10940
-      angle_min: -3.141592653589793
-      angle_max: 3.141592653589793
+      urg_node:
+        laser_frame_id: lidar2d_0_laser
+        ip_address: 192.168.131.20
+        ip_port: 10940
+        angle_min: -3.141592653589793
+        angle_max: 3.141592653589793
 ```
 
 - **_sick_lms1xx:_**
@@ -782,11 +944,10 @@ lidar2d:
     xyz: [0.0, 0.0, 0.0]
     rpy: [0.0, 0.0, 0.0]
     ros_parameters:
-      frame_id: lidar2d_0_laser
-      hostname: 192.168.131.20
-      port: 2112
-      min_ang: -2.391
-      max_ang: 2.391
+      lms1xx:
+        frame_id: lidar2d_0_laser
+        host: 192.168.131.20
+        port: 2111
 ```
 
 ### LiDAR 3D
@@ -802,12 +963,15 @@ lidar3d:
     xyz: [0.0, 0.0, 0.0]
     rpy: [0.0, 0.0, 0.0]
     ros_parameters:
-      frame_id: lidar3d_0_laser
-      device_ip: 192.168.131.25
-      port: 2368
-      model: VLP16
-      fixed_frame: lidar3d_0_laser
-      target_frame: lidar3d_0_laser
+      velodyne_driver_node:
+        frame_id: lidar3d_0_laser
+        device_ip: 192.168.131.25
+        port: 2368
+        model: VLP16
+      velodyne_convert_node:
+        model: VLP16
+        fixed_frame: lidar3d_0_laser
+        target_frame: lidar3d_0_laser
 ```
 
 ### Sample {#sensors-sample}
@@ -836,12 +1000,15 @@ lidar3d:
     xyz: [0.0, 0.0, 0.0]
     rpy: [0.0, 0.0, 0.0]
     ros_parameters:
-      frame_id: lidar3d_0_laser
-      device_ip: 192.168.131.25
-      port: 2368
-      model: VLP16
-      fixed_frame: lidar3d_0_laser
-      target_frame: lidar3d_0_laser
+      velodyne_driver_node:
+        frame_id: lidar3d_0_laser
+        device_ip: 192.168.131.25
+        port: 2368
+        model: VLP16
+      velodyne_convert_node:
+        model: VLP16
+        fixed_frame: lidar3d_0_laser
+        target_frame: lidar3d_0_laser
 ```
 
 <center>
@@ -865,11 +1032,12 @@ lidar2d:
     xyz: [0.0, 0.0, 0.0]
     rpy: [0.0, 0.0, 0.0]
     ros_parameters:
-      laser_frame_id: lidar2d_0_laser
-      ip_address: 192.168.131.20
-      ip_port: 10940
-      angle_min: -3.141592653589793
-      angle_max: 3.141592653589793
+      urg_node:
+        laser_frame_id: lidar2d_0_laser
+        ip_address: 192.168.131.20
+        ip_port: 10940
+        angle_min: -3.141592653589793
+        angle_max: 3.141592653589793
 ```
 
 <center>
@@ -893,14 +1061,15 @@ camera:
     xyz: [0.0, 0.0, 0.0]
     rpy: [0.0, 0.0, 0.0]
     ros_parameters:
-      camera_name: camera_0
-      device_type: d435
-      serial_no: "0"
-      enable_color: true
-      rgb_camera.profile: 640,480,30
-      enable_depth: true
-      depth_module.profile: 640,480,30
-      pointcloud.enable: true
+      camera:
+        camera_name: camera_0
+        device_type: d435
+        serial_no: '0'
+        enable_color: true
+        rgb_camera.profile: 640,480,30
+        enable_depth: true
+        depth_module.profile: 640,480,30
+        pointcloud.enable: true
 ```
 
 <center>
@@ -925,14 +1094,15 @@ sensors:
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
       ros_parameters:
-        camera_name: camera_0
-        device_type: d435
-        serial_no: "0"
-        enable_color: true
-        rgb_camera.profile: 640,480,30
-        enable_depth: true
-        depth_module.profile: 640,480,30
-        pointcloud.enable: true
+        camera:
+          camera_name: camera_0
+          device_type: d435
+          serial_no: '0'
+          enable_color: true
+          rgb_camera.profile: 640,480,30
+          enable_depth: true
+          depth_module.profile: 640,480,30
+          pointcloud.enable: true
   gps: []
   imu: []
   lidar2d:
@@ -943,11 +1113,12 @@ sensors:
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
       ros_parameters:
-        laser_frame_id: lidar2d_0_laser
-        ip_address: 192.168.131.20
-        ip_port: 10940
-        angle_min: -3.141592653589793
-        angle_max: 3.141592653589793
+        urg_node:
+          laser_frame_id: lidar2d_0_laser
+          ip_address: 192.168.131.20
+          ip_port: 10940
+          angle_min: -3.141592653589793
+          angle_max: 3.141592653589793
   lidar3d:
     - model: velodyne_lidar
       urdf_enabled: true
@@ -956,12 +1127,16 @@ sensors:
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
       ros_parameters:
-        frame_id: lidar3d_0_laser
-        device_ip: 192.168.131.25
-        port: 2368
-        model: VLP16
-        fixed_frame: lidar3d_0_laser
-        target_frame: lidar3d_0_laser
+        velodyne_driver_node:
+          frame_id: lidar3d_0_laser
+          device_ip: 192.168.131.25
+          port: 2368
+          model: VLP16
+        velodyne_convert_node:
+          model: VLP16
+          fixed_frame: lidar3d_0_laser
+          target_frame: lidar3d_0_laser
+
 ```
 
 </p>
