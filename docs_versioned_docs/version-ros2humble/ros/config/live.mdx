@@ -1,0 +1,30 @@
+---
+title: View and Edit the YAML
+sidebar_label: Live YAML
+sidebar_position: 4
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+Users familiar with Clearpath robots, know we provide desktop packages that facilitate the viewing of robot models in RViz without needing to have a real robot. In ROS 2, the `view_model.launch.py` node will check and update the model and display the new changes in RViz.
+
+This functionality requires a desktop manager to be installed, i.e. these commands will not work on Clearpath robot computers since these run Ubuntu 22.04 server rather than desktop.
+
+# Installation
+Install the desktop packages using `apt`. Make sure to have [added Clearpath packages](https://packages.clearpathrobotics.com/) to the source list before installation.
+```bash
+sudo apt install ros-humble-clearpath-desktop
+```
+
+# Setup
+Before running the node, we will need to setup the working directory.
+First, create the directory `/etc/clearpath`.
+Then, copy your `robot.yaml` to `/etc/clearpath/robot.yaml`.
+
+# Run the Node
+Running `view_model.launch.py` will generate the URDF of the robot from the `/etc/clearpath/robot.yaml` and then start RViz.
+
+It will then monitor the `/etc/clearpath/robot.yaml` for changes. Whenever changes are detected, the URDF will be regenerated and the RViz model will be updated.
+
+
+
