@@ -173,22 +173,6 @@ clearpath_navigation_msgs/Waypoint[] viapoints
 clearpath_navigation_msgs/Task[] tasks
 ```
 
-#### clearpath_navigation_msgs/CurrentGoalInfo.msg {#msg-current-goal-info}
-
-```
-# Message contains an identifier for the goal, as well as the final goal heading and tolerances
-
-string goal_id
-clearpath_navigation_msgs/Waypoint goal
-float64 goal_heading
-float64 goal_position_tolerance
-float64 goal_heading_tolerance
-clearpath_navigation_msgs/Waypoint[] viapoints
-float64[] viapoint_headings
-float64[] viapoint_position_tolerances
-float64[] viapoint_heading_tolerances
-```
-
 #### clearpath_navigation_msgs/DistanceToGoal.msg {#msg-distance-to-goal}
 
 ```
@@ -220,9 +204,9 @@ uint64 num_tasks_executed
 
 # State pertaining to current motion of the robot.
 uint8 MOTION_NORMAL=10
-uint8 MOTION_SLOWING=11
-uint8 MOTION_STOPPED=12
-uint8 MOTION_REVERSE=13
+uint8 MOTION_STOPPED=11
+uint8 MOTION_REVERSE=12
+uint8 MOTION_SLOWING=13 # Currently unused
 uint8 motion
 
 # State pertaining to the robot's movement along the path. Predictive, ie state
@@ -232,7 +216,7 @@ uint8 INDICATOR_LEFT_TURN=21
 uint8 INDICATOR_RIGHT_TURN=22
 uint8 INDICATOR_CLOCKWISE=23
 uint8 INDICATOR_COUNTERCLOCKWISE=24
-uint8 INDICATOR_HAZARD=25
+uint8 INDICATOR_HAZARD=25 # Currently unused
 uint8 indicator
 
 # Direction of travel of the robot relative to its physical forward direction.

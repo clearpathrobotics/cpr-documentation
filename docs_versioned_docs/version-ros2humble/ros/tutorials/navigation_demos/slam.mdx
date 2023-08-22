@@ -6,8 +6,12 @@ toc_min_heading_level: 2
 toc_max_heading_level: 5
 ---
 
-Simultaneous localization and mapping (SLAM) is a method of generating a map and tracking the robot's location within the map. It is generally done using
-laser scan data from a 2D LIDAR, and the robot's odometry. For this demo we are using the [slam_toolbox](https://github.com/SteveMacenski/slam_toolbox) package to map our environment. This tutorial will use the [Clearpath simulator](../simulator/overview), but will work on a physical robot too. We will be using a J100 with a Hokuyo UST10 attached to the front of the robot. 
+Simultaneous localization and mapping (SLAM) is a method of generating a map and tracking the robot's
+location within the map. It is generally done using
+laser scan data from a 2D LIDAR, and the robot's odometry. For this demo we are using the
+[slam_toolbox](https://github.com/SteveMacenski/slam_toolbox) package to map our environment.
+This tutorial will use the [Clearpath simulator](../simulator/overview), but will work on a physical
+robot too. We will be using a J100 with a Hokuyo UST10 attached to the front of the robot. 
 
 <details><summary>J100 YAML</summary>
 <p>
@@ -27,6 +31,8 @@ system:
     namespace: j100_0001
     domain_id: 0
     rmw_implementation: rmw_fastrtps_cpp
+    workspaces:
+      - /home/administrator/micro_ros_ws/install/setup.bash
 platform:
   controller: ps4
   decorations:
@@ -52,7 +58,7 @@ platform:
     control: null
 sensors:
   lidar2d:
-    - model: hokuyo_ust10
+    - model: hokuyo_ust
       urdf_enabled: true
       launch_enabled: true
       parent: front_mount
@@ -67,7 +73,10 @@ sensors:
 </details>
 
 :::tip
-Make sure you have installed the simulator before starting this tutorial. Take a look at the [installation](../simulator/install) guide for details.
+
+Make sure you have installed the simulator before starting this tutorial. Take a look at the
+[installation](../simulator/install) guide for details.
+
 :::
 
 ## Launching the simulation and SLAM

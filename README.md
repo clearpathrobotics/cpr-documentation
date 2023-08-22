@@ -20,7 +20,9 @@
         - Extension: _Prettier_
         - Extension: _MDX_
     2.  Terminal configured to work with this GitHub repository
-    3.  Node.js is installed
+    3.  Node.js (16.x or newer) is installed
+        1.  To install `nodejs` LTS (18.x currently) on Ubuntu run: `curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - && sudo apt-get install -y nodejs`
+        2.  For all other platforms use: https://nodejs.org/en/download
 2.  Clone this repository,
 
         git clone https://github.com/clearpathrobotics/cpr-documentation.git
@@ -32,7 +34,7 @@
     Your terminal session should show the port the webpage is running on.
     The default address is http://localhost:3000/ but this may change if you are already using that port for another site.
 7.  If you want to test something on a mobile screensize; you can do this within your desktop's Chrome browser.
-    When the site is running locally; enter Chrome's developer tools by selecting: _3 dots in the top right_ → _More tools_ → _Developer tools_.
+    When the site is running locally; enter Chrome's developer tools by selecting: The _vertical ellipsis (3 dots) in the top right_ → _More tools_ → _Developer tools_.
     You can then select the _Device Toolbar_ button, and change the screensize, as shown in the two images below.
     We are designing to a smallest screen width of 320 px.
 
@@ -90,13 +92,6 @@ documentation.
 
 During the development phase, follow steps 1-10 of the workflow above. Note that the updates will not affect
 the default view of the user manual, only the "next" version of the manual
-(eg. http://docs.clearpathrobotics.com/docs_outdoornav_user_manual/next/index). You can enable the visibility of the "next" version by setting
-
-```
-includeCurrentVersion: true,
-```
-
-in `docusaurus.config.js` alongside `id: "outdoornav_user_manual",` section. Ensure to reset this to false before releasing the changes.
 
 ### Release Phase
 
@@ -305,6 +300,9 @@ The list below are not strict rules, but are considered good practice to keep im
 All links to, or imports of versioned elements (images, markdown files etc.) must be referred to using relative links (`./img/image-name.png`). These versioned pages will be moved together and ensures that the correct version is used.
 
 All links to, or imports of unversioned static elements must be referred to using absolute paths (`/static/img/image-name.png`). This allows these assets to be found irrelevant of the location of the particular page.
+
+Links to headings must not include an extra slash between the name of the page and the name of the heading. Doing this will result in broken links. For example: `../ros/#supported-platforms` is incorrect. It will initially work but any subsequent relative link that the user clicks
+will appear to be broken. Instead, it must be `../ros#supported-platforms`.
 
 ## SolidWorks image exports
 
