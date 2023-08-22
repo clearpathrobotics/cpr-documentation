@@ -66,6 +66,8 @@ system:
     namespace: a200_0000
     domain_id: 0
     rmw_implementation: rmw_fastrtps_cpp
+    workspaces:
+      - /home/administrator/micro_ros_ws/install/setup.bash
 platform:
   controller: ps4
   attachments:
@@ -140,7 +142,7 @@ sensors:
   gps: []
   imu: []
   lidar2d:
-    - model: hokuyo_ust10
+    - model: hokuyo_ust
       urdf_enabled: true
       launch_enabled: true
       parent: bracket_0_mount
@@ -181,8 +183,8 @@ The Clearpath serial number is composed of two sections: an alpha-numerical code
 
 At this moment, the supported robot platforms are:
 
-1. [Husky A200](../../robots/outdoor_robots/husky/user_manual_husky/#introduction): `a200-0000`
-2. [Jackal J100](../../robots/outdoor_robots/jackal/user_manual_jackal/#introduction): `j100-0000`
+1. [Husky A200](../../robots/outdoor_robots/husky/user_manual_husky#introduction): `a200-0000`
+2. [Jackal J100](../../robots/outdoor_robots/jackal/user_manual_jackal#introduction): `j100-0000`
 
 Every robot platform has specific [attachments](#attachments), i.e. platform specific parts, that are selected based on the serial number passed. Therefore, it is required that a serial number is specified in the `robot.yaml`.
 
@@ -215,6 +217,7 @@ The **ros2** sections is necessary to setup the ROS 2 middleware.
 - **namespace** specified will be appended as a prefix to all sensor topics to prevent topic cloberring when multiple robots are on the same network and domain ID.
 - **domain_id** specifies the ROS 2 domain ID to use.
 - **rmw_implementation** specifies the ROS 2 middleware to use. **Currently, it only supports `rmw_fastrtps_cpp`.**
+- **workspaces** indicates a list of workspaces that need to be sourced by specifying the path to the setup.py
 
 ### Sample {#system-sample}
 
@@ -240,6 +243,8 @@ system:
     namespace: a200_0000
     domain_id: 0
     rmw_implementation: rmw_fastrtps_cpp
+    workspaces:
+      - /home/administrator/micro_ros_ws/install/setup.bash
 ```
 
 At this point, with just the **serial_number** and **system** defined: our robot is just the standard **Husky A200** platform, and looks like this:
@@ -914,11 +919,11 @@ imu:
 
 ### LiDAR 2D
 
-- **_hokuyo_ust10:_**
+- **_hokuyo_ust:_**
 
 ```yaml
 lidar2d:
-  - model: hokuyo_ust10
+  - model: hokuyo_ust
     urdf_enabled: true
     launch_enabled: true
     parent: base_link
@@ -1021,11 +1026,11 @@ lidar3d:
   </figure>
 </center>
 
-Next, we will add a `hokuyo_ust10` to the **bracket** we added earlier. Since that is the first **bracket**, then it's mounting location will be: `bracket_0_mount`; setting the parent link of the sensor, we get:
+Next, we will add a `hokuyo_ust` to the **bracket** we added earlier. Since that is the first **bracket**, then it's mounting location will be: `bracket_0_mount`; setting the parent link of the sensor, we get:
 
 ```yaml
 lidar2d:
-  - model: hokuyo_ust10
+  - model: hokuyo_ust
     urdf_enabled: true
     launch_enabled: true
     parent: bracket_0_mount
@@ -1106,7 +1111,7 @@ sensors:
   gps: []
   imu: []
   lidar2d:
-    - model: hokuyo_ust10
+    - model: hokuyo_ust
       urdf_enabled: true
       launch_enabled: true
       parent: bracket_0_mount

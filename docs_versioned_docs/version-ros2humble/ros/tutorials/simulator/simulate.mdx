@@ -10,7 +10,9 @@ Once the simulator has been [installed](./install), you can launch the simulatio
 
 ## Launching the simulator
 
-Launch files for the simulation can be found in the `clearpath_gz` package, which is installed as part of the `clearpath_simulator` metapackage. The default launch file for launching the simulation environment and spawning your robot is [simulation.launch.py](https://github.com/clearpathrobotics/clearpath_simulator/blob/main/clearpath_gz/launch/simulation.launch.py).
+Launch files for the simulation can be found in the `clearpath_gz` package, which is installed as part of the `clearpath_simulator`
+metapackage. The default launch file for launching the simulation environment and spawning your robot is
+[simulation.launch.py](https://github.com/clearpathrobotics/clearpath_simulator/blob/main/clearpath_gz/launch/simulation.launch.py).
 
 It can be called like this:
 
@@ -18,7 +20,9 @@ It can be called like this:
 ros2 launch clearpath_gz simulation.launch.py
 ```
 
-The launch file will run all of the necessary [generators](../../config/generators) to generate launch and parameter files for the simulation before launching Gazebo and spawning the robot. These will be placed under the setup path (defaults to `$HOME/clearpath/`).
+The launch file will run all of the necessary [generators](../../config/generators) to generate launch and parameter
+files for the simulation before launching Gazebo and spawning the robot. These will be placed under the setup path
+(defaults to `$HOME/clearpath/`).
 
 ### Launch arguments
 
@@ -35,7 +39,10 @@ ros2 launch clearpath_gz simulation.launch.py world:=my_world
 ```
 
 :::note
-The launch file will look for the world `.sdf` file inside the [worlds](https://github.com/clearpathrobotics/clearpath_simulator/tree/main/clearpath_gz/worlds) folder of the `clearpath_gz` package.
+
+The launch file will look for the world `.sdf` file inside the
+[worlds](https://github.com/clearpathrobotics/clearpath_simulator/tree/main/clearpath_gz/worlds)folder of the `clearpath_gz` package.
+
 :::
 
 The position and orientation of where the robot is spawned can be changed:
@@ -52,7 +59,10 @@ ros2 launch clearpath_gz simulation.launch.py rviz:=true
 
 ## Driving the robot
 
-The simulated robot can be driven in the same ways as the physical robot. Take a look at the [Teleop](../driving) guide for details. In addition, the Gazebo Teleop GUI plugin can be used. The plugin will be visible by default when Gazebo is launched. If your robot has a namespace, change the topic to `<namespace>/cmd_vel`. Set the maximum forward and yaw velocities, then select the method of driving.
+The simulated robot can be driven in the same ways as the physical robot. Take a look at the [Teleop](../driving)
+guide for details. In addition, the Gazebo Teleop GUI plugin can be used. The plugin will be visible by default when
+Gazebo is launched. If your robot has a namespace, change the topic to `<namespace>/cmd_vel`. Set the maximum forward
+and yaw velocities, then select the method of driving.
 
 <center>
   <figure>

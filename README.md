@@ -301,6 +301,9 @@ All links to, or imports of versioned elements (images, markdown files etc.) mus
 
 All links to, or imports of unversioned static elements must be referred to using absolute paths (`/static/img/image-name.png`). This allows these assets to be found irrelevant of the location of the particular page.
 
+Links to headings must not include an extra slash between the name of the page and the name of the heading. Doing this will result in broken links. For example: `../ros/#supported-platforms` is incorrect. It will initially work but any subsequent relative link that the user clicks
+will appear to be broken. Instead, it must be `../ros#supported-platforms`.
+
 ## SolidWorks image exports
 
 1.  Open your assembly in SolidWorks.
