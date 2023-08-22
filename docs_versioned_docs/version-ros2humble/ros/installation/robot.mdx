@@ -68,8 +68,10 @@ an IP address has been assigned to your Wi-Fi interface.
 You should now be able to SSH into the robot by calling `ssh administrator@<robot_ip>` from a remote computer.
 
 :::note
+
 If the wifi interface indicates down (disabled), enable it using `sudo ip link set dev <interface> up`.
 Replace `<interface>` with the name of your disabled Wi-Fi interface.
+
 :::
 
 ### Ethernet
@@ -223,8 +225,10 @@ source /home/administrator/clearpath_ws/install/setup.bash
 
 
 :::note
+
 This workspace will also need to be sourced in your [robot.yaml](#robot-yaml) file as described 
 in the [ROS2 Environment](../config/yaml#ros-2-environment) section.
+
 :::
 
 #### Setup folder
