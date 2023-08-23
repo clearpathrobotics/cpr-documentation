@@ -75,7 +75,7 @@ Waypoints with the exception of the first waypoint (green) and the last waypoint
 
 :::note
 
-**The first Waypoint in the mission must be within 1.5 meters of the UGV's current position.**
+**The first Waypoint in the mission must be within 3.0 meters of the UGV's current position.**
 
 :::
 
@@ -83,28 +83,6 @@ As Waypoints are placed, a "ghost waypoint" will appear between each pair of rea
 Waypoints and can be dragged to a new spot to insert a real Waypoint 
 between them.  Waypoints can also be dragged and dropped on the map to 
 modify their positions.
-
-## Constrained Replanning {#constrained_path}
-
-If constrained replanning is enabled the user can show on the path
-deviation distance by navigating to the General settings in the
-hamburger menu. Once enabled the area of possible deviation will show
-over the planned route as can be seen in the following figure.
-
-<center>
-  <figure>
-    <img src="/img/outdoornav_images/ui_route_deviation.png" />
-    <figcaption>Route with deviation</figcaption>
-  </figure>
-</center>
-
-:::note
-
-If the UGV is manually driven outside of the constrained replanning area 
-while a Mission is running, the Mission will need to be restarted as the UGV 
-will no longer be able to find it's way back onto the path.
-
-:::
 
 ### Waypoint Panel
 
@@ -204,9 +182,7 @@ To add a Task to the end of a Mission:
         Settings: Enter the amount of time to wait, in seconds.
     
     -   <img src="/img/outdoornav_images/customTask_40px.png" width="30px"/> <strong>New Custom Task: </strong>
-        Creates a new custom task that is defined by the user. Users specify a task name along with an absolute path to the custom tasks 
-        action server. Custom tasks can take two optional comma separated lists, one of floating point values the other of standard text strings.
-
+        Creates a new custom task that is defined by the user. 
         <center>
           <figure>
             <img src="/img/outdoornav_images/custom_task_settings.png"/>
@@ -214,9 +190,13 @@ To add a Task to the end of a Mission:
           </figure>
         </center>
         
-        
-        See [Custom Tasks](/docs_outdoornav_user_manual/web_user_interface/ui_autonomous_mode#custom-task)
-        for more details on creating custom tasks.
+        - Task Name: Task name that will show up in the list of available tasks on the UI.
+        - Action Server Name: The namespace of the custom task action server.
+        - Float CSV: A list of comma seperated float values that consist of the numerical inputs to the custom task.
+        - String CSV: A list of comma seperated string values that consist of the semantic inputs to the custom task.
+
+        See the [Custom Tasks](/docs_outdoornav_user_manual/features/custom_tasks) section 
+        for details on how to develop custom tasks for your application.
 
 4.  Click the Gear icon next to the selected Task to add the required
     Settings.
@@ -227,98 +207,6 @@ To add a Task to the end of a Mission:
     be replaced with <img src="/img/outdoornav_images/multiTask_40px.png" width="30px"/>
 
     :::
-
-### Custom Tasks  {#custom-task}
-
-Users can create their own tasks following a specific template and place them within the **~/cpr_outdoornav_launch/custom_tasks** directory.
-Restarting the UGV will trigger the system to load the custom task that was created, making it available for mission use.
-Below is a sample template file named "input_looper.py" which iterates throught the two data variables and publishes them to the feedback 
-topics. The purpose of this task is to simply outline what is available to the user when they decide to create their own tasks.
-
-#### Sample Custom Task
-
-This sample custom task iterates through the two available data variables and outputs them to the feedback topic. If neither of the 
-variables have any data in them the task is aborted.  Each section will be elaborated further in the document.
-
-```py
-#!/usr/bin/python3
-
-from onav_tasks.custom_task_base import *
-
-class InputLooperTask(CustomTaskBase):
-  def __init__(self):
-    # The derived class must always call the super() and provide the action server name.
-    # This name will need to be unique among custom tasks and must match what is in the 
-    # UI. 
-    super().__init__("input_looper")
-
-  def run_task(self, goal):
-    if len(goal.strings) == 0 and len(goal.floats) == 0:
-      # Task and running mission will be aborted in this case
-      self._as.set_aborted()
-      return False
-
-    # Loop through the strings and float values and publish them each to the /input_looper/feedback topic
-    for string in goal.strings:
-      self._feedback.state = string      
-      self._as.publish_feedback(self._feedback)
-      
-    for num in goal.floats:
-      self._feedback.state = str(num)
-      self._as.publish_feedback(self._feedback)
-
-    # Returning True or False will not currently impact the mission but will write the current state to the 
-    # /task/result topic accordingly.  
-    return True
-```
-
-##### Custom Task Class
-
-To leverage custom tasks, users will need to create a new file that defines a new class which inherits from `CustomTaskBase`. The `CustomTaskBase` class is 
-found in the `onav_tasks.custom_task_base` package. It exposes a `SimpleActionServer` (see <a href="http://wiki.ros.org/actionlib_tutorials/Tutorials/Writing%20a%20Simple%20Action%20Server%20using%20the%20Execute%20Callback%20%28Python%29">here</a> 
-for further details) object as `_as`, a `UITaskFeedback` object as `_feedback` and a `UITaskResults` object as `_result` to be used as part of 
-the tasks functionality. The custom task manager requires the user to also define a `run_task` method that takes a `UITaskGoal` object as a parameter.
-
-```py 
-from onav_tasks.custom_task_base import *
-
-class CustomTask(CustomTaskBase):
-  def __init__(self):
-      super().__init__("input_looper")
-
-  def run_task(self, goal):
-```
-
-##### Aborting Tasks 
-
-When running the task users may handle errors through the action servers `set_aborted()` function.  When this function is called the entire mission 
-will be aborted. In this sample the task is aborted if neither of the lists have any values.
-
-```py 
-if len(goal.strings) == 0 and len(goal.floats) == 0:
-  # Task and running mission will be aborted in this case
-  self._as.set_aborted()
-  return False
-```
-
-##### Setting feedback
-
-Users can set the feedback state using the `SimpleActionServer` class's standard methods. In this case the task iterates through the comma delimited
-strings and floats and writes them to the feedback state before publishing them.  Upon success the `run_task` method returns True.
-
-```py 
-for string in goal.strings:
-  self._feedback.state = string      
-  self._as.publish_feedback(self._feedback)
-  
-for num in goal.floats:
-  self._feedback.state = str(num)
-  self._as.publish_feedback(self._feedback)
-
-  return True
-```
-
-If a custom task is not configured properly the custom task manager will ignore the task and proceed loading in the next task while logging an error with ROS. 
 
 ### Advanced Settings
 
@@ -366,6 +254,28 @@ seen and the advanced settings of each Waypoint can be accessed by clicking
 the "Gear" icon. To set the Waypoint's tolerance, the user will need to
 check the "Waypoint Tolerance Enabled" checkbox and enter the position and
 orientation values, in meters and degrees, respectively.
+
+### Constrained Replanning {#constrained_path}
+
+If constrained replanning is enabled the user can show on the path
+deviation distance by navigating to the General settings in the
+hamburger menu. Once enabled the area of possible deviation will show
+over the planned route as can be seen in the following figure.
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_route_deviation.png" />
+    <figcaption>Route with deviation</figcaption>
+  </figure>
+</center>
+
+:::note
+
+If the UGV is manually driven outside of the constrained replanning area 
+while a Mission is running, the Mission will need to be restarted as the UGV 
+will no longer be able to find it's way back onto the path.
+
+:::
 
 ## Mission Execution
 

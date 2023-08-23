@@ -141,10 +141,30 @@ uint8 HEADING_RTK_FLOAT = 2
 uint8 HEADING_RTK_FIXED = 3
 uint8 heading_fix_type
 
-uint8 num_connected_sats	# Number of satellites connected to the antenna/receiver
+uint8 num_connected_sats  # Number of satellites connected to the antenna/receiver
 uint8 num_sats_solution   # Number of sats used in solution
-float32[] cn0			        # The carrier-to-noise ratio of each connected satellite
+float32[] cn0			  # The carrier-to-noise ratio of each connected satellite
 float64 correction_age    # Age of RTK corrections. -1 indicates none received
+```
+
+#### clearpath_mission_manager_msgs/msg/StorageState.msg {#storage-storagestate}
+
+```
+# The entire contents of the Mission database
+# Note that all of the following cases are valid:
+# - a Task can be referenced in multiple Waypoints
+# - a Waypoint can be referenced in multiple Missions
+# - a Waypoint can be orphaned (i.e. not included in any Missions)
+# - a Task can be orphaned (i.e. not included in any Waypoints)
+
+# All missions defined in the database
+clearpath_navigation_msgs/Mission[] missions
+
+# All waypoints defined in the database
+clearpath_navigation_msgs/Waypoint[] waypoints
+
+# All tasks defined in the database
+clearpath_navigation_msgs/Task[] tasks
 ```
 
 #### clearpath_navigation_msgs/Mission.msg {#msg-navigation-mission}
@@ -154,23 +174,18 @@ float64 correction_age    # Age of RTK corrections. -1 indicates none received
 
 std_msgs/Header header
 
-# The goal's final waypoint
-clearpath_navigation_msgs/Waypoint goalpoint
+# The human-readable name of this mission
+string name
 
-# If a final heading is to be set for the goal, the following fields are required
-bool enable_final_heading
-float64 goalpoint_heading
+# A UUID string used to uniquely identify this mission
+string uuid
 
-# If a goal tolerance is to be set for the goal, the following fields are required
-bool enable_goal_tolerance
-float64 position_tolerance
-float64 yaw_tolerance
+# The ordered list of Waypoints that make up the mission
+clearpath_navigation_msgs/Waypoint[] waypoints
 
-# The intermediate waypoints on the way to the goal
-clearpath_navigation_msgs/Waypoint[] viapoints
-
-# The list of internal/external software calls that can be assigned to the goal. These will be called in the order that they are added to the list.
-clearpath_navigation_msgs/Task[] tasks
+# Configuration parameters for the mission
+# Additional details TBD
+string onav_config
 ```
 
 #### clearpath_navigation_msgs/DistanceToGoal.msg {#msg-distance-to-goal}
@@ -293,13 +308,26 @@ clearpath_navigation_msgs/PointVector[] cloud_vector
 #### clearpath_navigation_msgs/Task.msg {#msg-navigation-task}
 
 ```
-# Message definition for the tasks (ie. internal/external software calls) that can be assigned to an OutdoorNav mission.
+# A single task that can be executed at a Waypoint
 
+# The human-readable name of this task
+string name
 
-string task_name
-string service_call
+# A UUID string to uniquely identify this Task
+string uuid
+
+# The ROS action that this task executes
+string action_server_name
+
+# The version of this task
 string version
+
+# Numerical/boolean data to be passed to the action_server_name
+# The exact meaning of these values is dependent on the underlying service
 float64[] floats
+
+# String data to be passed to the action_server_name
+# The exact meaning of these values is dependent on the underlying service
 string[] strings
 ```
 
@@ -322,79 +350,6 @@ float32[2] point
 ```
 
 #### clearpath_navigation_msgs/Waypoints.msg {#msg-navigation-waypoints}
-
-```
-float64 x
-float64 y
-```
-
-#### clearpath_platform_msgs/PlatformID.msg {#msg-platform-id}
-
-```
-# Platform ID message containing the model, serial #, hardware and firmware versions
-
-string model
-string serial_id
-string hardware_revision
-string firmware_revision
-```
-
-#### clearpath_safety_msgs/WatchdogStatus.msg {#msg-safety-watchdog}
-
-```
-# Watchdog status message containing information related to sensor monitoring, emergency stop and safety stops
-
-bool[] gps_watchdog_triggered
-bool[] lidar_watchdog_triggered
-bool[] camera_watchdog_triggered
-```
-
-#### onav_ms2_msgs/msg/Mission.msg {#storage-mission}
-
-```
-# A mission containing one or more Waypoints, which may contain zero or more Tasks
-
-# A UUID string used to uniquely identify this mission
-string uuid
-
-# The human-readable name of this mission
-string name
-
-# The ordered list of Waypoints that make up the mission
-onav_ms2_msgs/Waypoint[] waypoints
-
-# Configuration parameters for the mission
-# Currently unused, but planned for future development
-string onav_config
-```
-
-#### onav_ms2_msgs/msg/Task.msg {#storage-task}
-
-```
-# A single task that can be executed at a Waypoint
-
-# A UUID string to uniquely identify this Task
-string uuid
-
-# The human-readable name of this task
-string name
-
-# The ROS action that this task executes
-string service_call
-
-# The version of this task
-string version
-
-# Numerical/boolean data to be passed to the service_call
-# The exact meaning of these values is dependent on the underlying service
-float64[] floats
-
-# String data to be passed to the service_call
-# The exact meaning of these values is dependent on the underlying service
-string[] strings
-```
-
-#### onav_ms2_msgs/msg/Waypoint.msg {#storage-waypoint}
 
 ```
 # A single Waypoint along a Mission
@@ -423,27 +378,28 @@ float64 position_tolerance
 float64 yaw_tolerance
 
 # The ordered set of Tasks to execute once the goal position & orientation are reached
-onav_ms2_msgs/Task[] tasks
+clearpath_navigation_msgs/Task[] tasks
 ```
 
-#### onav_mission_manager_msgs/msg/StorageState.msg {#storage-storagestate}
+#### clearpath_platform_msgs/PlatformID.msg {#msg-platform-id}
 
 ```
-# The entire contents of the Mission database
-# Note that all of the following cases are valid:
-# - a Task can be referenced in multiple Waypoints
-# - a Waypoint can be referenced in multiple Missions
-# - a Waypoint can be orphaned (i.e. not included in any Missions)
-# - a Task can be orphaned (i.e. not included in any Waypoints)
+# Platform ID message containing the model, serial #, hardware and firmware versions
 
-# All missions defined in the database
-onav_ms2_msgs/Mission[] missions
+string model
+string serial_id
+string hardware_revision
+string firmware_revision
+```
 
-# All waypoints defined in the database
-onav_ms2_msgs/Waypoint[] waypoints
+#### clearpath_safety_msgs/WatchdogStatus.msg {#msg-safety-watchdog}
 
-# All tasks defined in the database
-onav_ms2_msgs/Task[] tasks
+```
+# Watchdog status message containing information related to sensor monitoring, emergency stop and safety stops
+
+bool[] gps_watchdog_triggered
+bool[] lidar_watchdog_triggered
+bool[] camera_watchdog_triggered
 ```
 
 #### Standard ROS Messages {#std-ros-msgs}
@@ -534,6 +490,301 @@ float32 lon
 bool success
 ```
 
+#### clearpath_mission_manager_msgs/srv/AddRemoveById.srv {#storage-addremovebyid}
+
+```
+# The UUID of the object we're inserting/removing
+# When removing, all instances with this UUID are deleted from the parent
+string uuid
+
+# The UUID of the parent object
+string parent_uuid
+
+# The zero-based index to insert the object into
+# Ignored when removing
+int32 position
+---
+# True if the object was added/removed successfully, otherwise False
+bool ok
+```
+
+#### clearpath_mission_manager_msgs/srv/CloneMission.srv {#storage-clonemission}
+```
+# The desired name for the new mission
+string name
+
+# The additional configuration options
+# see clearpath_navigation_msgs/msg/Mission for details
+string onav_config
+
+# The ordered list of Waypoint UUIDs to include in this mission
+string[] waypoint_ids
+---
+# The resulting Mission, with an auto-generated UUID is returned
+clearpath_navigation_msgs/Mission result
+```
+
+#### clearpath_mission_manager_msgs/srv/CreateMission.srv {#storage-createmission}
+
+```
+# The desired name for the new mission
+string name
+
+# The additional configuration options
+# see clearpath_mission_manager_msgs/msg/Mission for details
+string onav_config
+
+# The ordered list of Waypoint UUIDs to include in this mission
+string[] waypoint_ids
+---
+# The resulting Mission, with an auto-generated UUID is returned
+clearpath_navigation_msgs/Mission result
+```
+
+#### clearpath_mission_manager_msgs/srv/CreateTask.srv {#storage-createtask}
+
+```
+# The desired name for the Task
+string name
+
+# The ROS Action to invoke to execute the task
+string service_call
+
+# The version of the task
+string version
+
+# The numerical arguments to pass to the service_call
+float64[] floats
+
+# The string arguments to pass to the service_call
+string[] strings
+
+# Optional list of Waypoint UUIDs to assign this task to automatically
+# The new task will be appended to the end of the existing Waypoints
+string[] assign_to
+---
+# The resulting Task with an auto-generated UUID is returned
+clearpath_navigation_msgs/Task result
+```
+
+#### clearpath_mission_manager_msgs/srv/CreateWaypoint.srv {#storage-createwaypoint}
+
+```
+# The desired name for the Waypoint
+string name
+
+# The latitude for the Waypoint in degrees
+float64 latitude
+
+# The longitude for the Waypoint in degrees
+float64 longitude
+
+# The compass heading in degrees for the Waypoint
+float64 heading
+
+# The position tolerance for the Waypoint in meters
+float64 position_tolerance
+
+# The orientation tolerance for the Waypoint in degrees
+float64 yaw_tolerance
+
+# Optional ordered list of Task UUIDs to execute at this Waypoint
+string[] task_ids
+
+# Optional list of Mission UUIDs to assign the new Waypoint to
+# The new Waypoint is appended to the end of the existing Missions
+string[] assign_to
+---
+# The resulting Waypoint with an auto-generated UUID is returned
+clearpath_navigation_msgs/Waypoint result
+```
+
+#### clearpath_mission_manager_msgs/srv/DeleteById.srv {#storage-deletebyid}
+
+```
+# The UUID of the object we want to delete
+string uuid
+---
+# True if the item was successfully deleted, otherwise False
+bool ok
+```
+
+#### clearpath_mission_manager_msgs/srv/DeleteEverything.srv {#storage-deleteeverything}
+
+```
+# Used to permanently delete everything from the database.
+# Use this service at your own risk
+
+# This must be set to true to confirm you really want to delete everything
+bool yes_i_am_absolutely_sure_i_want_to_do_this
+---
+# True if the database was cleared, otherwise False
+bool ok
+```
+
+#### clearpath_mission_manager_msgs/srv/ExportData.srv {#storage-exportdata}
+
+```
+---
+# A base-64 encoded string representing a compressed version of
+# the database contents.
+# The data itself is a gzipped JSON string representing the database contents
+# This can be written to a file or used with the ImportData.srv
+# to back-up/restore the database contents
+string data
+```
+
+#### clearpath_mission_manager_msgs/srv/GetAllMissions.srv {#storage-getallmissions}
+
+```
+---
+# An array of all Missions defined in the database
+clearpath_navigation_msgs/Mission[] missions
+```
+
+#### clearpath_mission_manager_msgs/srv/GetAllTasks.srv {#storage-getalltasks}
+
+```
+---
+# The array of all Tasks defined in the database
+clearpath_navigation_msgs/Task[] tasks
+```
+
+#### clearpath_mission_manager_msgs/srv/GetAllWaypoints.srv {#storage-getallwaypoints}
+
+```
+---
+# The array of all Waypoints defined in the database
+clearpath_navigation_msgs/Waypoint[] waypoints
+```
+
+#### clearpath_mission_manager_msgs/srv/GetEverything.srv {#storage-geteverything}
+
+```
+---
+# All Missions, Waypoints, and Tasks defined in the database
+clearpath_mission_manager_msgs/StorageState state
+```
+
+#### clearpath_mission_manager_msgs/srv/GetMission.srv {#storage-getmission}
+
+```
+# The UUID of the Mission we want to retrieve
+string uuid
+---
+# The Mission with the given ID, or null if no Mission with that ID exists
+clearpath_navigation_msgs/Mission mission
+```
+
+#### clearpath_mission_manager_msgs/srv/GetTask.srv {#storage-gettask}
+
+```
+# The UUID of the Task we want to retrieve
+string uuid
+---
+# The Task with the given ID, or null if no Task with that ID exists
+clearpath_navigation_msgs/Task task
+```
+
+#### clearpath_mission_manager_msgs/srv/GetWaypoint.srv {#storage-getwaypoint}
+
+```
+# The UUID of the Waypoint we want to retrieve
+string uuid
+---
+# The Waypoint with the given ID, or null if no Waypoint with that ID exists
+clearpath_navigation_msgs/Waypoint waypoint
+```
+
+#### clearpath_mission_manager_msgs/srv/ImportData.srv {#storage-importdata}
+
+```
+# A base-64 encoded string representing a compressed version of
+# the database contents.
+# The data itself is a gzipped JSON string representing the database contents
+# This is the same as the data output by the ExportData service, and is intended
+# to be used to restore the database to a previous state
+string data
+---
+# The state of the database after importing the data
+clearpath_mission_manager_msgs/StorageState state
+```
+
+#### clearpath_mission_manager_msgs/srv/UpdateMission.srv {#storage-updatemission}
+
+```
+# The UUID of the mission we want to edit
+string uuid
+
+# The human-readable name for the Mission
+string name
+
+# The configuration parameters for the Mission
+string onav_config
+
+# The ordered list of Waypoint UUIDs to include in the Mission
+string[] waypoint_ids
+---
+# The edited Mission, or null if no mission with the given ID exists
+clearpath_navigation_msgs/Mission result
+```
+
+#### clearpath_mission_manager_msgs/srv/UpdateTask.srv {#storage-updatetask}
+
+```
+# The UUID of the Task to edit
+string uuid
+
+# The human-readable name for the Task
+string name
+
+# The ROS Action that the Task executes
+string service_call
+
+# The version of the Task
+string version
+
+# The numerical data to pass to the service_call
+float64[] floats
+
+# The string data to pass to the service_call
+string[] strings
+---
+# The edited Task, or null if no Task with the given ID exists
+clearpath_navigation_msgs/Task result
+```
+
+#### clearpath_mission_manager_msgs/srv/UpdateWaypoint.srv {#storage-updatewaypoint}
+
+```
+# The UUID of the Waypoint to edit
+string uuid
+
+# The human-readable name for the Waypoint
+string name
+
+# The latitude of the Waypoint in degrees
+float64 latitude
+
+# The longitude of the Waypoint in degrees
+float64 longitude
+
+# The compass heading of the Waypoint in degrees
+float64 heading
+
+# The Waypoint's position tolerance in meters
+float64 position_tolerance
+
+# The Waypoint's orientation tolerance in degrees
+float64 yaw_tolerance
+
+# The ordered list of Task UUIDs to execute at this Waypoint
+string[] task_ids
+---
+# The edited Waypoint, or null if no Waypoint with the given ID exists
+clearpath_navigation_msgs/Waypoint result
+```
+
 #### clearpath_navigation_msgs/srv/SetDelayCompensation.srv {#srv-set-delay-compensation}
 
 ```
@@ -582,301 +833,6 @@ float32 stop_distance
 ---
 bool success
 string message
-```
-
-#### onav_mission_manager_msgs/srv/AddRemoveById.srv {#storage-addremovebyid}
-
-```
-# The UUID of the object we're inserting/removing
-# When removing, all instances with this UUID are deleted from the parent
-string uuid
-
-# The UUID of the parent object
-string parent_uuid
-
-# The zero-based index to insert the object into
-# Ignored when removing
-int32 position
----
-# True if the object was added/removed successfully, otherwise False
-bool ok
-```
-
-#### onav_mission_manager_msgs/srv/CloneMission.srv {#storage-clonemission}
-```
-# The desired name for the new mission
-string name
-
-# The additional configuration options
-# see onav_ms2_msgs/msg/Mission for details
-string onav_config
-
-# The ordered list of Waypoint UUIDs to include in this mission
-string[] waypoint_ids
----
-# The resulting Mission, with an auto-generated UUID is returned
-onav_ms2_msgs/Mission result
-```
-
-#### onav_mission_manager_msgs/srv/CreateMission.srv {#storage-createmission}
-
-```
-# The desired name for the new mission
-string name
-
-# The additional configuration options
-# see onav_mission_manager_msgs/msg/Mission for details
-string onav_config
-
-# The ordered list of Waypoint UUIDs to include in this mission
-string[] waypoint_ids
----
-# The resulting Mission, with an auto-generated UUID is returned
-onav_ms2_msgs/Mission result
-```
-
-#### onav_mission_manager_msgs/srv/CreateTask.srv {#storage-createtask}
-
-```
-# The desired name for the Task
-string name
-
-# The ROS Action to invoke to execute the task
-string service_call
-
-# The version of the task
-string version
-
-# The numerical arguments to pass to the service_call
-float64[] floats
-
-# The string arguments to pass to the service_call
-string[] strings
-
-# Optional list of Waypoint UUIDs to assign this task to automatically
-# The new task will be appended to the end of the existing Waypoints
-string[] assign_to
----
-# The resulting Task with an auto-generated UUID is returned
-onav_ms2_msgs/Task result
-```
-
-#### onav_mission_manager_msgs/srv/CreateWaypoint.srv {#storage-createwaypoint}
-
-```
-# The desired name for the Waypoint
-string name
-
-# The latitude for the Waypoint in degrees
-float64 latitude
-
-# The longitude for the Waypoint in degrees
-float64 longitude
-
-# The compass heading in degrees for the Waypoint
-float64 heading
-
-# The position tolerance for the Waypoint in meters
-float64 position_tolerance
-
-# The orientation tolerance for the Waypoint in degrees
-float64 yaw_tolerance
-
-# Optional ordered list of Task UUIDs to execute at this Waypoint
-string[] task_ids
-
-# Optional list of Mission UUIDs to assign the new Waypoint to
-# The new Waypoint is appended to the end of the existing Missions
-string[] assign_to
----
-# The resulting Waypoint with an auto-generated UUID is returned
-onav_ms2_msgs/Waypoint result
-```
-
-#### onav_mission_manager_msgs/srv/DeleteById.srv {#storage-deletebyid}
-
-```
-# The UUID of the object we want to delete
-string uuid
----
-# True if the item was successfully deleted, otherwise False
-bool ok
-```
-
-#### onav_mission_manager_msgs/srv/DeleteEverything.srv {#storage-deleteeverything}
-
-```
-# Used to permanently delete everything from the database.
-# Use this service at your own risk
-
-# This must be set to true to confirm you really want to delete everything
-bool yes_i_am_absolutely_sure_i_want_to_do_this
----
-# True if the database was cleared, otherwise False
-bool ok
-```
-
-#### onav_mission_manager_msgs/srv/ExportData.srv {#storage-exportdata}
-
-```
----
-# A base-64 encoded string representing a compressed version of
-# the database contents.
-# The data itself is a gzipped JSON string representing the database contents
-# This can be written to a file or used with the ImportData.srv
-# to back-up/restore the database contents
-string data
-```
-
-#### onav_mission_manager_msgs/srv/GetAllMissions.srv {#storage-getallmissions}
-
-```
----
-# An array of all Missions defined in the database
-onav_ms2_msgs/Mission[] missions
-```
-
-#### onav_mission_manager_msgs/srv/GetAllTasks.srv {#storage-getalltasks}
-
-```
----
-# The array of all Tasks defined in the database
-onav_ms2_msgs/Task[] tasks
-```
-
-#### onav_mission_manager_msgs/srv/GetAllWaypoints.srv {#storage-getallwaypoints}
-
-```
----
-# The array of all Waypoints defined in the database
-onav_ms2_msgs/Waypoint[] waypoints
-```
-
-#### onav_mission_manager_msgs/srv/GetEverything.srv {#storage-geteverything}
-
-```
----
-# All Missions, Waypoints, and Tasks defined in the database
-onav_mission_manager_msgs/StorageState state
-```
-
-#### onav_mission_manager_msgs/srv/GetMission.srv {#storage-getmission}
-
-```
-# The UUID of the Mission we want to retrieve
-string uuid
----
-# The Mission with the given ID, or null if no Mission with that ID exists
-onav_ms2_msgs/Mission mission
-```
-
-#### onav_mission_manager_msgs/srv/GetTask.srv {#storage-gettask}
-
-```
-# The UUID of the Task we want to retrieve
-string uuid
----
-# The Task with the given ID, or null if no Task with that ID exists
-onav_ms2_msgs/Task task
-```
-
-#### onav_mission_manager_msgs/srv/GetWaypoint.srv {#storage-getwaypoint}
-
-```
-# The UUID of the Waypoint we want to retrieve
-string uuid
----
-# The Waypoint with the given ID, or null if no Waypoint with that ID exists
-onav_ms2_msgs/Waypoint waypoint
-```
-
-#### onav_mission_manager_msgs/srv/ImportData.srv {#storage-importdata}
-
-```
-# A base-64 encoded string representing a compressed version of
-# the database contents.
-# The data itself is a gzipped JSON string representing the database contents
-# This is the same as the data output by the ExportData service, and is intended
-# to be used to restore the database to a previous state
-string data
----
-# The state of the database after importing the data
-onav_mission_manager_msgs/StorageState state
-```
-
-#### onav_mission_manager_msgs/srv/UpdateMission.srv {#storage-updatemission}
-
-```
-# The UUID of the mission we want to edit
-string uuid
-
-# The human-readable name for the Mission
-string name
-
-# The configuration parameters for the Mission
-string onav_config
-
-# The ordered list of Waypoint UUIDs to include in the Mission
-string[] waypoint_ids
----
-# The edited Mission, or null if no mission with the given ID exists
-onav_ms2_msgs/Mission result
-```
-
-#### onav_mission_manager_msgs/srv/UpdateTask.srv {#storage-updatetask}
-
-```
-# The UUID of the Task to edit
-string uuid
-
-# The human-readable name for the Task
-string name
-
-# The ROS Action that the Task executes
-string service_call
-
-# The version of the Task
-string version
-
-# The numerical data to pass to the service_call
-float64[] floats
-
-# The string data to pass to the service_call
-string[] strings
----
-# The edited Task, or null if no Task with the given ID exists
-onav_ms2_msgs/Task result
-```
-
-#### onav_mission_manager_msgs/srv/UpdateWaypoint.srv {#storage-updatewaypoint}
-
-```
-# The UUID of the Waypoint to edit
-string uuid
-
-# The human-readable name for the Waypoint
-string name
-
-# The latitude of the Waypoint in degrees
-float64 latitude
-
-# The longitude of the Waypoint in degrees
-float64 longitude
-
-# The compass heading of the Waypoint in degrees
-float64 heading
-
-# The Waypoint's position tolerance in meters
-float64 position_tolerance
-
-# The Waypoint's orientation tolerance in degrees
-float64 yaw_tolerance
-
-# The ordered list of Task UUIDs to execute at this Waypoint
-string[] task_ids
----
-# The edited Waypoint, or null if no Waypoint with the given ID exists
-onav_ms2_msgs/Waypoint result
 ```
 
 #### Standard ROS Services

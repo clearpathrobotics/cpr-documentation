@@ -1,0 +1,210 @@
+---
+title: Mission from YAML File
+sidebar_label: Mission from YAML File
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+## The Code
+
+``` python
+#! /usr/bin/env python3
+
+from cpr_outdoornav_api_examples_lib.ros_node import RosNode
+from cpr_outdoornav_api_examples_lib.yaml_config import YamlConfig
+import time
+import os
+
+# The file containing the mission configuration (adjust as needed)
+MISSION_YAML_FILE = os.environ.get("HOME", "administrator") + "/example_ws/src/" + \
+                   "CPR-OutdoorNav/src/cpr_outdoornav_api_examples/config/sample_mission.yaml"
+
+class MissionFromYamlFile(RosNode):
+    """
+    Create and run a mission loaded from a YAML configuration file.
+    Be that your robot is within 3m of your first Waypoint prior to starting the mission.
+    """
+
+    def __init__(self):
+        """Initialize the mission details and server connection."""
+
+        RosNode.__init__(self, 'mission_from_yaml_file')
+        self.mission = YamlConfig.yamlFileToMission(MISSION_YAML_FILE)
+
+        # NOTE: to save the configuration to file, uncomment the following lines:
+        # YamlConfig.missionToYamlFile('/tmp/test1.yaml', self.mission)
+
+    def run(self):
+        """Execute the mission."""
+
+        if not self.mission.startMission():
+            return False
+        while not self.mission.isMissionComplete():
+            time.sleep(1.0)
+        return self.mission.getMissionSuccess()
+
+
+if __name__ == '__main__':
+    if MissionFromYamlFile().run():
+        print("Mission completed successfully")
+    else:
+        print("Mission failed")
+
+```
+
+## The Code Explained 
+
+Let's break down the code.
+
+``` python
+#! /usr/bin/env python3
+```
+
+Every Python ROS Node will have this declaration at the top. The first line makes sure your script is executed as a Python3 script.
+
+
+``` python
+from cpr_outdoornav_api_examples_lib.ros_node import RosNode
+from cpr_outdoornav_api_examples_lib.yaml_config import YamlConfig
+```
+
+We provide a library of classes that can be used within your file for ease of use. In the above example, we import the RosNode and YamlConfig classes.
+The RosNode class is used by all of our examples to initialize a ROS node that will execute the example mission. The YamlConfig class is used to import
+a YAML file and convert it to a Mission object.
+
+``` python
+MISSION_YAML_FILE = os.environ.get("HOME", "administrator") + "/example_ws/src/" + \
+                   "CPR-OutdoorNav/src/cpr_outdoornav_api_examples/config/sample_mission.yaml"
+```
+
+This defines the file path of the YAML file that contains the mission to be executed. See the [YAML file](#yaml-file) below for the example YAML file
+that will be executed.
+
+``` python
+class MissionFromYamlFile(RosNode):
+```
+
+Creates a class for your example, which inherits a RosNode object. All python mission files are requried to inherit the RosNode class.
+
+``` python
+        RosNode.__init__(self, 'mission_from_yaml_file')
+        self.mission = YamlConfig.yamlFileToMission(MISSION_YAML_FILE)```
+```
+
+Initialize the ROS node with name `mission_from_yaml_file` and import the the mission from the yaml config file. The `YamlConfig.yamlFileToMission()` function
+reads teh configuration you have created in the YAML file and converts it into a Mission object.
+
+``` python
+        if not self.mission.startMission():
+            return False
+```
+
+Upon execution of the script, the `self.mission.startMission()` function creates the mission client if not yet created, connects to the mission action server
+and sends the goal to the action server to begin the execution of the mission.
+
+``` python
+        while not self.mission.isMissionComplete():
+            time.sleep(1.0)
+        return self.mission.getMissionSuccess()
+```
+
+`self.mission.isMissionComplete()` monitors the mission status and only proceeds to terminating the mission has completed or been cancelled.
+
+
+## YAML File {#yaml-file}
+
+The following YAML file is used in the above example mission.
+
+``` python
+mission:
+  header:
+    seq: 0
+    stamp:
+      secs: 0
+      nsecs: 0
+    frame_id: ''
+  name: "Sample Mission"
+  uuid: "8f57fd20-8a8c-4748-85ef-be1495b3ee06"
+  waypoints:
+    -
+      name: "Waypoint: 60"
+      uuid: "3edcedd7-ae0d-47cf-bd23-f7988d2779b7"
+      latitude: 50.10950820165676
+      longitude: -97.31898507913323
+      heading: -1.0
+      tasks: []
+      position_tolerance: -1.0
+      yaw_tolerance: -1.0
+    -
+      name: "Waypoint: 61"
+      uuid: "ad23202e-7067-4f1c-8677-2dc07af1e729"
+      latitude: 50.1095698924641
+      longitude: -97.31929487427445
+      heading: -1.0
+      tasks: []
+      position_tolerance: -1.0
+      yaw_tolerance: -1.0
+    -
+      name: "Waypoint: 62"
+      uuid: "fe452e77-4a26-41b0-b4ab-ee1859612a60"
+      latitude: 50.109437123117864
+      longitude: -97.31946787675591
+      heading: -1.0
+      tasks:
+        -
+          name: "Wait"
+          uuid: "ec1121a8-7481-420f-b532-c47ea86afcd7"
+          service_call: "/wait"
+          version: "0.0.0"
+          floats: [3.0]
+          strings: []
+      position_tolerance: -1.0
+      yaw_tolerance: -1.0
+    -
+      name: "Waypoint: 63"
+      uuid: "5ed54c1f-1599-497a-9c16-93c7ca6c355e"
+      latitude: 50.109384820042074
+      longitude: -97.3194477601883
+      heading: -1.0
+      tasks: []
+      position_tolerance: -1.0
+      yaw_tolerance: -1.0
+    -
+      name: "Waypoint: 64"
+      uuid: "2e021345-636b-4bd3-81ba-4f6901fdc016"
+      latitude: 50.10934056359333
+      longitude: -97.31936192949982
+      heading: -1.0
+      tasks: []
+      position_tolerance: -1.0
+      yaw_tolerance: -1.0
+    -
+      name: "Waypoint: 65"
+      uuid: "00c041ee-2ca4-40ba-8e38-65ac900d5a1d"
+      latitude: 50.10946930962604
+      longitude: -97.31921709021302
+      heading: -1.0
+      tasks: []
+      position_tolerance: -1.0
+      yaw_tolerance: -1.0
+    -
+      name: "Waypoint: 66"
+      uuid: "a5826fc5-b696-4b63-82aa-cc2e7a426640"
+      latitude: 50.10949344950718
+      longitude: -97.31911382516594
+      heading: -1.0
+      tasks: []
+      position_tolerance: -1.0
+      yaw_tolerance: -1.0
+    -
+      name: "Waypoint: 67"
+      uuid: "7ff204b2-79a3-46da-a8c0-2c734b4c5314"
+      latitude: 50.10949613171619
+      longitude: -97.31898910244675
+      heading: -1.0
+      tasks: []
+      position_tolerance: -1.0
+      yaw_tolerance: -1.0
+  onav_config: "To be determined"
+```
