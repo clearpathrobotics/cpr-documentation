@@ -6,8 +6,17 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-Before being able to run the examples similar to the one explained below, it is reuired that you have written your own custom tasks. See the
-[Custom Tasks](/docs_outdoornav_user_manual/features/custom_tasks) section for information on how to develop tasks for your application.
+:::tip
+
+API examples are currently in BETA. That is, we are providing instructions and examples of how to 
+generate your own example scripts using our API, however not everyone will be able to run these 
+scripts. During the BETA release of this feature, only a select few partners will be eligible to 
+run their custom example scripts. 
+
+:::
+
+Before being able to run the examples similar to the one explained below, it is required that you have written your own custom tasks. See the
+[Custom Tasks](../../../features/custom_tasks) section for information on how to develop tasks for your application.
 
 ## The Code
 
@@ -16,7 +25,6 @@ Before being able to run the examples similar to the one explained below, it is 
 
 import rospy
 import actionlib
-from cpr_outdoornav_api_examples_lib.coordinate_lat_lon import CoordinateLatLon
 from cpr_outdoornav_api_examples_lib.ros_node import RosNode
 from cpr_outdoornav_api_examples_lib.waypoint import Waypoint
 from cpr_outdoornav_api_examples_lib.mission import Mission
@@ -131,14 +139,13 @@ if __name__ == '__main__':
 ``` python
 import rospy
 import actionlib
-from cpr_outdoornav_api_examples_lib.coordinate_lat_lon import CoordinateLatLon
 from cpr_outdoornav_api_examples_lib.ros_node import RosNode
 from cpr_outdoornav_api_examples_lib.waypoint import Waypoint
 from cpr_outdoornav_api_examples_lib.mission import Mission
 from clearpath_navigation_msgs.msg import Task, UITaskResult, UITaskAction
 ```
 
-Import the `RosNode`, `CoordinateLatLon`, `Waypoint` and `Mission` classes which will be used to create the mission to be executed. 
+Import the `RosNode`, `Waypoint` and `Mission` classes which will be used to create the mission to be executed. 
 We also import the `Task` and `UITask` messages which are used to generate the action servers. 
 
 ``` python

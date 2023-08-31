@@ -41,16 +41,29 @@ Begin by connecting to the OutdoorNav Computer as outlined above.
 On UGV startup, all the sensors, the user interface, as well as the
 Navigation software are set to start automatically through a Docker
 container. You can check the Docker container's status by running
-`docker compose ps` and checking for:
+`docker ps` and checking for:
 
 -   onav-web (Docker image containing the web interface)
 -   onav-web-ros (Docker image containing the ROS web bridge nodes)
--   onav-sensors (Docker image containing that launches the ROS sensor
-    drivers)
--   onav-autonomy (Docker image containing the ROS nodes related to the
-    autonomy)
+-   onav-sensors (Docker image that launches the ROS sensor drivers)
+-   onav-power (Docker image that launches the ROS nodes related to 
+    the power system of the UGV)
+-   onav-autonomy (Docker image that launches the ROS nodes related 
+    to the autonomy)
 
-If the Docker containers are not running, they can be started with:
+The docker compose file located at `~/cpr_outdoornav_launch/docker-compose.yml`
+provides the description for each the docker images that are being generated
+on startup. In here, you can find that there are profiles set up as part of the
+docker compose structure. They are:
+
+-   ui: starts the onav-web and onav-web-ros containers
+-   sensors: starts the onav-sensors container
+-   power: starts the onav-power container
+-   autonomy: starts the onav-autonomy container
+-   outdoornav: starts all of the containers
+-   teleop: start only the ui and sensor related containers (no autonomy)
+
+If the Docker containers are not running, they can all be started with:
 
 ``` bash
 cd ~/cpr_outdoornav_launch/    # directory with docker-compose.yaml
@@ -59,20 +72,20 @@ docker compose --profile outdoornav up -d
 
 ### Stopping/Restarting all of OutdoorNav
 
-To use the UGV without the OutdoorNav software, use these commands to
-stop the software and prevent it from automatic startup:
+Each individual profile can also be brought down. For example to use the UGV without
+the OutdoorNav software. The following command brings down OutdoorNav and is persistent
+accross reboots/power cylces.
 
 ``` bash
 cd ~/cpr_outdoornav_launch/    # directory with docker-compose.yaml
-docker compose --profile outdoornav stop
+docker compose --profile outdoornav down
 ```
 
-If the OutdoorNav software is currently running or has been stopped, it
-can be restarted by running:
+If the OutdoorNav software has been brought down, it can be restarted by running:
 
 ``` bash
 cd ~/cpr_outdoornav_launch/    # directory with docker-compose.yaml
-docker compose --profile outdoornav start
+docker compose --profile outdoornav up -d
 ```
 
 ### Stopping/Restarting the Autonomy
@@ -82,14 +95,14 @@ commands to stop the nodes and prevent them from automatic startup:
 
 ``` bash
 cd ~/cpr_outdoornav_launch/    # directory with docker-compose.yaml
-docker compose --profile autonomy stop
+docker compose --profile autonomy down
 ```
 
 The autonomy core can be restarted by running:
 
 ``` bash
 cd ~/cpr_outdoornav_launch/    # directory with docker-compose.yaml
-docker compose --profile outdoornav start
+docker compose --profile autonomy up -d
 ```
 
 ### Stopping/Restarting the Sensors
@@ -99,18 +112,17 @@ nodes and prevent them from automatic startup:
 
 ``` bash
 cd ~/cpr_outdoornav_launch/    # directory with docker-compose.yaml
-docker compose stop
+docker compose --profile sensors down
 ```
 
-### Accessing the Shell in Docker Container
+::: note
 
-To access the shell in a Docker container for debugging (optionally
-replace `onav-autonomy` with `onav-web` in the following command):
+This command will only disable the drivers for the sensors that are started
+by the OutdoorNv software. This includes the GNSS units, the Microstrain IMU,
+and any LiDAR/Stereo detection sources (not limited to Velodyne LiDARs, Realsense
+cameras, 2D Lidars)
 
-``` bash
-cd ~/cpr_outdoornav_launch/      # directory with docker-compose.yaml
-docker compose exec -it onav-autonomy bash
-```
+:::
 
 ### Accessing the Navigation Software Logs
 
@@ -119,4 +131,11 @@ To check the logs of the Navigation software:
 ``` bash
 cd ~/cpr_outdoornav_launch/    # The directory with docker-compose.yaml
 docker compose logs -f
+```
+
+Optionally, specify the specific container you would like to view logs for:
+
+``` bash
+cd ~/cpr_outdoornav_launch/    # The directory with docker-compose.yaml
+docker compose logs -f onav-autonomy
 ```
