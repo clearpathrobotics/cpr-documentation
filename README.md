@@ -20,7 +20,7 @@
         - Extension: _Prettier_
         - Extension: _MDX_
     2.  Terminal configured to work with this GitHub repository
-    3.  Node.js (16.x or newer) is installed
+    3.  Node.js (18.13.0 or newer) is installed
         1.  To install `nodejs` LTS (18.x currently) on Ubuntu run: `curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - && sudo apt-get install -y nodejs`
         2.  For all other platforms use: https://nodejs.org/en/download
 2.  Clone this repository,
