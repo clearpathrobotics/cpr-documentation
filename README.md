@@ -48,10 +48,10 @@
 
 1.  Clone or fork this repository,
 
-        git clone https://github.com/clearpathrobotics/cpr-documentation.git`
+        git clone https://github.com/clearpathrobotics/cpr-documentation.git
 
 2.  Create a branch from development. with a name indicating the purpose, such as _feature_xxxxxx_
-3.  Make changes to the relevant files
+3.  Make changes to the relevant files.
 4.  Test using your local server, using the steps mentioned [Steps to run this on your computer locally](##-steps-to-run-this-on-your-computer-locally)
 5.  When ready, enter `ctrl-c` in your terminal to stop the server. Then run `npm run build` to test that the site builds corretly.
 6.  Resolve any errors that the terminal reports, and rerun the command `npm run build`.
@@ -59,25 +59,27 @@
     The terminal will either report:
     - _All matched files use Prettier code style!_
     - _Code style issues found in the above file(s). Forgot to run Prettier?_
-      You can fix the errors by running the command `npm run format-write`.
-      This format all the files in the repository, and save them automatically.
+      You can fix the errors by running Prettier on a single file, with `npx prettier --write <FILE PATH>`.
+      For example, you can run the command `npx prettier --write README.md` to format this README.
       - Refer to the _package.json_ to understand what this script calls.
       - Refer to the _.prettierrc.json_ to understand the rules Prettier is using when checking files.
-      - Alternativaly, you can format a single file by running `npx prettier --write <FILE PATH>`, such as `npx prettier --write README.md`
-8.  You will need to confirm that `npm run format-write` code formatting did not make any functionality changes to your _.mdx_ documentation.
-    You may see files that claim to be updated in Source Control, but don't have any visible changes.
-    You should run these commands in your terminal to prevent Git from noting these types of changes:
+      
+      Note, we used to suggest the command `npm run format-write` to update all the files in this repository.
+      We don't suggest this command anymore, since it is then difficult for reviewers of Pull Requests to find the intended content changes.
+      If you do continue to use this entire repositry command, you may see files that claim to be updated in Source Control, but don't have any visible changes.
+      If so, you should run these commands in your terminal to prevent Git from noting these types of changes:
 
         git config --global core.filemode false
         git config --global core.autocrlf false
 
-9.  When ready, publish your branch on GitHub, and submit a Pull Request to merge your changes into the _development_ branch.
+8.  When ready, publish your branch on GitHub, and submit a Pull Request to merge your changes into the _development_ branch.
     Pull Requests to the _production_ branch will not merged.
     Also note that this GitHub repository has branch protection rules, that prevent you from committing directly to _production_ and _development_.
+    The Pull Request will automatically request reviews from people listed in the codeowners file, but you can also add more reviewers.
 
     <img src="/static/img/readme_images/readme_github_1.png" width="467"/>
 
-10. The administrators of this documentation will review the website for any functional issues,
+9.  The administrators of this documentation will review the website for any functional issues,
     and will periodically merge the latest commits in the _development_ branch into the _production_ branch.
 
 ## Workflow for publishing OutdoorNav User Manual updates
@@ -213,7 +215,7 @@ Using lowercase letters minimizes the number of build issues.
 - Bad: `controller_1.PNG`
 
 Downloadable assets like PDFs should say _clearpath_robotics_ at the start of the name.
-This helps User's know where they downloaded the file from later, as the asset is saved to their _Downloads_ folder.
+This helps Users know where they downloaded the file from later, as the asset is saved to their _Downloads_ folder.
 
 ## Where should I place files?
 
@@ -236,6 +238,37 @@ This helps User's know where they downloaded the file from later, as the asset i
 5.  Versioned Images
 
     In an `img/` folder next to the markdown files where it will be used.
+
+## How to merge branches into the Production branch?
+
+The website is built and deployed using AWS Amplify.
+AWS watches the state of our GitHub _production_ and _development_ branches, and rebuilds when it sees a new commit on either one.
+
+Follow this process to keep the _development_ and _production_ branches aligned, without adding many unneccessary commits:
+
+1.  Merge _feature_ branches into _development_.
+    _development_ is set as the default branch in GitHub, so Pull Requests should automatically suggest it as the target branch.
+    You should merge branches using the Squash-and-Merge option, to limit the number of commits in the repository.
+2.  Review the AWS Amplify dashboard, to make sure the site rebuilt without any errors.
+    If there is an error, create a new _feature_ branch to fix the issue, and merge it into _development_.
+    You can proceed to the next step when you are happy with the state of _development_, and know it is building correctly in AWS.
+3.  Create a Pull Request with:
+    - Base: _production_
+    - Head: _development_
+4.  After the Pull Request has been approved, you can merge it using the Create-a-Merge-Commit option.
+    You should not use the Squash-and-Merge option here, otherwise _production_ will not have the latest commits from _development_, which were created in step 1 of this list. The source data will be the same on the 2 branches, but the commit hashes will not be aligned.
+
+     The Create-a-Merge-Commit option prevents this issue, by adding all the commits from _development_ to _production_, and also adding a commit to _production_ that mentions the Pull Request.
+5.  _production_ has been updated, but it is one commit ahead of _development_.
+    We want to update _development_ so we do not experience rebase issues next time we want to update the _production_ branch.
+    To update _development_, go to VS Code:
+    1.  Pull the latest remote data to _production_
+    2.  Pull the latest remote data to _development_
+    3.  Switch to your local _development_ branch
+    4.  Run `git rebase production`.
+        This should pull one commit into _development_. It should be the commit related to merging the Pull Request.
+    5.  Force Push this commit to the _development_ branch on GitHub.
+        Note: our branch protection rules in the GitHub repository only allow Administrators and Owners to Force Push to the _production_ and _development_ branches.    
 
 ## How does the deployed website get updated?
 
