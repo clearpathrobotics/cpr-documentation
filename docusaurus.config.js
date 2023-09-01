@@ -95,14 +95,14 @@ const config = {
         items: [
           {
             type: "docsVersion",
-            to: "/docs/robots",
+            to: "/docs/robots/",
             label: "Robots",
             position: "left",
             docsPluginId: "docs",
           },
           {
             type: "docsVersion",
-            to: "/docs/ros",
+            to: "/docs/ros/",
             label: "ROS",
             position: "left",
             docsPluginId: "docs",
