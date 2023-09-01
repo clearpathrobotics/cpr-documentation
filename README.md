@@ -59,11 +59,13 @@
     The terminal will either report:
     - _All matched files use Prettier code style!_
     - _Code style issues found in the above file(s). Forgot to run Prettier?_
-      You can fix the errors by running the command `npm run format-write`.
-      This format all the files in the repository, and save them automatically.
+      You can fix the errors by running Prettier on a single file, with `npx prettier --write <FILE PATH>`.
+      For example, you can run the command `npx prettier --write README.md` to format this README.
       - Refer to the _package.json_ to understand what this script calls.
       - Refer to the _.prettierrc.json_ to understand the rules Prettier is using when checking files.
-      - Alternativaly, you can format a single file by running `npx prettier --write <FILE PATH>`, such as `npx prettier --write README.md`
+      
+      Note, we used to suggest the command `npm run format-write` to update all the files in this repository.
+      We don't suggest this command anymore, since it is then difficult for reviewers of Pull Requests to find the intended content changes. 
 8.  You will need to confirm that `npm run format-write` code formatting did not make any functionality changes to your _.mdx_ documentation.
     You may see files that claim to be updated in Source Control, but don't have any visible changes.
     You should run these commands in your terminal to prevent Git from noting these types of changes:
