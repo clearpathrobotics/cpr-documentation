@@ -51,7 +51,7 @@
         git clone https://github.com/clearpathrobotics/cpr-documentation.git
 
 2.  Create a branch from development. with a name indicating the purpose, such as _feature_xxxxxx_
-3.  Make changes to the relevant files
+3.  Make changes to the relevant files.
 4.  Test using your local server, using the steps mentioned [Steps to run this on your computer locally](##-steps-to-run-this-on-your-computer-locally)
 5.  When ready, enter `ctrl-c` in your terminal to stop the server. Then run `npm run build` to test that the site builds corretly.
 6.  Resolve any errors that the terminal reports, and rerun the command `npm run build`.
