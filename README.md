@@ -75,6 +75,7 @@
 8.  When ready, publish your branch on GitHub, and submit a Pull Request to merge your changes into the _development_ branch.
     Pull Requests to the _production_ branch will not merged.
     Also note that this GitHub repository has branch protection rules, that prevent you from committing directly to _production_ and _development_.
+    The Pull Request will automatically request reviews from people listed in the codeowners file, but you can also add more reviewers.
 
     <img src="/static/img/readme_images/readme_github_1.png" width="467"/>
 
