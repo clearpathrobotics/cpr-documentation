@@ -48,7 +48,7 @@
 
 1.  Clone or fork this repository,
 
-        git clone https://github.com/clearpathrobotics/cpr-documentation.git`
+        git clone https://github.com/clearpathrobotics/cpr-documentation.git
 
 2.  Create a branch from development. with a name indicating the purpose, such as _feature_xxxxxx_
 3.  Make changes to the relevant files
