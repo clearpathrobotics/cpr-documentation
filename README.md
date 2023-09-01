@@ -239,6 +239,37 @@ This helps Users know where they downloaded the file from later, as the asset is
 
     In an `img/` folder next to the markdown files where it will be used.
 
+## How to merge branches into the Production branch?
+
+The website is built and deployed using AWS Amplify.
+AWS watches the state of our GitHub _production_ and _development_ branches, and rebuilds when it sees a new commit on either one.
+
+Follow this process to keep the _development_ and _production_ branches aligned, without adding many unneccessary commits:
+
+1.  Merge _feature_ branches into _development_.
+    _development_ is set as the default branch in GitHub, so Pull Requests should automatically suggest it as the target branch.
+    You should merge branches using the Squash-and-Merge option, to limit the number of commits in the repository.
+2.  Review the AWS Amplify dashboard, to make sure the site rebuilt without any errors.
+    If there is an error, create a new _feature_ branch to fix the issue, and merge it into _development_.
+    You can proceed to the next step when you are happy with the state of _development_, and know it is building correctly in AWS.
+3.  Create a Pull Request with:
+    - Base: _production_
+    - Head: _development_
+4.  After the Pull Request has been approved, you can merge it using the Create-a-Merge-Commit option.
+    You should not use the Squash-and-Merge option here, otherwise _production_ will not have the latest commits from _development_, which were created in step 1 of this list. The source data will be the same on the 2 branches, but the commit hashes will not be aligned.
+
+     The Create-a-Merge-Commit option prevents this issue, by adding all the commits from _development_ to _production_, and also adding a commit to _production_ that mentions the Pull Request.
+5.  _production_ has been updated, but it is one commit ahead of _development_.
+    We want to update _development_ so we do not experience rebase issues next time we want to update the _production_ branch.
+    To update _development_, go to VS Code:
+    1.  Pull the latest remote data to _production_
+    2.  Pull the latest remote data to _development_
+    3.  Switch to your local _development_ branch
+    4.  Run `git rebase production`.
+        This should pull one commit into _development_. It should be the commit related to merging the Pull Request.
+    5.  Force Push this commit to the _development_ branch on GitHub.
+        Note: our branch protection rules in the GitHub repository only allow Administrators and Owners to Force Push to the _production_ and _development_ branches.    
+
 ## How does the deployed website get updated?
 
 We have this site deployed on _AWS Amplify_.
