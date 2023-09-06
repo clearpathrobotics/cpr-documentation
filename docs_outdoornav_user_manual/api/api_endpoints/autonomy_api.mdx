@@ -351,12 +351,11 @@ localization according to the current sensor readings. If you are
 sending a mission to the UGV without using the UI and through the API,
 you must call this service before sending the mission.
 
-#### /localization/set_pose (IN DEVELOPMENT)
+#### /localization/reset
 
-&emsp;&emsp;**Service Type:**
+&emsp;&emsp;**Service Type:** [clearpath_localization_msgs/srv/ResetLocalization](definitions#srv-reset-localization)
 
-&emsp;&emsp;**Description:** This service can be used to reset or reinitialize the
-localization of the UGV.
+&emsp;&emsp;**Description:** This service can be used to trigger a reset of the UGVs localization.
 
 #### /navigation/set_collision_avoidance
 
