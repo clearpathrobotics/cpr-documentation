@@ -79,6 +79,14 @@ status, and whether the robot is dead reckoning.
 
 &emsp;&emsp;**Description:** Result topic from the mission action.
 
+#### /navigation/cmd_vel
+
+&emsp;&emsp;**Message Type:** geometry_msgs/Twist
+
+&emsp;&emsp;**Description:** This output commanded velocity from the autonomy
+software (OutdoorNav) to control the velocity of the platform. It is
+commonly relayed directly into the UGV's velocity controller.
+
 #### /navigation/distance_to_goal
 
 &emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/DistanceToGoal](definitions#msg-distance-to-goal)
@@ -186,14 +194,6 @@ IDLE, PAUSE, ESTOP, LOST. Multiple simultaneous states are possible.
 between the robot and the reference path) and as well as the heading
 error (ie. the difference between the current heading and the path
 direction).
-
-#### /navigation/cmd_vel
-
-&emsp;&emsp;**Message Type:** geometry_msgs/Twist
-
-&emsp;&emsp;**Description:** This output commanded velocity from the autonomy
-software (OutdoorNav) to control the velocity of the platform. It is
-commonly relayed directly into the UGV's velocity controller.
 
 #### /safety/safety_stop
 
