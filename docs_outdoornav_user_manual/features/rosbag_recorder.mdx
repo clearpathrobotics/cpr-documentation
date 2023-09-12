@@ -12,15 +12,23 @@ select **Start rosbag recording**. This will record a rosbag of the
 following topics (or all the topics in the namespace if followed by a
 `/*`):
 
--   rosout_agg/*
--   rosout
--   twist_marker_server/*
--   localization_helper/*
--   localization_core/*
--   navigation/*
--   piksi_position/*
--   piksi_heading/*
+-   '/rosout(.*)'
+-   '/twist_marker_server/(.*)'
+-   '/dock/(.*)'
+-   '/laser_target_tracker/(.*)'
+-   '/localization/(.*)'
+-   '/localization_core/(.*)'
+-   '/localization_helper/(.*)'
+-   '/mission/(.*)'
+-   '/navigation/(.*)'
+-   '/onboard_systems/(.*)'
+-   '/platform/(.*)'
+-   '/swiftnav/(.*)'
+-   '/sensors/gps(.*)'
+-   '/sensors/imu(.*)'
+-   '/target/(.*)'
+-   '/tf(.*)'
 
 To stop the recording navigate to the Settings drop down and select
 **Stop rosbag recording**. This will save the rosbag with the date and
-time as its file name in the onav_log/rosbag_data folder.
+time as its file name in the `~/clearpath_files/rosbag_data` folder.
