@@ -79,12 +79,13 @@ status, and whether the robot is dead reckoning.
 
 &emsp;&emsp;**Description:** Result topic from the mission action.
 
-#### /navigation/current_goal_info
+#### /navigation/cmd_vel
 
-&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/CurrentGoalInfo](definitions#msg-current-goal-info)
+&emsp;&emsp;**Message Type:** geometry_msgs/Twist
 
-&emsp;&emsp;**Description:** string identifier (id), goal and viapoint positions,
-headings, pose/yaw tolerances, etc\...
+&emsp;&emsp;**Description:** This output commanded velocity from the autonomy
+software (OutdoorNav) to control the velocity of the platform. It is
+commonly relayed directly into the UGV's velocity controller.
 
 #### /navigation/distance_to_goal
 
@@ -98,6 +99,13 @@ in meters, from the robot to its current goal.
 &emsp;&emsp;**Message Type:** geometry_msgs/Polygon
 
 &emsp;&emsp;**Description:** The footprint of the robot.
+
+#### /navigation/global_costmap
+
+&emsp;&emsp;**Message Type:** nav_msgs/OccupancyGrid
+
+&emsp;&emsp;**Description:** An occupancy grid consisting of the Free, Occupied or
+Unknown space that the robot uses to plan paths in the environment.
 
 #### /navigation/local_costmap
 
@@ -122,7 +130,7 @@ the navigation. This includes the total distance travelled, duration run, as wel
 information such as how many missions have been sent, how many have been completed and the number
 of replanning maneuvers, recoveries and number of tasks executed.
 
-#### /navigation/motion_state (IN DEVELOPMENT)
+#### /navigation/motion_state
 
 &emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/MotionState](definitions#msg-motion-state)
 
@@ -186,14 +194,6 @@ IDLE, PAUSE, ESTOP, LOST. Multiple simultaneous states are possible.
 between the robot and the reference path) and as well as the heading
 error (ie. the difference between the current heading and the path
 direction).
-
-#### /navigation/cmd_vel
-
-&emsp;&emsp;**Message Type:** geometry_msgs/Twist
-
-&emsp;&emsp;**Description:** This output commanded velocity from the autonomy
-software (OutdoorNav) to control the velocity of the platform. It is
-commonly relayed directly into the UGV's velocity controller.
 
 #### /safety/safety_stop
 
@@ -326,6 +326,12 @@ The new dock will appear on the UI.
 &emsp;&emsp;**Description:** Remove and existing dock from the database. Input to this service requires ether the UUID
 or the semantic name of the dock.
 
+#### /dock/clear_data
+
+&emsp;&emsp;**Service Type:** [std_srvs/srv/Trigger](definitions#srv-clear-dock-data)
+
+&emsp;&emsp;**Description:** Remove all existing dock data from storage.
+
 #### /dock/set_location/by_id
 
 &emsp;&emsp;**Service Type:** [clearpath_dock_msgs/srv/SetDockLocationByID](definitions#srv-set-dock-location-by-id)
@@ -351,12 +357,11 @@ localization according to the current sensor readings. If you are
 sending a mission to the UGV without using the UI and through the API,
 you must call this service before sending the mission.
 
-#### /localization/set_pose (IN DEVELOPMENT)
+#### /localization/reset
 
-&emsp;&emsp;**Service Type:**
+&emsp;&emsp;**Service Type:** [clearpath_localization_msgs/srv/ResetLocalization](definitions#srv-reset-localization)
 
-&emsp;&emsp;**Description:** This service can be used to reset or reinitialize the
-localization of the UGV.
+&emsp;&emsp;**Description:** This service can be used to trigger a reset of the UGVs localization.
 
 #### /navigation/set_collision_avoidance
 

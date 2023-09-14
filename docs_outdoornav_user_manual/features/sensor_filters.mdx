@@ -1,0 +1,114 @@
+---
+title: Sensor Filters
+sidebar_label: Sensor Filters
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+:::note
+
+Changes to any of the following variables will only take effect after power cycling the robot.
+
+:::
+
+
+The following table lists the sensors that are useable with the
+OutdoorNav software. The sensor drivers can be turned on/off using
+these environment variables, however, the sensor will always remain
+powered on. The environment variables, should be added to the
+`~/cpr_outdoornav_launch/env/sensors_customization.env` file.
+
+| Environment Variable           | Description                               | Data Type
+|--------------------------------|-------------------------------------------|--------------
+| **SWIFTNAV_ENABLE_DRIVER**     | Enable/disable the Swiftnav Piksi/Duro ROS driver, if integrated. | bool |
+| **UBLOX_ENABLE_DRIVER**        | Enable/disable the UBlox ROS driver, if integrated. | bool |
+| **MICROSTRAIN_ENABLE_DRIVER**  | Enable/disable the Microstrain GX5/CV5 ROS driver, if integrated.  | bool |
+| **XSENS_ENABLE_DRIVER**        | Enable/disable the XSens MTI ROS driver, if integrated.  | bool |
+| **VLP_ENABLE_DRIVER**          | Enable/disable the Velodyne ROS driver, if integrated (front unit if more than one).  | bool |
+| **REAR_VLP_ENABLE_DRIVER**     | Enable/disable the Velodyne ROS driver, if integrated (rear unit if more than one).  | bool |
+| **LMS1XX_ENABLE_DRIVER**       | Enable/disbale the Sick LMS1XX ROS driver, if integrated (front unit if more than one).  | bool |
+| **REAR_LMS1XX_ENABLE_DRIVER**  | Enable/disbale the Sick LMS1XX ROS driver, if integrated (rear unit if more than one).  | bool |
+| **HOKUYO_ENABLE_DRIVER**       | Enable/disbale the Hokuyo ROS driver, if integrated (front unit if more than one).  | bool |
+| **REAR_HOKUYO_ENABLE_DRIVER**  | Enable/disbale the Hokuyo ROS driver, if integrated (rear unit if more than one).  | bool |
+| **D435_ENABLE_DRIVER**         | Enable/disable the Realsense ROS driver, if integrated (front unit if more than one).  | bool |
+| **REAR_D435_ENABLE_DRIVER**    | Enable/disable the Realsense ROS driver, if integrated (rear unit if more than one).  | bool |
+
+
+### Sensor Tuning (Advanced)
+
+:::danger SAFETY WARNING
+
+Making changes to any of the following variables may decrease system safety. It is recommended that users
+only modify these parameters in consultation with Clearpath Robotics Support.
+
+:::
+
+The following list of environment variables can be used to filter the
+sensor data in order to modify/improve the sensory input to the
+OutdoorNav autonomy. It is recommended that you first consult the
+following links before attempting to modify these parameters.
+
+-   [PCL Filters](http://wiki.ros.org/pcl_ros/Tutorials/filters)
+-   [PointCloud to LaserScan Filter](http://wiki.ros.org/pointcloud_to_laserscan)
+-   [DepthImage to LaserScan Filter](http://wiki.ros.org/depthimage_to_laserscan)
+
+#### Voxel Grid Filter
+
+| Environment Variable | Description                              | Data Type (Default) |
+|----------------------|------------------------------------------|---------------------|
+| **<type\>_ENABLE_FILTER_VOXEL** | Enable/disable the PCL voxel filter for the sensor of type <type\>.<br/><br/>type = {VLP, D435, REAR_VLP, REAR_D435} | bool<br/>(false) |
+| **PCL_FIL_FILTER_VOXEL_LEAF_SIZE** | The size of a leaf (on x,y,z), in meters, used for downsampling. Range: 0.0 to 1.0. | double (0.01) |
+
+#### Cropbox Filter
+
+| Environment Variable | Description                              | Data Type (Default) |
+|----------------------|------------------------------------------|---------------------|
+| **<type\>_ENABLE_FILTER_CROPBOX** | Enable/disable the PCL cropbox filter for the sensor of type <type\>.<br/><br/>type = {VLP, D435, REAR_VLP, REAR_D435} | bool<br/>(false) |
+| **PCL_FILTER_CROPBOX_MIN_X** | The lower bound, in meters, on the x-axis within which to reject points from the pointcloud. Range: -1000.0 to 1000.0. | double<br/>(0.01) |
+| **PCL_FILTER_CROPBOX_MAX_X** | The upper bound, in meters, on the x-axis within which to reject points from the pointcloud. Range: -1000.0 to 1000.0. | double<br/>(2.0) |
+| **PCL_FILTER_CROPBOX_MIN_Y** | The lower bound, in meters, on the y-axis within which to reject points from the pointcloud. Range: -1000.0 to 1000.0. | double<br/>(-10.0) |
+| **PCL_FILTER_CROPBOX_MAX_Y** | The upper bound, in meters, on the y-axis within which to reject points from the pointcloud. Range: -1000.0 to 1000.0. | double<br/>(10.0) |
+| **PCL_FILTER_CROPBOX_MIN_Z** | The lower bound, in meters, on the z-axis within which to reject points from the pointcloud. Range: -1000.0 to 1000.0. | double<br/>(-0.5) |
+| **PCL_FILTER_CROPBOX_MAX_Z** | The upper bound, in meters, on the z-axis within which to reject points from the pointcloud. Range: -1000.0 to 1000.0. | double<br/>(10.0) |
+
+#### Radius Outlier Filter
+
+| Environment Variable | Description                              | Data Type (Default) |
+|----------------------|------------------------------------------|---------------------|
+| **<type\>_ENABLE_FILTER_RADIUS_OUTLIER** | Enable/disable the PCL radius outlier filter for the sensor of type <type\>.<br/><br/>type = {VLP, D435, REAR_VLP, REAR_D435} | bool<br/>(false) |
+| **PCL_FILTER_ROR_RADIUS_SEARCH** | The number of points within this distance, in meters, from the query point will need to be equal or greater than PCL_FILTER_ROR_MIN_NEIGHBORS in order to be classified as an inlier point (i.e. will not be filtered). | double<br/>(0.05) |
+| **PCL_FILTER_ROR_MIN_NEIGHBORS** | The number of points within PCL_FILTER_ROR_RADIUS_SEARCH from the query point will need to be equal or greater than this number in order to be classified as an inlier point (i.e. will not be filtered). | int<br/>(10) |
+
+#### Statistical Outlier Filter
+
+| Environment Variable | Description                              | Data Type (Default) |
+|----------------------|------------------------------------------|---------------------|
+| **<type\>_ENABLE_FILTER_STATISTICAL_OUTLIER** | Enable/disable the PCL statistical outlier filter for the sensor of type <type\>.<br/><br/>type = {VLP, D435, REAR_VLP, REAR_D435} | bool<br/>(false) |
+| **PCL_FILTER_SOR_MEAN_K** | The number of points (k) to use for mean distance estimation Range: 2 to 100. | double<br/>(5.0) |
+| **PCL_FILTER_SOR_STD_DEV** | The standard deviation multiplier threshold. All points outside the mean +- sigma * std_mul will be considered outliers. Range: 0.0 to 5.0. | double<br/>(0.3) |
+
+#### PointCloud to LaserScan Filter
+
+| Environment Variable | Description                              | Data Type (Default) |
+|----------------------|------------------------------------------|---------------------|
+| **<type\>_ENABLE_POINTCLOUD_TO_LASERSCAN** | Enable/disable the pointcloud to laserscan outlier filter for the sensor of type <type\>.<br/><br/>type = {VLP, D435, REAR_VLP, REAR_D435} | bool<br/>(false) |
+| **PCL_TO_SCAN_MIN_HEIGHT** | The minimum height to sample in the point cloud, in meters. | double<br/>(0.2) | 
+| **PCL_TO_SCAN_MAX_HEIGHT** | The maximum height to sample in the point cloud, in meters. | double<br/>(1.2) | 
+| **PCL_TO_SCAN_MIN_ANGLE** | The minimum scan angle, in radians. | double<br/>(3.14) | 
+| **PCL_TO_SCAN_MAX_ANGLE** | The maximum scan angle, in radians. | double<br/>(3.14) | 
+| **PCL_TO_SCAN_ANGLE_INCREMENT** | Resolution of laser scan, in radians, per ray. | double<br/>(0.00218) | 
+| **PCL_TO_SCAN_TIME** | The scan rate in seconds. | double<br/>(0.3333) | 
+| **PCL_TO_SCAN_MIN_RANGE** | The minimum ranges to return, in meters. | double<br/>(0.3) | 
+| **PCL_TO_SCAN_MAX_RANGE** | The maximum ranges to return, in meters. | double<br/>(100.0) | 
+
+
+#### DepthImage to LaserScan Filter
+
+| Environment Variable | Description                              | Data Type (Default) |
+|----------------------|------------------------------------------|---------------------|
+| **<type\>_ENABLE_DEPTH_TO_LASERSCAN** | Enable/disable the depth image to laserscan outlier filter for the sensor of type <type\>.<br/><br/>type = {D435, REAR_D435} | bool<br/>(false) |
+| **DEPTH_TO_SCAN_HEIGHT** | The number of pixel rows to use to generate the laserscan. For each column, the scan will return the minimum value for those pixels centered vertically in the image. | int |
+| **DEPTH_TO_SCAN_TIME** | Time between scans (seconds). Typically, 1.0/frame_rate. This value is not easily calculated from consecutive messages, and is thus left to the user to set correctly. | double |
+| **DEPTH_TO_SCAN_MIN_RANGE** | The minimum ranges to return in meters. Ranges less than this will be output as -Inf. | double |
+| **DEPTH_TO_SCAN_MAX_RANGE** | The maximum ranges to return in meters. Ranges greater than this will be output as +Inf. | double |
