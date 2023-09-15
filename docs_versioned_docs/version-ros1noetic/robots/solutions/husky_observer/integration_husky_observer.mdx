@@ -8,30 +8,74 @@ toc_max_heading_level: 4
 
 import Support from "/components/support.mdx";
 import ComponentAddingASourceWorkspace from "/docs_versioned_docs/version-ros1noetic/components/_adding_a_source_workspace.mdx";
+import ComponentPacsMechanical from "/components/pacs_mechanical.mdx";
+
 
 To attach custom hardware to Husky Observer, you will have to take care of mechanical mounting, electrical
 supply, and software integration. This guide aims to equip you with respect to these challenges.
 
 ## Mechanical Mounting
 
-TODO: notes on two PACS-compatible mount points (front and rear)
+Husky Observer has two PACS&trade;-compatible mount points on the top of the robot, one at the front
+and one at the rear, as outlined in the figure below. Each of the two mount points can support
+a payload up to 5 kg.
+
+TODO: image of mount points.
+
+<ComponentPacsMechanical />
+
+:::note
+
+When using the front and rear mount point, be careful to avoid blocking the field of view of
+the 3D LiDAR. If you have any related questions, please contact [Support](#support).
+
+:::
 
 ---
 
 ## Electrical Integration
 
-TODO: power: note new breakouts
-TODO: data: note Ethernet + USB breakouts
+Except for bus-powered USB cameras, most payloads have separate leads for power and data.
+
+### Data Connections
+
+On the Husky Observer lid, there are three data interfaces:
+
+- One 1 Gbps Ethernet (RJ45 connector), connected to the Main Computer (TODO: IP rated connector?)
+- One USB 3.0 (Type A connector), connected to the Main Computer (TODO: IP rated connector?)
+- One HDMI, connected to the Main Computer (TODO: IP rated connector?)
+
+These can be used for debugging or for providing data connectivity to custom payloads.
+
+### Power Connections
+
+On the Husky Observer lid, there is an Icotek (TODO? P/N) connector with three cable glands that will allow the user to
+create and route power cables from custom payloads on the lid to power sources inside the Husky Observer
+while still maintaining the IP rating of the robot. (TODO: link to instructions on cable passthrough)
+
+Inside the Husky Observer, power is available from terminal blocks as outlined in the table below.
+For each power source, 18 AWG wires with ferrules (DigiKey P/N 277-2156-ND) are recommended for power cables
+at the end that gets inserted into the terminal blocks. Note that positive and negative wires are connected
+to separate terminal blocks.
+
+| Power Source | Maximum Current | Terminal Blocks |
+| :----------- | :-------------- | :-------------- |
+| VBAT (24.0 V minimum) | 3.75 A | Brown (positive), Black (negative) |
+| 24 V | 2.5 A | Grey (positive), Black (negative) |
+| 12 V | 3.5 A | White (positive), Black (negative) |
+
+TODO: image of terminal blocks (left-to-right, with colours)
 
 ---
 
 ## Software Integration
 
-TODO: generally refer to ROS integration on main computer
+<ComponentCommonSoftwareIntegration />
 
-#### Adding a Source Workspace
+Refer to the following for more details:
 
-<ComponentAddingASourceWorkspace />
+- [Sensors](../../accessories/sensors)
+- [Accessories](../../accessories/add-ons)
 
 ---
 
