@@ -173,9 +173,6 @@ The direction of the axes differs from those used for roll, pitch, and yaw in ai
 
 ### System Specifications
 
-TODO: validate these specifications
-TODO: shipping temperature range?
-
 | Specification                 | Measurement                                                                   |
 | :---------------------------- | :---------------------------------------------------------------------------- |
 | Dimensions                    | 1061 mm (length) X 854 mm (width) X 1224 mm (height)                          |
@@ -189,12 +186,12 @@ TODO: shipping temperature range?
 | Traversal Grade / Sideslope   | 15 °                                                                          |
 | Ambient Operating Temperature | -10 to + 40 °C                                                                |
 | Environmental                 | Designed for IP55                                                             |
-| Operating Time, Average       | 2.5 to 3.0 hours                                                              |
-| Operating Time, Standby       | 4 hours                                                                       |
+| Operating Time, Typical       | 2.5 to 3.25 hours                                                             |
+| Operating Time, Standby       | 4.0 hours                                                                     |
 | Battery                       | 35 Ah @ 24 V, LiFePO<sub>4</sub>                                              |
 | Wireless charging             | Up to 300 W (approximately 4 hours to charge from 10 to 85% when powered on in low power mode) |
 | Wired charging                | 650 W (approximately 1 hour to charge from 10 to 85% when powered off)        |
-| Expansion                     | VBAT @ TBD A, USB 3.0 (5 V @ TBD A), Ethernet (data only, 1 Gbps)             |
+| Expansion                     | 2.5 A @ 24 V, 3.5 A @ 12 V, 3.75 A @ VBAT, USB 3.0, Ethernet (data only, 1 Gbps), HDMI |
 
 <center>
   <img
@@ -400,7 +397,7 @@ To reduce current draw, consider commanding wider-radius turns from your control
 The temperature is measured in the motor drivers and on the motor casings; the coils inside the motor casings cannot be measured.
 Therefore, it is important to note that the temperature measured on the motor casings is a lagging indicator of the temperature of the coils inside the casing.
 Be aware of the delay in heat propagation on the motors during heavy use.
-The thermal limit of the system is 50 °C, and the system will shut down if this limit is reached.
+The thermal limit of the system is 50 °C, and components of the system will begin to throttle or shut down if internal temperatures exceed this limit.
 Monitoring these fields over longer periods of operation will allow you to ensure that you are not putting excessive wear on
 Husky Observer's motors.
 
@@ -470,7 +467,7 @@ not be used as the means of controlling robot motion during regular operation.
 
 The wireless motion-stop function (but not the on-board motion-stop function) may be overridden by means of
 a key switch as shown in the figure above. This is to allow the robot to be operated **at higher risk** while,
-for example, the controller battery is dead, out of range or not accessible, etc.
+for example, the controller battery is dead, out of range or not accessible.
 
 Operation of the mobile robot while the wireless motion-stop function is overridden **is not recommended**.
 The system deployer/operator assumes all responsibility for injury to persons or animals, or damage to property,
@@ -487,7 +484,7 @@ is required to enable this feature.
 During and **only** during OutdoorNav missions (not during OutdoorNav Manual Mode),
 the 3-dimensional LiDAR is used to perform obstacle avoidance to reduce the risk of the robot colliding with stationary or dynamic obstacles
 in its environment. The navigation uses the robot's 3D LiDAR scanner to detect obstacles within a certain range. A gradual speed reduction
-is asserted as the distance to the obstacle decreases and the robot will attempt to re-plan around any obstacle it detects. This may happen
+is asserted as the distance to the obstacle decreases and the robot will attempt to move around any obstacle it detects. This may happen
 several times if the robot has navigated itself into a tight space surrounded by walls. No intervention from the user is required.
 
 The 3D LiDAR scanner used for obstacle detection has a 360° field-of-view in the horizontal plane, and a ±15° field-of-view in all
@@ -542,7 +539,7 @@ The location of the Base Station, particularly its antenna, will play a critical
 role in the performance of the outdoor navigation software, especially at long
 range.
 
-Below are a set of criteria in order of priority, for the location of the Base
+Below is a set of criteria in order of priority, for the location of the Base
 Station, such that the performance of the networking/software is not degraded:
 
 - The Base Station should be secured as high as possible so that the GPS
@@ -579,9 +576,16 @@ side of the enclosure. When powered, the button will illuminate blue.
 ##### Internet over Base Station Network
 
 If a wired internet connection is available at the user facility, an
-Ethernet cable can be run from an access point to the Ethernet port on the bottom
+Ethernet cable can be run from an access point to the Ethernet port on the side
 of the Base Station case. This will provide internet access for the robot
-and the tablet.
+and the tablet. Note that there are two network ports on the side of the
+Base Station; use the bottommost port for connecting the cable that provides
+internet access. The other network port provides a local network connection
+for debugging purposes only. 
+
+Note that the connector on the Base Station is an M12 connector (Digikey
+P/N 1754-1180-ND) and an Ethernet cable with a mating connector must be used
+for providing internet access.
 
 #### Autocharge Dock Setup
 
@@ -640,8 +644,9 @@ complete the installation of the wireless transmitter:
   power cord (an extension cord may be required). The transmitter requires
   90 - 264 V AC, 50 - 60 Hz.
 - Power ON the wireless transmitter by pressing the switch on the side
-  of the transmitter. The center **<span style={{color: '#38761d'}}>GREEN</span>**
-  LED will light up when powered ON.
+  of the transmitter. The **<span style={{color: '#38761d'}}>GREEN</span>**
+  LED will light up when powered ON, flashing once every three seconds to
+  indicate idle mode.
 
 ##### Wireless Receiver
 
@@ -693,14 +698,12 @@ An LTE SIM card can optionally be installed into the robot to provide network
 access when out of range of WiFi networks. A SIM card is not required if
 Husky Observer is always being operated within range of WiFi networks.
 Note that the SIM card (and corresponding data plan) is provided by the end user,
-not by Clearpath.
-
-TODO: Update these installation details.
+not by Clearpath Robotics.
 
 1. Open the lid on Husky Observer.
-1. Find the Microhard.
-1. Insert the SIM card.
-1. See [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for details on the software setup.
+1. Locate the "Microhard" component, near the rear-left corner.
+1. Insert the SIM card into the Microhard port labelled "SIM 1".
+1. Refer to [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for details on the software setup.
 
 #### Robot Startup
 
@@ -719,6 +722,8 @@ When powering up the robot for the first time, follow these steps:
 1. Turn the Main Power Switch to the "ON" position. Note that this
    switch is set to "OFF" prior to shipping to prevent battery drain during
    shipping.
+1. Wait 10-15 seconds for the startup checks to complete, at which point
+   LEDs on the Status Panel should illuminate and the system will begin booting.
 1. Wait one to two minutes for the system to boot fully before proceeding.
    The external light indicators on the rear of the robot will illuminate once
    the system is powered. The "COMM" light will notify the user about the
@@ -851,8 +856,8 @@ modes for deploying Husky Observer, which are outlined below.
 | Network Mode     | Description                                                                                                      | Base Station Setup        | Robot Setup                                                                                                                                                 | Tablet Setup                                                                                                                                                                                                                              | OutdoorNav URL via Local WiFi | OutdoorNav URL via Internet/Cellular      |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------------------------------------- |
 | Base Station     | Base Station with WiFi for near-range operations; optional LTE also available on robot for long-range operations | Pre-configured at factory | Pre-configured at factory; see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup                                            | Pre-configured at factory                                                                                                                                                                                                                 | http://192.168.132.1:8080     | See [Remote Access Setup](#remote-access) |
-| Customer Network | Customer WiFi for near-range operations; optional LTE also available on robot for long-range operations          | N/A                       | See [Updating the WiFi SSID or Password on Robot](#robot-wifi-setup); see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup | See [Windows 10 instructions](https://support.microsoft.com/en-us/windows/connect-to-a-wi-fi-network-in-windows-1f881677-b569-0cd5-010d-e3cd3579d263) for connecting to Customer WiFi network; configure as Static IP `192.168.131.75/24` | http://192.168.132.1:8080     | See [Remote Access Setup](#remote-access) |
-| Cellular Only    | Uses cellular in robot + separate cellular in Tablet                                                             | N/A                       | See [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for setup                                                                                     | Pre-configured at factory (TODO: confirm) or use USB-tethering to a cell phone                                                                                                                                                            | N/A                           | See [Remote Access Setup](#remote-access) |
+| Customer WiFi Network | Customer WiFi for near-range operations; optional LTE also available on robot for long-range operations     | N/A                       | See [Updating the WiFi SSID or Password on Robot](#robot-wifi-setup); see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup | See [Windows 10 instructions](https://support.microsoft.com/en-us/windows/connect-to-a-wi-fi-network-in-windows-1f881677-b569-0cd5-010d-e3cd3579d263) for connecting to Customer WiFi network | http://<customer_IP>:8080     | See [Remote Access Setup](#remote-access) |
+| Cellular Only    | Uses cellular in robot + separate cellular in Tablet                                                             | N/A                       | See [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for setup                                                                                     | Pre-configured at factory or use USB-tethering to a cell phone                                                                                                                                                            | N/A                           | See [Remote Access Setup](#remote-access) |
 
 <center>
   <figure>
@@ -902,11 +907,11 @@ To switch between DHCP and Static modes for the WAN/Internet port on the Base St
 1. Open the front panel of the Base Station and connect an Ethernet cable from
    the configured port on your laptop to one of the available LAN ports on the
    Microhard in the Base Station.
-1. Open the following in your Chrome browser: http://192.168.132.50/network/wan<br/>
+1. Open the following in your Chrome browser: https://192.168.132.50/cgi-bin/webif/network-wan.sh<br/>
    This should bring you to the "Network &srarr; WAN" menu.
    Note: Refer [Appendix A](#networking-configuration) for default credentials.
-1. Update the "WAN2 Port Configuration" as desired. TODO: example figures (DHCP vs Static)
-1. TODO: how to save/apply the changes?
+1. Update the "WAN2 Port Configuration" as desired.
+1. Click "Submit" in the bottom-right corner to apply the settings.
 1. Disconnect the Ethernet cable and close the Base Station.
 
 ##### Updating the WiFi SSID or Password on Base Station
@@ -919,11 +924,11 @@ Follow the steps below to change the default WiFi SSID or password of this acces
 1. Open the front panel of the Base Station and connect an Ethernet cable from
    the configured port on your laptop to one of the available LAN ports on the
    Microhard in the Base Station.
-1. Open the following in your Chrome browser: http://192.168.132.50/wireless/radio1<br/>
+1. Open the following in your Chrome browser: https://192.168.132.50/cgi-bin/webif/wireless-wlan0.sh<br/>
    This should bring you to the "Wireless &srarr; Radio1" menu.
    Note: Refer [Appendix A](#networking-configuration) for default credentials.
 1. Update the "Radio1 Virtual Interface 1" to set the new SSID or password as desired.
-1. TODO: how to save/apply the changes?
+1. Click "Submit" in the bottom-right corner to apply the settings.
 1. Disconnect the Ethernet cable and close the Base Station.
 1. Apply the corresponding changes to the robot (see below).
 
@@ -938,12 +943,12 @@ WiFi access point.
    See [Wired Network Connection](#wired-network-connection) for details.
 1. Connect an ethernet cable from the configured port on your laptop to the
    debug/expansion port on the top of the robot.
-1. Open the following in your Chrome browser: http://192.168.131.51/wireless/radio1<br/>
+1. Open the following in your Chrome browser: https://192.168.131.51/cgi-bin/webif/wireless-wlan0.sh<br/>
    This should bring you to the "Wireless &srarr; Radio1" menu.
    Note: Refer [Appendix A](#networking-configuration) for default credentials.
 1. Update the "Radio1 Virtual Interface 1" to set the new SSID or password to match
    that of the access point.
-1. TODO: how to save/apply the changes?
+1. Click "Submit" in the bottom-right corner to apply the settings.
 1. Disconnect the Ethernet cable.
 
 ##### Enabling LTE (Cellular) Networking on Robot {#lte-setup}
@@ -959,10 +964,10 @@ TODO: failover details; possibly port additional settings from https://wiki.clea
    See [Wired Network Connection](#wired-network-connection) for details.
 1. Connect an ethernet cable from the configured port on your laptop to the
    debug/expansion port on the top of the robot.
-1. Open the following in your Chrome browser: http://192.168.131.51/wwan/settings<br/>
+1. Open the following in your Chrome browser: https://192.168.131.51/cgi-bin/webif/carrier.sh<br/>
    This should bring you to the "WWAN &srarr; Settings" menu.
    Note: Refer [Appendix A](#networking-configuration) for default credentials.
-1. Apply the following settings: (TODO: image)
+1. Apply the following settings as shown in the image below:
    - Carrier status: `Enable`
    - IP-Passthrough: `Disable`
    - MTU Size: (blank)
@@ -976,9 +981,19 @@ TODO: failover details; possibly port additional settings from https://wiki.clea
    - Network+: (not checked)
    - IoT Sockets available: `None`
    - RSSI Threshold: `90`
-1. After a couple minutes, check the WWAN status in your Chrome browser: http://192.168.131.51/wwan/status<br/>
-   Ensure that "Activity Status" is `Connected` and that a "WWAN IP Address" has been assigned. (TODO: image)
+1. After a couple minutes, check the WWAN status in your Chrome browser: https://192.168.131.51/cgi-bin/webif/carrier-status.sh<br/>
+   Ensure that "Activity Status" is `Connected` and that a "WWAN IP Address" has been assigned.
 1. Disconnect the Ethernet cable.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/microhard_wwan_settings.png"
+      width="800"
+    />
+    <figcaption>Microhard SIM Card Settings</figcaption>
+  </figure>
+</center>
 
 #### Remote Access Setup {#remote-access}
 
@@ -1044,7 +1059,7 @@ additional tunnels to the example above.
 
 #### Tablet Startup
 
-The Husky Observer ships with a Getac ruggedized tablet as shown in below.
+The Husky Observer optionally ships with a Getac ruggedized tablet as shown in below.
 
 <center>
   <figure>
@@ -1068,7 +1083,7 @@ has network connectivity to the Husky Observer as described in
 [Networking Setup](#networking-setup) and note the URL for accessing the OutdoorNav UI.
 
 1. Open the Chrome browser.
-1. Enter the OutdoorNav UI URL in the search bar.
+1. Enter the OutdoorNav UI URL in the search bar (see [Network Modes](#network-modes) for URLs).
 1. Optional: Add a bookmark to Chrome.
 
 These steps will open the OutdoorNav UI, which will allow you to
@@ -1093,8 +1108,9 @@ This step is optional, but highly recommended.
 RTK corrections are used to minimize errors related to GPS-based localization and
 are strongly recommended when attempting to operate Husky Observer autonomously.
 If a Base Station is present, RTK corrections will be acquired from the Base Station,
-once it has been surveyed. Alternatively, RTK corrections can be acquired through
-the internet, such as through the [SwiftNav Skylark](https://www.swiftnav.com/skylark)
+once it has been surveyed. Alternatively, RTK corrections can be acquired over
+the internet using the NTRIP protocol from various service providers, such as
+through the [SwiftNav Skylark](https://www.swiftnav.com/skylark)
 service. Both the Base Station and Skylark setup instructions are outlined below.
 
 ##### Survey Base Station {#survey-base-station}
@@ -1106,8 +1122,8 @@ for details on how to survey the Base Station.
 
 ##### RTK Corrections via the Skylark Service
 
-If a Base Station is not present, RTK corrections can be acquired through
-the internet. While various services are available for providing RTK corrections,
+If a Base Station is not present, RTK corrections can be acquired over
+the internet using the NTRIP protocol. While various services are available for providing RTK corrections,
 Husky Observer has been validated with the [SwiftNav Skylark](https://www.swiftnav.com/skylark)
 service. Follow the steps below to set up the Skylark service.
 
@@ -1162,7 +1178,7 @@ for details on how to set the datum.
 
 #### Set Dock Location {#set-dock-location}
 
-Before being able to operate the robot autonomously, you will need to set
+Before being able to perform docking operations, you will need to set
 the dock location. Follow the instructions in the
 [OutdoorNav User Manual](/docs_outdoornav_user_manual/getting_started/system_setup#set-dock-location)
 for details on how to set the dock location.
@@ -1246,17 +1262,16 @@ see [Remote Access Setup](#remote-access)).
 The IP address, username, and password for connecting to
 the robot are provided in [Appendix A: Networking Configuration](#networking-configuration).
 The output files from the
-autonomous missions are available to be downloaded from: `/home/administrator/missiondata`.
+autonomous missions are available to be downloaded from: `/home/administrator/clearpath_files/media`.
 
 Key notes:
 
-- In the above directory, there will be a subdirectory for each of the cameras.
-  Each of the camera subdirectories will contain images and videos whose filenames
-  are based on the time at which the image was captured or the time at which the video
+- In the above directory, there will be a subdirectory for each of the sensors.
+  Each of the sensor subdirectories will contain images, videos, or audio whose filenames
+  are based on the time at which the image was captured or the time at which the audio/video
   recording was started. For example, a video that was
   started on May 17, 2022 at 13:25:08 would correspond to a filename of:
-  `20220517T132508.avi`
-- Audio files use a similar file naming convention as images and videos.
+  `2022-05-17_13-25-08.avi`
 - The operator is responsible for deleting image, video, and audio files after they have been downloaded
   and archived. Failure to do so may result in the robot storage becoming full, which
   could prevent new mission data from being saved.
@@ -1274,7 +1289,8 @@ The example below shows how to download files using the Base Station network.
 If downloading via the internet instead, update the `host` below based on the
 [Remote Access Setup](#remote-access). For example, if using ngrok with a tunnel
 set up on port 22 with a subdomain of `customer1-sftp`, then the `host` would
-be `customer1-sftp.ngrok.io`.
+be `customer1-sftp.ngrok.io` and the port would be the one specified by
+the ngrok mapping.
 
 :::
 
@@ -1282,10 +1298,10 @@ To use FileZilla, begin by entering the following settings on a laptop or tablet
 on the Base Station network, then click "Quickconnect" as illustrated in
 the figure below.
 
-- **host:** 192.168.131.1
+- **host:** 192.168.132.1
 - **username:** administrator
 - **password:** clearpath
-- **port:** 22
+- **port:** 2222
 
 <center>
   <figure>
@@ -1293,7 +1309,7 @@ the figure below.
       src="/img/robot_images/husky_observer_images/filezilla_connection_details.png"
       width="800"
     />
-    <figcaption>FileZilla Quickconnect</figcaption>
+    <figcaption>TODO: new image FileZilla Quickconnect</figcaption>
   </figure>
 </center>
 
@@ -1309,13 +1325,41 @@ Once you are finished, close the connection with Server &srarr; Disconnect.
       src="/img/robot_images/husky_observer_images/filezilla_full_view.png"
       width="800"
     />
-    <figcaption>FileZilla Full View</figcaption>
+    <figcaption>TODO: new image FileZilla Full View</figcaption>
   </figure>
 </center>
 
 #### Monitoring System Status {#monitoring-system-status}
 
-TODO: Add notes about how to monitor the system status in the OutdoorNav UI once we implement this feature.
+The OutdoorNav UI has battery, networking, and status indicators on the main dashboard.
+In addition, to see the detailed status of the system in the OutdoorNav UI,
+select the "STATUS" option from the menu, which will provide the status for key
+subsystems:
+
+-  Localization
+-  Dock
+-  Wireless Charging
+-  System/Computer
+-  Sensors
+
+All subsystems should have a green checkmark to indicate they are working as intended.
+Otherwise, a warning or error message is provided.
+
+#### Using Pan-Tilt-Zoom Camera in Autonomous Missions
+
+The Husky Observer is equipped with a pan-tilt-zoom (PTZ) camera that is capable of
+high zoom levels. During autonomous missions, pre-configured pan-tilt-zoom settings can be
+used to capture images and videos. These pan-tilt-zoom settings are configured through
+the [Move PTZ Task](https://docs.clearpathrobotics.com/docs_outdoornav_user_manual/web_user_interface/ui_autonomous_mode#add-task).
+To increase the repeatability of data captured when using the Move PTZ Task, the
+[Waypoint Heading](https://docs.clearpathrobotics.com/docs_outdoornav_user_manual/web_user_interface/ui_autonomous_mode#waypoint-heading)
+should be enabled and [Waypoint Tolerance](https://docs.clearpathrobotics.com/docs_outdoornav_user_manual/web_user_interface/ui_autonomous_mode#waypoint-tolerance)
+settings should be set to their minimum values.
+
+Even with these constraints, given the minimum tolerances and subject to environmental conditions,
+to ensure that images/videos captured following a Move PTZ Task are for an equivalent target area
+each time the mission is repeated, zoom values above the 25-40 are not recommended by default.
+Validation in the customer environment is recommended.
 
 ---
 
@@ -1330,28 +1374,27 @@ TODO: Add notes about how to monitor the system status in the OutdoorNav UI once
 ### Base Station Network WiFi Access
 
 In some cases, it may be desirable to connect additional equipment, such as a laptop, to the
-Base Station network via WiFi. To do so, use the settings outlined below. Note that a static IP
-address, subnet, and gateway must be specified manually in your networking setup.
+Base Station network via WiFi. To do so, use the settings outlined below. By default, the
+Base Station is configured in DHCP mode; as such, the device being connected should be
+set for DHCP mode. Once connected to the Base Station, an IP address in the 192.168.132.0/24
+will be assigned.
 
 - **Default WiFi SSID:** CPR Base Station
 - **Default WiFi password:** clearpath
-- **Available IP range:** 192.168.131.200 to 192.168.131.254
-- **Subnet:** 255.255.255.0
-- **Gateway:** 192.168.131.50
 
-### Accessing the Base Computer from the WAN
+### Accessing the Main Computer from the WAN
 
-All images and videos that are collected during missions are stored on the robot Base Computer
-until downloaded and deleted by the operator. When the download/delete function is performed
-by a computer within the Base Station network, the robot Base Computer can be accessed
-as described in the previous section by connecting to TCP port 22 on the robot Base Computer.
+All images and videos that are collected during missions are stored on the Main Computer
+inside Husky Observer until downloaded and deleted by the operator. When the download/delete function is performed
+by a computer within the Base Station network, the Main Computer can be accessed
+as described in the following section by connecting to TCP port 22 on the Main Computer.
 When the download/delete function is performed by a computer on the WAN network (connected
-to the Base Station WAN port), the operator can access the robot Base Computer by accessing
-TCP port 8022 on the Base Station, which gets mapped to TCP port 22 on the robot Base Computer.
+to the Base Station WAN port), the operator can access the Main Computer by accessing
+TCP port 2222 on the Base Station, which gets mapped to TCP port 22 on the Main Computer.
 
 ### Husky Observer Network Components
 
-| Component                                              | IP Address                       | Credentials                                         |
+| Component                                              | IP Address                       | Default Credentials                                 |
 | ------------------------------------------------------ | -------------------------------- | --------------------------------------------------- |
 | Main Computer                                          | 192.168.131.1<br/>10.252.252.100 | **user:** administrator<br/>**password:** clearpath |
 | IndoorNav Computer (optional)                          | 10.252.252.1                     | **user:** administrator<br/>**password:** clearpath |
@@ -1381,8 +1424,7 @@ settings can be updated.
 :::warning
 
 NOTE: Updating camera settings may affect overall system stability.
-Proceed with caution! See \autoref{sec:contact} for details on how
-to contact Clearpath if you have any questions.
+Proceed with caution! Contact [Support](#support) if you have any questions.
 
 :::
 
@@ -1393,39 +1435,51 @@ colour and low-light capabilities, defogger, and lens wiper.
 
 #### Key Settings
 
-- Resolution: Max: 1920x1080. ROS driver defaults: 640x480
-- Frame rate: 60Hz
+- Resolution:
+    - Max: 1920x1080
+    - Default: 1280x720
+- Frame rate:
+    - Max: 60 Hz
+    - Default: 20 Hz for data capture, 10Hz for UI live stream
 
 #### Where to make adjustments
 
 Global camera settings (like pan & tilt limits) can be set by logging into the Axis setup tool on the camera. Connect
-a laptop to the robot and assign the laptop a static IP address in the range `192.168.131.100-200`. Then open a
-browser and navigate to [http://192.168.131.10](http://192.168.131.10).
+a laptop to the robot and assign the laptop a static IP address of `192.168.131.101/24`. Then open a
+browser and navigate to http://192.168.131.10.
 
-ROS driver settings can be edited in `/etc/ros/noetic/ros.d/axis_ptz.launch` or by changing the environment variables
-found in `/etc/ros/setup.bash` on the robot's primary computer.
+Resolution and frame rate settings can be adjusted on the Main Computer by editing the following environment
+variables in `/home/administrator/cpr_outdoornav_launch/env/sensors_customization.env`. Note that any increase
+in resolution may require a corresponding decrease in the frame rate to avoid data bottlenecks.
 
-#### Pan Limits
+- AXIS_PTZ_WIDTH
+- AXIS_PTZ_HEIGHT
+- AXIS_PTZ_FPS
+- AXIS_Q62_THROTTLE_RATE
+
+#### Adjusting Pan Limits
 
 The Axis Q62 is normally capable of making continuous rotations in either direction. This allows the camera to always
 take the shortest trajectory to reach any given pan angle. However, if you have additional equipment mounted on top of
 the camera, for example a Flir thermal camera or a microphone, this behaviour may cause the wires to get tangled around
 the PTZ camera and potentially cause damage to the robot.
 
-To prevent damage to the robot, Clearpath recommends setting pan limits on the Axis camera. This will restrict the
+To prevent damage to the robot, the camera has been pre-configured with pan limits on the Axis camera. This will restrict the
 camera's range of motion to less than 180 degrees in either direction, eliminating the risk of the camera making
 continuous rotations.
 
-To set pan limits, connect your laptop to one of the robot's exposed ethernet ports and assign your laptop a static
-IP address in the range `192.168.131.100-200`. Open your web browser and navigate to
-[http://192.168.131.10](http://192.168.131.10). Log into the Axis configuration website using the credentials found
+The steps below outline how to adjust the pan limits.
+
+Connect your laptop to one of the robot's exposed ethernet ports and assign your laptop a static
+IP address of `192.168.131.101/24`. Open your web browser and navigate to
+http://192.168.131.10. Log into the Axis configuration website using the credentials found
 in [Appendix A](#networking-configuration).
 
 <center>
   <figure>
     <img
       src="/img/robot_images/husky_observer_images/axis_q62_login.png"
-      width="600"
+      width="300"
     />
     <figcaption>Axis Q62 login screen</figcaption>
   </figure>
@@ -1437,7 +1491,7 @@ In the browser, click on Settings and select PTZ
   <figure>
     <img
       src="/img/robot_images/husky_observer_images/axis_q62_settings_ptz.png"
-      width="600"
+      width="800"
     />
     <figcaption>Axis Q62 PTZ settings</figcaption>
   </figure>
@@ -1449,13 +1503,13 @@ Disable any exisitng pan limits by opening the limits menu and making sure all t
   <figure>
     <img
       src="/img/robot_images/husky_observer_images/axis_q62_limits_off.png"
-      width="600"
+      width="300"
     />
     <figcaption>Disabling the Axis Q62 pan limits</figcaption>
   </figure>
 </center>
 
-Move the camera to a pan of -179 degrees. The easiest way to move the camera precisely is to launch the ROS driver and use the `cmd` topic to move the camera:
+Move the camera to a pan of -179 degrees. The easiest way to move the camera precisely is to launch the ROS driver on the Main Computer and use the `cmd` topic to move the camera:
 
 ```bash
 # Start the driver in one terminal
@@ -1472,7 +1526,7 @@ Once the camera finishes moving, set the left pan limit by pressing the left lim
   <figure>
     <img
       src="/img/robot_images/husky_observer_images/axis_q62_set_left_limit.png"
-      width="600"
+      width="e00"
     />
     <figcaption>Setting the left pan limit to -179 degrees</figcaption>
   </figure>
@@ -1490,7 +1544,7 @@ Once the camera finishes moving, click on the right pan limit button to set the 
   <figure>
     <img
       src="/img/robot_images/husky_observer_images/axis_q62_set_right_limit.png"
-      width="600"
+      width="300"
     />
     <figcaption>Setting the right pan limit to 179 degrees</figcaption>
   </figure>
@@ -1503,74 +1557,23 @@ it cannot point. This is an unfortunate but unavoidable side-effect of setting t
 
 #### Key Settings
 
-- Resolution: TODO
-- Frame rate: TODO frames per second (front); TODO frames per second (rear)
+- Resolution: 854x480
+- Frame rate: 6 Hz
 
 #### Where to make adjustments
 
-- TODO
+The front/rear camera settings are not configurable.
 
 ### Motion Buzzer Enable/Disable
 
 The system is equipped with a buzzer to produces a loud sound when the system
 is driving in any direction. This buzzer is enabled by default. To disable the buzzer,
-the following file can be updated on the robot:
+run the following command on the Main Computer:
 
 ```
-/home/administrator/config/buzzer.bash
+rosservice call /safety_alarm/set_mute "data: true"
 ```
-
-To enable the buzzer, set:
-
-```
-export ENABLE_REVERSE_ALARM=1
-```
-
-To disable the buzzer, set:
-
-```
-export ENABLE_REVERSE_ALARM=0
-```
-
-After updating `buzzer.bash`, the system must be power cycled for the change to
-take effect.
 
 ### Omnidirectional Microphone Configuration
 
-TODO
-
-### FLIR Thermal Camera Configuration
-
-TODO
-
-### Shotgun Microphone Configuration
-
-TODO
-
----
-
-## Appendix C: Software Installation and Backup
-
-### Backing Up Robot Configuration
-
-If making changes to your robot configuration, it is recommended that you make a backup first
-so that you can restore the original state if things go wrong.
-
-<ComponentPerformingABackup />
-
-### Installing and Configuring Robot Software
-
-:::note
-
-Husky Observer ships with all software pre-installed;
-therefore, you will only need to follow the instructions below if you are re-installing software on the Husky Observer.
-
-:::
-
-There are three components to the Husky Observer software:
-
-1. Base Husky software. Refer to the [Husky Tutorials](../../../robots/outdoor_robots/husky/tutorials_husky#installing-husky-software) for details.
-1. Husky Observer system packages. TODO: details on installing the "husky_observer" debian package and its dependencies.
-1. OutdoorNav software packages. Contact [Support](#support) for details on installing or upgrading these packages.
-
-See [Maintenance](maintenance_husky_observer#software_maintenance) for details on keeping Husky Observer software up to date.
+No configuration is available for the omnidirectional microphone.
