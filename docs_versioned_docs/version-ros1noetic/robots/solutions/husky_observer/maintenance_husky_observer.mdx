@@ -28,15 +28,29 @@ noting that the robot will only charge on the dock when the disconnect is in the
   This method requires that the [base station has been surveyed](#survey-base-station),
   the [Datum has been set to the coordinates of the test site](#set-datum),
   and that the [dock location has been set](#set-dock-location).
-- TODO: note possible charge rate throttle above 35C ambient
+
+:::note
+
+At ambient temperatures above 35 °C, there may be some automatic throttling
+of the charge rate when using the autocharge dock. No user intervention is
+required as the system will charge at the maximum possible rate based on
+the internal temperatures in the robot.
+
+:::
+
+:::note
+
+By default, the autocharge dock is configured to disable charging at ambient temperatures below
+0 °C. It is possible to perform charging at ambient temperatures as low as -10 °C
+in some cases. Contact [Support](#support) for details.
+
+:::
 
 #### Manual Charger
 
 The Manual Charger may be used when the robot is far from its wireless
-charger or when a faster charge time is desired. For faster charging,
-first turn off the robot.
-
-TODO: Possibly update some of the wording here for the new charger.
+charger or when a faster charge rate is desired. For fastest charging,
+turn off the robot while charging.
 
 - Plug the manual charger into an AC outlet and wait for the power
   light to turn solid **<span style={{color: '#0000ff'}}>BLUE</span>**.
@@ -157,7 +171,44 @@ dirt and/or any other particulate matter.
 
 ### Cleaning or Replacing Fan Filters
 
-TODO
+#### Bottom Fan Filters
+
+The fans between the Husky Observer wheels are intake fans with filters.
+These filters require periodic maintenance to clean or replace the filters.
+In very dusty off-road environments, these filters should be inspected
+after every 20 hours of use and replaced as needed. In typical environments,
+the fan filters should be inspected after every 50 hours of use and replaced
+as needed.
+
+To replace the filters:
+
+1. Remove the four screws holding the fan cover panel in place. (TODO: image)
+1. For each of the two fans, remove the 4 screws holding the fan filter in place.
+1. Remove the fan filters and replace with new filters. (See Mouser P/N 562-09250-F/100)
+1. Install the screws holding the fan filters in place.
+1. Install the screws hold the fan cover panel in place.
+
+#### Top Fan Filters
+
+The top fans on the front side of Husky Observer are intake fans with filters.
+These filters require periodic maintenance to clean or replace the filters.
+In very dusty off-road environments, these filters should be inspected
+after every 50 hours of use and replaced as needed. In typical environments,
+the fan filters should be inspected after every 100 hours of use and replaced
+as needed.
+
+To replace the filters (repeat the steps below for each fan):
+
+1. Remove the four screws holding the fan cover screen in place. (TODO: image)
+1. Remove the fan cover screen.
+1. Open the top lid of Husky Observer and pull out the fan assembly from the inside.
+1. Remove the fan filter and replace with new filter. (See Mouser P/N TODO)
+1. Install the fan assembly from the inside.
+1. Put the fan cover screen in place.
+1. Install the four screws holding the assembly together.
+
+The top fans on the rear side of Husky Observer are exhaust fans and, as such,
+the filters on those fans do not require regular maintenance.
 
 ---
 

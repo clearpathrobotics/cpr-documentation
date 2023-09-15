@@ -957,8 +957,6 @@ Where WiFi access is not available or when the robot will be travelling out of
 WiFi range, it is necessary to enable LTE (cellular) networking on the robot.
 Follow the steps below to enable LTE.
 
-TODO: failover details; possibly port additional settings from https://wiki.clearpathrobotics.com/display/~stphillips/Microhard+Cellular+Setup.
-
 1. Complete the physical [Installation of SIM Card](#installation-of-sim-card).
 1. Configure a wired Ethernet port on your laptop to `192.168.131.101/24`.
    See [Wired Network Connection](#wired-network-connection) for details.
@@ -983,6 +981,9 @@ TODO: failover details; possibly port additional settings from https://wiki.clea
    - RSSI Threshold: `90`
 1. After a couple minutes, check the WWAN status in your Chrome browser: https://192.168.131.51/cgi-bin/webif/carrier-status.sh<br/>
    Ensure that "Activity Status" is `Connected` and that a "WWAN IP Address" has been assigned.
+1. Open the following in your Chrome browser: https://192.168.131.51/cgi-bin/webif/mwan.sh<br/>
+   This should bring you to the "Network &srarr; LoadBalancer" menu.
+1. Confirm that the settings are as outlined in the figure below.
 1. Disconnect the Ethernet cable.
 
 <center>
@@ -992,6 +993,13 @@ TODO: failover details; possibly port additional settings from https://wiki.clea
       width="800"
     />
     <figcaption>Microhard SIM Card Settings</figcaption>
+  </figure>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/microhard_loadbalancer.png"
+      width="800"
+    />
+    <figcaption>Microhard Load Balancer Settings</figcaption>
   </figure>
 </center>
 
@@ -1294,10 +1302,12 @@ the ngrok mapping.
 
 :::
 
-To use FileZilla, begin by entering the following settings on a laptop or tablet
-on the Base Station network, then click "Quickconnect" as illustrated in
-the figure below.
+To use FileZilla on a laptop or tablet connected to the Base Station network,
+open FileZilla, use its menu to select File &srarr; Site Manager,
+and enter the settings as illustrated in the figure below and click
+"Connect".
 
+- **protocol:** SFTP
 - **host:** 192.168.132.1
 - **username:** administrator
 - **password:** clearpath
@@ -1307,9 +1317,9 @@ the figure below.
   <figure>
     <img
       src="/img/robot_images/husky_observer_images/filezilla_connection_details.png"
-      width="800"
+      width="400"
     />
-    <figcaption>TODO: new image FileZilla Quickconnect</figcaption>
+    <figcaption>FileZilla Connection Details</figcaption>
   </figure>
 </center>
 
@@ -1325,7 +1335,7 @@ Once you are finished, close the connection with Server &srarr; Disconnect.
       src="/img/robot_images/husky_observer_images/filezilla_full_view.png"
       width="800"
     />
-    <figcaption>TODO: new image FileZilla Full View</figcaption>
+    <figcaption>FileZilla Full View</figcaption>
   </figure>
 </center>
 
