@@ -255,23 +255,33 @@ orientation values, in meters and degrees, respectively.
 
 ### Constrained Replanning {#constrained_path}
 
-If constrained replanning is enabled the user can show on the path
-deviation distance by navigating to the General settings in the
-upper left hand menu. Once enabled the area of possible deviation will show
+To enable the visualization of the contrained area of traversal (defined by 
+the path contraint around the reference path), navigate to the General settings
+in the hamburger menu. Enable/disbale the visualization of the path ui_route_deviation
+distance using the swith button (see image below).
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_general_settings.png" />
+    <figcaption>General settings</figcaption>
+  </figure>
+</center>
+
+Once enabled the area of possible deviation will show
 over the planned route as can be seen in the following figure.
 
 <center>
   <figure>
     <img src="/img/outdoornav_images/ui_route_deviation.png" />
-    <figcaption>Route with deviation</figcaption>
+    <figcaption>Route with maximum path deviation</figcaption>
   </figure>
 </center>
 
 :::note
 
 If the UGV is manually driven outside of the constrained replanning area 
-while a Mission is running, the Mission will need to be restarted as the UGV 
-will no longer be able to find it's way back onto the path.
+while a Mission is running, the Mission will not be able to be resumed until the 
+UGV is returned within the navigable area defined by the path contraint.
 
 :::
 
