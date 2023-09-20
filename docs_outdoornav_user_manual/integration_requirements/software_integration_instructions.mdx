@@ -103,7 +103,7 @@ nano outdoornav_tuning.env
 
 ``` bash
 cd ~/cpr_outdoornav_launch/    # directory with docker-compose.yaml
-docker compose --profile outdoornav up -d
+docker compose --profile outdoornav up -d --build
 ```
 
 ### Test OutdoorNav Installation
@@ -115,31 +115,31 @@ docker compose --profile outdoornav up -d
 ``` bash
 rostopic echo -n 1 /platform/odom
 rostopic echo -n 1 /platform/cmd_vel
- 
+
 # IMU 1 (if included)
-rostopic echo -n 1 /sensors/imu/0/data
+rostopic echo -n 1 /sensors/imu_0/data
  
 rostopic echo -n 1 /localization/odom
  
-# Velodyne 1 (if included)
-rostopic echo /sensors/lidar/0/pointcloud
- 
-# Velodyne 2 (if included)
-rostopic echo -n 1 /sensors/lidar/1/pointcloud
- 
-# Laser Scan Front (if included)
-rostopic echo -n 1 /sensors/lidar/0/scan
- 
-# Laser Scan Rear (if included)
-rostopic echo -n 1 /sensors/lidar/1/scan
+# Velodyne/Ouster/LMS1XX/Hokuyo/OutdoorScan (if included)
+rostopic echo /sensors/lidar_<sensor_num>/pointcloud
+rostopic echo /sensors/lidar_<sensor_num>/scan
  
 # Realsense D435 Front (if included)
-rostopic echo -n 1 /sensors/stereo/0/pointcloud
-rostopic echo -n 1 /sensors/stereo/0/depth/image_rect_raw
+rostopic echo -n 1 /sensors/stereo_0/pointcloud
+rostopic echo -n 1 /sensors/stereo_0/depth/image_rect_raw
  
 # Realsense D435 Rear (if included)
-rostopic echo -n 1 /sensors/stereo/1/pointcloud
-rostopic echo -n 1 /sensors/stereo/1/depth/image_rect_raw
+rostopic echo -n 1 /sensors/stereo_1/pointcloud
+rostopic echo -n 1 /sensors/stereo_1/depth/image_rect_raw
 ```
+
+<sensor_num> will be the number of the sensor as it was loaded into the software. Eg. If you have a VLP and an LMS1XX, then the VLP will be lidar_0, and the LMS1XX will be lidar_1. If we only have an LMS1XX, then it would be lidar_0. Ie. the 3D lidars have a higher "priority and therefore will be loaded first.
+
+:::note
+
+The 2D LiDARs (LMS1XX, Hokuyo) will not have a pointcloud topic.
+
+:::
 
 Once installation is complete, you can proceed to [Getting Started](../getting_started/system_setup) to start using the software.
