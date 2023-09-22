@@ -20,7 +20,7 @@ Changes to any of the following variables will only take effect after power cycl
 :::
 
 The collision avoidance feature of OutdoorNav allows our platforms to detect,
-replan and then navigate around any obstacles that may be present in the UGVs
+replan and then navigate around any obstacles that may be present in the UGV's
 path. The workflow of this feature can be seen in the figure below.
 
 
@@ -38,13 +38,13 @@ The detection sensors available on the UGV will have their data filtered, if nec
 that can be fed into the costmap(s). The costmap will then use this filtered data
 to generate two costmaps (local and global).
 
-- **global costmap**: A large costmap (whose size is gets set relative to the
+- **global costmap**: A large costmap (whose size gets set relative to the
 Waypoints of the desired mission) the replanned paths around detected obstacles.
 - **local costmap**: A smaller costmap that is used solely for detecting potential
 collisions and triggering the path replanner.
 
 Therefore, there are two components in which we can tune the behaviour of the collision
-avoidnace feature: the sensor filters or the costmap generation. We will expand on these below.
+avoidance feature: the sensor filters or the costmap generation. We will expand on these below.
 
 ## Sensor Tuning
 
@@ -145,7 +145,7 @@ Eg. Velodyne, Ouster or Realsense
 
 #### PointCloud to LaserScan Filter
 
-The following filter is enabled by default and is applied after any 3D liDAR filtering has occured. It project the final pointcloud topic onto the 2D plane that is then used to generate the costmap.
+The following filter is enabled by default and is applied after any 3D LiDAR filtering has occured. It projects the final pointcloud topic onto the 2D plane that is then used to generate the costmap.
 
 | Environment Variable | Description                              | Data Type (Default) |
 |----------------------|------------------------------------------|---------------------|
@@ -217,7 +217,7 @@ attempting to modify these parameters.
 
 ## Limitations
 
-The collision avoidnace feature as it currently stands, does come with some limitations. These are listed listed below:
+The collision avoidance feature as it currently stands, does come with some limitations. These are listed listed below:
 
 #### Detection range limits
 
@@ -270,7 +270,7 @@ detection bounds for the Starter Sensor Kit have yet to be determined.
 
 #### Tall grass
 
-**Description**: Grass that is taller than 15cm may occasionally be deteted as the robot is driving.
+**Description**: Grass that is taller than 15cm may occasionally be detected as the robot is driving.
 
 **Workaround Available?**: Yes (Mitigation)
 
@@ -307,7 +307,7 @@ so that it does not overlap with the detection field of the 3D LiDAR.
 #### Branches across narrow path
 
 **Description**: If there are overhanging branches across a path (ie. not coming from the ground),
-the navigation may not be able to maneuvre through them.
+the navigation may not be able to maneuver through them.
 
 **Workaround Available?**:  Limited to None
 
