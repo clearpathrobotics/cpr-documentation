@@ -33,12 +33,24 @@ toc_max_heading_level: 4
         A missing task setting for a Move PTZ task will block the 
         execution of the Mission it is in.
 
+3.  **What version of ROS is compatible with OutdoorNav?**
+
+    Currently OutdoorNav is developed in ROS1 (and is built in DOcker containers on top of ROS1 Noetic).
+    So, the recommended ROS version is ROS1 Noetic. However, although not recommended, it is still
+    possible to use ROS1 Melodic. Some issues may arise related to the mismatched message types.
+    Also, if trying to run any python scripts as Melodic targets Python2, whereas Noetic targets Python3.
+
+    Finally, official ROS2 compatibility is currently unsupported. In theory, if you only have ROS2 installed
+    on your system, you can try to install ROS1 Noetic as well and set up a ros1_to_ros2 bridge. Since the 
+    OutdoorNav software is packaged in Dockers, it will communicate directly ROS1 and then the data can be
+    redirected by the ros1_to_ros2 bridge to ROS2.
+
 ## Autonomy
 
 1.  **Am I able to send the UGV on a repeated loop?**
 
     When generating a single mission on the UI or through the API, it is not possible for the
-    mission to start at the location of the robot and end at the location of the robot. THis has to do with
+    mission to start at the location of the robot and end at the location of the robot. This has to do with
     the navigation thinking that the UGV has already arrived at its goal and will not generate a path through
     the Waypoints. However, it is possible to split the mission into two missions (ie. one to go to a 
     location and the the scond to return to the starting point). With these two missions you will then either be
