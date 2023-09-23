@@ -44,21 +44,22 @@ the 3D LiDAR. If you have any related questions, please contact [Support](#suppo
 
 Except for bus-powered USB cameras, most payloads have separate leads for power and data.
 
-### Data Connections
+### Maintenance and Debugging Connections
 
-On the Husky Observer lid, there are three data interfaces:
+On the Husky Observer lid, there are three data interfaces that can be used for system maintenance
+and debugging:
 
-- One 1 Gbps Ethernet (RJ45 connector), connected to the Main Computer (TODO: IP rated connector?)
-- One USB 3.0 (Type A connector), connected to the Main Computer (TODO: IP rated connector?)
-- One HDMI, connected to the Main Computer (TODO: IP rated connector?)
+- One 1 Gbps Ethernet (RJ45 connector), connected to the Main Computer
+- One USB 3.0 (Type A connector), connected to the Main Computer
+- One HDMI, connected to the Main Computer
 
-These can be used for debugging or for providing data connectivity to custom payloads.
+### Custom Payload Connections
 
-### Power Connections
-
-On the Husky Observer lid, there is an Icotek (TODO? P/N) connector with three cable glands that will allow the user to
+On the Husky Observer lid, there is an Icotek KEL-FG-ER-E3 connector with three cable glands that will allow the user to
 create and route power cables from custom payloads on the lid to power sources inside the Husky Observer
-while still maintaining the IP rating of the robot. (TODO: link to instructions on cable passthrough)
+while still maintaining the IP rating of the robot. (See
+[this video](https://www.youtube.com/watch?v=xVLlroSRH7E&t=1s&ab_channel=icotek)
+for more details on using the Icotek cable glands system.)
 
 Inside the Husky Observer, power is available from terminal blocks as outlined in the table below.
 For each power source, 18 AWG wires with ferrules (DigiKey P/N 277-2156-ND) are recommended for power cables
@@ -72,6 +73,11 @@ to separate terminal blocks.
 | 12 V                  | 3.5 A           | White (positive), Black (negative) |
 
 TODO: image of terminal blocks (left-to-right, with colours)
+
+In addition to the power connections, the cable glands can be used to make data connections to
+available ports on the Ethernet switch or to available USB ports on the Main Computer. When
+connecting a device to the Ethernet switch, the device should be configured with a static IP
+address in the 192.168.131.80 to 192.168.131.89 range.
 
 ---
 
