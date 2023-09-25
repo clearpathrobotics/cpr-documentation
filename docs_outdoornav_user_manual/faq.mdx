@@ -45,6 +45,17 @@ toc_max_heading_level: 4
     OutdoorNav software is packaged in Dockers, it will communicate directly ROS1 and then the data can be
     redirected by the ros1_to_ros2 bridge to ROS2.
 
+4.  **How can I record ROS data?**
+
+    There are two ways to record ROS data. The first is [through the UI](./features/rosbag_recorder) and the
+    second is the more traditional method of accessing the command line of the UGVs PC and running 
+    [rosbag record commands](http://wiki.ros.org/rosbag/Commandline).
+
+5.  **Where do all the video/audio/images get saved from the mission tasks?**
+
+    All of the data that gets saved (ROSbags, video recordings, audio recordings, and saved images) get stored on
+    UGVs PC at the following location: `~/clearpath_files/...`
+
 ## Autonomy
 
 1.  **Am I able to send the UGV on a repeated loop?**
@@ -61,7 +72,7 @@ toc_max_heading_level: 4
 
     There are several checks that should be done:
 
-    -   Check that the base station is powered on, nd that all the devices inside are powered on.
+    -   Check that the base station is powered on, and that all the devices inside are powered on.
     -   From the robot PC, check that you can ping the base station.
 
 ``` bash
@@ -130,10 +141,11 @@ ping 192.168.131.30
     Unfortunately, users are not currently enabled to make modifications to the user interface.
     This feature will be available in a future release. Please direct any feature requests to [customer support](./support).
 
-5. **What to do if my task is not working?**
+5. **What to do if my custom task is not working?**
 
     Ensure that you have followed the [Custom Tasks](./features/custom_tasks) instructions. When adding the
-    custom task to a Waypoint, it is important to double check that all the [fields](./web_user_interface/ui_autonomous_mode#add-task) for the new task are correct.
+    custom task to a Waypoint, it is important to double check that all the [fields](./web_user_interface/ui_autonomous_mode#add-task) 
+    for your custom task are correct.
 
 6.  **Why are either of the GNSS Status indicator (POS and/or DIR) on the UI not Green?**
 
