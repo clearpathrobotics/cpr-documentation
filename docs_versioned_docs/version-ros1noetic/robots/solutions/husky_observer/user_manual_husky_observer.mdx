@@ -1003,6 +1003,42 @@ Follow the steps below to enable LTE.
   </figure>
 </center>
 
+:::info
+
+In some cases, it may be desirable to monitor the daily use on the WWAN interface,
+especially when there are monthly data limits for your SIM card. It is possible to
+review your daily and monthly usage on the WWAN interface from the Microhard
+"WWAN &srarr; DataUsage" menu:
+https://192.168.131.51/cgi-bin/webif/carrier-datausage.sh
+
+:::
+
+:::info
+
+It is possible to apply a bandwidth throttle, either to the WWAN or WiFi interface (or both).
+For OutdoorNav, any bandwidth limits would likely be applied to the upload direction to
+limit the amount of video data being sent from the robot; very little download data is
+used by the robot. To configure bandwidth throttling, use the Microhard "Network &srarr; Bandwidth" menu:
+https://192.168.131.51/cgi-bin/webif/thruputcontrol.sh
+
+:::
+
+:::info
+
+When cellular support is enabled on the robot, the system will automatically switch from WiFi to
+cellular if the WiFi connection has gone down for two minutes or more. This allows remote
+recovery of the robot if it has been driven beyond WiFi range.
+
+:::
+
+:::info
+
+When switching between WiFi and cellular modes, the switchover normally occurs within 30 seconds
+but may take up to 120 seconds to complete. In some cases, it may be necessary to refresh the
+OutdoorNav UI manually after the switchover.
+
+:::
+
 #### Remote Access Setup {#remote-access}
 
 :::note
