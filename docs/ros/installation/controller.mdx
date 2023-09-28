@@ -13,18 +13,21 @@ these instructions can also be used to pair these controllers to your own comput
 ### PS4 Controller
 
 :::note
+
 If your robot comes with a PS4 controller, it will be paired already. Simply turn on the robot and turn on the controller.
+
 :::
 
 To re-pair the PS4 controller or pair a new PS4 controller:
 
-1. Install the python-ds4drv package if it is not installed already. In terminal, run:
+1. Install the python3-ds4drv package if it is not installed already. In terminal, run:
 
 ```
-sudo apt-get install python-ds4drv
+sudo apt-get install python3-ds4drv
 ```
 
-2. Put the controller in pairing mode. Press and hold the PS and Share buttons on your controller until the LED begins rapidly flashing white.
+2. Put the controller in pairing mode. Press and hold the PS and Share buttons on your controller until
+   the LED begins rapidly flashing white.
 3. Run the `ds4drv-pair` script to pair the controller to the computer. In terminal, run:
 
 ```
@@ -54,8 +57,10 @@ agent on
 scan on
 ```
 
-4. Put the controller in pairing mode. Press and hold the PS and Share buttons on your controller until the LED begins rapidly flashing white.
-5. The bluetooth scan will display the MAC addresses of nearby devices. Determine which MAC address corresponds to the controller and copy it. In the bluetooth control application, run:
+4. Put the controller in pairing mode. Press and hold the PS and Share buttons on your controller until
+   the LED begins rapidly flashing white.
+5. The bluetooth scan will display the MAC addresses of nearby devices. Determine which MAC address
+   corresponds to the controller and copy it. In the bluetooth control application, run:
 
 ```
 scan off
@@ -67,5 +72,7 @@ connect <MAC Address>
 The controller should now be paired.
 
 :::note
-Make sure to set the correct controller type in your [robot.yaml](../config/yaml) file
+
+Make sure to set the correct controller type in your [robot.yaml](../config/yaml) file. See, [Joystick Controller](../config/yaml.mdx#joystick-controller) setup in the Clearpath Configuration.
+
 :::
