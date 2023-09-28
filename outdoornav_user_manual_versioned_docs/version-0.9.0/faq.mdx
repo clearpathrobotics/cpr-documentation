@@ -1,0 +1,194 @@
+---
+title: Frequently Asked Questions
+sidebar_label: Frequently Asked Questions
+sidebar_position: 10
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+## General
+
+1.  **How do I start, pause or stop a mission?**
+
+    A mission can be started in a few different ways, i) through the web user interface (See [Mission Execution](./web_user_interface/ui_autonomous_mode#mission-execution)) or,
+    ii) through the ROS API (See [API Examples](./api/api_examples)).
+
+2.  **When I start a mission the UGV does not move. What could be the
+    problem?**
+
+    There could be one of several reasons for why this is happening:
+
+    1.  Check that none of the onboard Motion-Stop actuators are
+        activated.
+    2.  Check that none of the wireless Motion-Stops are engaged. This
+        can be checked via the UI (a red Status Indicator means
+        Motion-Stop is engaged) or the onboard UGV lights (will flash
+        when Motion-Stop is engaged).
+    3.  If OutdoorNav is running on a Clearpath Robotics Warthog UGV
+        that is programmed with a Futaba controller, then ensure that
+        the controller is turned off. If it is on then it will be
+        sending "no motion" commands that will be overriding the
+        autonomy commands.
+    4.  Check the task settings for each Waypoint in the Mission. 
+        A missing task setting for a Move PTZ task will block the 
+        execution of the Mission it is in.
+
+3.  **What version of ROS is compatible with OutdoorNav?**
+
+    Currently OutdoorNav is developed in ROS 1 (and is built in Docker containers on top of ROS 1 Noetic).
+    So, the recommended ROS version is ROS 1 Noetic. However, although not recommended, it is still
+    possible to use ROS 1 Melodic. Some issues may arise related to the mismatched message types.
+    Also, if trying to run any python scripts as Melodic targets Python2, whereas Noetic targets Python3.
+
+    Finally, official ROS 2 compatibility is currently unsupported. In theory, if you only have ROS 2 installed
+    on your system, you can try to install ROS 1 Noetic as well and set up a ros1_to_ros2 bridge. Since the 
+    OutdoorNav software is packaged in Dockers, it will communicate directly ROS 1 and then the data can be
+    redirected by the ros1_to_ros2 bridge to ROS 2.
+
+4.  **How can I record ROS data?**
+
+    There are two ways to record ROS data. The first is [through the UI](./features/rosbag_recorder) and the
+    second is the more traditional method of accessing the command line of the UGV's computer and running 
+    [rosbag record commands](http://wiki.ros.org/rosbag/Commandline).
+
+5.  **Where do all the video/audio/images get saved from the mission tasks?**
+
+    All of the data that gets saved (ROSbags, video recordings, audio recordings, and saved images) get stored on
+    UGV's computer at the following location: `~/clearpath_files/...`
+
+## Autonomy
+
+1.  **Am I able to send the UGV on a repeated loop?**
+
+    When generating a single mission on the UI or through the API, it is not possible for the
+    mission to start at the location of the robot and end at the location of the robot. This has to do with
+    the navigation thinking that the UGV has already arrived at its goal and will not generate a path through
+    the Waypoints. However, it is possible to split the mission into two missions (ie. one to go to a 
+    location and the second to return to the starting point). With these two missions you will then either be
+    able to send each mission one after the other or you can use the [Mission Scheduler](./features/mission_scheduler).
+    Add the two missions to the schedule and you will have the ability to also repeat this loop as many times as needed.
+
+2. **Why is surveying failing?**
+
+    There are several checks that should be done:
+
+    -   Check that the base station is powered on, and that all the devices inside are powered on.
+    -   From the UGV's computer, check that you can ping the base station.
+
+``` bash
+ping 192.168.131.30
+```
+
+&emsp;&emsp;If all of these tests PASS, contact [Support](./support).
+
+3.  **Is it possible to increase the maximum velocity of the UGV?**
+
+    The OutdoorNav software has been tune for specific maximum velocities depending on the platform, 
+    1.2 m/s, 1.0 m/s and 2.0 m/s for Jackal, Husky and Warthog UGVs, respectively. The Husky maximum velocity
+    is 1.0 m/s so increasing above this is not possible however if you would like to increase the maximum
+    velocity for either the Jackal or the Warthog, further tuning may be required. Consult the 
+    [tuning guide](./customized_tuning/tuning_instructions/differential_drive_dynamics) and contact
+    [Support](./support) if required.
+
+4.  **My robot it detecting too many obstacles and replanning too frequently. How can I resolve this?**
+
+    Please consult the [Limitations](./features/collision_avoidance#limitations) section of the collisison
+    avoidance feature. It will describe some limits to the obstaacle detection and can help you improve the 
+    smoothness of the navigation.
+
+5.  **I am getting a 'Robot too far off path warning'. What should I do?**
+
+    These types of warnings appear on the UI under two conditions:
+    i)  If the robot indicator (blue arrow on the UI) is not within 3.0 meters of the first Waypoint (the Green one on the UI).
+    ii) If the robot is outside of the allowable navigable space (defined by the path contraint, default: 3.0 meters around the reference path). 
+    Enable the visualization of the [path contraint](./web_user_interface/ui_autonomous_mode#constrained_path) and Teleop the robot back into the
+    navigable space.
+
+6.  **How can I remove certain sensors from the collision avoidance pipeline?**
+
+    If your robot is equipped with collision avoidance sensors (eg. Velodyne, Hokuyo, Sick LMS), it is
+    possible to enable/disable the throughput of each sensor data into the collision avoidance pipeline.
+    Consult the [Collision Avoidance](./features/collision_avoidance) section for these instructions.
+
+7.  **Can I use OutdoorNav without using the UI?**
+
+    We empower customers to send mission via either the UI or our [ROS 1 API](./api/api_overview). Through this
+    API, you are enabled to write either CPP code or Python scripts where you would generate your mission, survey the base station,
+    set the datum, assign [custom tasks](./features/custom_tasks) to your mission. If using Python, we provide a set of libraries that
+    speed up the develpment process. See some of the [example codes](./api/api_examples) for an idea of how to generate these scripts.
+
+## Web User Interface
+
+1.  **How do I delete a waypoint on the UI?**
+
+    Make sure the **Edit Missions** toggle is enabled, then click the
+    **Waypoint Mode** button. Now you can click the Waypoint you wish to
+    delete. A drop down list will appear. Select **Delete**.
+
+2.  **How do I add a Task to a Waypoint on the UI?**
+
+    See [Add Task to Waypoint](./web_user_interface/ui_autonomous_mode#add-task) for information on how
+    to add a Task to a Waypoint.
+
+3.  **Why is the "Save Image" Task failing?**
+
+    Check the Waypoints that have a **Save Image** task in the Waypoint panel. 
+    If you see a red warning triangle beside the **Save Image** task it means 
+    that the settings for this task were not properly set. Set them and rerun 
+    the mission.
+
+4.  **Are we able to make any changes to the UI?**
+
+    Unfortunately, users are not currently enabled to make modifications to the user interface.
+    This feature will be available in a future release. Please direct any feature requests to [Support](./support).
+
+5. **What to do if my custom task is not working?**
+
+    Ensure that you have followed the [Custom Tasks](./features/custom_tasks) instructions. When adding the
+    custom task to a Waypoint, it is important to double check that all the [fields](./web_user_interface/ui_autonomous_mode#add-task) 
+    for your custom task are correct.
+
+6.  **Why are either of the GNSS Status indicator (POS and/or DIR) on the UI not Green?**
+
+    i)  If the **POS** indicator is YELLOW, and you are using an RTK base station:
+        -   Check communication between the robot and the base station by pinging 192.168.131.30 (from the UGV's computer)
+        -   Re-survey the base station
+        -   Access the [Swift Console](https://support.swiftnav.com/support/solutions/articles/44001391679-swift-console) using
+            the both the base station IP (192.168.131.30) and the position unit IP (192.168.131.31) and ensure that certain
+            settings are set correctly:
+                On the base station unit:
+                1)  surveyed_position/broadcast = True
+                    tcp_server1/mode = SBP
+                    tcp_server1/enabled sbp messages = 72,74,117,65535,114
+                    tcp_server1/address = 55556
+                On the position unit:
+                2)  tcp_client0/mode = SBP
+                    tcp_client0/enabled sbp messages = 0
+                    tcp_client0/address = 192.168.131.30:55556
+    ii) If the **POS** indicator is RED:
+        -   Check communication between the robot and the position GNSS unit by pinging 192.168.131.31 (from the UGV's computer)
+        -   Access the [Swift Console](https://support.swiftnav.com/support/solutions/articles/44001391679-swift-console) using
+            the position unit IP (192.168.131.31) and ensure that the unit is working by checking that satellites are being
+            tracked in the "Tracking" tab.
+
+    iii) If the **DIR** indicator is YELLOW,
+        -   Access the [Swift Console](https://support.swiftnav.com/support/solutions/articles/44001391679-swift-console) using
+            the position unit IP (192.168.131.31) and the heading unit IP (192.168.131.32), and ensure that certain
+            settings are set correctly:
+                On the position unit:
+                1)  tcp_server1/mode = SBP
+                    tcp_server1/enabled sbp messages = 74,117
+                    tcp_server1/address = 55556
+                On the heading unit:
+                2)  tcp_client0/mode = SBP
+                    tcp_client0/enabled sbp messages = 0
+                    tcp_client0/address = 192.168.131.31:55556
+                    solution/dgnss_solution_mode = Time Matched
+                    solution/heading offset = 0
+                    solution/send heading = True
+                    solution/soln freq = 5
+                    solution/output ever n obs = 1
+
+    iv) If the **DIR** indicator is RED:
+        -   Check communication between the robot and the position GNSS unit by pinging 192.168.131.31 (from the UGV's computer)
+

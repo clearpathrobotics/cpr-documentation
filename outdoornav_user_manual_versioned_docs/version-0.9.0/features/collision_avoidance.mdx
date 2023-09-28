@@ -1,0 +1,334 @@
+---
+title: Collision Avoidance
+sidebar_label: Collision Avoidance
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+:::danger SAFETY WARNING
+
+Making changes to any of the following variables may decrease system safety. It is recommended that users
+only modify these parameters in consultation with Clearpath Robotics Support.
+
+:::
+
+:::note
+
+Changes to any of the following variables will only take effect after power cycling the UGV.
+
+:::
+
+The collision avoidance feature of OutdoorNav allows our platforms to detect,
+replan and then navigate around any obstacles that may be present in the UGV's
+path. The workflow of this feature can be seen in the figure below.
+
+
+<center>
+  <figure>
+    <img
+      src="/img/outdoornav_images/collision_avoidance_workflow.png"
+      width="1000"
+    />
+    <figcaption>Collision avoidance workflow</figcaption>
+  </figure>
+</center>
+
+The detection sensors available on the UGV will have their data filtered, if necessary into data
+that can be fed into the costmap(s). The costmap will then use this filtered data
+to generate two costmaps (local and global).
+
+- **global costmap**: A large costmap (whose size gets set relative to the
+Waypoints of the desired mission) the replanned paths around detected obstacles.
+- **local costmap**: A smaller costmap that is used solely for detecting potential
+collisions and triggering the path replanner.
+
+Therefore, there are two components in which we can tune the behaviour of the collision
+avoidance feature: the sensor filters or the costmap generation. We will expand on these below.
+
+## Sensor Tuning
+
+The following table lists the sensors that are useable with the
+OutdoorNav software. The sensor drivers can be turned on/off using
+these environment variables, however, the sensor will always remain
+powered on. The environment variables, should be added to the
+`~/cpr_outdoornav_launch/env/sensors_customization.env` file.
+
+| Environment Variable           | Description                               | Data Type
+|--------------------------------|-------------------------------------------|--------------
+| **SWIFTNAV_ENABLE_DRIVER**     | Enable/disable the Swiftnav Piksi/Duro ROS driver, if integrated. | bool |
+| **UBLOX_ENABLE_DRIVER**        | Enable/disable the UBlox ROS driver, if integrated. | bool |
+| **MICROSTRAIN_ENABLE_DRIVER**  | Enable/disable the Microstrain GX5/CV5 ROS driver, if integrated.  | bool |
+| **XSENS_ENABLE_DRIVER**        | Enable/disable the XSens MTI ROS driver, if integrated.  | bool |
+| **VLP_ENABLE_DRIVER**          | Enable/disable the Velodyne ROS driver, if integrated (front unit if more than one).  | bool |
+| **REAR_VLP_ENABLE_DRIVER**     | Enable/disable the Velodyne ROS driver, if integrated (rear unit if more than one).  | bool |
+| **LMS1XX_ENABLE_DRIVER**       | Enable/disbale the Sick LMS1XX ROS driver, if integrated (front unit if more than one).  | bool |
+| **REAR_LMS1XX_ENABLE_DRIVER**  | Enable/disbale the Sick LMS1XX ROS driver, if integrated (rear unit if more than one).  | bool |
+| **HOKUYO_ENABLE_DRIVER**       | Enable/disbale the Hokuyo ROS driver, if integrated (front unit if more than one).  | bool |
+| **REAR_HOKUYO_ENABLE_DRIVER**  | Enable/disbale the Hokuyo ROS driver, if integrated (rear unit if more than one).  | bool |
+| **D435_ENABLE_DRIVER**         | Enable/disable the Realsense ROS driver, if integrated (front unit if more than one).  | bool |
+| **REAR_D435_ENABLE_DRIVER**    | Enable/disable the Realsense ROS driver, if integrated (rear unit if more than one).  | bool |
+
+
+### Sensor Filters
+
+:::info
+
+It is currently only possible to use one filter of the 3D LiDAR filters (voxel, cropbox, radius, or statistical outlier) at a 
+time on any source of data. In future releases we plan on expanding this to work as a filter chain.
+
+:::
+
+The following list of environment variables can be used to filter the
+sensor data in order to modify/improve the sensory input to the
+OutdoorNav autonomy. It is recommended that you first consult the
+following links before attempting to modify these parameters.
+
+-   [PCL Filters](http://wiki.ros.org/pcl_ros/Tutorials/filters)
+-   [PointCloud to LaserScan Filter](http://wiki.ros.org/pointcloud_to_laserscan)
+-   [DepthImage to LaserScan Filter](http://wiki.ros.org/depthimage_to_laserscan)
+
+#### Voxel Grid Filter
+
+Applicable for 3D LiDAR data published on the `../pointcloud` topic. 
+
+Eg. Velodyne, Ouster or Realsense 
+[`PointCloud2`](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/PointCloud2.html) data. 
+
+| Environment Variable | Description                              | Data Type (Default) |
+|----------------------|------------------------------------------|---------------------|
+| **<type\>_ENABLE_FILTER_VOXEL** | Enable/disable the PCL voxel filter for the sensor of type <type\>.<br/><br/>type = {VLP, D435, REAR_VLP, REAR_D435} | bool<br/>(false) |
+| **PCL_FIL_FILTER_VOXEL_LEAF_SIZE** | The size of a leaf (on x,y,z), in meters, used for downsampling. Range: 0.0 to 1.0. | double (0.01) |
+
+#### Cropbox Filter
+
+Applicable for 3D LiDAR data published on the `../pointcloud` topic. 
+
+Eg. Velodyne, Ouster or Realsense 
+[`PointCloud2`](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/PointCloud2.html) data. 
+
+| Environment Variable | Description                              | Data Type (Default) |
+|----------------------|------------------------------------------|---------------------|
+| **<type\>_ENABLE_FILTER_CROPBOX** | Enable/disable the PCL cropbox filter for the sensor of type <type\>.<br/><br/>type = {VLP, D435, REAR_VLP, REAR_D435} | bool<br/>(false) |
+| **PCL_FILTER_CROPBOX_MIN_X** | The lower bound, in meters, on the x-axis within which to reject points from the pointcloud. Range: -1000.0 to 1000.0. | double<br/>(0.01) |
+| **PCL_FILTER_CROPBOX_MAX_X** | The upper bound, in meters, on the x-axis within which to reject points from the pointcloud. Range: -1000.0 to 1000.0. | double<br/>(2.0) |
+| **PCL_FILTER_CROPBOX_MIN_Y** | The lower bound, in meters, on the y-axis within which to reject points from the pointcloud. Range: -1000.0 to 1000.0. | double<br/>(-10.0) |
+| **PCL_FILTER_CROPBOX_MAX_Y** | The upper bound, in meters, on the y-axis within which to reject points from the pointcloud. Range: -1000.0 to 1000.0. | double<br/>(10.0) |
+| **PCL_FILTER_CROPBOX_MIN_Z** | The lower bound, in meters, on the z-axis within which to reject points from the pointcloud. Range: -1000.0 to 1000.0. | double<br/>(-0.5) |
+| **PCL_FILTER_CROPBOX_MAX_Z** | The upper bound, in meters, on the z-axis within which to reject points from the pointcloud. Range: -1000.0 to 1000.0. | double<br/>(10.0) |
+
+#### Radius Outlier Filter
+
+Applicable for 3D LiDAR data published on the `../pointcloud` topic. 
+
+Eg. Velodyne, Ouster or Realsense 
+[`PointCloud2`](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/PointCloud2.html) data. 
+
+| Environment Variable | Description                              | Data Type (Default) |
+|----------------------|------------------------------------------|---------------------|
+| **<type\>_ENABLE_FILTER_RADIUS_OUTLIER** | Enable/disable the PCL radius outlier filter for the sensor of type <type\>.<br/><br/>type = {VLP, D435, REAR_VLP, REAR_D435} | bool<br/>(false) |
+| **PCL_FILTER_ROR_RADIUS_SEARCH** | The number of points within this distance, in meters, from the query point will need to be equal or greater than PCL_FILTER_ROR_MIN_NEIGHBORS in order to be classified as an inlier point (i.e. will not be filtered). | double<br/>(0.05) |
+| **PCL_FILTER_ROR_MIN_NEIGHBORS** | The number of points within PCL_FILTER_ROR_RADIUS_SEARCH from the query point will need to be equal or greater than this number in order to be classified as an inlier point (i.e. will not be filtered). | int<br/>(10) |
+
+#### Statistical Outlier Filter
+
+Applicable for 3D LiDAR data published on the `../pointcloud` topic. 
+
+Eg. Velodyne, Ouster or Realsense 
+[`PointCloud2`](http://docs.ros.org/en/melodic/api/sensor_msgs/html/msg/PointCloud2.html) data. 
+
+| Environment Variable | Description                              | Data Type (Default) |
+|----------------------|------------------------------------------|---------------------|
+| **<type\>_ENABLE_FILTER_STATISTICAL_OUTLIER** | Enable/disable the PCL statistical outlier filter for the sensor of type <type\>.<br/><br/>type = {VLP, D435, REAR_VLP, REAR_D435} | bool<br/>(false) |
+| **PCL_FILTER_SOR_MEAN_K** | The number of points (k) to use for mean distance estimation Range: 2 to 100. | double<br/>(5.0) |
+| **PCL_FILTER_SOR_STD_DEV** | The standard deviation multiplier threshold. All points outside the mean +- sigma * std_mul will be considered outliers. Range: 0.0 to 5.0. | double<br/>(0.3) |
+
+#### PointCloud to LaserScan Filter
+
+The following filter is enabled by default and is applied after any 3D LiDAR filtering has occured. It projects the final pointcloud topic onto the 2D plane that is then used to generate the costmap.
+
+| Environment Variable | Description                              | Data Type (Default) |
+|----------------------|------------------------------------------|---------------------|
+| **<type\>_ENABLE_POINTCLOUD_TO_LASERSCAN** | Enable/disable the pointcloud to laserscan outlier filter for the sensor of type <type\>.<br/><br/>type = {VLP, D435, REAR_VLP, REAR_D435} | bool<br/>(false) |
+| **PCL_TO_SCAN_MIN_HEIGHT** | The minimum height to sample in the point cloud, in meters. | double<br/>(0.2) | 
+| **PCL_TO_SCAN_MAX_HEIGHT** | The maximum height to sample in the point cloud, in meters. | double<br/>(1.2) | 
+| **PCL_TO_SCAN_MIN_ANGLE** | The minimum scan angle, in radians. | double<br/>(3.14) | 
+| **PCL_TO_SCAN_MAX_ANGLE** | The maximum scan angle, in radians. | double<br/>(3.14) | 
+| **PCL_TO_SCAN_ANGLE_INCREMENT** | Resolution of laser scan, in radians, per ray. | double<br/>(0.00218) | 
+| **PCL_TO_SCAN_TIME** | The scan rate in seconds. | double<br/>(0.3333) | 
+| **PCL_TO_SCAN_MIN_RANGE** | The minimum ranges to return, in meters. | double<br/>(0.3) | 
+| **PCL_TO_SCAN_MAX_RANGE** | The maximum ranges to return, in meters. | double<br/>(100.0) | 
+
+
+#### DepthImage to LaserScan Filter
+
+Applicable for depth image data published on the `../depth/image_rect_raw` topic. 
+
+Eg. Realsense [`DepthImage`](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/Image.html) data. 
+
+| Environment Variable | Description                              | Data Type (Default) |
+|----------------------|------------------------------------------|---------------------|
+| **<type\>_ENABLE_DEPTH_TO_LASERSCAN** | Enable/disable the depth image to laserscan outlier filter for the sensor of type <type\>.<br/><br/>type = {D435, REAR_D435} | bool<br/>(false) |
+| **DEPTH_TO_SCAN_HEIGHT** | The number of pixel rows to use to generate the laserscan. For each column, the scan will return the minimum value for those pixels centered vertically in the image. | int |
+| **DEPTH_TO_SCAN_TIME** | Time between scans (seconds). Typically, 1.0/frame_rate. This value is not easily calculated from consecutive messages, and is thus left to the user to set correctly. | double |
+| **DEPTH_TO_SCAN_MIN_RANGE** | The minimum ranges to return in meters. Ranges less than this will be output as -Inf. | double |
+| **DEPTH_TO_SCAN_MAX_RANGE** | The maximum ranges to return in meters. Ranges greater than this will be output as +Inf. | double |
+
+
+## Costmap Tuning
+
+The following section provides a list of environment variables that can
+be modified in order to tune OutdoorNav. All of the environment variables listed below
+can be modified in the `~/cpr_outdoornav_launch/env/autonomy_customization.env` file.
+
+### Costmap Inputs
+
+The following table lists the environment variables that can be used to
+enable/disable which sensor is used as part of the collision avoidance
+feature of OutdoorNav.
+
+| Environment Variable | Description                              | Data Type |
+|----------------------|------------------------------------------|-----------|
+| **VLP_ENABLE_COSTMAP** | Enable/disable the Velodyne from populating the costmap and being used for collision avoidance. This variable should only be used if the sensor is integrated (front unit if more than one). | bool |
+| **REAR_VLP_ENABLE_COSTMAP** | Enable/disable the Velodyne from populating the costmap and being used for collision avoidance. This variable should only be used if the sensor is integrated (rear unit if more than one). | bool |
+| **LMS1XX_ENABLE_COSTMAP** | Enable/disable the Sick LMS1XX from populating the costmap and being used for collision avoidance. This variable should only be used if the sensor is integrated (front unit if more than one). | bool |
+| **REAR_LMS1XX_ENABLE_COSTMAP** | Enable/disable the Sick LMS1XX from populating the costmap and being used for collision avoidance. This variable should only be used if the sensor is integrated (rear unit if more than one). | bool |
+| **HOKUYO_ENABLE_COSTMAP** | Enable/disable the Hokuyo from populating the costmap and being used for collision avoidance. This variable should only be used if the sensor is integrated (front unit if more than one). | bool |
+| **REAR_HOKUYO_ENABLE_COSTMAP** | Enable/disable the Hokuyo from populating the costmap and being used for collision avoidance. This variable should only be used if the sensor is integrated (rear unit if more than one). | bool |
+| **D435_ENABLE_COSTMAP** | Enable/disable the Realsense from populating the costmap and being used for collision avoidance. This variable should only be used if the sensor is integrated (front unit if more than one). | bool |
+| **REAR_D435_ENABLE_COSTMAP** | Enable/disable the Realsense from populating the costmap and being used for collision avoidance. This variable should only be used if the sensor is integrated (rear unit if more than one). | bool |
+
+### Costmap Generation
+
+The following list of environment variables can be used to modify some
+of the navigation inputs of to the OutdoorNav autonomy. It is
+recommended that you first consult the following link(s) before
+attempting to modify these parameters.
+
+-   [Costmap2D/ObstacleLayer](http://wiki.ros.org/costmap_2d/hydro/obstacles)
+
+| Environment Variable | Description                              | Data Type |
+|----------------------|------------------------------------------|-----------|
+| **COSTMAP\_LIDAR\_<2D/3D\>_OBSTACLE_RANGE** | The maximum range in meters at which to insert obstacles into the costmap using sensor data. This can apply for either 2D or 3D variables, associated with 2D and 3D lidars, respectively (front unit if more than one). | double |
+| **COSTMAP\_LIDAR\_<2D/3D\>_RAYTRACE_RANGE** | The maximum range in meters at which to raytrace out obstacles from the map using sensor data. This can apply for either 2D or 3D variables, associated with 2D and 3D lidars, respectively (front unit if more than one). | double |
+| **COSTMAP\_REAR_LIDAR\_<2D/3D\>_OBSTACLE_RANGE** | The maximum range in meters at which to insert obstacles into the costmap using sensor data. This can apply for either 2D or 3D variables, associated with 2D and 3D lidars, respectively (rear unit if more than one). | double |
+| **COSTMAP\_REAR_LIDAR\_<2D/3D\>_RAYTRACE_RANGE** | The maximum range in meters at which to raytrace out obstacles from the map using sensor data. This can apply for either 2D or 3D variables, associated with 2D and 3D lidars, respectively (front unit if more than one). | double |
+
+
+## Limitations
+
+The collision avoidance feature as it currently stands, does come with some limitations. These are listed listed below:
+
+#### Detection range limits
+
+The maximum collision avoidance range for the OutdoorNav Software is
+UGV-dependent and is related to the maximum speed of the UGV. These
+ranges for Clearpath Robotics UGVs are:
+
+-   Jackal UGV: 4.5 meters
+-   Husky UGV: 4.5 meters
+-   Warthog UGV: 15.0 meters
+
+While the sensors are able to detect objects at further distances, the
+OutdoorNav Software only considers obstacles detected within these
+distances for collision avoidance. That is, the UGV will only begin to
+decelerate as it detects obstacles within this range.
+
+The detection itself is also related to the horizontal size
+(width/diameter) of the obstacle. The limitations in detecting objects
+with small horizontal size are described in the table below.
+
+_Maximum Reliable Obstacle Detection Distance from UGV, according to Obstacle Horizontal Size_
+
+| Object Size (Horizontal) | Starter Sensor Kit                                             | Standard/(CUstom w/ VLP) Sensor Kit                                            |
+|--------------------------|----------------------------------------------------------------|----------------------------------------------------------------|
+| Less than 0.6 cm         | No reliable detection                                          | No reliable detection                                          |
+| 0.6 to 1.0 cm            | 0.8 m                                                          | No reliable detection                                          |
+| 1.0 to 3.0 cm            | 2.0 m                                                          | 1.75 m                                                         |
+| Greater than 3.0 cm      | Maximum collision avoidance distance (UGV-specific; see above) | Maximum collision avoidance distance (UGV-specific; see above) |
+
+Finally, the OutdoorNav Software bounds the obstacle detection to
+prevent ground hits and to remove detections above the UGV body. The
+following bounds are relative to the ground, assuming a flat surface.
+Obstacles that are entirely below the lower bound or entirely above the
+upper bound are not considered obstacles and will not be avoided.
+
+_Obstacle Detection Vertical Bounds_
+
+| Vertical Bound        | Jackal UGV | Husky UGV | Warthog UGV |
+|-----------------------|------------|-----------|-------------|
+| Lower Detection Bound | 0.3 m      | 0.3 m     | 0.3 m       |
+| Upper Detection Bound | 0.8 m      | 1.3 m     | 1.8 m       |
+
+:::note
+
+The vertical detection bounds above are for the Standard Sensor Kit or a
+custom sensor configuration that includes a Velodyne. The vertical
+detection bounds for the Starter Sensor Kit have yet to be determined.
+
+:::
+
+#### Tall grass
+
+**Description**: Grass that is taller than 15cm may occasionally be detected as the robot is driving.
+
+**Workaround Available?**: Yes (Mitigation)
+
+**Mitigating Solution**: There are a couple of ways to reduce the amount of detections of long blades of grass.
+
+1) Apply either a radial filter or a statistical outlier filter on the pointcloud data to filter out the stray detections.
+
+- File: `~/cpr_outdoornav_launch/env/sensors_customization.env`
+- Environment variable(s): `<sensor_type>_ENABLE_FILTER_RADIUS_OUTLIER`, `<sensor_type>_ENABLE_FILTER_STATISTICAL_OUTLIER` 
+
+2) Increase the pointcloud to laserscan conversion filter minimum height parameter. The environment variable 
+
+- File: `~/cpr_outdoornav_launch/env/sensors_customization.env`
+- Environment variable(s): `PCL_TO_SCAN_MIN_HEIGHT`
+
+#### Pitch changes
+
+**Description**: Pitch changes along the UGVs planned path may cause the ground to be detected and
+unwanted replanning may occur. This occurs because since we do not track change in pitch of the robot,
+and since we filter the sensor data such that essentially chop off the lower portion of the data.
+With the change in pitch this lower plane will then cause ground detections.
+
+**Workaround Available?**: Yes (Mitigation)
+
+**Mitigating Solution**: Limit the range from the `base_link` that the costmap generates lethal
+obstacles, for a specific sensor. Eg. If your UGV has both a 3D and a 2D LiDAR. We want to limit
+the range at which the 2D LiDAR will generate obstacles since the 3D LiDAR will cover a majority
+of the detections. You would be able to reduce the range that the 2D LiDAR generates obstacles,
+so that it does not overlap with the detection field of the 3D LiDAR.
+
+- File: `~/cpr_outdoornav_launch/env/autonomy_customization.env`
+- Environment variable(s): `COSTMAP_LIDAR_2D_OBSTACLE_RANGE` and/or `COSTMAP_REAR_LIDAR_2D_OBSTACLE_RANGE`
+
+#### Branches across narrow path
+
+**Description**: If there are overhanging branches across a path (ie. not coming from the ground),
+the navigation may not be able to maneuver through them.
+
+**Workaround Available?**:  Limited to None
+
+**Mitigating Solution**: Reduction of the global costmap `inflation_radius` and/or `costmap_scaling_factor`
+parameters may provide sufficient space for the navigation to replan though the branches.
+
+- File: `~/cpr_outdoornav_launch/env/onav_robots/params/<platform>/navigation/costmap_global.yaml`
+- Environment variable(s): `/navigation/global_costmap/inflation/inflation_radius` and/or `/navigation/global_costmap/inflation/cost_scaling_factor`
+
+:::info
+
+See the bottom of [this](http://wiki.ros.org/costmap_2d/hydro/inflation) page for information on how the
+costmap inflation layer costs are computed based on the above two parameters.
+
+:::
+
+#### Reflective surfaces
+
+**Description**: Reflective surfaces on or around the robot can cause false positive obstacle placement
+at incorrect locations on the costmap.
+
+**Workaround Available?**: No software workaround available.
+
+**Mitigating Solution**: Remove/cover/re-position all reflective surfaces on the robot.
