@@ -118,9 +118,7 @@ The Stack Lights can also be visible in the UI in both the upper right hand corn
 
 <center>
   <figure>
-    <img
-      src="/img/outdoornav_images/ui_stack_lights.png"
-    />
+    <img src="/img/outdoornav_images/ui_stack_lights.png" />
     <figcaption>Stack Light Widget (1) found in the Status Page and Stack Light Icon (2) found in the Navigation Bar</figcaption>
   </figure>
 </center>
@@ -192,25 +190,25 @@ The direction of the axes differs from those used for roll, pitch, and yaw in ai
 
 ### System Specifications
 
-| Specification                 | Measurement                                                                   |
-| :---------------------------- | :---------------------------------------------------------------------------- |
-| Dimensions                    | 1061 mm (length) X 854 mm (width) X 1224 mm (height)                          |
-| Track Width                   | 550 mm                                                                        |
-| Wheelbase Length              | 512 mm                                                                        |
-| Ground Clearance              | 130 mm                                                                        |
-| Mass                          | 98.5 kg                                                                       |
-| Maximum Payload               | 10.0 kg                                                                       |
-| Speed, Maximum                | 1.0 m/s                                                                       |
-| Climb Grade                   | 15 °                                                                          |
-| Traversal Grade / Sideslope   | 15 °                                                                          |
-| Ambient Operating Temperature | -10 to + 40 °C                                                                |
-| Environmental                 | Designed for IP55                                                             |
-| Operating Time, Typical       | 2.5 to 3.25 hours                                                             |
-| Operating Time, Standby       | 4.0 hours                                                                     |
-| Battery                       | 35 Ah @ 24 V, LiFePO<sub>4</sub>                                              |
+| Specification                 | Measurement                                                                                    |
+| :---------------------------- | :--------------------------------------------------------------------------------------------- |
+| Dimensions                    | 1061 mm (length) X 854 mm (width) X 1224 mm (height)                                           |
+| Track Width                   | 550 mm                                                                                         |
+| Wheelbase Length              | 512 mm                                                                                         |
+| Ground Clearance              | 130 mm                                                                                         |
+| Mass                          | 98.5 kg                                                                                        |
+| Maximum Payload               | 10.0 kg                                                                                        |
+| Speed, Maximum                | 1.0 m/s                                                                                        |
+| Climb Grade                   | 15 °                                                                                           |
+| Traversal Grade / Sideslope   | 15 °                                                                                           |
+| Ambient Operating Temperature | -10 to + 40 °C                                                                                 |
+| Environmental                 | Designed for IP55                                                                              |
+| Operating Time, Typical       | 2.5 to 3.25 hours                                                                              |
+| Operating Time, Standby       | 4.0 hours                                                                                      |
+| Battery                       | 35 Ah @ 24 V, LiFePO<sub>4</sub>                                                               |
 | Wireless charging             | Up to 300 W (approximately 4 hours to charge from 10 to 85% when powered on in low power mode) |
-| Wired charging                | 650 W (approximately 1 hour to charge from 10 to 85% when powered off)        |
-| Expansion                     | 2.5 A @ 24 V, 3.5 A @ 12 V, 3.75 A @ VBAT, USB 3.0, Ethernet (data only, 1 Gbps), HDMI |
+| Wired charging                | 650 W (approximately 1 hour to charge from 10 to 85% when powered off)                         |
+| Expansion                     | 2.5 A @ 24 V, 3.5 A @ 12 V, 3.75 A @ VBAT, USB 3.0, Ethernet (data only, 1 Gbps), HDMI         |
 
 <center>
   <img
@@ -600,7 +598,7 @@ of the Base Station case. This will provide internet access for the robot
 and the tablet. Note that there are two network ports on the side of the
 Base Station; use the bottommost port for connecting the cable that provides
 internet access. The other network port provides a local network connection
-for debugging purposes only. 
+for debugging purposes only.
 
 Note that the connector on the Base Station is an M12 connector (Digikey
 P/N 1754-1180-ND) and an Ethernet cable with a mating connector must be used
@@ -872,11 +870,11 @@ requirements are:
 While there are many ways to meet the Network Requirements listed above, there are three common network
 modes for deploying Husky Observer, which are outlined below.
 
-| Network Mode     | Description                                                                                                      | Base Station Setup        | Robot Setup                                                                                                                                                 | Tablet Setup                                                                                                                                                                                                                              | OutdoorNav URL via Local WiFi | OutdoorNav URL via Internet/Cellular      |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------------------------------------- |
-| Base Station     | Base Station with WiFi for near-range operations; optional LTE also available on robot for long-range operations | Pre-configured at factory | Pre-configured at factory; see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup                                            | Pre-configured at factory                                                                                                                                                                                                                 | http://192.168.132.1:8080     | See [Remote Access Setup](#remote-access) |
-| Customer WiFi Network | Customer WiFi for near-range operations; optional LTE also available on robot for long-range operations     | N/A                       | See [Updating the WiFi SSID or Password on Robot](#robot-wifi-setup); see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup | See [Windows 10 instructions](https://support.microsoft.com/en-us/windows/connect-to-a-wi-fi-network-in-windows-1f881677-b569-0cd5-010d-e3cd3579d263) for connecting to Customer WiFi network | http://<customer_IP>:8080     | See [Remote Access Setup](#remote-access) |
-| Cellular Only    | Uses cellular in robot + separate cellular in Tablet                                                             | N/A                       | See [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for setup                                                                                     | Pre-configured at factory or use USB-tethering to a cell phone                                                                                                                                                            | N/A                           | See [Remote Access Setup](#remote-access) |
+| Network Mode          | Description                                                                                                      | Base Station Setup        | Robot Setup                                                                                                                                                 | Tablet Setup                                                                                                                                                                                  | OutdoorNav URL via Local WiFi | OutdoorNav URL via Internet/Cellular      |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------------------------------------- |
+| Base Station          | Base Station with WiFi for near-range operations; optional LTE also available on robot for long-range operations | Pre-configured at factory | Pre-configured at factory; see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup                                            | Pre-configured at factory                                                                                                                                                                     | http://192.168.132.1:8080     | See [Remote Access Setup](#remote-access) |
+| Customer WiFi Network | Customer WiFi for near-range operations; optional LTE also available on robot for long-range operations          | N/A                       | See [Updating the WiFi SSID or Password on Robot](#robot-wifi-setup); see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup | See [Windows 10 instructions](https://support.microsoft.com/en-us/windows/connect-to-a-wi-fi-network-in-windows-1f881677-b569-0cd5-010d-e3cd3579d263) for connecting to Customer WiFi network | http://<customer_IP>:8080     | See [Remote Access Setup](#remote-access) |
+| Cellular Only         | Uses cellular in robot + separate cellular in Tablet                                                             | N/A                       | See [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for setup                                                                                     | Pre-configured at factory or use USB-tethering to a cell phone                                                                                                                                | N/A                           | See [Remote Access Setup](#remote-access) |
 
 <center>
   <figure>
@@ -1055,6 +1053,13 @@ recovery of the robot if it has been driven beyond WiFi range.
 When switching between WiFi and cellular modes, the switchover normally occurs within 30 seconds
 but may take up to 120 seconds to complete. In some cases, it may be necessary to refresh the
 OutdoorNav UI manually after the switchover.
+
+:::
+
+:::note
+
+Refer to the [OutdoorNav User Manual](/docs_outdoornav_user_manual/web_user_interface/ui_overview#general-settings)
+for details on switching between WiFi and cellular modes.
 
 :::
 
@@ -1401,11 +1406,11 @@ In addition, to see the detailed status of the system in the OutdoorNav UI,
 select the "STATUS" option from the menu, which will provide the status for key
 subsystems:
 
--  Localization
--  Dock
--  Wireless Charging
--  System/Computer
--  Sensors
+- Localization
+- Dock
+- Wireless Charging
+- System/Computer
+- Sensors
 
 All subsystems should have a green checkmark to indicate they are working as intended.
 Otherwise, a warning or error message is provided.
@@ -1501,11 +1506,11 @@ colour and low-light capabilities, defogger, and lens wiper.
 #### Key Settings
 
 - Resolution:
-    - Max: 1920x1080
-    - Default: 1280x720
+  - Max: 1920x1080
+  - Default: 1280x720
 - Frame rate:
-    - Max: 60 Hz
-    - Default: 20 Hz for data capture, 10Hz for UI live stream
+  - Max: 60 Hz
+  - Default: 20 Hz for data capture, 10Hz for UI live stream
 
 #### Where to make adjustments
 
