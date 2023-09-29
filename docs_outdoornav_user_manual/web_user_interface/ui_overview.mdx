@@ -22,34 +22,34 @@ mode.
 </center>
 
 1.  **Menu:** A dropdown menu allowing the user to access the Dashboard
-    (ie. Home), Settings, Status or Help pages.
+    (ie. Home), Settings, Status, Scheduler and Help pages. The Operator 
+    can also run the UI Virtual Tour from this menu.
 
-2.  **Path Progress Meter:** A meter indicating the percentage complete
+2.  **Feedback Bar:** The feedback bar will display information
+    regarding the execution state of the navigation and of any Tasks
+    being executed.
+
+3.  **Path Progress Meter:** A meter indicating the percentage complete
     of a Mission.
 
-3.  **UGV Position:** The UGV's X and Y position in the world frame
-    relative to the Datum.
+4.  **UGV Position:** The UGV's X and Y position in the world frame
+    relative to the Datum. Can also be shown in Lat/Lon coordinates
 
-4.  **UGV Heading:** The UGV's heading in the world frame.
+5.  **UGV Heading:** The UGV's heading in the world frame. 0 degrees is North, 90 degrees is East, 180 degrees is South and 270 degrees is West.
 
-5.  **Status Indicator:** The status indicator will display information
+6.  **Status Indicator:** The status indicator will display information
     regarding various UGV status monitors such as the Emergency Stop,
     Surveying, etc. When the UGV is fully operational, the indicator
-    will be green.
+    will be green. Operators can click on the status indicator to see more details 
+    pertaining to the current state as well as past messages.
 
-6.  **GPS Status Indicator:** The GPS status indicators will display GPS
+7.  **GPS Status Indicator:** The GPS status indicators will display GPS
     signal accuracy for position (POS indicator) and heading (DIR
     indicator). Green indicators represent RTK accuracy and are
     currently required for accurate autonomous navigation. Yellow and orange 
     indicators represent SBAS and SPP accuracy respectively and noticeable 
     oscillations may occur in such cases. Red indicators mean no GPS signal 
     and autonomous navigation missions should not be started.
-
-7. **ROS Status Indicator:** The ROS status indicator is used to give a 
-    quick overview of the current status of the watched ROS topics. If 
-    green it means that all topics are being received correctly while yellow
-    indicates that one or more topics is not being recieved. Further information
-    can be found in the status page by clicking on the ROS status indicator.
 
 8.  **Battery Life Indicator:** The UGV's battery life indicator.
 
@@ -63,19 +63,24 @@ mode.
 
 9.  **Wireless Connection Indicator:** The wireless connection indicator
     represents the signal strength between the wifi access point
-    (typically the Base Station) and the UGV.
+    (typically the Base Station) and the UGV. If the system can support 
+    cellular connections a cellular indicator will appear next to the 
+    wifi icon with the currently active connection being highlighted in green.
 
-10.  **Views List:** A dropdown list of available views, detailed later
+10. **Views List:** A dropdown list of available views, detailed later
     in this section. Some of the available views are Map, Camera and 3D
     views, etc.
 
-11. **Mission List:** View the list of Missions that Operator(s) have
+11. **Record Audio:** If the UGV is equipped with a microphone the user 
+    can start/stop recording manually by clicking this icon.
+
+12. **Mission List:** View the list of Missions that Operator(s) have
     created.
 
-12. **Edit Mission Toggle:** This toggle allows the user to start
-    creating Waypoints for the current Mission. The user will also be able to
+13. **Edit Mission Toggle:** This toggle allows the Operator to start
+    creating Waypoints for the current Mission. The Operator will also be able to
     drag and drop Waypoints in this mode. Once this button is enabled,
-    the Waypoint Mode will now be available for selection. When a Mission is 
+    the Waypoint Mode will be available for selection. When a Mission is 
     started this toggle will be disabled (ie. the Operator will not be able 
     to modify/add Waypoints).
 
@@ -86,23 +91,20 @@ mode.
     
     :::
 
-13. **Waypoint Panel Toggle:** View list of Waypoints in the current Mission.
+14. **Waypoint Panel Toggle:** View list of Waypoints in the current Mission.
 
-14. **Waypoint Drop Button:** The Waypoint indicator marker on the
-    bottom bar allows the user to place a Waypoint at the location of the UGV. 
+15. **Waypoint Drop Button:** The Waypoint indicator marker on the
+    bottom bar allows the Operator to place a Waypoint at the location of the UGV. 
 
-15. **Start Button:** Start the current Mission.
+16. **Start Button:** Start the current Mission.
 
-16. **Pause Button:** Pause the current Mission. Pressing the start button
+17. **Pause Button:** Pause the current Mission. Pressing the start button
     while paused will continue the current Mission.
 
-17. **Stop Button:** Cancel the Mission or Task that is currently being
+18. **Stop Button:** Cancel the Mission or Task that is currently being
     executed. Pressing the start button while when stopped will restart
     the list of steps in the current Mission.
 
-18. **Feedback Bar:** The feedback bar will display information
-    regarding the execution state of the navigation and of any Tasks
-    being executed.
 
 By opening the dropdown list "Views", on the right side of the UI, the
 Operator can access the following views:
@@ -225,6 +227,43 @@ acquired by the VLP-16 LiDAR.
 </center>
 
 ## System Configuration
+
+### General Settings
+
+The General settings section can be found in through the upper left hand menu and allows the Operator to modify 
+general features of the UGV.
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_general_settings.png" />
+    <figcaption>General Settings Page</figcaption>
+  </figure>
+</center>
+
+#### Coordinates
+
+The Operator can change the coordinate space from X/Y relative to the Datum to Latitude/Longitude.
+
+#### Save Image Location 
+
+The Operator can choose to store images saved manually to the robot directly or to download them onto their computer. This 
+feature only affects the manual save image option found on each relevant camera view.
+
+#### Robot Internet Connection Type 
+
+If the UGV is equipped with SIM card and can switch between Cellular and WiFi connections, the Operator can manually trigger this 
+change through the general settings page.  This switchover will take approximately 30 seconds and will require a refresh on the UI.
+
+#### Show Path Deviation Distance
+
+When a mission is running the UGV will have a maximum path deviation distance that it shouldn't cross if it needs to replan.  If this 
+toggle is set to true, while in edit mode this buffer is shown over top of the path as the Operator creates/edits the mission.  This 
+toggle does not disable the path deviation distance feature.
+
+#### Low Power Mode
+
+If the UGV is equipped with a Low Power Module this toggle allows the user to switch the UGV into a low power state that will drastically 
+limit functionality but help conserve power. This mode is best used to help better facilitate charging while the UGV is not in use.
 
 ### Map Source Configuration
 
