@@ -1,0 +1,326 @@
+---
+title: Husky Observer Maintenance
+sidebar_label: Maintenance
+sidebar_position: 4
+---
+
+import GettingNewPackages from "/components/maintenance/getting_new_packages.mdx";
+import ComponentUpdatingPumaFirmware from "/components/maintenance/firmware_update_puma.mdx";
+import Support from "/components/support.mdx";
+
+## Hardware Maintenance
+
+### Charging the Robot {#charging}
+
+The robot can be charged wirelessly with the Autocharge Dock or with a wired
+connection with the Manual Charger.
+
+#### Autocharge Dock
+
+The operator can start charging the robot using the autocharge dock in two ways,
+noting that the robot will only charge on the dock when the disconnect is in the
+"ON" position.
+
+- Manually drive the robot to its position at the dock. The receiver on
+  the robot should be properly aligned with the circle on the dock transmitter.
+- Use the OutdoorNav UI to dock the robot autonomously. Please consult
+  [Autonomous Missions](#autonomous-missions) for further details.
+  This method requires that the [base station has been surveyed](#survey-base-station),
+  the [Datum has been set to the coordinates of the test site](#set-datum),
+  and that the [dock location has been set](#set-dock-location).
+
+:::note
+
+At ambient temperatures above 35 °C, there may be some automatic throttling
+of the charge rate when using the autocharge dock. No user intervention is
+required as the system will charge at the maximum possible rate based on
+the internal temperatures in the robot.
+
+:::
+
+:::note
+
+By default, the autocharge dock is configured to disable charging at ambient temperatures below
+0 °C. It is possible to perform charging at ambient temperatures as low as -10 °C
+in some cases. Contact [Support](#support) for details.
+
+:::
+
+#### Manual Charger
+
+The Manual Charger may be used when the robot is far from its wireless
+charger or when a faster charge rate is desired. For fastest charging,
+turn off the robot while charging.
+
+- Plug the manual charger into an AC outlet and wait for the power
+  light to turn solid **<span style={{color: '#0000ff'}}>BLUE</span>**.
+- Remove the cap from the manual charging port (rear of robot) by
+  squeezing the two cap sides and lifting.
+- Connect the manual charger plug into port.
+
+After a moment the **<span style={{color: '#e38e4e'}}>ORANGE</span>**
+"lightning bolt" will illuminate on the charger indicating that charging
+has begun. The **<span style={{color: '#38761d'}}>GREEN</span>** battery level
+indicator on the charger will also flash. When both segments of this
+indicator turn solid, charging is complete.
+
+Be sure to replace the charge port cap when charging is complete. This
+will protect the connectors from environmental conditions.
+
+### Balancing Batteries
+
+The robot's batteries must be balanced on a regular basis to ensure accurate
+feedback, consistent performance, and long life. If the batteries are
+allowed to fall out of balance, they will become unevenly loaded. This can
+lead to back-feeding between batteries, reduced charge-holding capacity
+for the system as a whole, and increased stress on both batteries.
+If the imbalance becomes severe enough, one of the system batteries
+will enter a protective state and disconnect itself from the system.
+Once the battery enters this state there is a limited time window to
+recover it. If that window expires the battery will become irreversibly
+damaged with no possibility of recovery.
+
+Battery balancing is a slow process that will occur automatically when
+the fully-charged batteries are held at their float voltage. Because the
+automatic charger will shut off when it determines that the batteries are
+fully charged, the system cannot be balanced using the autocharge dock.
+The manual charger must be used.
+
+To perform a "quick" balance, leave the robot plugged into the manual
+charger overnight. A quick balance is recommended at least once per week.
+A full balance of 24+ hours is recommended at least once per month.
+
+Contact Clearpath Robotics for assistance with recovering a battery that
+has entered a protective state.
+
+### Checking Battery Health
+
+A regularly-balanced battery system can be recharged thousands of times
+before degrading. Eventually, however, the batteries will degrade (their
+usable capacity will decrease). This translates to reduced run-time and
+range. The robot will need to be recharged more frequently and overall
+system availability will be reduced.
+
+It is recommended that the system operator review runtime performance
+once per year to determine whether battery replacement is required.
+Runtime measurements should be taken immediately after a full balancing
+operation. Battery replacement is performed by Clearpath Robotics and
+is subject to battery availability. Replacement batteries may be
+purchased in advance and warehoused at Clearpath for future use.
+
+### Checking Drivetrain Health
+
+Depending on the environment in which the robot is used in and duty cycle,
+the robot drivetrain may require maintenance during its life. Maintenance
+activities can include gearhead replacement, tire tread replacement, motor
+brush replacement, belt replacement, bearing replacement, etc.
+
+It is recommended that the user perform an auditory inspection of the
+robot drivetrain once per month. Take note of any clicking, grinding or
+irregular skipping sounds while the robot is moving. Note that some clicking
+in the gearheads is normal during stops and starts, due to backlash between
+the gears.
+
+### Checking Wheels
+
+Tire pressure may change with temperature and should be checked monthly
+with a pressure gauge. Inspecting tires, releasing pressure, and inflating
+tires are completed through the tire's inflation stem. Tire pressure should
+not exceed 138 kPa ( 20 psi ), and lower pressure may be desired based on
+terrain requirements.
+
+A monthly visual inspection of the tire treads is also recommended.
+Replacement wheel assemblies can be purchased from Clearpath Robotics and
+can be installed by the user.
+
+If a tire must be removed, first unfasten the four
+M5 Socket Head Cap Screws that join the wheel to the axle hub, then slide
+the wheel off the axle. When replacing the wheel, screws should be
+lubricated with Loctite® 243 and then tightened to 5 N·m ( 3.7 ft-lb )
+torque.
+
+### Cleaning LiDARs
+
+The lenses of both the 2D and 3D LiDARs must
+be cleaned on a regular basis. Contamination of the 3D LiDAR
+can result in a "stuck" robot and sub-optimal navigation performance.
+Contamination of the 2D LiDAR can result in poor docking
+performance and inability to automatically maintain battery charge.
+
+Once per week or as required, visually inspect the lenses for dust or
+dirt. Use a clean microfiber cloth to gently wipe away any contaminants.
+Do not use cleaners or chemicals on the LiDAR lenses, as they may damage
+the optical coating.
+
+### Cleaning Cameras
+
+The robot's camera lenses should be cleaned at least once per month.
+The cleaning procedure is the same as that for the LiDAR lenses.
+
+### Cleaning Dock Target
+
+During the autonomous docking process, the white material of the dock
+target provides high remission from the Sick LMS-111 laser scanner.
+Over time, as the material is exposed to the elements dust/particles
+may build up on the white plastic part of the dock target and will
+require some maintenance.
+
+This maintenance simply consists of cleaning the white plastic panels
+with a microfiber cloth. Ensure that the surfaces are clear of any dust,
+dirt and/or any other particulate matter.
+
+### Cleaning or Replacing Fan Filters
+
+#### Bottom Fan Filters
+
+The fans between the Husky Observer wheels are intake fans with filters.
+These filters require periodic maintenance to clean or replace the filters.
+In very dusty off-road environments, these filters should be inspected
+after every 20 hours of use and replaced as needed. In typical environments,
+the fan filters should be inspected after every 50 hours of use and replaced
+as needed.
+
+To replace the filters:
+
+1. Remove the four screws holding the fan cover panel in place as shown in the image below.
+    <center>
+      <figure>
+        <img
+          src="/img/robot_images/husky_observer_images/base_screws_for_fan_maintenance.png"
+          width="400"
+        />
+        <figcaption>Bottom fan cover panel screws</figcaption>
+      </figure>
+    </center>
+1. For each of the two fans, remove the 4 screws holding the fan filter in place.
+1. Remove the fan filters and replace with new filters. (See Mouser P/N 562-09250-F/100)
+1. Install the screws holding the fan filters in place.
+1. Install the screws hold the fan cover panel in place.
+
+#### Top Fan Filters
+
+The top fans on the front side of Husky Observer are intake fans with filters.
+These filters require periodic maintenance to clean or replace the filters.
+In very dusty off-road environments, these filters should be inspected
+after every 50 hours of use and replaced as needed. In typical environments,
+the fan filters should be inspected after every 100 hours of use and replaced
+as needed.
+
+To replace the filters (repeat the steps below for each fan):
+
+1. Remove the four screws holding the fan cover screen in place as shown in the image below.
+    <center>
+      <figure>
+        <img
+          src="/img/robot_images/husky_observer_images/cabinet_screws_for_fan_maintenance.png"
+          width="400"
+        />
+        <figcaption>Top fan cover panel screws</figcaption>
+      </figure>
+    </center>
+1. Remove the fan cover screen.
+1. Open the top lid of Husky Observer and pull out the fan assembly from the inside.
+1. Remove the fan filter and replace with new filter. (See DigiKey P/N 1570-1461-ND)
+1. Install the fan assembly from the inside.
+1. Put the fan cover screen in place.
+1. Install the four screws holding the assembly together.
+
+The top fans on the rear side of Husky Observer are exhaust fans and, as such,
+the filters on those fans do not require regular maintenance.
+
+---
+
+## Software Maintenance {#software_maintenance}
+
+<GettingNewPackages />
+
+### MCU Firmware Update
+
+Customer updates of Husky firmware are not supported at this time. Contact [Support](#support) if
+Husky firmware updates are needed.
+
+### Motor Controller Firmware Update {#maintenance_husky_motor_controller_firmware}
+
+<ComponentUpdatingPumaFirmware />
+
+---
+
+## Storage, Shipping, and Disposal
+
+### Storing Husky Observer for Extended Periods
+
+All batteries self-discharge over time. To minimise the risk of battery
+state-of-charge dropping to a dangerously low leve while in storage, the
+robot should be fully-charged and fully-balanced before being put into storage.
+In addition, batteries in long-term storage will need to be recharged
+every 6 months.
+
+The rate of discharge should also be minimised by disconnecting the batteries
+from the rest of the system. This is achieved by means of a disconnect switch
+in the robot's rear panel. Turn this switch to "OFF" prior to storing the
+robot for long periods.
+
+### Preparing Husky Observer for Shipping
+
+The following should be considered when preparing to ship the robot and its
+associated equipment:
+
+- Risk of equipment damage due to shock, vibration and impact
+- Risk of equipment damage due to extreme temperatures
+- Risk of equipment damage due to contamination, including liquid ingress
+- Risk of equipment damage and injury due to over-charged or over-discharged lithium-ion batteries
+- Risk of injury as a result of imbalanced or shifting loads
+- Risk of environmental damage due to invasive species and/or hazardous material release
+
+Note the shipping temperature ranges and ingress protection ratings in the
+[System Specifications](user_manual_husky_observer#system-specifications).
+Secure all equipment using appropriately-rated rigging.
+Protect the equipment from mechanical damage, liquid ingress and exposure to
+caustic environments (including sea air). If lumber is used, ensure that it
+has been appropriately treated to prevent the spread of invasive species.
+
+Lithium-ion batteries (which includes the robot's integrated lithium iron
+nanophosphate batteries) are considered dangerous goods in many jurisdictions.
+Ensure that the appropriate dangerous goods signage and paperwork is in place
+prior to shipping the robot (as applicable). Note that the wireless motion-stop
+system includes two small stand-alone lithium-ion batteries, and the remote
+control gamepad includes an integrated lithium-ion battery.
+
+Some jurisdictions require battery states of charge to remain within a certain
+band during transport. Consult local regulations.
+
+For short-duration transports lasting up to several days, it is recommended
+that all batteries be charged to the maximum state of charge permitted by
+applicable regulations. Disconnection of the robot's internal batteries is not
+required.
+
+For longer-duration transports more than several days, the guidelines for
+extended storage should be followed (to the degree allowable by applicable
+regulation).
+
+### Disposing of Husky Observer
+
+<center>
+  <img
+    src="/img/robot_images/husky_observer_images/disposal_warning.png"
+    width="800"
+  />
+</center>
+
+The robot and associated equipment contain materials that should not be
+disposed of in a landfill. These include lithium-ion batteries and leaded
+solder, and may include cadmium, toxic lubricants and adhesives, and
+other materials that can be harmful to people, animals and ecosystems.
+
+All printed circuit board assemblies, wiring harnesses and other
+electronics components such as sensors, computers, human-machine
+interface components, lights and motors should be treated as "e-waste"
+and disposed of in accordance with local regulations. Lithium-ion
+batteries should be treated as hazardous goods and disposed of in
+accordance with local battery disposal regulations.
+
+---
+
+## Support {#support}
+
+<Support />
