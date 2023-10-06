@@ -57,20 +57,22 @@
 6.  Resolve any errors that the terminal reports, and rerun the command `npm run build`.
 7.  Finally, check that your updates adhere to our code formatting standard, by running the command `npm run format-check`.
     The terminal will either report:
+
     - _All matched files use Prettier code style!_
     - _Code style issues found in the above file(s). Forgot to run Prettier?_
       You can fix the errors by running Prettier on a single file, with `npx prettier --write <FILE PATH>`.
       For example, you can run the command `npx prettier --write README.md` to format this README.
+
       - Refer to the _package.json_ to understand what this script calls.
       - Refer to the _.prettierrc.json_ to understand the rules Prettier is using when checking files.
-      
+
       Note, we used to suggest the command `npm run format-write` to update all the files in this repository.
       We don't suggest this command anymore, since it is then difficult for reviewers of Pull Requests to find the intended content changes.
       If you do continue to use this entire repositry command, you may see files that claim to be updated in Source Control, but don't have any visible changes.
       If so, you should run these commands in your terminal to prevent Git from noting these types of changes:
 
-        git config --global core.filemode false
-        git config --global core.autocrlf false
+      git config --global core.filemode false
+      git config --global core.autocrlf false
 
 8.  When ready, publish your branch on GitHub, and submit a Pull Request to merge your changes into the _development_ branch.
     Pull Requests to the _production_ branch will not merged.
@@ -258,7 +260,8 @@ Follow this process to keep the _development_ and _production_ branches aligned,
 4.  After the Pull Request has been approved, you can merge it using the Create-a-Merge-Commit option.
     You should not use the Squash-and-Merge option here, otherwise _production_ will not have the latest commits from _development_, which were created in step 1 of this list. The source data will be the same on the 2 branches, but the commit hashes will not be aligned.
 
-     The Create-a-Merge-Commit option prevents this issue, by adding all the commits from _development_ to _production_, and also adding a commit to _production_ that mentions the Pull Request.
+    The Create-a-Merge-Commit option prevents this issue, by adding all the commits from _development_ to _production_, and also adding a commit to _production_ that mentions the Pull Request.
+
 5.  _production_ has been updated, but it is one commit ahead of _development_.
     We want to update _development_ so we do not experience rebase issues next time we want to update the _production_ branch.
     To update _development_, go to VS Code:
@@ -268,7 +271,7 @@ Follow this process to keep the _development_ and _production_ branches aligned,
     4.  Run `git rebase production`.
         This should pull one commit into _development_. It should be the commit related to merging the Pull Request.
     5.  Force Push this commit to the _development_ branch on GitHub.
-        Note: our branch protection rules in the GitHub repository only allow Administrators and Owners to Force Push to the _production_ and _development_ branches.    
+        Note: our branch protection rules in the GitHub repository only allow Administrators and Owners to Force Push to the _production_ and _development_ branches.
 
 ## How does the deployed website get updated?
 

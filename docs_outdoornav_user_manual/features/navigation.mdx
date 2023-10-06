@@ -1,0 +1,38 @@
+---
+title: Navigation Features
+sidebar_label: Navigation Features
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+:::danger SAFETY WARNING
+
+Making changes to any of the following variables may decrease system safety. It is recommended that users
+only modify these parameters in consultation with Clearpath Robotics Support.
+
+:::
+
+:::note
+
+Changes to any of the following variables will only take effect after power cycling the UGV.
+
+:::
+
+The OutdoorNav Software contains a set of features that can be enabled
+or disabled according to your required application requirements. These
+features can be enabled or disabled through the use of environment
+variables, which should be added to the
+`~/cpr_outdoornav_launch/env/autonomy_customization.env` file. The
+following table describes the available features, their default state
+and any additional parameters that we expose that may also be included
+to tune the feature.
+
+| Feature     | Description                                            |
+|-----------------------------|----------------------------------------|
+| **Collision Avoidance**     | Collision avoidance is the UGV's ability to detect obstacles and stop/maneuver around the obstacle without any collisions. If `true`, the UGV will detect obstacles and if `false` no obstacles will be detected. Setting to `false` is not recommended and may cause harm to property or to individuals.<br/><br/>Environment Variable: `ENABLE_COLLISION_AVOIDANCE` (Default: `true`). |
+| **Constrained Planning**    | The constrained replanning feature, which is always enabled, restricts the area in which the UGV can plan paths. For example, if the default `PATH_CONSTRAINT` of 3.0 m is used, the UGV will not be allowed to 1) produce paths that drives it more than 3.0 meters from the initial path, and 2) fail to compute paths if the UGV is further than 3.0 meters from the any of the Waypoints. This allowable planning/navigation area can be shown on the map over the connecting lines between Waypoints. See [Constrained Replanning](../web_user_interface/ui_autonomous_mode#constrained_path) for further details.<br/><br/>Use the `PATH_CONSTRAINT` environment variable to modify the path constraint (in meters). |
+| **Path Smoothing**          | Generate paths according to a specified turning radius. <br/><br/>Environment Variable: `ENABLE_DUBINS_PATH_SMOOTHER` (Default: `false`).<br/><br/>Use the `TURN_RADIUS` environment variable to modify the radius of the planned paths (in meters). |
+| **Stop Distance**           | The stop distance feature allows the UGV to stop a predefined distance away from obstacles. This is useful if a UGV cannot drive in reverse and needs the required room in front of it to replan around an obstacle.<br/><br/>Environment Variable: `ENABLE_STOP_DISTANCE` (Default: `false`)<br/><br/>Use the `STOP_DISTANCE` environment variable to modify the stop distance (in meters). Note that if the stop distance is larger than 4.5 meters for the Clearpath Robotics Jackal and Husky UGVs, or 10.0 meters for the Clearpath Robotics Warthog UGV, the computational load will increase and may cause a decrease in performance in the navigation. |
+| **Delay Compensation**      | The delay compensation feature is able to compensate for mechanical delay on UGVs where either the accelerator introduces delay into the linear velocity or the steering introduces delay in the angular velocity. This feature is not required for Clearpath Robotics UGVs as negligible delay is present in our system.<br/><br/>Environment Variable: `ENABLE_DELAY_COMPENSATION` (Default: `false`)<br/><br/>Use the `CONTROLLER_DELAY` environment variable to modify the amount of delay to be compensated (in milliseconds). |
+| **Docking**                 | If purchased, autonomous docking will allow the user to autonomously dock/undock their UGV.  If not purchased, enabling this environment variable will do nothing.<br/><br/>Environment Variable: `OUTDORRNAV_ENABLE_DOCKING` (Default: `false`).|

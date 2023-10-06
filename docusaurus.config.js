@@ -89,8 +89,8 @@ const config = {
         title: " ",
         logo: {
           alt: "Clearpath Robotics",
-          src: "img/website_images/logo_yellow.png",
-          srcDark: "img/website_images/logo_white.png",
+          src: "img/website_images/logo_rockwell_pipe_clearpath_colour.png",
+          srcDark: "img/website_images/logo_rockwell_pipe_clearpath_white.png",
         },
         items: [
           {
@@ -161,7 +161,7 @@ const config = {
         },
       },
       footer: {
-        copyright: `Copyright © 2023 Clearpath Robotics Inc. All rights reserved.`,
+        copyright: `Clearpath Robotics, by Rockwell Automation. All rights reserved. © Clearpath Robotics, Inc., a Rockwell Automation Company. All rights reserved.`,
       },
       prism: {
         theme: lightCodeTheme,

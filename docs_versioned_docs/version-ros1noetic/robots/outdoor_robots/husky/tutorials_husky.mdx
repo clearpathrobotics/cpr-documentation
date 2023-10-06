@@ -52,14 +52,14 @@ to upgrade the robot OS environment to Ubuntu 20.04 with ROS Noetic.
 [Husky Software Setup](#husky-software-setup) outlines the steps for setting up the software on
 your Husky robot and optionally on a remote computer.
 
-[Using Husky](#using-husky) describes how to simulate and drive your Husky. [Simuation](#simulating-husky)
+[Using Husky](#using-husky) describes how to simulate and drive your Husky. [Simulation](#simulating-husky)
 is a great way for most users to learn more about their Husky; understanding how to effectively operate Husky
 in simulation is valuable whether you are in the testing phase with software you intend to ultimately deploy on a
 physical Husky, or you do not have one and are simply exploring the platform's capabilities.
 [Driving Husky](#driving-husky) covers how to teleoperate Husky using the remote control, as well as safety
 procedures for operating the physical robot. Anyone working with a physical robot should be familiar with this section.
 
-[Navigating Husky](#navigating-husky) is a follow-on to what is learned in the [Simuation](#simulating-husky)
+[Navigating Husky](#navigating-husky) is a follow-on to what is learned in the [Simulation](#simulating-husky)
 tutorial, as navigation and map-making may be run in the simulated environment. However, this content is applicable
 to both the simulator and the real platform, if your Husky is equipped with a laser scanner.
 
@@ -426,7 +426,7 @@ Then create your customized URDF file, for example `$HOME/Desktop/realsense.urdf
           <format>RGB8</format>
         </image>
         <clip>
-          <!-- give the color sensor a maximum range of 50m so that the simulation renders nicely -->
+          <!-- give the colour sensor a maximum range of 50m so that the simulation renders nicely -->
           <near>0.01</near>
           <far>50.0</far>
         </clip>

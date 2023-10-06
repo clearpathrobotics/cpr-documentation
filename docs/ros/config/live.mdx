@@ -11,27 +11,33 @@ Users familiar with Clearpath's robots, know we provide desktop packages that fa
 This functionality requires a desktop manager to be installed; in other words, these commands will not work on robot computers since these run Ubuntu 22.04 server rather than desktop.
 
 # Installation
+
 Install the desktop packages using `apt`. Make sure to have [added Clearpath packages](https://packages.clearpathrobotics.com/) to the source list before installation.
+
 ```bash
 sudo apt install ros-humble-clearpath-desktop ros-humble-clearpath-config-live
 ```
 
 # Setup
+
 Before running the node, we will need to setup the working directory.
 First, create the directory `/etc/clearpath`.
 Then, copy your `robot.yaml` to `/etc/clearpath/robot.yaml`.
 
 # Run the Node
+
 Running `view_model.launch.py` will generate the URDF of the robot from the `/etc/clearpath/robot.yaml` and then start RViz.
 
 It will then monitor the `/etc/clearpath/robot.yaml` for changes. Whenever changes are detected, the URDF will be regenerated and the RViz model will be updated.
 
 To run the node:
+
 ```bash
 ros2 launch clearpath_viz view_model.launch.py
 ```
 
 # Example
+
 Starting off with the default A200 Husky YAML, we switch the top plate, add the sensor arch, a fath pivot mount, and finally a RealSense. Every time we want changes to take effect, we save the file. If after saving no changes take place, then it's an indication that these were invalid.
 
 <center>

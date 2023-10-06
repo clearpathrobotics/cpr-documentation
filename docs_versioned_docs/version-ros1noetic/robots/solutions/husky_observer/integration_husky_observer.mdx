@@ -1,0 +1,117 @@
+---
+title: Husky Observer Integration
+sidebar_label: Integration
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+import Support from "/components/support.mdx";
+import ComponentCommonSoftwareIntegration from "/components/common_software_integration.mdx";
+
+To attach custom hardware to Husky Observer, you will have to take care of mechanical mounting, electrical
+supply, and software integration. This guide aims to equip you with respect to these challenges.
+
+## Mechanical Mounting
+
+Husky Observer has two PACS&trade;-compatible mount points on the top of the robot, one at the front
+and one at the rear, as outlined in the figures below. Each of the two mount points can support
+a payload up to 5 kg.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/front_wireframe_with_labels.png"
+      width="800"
+    />
+    <img
+      src="/img/robot_images/husky_observer_images/rear_wireframe_with_labels.png"
+      width="800"
+    />
+    <figcaption>Husky Observer exterior, front view</figcaption>
+  </figure>
+</center>
+
+[PACS&trade;](../../accessories/pacs) is a Clearpath Robotics standard.
+We add a grid of M5x0.8 holes onto the top plate of the robot.
+This grid of holes has a 80 mm X 80 mm spacing.
+You can create your own brackets to interface with these holes, or can use an existing Clearpath Robotics designed bracket.
+
+:::note
+
+Our [Sensors](../../accessories/sensors) and [Accessories](../../accessories/add-ons) pages indicate the required bracket for the particular attachment.
+
+:::
+
+:::note
+
+When using the front and rear mount point, be careful to avoid blocking the field of view of
+the 3D LiDAR. If you have any related questions, please contact [Support](#support).
+
+:::
+
+---
+
+## Electrical Integration
+
+Except for bus-powered USB cameras, most payloads have separate leads for power and data.
+
+### Maintenance and Debugging Connections
+
+On the Husky Observer lid, there are three data interfaces that can be used for system maintenance
+and debugging:
+
+- One 1 Gbps Ethernet (RJ45 connector), connected to the Main Computer
+- One USB 3.0 (Type A connector), connected to the Main Computer
+- One HDMI, connected to the Main Computer
+
+### Custom Payload Connections
+
+On the Husky Observer lid, there is an Icotek KEL-FG-ER-E3 connector with three cable glands that will allow the user to
+create and route power cables from custom payloads on the lid to power sources inside the Husky Observer
+while still maintaining the IP rating of the robot. (See
+[this video](https://www.youtube.com/watch?v=xVLlroSRH7E&t=1s&ab_channel=icotek)
+for more details on using the Icotek cable glands system.)
+
+Inside the Husky Observer, power is available from terminal blocks as outlined in the table below.
+For each power source, 18 AWG wires with ferrules (DigiKey P/N 277-2156-ND) are recommended for power cables
+at the end that gets inserted into the terminal blocks. Note that positive and negative wires are connected
+to separate terminal blocks.
+
+| Power Source          | Maximum Current | Terminal Blocks                    |
+| :-------------------- | :-------------- | :--------------------------------- |
+| VBAT (24.0 V minimum) | 3.75 A          | Brown (positive), Black (negative) |
+| 24 V                  | 2.5 A           | Grey (positive), Black (negative)  |
+| 12 V                  | 3.5 A           | White (positive), Black (negative) |
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/power_distribution_terminal_blocks.png"
+      width="400"
+    />
+    <figcaption>Power distribution terminal blocks</figcaption>
+  </figure>
+</center>
+
+In addition to the power connections, the cable glands can be used to make data connections to
+available ports on the Ethernet switch or to available USB ports on the Main Computer. When
+connecting a device to the Ethernet switch, the device should be configured with a static IP
+address in the 192.168.131.80 to 192.168.131.89 range.
+
+---
+
+## Software Integration
+
+<ComponentCommonSoftwareIntegration />
+
+Refer to the following for more details:
+
+- [Sensors](../../accessories/sensors)
+- [Accessories](../../accessories/add-ons)
+
+---
+
+## Support {#support}
+
+<Support />
