@@ -12,7 +12,7 @@ function HomepageHeader() {
     <header className={styles.heroBanner}>
       <div className="container">
         <img
-          src="/img/website_images/logo_yellow_fullsize.png"
+          src="/img/website_images/logo_rockwell_pipe_clearpath_white.png"
           width={500}
         ></img>
         <p className={styles.titleText}>Documentation and Tutorials for Robotics Development</p>
