@@ -1,0 +1,61 @@
+---
+title: API Overview
+sidebar_label: API Overview
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+While the Web User Interface provides a great way to get started quickly
+with OutdoorNav Software, some users will want programmatic control or
+may wish to develop their own graphical user interfaces \-- for those
+users, the Application Programming Interface (API) provides the
+flexibility to do so. This is illustrated in the figure below.
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ros_integration.png" />
+    <figcaption>Interconnection between OutdoorNav Software and UGV Controller</figcaption>
+  </figure>
+</center>
+
+The API is, at present, a [ROS 1 Noetic](http://wiki.ros.org/noetic) API,
+but will soon be extended to a ROS 2 API. The API is divided into two
+sections, whose details are provided below:
+
+-   [Platform API](./api_endpoints/platform_api): The set of [ROS
+    Topics](http://wiki.ros.org/Topics) are used to comminucate with the
+    hardware platform (eg. sensor data, wireless, battery state, command
+    velocity). This API can be used by autonomy software packages to
+    interface with the hardware platform.
+    -   [Topics Published by UGV](/docs_outdoornav_user_manual/api/api_endpoints/platform_api#topics-published-by-platform):
+        The set of topics that are published by the hardware platform.
+    -   [Topics Subscribed to by UGV](/docs_outdoornav_user_manual/api/api_endpoints/platform_api#topics-subscribed-by-platform):
+        The set of topics that are subscribed to by the hardware
+        platform.
+-   [Autonomy API](./api_endpoints/autonomy_api): The set of [ROS
+    Topics](http://wiki.ros.org/Topics) that are used for monitoring and
+    controlling the the hardware platform through the OutdoorNav
+    autonomy software.
+    -   [Topics Published by Autonomy](/docs_outdoornav_user_manual/api/api_endpoints/autonomy_api#topics-published-by-autonomy):
+        The set of [ROS Topics](http://wiki.ros.org/Topics) published by
+        OutdoorNav Software, to be subscribed to by the UGV.
+    -   [Topics Subscribed to by Autonomy](/docs_outdoornav_user_manual/api/api_endpoints/autonomy_api#topics-subscribed-to-by-autonomy):
+        The set of [ROS Topics](http://wiki.ros.org/Topics)
+        subscribed to by OutdoorNav Software, typically published by the
+        client for directing OutdoorNav operation.
+    -   [Services Exported by Autonomy](/docs_outdoornav_user_manual/api/api_endpoints/autonomy_api#services-exported-by-autonomy):
+        The set of [ROS Services](http://wiki.ros.org/Services) provided
+        by OutdoorNav Software, for use by the client to modify/control
+        the behaviour of the Autonomy.
+    -   [Actions Exported by Autonomy](/docs_outdoornav_user_manual/api/api_endpoints/autonomy_api#actions-exported-by-autonomy):
+        The set of [ROS Actions](http://wiki.ros.org/actionlib) provided
+        by OutdoorNav Software, for use by the client to modify/control
+        the behaviour of the Autonomy.
+-   [Mission Manager API](./api_endpoints/mission_manager_api): The set of [ROS
+    Services](http://wiki.ros.org/Services) that are used for creating, deleting, and modifying OutdoorNav missions
+-   [Definitions](./api_endpoints/definitions): The set of custom
+    [ROS Message](http://wiki.ros.org/Messages), [ROS
+    Service](http://wiki.ros.org/Services), and [ROS
+    Action](http://wiki.ros.org/actionlib) definitions.
+-   API Examples: Example code to come.

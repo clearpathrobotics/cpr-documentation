@@ -1,0 +1,254 @@
+---
+title: Mission Manager API
+sidebar_label: Mission Manager API
+sidebar_position: 4
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+The Mission Manager API allows creation, deletion, and modification of OutdoorNav missions.  Mission data is stored
+in a databse-like structure on-disk.  The web UI is the primary method of managing missions, but this service
+API provides the ability to write your own UI if desired.
+
+### Topics Exported by Mission Manager
+
+#### mission_manager/state
+
+**Message Type:** [clearpath_mission_manager_msgs/msg/StorageState](definitions#storage-storagestate)
+
+**Description:** Latched topic that publishes the current database contents every time a change is made.
+
+### Services Exported by Mission Manager
+
+#### mission_manager/add_task_to_waypoint
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/AddRemoveById](definitions#storage-addremovebyid)
+
+**Description:** Add an existing Task to an existing Waypoint.  If the `position` parameter is negative the Task
+is added to the end of the Waypoint's `tasks` list.
+
+#### mission_manager/add_waypoint_to_mission
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/AddRemoveById](definitions#storage-addremovebyid)
+
+**Description:** Add an existing Waypoint to an existing Mission.  If the `position` parameter is negative the Waypoint
+is added to the end of the Task's `waypoints` list.
+
+#### mission_manager/clone_mission
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/CloneMission](definitions#storage-clonemission)
+
+**Description:** Create a deep-copy of a Mission.  The new Mission will be given the provided name, or reuse the original
+mission's name wth `-copy` appended to the end if no name is provided. All Waypoints and their associated Tasks are also
+deep-copied.  If the `reverse` parameter is set to `true` the order of waypoints is reversed in the new mission.
+
+:::note
+
+In 0.8.0 onward, all missions are required to have unique names.  If the specified name is not unique the cloning will
+fail. Cloning a mission multiple times without specifying a unique name will add incrementing numbers to the suffix:
+`-copy` for the first, `-copy1` for the second, `-copy2` for the third, and so on.
+
+:::
+
+:::note
+
+The `reverse` parameter was added in 0.9.0 and is not available in older versions.
+
+:::
+
+#### mission_manager/clone_task
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetTask](definitions#storage-gettask)
+
+**Description:** Create a deep-copy of a Task.
+
+#### mission_manager/clone_waypoint
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetWaypoint](definitions#storage-GetWaypoint)
+
+**Description:** Create a deep-copy of a Waypoint.  The new Waypoint will be renamed to have `-copy` at the end. All
+Tasks in the original Waypoint are also duplicated.
+
+#### mission_manager/create_mission
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/CreateMission](definitions#storage-createmission)
+
+**Description:** Create a new Mission.
+
+:::note
+
+In 0.8.0 onward, all missions are required to have unique names.  Creating a mission with a duplicate mission will fail.
+
+:::
+
+#### mission_manager/create_task
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/CreateTask](definitions#storage-createtask)
+
+**Description:** Create a new Task.
+
+#### mission_manager/create_waypoint
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/CreateWaypoint](definitions#storage-createwaypoint)
+
+**Description:** Create a new Waypoint.
+
+#### mission_manager/delete_all
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteEverything](definitions#storage-deleteeverything)
+
+**Description:** Delete everything in the database.
+
+:::note
+
+Use with extreme caution; this procedure cannot be undone.
+
+:::
+
+#### mission_manager/delete_mission
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteById](definitions#storage-deletebyid)
+
+**Description:** Delete the Mission with the given ID.  Waypoints that are included in this mission are not
+deleted, as they may be referenced by other Missions.
+
+#### mission_manager/delete_orphan_objects
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteEverything](definitions#storage-deleteeverything)
+
+**Description:** Delete all Waypoints that are not referenced by any Missions and all Tasks that are not referenced
+by any Waypoints.
+
+:::note
+
+Use with caution; deleted items cannot be recovered.
+
+:::
+
+#### mission_manager/delete_task
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteById](definitions#storage-deletebyid)
+
+**Description:** Delete the Task with the given ID.  Any Waypoints that reference the deleted Task will be modified
+to omit this Task once it is deleted.
+
+#### mission_manager/delete_waypoint
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteById](definitions#storage-deletebyid)
+
+**Description:** Delete the Waypoint with the given ID.  Tasks that are included in this mission are not
+deleted, as they may be referenced by other Waypoints.  Any Missions that reference the deleted Waypoint will be
+modified to omit this Waypoint once it is deleted.
+
+#### mission_manager/export
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/ExportData](definitions#storage-exportdata)
+
+**Description:** Export the database so its contents can be restored later using the `mission_manager/import` service.
+
+:::note
+
+The data returned is a JSON string representing the underlying storage file's contents.
+
+:::
+
+#### mission_manager/get_all
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetEverything](definitions#storage-geteverything)
+
+**Description:** Get the entire contents of the database, including all Missions, Tasks, and Waypoints.
+
+:::note
+
+If you need to maintain an up-to-date copy of the database state, rather than calling this service repeatedly you
+should subscribe to the `mission_manager/state` topic.
+
+:::
+
+#### mission_manager/get_all_missions
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetAllMissions](definitions#storage-getallmissions)
+
+**Description:** Get all Missions defined in the database.
+
+#### mission_manager/get_all_tasks
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetAllTasks](definitions#storage-getalltasks)
+
+**Description:** Get all Tasks defined in the database.
+
+#### mission_manager/get_all_waypoints
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetAllWaypoints](definitions#storage-getallwaypoints)
+
+**Description:** Get all Waypoints defined in the database.
+
+#### mission_manager/get_mission
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetMission](definitions#storage-getmission)
+
+**Description:** Get the Mission with the specified ID.
+
+#### mission_manager/get_task
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetTask](definitions#storage-gettask)
+
+**Description:** Get the Task with the specified ID.
+
+#### mission_manager/get_waypoint
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetWaypoint](definitions#storage-getwaypoint)
+
+**Description:** Get the Waypoint with the specified ID.
+
+#### mission_manager/import
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/ImportData](definitions#storage-importdata)
+
+**Description:** Overwite the database contents with data generated by the `mission_manager/export` service.
+
+:::note
+
+All existing Missions, Tasks and Waypoints are deleted permanently and the entire database contents are replaced
+with the imported data.
+
+The data itself is a JSON string representing the underlying on-disk storage.
+
+:::
+
+#### mission_manager/remove_task_from_waypoint
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/AddRemoveById](definitions#storage-addremovebyid)
+
+**Description:** Remove a Task from a Waypoint.  All instances of the Task are removed from the given Waypoint.
+
+#### mission_manager/remove_waypoint_from_mission
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/AddRemoveById](definitions#storage-addremovebyid)
+
+**Description:** Remove a Waypoint from a Mission.  All instances of the Waypoint are removed from the given Mission.
+
+#### mission_manager/update_mission
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/UpdateMission](definitions#storage-updatemission)
+
+**Description:** Modify a Mission.  All attributes of the Mission are replaced with the provided values.
+
+:::note
+
+In 0.8.0 onward, all missions are required to have unique names.  Assigning a name that is already in-use will result
+in an error.
+
+:::
+
+#### mission_manager/update_task
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/UpdateTask](definitions#storage-updatetask)
+
+**Description:** Modify a Task.  All attributes of the Task are replaced with the provided values.
+
+#### mission_manager/update_waypoint
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/UpdateWaypoint](definitions#storage-updatewaypoint)
+
+**Description:** Modify a Waypoint.  All attributes of the Waypoint are replaced with the provided values.
