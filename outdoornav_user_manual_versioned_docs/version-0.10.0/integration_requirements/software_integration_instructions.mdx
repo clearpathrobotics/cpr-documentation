@@ -1,0 +1,145 @@
+---
+title: "Software Integration Instructions"
+sidebar_label: "Software Integration Instructions"
+sidebar_position: 4
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+import versions from "@site/static/versions.js"
+
+Prior to installing the OutdoorNav software, ensure that you have completed the relevant [Hardware Kit Checklist](./hardware_integration_requirements). If installing on a secondary/backpack/Starter Kit computer, ensure to have also completed the:
+- [Interface Control Checklist](./interface_control_requirements)
+
+All the following instructions, unless otherwise specified, are to be run on the OutdoorNav computer.
+
+### Clone OutdoorNav Repository {#clone-install-repo}
+
+The following repository is required to run the instructions in the subsequent sections.
+
+<code>
+{`
+cd ~/
+git clone -b ${versions.outdoornav} https://gitlab.clearpathrobotics.com/cpr-outdoornav/cpr_outdoornav_launch.git
+`}
+</code>
+
+For remote installations, please contact Clearpath Robotics customer support in order to obtain the relevant information required to proceed.
+
+### Install Docker {#install-docker}
+
+``` bash
+cd ~/cpr_outdoornav_launch/scripts/
+./install_docker.sh
+```
+
+### Configure OutdoorNav Sensors {#configure-outdoornav-sensors}
+
+Prior to configuring the sensors, ensure that you have measured the position (XYZ) and orientation (RPY) of each of your sensors with respect to the `base_link`. See your results from the [Integration Requirements](./hardware_integration_requirements).
+
+``` bash
+cd ~/cpr_outdoornav_launch/scripts/
+./configure_outdoornav.sh
+```
+
+### Finalize Setup {#final-setup}
+
+The script in the sections below will reboot the computer it is run on.
+
+##### UGV Computer
+
+For installations of the OutdoorNav software on the UGV computer (not a secondary or Starter Kit computer), run the following:
+
+``` bash
+cd ~/cpr_outdoornav_launch/scripts
+sudo ./setup_computers.sh
+```
+##### Secondary or Starter Kit Computer
+
+Prior to running the script on the secondary or Starter Kit computer, ensure that you have the user and IP of the UGV computer that the secondary/starter kit computer is connected to. Run the following:
+
+``` bash
+cd ~/cpr_outdoornav_launch/scripts
+sudo ./setup_computers.sh -b
+```
+
+### Install OutdoorNav Software {#install-outdoornav}
+
+``` bash
+cd ~/cpr_outdoornav_launch/scripts/
+docker compose --profile outdoornav pull
+```
+
+:::note
+If you are installing the OutdoorNav software on a secondary or Starter Kit computer, you must also complete the [UGV Computer Checklist](./platform_computer_checklist)
+:::
+
+### Configure UGV Footprint {#configure-platform-footprint}
+
+If the UGV has sensors and/or parts that protrude outside of the UGV body, then a few environment variables will need to be modified to adjust the footprint of the robot. Things that could be extending past the footprint could include but are not limited to:
+
+-   GPS antennae,
+-   Charging receivers,
+-   Arms,
+-   etc...
+
+Change the environment variables from the Table below, in the following file:
+
+```
+cd ~/cpr_outdoornav_launch
+nano outdoornav_tuning.env
+```
+
+| Environment Variable        | Description                            | Default |
+|-----------------------------|----------------------------------------|---------|
+| **FOOTPRINT_OFFSET_POS_X**  | Distance from base_link to the furthest edge of any part/sensor at the front of the robot | 0.5   |
+| **FOOTPRINT_OFFSET_NEG_X**  | Distance from base_link to the furthest edge of any part/sensor at the rear of the robot  | -0.5  |
+| **FOOTPRINT_OFFSET_POS_Y**  | Distance from base_link to the furthest edge of any part/sensor at the left of the robot  | 0.35  |
+| **FOOTPRINT_OFFSET_NEG_Y**  | Distance from base_link to the furthest edge of any part/sensor at the right of the robot | -0.35 |
+
+
+
+### Start OutdoorNav
+
+``` bash
+cd ~/cpr_outdoornav_launch/    # directory with docker-compose.yaml
+docker compose --profile outdoornav up -d --build
+```
+
+### Test OutdoorNav Installation
+
+1. Ping all of the network sensors to ensure proper communication with the UGV or secondary computer.
+
+2. Check the following topics and make sure there is data being published to them:
+
+``` bash
+rostopic echo -n 1 /platform/odom
+rostopic echo -n 1 /platform/cmd_vel
+
+# IMU 1 (if included)
+rostopic echo -n 1 /sensors/imu_0/data
+ 
+rostopic echo -n 1 /localization/odom
+ 
+# Velodyne/Ouster/LMS1XX/Hokuyo/OutdoorScan (if included)
+rostopic echo /sensors/lidar_<sensor_num>/pointcloud
+rostopic echo /sensors/lidar_<sensor_num>/scan
+ 
+# Realsense D435 Front (if included)
+rostopic echo -n 1 /sensors/stereo_0/pointcloud
+rostopic echo -n 1 /sensors/stereo_0/depth/image_rect_raw
+ 
+# Realsense D435 Rear (if included)
+rostopic echo -n 1 /sensors/stereo_1/pointcloud
+rostopic echo -n 1 /sensors/stereo_1/depth/image_rect_raw
+```
+
+<sensor_num> will be the number of the sensor as it was loaded into the software. Eg. If you have a VLP and an LMS1XX, then the VLP will be lidar_0, and the LMS1XX will be lidar_1. If we only have an LMS1XX, then it would be lidar_0. Ie. the 3D lidars have a higher "priority" and therefore will be loaded first.
+
+:::note
+
+The 2D LiDARs (LMS1XX, Hokuyo) will not have a pointcloud topic.
+
+:::
+
+Once installation is complete, you can proceed to [Getting Started](../getting_started/system_setup) to start using the software.

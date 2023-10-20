@@ -1,0 +1,422 @@
+---
+title: Web UI Overview
+sidebar_label: Web UI Overview
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+The Web User Interface (Web UI) provides a easy, graphical, means to
+control both manual and autonomous operation of your UGV. The following
+sections outline: the components and views of the UI, the details of
+operating in manual mode, and the details of operating in autonomous
+mode.
+
+## Main Components
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_main_components.png"/>
+    <figcaption>UI Main Components</figcaption>
+  </figure>
+</center>
+
+1.  **Menu:** A dropdown menu allowing the user to access the Dashboard
+    (ie. Home), Settings, Status, Scheduler and Help pages. The Operator 
+    can also run the UI Virtual Tour from this menu.
+
+2.  **Feedback Bar:** The feedback bar will display information
+    regarding the execution state of the navigation and of any Tasks
+    being executed.
+
+3.  **Path Progress Meter:** A meter indicating the percentage complete
+    of a Mission.
+
+4.  **UGV Position:** The UGV's X and Y position in the world frame
+    relative to the Datum. Can also be shown in Lat/Lon coordinates
+
+5.  **UGV Heading:** The UGV's heading in the world frame. 0 degrees is North, 90 degrees is East, 180 degrees is South and 270 degrees is West.
+
+6.  **Status Indicator:** The status indicator will display information
+    regarding various UGV status monitors such as the Emergency Stop,
+    Surveying, etc. When the UGV is fully operational, the indicator
+    will be green. Operators can click on the status indicator to see more details 
+    pertaining to the current state as well as past messages.
+
+7.  **GPS Status Indicator:** The GPS status indicators will display GPS
+    signal accuracy for position (POS indicator) and heading (DIR
+    indicator). Green indicators represent RTK accuracy and are
+    currently required for accurate autonomous navigation. Yellow and orange 
+    indicators represent SBAS and SPP accuracy respectively and noticeable 
+    oscillations may occur in such cases. Red indicators mean no GPS signal 
+    and autonomous navigation missions should not be started.
+
+8.  **Battery Life Indicator:** The UGV's battery life indicator.
+
+    :::note
+    
+    If the indicator is stuck at 50%, that means that your UGV does not
+    have a supported battery management system and this indicator is not
+    active.
+    
+    :::
+
+9.  **Wireless Connection Indicator:** The wireless connection indicator
+    represents the signal strength between the wifi access point
+    (typically the Base Station) and the UGV. If the system can support 
+    cellular connections a cellular indicator will appear next to the 
+    wifi icon with the currently active connection being highlighted in green.
+
+10. **Views List:** A dropdown list of available views, detailed later
+    in this section. Some of the available views are Map, Camera and 3D
+    views, etc.
+
+11. **Record Audio:** If the UGV is equipped with a microphone the user 
+    can start/stop recording manually by clicking this icon.
+
+12. **Mission List:** View the list of Missions that Operator(s) have
+    created.
+
+13. **Edit Mission Toggle:** This toggle allows the Operator to start
+    creating Waypoints for the current Mission. The Operator will also be able to
+    drag and drop Waypoints in this mode. Once this button is enabled,
+    the Waypoint Mode will be available for selection. When a Mission is 
+    started this toggle will be disabled (ie. the Operator will not be able 
+    to modify/add Waypoints).
+
+    :::note
+
+    If the toggle is enabled while an autonomous Mission is running, it
+    will cancel the current Mission.
+    
+    :::
+
+14. **Waypoint Panel Toggle:** View list of Waypoints in the current Mission.
+
+15. **Waypoint Drop Button:** The Waypoint indicator marker on the
+    bottom bar allows the Operator to place a Waypoint at the location of the UGV. 
+
+16. **Start Button:** Start the current Mission.
+
+17. **Pause Button:** Pause the current Mission. Pressing the start button
+    while paused will continue the current Mission.
+
+18. **Stop Button:** Cancel the Mission or Task that is currently being
+    executed. Pressing the start button while when stopped will restart
+    the list of steps in the current Mission.
+
+
+By opening the dropdown list "Views", on the right side of the UI, the
+Operator can access the following views:
+
+-   Map View
+-   PTZ Camera View (if available)
+-   Front/Back Camera View (if available)
+-   3D View
+
+## Map View
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_map_view.png" />
+    <figcaption>Map View</figcaption>
+  </figure>
+</center>
+
+1.  **Zoom Buttons:** These buttons allow the user to zoom in/out of the
+    map levels.
+2.  **Zoom-to-Fit Button:** This button will zoom the map to where there
+    is activity (ie. where the datum is set or where Waypoints have been
+    set on the map.
+3.  **Pointer Mode Button:** This button allows the user to move the map
+    and select point on the map to see their coordinate (lat/lon or
+    x/y).
+4.  **Waypoint Mode Button:** This button allows the user to place
+    Waypoints on the map. Users can also select existing Waypoints to
+    modify/delete them.
+5.  **UGV:** The blue arrow represents the UGV. Its location is its
+    position in the world frame and its orientation is the heading in
+    the world frame.
+6.  **Base Station:** The yellow antenna icon is the last known location of
+    the base station based on the last survey performed. By clicking it the 
+    user will be presented with the base station's coordinates, when it was 
+    surveyed, and how many samples were taken during the survey.
+
+7.  **Datum:** The blue Waypoint marker on the map view represents the
+    location of the reference point (ie. (x,y)=(0,0)) of the world
+    coordinate system. The world (ie. map) coordinate system is in the
+    ENU convention.
+8.  **Scale:** The scale representing the ratio of a distance on the map
+    to the corresponding distance on the ground.
+
+## Camera Views
+
+:::note
+
+If PTZ and/or Front/Back camera(s) are included on the UGV, their feeds
+can be viewed through the UI and the PTZ can be controlled through the
+UI. If not, there will not be any PTZ, Front/Back view(s) in the list of
+available views.
+
+:::
+
+### Pan-Tilt-Zoom (PTZ) View {#ptz-view}
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_ptz_view-0_8_0.png" />
+    <figcaption>PTZ Camera View</figcaption>
+  </figure>
+</center>
+
+1.  **Tilt Slider:** The left slider can be used to tilt the camera in a
+    vertical motion, (ie. upwards or downwards motion). By default, the
+    slider is at its neutral ("zero") position.
+2.  **Pan Slider:** The bottom slider can be used to pan/rotate the
+    camera, (ie. rotational motion). By default, the slider is at its
+    neutral ("zero") position.
+3.  **Zoom Slider:** The right slider can be used to zoom the camera
+    feed. By default, the slider is at its neutral ("zero") position.
+4.  **Save Image:** Depending on the current camera view selected, this
+    button will save an image to the computer/tablet running the UI.
+    Images will be saved to the location in which your browser saves
+    files.
+5.  **Camera Positions List:** Display the list of available camera
+    positions that have been saved. These camera positions can be
+    deleted from this list by clicking the "garbage can" icon beside
+    the corresponding position.
+6.  **Save Camera Position:** This button will save the camera position
+    to be used in the "Move PTZ" task. An example use case would be:
+    1.  Switch to the PTZ camera view.
+    2.  Teleoperate the UGV to a location at which the user can inspect
+        something.
+    3.  Move the camera sliders to orient the camera such that it is
+        looking at the inspection point.
+    4.  Click the "Save Camera Position".
+    5.  When creating an autonomous mission to this inspection point,
+        add the "Move PTZ" task to a Waypoint.
+    6.  Click the settings button beside the task and add the camera
+        position related to the inspection point.
+
+### Front and Back Views
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_front_camera-0_8_0.png" />
+    <figcaption>Front View</figcaption>
+  </figure>
+</center>
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_rear_camera-0_8_0.png" />
+    <figcaption>Back View</figcaption>
+  </figure>
+</center>
+
+## 3D View
+
+The 3D view allows the user to visualize the pointcloud data being
+acquired by the VLP-16 LiDAR.
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_3d_view.png" />
+    <figcaption>3D View</figcaption>
+  </figure>
+</center>
+
+## System Configuration
+
+### General Settings
+
+The General settings section can be found in through the upper left hand menu and allows the Operator to modify 
+general features of the UGV.
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_general_settings.png" />
+    <figcaption>General Settings Page</figcaption>
+  </figure>
+</center>
+
+#### Coordinates
+
+The Operator can change the coordinate space from X/Y relative to the Datum to Latitude/Longitude.
+
+#### Save Image Location 
+
+The Operator can choose to store images saved manually to the robot directly or to download them onto their computer. This 
+feature only affects the manual save image option found on each relevant camera view.
+
+#### Robot Internet Connection Type 
+
+If the UGV is equipped with SIM card and can switch between Cellular and WiFi connections, the Operator can manually trigger this 
+change through the general settings page.  This switchover will take approximately 30 seconds and will require a refresh on the UI.
+
+#### Show Path Deviation Distance
+
+When a mission is running the UGV will have a maximum path deviation distance that it shouldn't cross if it needs to replan.  If this 
+toggle is set to true, while in edit mode this buffer is shown over top of the path as the Operator creates/edits the mission.  This 
+toggle does not disable the path deviation distance feature.
+
+#### Low Power Mode
+
+If the UGV is equipped with a Low Power Module this toggle allows the user to switch the UGV into a low power state that will drastically 
+limit functionality but help conserve power. This mode is best used to help better facilitate charging while the UGV is not in use.
+
+### Map Source Configuration
+
+The Web UI ships with access to free
+[OpenStreetMap](https://www.openstreetmap.org/) maps. Aerial view
+requires access to third-party aerial maps or your own aerial maps.
+
+The Web UI is pre-configured to work with
+[MapBox](https://www.mapbox.com/) and [Bing
+Maps](https://www.bingmapsportal.com/) once a suitable map key has been
+acquired. Both services offer a free tier that will be sufficient in
+almost all cases.
+
+#### Using OpenStreetMap Maps
+
+As no key is required to use
+[OpenStreetMap](https://www.openstreetmap.org/) maps, the process to
+select these maps in the Web UI is simple.
+
+1.  In the Web UI, from the menu, select **Settings→Map** to bring up
+    the **Map Settings** page.
+2.  Select **OpenStreetMap**
+3.  Click **Ok**.
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/map_settings_osm.png" />
+    <figcaption>Using Map Settings to select OpenStreetMap</figcaption>
+  </figure>
+</center>
+
+#### Using MapBox Maps
+
+Using [MapBox](https://www.mapbox.com/) maps requires a key, which can
+then be used by the Web UI. The steps to set up MapBox are outlined
+below.
+
+1.  Acquire a MapBox key from the [MapBox
+    website](https://account.mapbox.com/auth/signup/). Review the
+    license terms and select the appropriate plan. In most cases, the
+    free tier will be sufficient.
+2.  Back in the Web UI, from the menu, select **Settings→Map** to bring
+    up the **Map Settings** page.
+3.  Select **MapBox**.
+4.  Copy the MapBox key from Step 1 into the **Map Key** field.
+5.  Click **Ok**.
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/map_settings_mapbox.png" />
+    <figcaption>Using Map Settings to select MapBox</figcaption>
+  </figure>
+</center>
+
+#### Using Bing Maps
+
+Using [Bing Maps](https://www.bingmapsportal.com/) requires a key, which
+can then be used by the Web UI. The steps to set up Bing Maps are
+outlined below.
+
+1.  Acquire a Bing Maps key from the [Bing
+    website](https://www.microsoft.com/en-us/maps/create-a-bing-maps-key).
+    Review the license terms and select the appropriate plan. In most
+    cases, the free tier will be sufficient.
+2.  Back in the Web UI, from the menu, select **Settings→Map** to bring
+    up the **Map Settings** page.
+3.  Select **Bing Maps**.
+4.  Copy the Bing Maps key from Step 1 into the **Map Key** field.
+5.  Click **Ok**.
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/map_settings_bing.png" />
+    <figcaption>Using Map Settings to select Bing Maps</figcaption>
+  </figure>
+</center>
+
+#### Using Custom Maps {#using_custom_maps}
+
+Custom Maps allow you to use another set of maps in XYZ format, either
+from a third-party map provider or from maps that you have generated on
+your own, such as from drone aerial images. Custom maps can be selected
+by using the steps below.
+
+1.  Ensure that the maps are accessible on an internal network or on the
+    Internet by the device that is being used to display the Web UI,
+    such as a laptop, tablet, or desktop computer.
+2.  Ensure that the directory structure for the individual tiles is well
+    defined. See the section below for details on
+    [Preparing Custom Map Tiles from Drone Aerial Images](#preparing_custom_map_tiles).
+3.  In the Web UI, from the menu, select **Settings→Map** to bring up
+    the **Map Settings** page.
+4.  Select **Custom**.
+5.  Enter the network path for the maps into the **Custom URL** field.
+    If hosting the maps on your local computer, this will be similar to
+    <http://localhost:8000/{z}/{x}/{-y}.png>. Note how the
+    URL is parameterized with `{z}`, `{x}`, and `{-y}` values. This will
+    need to be adapted to match the directory structure of your map tile
+    images.
+6.  Click **Ok**.
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/map_settings_custom.png" />
+    <figcaption>Using Map Settings to select Custom maps</figcaption>
+  </figure>
+</center>
+
+#### Preparing Custom Map Tiles from Drone Aerial Images {#preparing_custom_map_tiles}
+
+In some cases, it is desirable to create your own maps rather than using
+third party maps which might be outdated. One way to do this is to use a
+drone to capture aerial images and convert those images into map tiles.
+While there are many ways to accomplish this, one approach is outlined
+below.
+
+1.  Use a drone to collect top-down photos covering the area of
+    interest. It is highly recommended to use a drone control app that
+    allows you to specify the area of interest and desired image overlap
+    (recommended \~75%) and takes care of coverage planning, drone
+    control, and image acquisition.
+
+2.  Perform ortho-mosaicing/ortho-rectification to stitch the collected
+    images together into a single orthographic image. [Open Drone
+    Map](https://www.opendronemap.org/) is a popular open source project
+    that Clearpath has used for stitching, but there are also paid
+    services that automate the process.
+
+3.  Georeference the orthographic image. One way to do this is to define
+    the locations of well-defined features (sewer grates, utility holes,
+    etc.) based on their known positions, such as their position data
+    from an existing mapping service (e.g., Google Maps). Open source
+    tools, such as [QGIS](https://www.qgis.org/en/site/) can help with
+    this process.
+
+4.  Generate the map tiles. Using Ubuntu, this can be accomplished with
+    the following commands, where `GEOREFERENCED_IMG.tif` is the output
+    of the previous step.
+
+    ``` 
+    sudo apt install gdal-bin
+    gdal2tiles.py <GEOREFERENCED_IMG.tif>
+    ```
+
+5.  Use a web server to host the tiles locally. Using Ubuntu, one way to
+    accomplish this is to use the commands below, which will make the
+    tiles available at: <http://localhost:8000/>.
+
+    ``` 
+    cd /base/directory/of/tiles
+    python3 -m http.server
+    ```
+
+Once your map tiles are available on the network, you can follow the
+steps in [Using Custom Maps](#using_custom_maps) to have the
+Web UI use your custom tiles.
