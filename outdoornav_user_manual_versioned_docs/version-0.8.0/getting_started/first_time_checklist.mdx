@@ -12,13 +12,13 @@ toc_max_heading_level: 4
 
 Ensure that the Base Station has been set up approximately 5 meters
 away from any buildings and is currently powered on. See
-[System Startup](/docs_outdoornav_user_manual/getting_started/system_setup) for further
+[System Startup](system_setup.mdx) for further
 instructions related to setting up the Base Station.
 
 ### ☐ Is the UGV connected to the Base Station?
 
 Check to see that the UGV can be pinged from the Base Station network.
-See [Connecting to Web UI](/docs_outdoornav_user_manual/getting_started/system_setup#connecting_to_web_ui) for further
+See [Connecting to Web UI](system_setup.mdx#connecting_to_web_ui) for further
 details.
 
 ## Software Setup
@@ -28,7 +28,7 @@ details.
 SSH into the UGV and run `rostopic list` to generate a list of the
 rostopics that are currently available. The list is generally fairly
 long so if you are looking for any specific topic please refer to
-[API Endpoints](/docs_outdoornav_user_manual/api/api_endpoints/api_endpoints.mdx). You can also check the
+[API Endpoints](../api/api_endpoints/api_endpoints.mdx). You can also check the
 ROS status through the OutdoorNAV UI by selecting the ROS icon next to
 the POS/DIR icons.
 
@@ -43,11 +43,11 @@ running.)
 ### ☐ Is the computer using the UI connected to the Base Station network?
 
 This can be confirmed by following the steps found in
-[Connecting to Web UI](/docs_outdoornav_user_manual/getting_started/system_setup#connecting_to_web_ui).
+[Connecting to Web UI](system_setup.mdx#connecting_to_web_ui).
 
 ### ☐ Have you surveyed the Base Station?
 
-See [RTK Survey Positioning](/docs_outdoornav_user_manual/cpr_hardware.mdx#base-station-survey) for
+See [RTK Survey Positioning](../cpr_hardware.mdx#base-station-survey) for
 information on how and when to survey the Base station.
 
 ### ☐ Do you have a strong GPS signal?
@@ -55,25 +55,25 @@ information on how and when to survey the Base station.
 After surveying the Base Station check the upper right hand corner of
 the UI to confirm that you have a strong GPS signal (the POS and DIR
 icons should be green). If either of these icons are not green refer
-to [Checking GPS RTK Fix](/docs_outdoornav_user_manual/getting_started/system_setup#checking-gpt-rtk-fix) for further
+to [Checking GPS RTK Fix](system_setup.mdx#checking-gpt-rtk-fix) for further
 troubleshooting information.
 
 ### ☐ Is the map loading correctly?
 
 Currently the map requires internet access to load. Refer to
-[Loading Map Tiles](/docs_outdoornav_user_manual/getting_started/system_setup#loading_map_tiles) for more details
+[Loading Map Tiles](system_setup.mdx#loading_map_tiles) for more details
 related to setting up the map.
 
 ### ☐ Has the Datum been set?
 
-See [Set Datum](/docs_outdoornav_user_manual/getting_started/system_setup#set-datum) for information on how
+See [Set Datum](system_setup.mdx#set-datum) for information on how
 to set the Datum variables.
 
 ### ☐ If docking is enabled has the location been set?
 
 If the Clearpath Robotics autonomous docking package was purchased the
 docking location will need to be set. See
-[Set Dock Location](/docs_outdoornav_user_manual/getting_started/system_setup#set-dock-location) for information on
+[Set Dock Location](system_setup.mdx#set-dock-location) for information on
 how to set the docking location.
 
 ### ☐ Is the Navbar status icon functioning?
@@ -92,25 +92,25 @@ properly.
 
 ### ☐ Can the virtual joystick drive the UGV?
 
-See [Web UI Manual Mode](/docs_outdoornav_user_manual/web_user_interface/ui_manual_mode) for further details
+See [Web UI Manual Mode](../web_user_interface/ui_manual_mode.mdx) for further details
 related to this.
 
 ### ☐ Can you create a new mission?
 
 Select the mission list and then click on `Add Mission` to create a
 new mission. To add new waypoints for the mission refer to
-[Mission Creation](/docs_outdoornav_user_manual/web_user_interface/ui_autonomous_mode#mission-creation).
+[Mission Creation](../web_user_interface/ui_autonomous_mode.mdx#mission-creation).
 
 ### ☐ After creating a new mission, can you execute the mission?
 
-To execute a mission refer to [Mission Execution](/docs_outdoornav_user_manual/web_user_interface/ui_autonomous_mode#mission-execution).
+To execute a mission refer to [Mission Execution](../web_user_interface/ui_autonomous_mode.mdx#mission-execution).
 
 ### ☐ Are the cameras (if present) active in the view bar section when running the mission?
 
 For more information related to camera views see
-[Camera Views](/docs_outdoornav_user_manual/web_user_interface/ui_overview#camera-views).
+[Camera Views](../web_user_interface/ui_overview.mdx#camera-views).
 
 ### ☐ Can you select a camera and save an image after it loads on the main screen?
 
-See [Pan-Tilt-Zoom (PTZ) View ](/docs_outdoornav_user_manual/web_user_interface/ui_overview#ptz-view) for more details related
+See [Pan-Tilt-Zoom (PTZ) View ](../web_user_interface/ui_overview.mdx#ptz-view) for more details related
 to saving images.
