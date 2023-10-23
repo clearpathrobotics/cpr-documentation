@@ -6,7 +6,7 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-Once the simulator has been [installed](./install), you can launch the simulation.
+Once the simulator has been [installed](install.mdx), you can launch the simulation.
 
 ## Launching the simulator
 
@@ -20,7 +20,7 @@ It can be called like this:
 ros2 launch clearpath_gz simulation.launch.py
 ```
 
-The launch file will run all of the necessary [generators](../../config/generators) to generate launch and parameter
+The launch file will run all of the necessary [generators](../../config/generators.mdx) to generate launch and parameter
 files for the simulation before launching Gazebo and spawning the robot. These will be placed under the setup path
 (defaults to `$HOME/clearpath/`).
 
@@ -59,7 +59,7 @@ ros2 launch clearpath_gz simulation.launch.py rviz:=true
 
 ## Driving the robot
 
-The simulated robot can be driven in the same ways as the physical robot. Take a look at the [Teleop](../driving)
+The simulated robot can be driven in the same ways as the physical robot. Take a look at the [Teleop](../driving.mdx)
 guide for details. In addition, the Gazebo Teleop GUI plugin can be used. The plugin will be visible by default when
 Gazebo is launched. If your robot has a namespace, change the topic to `<namespace>/cmd_vel`. Set the maximum forward
 and yaw velocities, then select the method of driving.
