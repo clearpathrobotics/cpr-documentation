@@ -18,39 +18,39 @@ can be used to monitor the behaviour of OutdoorNav.
 
 #### /control_selection/control_state
 
-&emsp;&emsp;**Message Type:** [clearpath_control_msgs/ControlSelectionState](definitions#msg-control-selection-state)
+&emsp;&emsp;**Message Type:** [clearpath_control_msgs/ControlSelectionState](definitions.mdx#msg-control-selection-state)
 
 &emsp;&emsp;**Description:** Indicates the complete state of control selection
 including autonomy state and mode.
 
 #### /control_selection/current_mode
 
-&emsp;&emsp;**Message Type:** [clearpath_control_msgs/ControlMode](definitions#msg-control-mode)
+&emsp;&emsp;**Message Type:** [clearpath_control_msgs/ControlMode](definitions.mdx#msg-control-mode)
 
 &emsp;&emsp;**Description:** Current control mode (NEUTRAL, MANUAL, AUTONOMY).
 
 #### /dock/feedback
 
-&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/DockActionFeedback](definitions#action-dock)
+&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/DockActionFeedback](definitions.mdx#action-dock)
 
 &emsp;&emsp;**Description:** Feedback topic from the dock action.
 
 #### /dock/result
 
-&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/DockActionResult](definitions#action-dock)
+&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/DockActionResult](definitions.mdx#action-dock)
 
 &emsp;&emsp;**Description:** Result topic from the dock action.
 
 #### /dock/properties
 
-&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/DockProperties](definitions#msg-dock-properties)
+&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/DockProperties](definitions.mdx#msg-dock-properties)
 
 &emsp;&emsp;**Description:**  A list of docks, in which each dock includes information related to
 the location, id, etc...
 
 #### /dock/state
 
-&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/DockState](definitions#msg-dock-state)
+&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/DockState](definitions.mdx#msg-dock-state)
 
 &emsp;&emsp;**Description:**  The current state of the docking process.
 
@@ -62,7 +62,7 @@ the location, id, etc...
 
 #### /localization/status
 
-&emsp;&emsp;**Message Type:** [clearpath_localization_msgs/LocalizationStatus](definitions#msg-localization-status)
+&emsp;&emsp;**Message Type:** [clearpath_localization_msgs/LocalizationStatus](definitions.mdx#msg-localization-status)
 
 &emsp;&emsp;**Description:** Current localization status. Includes accuracy, GNSS
 status, and whether the robot is dead reckoning.
@@ -89,7 +89,7 @@ commonly relayed directly into the UGV's velocity controller.
 
 #### /navigation/distance_to_goal
 
-&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/DistanceToGoal](definitions#msg-distance-to-goal)
+&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/DistanceToGoal](definitions.mdx#msg-distance-to-goal)
 
 &emsp;&emsp;**Description:** The current Euclidean distance and the path distance,
 in meters, from the robot to its current goal.
@@ -123,7 +123,7 @@ the robot along the reference path.
 
 #### /navigation/metrics
 
-&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/Metrics](definitions#msg-metrics)
+&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/Metrics](definitions.mdx#msg-metrics)
 
 &emsp;&emsp;**Description:** This topic provides metric information regarding the lifetime of
 the navigation. This includes the total distance travelled, duration run, as well as mission 
@@ -132,7 +132,7 @@ of replanning maneuvers, recoveries and number of tasks executed.
 
 #### /navigation/motion_state
 
-&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/MotionState](definitions#msg-motion-state)
+&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/MotionState](definitions.mdx#msg-motion-state)
 
 &emsp;&emsp;**Description:** This topic provides information about the motion state
 of the robot. This includes information about whether the robot is
@@ -142,7 +142,7 @@ physical orientation.
 
 #### /navigation/odom_intent (IN DEVELOPMENT)
 
-&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/OdomIntent](definitions#msg-odom-intent)
+&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/OdomIntent](definitions.mdx#msg-odom-intent)
 
 &emsp;&emsp;**Description:** The robot's current pose and velocity as well as an
 intended pose and velocity in the immediate future.
@@ -157,7 +157,7 @@ generated from replanning maneuvers.
 
 #### /navigation/progress (BETA)
 
-&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/Progress](definitions#msg-navigation-progress)
+&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/Progress](definitions.mdx#msg-navigation-progress)
 
 &emsp;&emsp;**Description:** The completion percentage of the current path, the
 current goal and the current mission.
@@ -172,7 +172,7 @@ according to the current velocity of the robot.
 
 #### /navigation/scan_points (IN DEVELOPMENT)
 
-&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/ScanPoints](definitions#msg-scan-points)
+&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/ScanPoints](definitions.mdx#msg-scan-points)
 
 &emsp;&emsp;**Description:** Scans and pointclouds from the various ROS message
 formats converted into a simple PointVector format that can be easily
@@ -180,7 +180,7 @@ consumed by the UI.
 
 #### /navigation/state (BETA)
 
-&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/NavigationState](definitions#msg-navigation-state)
+&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/NavigationState](definitions.mdx#msg-navigation-state)
 
 &emsp;&emsp;**Description:** The current navigation state. The available states are
 COMPUTE PATH, EXECUTE, REPLAN, NAVIGATING AROUND OBSTACLE, RECOVERY,
@@ -188,7 +188,7 @@ IDLE, PAUSE, ESTOP, LOST. Multiple simultaneous states are possible.
 
 #### /navigation/track_error
 
-&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/TrackError](definitions#msg-track-error)
+&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/TrackError](definitions.mdx#msg-track-error)
 
 &emsp;&emsp;**Description:** The current crosstrack error (ie. the off-path distance
 between the robot and the reference path) and as well as the heading
@@ -205,7 +205,7 @@ triggered the safety monitor watchdog.
 
 #### /safety/watchdog_status (IN DEVELOPMENT)
 
-&emsp;&emsp;**Message Type:** [clearpath_safety_msgs/WatchdogStatus](definitions#msg-safety-watchdog)
+&emsp;&emsp;**Message Type:** [clearpath_safety_msgs/WatchdogStatus](definitions.mdx#msg-safety-watchdog)
 
 &emsp;&emsp;**Description:** Provides a list of status flags for each of the
 possible sensors that may trigger a safety stop. The watchdog will
@@ -214,19 +214,19 @@ message for 1 second).
 
 #### /target_tracker/state
 
-&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/TargetTrackerState](definitions#msg-target-tracker-state)
+&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/TargetTrackerState](definitions.mdx#msg-target-tracker-state)
 
 &emsp;&emsp;**Description:** The state information for target tracker used as part of docking.
 
 #### /undock/feedback
 
-&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/UndockActionFeedback](definitions#action-undock)
+&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/UndockActionFeedback](definitions.mdx#action-undock)
 
 &emsp;&emsp;**Description:** Feedback topic from the undock action.
 
 #### /undock/result
 
-&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/UndockActionResult](definitions#action-undock)
+&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/UndockActionResult](definitions.mdx#action-undock)
 
 &emsp;&emsp;**Description:** Result topic from the undock action.
 
@@ -267,7 +267,7 @@ initialized by a previously sent goal.
 
 #### /dock/goal
 
-&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/msg/DockActionGoal](definitions#action-dock)
+&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/msg/DockActionGoal](definitions.mdx#action-dock)
 
 &emsp;&emsp;**Description:** This topic is used to send a goal to the docking process.
 The goal consists of the UUID of the dock to dock at as well as wether or not local docking
@@ -282,7 +282,7 @@ initialized by a previously sent goal.
 
 #### /undock/goal
 
-&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/msg/UndockActionGoal](definitions#action-undock)
+&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/msg/UndockActionGoal](definitions.mdx#action-undock)
 
 &emsp;&emsp;**Description:** This topic is used to send a goal to the undocking process.
 The goal is empty since we always consider undocking to be a local undocking process.
@@ -293,7 +293,7 @@ The goal is empty since we always consider undocking to be a local undocking pro
 
 #### /control_selection/set_mode
 
-&emsp;&emsp;**Service Type:** [clearpath_control_msgs/srv/SetControlMode](definitions#srv-set-control-mode)
+&emsp;&emsp;**Service Type:** [clearpath_control_msgs/srv/SetControlMode](definitions.mdx#srv-set-control-mode)
 
 &emsp;&emsp;**Description:** Change the current control mode from NEUTRAL to MANUAL
 or AUTONOMY.
@@ -314,41 +314,41 @@ AUTONOMY. Will only resume if the robot is in a paused state.
 
 #### /dock/add
 
-&emsp;&emsp;**Service Type:** [clearpath_dock_msgs/srv/AddDock](definitions#srv-add-dock)
+&emsp;&emsp;**Service Type:** [clearpath_dock_msgs/srv/AddDock](definitions.mdx#srv-add-dock)
 
 &emsp;&emsp;**Description:** Add a dock to the database of docks. Complete list of dock information is required as input.
 The new dock will appear on the UI.
 
 #### /dock/remove
 
-&emsp;&emsp;**Service Type:** [clearpath_dock_msgs/srv/RemoveDock](definitions#srv-remove-dock)
+&emsp;&emsp;**Service Type:** [clearpath_dock_msgs/srv/RemoveDock](definitions.mdx#srv-remove-dock)
 
 &emsp;&emsp;**Description:** Remove and existing dock from the database. Input to this service requires ether the UUID
 or the semantic name of the dock.
 
 #### /dock/clear_data
 
-&emsp;&emsp;**Service Type:** [std_srvs/srv/Trigger](definitions#srv-clear-dock-data)
+&emsp;&emsp;**Service Type:** [std_srvs/srv/Trigger](definitions.mdx#srv-clear-dock-data)
 
 &emsp;&emsp;**Description:** Remove all existing dock data from storage.
 
 #### /dock/set_location/by_id
 
-&emsp;&emsp;**Service Type:** [clearpath_dock_msgs/srv/SetDockLocationByID](definitions#srv-set-dock-location-by-id)
+&emsp;&emsp;**Service Type:** [clearpath_dock_msgs/srv/SetDockLocationByID](definitions.mdx#srv-set-dock-location-by-id)
 
 &emsp;&emsp;**Description:** Can be used to either set up a new dock (empty string in the uuid field), or update
 the location of an existing dock (where the `uuid` field is required).
 
 #### /dock/set_location/by_name
 
-&emsp;&emsp;**Service Type:** [clearpath_dock_msgs/srv/SetDockLocationByName](definitions#srv-set-dock-location-by-name)
+&emsp;&emsp;**Service Type:** [clearpath_dock_msgs/srv/SetDockLocationByName](definitions.mdx#srv-set-dock-location-by-name)
 
 &emsp;&emsp;**Description:** Can be used to update the location of an existing dock. Requires the semantic name 
 of the dock to be input into the `name` field.
 
 #### /localization/set_datum
 
-&emsp;&emsp;**Service Type:** [clearpath_localization_msgs/srv/SetDatum](definitions#srv-set-datum)
+&emsp;&emsp;**Service Type:** [clearpath_localization_msgs/srv/SetDatum](definitions.mdx#srv-set-datum)
 
 &emsp;&emsp;**Description:** This service is used to manually set the datum
 parameters of OutdoorNav running on the UGV. After setting the datum
@@ -359,7 +359,7 @@ you must call this service before sending the mission.
 
 #### /localization/reset
 
-&emsp;&emsp;**Service Type:** [clearpath_localization_msgs/srv/ResetLocalization](definitions#srv-reset-localization)
+&emsp;&emsp;**Service Type:** [clearpath_localization_msgs/srv/ResetLocalization](definitions.mdx#srv-reset-localization)
 
 &emsp;&emsp;**Description:** This service can be used to trigger a reset of the UGVs localization.
 
@@ -406,7 +406,7 @@ obstacles before generating a path around the obstacle.
 
 #### /navigation/set_path_smoother
 
-&emsp;&emsp;**Service Type:** [clearpath_navigation_msgs/srv/SetPathSmoother](definitions#srv-set-path-smoother)
+&emsp;&emsp;**Service Type:** [clearpath_navigation_msgs/srv/SetPathSmoother](definitions.mdx#srv-set-path-smoother)
 
 &emsp;&emsp;**Description:** Modify the state of the path smoothing feature. If
 True, path smoothing is ENABLED and curved paths will be generated
@@ -421,7 +421,7 @@ This feature takes effect immediately once the service is called.
 
 #### /navigation/set_path shifter
 
-&emsp;&emsp;**Service Type:** [clearpath_navigation_msgs/srv/SetPathShifter](definitions#srv-set-path-shifter)
+&emsp;&emsp;**Service Type:** [clearpath_navigation_msgs/srv/SetPathShifter](definitions.mdx#srv-set-path-shifter)
 
 &emsp;&emsp;**Description:** Modify the state of the path shifting feature. If True,
 path shifting is ENABLED and the reference path will be automatically
@@ -436,7 +436,7 @@ This feature takes effect immediately once the service is called.
 
 #### /navigation/set_stop_distance (IN DEVELOPMENT)
 
-&emsp;&emsp;**Service Type:** [clearpath_navigation_msgs/srv/SetStopDistance](definitions#srv-set-stop-distance)
+&emsp;&emsp;**Service Type:** [clearpath_navigation_msgs/srv/SetStopDistance](definitions.mdx#srv-set-stop-distance)
 
 &emsp;&emsp;**Description:** Modify the state of the stop distance feature. If True,
 the stop distance feature is ENABLED and the robot will stop the
@@ -445,7 +445,7 @@ is DISABLED and the robot will stop the default distance from obstacles.
 
 #### /navigation/set_delay_compensation (IN DEVELOPMENT)
 
-&emsp;&emsp;**Service Type:** [clearpath_navigation_msgs/srv/SetDelayCompensation](definitions#srv-set-delay-compensation)
+&emsp;&emsp;**Service Type:** [clearpath_navigation_msgs/srv/SetDelayCompensation](definitions.mdx#srv-set-delay-compensation)
 
 &emsp;&emsp;**Description:** Modify the state of the delay compensation feature. If
 True, delay compensation is ENABLED and the controller will compensate
@@ -458,20 +458,20 @@ DISABLED and the normal behaviour is expected.
 
 #### /dock
 
-&emsp;&emsp;**Action Type:** [clearpath_dock_msgs/action/Dock](definitions#action-dock)
+&emsp;&emsp;**Action Type:** [clearpath_dock_msgs/action/Dock](definitions.mdx#action-dock)
 
 &emsp;&emsp;**Description:** Send the robot to the charging dock, if the docking
 package has been included.
 
 #### /localization/survey
 
-&emsp;&emsp;**Action Type:** [clearpath_localization_msgs/action/SurveyBaseStation](definitions#action-survey-base-station)
+&emsp;&emsp;**Action Type:** [clearpath_localization_msgs/action/SurveyBaseStation](definitions.mdx#action-survey-base-station)
 
 &emsp;&emsp;**Description:** Start surveying the base station, if available.
 
 #### /mission
 
-&emsp;&emsp;**Action Type:** [clearpath_navigation_msgs/action/Mission](definitions#action-mission)
+&emsp;&emsp;**Action Type:** [clearpath_navigation_msgs/action/Mission](definitions.mdx#action-mission)
 
 &emsp;&emsp;**Description:** Send goals for execution by the robot. This will
 include the goal, the viapoint(s), tasks, goal tolerances and goal
@@ -479,7 +479,7 @@ heading.
 
 #### /undock
 
-&emsp;&emsp;**Action Type:** [clearpath_dock_msgs/action/Dock](definitions#action-undock)
+&emsp;&emsp;**Action Type:** [clearpath_dock_msgs/action/Dock](definitions.mdx#action-undock)
 
 &emsp;&emsp;**Description:** Undock the robot to the charging dock, if the docking
 package has been included.

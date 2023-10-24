@@ -6,8 +6,8 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-Prior to installing the OutdoorNav software, ensure that you have completed the relevant [Hardware Kit Checklist](/docs_outdoornav_user_manual/integration_requirements/hardware_integration_requirements). If installing on a secondary/backpack/Starter Kit computer, ensure to have also completed the:
-- [Interface Control Checklist](/docs_outdoornav_user_manual/integration_requirements/interface_control_requirements)
+Prior to installing the OutdoorNav software, ensure that you have completed the relevant [Hardware Kit Checklist](hardware_integration_requirements/hardware_integration_requirements.mdx). If installing on a secondary/backpack/Starter Kit computer, ensure to have also completed the:
+- [Interface Control Checklist](interface_control_requirements.mdx)
 
 All the following instructions, unless otherwise specified, are to be run on the OutdoorNav computer.
 
@@ -31,7 +31,7 @@ cd ~/cpr_outdoornav_launch/scripts/
 
 ### Configure OutdoorNav Sensors {#configure-outdoornav-sensors}
 
-Prior to configuring the sensors, ensure that you have measured the position (XYZ) and orientation (RPY) of each of your sensors with respect to the `base_link`. See your results from the [Integration Requirements](/docs_outdoornav_user_manual/integration_requirements/hardware_integration_requirements).
+Prior to configuring the sensors, ensure that you have measured the position (XYZ) and orientation (RPY) of each of your sensors with respect to the `base_link`. See your results from the [Integration Requirements](hardware_integration_requirements/hardware_integration_requirements.mdx).
 
 ``` bash
 cd ~/cpr_outdoornav_launch/scripts/
@@ -69,7 +69,7 @@ docker compose --profile outdoornav pull
 ```
 
 :::note
-If you are installing the OutdoorNav software on a secondary or Starter Kit computer, you must also complete the [Platform Computer Checklist](/docs_outdoornav_user_manual/integration_requirements/platform_computer_checklist)
+If you are installing the OutdoorNav software on a secondary or Starter Kit computer, you must also complete the [Platform Computer Checklist](platform_computer_checklist.mdx)
 :::
 
 ### Configure Platform Footprint {#configure-platform-footprint}
@@ -140,4 +140,4 @@ rostopic echo -n 1 /sensors/stereo/1/pointcloud
 rostopic echo -n 1 /sensors/stereo/1/depth/image_rect_raw
 ```
 
-Once installation is complete, you can proceed to [Getting Started](/docs_outdoornav_user_manual/getting_started/system_setup) to start using the software.
+Once installation is complete, you can proceed to [Getting Started](../getting_started/system_setup.mdx) to start using the software.

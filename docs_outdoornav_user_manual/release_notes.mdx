@@ -10,12 +10,12 @@ toc_max_heading_level: 4
 
 ### New Features
 
--   Operators can now Schedule Missions to run at specific times (see [Mission Scheduler](./features/mission_scheduler))
+-   Operators can now Schedule Missions to run at specific times (see [Mission Scheduler](./features/mission_scheduler.mdx))
 -   Added in support for BulletCat12 Microhard WiFi and Cellular connections
 -   Allow Audio recording as both tasks and manual operations if UGV has Microphones
--   Create custom tasks that can be run during missions (see [Custom Tasks](./features/custom_tasks))
+-   Create custom tasks that can be run during missions (see [Custom Tasks](./features/custom_tasks.mdx))
 -   If installed with PDU, UGV can be set to Low Power mode to better conserve power
--   New navigation topics added to ROS Autonomy API (see [API Endpoints](./api/api_endpoints/autonomy_api)):
+-   New navigation topics added to ROS Autonomy API (see [API Endpoints](./api/api_endpoints/autonomy_api.mdx)):
     - /navigation/progress
     - /navigation/motion_state
     - /navigation/metrics
@@ -24,7 +24,7 @@ toc_max_heading_level: 4
 -   Updated Navigation features available to the customer:
     - Continuous Replanning renamed to Continuous Planning and is always enabled.
     - Constrained Planning is always enabled. Environment Variable to update the path constraint has been modified 
-    (see [Navigation](./features/navigation))
+    (see [Navigation](./features/navigation.mdx))
     - Removed Obstacle Avoidance Mode. The UGV will always attempt to avoid obstacles.
     - Removed Path Smoothing. This is always enabled.
     - Docking feature added for customers who have purchased a dock. 
@@ -48,8 +48,8 @@ toc_max_heading_level: 4
 ### New Features
 
 -   Inertial Measurement Units (IMUs) integrated into localization.
--   Added localization status topic (see [API Endpoints](./api/api_endpoints/autonomy_api#localizationstatus)).
--   Added re-localization service (see [API Endpoints](./api/api_endpoints/definitions#srv-reset-localization)).
+-   Added localization status topic (see [API Endpoints](./api/api_endpoints/autonomy_api.mdx#localizationstatus)).
+-   Added re-localization service (see [API Endpoints](./api/api_endpoints/definitions.mdx#srv-reset-localization)).
 -   Additional diagnostic information in the status view.
 -   Docking improvements including: multiple docks, visual representation of docks on map, 
     local docking/undocking through teleop view. Docking only functional with 2D LiDARs.
@@ -79,7 +79,7 @@ toc_max_heading_level: 4
 ### New Features
 
 -   Goal terminology has been removed from the mission generation nomenclature (see 
-    [Definitions](./web_user_interface/ui_autonomous_mode#definitions)) 
+    [Definitions](./web_user_interface/ui_autonomous_mode.mdx#definitions)) 
     Users can now add tasks, apply final headings, and set navigation tolerances 
     to any Waypoint in a Mission.
 -   Drag and Drop of Waypoints now available in Edit Mode.
@@ -107,7 +107,7 @@ toc_max_heading_level: 4
 ### New Features
 
 -   OutdoorNav ROS API updated. API now divided into Platform and
-    Autonomy sections. See [API Overview](./api/api_overview)
+    Autonomy sections. See [API Overview](./api/api_overview.mdx)
     for more details.
 -   Simulation environment created with charge dock, base station and
     camera plugins.

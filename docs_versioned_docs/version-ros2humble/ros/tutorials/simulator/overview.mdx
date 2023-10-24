@@ -7,8 +7,8 @@ toc_max_heading_level: 4
 ---
 
 The Clearpath simulator uses [Gazebo Fortress](https://gazebosim.org/home) to simulate robots in a physics-based
-environment. The simulation supports the [Clearpath Config](../../../ros#terminology), as well as simulating
-multiple robots simultaneously. Gazebo data is bridged to ROS 2, and follows the [Clearpath API](../../api/overview).
+environment. The simulation supports the [Clearpath Config](../../../ros/ros.mdx#terminology), as well as simulating
+multiple robots simultaneously. Gazebo data is bridged to ROS 2, and follows the [Clearpath API](../../api/overview.mdx).
 The Clearpath simulator can be used to iterate on robot configurations, test controls, develop navigation software, and much more.
 
 <center>
@@ -25,6 +25,6 @@ The Clearpath simulator can be used to iterate on robot configurations, test con
 
 Gazebo uses its own transport layer consisting of nodes and messages similar to ROS 2. A
 [ROS 2 bridge node](https://github.com/gazebosim/ros_gz/tree/humble/ros_gz_bridge) is required to bridge
-Gazebo data to ROS 2, and vice versa. By leveraging the [generators](../../config/generators), we can
+Gazebo data to ROS 2, and vice versa. By leveraging the [generators](../../config/generators.mdx), we can
 generate the required bridges when the simulator is launched. As a result, the simulator can support all
 of the same configurations that a physical robot supports.

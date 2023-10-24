@@ -18,14 +18,14 @@ can be used to monitor the behaviour of OutdoorNav.
 
 #### control_selection/control_state
 
-**Message Type:** [cpr_control_msgs/ControlSelectionState](definitions#msg-control-selection-state)
+**Message Type:** [cpr_control_msgs/ControlSelectionState](definitions.mdx#msg-control-selection-state)
 
 **Description:** Indicates the complete state of control selection
 including autonomy state and mode.
 
 #### control_selection/current_mode
 
-**Message Type:** [cpr_control_msgs/ControlMode](definitions#msg-control-mode)
+**Message Type:** [cpr_control_msgs/ControlMode](definitions.mdx#msg-control-mode)
 
 **Description:** Current control mode (NEUTRAL, MANUAL, AUTONOMY).
 
@@ -37,7 +37,7 @@ including autonomy state and mode.
 
 #### localization/status (IN DEVELOPMENT)
 
-**Message Type:** [cpr_localization_msgs/LocalizationStatus](definitions#msg-localization-status)
+**Message Type:** [cpr_localization_msgs/LocalizationStatus](definitions.mdx#msg-localization-status)
 
 **Description:** Current localization status. Includes accuracy, GPS
 status
@@ -56,14 +56,14 @@ status
 
 #### navigation/current_goal_info
 
-**Message Type:** [cpr_navigation_msgs/CurrentGoalInfo](definitions#msg-current-goal-info)
+**Message Type:** [cpr_navigation_msgs/CurrentGoalInfo](definitions.mdx#msg-current-goal-info)
 
 **Description:** string identifier (id), goal and viapoint positions,
 headings, pose/yaw tolerances, etc\...
 
 #### navigation/distance_to_goal
 
-**Message Type:** [cpr_navigation_msgs/DistanceToGoal](definitions#msg-distance-to-goal)
+**Message Type:** [cpr_navigation_msgs/DistanceToGoal](definitions.mdx#msg-distance-to-goal)
 
 **Description:** The current Euclidean distance and the path distance,
 in meters, from the robot to its current goal.
@@ -90,7 +90,7 @@ the robot along the reference path.
 
 #### navigation/motion_state (IN DEVELOPMENT)
 
-**Message Type:** [cpr_navigation_msgs/MotionState](definitions#msg-motion-state)
+**Message Type:** [cpr_navigation_msgs/MotionState](definitions.mdx#msg-motion-state)
 
 **Description:** This topic provides information about the motion state
 of the robot. This includes information about whether the robot is
@@ -100,7 +100,7 @@ physical orientation.
 
 #### navigation/odom_intent (IN DEVELOPMENT)
 
-**Message Type:** [cpr_navigation_msgs/OdomIntent](definitions#msg-odom-intent)
+**Message Type:** [cpr_navigation_msgs/OdomIntent](definitions.mdx#msg-odom-intent)
 
 **Description:** The robot's current pose and velocity as well as an
 intended pose and velocity in the immediate future.
@@ -115,7 +115,7 @@ generated from replanning maneuvers.
 
 #### navigation/progress (BETA)
 
-**Message Type:** [cpr_navigation_msgs/Progress](definitions#msg-navigation-progress)
+**Message Type:** [cpr_navigation_msgs/Progress](definitions.mdx#msg-navigation-progress)
 
 **Description:** The completion percentage of the current path, the
 current goal and the current mission.
@@ -130,7 +130,7 @@ according to the current velocity of the robot.
 
 #### navigation/scan_points
 
-**Message Type:** [cpr_navigation_msgs/ScanPoints](definitions#msg-scan-points)
+**Message Type:** [cpr_navigation_msgs/ScanPoints](definitions.mdx#msg-scan-points)
 
 **Description:** Scans and pointclouds from the various ROS message
 formats converted into a simple PointVector format that can be easily
@@ -138,7 +138,7 @@ consumed by the UI.
 
 #### navigation/state (BETA)
 
-**Message Type:** [cpr_navigation_msgs/NavigationState](definitions#msg-navigation-state)
+**Message Type:** [cpr_navigation_msgs/NavigationState](definitions.mdx#msg-navigation-state)
 
 **Description:** The current navigation state. The available states are
 COMPUTE PATH, EXECUTE, REPLAN, NAVIGATING AROUND OBSTACLE, RECOVERY,
@@ -146,7 +146,7 @@ IDLE, PAUSE, ESTOP, LOST. Multiple simultaneous states are possible.
 
 #### navigation/track_error
 
-**Message Type:** [cpr_navigation_msgs/TrackError](definitions#msg-track-error)
+**Message Type:** [cpr_navigation_msgs/TrackError](definitions.mdx#msg-track-error)
 
 **Description:** The current crosstrack error (ie. the off-path distance
 between the robot and the reference path) and as well as the heading
@@ -171,7 +171,7 @@ triggered the safety monitor watchdog.
 
 #### safety/watchdog_status (IN DEVELOPMENT)
 
-**Message Type:** [cpr_safety_msgs/WatchdogStatus](definitions#msg-safety-watchdog)
+**Message Type:** [cpr_safety_msgs/WatchdogStatus](definitions.mdx#msg-safety-watchdog)
 
 **Description:** Provides a list of status flags for each of the
 possible sensors that may trigger a safety stop. The watchdog will
@@ -212,7 +212,7 @@ a Goal point.
 
 #### control_selection/set_mode
 
-**Service Type:** [cpr_control_msgs/srv/SetControlMode](definitions#srv-set-control-mode)
+**Service Type:** [cpr_control_msgs/srv/SetControlMode](definitions.mdx#srv-set-control-mode)
 
 **Description:** Change the current control mode from NEUTRAL to MANUAL
 or AUTONOMY.
@@ -233,7 +233,7 @@ AUTONOMY. Will only resume if the robot is in a paused state.
 
 #### localization/set_datum
 
-**Service Type:** [cpr_localization_msgs/srv/SetDatum](definitions#srv-set-datum)
+**Service Type:** [cpr_localization_msgs/srv/SetDatum](definitions.mdx#srv-set-datum)
 
 **Description:** This service is used to manually set the datum
 parameters of OutdoorNav running on the UGV. After setting the datum
@@ -292,7 +292,7 @@ obstacles before generating a path around the obstacle.
 
 #### navigation/set_path_smoother
 
-**Service Type:** [cpr_navigation_msgs/srv/SetPathSmoother](definitions#srv-set-path-smoother)
+**Service Type:** [cpr_navigation_msgs/srv/SetPathSmoother](definitions.mdx#srv-set-path-smoother)
 
 **Description:** Modify the state of the path smoothing feature. If
 True, path smoothing is ENABLED and curved paths will be generated
@@ -307,7 +307,7 @@ This feature takes effect immediately once the service is called.
 
 #### navigation/set_path shifter
 
-**Service Type:** [cpr_navigation_msgs/srv/SetPathShifter](definitions#srv-set-path-shifter)
+**Service Type:** [cpr_navigation_msgs/srv/SetPathShifter](definitions.mdx#srv-set-path-shifter)
 
 **Description:** Modify the state of the path shifting feature. If True,
 path shifting is ENABLED and the reference path will be automatically
@@ -322,7 +322,7 @@ This feature takes effect immediately once the service is called.
 
 #### navigation/set_stop_distance (IN DEVELOPMENT)
 
-**Service Type:** [cpr_navigation_msgs/srv/SetStopDistance](definitions#srv-set-stop-distance)
+**Service Type:** [cpr_navigation_msgs/srv/SetStopDistance](definitions.mdx#srv-set-stop-distance)
 
 **Description:** Modify the state of the stop distance feature. If True,
 the stop distance feature is ENABLED and the robot will stop the
@@ -331,7 +331,7 @@ is DISABLED and the robot will stop the default distance from obstacles.
 
 #### navigation/set_delay_compensation (IN DEVELOPMENT)
 
-**Service Type:** [cpr_navigation_msgs/srv/SetDelayCompensation](definitions#srv-set-delay-compensation)
+**Service Type:** [cpr_navigation_msgs/srv/SetDelayCompensation](definitions.mdx#srv-set-delay-compensation)
 
 **Description:** Modify the state of the delay compensation feature. If
 True, delay compensation is ENABLED and the controller will compensate
@@ -344,13 +344,13 @@ DISABLED and the normal behaviour is expected.
 
 #### localization/survey
 
-**Action Type:** [cpr_localization_msgs/action/SurveyBaseStation](definitions#action-survey-base-station)
+**Action Type:** [cpr_localization_msgs/action/SurveyBaseStation](definitions.mdx#action-survey-base-station)
 
 **Description:** Start surveying the base station, if available.
 
 #### mission
 
-**Action Type:** [cpr_navigation_msgs/action/Mission](definitions#action-mission)
+**Action Type:** [cpr_navigation_msgs/action/Mission](definitions.mdx#action-mission)
 
 **Description:** Send goals for execution by the robot. This will
 include the goal, the viapoint(s), tasks, goal tolerances and goal
@@ -358,7 +358,7 @@ heading.
 
 #### dock
 
-**Action Type:** [cpr_dock_msgs/action/Dock](definitions#action-dock)
+**Action Type:** [cpr_dock_msgs/action/Dock](definitions.mdx#action-dock)
 
 **Description:** Send the robot to the charging dock, if the docking
 package has been included.
