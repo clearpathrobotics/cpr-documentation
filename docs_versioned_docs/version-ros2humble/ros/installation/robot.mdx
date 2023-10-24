@@ -180,24 +180,13 @@ other than Clearpath firmware packages.
 
 #### Source install
 
-**1. Build Micro ROS**
-
-```
-mkdir -p ~/micro_ros_ws/src
-cd ~/micro_ros_ws/src
-git clone https://github.com/micro-ROS/micro-ROS-Agent.git -b humble
-cd ..
-rosdep install -r --from-paths src -i -y --rosdistro humble
-source /opt/ros/humble/setup.bash && colcon build
-```
-
-**2. Create a workspace on the robot's computer for the clearpath packages**
+**1. Create a workspace on the robot's computer for the clearpath packages**
 
 ```
 mkdir ~/clearpath_ws/src -p
 ```
 
-**3. Import dependencies**
+**2. Import dependencies**
 
 ```
 source /opt/ros/humble/setup.bash
@@ -208,13 +197,13 @@ vcs import src < dependencies.repos
 rosdep install -r --from-paths src -i -y
 ```
 
-**4. Build packages**
+**3. Build packages**
 
 ```
 colcon build --symlink-install
 ```
 
-**5. Link the workspace**
+**4. Link the workspace**
 
 Add the following line to your `~/clearpath_ws/src/clearpath_robot/clearpath_robot/scripts/generate` file,
 right under where ROS is sourced:
@@ -226,7 +215,7 @@ source /home/administrator/clearpath_ws/install/setup.bash
 
 :::note
 
-This workspace will also need to be sourced in your [robot.yaml](#robot-yaml) file as described 
+This workspace will also need to be sourced in your [robot.yaml](#robot-yaml) file as described
 in the [ROS2 Environment](../config/yaml#ros-2-environment) section.
 
 :::
