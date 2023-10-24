@@ -22,7 +22,11 @@ sudo apt install ros-humble-clearpath-desktop ros-humble-clearpath-config-live
 
 Before running the node, we will need to setup the working directory.
 
-Our standard working directory is: `/etc/clearpath`. However, you can choose whatever directory you'd like. We will refer to this directory as the **setup_path**.
+On our robots, our standard working directory is: `/etc/clearpath`.
+
+On remote computers, such as our users' computers, we recommend using `$HOME/clearpath`.
+
+However, you can choose whatever directory you'd like to use, just be mindful that contents may be deleted and recreated by our generator scripts. We will refer to this directory as the **setup_path**.
 
 Make sure to put your robot configuration file, `robot.yaml`, into the **setup_path**.
 > The configuration file must be named `robot.yaml`.
