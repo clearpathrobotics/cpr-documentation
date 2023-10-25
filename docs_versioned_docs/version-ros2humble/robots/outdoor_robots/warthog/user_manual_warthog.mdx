@@ -109,7 +109,7 @@ To connect a device to the onboard network, it's suggested to give it a static I
 | 192.168.131.2 | Ethernet-connected MCU                        |
 
 Typically addresses numbered 192.168.131.100 and above will not collide with any of Warthog's payloads.
-Please see [Electrical Integration](./integration_warthog#warthog-electrical-integration) for more information.
+Please see [Electrical Integration](integration_warthog/integration_warthog.mdx#warthog-electrical-integration) for more information.
 
 #### Payload Integration Area
 
@@ -117,7 +117,8 @@ All payloads should be mounted to the central chassis when traversing through wa
 The primary payload of the unit should be placed on the central chassis.
 If necessary loading can be placed on the drive units however payloads should not exceed 23 kg (50 lbs) on each drive unit.
 
-For more information and guidance on mounting payload structures on top of Warthog, please refer to subsection [Mechanical Mounting](./integration_warthog#warthog-mechanical-mounting).
+For more information and guidance on mounting payload structures on top of Warthog, please refer to subsection
+[Mechanical Mounting](integration_warthog/integration_warthog.mdx#warthog-mechanical-mounting).
 
 #### Body Lights
 
@@ -187,7 +188,7 @@ These two computers must be set up to communicate with each other.
 ### Onboard Computer Setup
 
 Warthog ships with an Onboard Computer from Clearpath Robotics, which is already installed, connected, and powered.
-If you need to reinstall the software on it, refer to the [Warthog Tutorials](./tutorials_warthog).
+If you need to reinstall the software on it, refer to the [Warthog Tutorials](tutorials_warthog.mdx).
 
 ### Powering Up
 
@@ -336,7 +337,7 @@ The Futaba RC will always publish messages to the `/rc_teleop/cmd_vel` topic whe
 
 To get Warthog connected to your local Wi-Fi network, you must first access the Onboard Computer using a wired connection to the robot.
 Locate the User Breakout Panel on the rear of the chassis and connect to an Ethernet port with a standard
-Ethernet cable. See the [Warthog Tutorials](./tutorials_warthog) for details
+Ethernet cable. See the [Warthog Tutorials](tutorials_warthog.mdx) for details
 on completing the Wi-Fi setup.
 
 ### Using ROS

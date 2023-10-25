@@ -6,7 +6,7 @@ sidebar_position: 1
 
 For [ROS 2 Humble](https://docs.ros.org/en/humble/index.html) and beyond, the software structure of Clearpath robots has changed significantly. Rather than having individual sets of packages for each
 robot, we have opted to create common `clearpath` packages which are used by all supported platforms. Additionally, we are moving away from using environment variables
-to customize the robot, and instead using a YAML configuration file to describe the robot. We have also defined a [ROS 2 API](api/overview) common to all of our supported platforms. As a result,
+to customize the robot, and instead using a YAML configuration file to describe the robot. We have also defined a [ROS 2 API](api/overview.mdx) common to all of our supported platforms. As a result,
 our platforms are now more customizable, more modular, and more unified.
 
 ## Terminology {#terminology}
@@ -18,7 +18,7 @@ the platform code to indicate the revision.
 
 **_Clearpath Config_**: The _config_ refers to the `robot.yaml` configuration file that defines the Clearpath robot.
 
-**_Clearpath API_**: The _API_ refers to the [ROS 2 application programming interface](api/overview). This is a set of ROS 2 topics and services defined
+**_Clearpath API_**: The _API_ refers to the [ROS 2 application programming interface](api/overview.mdx). This is a set of ROS 2 topics and services defined
 by Clearpath which are used by all supported Clearpath platforms.
 
 ## Supported Platforms {#supported-platforms}
@@ -115,7 +115,7 @@ sensors that have been validated by Clearpath.
     <a href="../robots/accessories/sensors/lidar_2d/hokuyo_ust10_lx">Hokuyo UST10-LX</a>
   </td>
   <td>2D Lidar</td>
-  <td>Source or Debian</td>
+  <td>Debian</td>
   <td>
     <a href="https://github.com/ros-drivers/urg_node">urg_node</a>
   </td>
@@ -128,7 +128,7 @@ sensors that have been validated by Clearpath.
     <a href="../robots/accessories/sensors/cameras/realsense_d435">Intel Realsense D435</a>
   </td>
   <td>Depth Camera</td>
-  <td>Source or Debian</td>
+  <td>Debian</td>
   <td>
     <a href="https://github.com/IntelRealSense/realsense-ros/tree/ros2-development">realsense-ros</a>
   </td>
@@ -141,7 +141,7 @@ sensors that have been validated by Clearpath.
     <a href="../robots/accessories/sensors/imu/microstrain_3dm_gx5">MicroStrain 3DM-GX5</a>
   </td>
   <td>IMU</td>
-  <td>Source or Debian</td>
+  <td>Debian</td>
   <td>
     <a href="https://github.com/LORD-MicroStrain/microstrain_inertial/tree/ros2">microstrain_intertial</a>
   </td>
@@ -154,7 +154,7 @@ sensors that have been validated by Clearpath.
     <a href="../robots/accessories/sensors/lidar_2d/sick_lms111">SICK LMS-111</a>
   </td>
   <td>2D Lidar</td>
-  <td>Source or Debian</td>
+  <td>Debian</td>
   <td>
     <a href="https://github.com/clearpathrobotics/LMS1xx">LMS1xx</a>
   </td>
@@ -176,7 +176,7 @@ sensors that have been validated by Clearpath.
   <tr>
     <td><a href="../robots/accessories/sensors/lidar_3d/velodyne_puck">Velodyne Puck</a></td>
     <td>3D Lidar</td>
-    <td>Source or Debian</td>
+    <td>Debian</td>
     <td><a href="https://github.com/ros-drivers/velodyne/tree/ros2">velodyne</a></td>
   </tr>
 </table>

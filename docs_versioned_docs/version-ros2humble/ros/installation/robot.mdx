@@ -103,13 +103,13 @@ wget -c https://raw.githubusercontent.com/clearpathrobotics/clearpath_computer_i
 
 <StandardClearpathBridgeSetup />
 
-For details on setting up custom network interface settings see [Clearpath Computer Setup](../networking/computer_setup).
+For details on setting up custom network interface settings see [Clearpath Computer Setup](../networking/computer_setup.mdx).
 
 #### Robot YAML
 
 The `robot.yaml` file defines the configuration of the robot including the robot model, all
 supported accessories and any extra URDF elements or ROS parameters. Information about the Robot YAML
-is found in the [Robot Configuration](../config/yaml) section. This YAML is used to generate the launch,
+is found in the [Robot Configuration](../config/yaml.mdx) section. This YAML is used to generate the launch,
 URDF and ROS parameter files during runtime.
 
 Create your `robot.yaml` file and then copy it into `/etc/clearpath/` and replace the existing file.
@@ -164,7 +164,7 @@ sudo apt-get update
 
 <StandardClearpathBridgeSetup />
 
-For details on setting up custom network interface settings see [Clearpath Computer Setup](../networking/computer_setup).
+For details on setting up custom network interface settings see [Clearpath Computer Setup](../networking/computer_setup.mdx).
 
 #### Clearpath Robot metapackage
 
@@ -222,7 +222,7 @@ in the [ROS2 Environment](../config/yaml.mdx#ros-2-environment) section.
 
 #### Setup folder
 
-Create the setup folder where the [robot.yaml](../config/yaml) file will be stored, and where files will be generated:
+Create the setup folder where the [robot.yaml](../config/yaml.mdx) file will be stored, and where files will be generated:
 
 ```
 sudo mkdir /etc/clearpath/ -p && sudo chmod 666 /etc/clearpath/
@@ -231,7 +231,7 @@ sudo mkdir /etc/clearpath/ -p && sudo chmod 666 /etc/clearpath/
 
 The `robot.yaml` file defines the configuration of the robot including the robot model, all
 supported accessories and any extra URDF elements or ROS parameters. Information about the Robot YAML
-is found in the [Robot Configuration](../config/yaml) section. This YAML is used to generate the launch,
+is found in the [Robot Configuration](../config/yaml.mdx) section. This YAML is used to generate the launch,
 URDF and ROS parameter files during runtime.
 
 Create your `robot.yaml` file and then copy it into `/etc/clearpath/`.
