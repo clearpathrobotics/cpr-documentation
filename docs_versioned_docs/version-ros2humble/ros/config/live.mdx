@@ -8,30 +8,50 @@ toc_max_heading_level: 4
 
 Users familiar with Clearpath's robots, know we provide desktop packages that facilitate the viewing of robot models in RViz without needing to have a real robot. In ROS 2, the `view_model.launch.py` node will check and update the model and display the new changes in RViz.
 
-This functionality requires a desktop manager to be installed; in other words, these commands will not work on robot computers since these run Ubuntu 22.04 server rather than desktop.
+This functionality requires a desktop manager to be installed; in other words, these commands will not work on standard robot computers since these run Ubuntu 22.04 server rather than desktop.
 
 # Installation
+
 Install the desktop packages using `apt`. Make sure to have [added Clearpath packages](https://packages.clearpathrobotics.com/) to the source list before installation.
+
 ```bash
 sudo apt install ros-humble-clearpath-desktop ros-humble-clearpath-config-live
 ```
 
 # Setup
+
 Before running the node, we will need to setup the working directory.
-First, create the directory `/etc/clearpath`.
-Then, copy your `robot.yaml` to `/etc/clearpath/robot.yaml`.
+
+On our robots, our standard working directory is: `/etc/clearpath`.
+
+On remote computers, such as our users' computers, we recommend using `$HOME/clearpath`.
+
+However, you can choose whatever directory you'd like to use, just be mindful that contents may be deleted and recreated by our generator scripts. We will refer to this directory as the **setup_path**.
+
+Make sure to put your robot configuration file, `robot.yaml`, into the **setup_path**.
+> The configuration file must be named `robot.yaml`.
+
+You can get a sample `robot.yaml` file from the [Clearpath Configuration repository](https://github.com/clearpathrobotics/clearpath_config/).
 
 # Run the Node
-Running `view_model.launch.py` will generate the URDF of the robot from the `/etc/clearpath/robot.yaml` and then start RViz.
 
-It will then monitor the `/etc/clearpath/robot.yaml` for changes. Whenever changes are detected, the URDF will be regenerated and the RViz model will be updated.
+Running `view_model.launch.py` will generate the URDF of the robot from the `robot.yaml` and then start RViz.
+
+It will then monitor the `robot.yaml` for changes. Whenever changes are detected, the URDF will be regenerated and the RViz model will be updated.
 
 To run the node:
+
 ```bash
-ros2 launch clearpath_viz view_model.launch.py
+ros2 launch clearpath_viz view_model.launch.py setup_path:=SETUP_PATH
 ```
+> Replace `SETUP_PATH` with the path to the directory where the `robot.yaml` is located.
+
+> Do not include `~` in the `SETUP_PATH`, use `$HOME` instead.
+
+> Make sure that `SETUP_PATH` ends with `/`.
 
 # Example
+
 Starting off with the default A200 Husky YAML, we switch the top plate, add the sensor arch, a fath pivot mount, and finally a RealSense. Every time we want changes to take effect, we save the file. If after saving no changes take place, then it's an indication that these were invalid.
 
 <center>
