@@ -10,8 +10,8 @@ toc_max_heading_level: 4
 
 1.  **How do I start, pause or stop a mission?**
 
-    A mission can be started in a few different ways, i) through the web user interface (See [Mission Execution](./web_user_interface/ui_autonomous_mode#mission-execution)) or,
-    ii) through the ROS API (See [API Examples](./api/api_examples)).
+    A mission can be started in a few different ways, i) through the web user interface (See [Mission Execution](./web_user_interface/ui_autonomous_mode.mdx#mission-execution)) or,
+    ii) through the ROS API (See [API Examples](./api/api_examples/api_examples.mdx)).
 
 2.  **When I start a mission the UGV does not move. What could be the
     problem?**
@@ -47,7 +47,7 @@ toc_max_heading_level: 4
 
 4.  **How can I record ROS data?**
 
-    There are two ways to record ROS data. The first is [through the UI](./features/rosbag_recorder) and the
+    There are two ways to record ROS data. The first is [through the UI](./features/rosbag_recorder.mdx) and the
     second is the more traditional method of accessing the command line of the UGV's computer and running 
     [rosbag record commands](http://wiki.ros.org/rosbag/Commandline).
 
@@ -65,7 +65,7 @@ toc_max_heading_level: 4
     the navigation thinking that the UGV has already arrived at its goal and will not generate a path through
     the Waypoints. However, it is possible to split the mission into two missions (ie. one to go to a 
     location and the second to return to the starting point). With these two missions you will then either be
-    able to send each mission one after the other or you can use the [Mission Scheduler](./features/mission_scheduler).
+    able to send each mission one after the other or you can use the [Mission Scheduler](./features/mission_scheduler.mdx).
     Add the two missions to the schedule and you will have the ability to also repeat this loop as many times as needed.
 
 2. **Why is surveying failing?**
@@ -79,7 +79,7 @@ toc_max_heading_level: 4
 ping 192.168.131.30
 ```
 
-&emsp;&emsp;If all of these tests PASS, contact [Support](./support).
+&emsp;&emsp;If all of these tests PASS, contact [Support](./support.mdx).
 
 3.  **Is it possible to increase the maximum velocity of the UGV?**
 
@@ -87,12 +87,12 @@ ping 192.168.131.30
     1.2 m/s, 1.0 m/s and 2.0 m/s for Jackal, Husky and Warthog UGVs, respectively. The Husky maximum velocity
     is 1.0 m/s so increasing above this is not possible however if you would like to increase the maximum
     velocity for either the Jackal or the Warthog, further tuning may be required. Consult the 
-    [tuning guide](./customized_tuning/tuning_instructions/differential_drive_dynamics) and contact
-    [Support](./support) if required.
+    [tuning guide](./customized_tuning/tuning_instructions/differential_drive_dynamics.mdx) and contact
+    [Support](./support.mdx) if required.
 
 4.  **My robot it detecting too many obstacles and replanning too frequently. How can I resolve this?**
 
-    Please consult the [Limitations](./features/collision_avoidance#limitations) section of the collisison
+    Please consult the [Limitations](./features/collision_avoidance.mdx#limitations) section of the collisison
     avoidance feature. It will describe some limits to the obstaacle detection and can help you improve the 
     smoothness of the navigation.
 
@@ -101,21 +101,21 @@ ping 192.168.131.30
     These types of warnings appear on the UI under two conditions:
     i)  If the robot indicator (blue arrow on the UI) is not within 3.0 meters of the first Waypoint (the Green one on the UI).
     ii) If the robot is outside of the allowable navigable space (defined by the path contraint, default: 3.0 meters around the reference path). 
-    Enable the visualization of the [path contraint](./web_user_interface/ui_autonomous_mode#constrained_path) and Teleop the robot back into the
+    Enable the visualization of the [path contraint](./web_user_interface/ui_autonomous_mode.mdx#constrained_path) and Teleop the robot back into the
     navigable space.
 
 6.  **How can I remove certain sensors from the collision avoidance pipeline?**
 
     If your robot is equipped with collision avoidance sensors (eg. Velodyne, Hokuyo, Sick LMS), it is
     possible to enable/disable the throughput of each sensor data into the collision avoidance pipeline.
-    Consult the [Collision Avoidance](./features/collision_avoidance) section for these instructions.
+    Consult the [Collision Avoidance](./features/collision_avoidance.mdx) section for these instructions.
 
 7.  **Can I use OutdoorNav without using the UI?**
 
-    We empower customers to send mission via either the UI or our [ROS 1 API](./api/api_overview). Through this
+    We empower customers to send mission via either the UI or our [ROS 1 API](./api/api_overview.mdx). Through this
     API, you are enabled to write either CPP code or Python scripts where you would generate your mission, survey the base station,
-    set the datum, assign [custom tasks](./features/custom_tasks) to your mission. If using Python, we provide a set of libraries that
-    speed up the develpment process. See some of the [example codes](./api/api_examples) for an idea of how to generate these scripts.
+    set the datum, assign [custom tasks](./features/custom_tasks.mdx) to your mission. If using Python, we provide a set of libraries that
+    speed up the develpment process. See some of the [example codes](./api/api_examples/api_examples.mdx) for an idea of how to generate these scripts.
 
 ## Web User Interface
 
@@ -127,7 +127,7 @@ ping 192.168.131.30
 
 2.  **How do I add a Task to a Waypoint on the UI?**
 
-    See [Add Task to Waypoint](./web_user_interface/ui_autonomous_mode#add-task) for information on how
+    See [Add Task to Waypoint](./web_user_interface/ui_autonomous_mode.mdx#add-task) for information on how
     to add a Task to a Waypoint.
 
 3.  **Why is the "Save Image" Task failing?**
@@ -140,12 +140,12 @@ ping 192.168.131.30
 4.  **Are we able to make any changes to the UI?**
 
     Unfortunately, users are not currently enabled to make modifications to the user interface.
-    This feature will be available in a future release. Please direct any feature requests to [Support](./support).
+    This feature will be available in a future release. Please direct any feature requests to [Support](./support.mdx).
 
 5. **What to do if my custom task is not working?**
 
-    Ensure that you have followed the [Custom Tasks](./features/custom_tasks) instructions. When adding the
-    custom task to a Waypoint, it is important to double check that all the [fields](./web_user_interface/ui_autonomous_mode#add-task) 
+    Ensure that you have followed the [Custom Tasks](./features/custom_tasks.mdx) instructions. When adding the
+    custom task to a Waypoint, it is important to double check that all the [fields](./web_user_interface/ui_autonomous_mode.mdx#add-task) 
     for your custom task are correct.
 
 6.  **Why are either of the GNSS Status indicator (POS and/or DIR) on the UI not Green?**

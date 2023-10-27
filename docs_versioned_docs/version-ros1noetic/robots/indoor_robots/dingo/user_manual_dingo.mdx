@@ -393,7 +393,7 @@ While in "Idle" and "Driving" states, the user can override the LEDs by publishi
 
 #### DC Shore Power
 
-Dingo provides a DC Shore Power connection ([internal connector for Dingo 1.0](./integration_dingo#dingo-payload-electrical-integration); [external connector for Dingo 1.5](#dingo-exterior-features))
+Dingo provides a DC Shore Power connection ([internal connector for Dingo 1.0](integration_dingo/integration_dingo.mdx#dingo-payload-electrical-integration); [external connector for Dingo 1.5](#dingo-exterior-features))
 to allow the system to be powered without requiring batteries to be present. Note that when DC Shore Power is connected, the motors are disabled and it is not possible to drive the
 Dingo; however, all other electronics (computers, sensors, etc) will remain enabled.
 
@@ -465,7 +465,7 @@ These two computers must be set up to communicate with each other.
 ### Onboard Computer Setup
 
 If you purchased an Onboard Computer from Clearpath Robotics with Dingo, it is already installed, connected, and powered.
-If not, or to set up your own Onboard Computer, see the [Dingo Tutorials](./tutorials_dingo).
+If not, or to set up your own Onboard Computer, see the [Dingo Tutorials](tutorials_dingo.mdx).
 
 Note that the Onboard Computer must be connected to Dingo's Ethernet port, which is accessible in the center channel.
 
@@ -482,13 +482,13 @@ This indicates that ROS is up on the computer and has established communications
 
 To get Dingo connected to your local Wi-Fi network, you must first access the Onboard Computer using a wired connection to the robot.
 Remove the top trough cover and the appropriate yellow fairing to access the computer module, then connect to one of the network ports with a standard Ethernet cable.
-See the [Dingo Tutorials](./tutorials_dingo#dingo-networking) for details.
+See the [Dingo Tutorials](tutorials_dingo.mdx#dingo-networking) for details.
 
 ### Connecting and Using the Controller {#controller}
 
 To use your controller, it must be paired with your Dingo and powered on.
 If your purchased the Onboard Computer from Clearpath Robotics, your controller is already paired with your Dingo.
-If your controller has become unpaired or if you wish to pair a new controller, following the instructions in the [Dingo Tutorials](./tutorials_dingo#pairing-the-controller).
+If your controller has become unpaired or if you wish to pair a new controller, following the instructions in the [Dingo Tutorials](tutorials_dingo.mdx#pairing-the-controller).
 
 To teleoperate Dingo, first clear the motion-stop.
 Then, power on the controller by pressing the `PS` button on the controller.
@@ -598,7 +598,7 @@ Ensure that the Motion Stop button is accessible at all times.
 Avoid mounting payloads that extend over the rear of Dingo and would block access to the Motion Stop button.
 
 Note that the Dingo MCU board does provide a breakout to allow an external motion-stop button/switch to be integrated by the end user, which could be used to engage/disengage Stop Mode.
-See [Optional External Motion Stop](./integration_dingo#dingo-external-motion-stop) for details on adding an external motion-stop button/switch.
+See [Optional External Motion Stop](integration_dingo/integration_dingo.mdx#dingo-external-motion-stop) for details on adding an external motion-stop button/switch.
 
 ### Electrical System
 

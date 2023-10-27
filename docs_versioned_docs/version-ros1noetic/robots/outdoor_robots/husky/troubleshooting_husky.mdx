@@ -43,7 +43,7 @@ If your robot was functioning recently, the most common causes are:
   If not, connect to the computer with SSH, or using a computer monitor to see if the computer is running.
 - The USB-Serial cable is not connected.
   Check that the USB end is seated in the robot's computer.
-  Check that the DE-9 end is seated on it's [jack in the Husky user bay](./user_manual_husky#onboard-computer-setup).
+  Check that the DE-9 end is seated on it's [jack in the Husky user bay](user_manual_husky.mdx#onboard-computer-setup).
 - Someone has changed ROS environment variables. You can review Husky's environment variables by running:
   ```
   nano /etc/ros/setup.bash
@@ -88,7 +88,7 @@ It is red when the Husky is in a motion-stop state, has insufficient battery vol
 2.  Confirm that the robot is not locked out.
 3.  Confirm that all external stop devices are functioning, and that their related switches and relays are closed.
     You may need to use a multimeter to test voltage between the external stop connector and each of these external stop switches.
-    Refer to the [External Stop](integration_husky#husky_external_stop) section for details.
+    Refer to the [External Stop](integration_husky/integration_husky.mdx#husky_external_stop) section for details.
 
 :::note
 
@@ -164,7 +164,7 @@ The `/twist_mux` topic controls to priority of `/cmd_vel` messages.
 :::tip
 
 If this amount of rolling is unacceptable, you can update the motor controller's firmware to a version that applies holding torque.
-The process to update the firmware is detailed on our [Husky Maintenance page](maintenance_husky#maintenance_husky_motor_controller_firmware).
+The process to update the firmware is detailed on our [Husky Maintenance page](maintenance_husky.mdx#maintenance_husky_motor_controller_firmware).
 
 :::
 
@@ -184,11 +184,11 @@ Your Husky will roll if:
 
 ### Not getting Wi-Fi internet connection
 
-Refer to the [Networking page](../../../ros/networking).
+Refer to the [Networking page](../../../ros/networking/networking.mdx).
 
 ### Cannot connect to the robot's computer over a network cable
 
-Reter to the [Networking page](../../../ros/networking).
+Reter to the [Networking page](../../../ros/networking/networking.mdx).
 
 ---
 
@@ -196,11 +196,11 @@ Reter to the [Networking page](../../../ros/networking).
 
 ### The computer does not automatically start
 
-Refer to the [Mini ITX troubleshooting page](../../accessories/computers/mini_itx).
+Refer to the [Mini ITX troubleshooting page](../../accessories/computers/mini_itx.mdx).
 
 ### The computer keeps reverting to old BIOS settings
 
-Refer to the [Mini ITX troubleshooting page](../../accessories/computers/mini_itx).
+Refer to the [Mini ITX troubleshooting page](../../accessories/computers/mini_itx.mdx).
 
 ---
 
@@ -213,7 +213,7 @@ Verify the upstart logs, `/var/log/upstart/husky_core.log`, to see if there are 
 ### Sensors are not turning on
 
 1.  Check that the sensor's User Power connector has the correct voltage.
-2.  If the voltage is correct, then review the [Troubleshooting section for the related sensor](../../accessories/sensors).
+2.  If the voltage is correct, then review the [Troubleshooting section for the related sensor](../../accessories/sensors/sensors.mdx).
 
 ### A ROS package isn't starting
 

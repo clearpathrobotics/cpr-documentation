@@ -333,12 +333,11 @@ The list below are not strict rules, but are considered good practice to keep im
 
 ## Links and Imports
 
-All links to, or imports of versioned elements (images, markdown files etc.) must be referred to using relative links (`./img/image-name.png`). These versioned pages will be moved together and ensures that the correct version is used.
+All links to, or imports of versioned elements (images, markdown files etc.) must be referred to using relative links (`img/image-name.png` or `../../robots/add-ons/pacs.mdx`), including the file extension. These versioned pages will be moved together and ensures that the correct version is used. Including the file extension ensures that the next page will be located based on the file location not the generated links. This method is much more robust and should be followed whenever possible.
 
-All links to, or imports of unversioned static elements must be referred to using absolute paths (`/static/img/image-name.png`). This allows these assets to be found irrelevant of the location of the particular page.
+All links to, or imports of unversioned static elements must be referred to using absolute paths (`/static/img/image-name.png`). This allows these assets to be found irrelevant of the location of the particular page. This link should be the path to the file including the file extension, even when it is an md or mdx file.
 
-Links to headings must not include an extra slash between the name of the page and the name of the heading. Doing this will result in broken links. For example: `../ros/#supported-platforms` is incorrect. It will initially work but any subsequent relative link that the user clicks
-will appear to be broken. Instead, it must be `../ros#supported-platforms`.
+Links to headings must not include an extra slash between the name of the page and the name of the heading. Doing this can result in broken links. For example: `../ros/#supported-platforms` is incorrect. It will initially work but any relative links that rely on the url (instead of file path) that the user clicks will appear to be broken. Instead, it must be `../ros#supported-platforms`. This is irrelevant when the relative links are based on file path.
 
 ## SolidWorks image exports
 

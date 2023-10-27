@@ -39,6 +39,8 @@ Additionally, there are two other, required parameters:
 
 Below is the sample **Husky A200** robot YAML of the robot displayed above. In the following sections, we will reference each and every component of this sample file, and show how to robot looks as we build it up.
 
+Find more samples `robot.yaml` configuration files in the [Clearpath Configuration repository](https://github.com/clearpathrobotics/clearpath_config/).
+
 You can also skip to each section to get an explanation of each part of the sample configuration:
 
 1. [**Serial Number Sample**](#serial-sample)
@@ -66,8 +68,7 @@ system:
     namespace: a200_0000
     domain_id: 0
     rmw_implementation: rmw_fastrtps_cpp
-    workspaces:
-      - /home/administrator/micro_ros_ws/install/setup.bash
+    workspaces: []
 platform:
   controller: ps4
   attachments:
@@ -153,8 +154,8 @@ sensors:
           laser_frame_id: lidar2d_0_laser
           ip_address: 192.168.131.20
           ip_port: 10940
-          angle_min: -3.141592653589793
-          angle_max: 3.141592653589793
+          angle_min: -2.356
+          angle_max: 2.356
   lidar3d:
     - model: velodyne_lidar
       urdf_enabled: true
@@ -183,8 +184,8 @@ The Clearpath serial number is composed of two sections: an alpha-numerical code
 
 At this moment, the supported robot platforms are:
 
-1. [Husky A200](../../robots/outdoor_robots/husky/user_manual_husky#introduction): `a200-0000`
-2. [Jackal J100](../../robots/outdoor_robots/jackal/user_manual_jackal#introduction): `j100-0000`
+1. [Husky A200](../../robots/outdoor_robots/husky/user_manual_husky.mdx#introduction): `a200-0000`
+2. [Jackal J100](../../robots/outdoor_robots/jackal/user_manual_jackal.mdx#introduction): `j100-0000`
 
 Every robot platform has specific [attachments](#attachments), i.e. platform specific parts, that are selected based on the serial number passed. Therefore, it is required that a serial number is specified in the `robot.yaml`.
 
@@ -243,8 +244,7 @@ system:
     namespace: a200_0000
     domain_id: 0
     rmw_implementation: rmw_fastrtps_cpp
-    workspaces:
-      - /home/administrator/micro_ros_ws/install/setup.bash
+    workspaces: []
 ```
 
 At this point, with just the **serial_number** and **system** defined: our robot is just the standard **Husky A200** platform, and looks like this:
@@ -266,14 +266,23 @@ At this point, with just the **serial_number** and **system** defined: our robot
 
 Every robot platform has unique structures such as versatile sensor mounting solutions, wireless charging receivers, and waterproofing enclosures; we refer to these as attachments.
 
+#### Joystick Controller
+We support two types of controllers:
+  - **ps4**: standard Playstation4 controller.
+  - **logitech**: Logitech F710
+
+```yaml
+controller: ps4 # or logitech
+```
+
 #### Attachments
 
-There are three types of attachments:
+There are four types of attachments:
 
 1. **bumpers** modify the front face and rear face of the robot platform.
 2. **fenders** modify the area above the wheels on the front and rear of the platform.
-2. **top_plates** modify the top face of the robot platform.
-3. **structures** are large custom parts that are added atop the top plate.
+3. **top_plates** modify the top face of the robot platform.
+4. **structures** are large custom parts that are added atop the top plate.
 
 #### Husky A200 {#attachments-a200}
 
@@ -367,15 +376,15 @@ platform:
   extras:
     ros_parameters:
       platform_velocity_controller:
-        platform_velocity_controller.wheel_radius": 0.1651
-        platform_velocity_controller.linear.x.max_velocity": 1.0
-        platform_velocity_controller.linear.x.min_velocity": -1.0
-        platform_velocity_controller.linear.x.max_acceleration": 3.0
-        platform_velocity_controller.linear.x.min_acceleration": -3.0
-        platform_velocity_controller.angular.z.max_velocity": 2.0
-        platform_velocity_controller.angular.z.min_velocity": -2.0
-        platform_velocity_controller.angular.z.max_acceleration": 6.0
-        platform_velocity_controller.angular.z.min_acceleration": -6.0
+        wheel_radius": 0.1651
+        linear.x.max_velocity": 1.0
+        linear.x.min_velocity": -1.0
+        linear.x.max_acceleration": 3.0
+        linear.x.min_acceleration": -3.0
+        angular.z.max_velocity": 2.0
+        angular.z.min_velocity": -2.0
+        angular.z.max_acceleration": 6.0
+        angular.z.min_acceleration": -6.0
 ```
 
 
@@ -385,15 +394,15 @@ platform:
   extras:
     ros_parameters:
       platform_velocity_controller:
-        platform_velocity_controller.wheel_radius": 0.098
-        platform_velocity_controller.linear.x.max_velocity": 2.0
-        platform_velocity_controller.linear.x.min_velocity": -2.0
-        platform_velocity_controller.linear.x.max_acceleration": 20.0
-        platform_velocity_controller.linear.x.min_acceleration": -20.0
-        platform_velocity_controller.angular.z.max_velocity": 4.0
-        platform_velocity_controller.angular.z.min_velocity": -4.0
-        platform_velocity_controller.angular.z.max_acceleration": 25.0
-        platform_velocity_controller.angular.z.min_acceleration": -25.0
+        wheel_radius": 0.098
+        linear.x.max_velocity": 2.0
+        linear.x.min_velocity": -2.0
+        linear.x.max_acceleration": 20.0
+        linear.x.min_acceleration": -20.0
+        angular.z.max_velocity": 4.0
+        angular.z.min_velocity": -4.0
+        angular.z.max_acceleration": 25.0
+        angular.z.min_acceleration": -25.0
 ```
 
 #### Sample {#platform-sample}
@@ -934,8 +943,8 @@ lidar2d:
         laser_frame_id: lidar2d_0_laser
         ip_address: 192.168.131.20
         ip_port: 10940
-        angle_min: -3.141592653589793
-        angle_max: 3.141592653589793
+        angle_min: -2.356
+        angle_max: 2.356
 ```
 
 - **_sick_lms1xx:_**
@@ -1041,8 +1050,8 @@ lidar2d:
         laser_frame_id: lidar2d_0_laser
         ip_address: 192.168.131.20
         ip_port: 10940
-        angle_min: -3.141592653589793
-        angle_max: 3.141592653589793
+        angle_min: -2.356
+        angle_max: 2.356
 ```
 
 <center>
@@ -1122,8 +1131,8 @@ sensors:
           laser_frame_id: lidar2d_0_laser
           ip_address: 192.168.131.20
           ip_port: 10940
-          angle_min: -3.141592653589793
-          angle_max: 3.141592653589793
+          angle_min: -2.356
+          angle_max: 2.356
   lidar3d:
     - model: velodyne_lidar
       urdf_enabled: true
