@@ -806,6 +806,21 @@ camera:
         pointcloud.enable: true
 ```
 
+- **_flir_blackfly:_**
+
+```yaml
+camera:
+  - model: flir_blackfly
+    urdf_enabled: true
+    launch_enabled: true
+    parent: fath_pivot_0_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      flir_blackfly:
+        serial_number: 0
+```
+
 ### GPS
 
 - **_swift_nav:_**
