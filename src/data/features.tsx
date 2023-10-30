@@ -40,6 +40,19 @@ const FEATURES: FeatureItem[] = [
   },
   {
     title: translate({
+      message: "HUSKY OBSERVER",
+      id: "homepage_husky_observer",
+    }),
+    image: {
+      src: "/img/website_images/husky_observer_thumbnail.png",
+      width: 114,
+      height: 150,
+      hyperlink: "/docs/ros1noetic/robots/solutions/husky_observer/user_manual_husky_observer",
+    },
+    text: <Translate id="homepage_husky_observer">Medium Outdoor Solution</Translate>,
+  },
+  {
+    title: translate({
       message: "WARTHOG",
       id: "homepage_warthog",
     }),
