@@ -169,7 +169,7 @@ sensors:
           device_ip: 192.168.131.25
           port: 2368
           model: VLP16
-        velodyne_convert_node:
+        velodyne_transform_node:
           model: VLP16
           fixed_frame: lidar3d_0_laser
           target_frame: lidar3d_0_laser
@@ -981,7 +981,7 @@ lidar2d:
 
 ### LiDAR 3D
 
-- **_velodyne_lidar:_**
+- **_velodyne_lidar - 16:_**
 
 ```yaml
 lidar3d:
@@ -997,8 +997,31 @@ lidar3d:
         device_ip: 192.168.131.25
         port: 2368
         model: VLP16
-      velodyne_convert_node:
+      velodyne_transform_node:
         model: VLP16
+        fixed_frame: lidar3d_0_laser
+        target_frame: lidar3d_0_laser
+```
+
+
+- **_velodyne_lidar - 32C:_**
+
+```yaml
+  - model: velodyne_lidar
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      velodyne_driver_node:
+        frame_id: lidar3d_0_laser
+        device_ip: 192.168.131.25
+        port: 2368
+        model: 32C
+      velodyne_transform_node:
+        model: 32C
+        calibration: /opt/ros/humble/share/velodyne_pointcloud/params/VeloView-VLP-32C.yaml
         fixed_frame: lidar3d_0_laser
         target_frame: lidar3d_0_laser
 ```
@@ -1034,7 +1057,7 @@ lidar3d:
         device_ip: 192.168.131.25
         port: 2368
         model: VLP16
-      velodyne_convert_node:
+      velodyne_transform_node:
         model: VLP16
         fixed_frame: lidar3d_0_laser
         target_frame: lidar3d_0_laser
@@ -1161,7 +1184,7 @@ sensors:
           device_ip: 192.168.131.25
           port: 2368
           model: VLP16
-        velodyne_convert_node:
+        velodyne_transform_node:
           model: VLP16
           fixed_frame: lidar3d_0_laser
           target_frame: lidar3d_0_laser
