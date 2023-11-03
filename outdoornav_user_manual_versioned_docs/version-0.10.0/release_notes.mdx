@@ -10,27 +10,43 @@ toc_max_heading_level: 4
 
 ### New Features
 
--   Added new services for backing-up & restoring dock locations
--   Added new package to back-up & restore missions, schedules, and docks with a single service
--   Added new scripts to back-up & restore missions, schedules, and docks via JSON files
--   Backed-up mission & schedule data is no longer compressed and base64-encoded; plain JSON is now used
+-   Added the ability to start mission from a specific Waypoint
+-   Added the ability to resume mission from current location
+-   Added the option to include on-start and on-stop tasks to a Mission
+-   Added the option to continue a Mission if a Task should fail
+-   Full release of the API examples repository to the public (link API examples top level page)
+
+### API Features
+
+-   Action definition changes (see [API Endpoints](./api/api_endpoints/autonomy_api))
+    -   Mission.action added from_start and *start_waypoint_uuid* fields
+    -   ExecuteMissionByUuid.action:  added from_start and *start_waypoint_uuid* fields
+-   Message Definition changes
+    -   Mission.msg: added an array of on_start and and array of on_stop tasks fields
+    -   Task.msg: added a boolean allow_failure field
+-   Updated /safety/safety_stop message type (see [Definitions](./api/api_endpoints/definitions.mdx#msg-safety))
+-   Added import/export services for /dock, /mission_manager/ and /mission_scheduler features
 
 ### Bug Fixes
 
+-   1546: Robot cannot start mission part-way through if a task is assigned on any Waypoint prior to its location
+-   1764: Importing missions with docking tasks fails to bring in docks
+
 ### Known Issues
 
--   Mission and schedule backups made using 0.9.0 or earlier cannot be imported into 0.10.*
+-   1396: Robot gets temporarily stuck at start of mission when near a Waypoint
+-   1844: [MPC] Maximum acceleration param doesn't appear to have any effect
 
 ## 0.9.0
 
 ### New Features
 
--   Operators can now Schedule Missions to run at specific times (see [Mission Scheduler](./features/mission_scheduler))
+-   Operators can now Schedule Missions to run at specific times (see [Mission Scheduler](./features/mission_scheduler.mdx))
 -   Added in support for BulletCat12 Microhard WiFi and Cellular connections
 -   Allow Audio recording as both tasks and manual operations if UGV has Microphones
--   Create custom tasks that can be run during missions (see [Custom Tasks](./features/custom_tasks))
+-   Create custom tasks that can be run during missions (see [Custom Tasks](./features/custom_tasks.mdx))
 -   If installed with PDU, UGV can be set to Low Power mode to better conserve power
--   New navigation topics added to ROS Autonomy API (see [API Endpoints](./api/api_endpoints/autonomy_api)):
+-   New navigation topics added to ROS Autonomy API (see [API Endpoints](./api/api_endpoints/autonomy_api.mdx)):
     - /navigation/progress
     - /navigation/motion_state
     - /navigation/metrics
@@ -38,19 +54,19 @@ toc_max_heading_level: 4
 -   Improved autonomy feedback when something goes wrong in the mission to increase the diagnosability of the error
 -   Updated Navigation features available to the customer:
     - Continuous Replanning renamed to Continuous Planning and is always enabled.
-    - Constrained Planning is always enabled. Environment Variable to update the path constraint has been modified
-    (see [Navigation](./features/navigation))
+    - Constrained Planning is always enabled. Environment Variable to update the path constraint has been modified 
+    (see [Navigation](./features/navigation.mdx))
     - Removed Obstacle Avoidance Mode. The UGV will always attempt to avoid obstacles.
     - Removed Path Smoothing. This is always enabled.
-    - Docking feature added for customers who have purchased a dock.
+    - Docking feature added for customers who have purchased a dock. 
 
-### Bug Fixes
+### Bug Fixes 
 
 -   1324: Allow single Waypoint missions and/or tasks on first waypoint (required for undocking through tasks).
 -   1340: Undocking not working through tasks
 -   1607: Fixed MovePTZ task failures
 
-### Known Issues
+### Known Issues 
 
 -   131: Software upgrade process not documented fully.
 -   609: Realsense D435 collision avoidance not fully tuned.
@@ -63,20 +79,20 @@ toc_max_heading_level: 4
 ### New Features
 
 -   Inertial Measurement Units (IMUs) integrated into localization.
--   Added localization status topic (see [API Endpoints](./api/api_endpoints/autonomy_api#localizationstatus)).
--   Added re-localization service (see [API Endpoints](./api/api_endpoints/definitions#srv-reset-localization)).
+-   Added localization status topic (see [API Endpoints](./api/api_endpoints/autonomy_api.mdx#localizationstatus)).
+-   Added re-localization service (see [API Endpoints](./api/api_endpoints/definitions.mdx#srv-reset-localization)).
 -   Additional diagnostic information in the status view.
--   Docking improvements including: multiple docks, visual representation of docks on map,
+-   Docking improvements including: multiple docks, visual representation of docks on map, 
     local docking/undocking through teleop view. Docking only functional with 2D LiDARs.
 -   Customization & Tuning Appendix C added. Lists of tuning parameters for navigation
     and collision avoidance are now available. As well as, instructions/process on how to
     tune UGVs with differential drive dynamics. Instructions for UGVs with Ackermann dynamics
     are on their way.
 
-### Bug Fixes
+### Bug Fixes 
 
 -   1134: Display/Hide Datum Point not working.
--   1139: Issues with non-husky platforms.
+-   1139: Issues with non-husky platforms. 
 -   1137: Refreshing page re-enables edit button while mission running.
 -   1276: Feedback added for incorrect first Waypoint placement.
 
@@ -93,12 +109,12 @@ toc_max_heading_level: 4
 
 ### New Features
 
--   Goal terminology has been removed from the mission generation nomenclature (see
-    [Definitions](./web_user_interface/ui_autonomous_mode#definitions))
-    Users can now add tasks, apply final headings, and set navigation tolerances
+-   Goal terminology has been removed from the mission generation nomenclature (see 
+    [Definitions](./web_user_interface/ui_autonomous_mode.mdx#definitions)) 
+    Users can now add tasks, apply final headings, and set navigation tolerances 
     to any Waypoint in a Mission.
 -   Drag and Drop of Waypoints now available in Edit Mode.
--   New Waypoints can be inserted between existing Waypoints in a Mission.
+-   New Waypoints can be inserted between existing Waypoints in a Mission. 
 -   Mission API now available to create/edit/load missions, waypoints and tasks.
 -   Mission execution via mission ID is now available.
 -   The base station location is now displayed in the UI after carrying out an automated survey.
@@ -122,7 +138,7 @@ toc_max_heading_level: 4
 ### New Features
 
 -   OutdoorNav ROS API updated. API now divided into Platform and
-    Autonomy sections. See [API Overview](./api/api_overview)
+    Autonomy sections. See [API Overview](./api/api_overview.mdx)
     for more details.
 -   Simulation environment created with charge dock, base station and
     camera plugins.

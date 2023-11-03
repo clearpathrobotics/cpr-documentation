@@ -8,7 +8,7 @@ toc_max_heading_level: 4
 
 ![](/img/outdoornav_images/gps_danger.png)
 
-Ensure that the [Safety](../safety) document has been
+Ensure that the [Safety](../safety.mdx) document has been
 read and the user is aware of possible hazards when using this product as well as the safety
 methods that can be used to stop the moving UGV.
 
@@ -63,19 +63,19 @@ To access the Map Settings: Menu → Settings → Map:
 
 To create a new Mission first ensure that the UI is in "Edit Mode" (
 select the pencil icon in the bottom bar). Then open the drop down menu in the bottom
-bar and select the "Add Mission" option. This will allow the user to create a new mission 
+bar and select the "Add Mission" option. This will allow the user to create a new Mission 
 which can then be defined with Waypoints. 
 
 ### Waypoint Mode
 
-To add new Waypoints to a mission while edit mode is enabled select the 
+To add new Waypoints to a Mission while edit mode is enabled select the 
 "Waypoint Mode" button. This will allow the user to place Waypoints at 
 locations where the user clicks on the map. These will appear as red 
 Waypoints with the exception of the first waypoint (green) and the last waypoint (yellow).
 
 :::note
 
-**The first Waypoint in the mission must be within 3.0 meters of the UGV's current position.**
+**The first Waypoint in the Mission must be within 3.0 meters of the UGV's current position.**
 
 :::
 
@@ -96,7 +96,20 @@ modify their positions.
 Enable the "Waypoint Panel" toggle to open the list of available Waypoints
 within the selected Mission as shown in the figure above. The user can
 now rearrange the list, rename Waypoints, add Tasks to the Waypoints, 
-and modify the final heading and/or tolerance of each Waypoint.
+and modify the final heading and/or tolerance of each Waypoint. The user can 
+also rename the mission and apply Tasks to when the Mission starts and stops.
+
+### Rename Mission
+
+To rename the Mission click the Mission name as it appears in the upper left
+hand corner.  This should change the text into an input box that can then be 
+modified. Press enter/click aside to save the change.
+
+### Mission Tasks
+
+A Mission can have Tasks assigned to when it starts and when it stops. These 
+Tasks will run in the order they are listed in and will always run whenever the Mission
+starts or stops.  
 
 ### Rearrange List of Waypoints
 
@@ -137,7 +150,8 @@ To add a Task to the end of a Mission:
 
 3.  Select the Task from the dropdown list. Standard waypoint icons will be
     replaced accordingly depending on the task selected (waypoint icons will keep the colours
-    assigned to them based on placement).
+    assigned to them based on placement). Waypoints in the table will also have a small icon to indicate
+    if tasks are assigned to the Waypoint accordingly.
 
     -   <img src="/img/outdoornav_images/dockTask_40px.png" width="30px"/> <strong>Dock UGV: </strong>
         Will dock the UGV to begin charging the UGV's
@@ -149,7 +163,7 @@ To add a Task to the end of a Mission:
         in the task settings.
 
         Settings: Select the camera position. See
-        [Pan-Tilt-Zoom (PTZ) View](./ui_overview#ptz-view) for details on how to
+        [Pan-Tilt-Zoom (PTZ) View](ui_overview.mdx#ptz-view) for details on how to
         save camera positions.
 
     -   <img src="/img/outdoornav_images/cameraTask_40px.png" width="30px"/>  <strong>Save Image: </strong>
@@ -169,9 +183,16 @@ To add a Task to the end of a Mission:
     -   <img src="/img/outdoornav_images/undockTask_40px.png" width="30px"/> <strong>Undock UGV: </strong>
         Will undock the UGV from the autocharge dock. Once
         completed, the UGV can be sent on autonomous missions. It is
-        often recommended to place the undock task first in the list of Waypoints;
+        often recommended to place the undock task first in the list of Waypoints or as a start Mission Task;
         that way, the UGV will automatically continue towards its next
         Waypoint once undocked.
+
+        :::note
+
+        If the users places the Undock Task in the start Mission event the first Waypoint should be 
+        approximately 2-3 meters behind the UGVs docked position.
+
+        :::
 
     -   <img src="/img/outdoornav_images/waitTask_40px.png" width="30px"/> <strong>Wait: </strong>
         Will pause and wait for the specified number of
@@ -193,10 +214,12 @@ To add a Task to the end of a Mission:
         - Float CSV: A list of comma seperated float values that consist of the numerical inputs to the custom task.
         - String CSV: A list of comma seperated string values that consist of the semantic inputs to the custom task.
 
-        See the [Custom Tasks](../features/custom_tasks) section 
+        See the [Custom Tasks](../features/custom_tasks.mdx) section 
         for details on how to develop custom tasks for your application.
-
-4.  Click the Gear icon next to the selected Task to add the required
+4.  The check box next to the Task name controls mission behaviour in the event that the Task fails.  If the checkbox is 
+    checked the Mission will proceed to the next step in it's process, such as the next task or navigating to the next Waypoint. 
+    If its not checked, the Mission will become cancelled upon the Task's failure.
+5.  Click the Gear icon next to the selected Task to add the required
     Settings.
 
     :::note
@@ -222,7 +245,14 @@ by clicking the "Gear" icon.
 To set the Waypoint's final heading, the user will need to check the
 "Final Heading Enabled" checkbox and enter the heading value in
 degrees. The heading indicator on the top bar can be used to help set
-this value. See the figure below showing the advanced settings.
+this value. See the figure below showing the advanced settings. 
+
+:::note
+
+Waypoints that have a heading or tolerance assigned to them will show a different colour 
+on their settings icon.
+
+:::
 
 <center>
   <figure>
@@ -289,9 +319,21 @@ UGV is returned within the navigable area defined by the path contraint.
 
 ### Start Mission
 
-At the bottom of the UI, the user has the ability to start the currently
-selected Mission by clicking the "Play" button <img src="/img/outdoornav_images/ui_start_button.png" width="16px"/>. When the
-Mission has been started this button will turn green. 
+There are multiple ways to start a Mission. At the bottom of the UI, the user has the ability to start the currently
+selected Mission by clicking the "Play" button <img src="/img/outdoornav_images/ui_start_button.png" width="16px"/>. 
+Starting the Mission this will start the Mission from the first Waypoint. The user may also select the drop down next to the button 
+to start the Mission from the current UGV position. This is a useful way to start a Mission in the event that the UGV was blocked by 
+obstacles that were later moved. Another way that a user can start a Mission is by selecting a waypoint in edit mode and then clicking on 
+"Start Mission from Here" option. If the UGV is within 3 metres of that Waypoint the Mission will start from there.
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_start_from_waypoint.png" />
+    <figcaption>Starting from a specific Waypoint</figcaption>
+  </figure>
+</center>
+
+When the Mission has been started the Play button will turn green, regardless of how it has been started. 
 
 ### Pause Mission
 
