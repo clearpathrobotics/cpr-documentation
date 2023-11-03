@@ -477,21 +477,13 @@ package has been included.
 include the goal, the waypoint(s), tasks, goal tolerances, goal
 heading, a from_start flag, and an optional start_waypoint_uuid.
 
-#### /mission/by_id 
-
-&emsp;&emsp;**Action Type:** [clearpath_navigation_msgs/action/ExecuteMissionByUuidAction](definitions#action-mission-by-id)
-
-&emsp;&emsp;**Description:** Sends a Mission uuid to execute on the robot. This also
-includes an optional start_waypoint_uuid and a from_start flag. 
-
-
 #### /mission/by_id
 
 &emsp;&emsp;**Action Type:** [clearpath_navigation_msgs/action/ExecuteMissionByUuid](definitions.mdx#action-execute-mission-by-uuid)
 
 &emsp;&emsp;**Description:** Send goals for execution by the robot
 according to the specific mission uuid. This will include the goal, the waypoint(s), tasks,
-goal tolerances and goal heading.
+goal tolerances, goal heading, an optional start_waypoint_uuid, and a from_start flag.
 
 #### /undock
 
