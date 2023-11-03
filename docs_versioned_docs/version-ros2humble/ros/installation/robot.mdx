@@ -103,13 +103,13 @@ wget -c https://raw.githubusercontent.com/clearpathrobotics/clearpath_computer_i
 
 <StandardClearpathBridgeSetup />
 
-For details on setting up custom network interface settings see [Clearpath Computer Setup](../networking/computer_setup).
+For details on setting up custom network interface settings see [Clearpath Computer Setup](../networking/computer_setup.mdx).
 
 #### Robot YAML
 
 The `robot.yaml` file defines the configuration of the robot including the robot model, all
 supported accessories and any extra URDF elements or ROS parameters. Information about the Robot YAML
-is found in the [Robot Configuration](../config/yaml) section. This YAML is used to generate the launch,
+is found in the [Robot Configuration](../config/yaml.mdx) section. This YAML is used to generate the launch,
 URDF and ROS parameter files during runtime.
 
 Create your `robot.yaml` file and then copy it into `/etc/clearpath/` and replace the existing file.
@@ -124,6 +124,12 @@ To start the services, call
 ```
 sudo systemctl daemon-reload && sudo systemctl start clearpath-robot.service
 ```
+
+#### Additional settings
+
+Certain sensors may require additional setup, please review the [Accessories](../../robots/accessories/accessories.mdx) pages
+for any additional instructions for the sensors that you are using. For example, the Blackfly camera has additional instructions
+listed under [software bringup](../../robots/accessories/sensors/cameras/flir_blackfly_s#software-bringup).
 
 ### Option 2: Manual Source Install
 
@@ -164,7 +170,7 @@ sudo apt-get update
 
 <StandardClearpathBridgeSetup />
 
-For details on setting up custom network interface settings see [Clearpath Computer Setup](../networking/computer_setup).
+For details on setting up custom network interface settings see [Clearpath Computer Setup](../networking/computer_setup.mdx).
 
 #### Clearpath Robot metapackage
 
@@ -180,24 +186,13 @@ other than Clearpath firmware packages.
 
 #### Source install
 
-**1. Build Micro ROS**
-
-```
-mkdir -p ~/micro_ros_ws/src
-cd ~/micro_ros_ws/src
-git clone https://github.com/micro-ROS/micro-ROS-Agent.git -b humble
-cd ..
-rosdep install -r --from-paths src -i -y --rosdistro humble
-source /opt/ros/humble/setup.bash && colcon build
-```
-
-**2. Create a workspace on the robot's computer for the clearpath packages**
+**1. Create a workspace on the robot's computer for the clearpath packages**
 
 ```
 mkdir ~/clearpath_ws/src -p
 ```
 
-**3. Import dependencies**
+**2. Import dependencies**
 
 ```
 source /opt/ros/humble/setup.bash
@@ -208,13 +203,13 @@ vcs import src < dependencies.repos
 rosdep install -r --from-paths src -i -y
 ```
 
-**4. Build packages**
+**3. Build packages**
 
 ```
 colcon build --symlink-install
 ```
 
-**5. Link the workspace**
+**4. Link the workspace**
 
 Add the following line to your `~/clearpath_ws/src/clearpath_robot/clearpath_robot/scripts/generate` file,
 right under where ROS is sourced:
@@ -226,14 +221,14 @@ source /home/administrator/clearpath_ws/install/setup.bash
 
 :::note
 
-This workspace will also need to be sourced in your [robot.yaml](#robot-yaml) file as described 
-in the [ROS2 Environment](../config/yaml#ros-2-environment) section.
+This workspace will also need to be sourced in your [robot.yaml](#robot-yaml) file as described
+in the [ROS2 Environment](../config/yaml.mdx#ros-2-environment) section.
 
 :::
 
 #### Setup folder
 
-Create the setup folder where the [robot.yaml](../config/yaml) file will be stored, and where files will be generated:
+Create the setup folder where the [robot.yaml](../config/yaml.mdx) file will be stored, and where files will be generated:
 
 ```
 sudo mkdir /etc/clearpath/ -p && sudo chmod 666 /etc/clearpath/
@@ -242,7 +237,7 @@ sudo mkdir /etc/clearpath/ -p && sudo chmod 666 /etc/clearpath/
 
 The `robot.yaml` file defines the configuration of the robot including the robot model, all
 supported accessories and any extra URDF elements or ROS parameters. Information about the Robot YAML
-is found in the [Robot Configuration](../config/yaml) section. This YAML is used to generate the launch,
+is found in the [Robot Configuration](../config/yaml.mdx) section. This YAML is used to generate the launch,
 URDF and ROS parameter files during runtime.
 
 Create your `robot.yaml` file and then copy it into `/etc/clearpath/`.
@@ -270,3 +265,9 @@ Add the following line to your `~/.bashrc` file to automatically source the gene
 ```
 source /etc/clearpath/setup.bash
 ```
+
+#### Additional settings
+
+Certain sensors may require additional setup, please review the [Accessories](../../robots/accessories/accessories.mdx) pages
+for any additional instructions for the sensors that you are using. For example, the Blackfly camera has additional instructions
+listed under [software bringup](../../robots/accessories/sensors/cameras/flir_blackfly_s#software-bringup).

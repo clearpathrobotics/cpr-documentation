@@ -71,8 +71,8 @@ function Feature({ feature, className }: { feature: FeatureItem; className?: str
 }
 
 function FeaturesContainer() {
-  const firstRow = Features.slice(0, 3);
-  const secondRow = Features.slice(3);
+  const firstRow = Features.slice(0, 4);
+  const secondRow = Features.slice(4);
 
   return (
     <div className="container text--center">
@@ -101,7 +101,7 @@ export default function Home(): JSX.Element {
   return (
     <Layout
       title={`Clearpath Robotics Documentation`}
-      description="Clearpath Robotics documentation and tutorials for robotis, sensors, and autonomy software"
+      description="Clearpath Robotics documentation and tutorials for robotics, sensors, and autonomy software"
     >
       <main>
         <HomepageHeader />
