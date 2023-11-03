@@ -1,5 +1,5 @@
-import React from 'react';
-import DocVersionBanner from '@theme-original/DocVersionBanner';
+import React from "react";
+import DocVersionBanner from "@theme-original/DocVersionBanner";
 import { useLocation } from "@docusaurus/router";
 
 export default function DocVersionBannerWrapper(props) {
