@@ -1,0 +1,199 @@
+---
+title: Mission Scheduler API
+sidebar_label: Mission Scheduler API
+sidebar_position: 5
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+The Mission Scheduler API provides a ROS interface for creating, deleting, editing, and executing missions on a daily
+schedule.  Schedules are stored in a database-like structure on-disk, and can be executed manually or automatically.
+
+The web UI is the primary method of creating and modifying schedules, though the ROS API is available should you wish
+to write your own interface or create automation tools to interact with the scheduler.
+
+## The Schedule Object
+
+A schedule consists of one or more missions to be executed in the specified order at a particular start time. For
+consistency the start time is expressed as a 24-hour time in UTC.
+
+The schedule must be in one of 3 modes:
+- `MODE_ONCE` -- the mission is executed exactly once per day, at the indicted UTC time
+- `MODE_LOOP` -- the mission is executed a set number of times per day, starting at the indicated UTC time and repeating
+  at fixed intervals until the desired number of repetitions is reached
+- `MODE_TRANSIENT` -- the mission is run exactly once, and is not saved to the persistent storage. This is intended to
+  be used for deferred execution of a mission (e.g. `execute mission X in 5 minutes` would use a transient schedule)
+
+Deleting a mission from the Mission Manager will result in that mission being automatically removed from any schedules
+it was part of. If a schedule has no missions it is automatically disabled, and cannot be re-enabled until it contains
+at least one mission.
+
+### A Note on Schedule Timing
+
+Automatically-scheduled missions are executed at the provided time +/- 10 seconds.  The duration provided by the
+`next_schedule` topic and `get_next_schedule` service is therefore approximate. We recommend rounding the time to the
+nearest minute when displaying the countdown information to the user in any sort of GUI.
+
+## Topics Exported by Mission Scheduler
+
+### mission_scheduler/next_schedule
+
+**Message Type:** [cpr_mission_scheduler_msgs/msg/NextSchedule](definitions.mdx#scheduler-nextschedule)
+
+**Description:** Publishes the UUID and duration to the next scheduled mission.  If no missions are scheduled the UUID
+will be blank.
+
+**Update Rate:** 1Hz
+
+### mission_scheduler/state
+
+**Message Type:** [cpr_mission_scheduler_msgs/msg/StorageState](definitions.mdx#scheduler-state)
+
+**Description:** Publishes the current state of the database. Anything that needs to display the current set of
+schedules should subscribe to this topic
+
+**Update Rate:** Latched, publishes on state-change only
+
+## Services Exported by Mission Scheduler
+
+### mission_scheduler/add_mission
+
+**Service Type:** [cpr_mission_manager_msgs/srv/AddRemoveById](definitions.mdx#storage-addremovebyid)
+
+**Description:** Add a mission to an existing schedule.
+
+### mission_scheduler/clone_schedule
+
+**Service Type:** [cpr_mission_scheduler_msgs/srv/CloneSchedule](definitions.mdx#scheduler-cloneschedule)
+
+**Description:** Perform a deep-copy of an existing schedule
+
+### mission_scheduler/create_schedule
+
+**Service Type:** [cpr_mission_scheduler_msgs/srv/CreateSchedule](definitions.mdx#scheduler-createschedule)
+
+**Description:** Create a new schedule
+
+### mission_scheduler/delete_all_schedules
+
+**Service Type:** [cpr_mission_manager_msgs/srv/DeleteEverything](definitions.mdx#storage-deleteeverything)
+
+**Description:** Delete all schedules.
+
+:::note
+
+This action is permanent and cannot be undone. Use with caution.
+
+:::
+
+### mission_scheduler/delete_schedule
+
+**Service Type:** [cpr_mission_manager_msgs/srv/DeleteById](definitions.mdx#storage-deletebyid)
+
+**Description:** Delete a single schedule.
+
+:::note
+
+This action is permanent and cannot be undone. Use with caution.
+
+:::
+
+### mission_scheduler/enable_schedule
+
+**Service Type:** [mission_scheduler/srv/UpdateSchedule](definitions.mdx#scheduler-enablechedule)
+
+**Description:** Enable or disable a schedule.
+
+:::note
+
+Disabled schedules can still be run manually with the `run_now` action (see below). Disabled schedules will never
+be run automatically.
+
+:::
+
+### mission_scheduler/export
+
+**Service Type:** [cpr_mission_scheduler_msgs/srv/ExportData](definitions.mdx#scheduler-exportdata)
+
+**Description:** Export all schedule data to a base64 string to it can be backed-up or copied to another robot.
+
+:::note
+
+This service is intended to be used in combination with the `import_data` service to facilitate backups or
+synchronizing schedules across multiple robots.
+
+:::
+
+### mission_scheduler/get_all_schedules
+
+**Service Type:** [mission_scheduler/srv/GetAllSchedules](definitions.mdx#scheduler-getallschedules)
+
+**Description:** Get the list of all schedules. The list will include enabled, disabled, and transient schedules.
+
+### mission_scheduler/get_next_schedule
+
+**Service Type:** [mission_scheduler/srv/GetNextSchedule](definitions.mdx#scheduler-getnextschedule)
+
+**Description:** Get the UUID of the next schedule that will be run automatically. If nothing is scheduled (e.g. because
+there are no enabled schedules) the UUID will be blank.
+
+:::note
+
+The duration is the approximate time left before the schedule will be started automatically.  Schedules will start at
+their designated start time +/- 10 seconds.
+
+:::
+
+### mission_scheduler/get_schedule
+
+**Service Type:** [mission_scheduler/srv/GetSchedule](definitions.mdx#scheduler-getschedule)
+
+**Description:** Get the schedule with the provided UUID. If an error occurred, or no schedule with the provided UUID
+exists, the returned object will have a blank UUID.
+
+### mission_scheduler/import
+
+**Service Type:** [cpr_mission_scheduler_msgs/srv/ImportData](definitions.mdx#scheduler-importdata)
+
+**Description:** Import data exported by the `export_data` service.  This will delete all schedules and replace the
+database contents with the imported data.
+
+:::note
+
+This service is intended to be used in combination with the `export_data` service to facilitate backups or
+synchronizing schedules across multiple robots.
+
+:::
+
+### mission_scheduler/remove_mission
+
+**Service Type:** [cpr_mission_manager_msgs/srv/AddRemoveById](definitions.mdx#storage-addremovebyid)
+
+**Description:** Remove the mission at a given position from a schedule, or remove all copies of a mission from a
+schedule
+
+### mission_scheduler/update_schedule
+
+**Service Type:** [mission_scheduler/srv/UpdateSchedule](definitions.mdx#scheduler-updateschedule)
+
+**Description:** Modify an existing schedule. All of the schedule's properties are overwritten with the new values
+provided in the service call.
+
+:::note
+
+Before modifying a schedule it is recommended to call the `get_schedule` service to get the schedule's current state,
+copy all values to the service request object, and then change the fields you want to overwrite.
+
+:::
+
+## Actions Exported by Mission Scheduler
+
+### mission_scheduler/run_now
+
+**Action Type:** [cpr_mission_scheduler_msgs/action/RunScheduleByUuid](definitions.mdx#scheduler-runschedulebyuuid)
+
+**Description:** Execute the schedule with the given UUID. The `delay` parameter will defer the execution by the
+specified time.  This action can be used to run a disabled schedule, or run a schedule at a time other than its
+scheduled start time.
+
+**Feedback Rate:** 1Hz
