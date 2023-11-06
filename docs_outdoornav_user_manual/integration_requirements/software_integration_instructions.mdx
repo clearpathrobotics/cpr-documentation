@@ -116,21 +116,27 @@ docker compose --profile outdoornav up -d --build
 rostopic echo -n 1 /platform/odom
 rostopic echo -n 1 /platform/cmd_vel
 
-# IMU 1 (if included)
-rostopic echo -n 1 /sensors/imu_0/data
- 
 rostopic echo -n 1 /localization/odom
+
+# GNSS units
+rostopic echo /sensors/gps_<sensor_num>/fix
+rostopic echo /sensors/gps_<sensor_num>/vel
+
+# IMU (if included)
+rostopic echo -n 1 /sensors/imu_<sensor_num>/data
  
 # Velodyne/Ouster/LMS1XX/Hokuyo/OutdoorScan (if included)
 rostopic echo /sensors/lidar_<sensor_num>/pointcloud
 rostopic echo /sensors/lidar_<sensor_num>/scan
- 
+
 # Realsense D435 Front (if included)
 rostopic echo -n 1 /sensors/stereo_0/pointcloud
+rostopic echo -n 1 /sensors/stereo_0/image
 rostopic echo -n 1 /sensors/stereo_0/depth/image_rect_raw
- 
+
 # Realsense D435 Rear (if included)
 rostopic echo -n 1 /sensors/stereo_1/pointcloud
+rostopic echo -n 1 /sensors/stereo_1/image
 rostopic echo -n 1 /sensors/stereo_1/depth/image_rect_raw
 ```
 
