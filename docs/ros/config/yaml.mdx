@@ -39,6 +39,8 @@ Additionally, there are two other, required parameters:
 
 Below is the sample **Husky A200** robot YAML of the robot displayed above. In the following sections, we will reference each and every component of this sample file, and show how to robot looks as we build it up.
 
+Find more samples `robot.yaml` configuration files in the [Clearpath Configuration repository](https://github.com/clearpathrobotics/clearpath_config/).
+
 You can also skip to each section to get an explanation of each part of the sample configuration:
 
 1. [**Serial Number Sample**](#serial-sample)
@@ -66,6 +68,7 @@ system:
     namespace: a200_0000
     domain_id: 0
     rmw_implementation: rmw_fastrtps_cpp
+    workspaces: []
 platform:
   controller: ps4
   attachments:
@@ -140,7 +143,7 @@ sensors:
   gps: []
   imu: []
   lidar2d:
-    - model: hokuyo_ust10
+    - model: hokuyo_ust
       urdf_enabled: true
       launch_enabled: true
       parent: bracket_0_mount
@@ -215,6 +218,7 @@ The **ros2** sections is necessary to setup the ROS 2 middleware.
 - **namespace** specified will be appended as a prefix to all sensor topics to prevent topic cloberring when multiple robots are on the same network and domain ID.
 - **domain_id** specifies the ROS 2 domain ID to use.
 - **rmw_implementation** specifies the ROS 2 middleware to use. **Currently, it only supports `rmw_fastrtps_cpp`.**
+- **workspaces** indicates a list of workspaces that need to be sourced by specifying the path to the setup.py
 
 ### Sample {#system-sample}
 
@@ -240,6 +244,7 @@ system:
     namespace: a200_0000
     domain_id: 0
     rmw_implementation: rmw_fastrtps_cpp
+    workspaces: []
 ```
 
 At this point, with just the **serial_number** and **system** defined: our robot is just the standard **Husky A200** platform, and looks like this:
@@ -261,9 +266,20 @@ At this point, with just the **serial_number** and **system** defined: our robot
 
 Every robot platform has unique structures such as versatile sensor mounting solutions, wireless charging receivers, and waterproofing enclosures; we refer to these as attachments.
 
+#### Joystick Controller
+
+We support two types of controllers:
+
+- **ps4**: standard Playstation4 controller.
+- **logitech**: Logitech F710
+
+```yaml
+controller: ps4 # or logitech
+```
+
 #### Attachments
 
-There are three types of attachments:
+There are four types of attachments:
 
 1. **bumpers** modify the front face and rear face of the robot platform.
 2. **fenders** modify the area above the wheels on the front and rear of the platform.
@@ -364,15 +380,15 @@ platform:
   extras:
     ros_parameters:
       platform_velocity_controller:
-        platform_velocity_controller.wheel_radius": 0.1651
-        platform_velocity_controller.linear.x.max_velocity": 1.0
-        platform_velocity_controller.linear.x.min_velocity": -1.0
-        platform_velocity_controller.linear.x.max_acceleration": 3.0
-        platform_velocity_controller.linear.x.min_acceleration": -3.0
-        platform_velocity_controller.angular.z.max_velocity": 2.0
-        platform_velocity_controller.angular.z.min_velocity": -2.0
-        platform_velocity_controller.angular.z.max_acceleration": 6.0
-        platform_velocity_controller.angular.z.min_acceleration": -6.0
+        wheel_radius": 0.1651
+        linear.x.max_velocity": 1.0
+        linear.x.min_velocity": -1.0
+        linear.x.max_acceleration": 3.0
+        linear.x.min_acceleration": -3.0
+        angular.z.max_velocity": 2.0
+        angular.z.min_velocity": -2.0
+        angular.z.max_acceleration": 6.0
+        angular.z.min_acceleration": -6.0
 ```
 
 **J100 Jackal Controller Defaults:**
@@ -382,15 +398,15 @@ platform:
   extras:
     ros_parameters:
       platform_velocity_controller:
-        platform_velocity_controller.wheel_radius": 0.098
-        platform_velocity_controller.linear.x.max_velocity": 2.0
-        platform_velocity_controller.linear.x.min_velocity": -2.0
-        platform_velocity_controller.linear.x.max_acceleration": 20.0
-        platform_velocity_controller.linear.x.min_acceleration": -20.0
-        platform_velocity_controller.angular.z.max_velocity": 4.0
-        platform_velocity_controller.angular.z.min_velocity": -4.0
-        platform_velocity_controller.angular.z.max_acceleration": 25.0
-        platform_velocity_controller.angular.z.min_acceleration": -25.0
+        wheel_radius": 0.098
+        linear.x.max_velocity": 2.0
+        linear.x.min_velocity": -2.0
+        linear.x.max_acceleration": 20.0
+        linear.x.min_acceleration": -20.0
+        angular.z.max_velocity": 4.0
+        angular.z.min_velocity": -4.0
+        angular.z.max_acceleration": 25.0
+        angular.z.min_acceleration": -25.0
 ```
 
 #### Sample {#platform-sample}
@@ -923,11 +939,11 @@ imu:
 
 ### LiDAR 2D
 
-- **_hokuyo_ust10:_**
+- **_hokuyo_ust:_**
 
 ```yaml
 lidar2d:
-  - model: hokuyo_ust10
+  - model: hokuyo_ust
     urdf_enabled: true
     launch_enabled: true
     parent: base_link
@@ -1030,11 +1046,11 @@ lidar3d:
   </figure>
 </center>
 
-Next, we will add a `hokuyo_ust10` to the **bracket** we added earlier. Since that is the first **bracket**, then it's mounting location will be: `bracket_0_mount`; setting the parent link of the sensor, we get:
+Next, we will add a `hokuyo_ust` to the **bracket** we added earlier. Since that is the first **bracket**, then it's mounting location will be: `bracket_0_mount`; setting the parent link of the sensor, we get:
 
 ```yaml
 lidar2d:
-  - model: hokuyo_ust10
+  - model: hokuyo_ust
     urdf_enabled: true
     launch_enabled: true
     parent: bracket_0_mount
@@ -1115,7 +1131,7 @@ sensors:
   gps: []
   imu: []
   lidar2d:
-    - model: hokuyo_ust10
+    - model: hokuyo_ust
       urdf_enabled: true
       launch_enabled: true
       parent: bracket_0_mount

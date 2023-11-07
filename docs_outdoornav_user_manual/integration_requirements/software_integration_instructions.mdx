@@ -8,8 +8,8 @@ toc_max_heading_level: 4
 
 import versions from "@site/static/versions.js"
 
-Prior to installing the OutdoorNav software, ensure that you have completed the relevant [Hardware Kit Checklist](./hardware_integration_requirements). If installing on a secondary/backpack/Starter Kit computer, ensure to have also completed the:
-- [Interface Control Checklist](./interface_control_requirements)
+Prior to installing the OutdoorNav software, ensure that you have completed the relevant [Hardware Kit Checklist](hardware_integration_requirements/hardware_integration_requirements.mdx). If installing on a secondary/backpack/Starter Kit computer, ensure to have also completed the:
+- [Interface Control Checklist](interface_control_requirements.mdx)
 
 All the following instructions, unless otherwise specified, are to be run on the OutdoorNav computer.
 
@@ -35,7 +35,7 @@ cd ~/cpr_outdoornav_launch/scripts/
 
 ### Configure OutdoorNav Sensors {#configure-outdoornav-sensors}
 
-Prior to configuring the sensors, ensure that you have measured the position (XYZ) and orientation (RPY) of each of your sensors with respect to the `base_link`. See your results from the [Integration Requirements](./hardware_integration_requirements).
+Prior to configuring the sensors, ensure that you have measured the position (XYZ) and orientation (RPY) of each of your sensors with respect to the `base_link`. See your results from the [Integration Requirements](hardware_integration_requirements/hardware_integration_requirements.mdx).
 
 ``` bash
 cd ~/cpr_outdoornav_launch/scripts/
@@ -71,7 +71,7 @@ docker compose --profile outdoornav pull
 ```
 
 :::note
-If you are installing the OutdoorNav software on a secondary or Starter Kit computer, you must also complete the [UGV Computer Checklist](./platform_computer_checklist)
+If you are installing the OutdoorNav software on a secondary or Starter Kit computer, you must also complete the [UGV Computer Checklist](platform_computer_checklist.mdx)
 :::
 
 ### Configure UGV Footprint {#configure-platform-footprint}
@@ -116,21 +116,27 @@ docker compose --profile outdoornav up -d --build
 rostopic echo -n 1 /platform/odom
 rostopic echo -n 1 /platform/cmd_vel
 
-# IMU 1 (if included)
-rostopic echo -n 1 /sensors/imu_0/data
- 
 rostopic echo -n 1 /localization/odom
+
+# GNSS units
+rostopic echo /sensors/gps_<sensor_num>/fix
+rostopic echo /sensors/gps_<sensor_num>/vel
+
+# IMU (if included)
+rostopic echo -n 1 /sensors/imu_<sensor_num>/data
  
 # Velodyne/Ouster/LMS1XX/Hokuyo/OutdoorScan (if included)
 rostopic echo /sensors/lidar_<sensor_num>/pointcloud
 rostopic echo /sensors/lidar_<sensor_num>/scan
- 
+
 # Realsense D435 Front (if included)
 rostopic echo -n 1 /sensors/stereo_0/pointcloud
+rostopic echo -n 1 /sensors/stereo_0/image
 rostopic echo -n 1 /sensors/stereo_0/depth/image_rect_raw
- 
+
 # Realsense D435 Rear (if included)
 rostopic echo -n 1 /sensors/stereo_1/pointcloud
+rostopic echo -n 1 /sensors/stereo_1/image
 rostopic echo -n 1 /sensors/stereo_1/depth/image_rect_raw
 ```
 
@@ -142,4 +148,4 @@ The 2D LiDARs (LMS1XX, Hokuyo) will not have a pointcloud topic.
 
 :::
 
-Once installation is complete, you can proceed to [Getting Started](../getting_started/system_setup) to start using the software.
+Once installation is complete, you can proceed to [Getting Started](../getting_started/system_setup.mdx) to start using the software.

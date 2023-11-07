@@ -9,7 +9,7 @@ toc_max_heading_level: 5
 The [Nav2](https://github.com/ros-planning/navigation2) package provides open source navigation controllers,
 planners, and utilities. The [clearpath_nav2_demos](https://github.com/clearpathrobotics/clearpath_nav2_demos/tree/main) package
 provides default configurations for supported robots, but these can be customized for your use case. This
-tutorial will use the [Clearpath simulator](../simulator/overview), but will work on a physical robot too.
+tutorial will use the [Clearpath simulator](../simulator/overview.mdx), but will work on a physical robot too.
 We will be using a J100 with a Hokuyo UST10 attached to the front of the robot.
 
 <details><summary>J100 YAML</summary>
@@ -30,8 +30,16 @@ system:
     namespace: j100_0001
     domain_id: 0
     rmw_implementation: rmw_fastrtps_cpp
-    workspaces:
-      - /home/administrator/micro_ros_ws/install/setup.bash
+  extras:
+    ros_parameters:
+      linear.x.max_velocity": 2.0
+      linear.x.min_velocity": -2.0
+      linear.x.max_acceleration": 20.0
+      linear.x.min_acceleration": -20.0
+      angular.z.max_velocity": 4.0
+      angular.z.min_velocity": -4.0
+      angular.z.max_acceleration": 25.0
+      angular.z.min_acceleration": -25.0
 platform:
   controller: ps4
   decorations:
@@ -52,9 +60,6 @@ platform:
       model: default
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
-  extras:
-    urdf: null
-    control: null
 sensors:
   lidar2d:
     - model: hokuyo_ust
@@ -64,8 +69,9 @@ sensors:
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
       ros_parameters:
-        angle_min: -1.5707
-        angle_max: 1.5707
+        urg_node:
+          angle_min: -1.5707
+          angle_max: 1.5707
 ```
 
 </p>
@@ -74,7 +80,7 @@ sensors:
 :::tip
 
 Make sure you have installed the simulator before starting this tutorial. Take a look at the
-[installation](../simulator/install) guide for details.
+[installation](../simulator/install.mdx) guide for details.
 
 :::
 

@@ -27,6 +27,6 @@ sensors defined in the robot YAML. This service can be stopped or started withou
 ### Clearpath Robot
 
 The `clearpath-robot` service is the "parent" service of `clearpath-platform` and `clearpath-sensors`. If it is restarted, then both the platform and sensors services
-will restart. This service will run all of the [generators](generators) in the `PreExec` step, before allowing the two dependent services to start. While
+will restart. This service will run all of the [generators](generators.mdx) in the `PreExec` step, before allowing the two dependent services to start. While
 the platform and sensors services are running, the robot service will periodically check for changes in the `robot.yaml` file. If a change is detected
 the service restarts, re-generating all files and restarting the platform and sensors services.
