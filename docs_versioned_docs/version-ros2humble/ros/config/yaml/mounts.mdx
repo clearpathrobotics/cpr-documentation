@@ -1,0 +1,154 @@
+---
+title: Mounts
+sidebar_label: Mounts
+sidebar_position: 6
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+Most sensors can use similar mounting structures. Therefore, we want to keep mounts separate from sensors, such that users could attach their own sensors to existing mounts.
+
+The following **mounts** are available:
+
+- **riser:** a plate with the defined number of rows and columns of an **80mm x 80mm** grid.
+
+```yaml
+riser:
+  - parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    rows: 4 # rows of 80mm x 80mm grid
+    columns: 4 # columns of 80mm x 80mm grid
+    thickness: 0.00635
+```
+
+- **bracket:** a small **100mm x 100mm** plate with **80mm x 80mm** screw holes to attach it to the grid. It comes with hole patterns to attach all supported small sensors.
+
+```yaml
+bracket:
+  - parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    model: horizontal # or large or vertical
+```
+
+- **fath_pivot:** generally a camera mount on a single axis that can be adjusted to change the pitch of the camera.
+
+```yaml
+fath_pivot:
+  - parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    angle: 0.0 # in radian
+```
+
+- **sick:** are mounts specifically designed to mount SICK LiDARs. The orientation of the LiDAR on the mount can be set to either `upright` or `inverted`.
+```yaml
+sick:
+  - parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    model: inverted # or upright
+```
+
+- **post:** are vertical extrusion rails to which sensors can be added.
+```yaml
+post:
+  - parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    model: single # or dual or quad
+    spacing: 0.08 # distance between multiple posts if model is dual or quad
+    height: 0.075 # height of post
+```
+
+- **disk:** are circular plates which are used to mount circular sensors, i.e. the Velodyne
+```yaml
+disk:
+  - parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+```
+
+# Sample
+
+<details><summary>Sample A200 Mounts Section</summary>
+<p>
+
+<center>
+  <figure>
+    <img
+      src={require("../img/husky_accessories_0.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with Covered User Bay</figcaption>
+  </figure>
+</center>
+
+In this sample, we will add a **bracket** to mount a LiDAR to the front of the **Husky A200**.
+
+We select the **_top_plate_mount_d1_**, i.e. the middle (**d**), front (**1**), 80mm x 80mm mounting location on the **pacs** top plate.
+
+```yaml
+bracket:
+  - parent: top_plate_mount_d1
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    model: horizontal
+```
+
+<center>
+  <figure>
+    <img
+      src={require("../img/husky_mounts_0.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with D1 Bracket</figcaption>
+  </figure>
+</center>
+
+Then, we want to add a camera to the sensor arch. However, we will complicate things by adding it upside down to the extrusion.
+
+We choose a **fath_pivot** mount, and then we set its **parent** to the **_sensor_arch_mount_**.
+
+Using the **xyz** entry, we lower the mount by 21mm to get it under the sensor arch; then, we roll it by PI to get it upside down.
+
+```yaml
+fath_pivot:
+  - parent: sensor_arch_mount # mount atop the sensor arch
+    xyz: [0.0, 0.0, -0.021] # lower pivot mount to below the sensor arch
+    rpy: [3.1415, 0.0, 0.0] # roll pivot mount to flip it upside down
+    angle: 0.0
+```
+
+<center>
+  <figure>
+    <img
+      src={require("../img/husky_mounts_1.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with upside down Fath Pivot Mount</figcaption>
+  </figure>
+</center>
+
+Since we did not need a riser, we leave that section empty; the resulting **mounts** section:
+
+```yaml
+mounts:
+  bracket:
+    - parent: top_plate_mount_d1
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      model: horizontal
+  fath_pivot:
+    - parent: sensor_arch_mount
+      xyz: [0.0, 0.0, -0.021]
+      rpy: [3.1415, 0.0, 0.0]
+      angle: 0.0
+  riser: []
+  sick: []
+  post: []
+  disk: []
+```
+
+</p>
+</details>

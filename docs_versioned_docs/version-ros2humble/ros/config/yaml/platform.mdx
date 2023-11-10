@@ -1,0 +1,238 @@
+---
+title: Platform
+sidebar_label: Platform
+sidebar_position: 4
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+Every robot platform has unique structures such as versatile sensor mounting solutions, wireless charging receivers, and waterproofing enclosures; we refer to these as attachments.
+
+# Joystick Controller
+We support two types of controllers:
+  - **ps4**: standard Playstation4 controller.
+  - **logitech**: Logitech F710
+
+```yaml
+controller: ps4 # or logitech
+```
+
+# Attachments
+
+There are four types of attachments:
+
+1. **bumpers** modify the front face and rear face of the robot platform.
+2. **fenders** modify the area above the wheels on the front and rear of the platform.
+2. **top_plates** modify the top face of the robot platform.
+3. **structures** are large custom parts that are added atop the top plate.
+
+# Husky A200 {#attachments-a200}
+
+The **Husky A200** has a few models for each of it's attachments:
+
+- **bumpers**:
+  - **_default:_** standard bumpers.
+  - **_wibotic:_** wireless charging receiver.
+
+```yaml
+front_bumper:
+  enabled: true
+  model: default # or wibotic
+  xyz: [0.0, 0.0, 0.0]
+  rpy: [0.0, 0.0, 0.0]
+  extension: 0.0
+rear_bumper:
+  enabled: true
+  model: default # or wibotic
+  xyz: [0.0, 0.0, 0.0]
+  rpy: [0.0, 0.0, 0.0]
+  extension: 0.0
+```
+
+- **top plate**:
+  - **_default:_** standard Husky A200 top plate.
+  - **_large:_** extended top plate, used to allow for enough space to mount large payloads.
+  - **_pacs:_** comes with **80x80 mm** mounting screw holes for versatile sensor placement.
+
+```yaml
+top_plate:
+  enabled: true
+  model: default # or 'pacs' or 'large'
+  xyz: [0.0, 0.0, 0.0]
+  rpy: [0.0, 0.0, 0.0]
+```
+
+- **struture**:
+  - **_sensor_arch_300:_** 300mm tall extrusion sensor arch.
+  - **_sensor_arch_510:_** 510mm tall extrusion sensor arch.
+
+```yaml
+structure:
+  enabled: false
+  model: sensor_arch_300 # or sensor_arch_510
+  xyz: [0.0, 0.0, 0.0]
+  rpy: [0.0, 0.0, 0.0]
+```
+
+# Jackal J100 {#attachments-j100}
+
+The **Jackal J100** currently only has customization options with it's fenders.
+
+- **fenders** can be swapped from the `default` model to the `sensor` model that has a mounting location for a small lidar or camera.
+
+```yaml
+front_fender:
+  enabled: true # or false
+  model: default # or sensor
+  xyz: [0.0, 0.0, 0.0]
+  rpy: [0.0, 0.0, 0.0]
+rear_fender:
+  enabled: true # or false
+  model: default #  or sensor
+  xyz: [0.0, 0.0, 0.0]
+  rpy: [0.0, 0.0, 0.0]
+```
+
+# Extras
+
+Despite all current customization options, we still would like our users to be able to add-in their existing custom URDF to the robot platform URDF and pass in and overwrite parameters to all platform nodes.
+Extras have the following entries:
+
+- **urdf:** absolute path to URDF to add to robot platform URDF.
+- **ros_parameters:** in YAML to pass in parameters to platform nodes. This is useful to change parameters such as the robot's velocity and acceleration.
+
+```yaml
+extras:
+  urdf: null # /absolute/path/to/urdf
+  ros_parameters: {} # node parameter
+```
+
+# ROS Parameters
+A common use case is to set and update the parameters to the `platform_velocity_controller` node. These can be used to modify the linear and angular velocity and acceleratation.
+
+These can be passed in as follows:
+
+**A200 Husky Controller Defaults:**
+```yaml
+platform:
+  extras:
+    ros_parameters:
+      platform_velocity_controller:
+        wheel_radius": 0.1651
+        linear.x.max_velocity": 1.0
+        linear.x.min_velocity": -1.0
+        linear.x.max_acceleration": 3.0
+        linear.x.min_acceleration": -3.0
+        angular.z.max_velocity": 2.0
+        angular.z.min_velocity": -2.0
+        angular.z.max_acceleration": 6.0
+        angular.z.min_acceleration": -6.0
+```
+
+
+**J100 Jackal Controller Defaults:**
+```yaml
+platform:
+  extras:
+    ros_parameters:
+      platform_velocity_controller:
+        wheel_radius": 0.098
+        linear.x.max_velocity": 2.0
+        linear.x.min_velocity": -2.0
+        linear.x.max_acceleration": 20.0
+        linear.x.min_acceleration": -20.0
+        angular.z.max_velocity": 4.0
+        angular.z.min_velocity": -4.0
+        angular.z.max_acceleration": 25.0
+        angular.z.min_acceleration": -25.0
+```
+
+# Sample
+
+<details><summary>Sample A200 Platform Section</summary>
+<p>
+
+<center>
+  <figure>
+    <img
+      src={require("../img/husky_platform_0.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with Default Top Plate</figcaption>
+  </figure>
+</center>
+
+In this sample, we swapped the top plate from the **_default_** model to the **_pacs_** model. Notice all the links added by the **_pacs_** plate below, compared to the **_default_** plate above.
+
+```yaml
+top_plate:
+  enabled: true
+  model: pacs # switched from 'default' to 'pacs'
+  xyz: [0.0, 0.0, 0.0]
+  rpy: [0.0, 0.0, 0.0]
+```
+
+<center>
+  <figure>
+    <img
+      src={require("../img/husky_platform_1.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with PACS Top Plate</figcaption>
+  </figure>
+</center>
+
+Then, we added a sensor arch to add our sample sensors to. We can do this by simply enabling the **structure** and setting the model to **_sensor_arch_300_**.
+
+```yaml
+structure:
+  enabled: true
+  model: sensor_arch_300
+  xyz: [0.0, 0.0, 0.0]
+  rpy: [0.0, 0.0, 0.0]
+```
+
+<center>
+  <figure>
+    <img
+      src={require("../img/husky_platform_2.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with 300mm Sensor Arch</figcaption>
+  </figure>
+</center>
+
+In terms of the **front_bumper** and **rear_bumper**, we left these as defaults. And, since we are not including any customization URDF or launch parameters; the resulting **platform** section look like this:
+
+```yaml
+platform:
+  controller: ps4
+  attachments:
+    front_bumper:
+      enabled: true
+      model: default
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      extension: 0.0
+    rear_bumper:
+      enabled: true
+      model: default
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      extension: 0.0
+    structure:
+      enabled: true
+      model: sensor_arch_300
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+    top_plate:
+      enabled: true
+      model: pacs
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+  extras:
+    urdf: null
+    ros_parameters: {}
+```
+
+</p>
+</details>

@@ -1,0 +1,69 @@
+---
+title: System
+sidebar_label: System
+sidebar_position: 3
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+Proper networking setup is crucial in setting up the ROS 2 middleware and ensure other onboard computers communicate reliably.
+
+### Hosts
+
+The **hosts** section serves as a way to match IP addresses to hostnames. By default, Clearpath robots use the serial number as the hostname and have a default IP of `192.168.131.1`.
+
+- The **self** entry refers to what hostname is this configuration file on.
+- The **platform** entry refers to the hostname and IP of the robot platform's main computer.
+- The **onboard** entry is used to define the hostname and IP of other computers on the robot.
+- The **remote** entry is used to define the hostname and IP of computers in the system that are not on the robot, such as a user's PC.
+
+### ROS 2 Environment
+
+The **ros2** sections is necessary to setup the ROS 2 middleware.
+
+- **username** must match the username of the user that is to run all ROS nodes.
+- **namespace** specified will be appended as a prefix to all sensor topics to prevent topic cloberring when multiple robots are on the same network and domain ID.
+- **domain_id** specifies the ROS 2 domain ID to use.
+- **rmw_implementation** specifies the ROS 2 middleware to use. **Currently, it only supports `rmw_fastrtps_cpp`.**
+- **workspaces** indicates a list of workspaces that need to be sourced by specifying the path to the setup.py
+
+# Sample
+
+<details><summary>Sample A200 System Section</summary>
+<p>
+
+In our sample, we have a **Husky A200** platform whose primary computer has hostname: `cpr-a200-0000` and IP: `192.168.131.1`.
+
+And, note that this configuration YAML is meant to be on that primary computer, hence `self: cpr-a200-0000`.
+
+By default, all Clearpath robots use username `administrator` and the robot's namespace matches the `serial_number`.
+
+```yaml
+system:
+  hosts:
+    self: cpr-a200-0000
+    platform:
+      cpr-a200-0000: 192.168.131.1
+    onboard: {}
+    remote: {}
+  ros2:
+    username: administrator
+    namespace: a200_0000
+    domain_id: 0
+    rmw_implementation: rmw_fastrtps_cpp
+    workspaces: []
+```
+
+At this point, with just the **serial_number** and **system** defined: our robot is just the standard **Husky A200** platform, and looks like this:
+
+<center>
+  <figure>
+    <img
+      src={require("../img/husky_platform_0.png").default}
+      width="500"
+    />
+    <figcaption>Default Husky A200</figcaption>
+  </figure>
+</center>
+
+</p>
+</details>

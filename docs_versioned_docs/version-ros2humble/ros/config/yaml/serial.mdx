@@ -1,0 +1,27 @@
+---
+title: Serial Number
+sidebar_label: Serial Number
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+The Clearpath serial number is composed of two sections:
+1. an alpha-numerical code corresponding to the robot platform, e.g. `a200`
+2. followed by an integer corresponding to the unit number, e.g. `0001`
+3. separated by a hyphen, `-`, e.g. `a200-0001`.
+
+At this moment, the supported robot platforms are:
+
+1. [Husky A200](../../../robots/outdoor_robots/husky/user_manual_husky.mdx): `a200-0000`
+2. [Jackal J100](../../../robots/outdoor_robots/jackal/user_manual_jackal.mdx): `j100-0000`
+3. [Warthog W200](../../../robots/outdoor_robots/warthog/user_manual_warthog.mdx): `w200-0000`
+
+Every robot platform has specific [attachments](#attachments), i.e. platform specific parts, that are selected based on the serial number passed. Therefore, it is **required** that a serial number is specified in the `robot.yaml`.
+
+# Sample
+
+In our sample, we use a **Husky A200** and therefore have set our serial number to:
+
+```yaml
+serial_number: "a200-0000"
+```

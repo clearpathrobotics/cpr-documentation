@@ -1,0 +1,578 @@
+---
+title: Sensors
+sidebar_label: Sensors
+sidebar_position: 7
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+At Clearpath, we have been migrating our large inventory of tested sensor drivers from ROS 1 to ROS 2.
+
+Sensors are split up into sections:
+
+- **Cameras:** publish **_sensor_msgs/Image_** messages
+- **GPS:** publish **_sensor_msgs/NavSatFix_** messages
+- **IMU:** publish **_sensor_msgs/Imu_** messages
+- **LiDAR 2D:** publish **_sensor_msgs/LaserScan_** messages
+- **LiDAR 3D:** publish **_sensor_msgs/PointCloud2_** messages
+
+In ROS 2, sensors use a `ros_parameters` YAML that contains all launch parameters for the driver node. To facilitate complete customization of these node parameters, the `ros_parameters` section, under every sensor entry, serves as a way to pass those key-value pairs to the corresponding node.
+
+By default, we pass tested parameters that are used on Clearpath robots.
+
+## Cameras
+### Intel Realsense
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/sensors/intel_realsense.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+camera:
+- model: intel_realsense
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+    camera:
+        camera_name: camera_0
+        device_type: d435
+        serial_no: "0"
+        enable_color: true
+        rgb_camera.profile: 640,480,30
+        enable_depth: true
+        depth_module.profile: 640,480,30
+        pointcloud.enable: true
+```
+</td>
+</tr>
+</table>
+
+
+
+## GPS
+### SwiftNav Duro
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/sensors/swiftnav_duro.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+gps:
+  - model: swiftnav_duro
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      duro_node:
+        gps_receiver_frame_id: gps_0_link
+        ip_address: 192.168.131.30
+        ip_port: 55555
+        imu_frame_id: gps_0_link
+```
+</td>
+</tr>
+</table>
+
+### Garmin 18X
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/sensors/garmin_18x.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+gps:
+  - model: garmin_18x
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      nmea_navsat_driver:
+        frame_id: gps_0_link
+        port: /dev/ttyACM0
+        baud: 115200
+```
+</td>
+</tr>
+</table>
+
+
+## Novatel Smart6
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/sensors/novatel_smart6.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+gps:
+  - model: novatel_smart6
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      nmea_navsat_driver:
+        frame_id: gps_0_link
+        port: /dev/ttyACM0
+        baud: 115200
+```
+</td>
+</tr>
+</table>
+
+## Novatel Smart6
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/sensors/novatel_smart7.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+gps:
+  - model: novatel_smart7
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      nmea_navsat_driver:
+        frame_id: gps_0_link
+        port: /dev/ttyACM0
+        baud: 115200
+```
+</td>
+</tr>
+</table>
+
+
+## IMU
+
+### Micorstrain IMU
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/sensors/microstrain_imu.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+imu:
+  - model: microstrain_imu
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      microstrain_inertial_driver:
+        imu_frame_id: imu_0_link
+        port: /dev/microstrain_main
+        use_enu_frame: true
+```
+</td>
+</tr>
+</table>
+
+### CHRobotics UM6
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/sensors/chrobotics_um6.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+imu:
+  - model: chrobotics_um6
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      um6_driver:
+        port: /dev/clearpath/imu
+        frame_id: imu_0_link
+        tf_ned_to_enu: true
+```
+</td>
+</tr>
+</table>
+
+### Redshift UM7
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/sensors/redshift_um7.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+imu:
+  - model: redshift_um7
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      um7_driver:
+        port: /dev/clearpath/imu
+        frame_id: imu_0_link
+        tf_ned_to_enu: true
+```
+</td>
+</tr>
+</table>
+
+
+## LiDAR 2D
+
+### Hokuyo UST
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/sensors/hokuyo_ust.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+lidar2d:
+  - model: hokuyo_ust
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      urg_node:
+        laser_frame_id: lidar2d_0_laser
+        ip_address: 192.168.131.20
+        ip_port: 10940
+        angle_min: -2.356
+        angle_max: 2.356
+```
+</td>
+</tr>
+</table>
+
+### SICK LMS1xx
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/sensors/sick_lms1xx.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+lidar2d:
+  - model: sick_lms1xx
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      lms1xx:
+        frame_id: lidar2d_0_laser
+        host: 192.168.131.20
+        port: 2111
+```
+</td>
+</tr>
+</table>
+
+
+
+## LiDAR 3D
+### Velodyne Lidar
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/sensors/velodyne_lidar.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+lidar3d:
+  - model: velodyne_lidar
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      velodyne_driver_node:
+        frame_id: lidar3d_0_laser
+        device_ip: 192.168.131.25
+        port: 2368
+        model: VLP16
+      velodyne_convert_node:
+        model: VLP16
+        fixed_frame: lidar3d_0_laser
+        target_frame: lidar3d_0_laser
+```
+</td>
+</tr>
+</table>
+
+## Sample
+
+<details><summary>Sample A200 Sensors Section</summary>
+<p>
+
+<center>
+  <figure>
+    <img
+      src={require("../img/husky_mounts_1.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with upside down Fath Pivot Mount</figcaption>
+  </figure>
+</center>
+
+In this sample, we first add the `velodyne_lidar` to the `sensor_arch_mount` by simply changing the parent link.
+
+```yaml
+lidar3d:
+  - model: velodyne_lidar
+    urdf_enabled: true
+    launch_enabled: true
+    parent: sensor_arch_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      velodyne_driver_node:
+        frame_id: lidar3d_0_laser
+        device_ip: 192.168.131.25
+        port: 2368
+        model: VLP16
+      velodyne_convert_node:
+        model: VLP16
+        fixed_frame: lidar3d_0_laser
+        target_frame: lidar3d_0_laser
+```
+
+<center>
+  <figure>
+    <img
+      src={require("../img/husky_sensors_0.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with LiDAR 3D on Sensor Arch</figcaption>
+  </figure>
+</center>
+
+Next, we will add a `hokuyo_ust` to the **bracket** we added earlier. Since that is the first **bracket**, then it's mounting location will be: `bracket_0_mount`; setting the parent link of the sensor, we get:
+
+```yaml
+lidar2d:
+  - model: hokuyo_ust
+    urdf_enabled: true
+    launch_enabled: true
+    parent: bracket_0_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      urg_node:
+        laser_frame_id: lidar2d_0_laser
+        ip_address: 192.168.131.20
+        ip_port: 10940
+        angle_min: -2.356
+        angle_max: 2.356
+```
+
+<center>
+  <figure>
+    <img
+      src={require("../img/husky_sensors_1.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with LiDAR 2D on D1 Bracket</figcaption>
+  </figure>
+</center>
+
+For the final step, we will add an `intel_realsense` to the **fath_pivot** mount that we added. Because it is the first **fath_pivot**, it's mounting location will be: `fath_pivot_0_mount`; setting the parent link of the sensor:
+
+```yaml
+camera:
+  - model: intel_realsense
+    urdf_enabled: true
+    launch_enabled: true
+    parent: fath_pivot_0_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      camera:
+        camera_name: camera_0
+        device_type: d435
+        serial_no: '0'
+        enable_color: true
+        rgb_camera.profile: 640,480,30
+        enable_depth: true
+        depth_module.profile: 640,480,30
+        pointcloud.enable: true
+```
+
+<center>
+  <figure>
+    <img
+      src={require("../img/husky_sensors_2.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with Intel Realsense</figcaption>
+  </figure>
+</center>
+
+Leaving the other sections empty, leaves us with the full sensors section:
+
+```yaml
+sensors:
+  camera:
+    - model: intel_realsense
+      urdf_enabled: true
+      launch_enabled: true
+      parent: fath_pivot_0_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ros_parameters:
+        camera:
+          camera_name: camera_0
+          device_type: d435
+          serial_no: '0'
+          enable_color: true
+          rgb_camera.profile: 640,480,30
+          enable_depth: true
+          depth_module.profile: 640,480,30
+          pointcloud.enable: true
+  gps: []
+  imu: []
+  lidar2d:
+    - model: hokuyo_ust
+      urdf_enabled: true
+      launch_enabled: true
+      parent: bracket_0_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ros_parameters:
+        urg_node:
+          laser_frame_id: lidar2d_0_laser
+          ip_address: 192.168.131.20
+          ip_port: 10940
+          angle_min: -2.356
+          angle_max: 2.356
+  lidar3d:
+    - model: velodyne_lidar
+      urdf_enabled: true
+      launch_enabled: true
+      parent: sensor_arch_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ros_parameters:
+        velodyne_driver_node:
+          frame_id: lidar3d_0_laser
+          device_ip: 192.168.131.25
+          port: 2368
+          model: VLP16
+        velodyne_convert_node:
+          model: VLP16
+          fixed_frame: lidar3d_0_laser
+          target_frame: lidar3d_0_laser
+
+```
+
+</p>
+</details>
