@@ -3,11 +3,11 @@ title: Platform
 sidebar_label: Platform
 sidebar_position: 4
 toc_min_heading_level: 2
-toc_max_heading_level: 4
+toc_max_heading_level: 5
 ---
 Every robot platform has unique structures such as versatile sensor mounting solutions, wireless charging receivers, and waterproofing enclosures; we refer to these as attachments.
 
-# Joystick Controller
+## Joystick Controller
 We support two types of controllers:
   - **ps4**: standard Playstation4 controller.
   - **logitech**: Logitech F710
@@ -16,64 +16,215 @@ We support two types of controllers:
 controller: ps4 # or logitech
 ```
 
-# Attachments
+## Attachments
+Each platform has its own unique set of attachments. To facilitate customizability, any attachment from any platform can be added on any other platform.
 
-There are four types of attachments:
+There is a default `parent` links at which these attachments are added; however, the `parent` link can be change to wherever you'd want the attachment to be placed.
 
-1. **bumpers** modify the front face and rear face of the robot platform.
-2. **fenders** modify the area above the wheels on the front and rear of the platform.
-2. **top_plates** modify the top face of the robot platform.
-3. **structures** are large custom parts that are added atop the top plate.
+Additionally, all attachments can be moved around using the `xyz` parameter to translate and the `rpy` parameter to rotate.
 
-# Husky A200 {#attachments-a200}
+Each attachment requires two parameters. The `name` parameter that will define the name of the links and joints added to URDF, and the `type` parameter which defines which type of attachment is to be added.
 
-The **Husky A200** has a few models for each of it's attachments:
+Some attachment types will have the same `type` parameter accross different platforms. In that case, if you'd like to use the attachment that belongs to a specific platform, you will need to prefix the `type` parameter with the platform that it belongs to. For example, `top_plate` would become `a200.top_plate`. If no prefix is set, then the platform defined in the `serial_number` will be used.
 
-- **bumpers**:
-  - **_default:_** standard bumpers.
-  - **_wibotic:_** wireless charging receiver.
+### Husky A200
+#### Bumper
+The A200 can have bumpers of a variable length. By setting the `extension` parameter, the bumper can be extended if required.
 
-```yaml
-front_bumper:
-  enabled: true
-  model: default # or wibotic
-  xyz: [0.0, 0.0, 0.0]
-  rpy: [0.0, 0.0, 0.0]
-  extension: 0.0
-rear_bumper:
-  enabled: true
-  model: default # or wibotic
-  xyz: [0.0, 0.0, 0.0]
-  rpy: [0.0, 0.0, 0.0]
-  extension: 0.0
-```
-
-- **top plate**:
-  - **_default:_** standard Husky A200 top plate.
-  - **_large:_** extended top plate, used to allow for enough space to mount large payloads.
-  - **_pacs:_** comes with **80x80 mm** mounting screw holes for versatile sensor placement.
+By default, we have two bumpers, on the front and rear of the robot.
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/attachments/a200/bumper.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
 
 ```yaml
-top_plate:
-  enabled: true
-  model: default # or 'pacs' or 'large'
-  xyz: [0.0, 0.0, 0.0]
-  rpy: [0.0, 0.0, 0.0]
+attachments:
+  - name: front_bumper
+    type: a200.bumper
+    model: default
+    parent: front_bumper_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    enabled: true
+    extension: 0.0
+  - name: rear_bumper
+    type: a200.bumper
+    model: default
+    parent: rear_bumper_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    enabled: true
+    extension: 0.0
 ```
+</td>
+</tr>
+</table>
 
-- **struture**:
-  - **_sensor_arch_300:_** 300mm tall extrusion sensor arch.
-  - **_sensor_arch_510:_** 510mm tall extrusion sensor arch.
+#### Top Plate
+The A200 has three types of top plates that modify the mounting surface of the robot.
+
+##### Default
+The **default** top plate is mounted atop a user rail that can be used to mount certain payload inside the chassis and right below the top plate.
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/attachments/a200/top_plate_default.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
 
 ```yaml
-structure:
-  enabled: false
-  model: sensor_arch_300 # or sensor_arch_510
-  xyz: [0.0, 0.0, 0.0]
-  rpy: [0.0, 0.0, 0.0]
+attachments:
+  - name: top_plate
+    type: a200.top_plate
+    model: default
+    parent: mid_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    enabled: true
 ```
+</td>
+</tr>
+</table>
 
-# Jackal J100 {#attachments-j100}
+##### Large
+The **large** top plate does not have a user rail and is primarily used to mount larger payloads such as manipulators on the robot.
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/attachments/a200/top_plate_large.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+attachments:
+  - name: top_plate
+    type: a200.top_plate
+    model: large
+    parent: mid_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    enabled: true
+```
+</td>
+</tr>
+</table>
+
+##### PACS
+The **pacs** top plate does not have a user rail. It has an opening to access the user bay within the chassis. It comes with the grid of mounting holes of the PACS™ **80mm x 80mm** grid.
+
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/attachments/a200/top_plate_pacs.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+attachments:
+  - name: top_plate
+    type: a200.top_plate
+    model: pacs
+    parent: mid_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    enabled: true
+```
+</td>
+</tr>
+</table>
+
+#### Sensor Arch
+The A200 has two types of sensor archs which are used to mount sensors from a vantage point.
+
+##### Sensor Arch 300
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/attachments/a200/sensor_arch_300.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+attachments:
+  - name: sensor_arch
+    type: a200.sensor_arch
+    model: sensor_arch_300
+    parent: mid_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    enabled: true
+```
+</td>
+</tr>
+</table>
+
+##### Sensor Arch 510
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/attachments/a200/sensor_arch_510.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+attachments:
+  - name: sensor_arch
+    type: a200.sensor_arch
+    model: sensor_arch_510
+    parent: mid_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    enabled: true
+```
+</td>
+</tr>
+</table>
+
+## Jackal J100 {#attachments-j100}
 
 The **Jackal J100** currently only has customization options with it's fenders.
 
@@ -92,7 +243,7 @@ rear_fender:
   rpy: [0.0, 0.0, 0.0]
 ```
 
-# Extras
+## Extras
 
 Despite all current customization options, we still would like our users to be able to add-in their existing custom URDF to the robot platform URDF and pass in and overwrite parameters to all platform nodes.
 Extras have the following entries:
@@ -106,7 +257,7 @@ extras:
   ros_parameters: {} # node parameter
 ```
 
-# ROS Parameters
+## ROS Parameters
 A common use case is to set and update the parameters to the `platform_velocity_controller` node. These can be used to modify the linear and angular velocity and acceleratation.
 
 These can be passed in as follows:
@@ -146,7 +297,7 @@ platform:
         angular.z.min_acceleration": -25.0
 ```
 
-# Sample
+## Sample
 
 <details><summary>Sample A200 Platform Section</summary>
 <p>
