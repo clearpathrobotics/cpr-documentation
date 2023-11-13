@@ -5,9 +5,24 @@ sidebar_position: 5
 toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
-Links are any URDF primitive:
+Links are any URDF primitive.
+> Just as is the case in URDF, links are added at the center of the primitive. In other words, you will need to slide up all links by half their height to have it "sit" on its parent link.
 
-1. **frame** in the URDF without any geometry, i.e. just a frame.
+## Frame
+Just a link without any geometry.
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/links/frame.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
 
 ```yaml
 frame:
@@ -16,8 +31,25 @@ frame:
     xyz: [0.0, 0.0, 0.0]
     rpy: [0.0, 0.0, 0.0]
 ```
+</td>
+</tr>
+</table>
 
-2. **box** of given length, width, and height.
+## Box
+A box of defined size.
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/links/box.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
 
 ```yaml
 box:
@@ -27,8 +59,25 @@ box:
     rpy: [0.0, 0.0, 0.0]
     size: [0.01, 0.01, 0.01]
 ```
+</td>
+</tr>
+</table>
 
-3. **cylinder** of given radius and height.
+## Cylinder
+A cylinder of defined height and radius.
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/links/cylinder.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
 
 ```yaml
 cylinder:
@@ -39,8 +88,25 @@ cylinder:
     radius: 0.01
     length: 0.01
 ```
+</td>
+</tr>
+</table>
 
-4. **sphere** of given radius.
+## Sphere
+A sphere of defined radius.
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/links/sphere.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
 
 ```yaml
 sphere:
@@ -50,8 +116,24 @@ sphere:
     rpy: [0.0, 0.0, 0.0]
     radius: 0.01
 ```
+</td>
+</tr>
+</table>
 
-5. **mesh** from a given absolute path to STL or OBJ file.
+## Mesh
+Include your custom mesh without creating a URDF of your own.
+
+If you prefer to add a URDF instead, then you can link it directly through the `platform.extras` entry.
+
+
+<table>
+    <tr>
+        <td>
+            <center>
+              Your Custom Mesh
+            </center>
+        </td>
+<td>
 
 ```yaml
 mesh:
@@ -61,10 +143,11 @@ mesh:
     rpy: [0.0, 0.0, 0.0]
     visual: /absolute/path/to/mesh.stl
 ```
+</td>
+</tr>
+</table>
 
-If a user needs to add a mesh or primitive to represent a payload on their robot, they can either create a URDF and use the platform extras, or they can add an link directly through the `robot.yaml`.
 
-Just as is the case in URDF, links are added at the center of the primitive. In other words, you will need to slide up all links by half their height to have it "sit" on its parent link.
 
 # Sample
 
