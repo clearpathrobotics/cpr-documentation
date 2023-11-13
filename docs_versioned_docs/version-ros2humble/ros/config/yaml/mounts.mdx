@@ -7,31 +7,203 @@ toc_max_heading_level: 4
 ---
 Most sensors can use similar mounting structures. Therefore, we want to keep mounts separate from sensors, such that users could attach their own sensors to existing mounts.
 
-The following **mounts** are available:
+## Riser
+A mounting plate with the defined number of rows and columns of the PACS™ **80mm x 80mm** grid.
+> :warning: At this time, you will **need to use the PACS™ top plate**, only available on the Husky, to add these riser mounts. See the [**platform**](./platform.mdx) section for more information.
 
-- **riser:** a plate with the defined number of rows and columns of an **80mm x 80mm** grid.
+### Preset Risers
+These are the most common riser sizes; therefore, we have accurate models of these plates.
+
+#### 8x7 Riser
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/mounts/riser_8x7.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
 
 ```yaml
 riser:
-  - parent: base_link
+  - parent: top_plate_mount_a1
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    rows: 8 # rows of 80mm x 80mm grid
+    columns: 7 # columns of 80mm x 80mm grid
+    thickness: 0.00635
+```
+</td>
+</tr>
+</table>
+
+
+#### 1x7 Riser
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/mounts/riser_1x7.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+riser:
+  - parent: top_plate_mount_a1
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    rows: 1 # rows of 80mm x 80mm grid
+    columns: 7 # columns of 80mm x 80mm grid
+    thickness: 0.00635
+```
+</td>
+</tr>
+</table>
+
+
+### Custom Risers
+To promote flexibility, the size of the risers can be changed to any size; however, there are no models for these, and instead will be generated using primitives.
+
+For example, we can add a riser with a 4 by 4 grid:
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/mounts/riser_4x4.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+riser:
+  - parent: top_plate_mount_a1
     xyz: [0.0, 0.0, 0.0]
     rpy: [0.0, 0.0, 0.0]
     rows: 4 # rows of 80mm x 80mm grid
     columns: 4 # columns of 80mm x 80mm grid
     thickness: 0.00635
 ```
+</td>
+</tr>
+</table>
 
-- **bracket:** a small **100mm x 100mm** plate with **80mm x 80mm** screw holes to attach it to the grid. It comes with hole patterns to attach all supported small sensors.
+
+## Bracket
+Brackets are small plates with **80mm x 80mm** screw holes that can be used to attach it to the PACS™ gird. They come in three different models.
+
+The **horizontal** and **vertical** models have screw holes to attach all small sensors such as camera, lidars, and IMU's.
+
+The **large** model have screw  holes to attach larger sensors such as the SwiftNav Duro receivers.
+
+### Horizontal Bracket
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/mounts/bracket_horizontal.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
 
 ```yaml
 bracket:
   - parent: base_link
     xyz: [0.0, 0.0, 0.0]
     rpy: [0.0, 0.0, 0.0]
-    model: horizontal # or large or vertical
+    model: horizontal
 ```
+</td>
+</tr>
+</table>
 
-- **fath_pivot:** generally a camera mount on a single axis that can be adjusted to change the pitch of the camera.
+### Vertical Bracket
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/mounts/bracket_vertical.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+bracket:
+  - parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    model: vertical
+```
+</td>
+</tr>
+</table>
+
+### Large Bracket
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/mounts/bracket_large.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+bracket:
+  - parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    model: large
+```
+</td>
+</tr>
+</table>
+
+## Fath Pivot
+Camera mount with a single joint taht can be adjusted to change the pitch of the camera. The angle of the joint is set using the **angle** parameter.
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/mounts/fath_pivot.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
 
 ```yaml
 fath_pivot:
@@ -40,34 +212,214 @@ fath_pivot:
     rpy: [0.0, 0.0, 0.0]
     angle: 0.0 # in radian
 ```
+</td>
+</tr>
+</table>
 
-- **sick:** are mounts specifically designed to mount SICK LiDARs. The orientation of the LiDAR on the mount can be set to either `upright` or `inverted`.
+## SICK Mounts
+These mounts are specifically designed to mount SICK LiDARs, but can be used for other sensors if required.
+The orientation of the LiDAR on the mount can be set to either `upright` or `inverted`
+
+### Upright
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/mounts/sick_upright.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
 ```yaml
 sick:
   - parent: base_link
     xyz: [0.0, 0.0, 0.0]
     rpy: [0.0, 0.0, 0.0]
-    model: inverted # or upright
+    model: upright
 ```
+</td>
+</tr>
+</table>
 
-- **post:** are vertical extrusion rails to which sensors can be added.
+### Inverted
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/mounts/sick_inverted.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+sick:
+  - parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    model: inverted
+```
+</td>
+</tr>
+</table>
+
+## Post
+Posts are vertical extrusion rails to which sensors can be added.
+
+These can be single, dual, and quad legs.
+
+### Single
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/mounts/post_single.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
 ```yaml
 post:
   - parent: base_link
     xyz: [0.0, 0.0, 0.0]
     rpy: [0.0, 0.0, 0.0]
-    model: single # or dual or quad
-    spacing: 0.08 # distance between multiple posts if model is dual or quad
+    model: single
     height: 0.075 # height of post
 ```
+</td>
+</tr>
+</table>
 
-- **disk:** are circular plates which are used to mount circular sensors, i.e. the Velodyne
+### Dual
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/mounts/post_dual.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+post:
+  - parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    model: dual
+    spacing: 0.08 # distance between posts
+    height: 0.075 # height of post
+```
+</td>
+</tr>
+</table>
+
+### Quad
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/mounts/post_quad.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+post:
+  - parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    model: quad
+    spacing: 0.08 # distance between posts
+    height: 0.075 # height of post
+```
+</td>
+</tr>
+</table>
+
+
+## Disk
+Disk plates are circular which are use to mount circular sensors, such as the Velodyne LiDARs.
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/mounts/disk.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
 ```yaml
 disk:
   - parent: base_link
     xyz: [0.0, 0.0, 0.0]
     rpy: [0.0, 0.0, 0.0]
 ```
+</td>
+</tr>
+</table>
+
+We can also make use of the **post** to lift the **disk** mount.
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/mounts/disk_post.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+post:
+  - parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    model: dual
+    spacing: 0.12
+    height: 0.075
+disk:
+  - parent: post_0_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+```
+</td>
+</tr>
+</table>
+
+
 
 # Sample
 
