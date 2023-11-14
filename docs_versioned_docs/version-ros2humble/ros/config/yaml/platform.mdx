@@ -226,25 +226,120 @@ attachments:
 
 ## Jackal J100 {#attachments-j100}
 
-The **Jackal J100** currently only has customization options with it's fenders.
+### Fenders
+There are two types of fenders that can be equipped on the **J100** platform.
 
-- **fenders** can be swapped from the `default` model to the `sensor` model that has a mounting location for a small lidar or camera.
+#### Default Fenders
+The **default** fenders are the standard fenders that come with every **J100**.
+
+The front and rear fender entries are indepenent from each other such that they can be modified independently.
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/attachments/j100/fender_default.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
 
 ```yaml
-front_fender:
-  enabled: true # or false
-  model: default # or sensor
-  xyz: [0.0, 0.0, 0.0]
-  rpy: [0.0, 0.0, 0.0]
-rear_fender:
-  enabled: true # or false
-  model: default #  or sensor
-  xyz: [0.0, 0.0, 0.0]
-  rpy: [0.0, 0.0, 0.0]
+attachments:
+  - name: front_fender
+    type: fender
+    model: default
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    enabled: true
+  - name: rear_fender
+    type: fender
+    model: default
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 3.1415]
+    enabled: true
 ```
+</td>
+</tr>
+</table>
+
+#### Sensor Fenders
+The **default** fenders are the standard fenders that come with every **J100**.
+
+The front and rear fender entries are indepenent from each other such that they can be modified independently.
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/attachments/j100/fender_sensor.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+attachments:
+  - name: front_fender
+    type: fender
+    model: sensor
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    enabled: true
+  - name: rear_fender
+    type: fender
+    model: sensor
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 3.1415]
+    enabled: true
+```
+</td>
+</tr>
+</table>
+
+### Top Plate
+The Jackal only has one type of top plate. The ark enclosure.
+
+#### Ark Enclosure
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("../img/attachments/j100/top_plate_ark_enclosure.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+attachments:
+  - name: ark_enclosure
+    type: top_plate
+    model: ark_enclosure
+    parent: mid_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    enabled: true
+```
+</td>
+</tr>
+</table>
 
 ## Extras
-
 Despite all current customization options, we still would like our users to be able to add-in their existing custom URDF to the robot platform URDF and pass in and overwrite parameters to all platform nodes.
 Extras have the following entries:
 
@@ -257,7 +352,7 @@ extras:
   ros_parameters: {} # node parameter
 ```
 
-## ROS Parameters
+### ROS Parameters
 A common use case is to set and update the parameters to the `platform_velocity_controller` node. These can be used to modify the linear and angular velocity and acceleratation.
 
 These can be passed in as follows:
@@ -315,11 +410,13 @@ platform:
 In this sample, we swapped the top plate from the **_default_** model to the **_pacs_** model. Notice all the links added by the **_pacs_** plate below, compared to the **_default_** plate above.
 
 ```yaml
-top_plate:
-  enabled: true
-  model: pacs # switched from 'default' to 'pacs'
-  xyz: [0.0, 0.0, 0.0]
-  rpy: [0.0, 0.0, 0.0]
+  - name: top_plate
+    type: a200.top_plate
+    model: pacs # switched from 'default' to 'pacs'
+    parent: mid_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    enabled: true
 ```
 
 <center>
@@ -332,14 +429,16 @@ top_plate:
   </figure>
 </center>
 
-Then, we added a sensor arch to add our sample sensors to. We can do this by simply enabling the **structure** and setting the model to **_sensor_arch_300_**.
+Then, we added a sensor arch to add our sample sensors to. We can do this by adding the **attachment**, **sensor_arch** and setting the model to **_sensor_arch_300_**.
 
 ```yaml
-structure:
-  enabled: true
-  model: sensor_arch_300
-  xyz: [0.0, 0.0, 0.0]
-  rpy: [0.0, 0.0, 0.0]
+  - name: sensor_arch
+    type: a200.sensor_arch
+    model: sensor_arch_300
+    parent: mid_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    enabled: true
 ```
 
 <center>
@@ -358,28 +457,36 @@ In terms of the **front_bumper** and **rear_bumper**, we left these as defaults.
 platform:
   controller: ps4
   attachments:
-    front_bumper:
-      enabled: true
+    - name: front_bumper
+      type: a200.bumper
       model: default
+      parent: front_bumper_mount
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
-      extension: 0.0
-    rear_bumper:
       enabled: true
+      extension: 0.0
+    - name: rear_bumper
+      type: a200.bumper
       model: default
+      parent: rear_bumper_mount
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
+      enabled: true
       extension: 0.0
-    structure:
-      enabled: true
-      model: sensor_arch_300
-      xyz: [0.0, 0.0, 0.0]
-      rpy: [0.0, 0.0, 0.0]
-    top_plate:
-      enabled: true
+    - name: top_plate
+      type: a200.top_plate
       model: pacs
+      parent: mid_mount
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
+      enabled: true
+    - name: sensor_arch
+      type: a200.sensor_arch
+      model: sensor_arch_300
+      parent: mid_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      enabled: true
   extras:
     urdf: null
     ros_parameters: {}
