@@ -71,28 +71,36 @@ system:
 platform:
   controller: ps4
   attachments:
-    front_bumper:
-      enabled: true
+    - name: front_bumper
+      type: a200.bumper
       model: default
+      parent: front_bumper_mount
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
-      extension: 0.0
-    rear_bumper:
       enabled: true
+      extension: 0.0
+    - name: rear_bumper
+      type: a200.bumper
       model: default
+      parent: rear_bumper_mount
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
+      enabled: true
       extension: 0.0
-    structure:
-      enabled: true
-      model: sensor_arch_300
-      xyz: [0.0, 0.0, 0.0]
-      rpy: [0.0, 0.0, 0.0]
-    top_plate:
-      enabled: true
+    - name: top_plate
+      type: a200.top_plate
       model: pacs
+      parent: mid_mount
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
+      enabled: true
+    - name: sensor_arch
+      type: a200.sensor_arch
+      model: sensor_arch_300
+      parent: mid_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      enabled: true
   extras:
     urdf: null
 links:
