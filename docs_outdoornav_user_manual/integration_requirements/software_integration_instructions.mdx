@@ -101,9 +101,18 @@ nano outdoornav_tuning.env
 
 ### Start OutdoorNav
 
+For standard CPR UGVs (ie. not including Husky Observer), run the following to start OutdoorNav:
+
 ``` bash
 cd ~/cpr_outdoornav_launch/    # directory with docker-compose.yaml
 docker compose --profile outdoornav up -d --build
+```
+
+For Husky Observers, run the following to start OutdoorNav:
+
+``` bash
+cd ~/cpr_outdoornav_launch/    # directory with docker-compose.yaml
+docker compose --profile outdoornav --profile power up -d --build
 ```
 
 ### Test OutdoorNav Installation
