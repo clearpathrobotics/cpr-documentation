@@ -25,7 +25,7 @@ Additionally, all attachments can be moved around using the `xyz` parameter to t
 
 Each attachment requires two parameters. The `name` parameter that will define the name of the links and joints added to URDF, and the `type` parameter which defines which type of attachment is to be added.
 
-Some attachment types will have the same `type` parameter accross different platforms. In that case, if you'd like to use the attachment that belongs to a specific platform, you will need to prefix the `type` parameter with the platform that it belongs to. For example, `top_plate` would become `a200.top_plate`. If no prefix is set, then the platform defined in the `serial_number` will be used.
+Some attachment types will have the same `type` parameter across different platforms. In that case, if you'd like to use the attachment that belongs to a specific platform, you will need to prefix the `type` parameter with the platform that it belongs to. For example, `top_plate` would become `a200.top_plate`. If no prefix is set, then the platform defined in the `serial_number` will be used.
 
 ### Husky A200
 #### Bumper
@@ -363,15 +363,15 @@ platform:
   extras:
     ros_parameters:
       platform_velocity_controller:
-        wheel_radius": 0.1651
-        linear.x.max_velocity": 1.0
-        linear.x.min_velocity": -1.0
-        linear.x.max_acceleration": 3.0
-        linear.x.min_acceleration": -3.0
-        angular.z.max_velocity": 2.0
-        angular.z.min_velocity": -2.0
-        angular.z.max_acceleration": 6.0
-        angular.z.min_acceleration": -6.0
+        wheel_radius: 0.1651
+        linear.x.max_velocity: 1.0
+        linear.x.min_velocity: -1.0
+        linear.x.max_acceleration: 3.0
+        linear.x.min_acceleration: -3.0
+        angular.z.max_velocity: 2.0
+        angular.z.min_velocity: -2.0
+        angular.z.max_acceleration: 6.0
+        angular.z.min_acceleration: -6.0
 ```
 
 
@@ -381,15 +381,32 @@ platform:
   extras:
     ros_parameters:
       platform_velocity_controller:
-        wheel_radius": 0.098
-        linear.x.max_velocity": 2.0
-        linear.x.min_velocity": -2.0
-        linear.x.max_acceleration": 20.0
-        linear.x.min_acceleration": -20.0
-        angular.z.max_velocity": 4.0
-        angular.z.min_velocity": -4.0
-        angular.z.max_acceleration": 25.0
-        angular.z.min_acceleration": -25.0
+        wheel_radius: 0.098
+        linear.x.max_velocity: 2.0
+        linear.x.min_velocity: -2.0
+        linear.x.max_acceleration: 20.0
+        linear.x.min_acceleration: -20.0
+        angular.z.max_velocity: 4.0
+        angular.z.min_velocity: -4.0
+        angular.z.max_acceleration: 25.0
+        angular.z.min_acceleration: -25.0
+```
+
+**W200 Warthog Controller Defaults:**
+```yaml
+platform:
+  extras:
+    ros_parameters:
+      platform_velocity_controller:
+        wheel_radius: 0.3
+        linear.x.max_velocity: 5.0
+        linear.x.min_velocity: -5.0
+        linear.x.max_acceleration: 50.0
+        linear.x.min_acceleration: -50.0
+        angular.z.max_velocity: 4.0
+        angular.z.min_velocity: -4.0
+        angular.z.max_acceleration: 40.0
+        angular.z.min_acceleration: -40.0
 ```
 
 ## Sample
