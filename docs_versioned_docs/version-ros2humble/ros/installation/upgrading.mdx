@@ -131,12 +131,12 @@ back these up yourself; `backup.sh` will not do this for you.
 
 The environment variables used to define your robot in ROS 1 and ROS 2 Foxy can be converted to the `robot.yaml`
 format to maintain the same robot description when you upgrade to ROS 2 Humble.
-Below are some common examples. Visit the [robot.yaml documentation](../config/yaml.mdx) for more details.
+Below are some common examples. Visit the [robot.yaml documentation](../config/yaml/overview.mdx) for more details.
 
 ### Attachments
 
 Each platform has platform-specific attachments (formerly decorations) such as bumpers and top plates. These
-now reside under the [platform](../config/yaml.mdx#platform) section of the `robot.yaml` file.
+now reside under the [platform](../config/yaml/platform.mdx) section of the `robot.yaml` file.
 
 <Tabs groupId="platform_codes">
   <TabItem
@@ -236,7 +236,7 @@ platform:
 
 ### Sensors
 
-Sensors can be added under the [sensors](../config/yaml.mdx#sensors) key in the `robot.yaml` file. There is no longer
+Sensors can be added under the [sensors](../config/yaml/sensors.mdx) key in the `robot.yaml` file. There is no longer
 a concept of primary, secondary, etc. sensors. Rather, sensors are enumerated in the order that they are added to the config.
 Sensor topics will be automatically set to match the [Clearpath API](../api/sensors_api.mdx#2d-lidar-topics).
 
