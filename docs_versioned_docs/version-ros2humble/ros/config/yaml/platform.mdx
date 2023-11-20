@@ -28,203 +28,48 @@ Each attachment requires two parameters. The `name` parameter that will define t
 Some attachment types will have the same `type` parameter across different platforms. In that case, if you'd like to use the attachment that belongs to a specific platform, you will need to prefix the `type` parameter with the platform that it belongs to. For example, `top_plate` would become `a200.top_plate`. If no prefix is set, then the platform defined in the `serial_number` will be used.
 
 ### Husky A200
+import A200Bumper from "/docs_versioned_docs/version-ros2humble/components/yaml/attachments/a200/bumper.mdx";
+import A200SensorArch300 from "/docs_versioned_docs/version-ros2humble/components/yaml/attachments/a200/sensor_arch_300.mdx";
+import A200SensorArch510 from "/docs_versioned_docs/version-ros2humble/components/yaml/attachments/a200/sensor_arch_510.mdx";
+import A200TopPlateDefault from "/docs_versioned_docs/version-ros2humble/components/yaml/attachments/a200/top_plate_default.mdx";
+import A200TopPlateLarge from "/docs_versioned_docs/version-ros2humble/components/yaml/attachments/a200/top_plate_large.mdx";
+import A200TopPlatePACS from "/docs_versioned_docs/version-ros2humble/components/yaml/attachments/a200/top_plate_pacs.mdx";
+
 #### Bumper
 The A200 can have bumpers of a variable length. By setting the `extension` parameter, the bumper can be extended if required.
 
 By default, we have two bumpers, on the front and rear of the robot.
-<table>
-    <tr>
-        <td>
-            <center>
-            <figure>
-                <img
-                    src={require("../img/attachments/a200/bumper.png").default}
-                    width="250"
-                />
-            </figure>
-            </center>
-        </td>
-<td>
 
-```yaml
-attachments:
-  - name: front_bumper
-    type: a200.bumper
-    model: default
-    parent: front_bumper_mount
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    enabled: true
-    extension: 0.0
-  - name: rear_bumper
-    type: a200.bumper
-    model: default
-    parent: rear_bumper_mount
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    enabled: true
-    extension: 0.0
-```
-</td>
-</tr>
-</table>
+<A200Bumper />
 
 #### Top Plate
 The A200 has three types of top plates that modify the mounting surface of the robot.
 
 ##### Default
 The **default** top plate is mounted atop a user rail that can be used to mount certain payload inside the chassis and right below the top plate.
-<table>
-    <tr>
-        <td>
-            <center>
-            <figure>
-                <img
-                    src={require("../img/attachments/a200/top_plate_default.png").default}
-                    width="250"
-                />
-            </figure>
-            </center>
-        </td>
-<td>
-
-```yaml
-attachments:
-  - name: top_plate
-    type: a200.top_plate
-    model: default
-    parent: mid_mount
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    enabled: true
-```
-</td>
-</tr>
-</table>
+<A200TopPlateDefault/>
 
 ##### Large
 The **large** top plate does not have a user rail and is primarily used to mount larger payloads such as manipulators on the robot.
-<table>
-    <tr>
-        <td>
-            <center>
-            <figure>
-                <img
-                    src={require("../img/attachments/a200/top_plate_large.png").default}
-                    width="250"
-                />
-            </figure>
-            </center>
-        </td>
-<td>
-
-```yaml
-attachments:
-  - name: top_plate
-    type: a200.top_plate
-    model: large
-    parent: mid_mount
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    enabled: true
-```
-</td>
-</tr>
-</table>
+<A200TopPlateLarge/>
 
 ##### PACS
 The **pacs** top plate does not have a user rail. It has an opening to access the user bay within the chassis. It comes with the grid of mounting holes of the PACS™ **80mm x 80mm** grid.
-
-<table>
-    <tr>
-        <td>
-            <center>
-            <figure>
-                <img
-                    src={require("../img/attachments/a200/top_plate_pacs.png").default}
-                    width="250"
-                />
-            </figure>
-            </center>
-        </td>
-<td>
-
-```yaml
-attachments:
-  - name: top_plate
-    type: a200.top_plate
-    model: pacs
-    parent: mid_mount
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    enabled: true
-```
-</td>
-</tr>
-</table>
+<A200TopPlatePACS/>
 
 #### Sensor Arch
 The A200 has two types of sensor archs which are used to mount sensors from a vantage point.
 
 ##### Sensor Arch 300
-<table>
-    <tr>
-        <td>
-            <center>
-            <figure>
-                <img
-                    src={require("../img/attachments/a200/sensor_arch_300.png").default}
-                    width="250"
-                />
-            </figure>
-            </center>
-        </td>
-<td>
-
-```yaml
-attachments:
-  - name: sensor_arch
-    type: a200.sensor_arch
-    model: sensor_arch_300
-    parent: mid_mount
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    enabled: true
-```
-</td>
-</tr>
-</table>
+<A200SensorArch300/>
 
 ##### Sensor Arch 510
-<table>
-    <tr>
-        <td>
-            <center>
-            <figure>
-                <img
-                    src={require("../img/attachments/a200/sensor_arch_510.png").default}
-                    width="250"
-                />
-            </figure>
-            </center>
-        </td>
-<td>
-
-```yaml
-attachments:
-  - name: sensor_arch
-    type: a200.sensor_arch
-    model: sensor_arch_510
-    parent: mid_mount
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    enabled: true
-```
-</td>
-</tr>
-</table>
+<A200SensorArch510/>
 
 ## Jackal J100 {#attachments-j100}
+import J100FenderDefault from "/docs_versioned_docs/version-ros2humble/components/yaml/attachments/j100/fender_default.mdx";
+import J100FenderSensor from "/docs_versioned_docs/version-ros2humble/components/yaml/attachments/j100/fender_sensor.mdx";
+import J100TopPlateArkEnclosure from "/docs_versioned_docs/version-ros2humble/components/yaml/attachments/j100/top_plate_ark_enclosure.mdx";
 
 ### Fenders
 There are two types of fenders that can be equipped on the **J100** platform.
@@ -233,231 +78,42 @@ There are two types of fenders that can be equipped on the **J100** platform.
 The **default** fenders are the standard fenders that come with every **J100**.
 
 The front and rear fender entries are indepenent from each other such that they can be modified independently.
-<table>
-    <tr>
-        <td>
-            <center>
-            <figure>
-                <img
-                    src={require("../img/attachments/j100/fender_default.png").default}
-                    width="250"
-                />
-            </figure>
-            </center>
-        </td>
-<td>
-
-```yaml
-attachments:
-  - name: front_fender
-    type: fender
-    model: default
-    parent: base_link
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    enabled: true
-  - name: rear_fender
-    type: fender
-    model: default
-    parent: base_link
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 3.1415]
-    enabled: true
-```
-</td>
-</tr>
-</table>
+<J100FenderDefault/>
 
 #### Sensor Fenders
 The **default** fenders are the standard fenders that come with every **J100**.
 
 The front and rear fender entries are indepenent from each other such that they can be modified independently.
-<table>
-    <tr>
-        <td>
-            <center>
-            <figure>
-                <img
-                    src={require("../img/attachments/j100/fender_sensor.png").default}
-                    width="250"
-                />
-            </figure>
-            </center>
-        </td>
-<td>
-
-```yaml
-attachments:
-  - name: front_fender
-    type: fender
-    model: sensor
-    parent: base_link
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    enabled: true
-  - name: rear_fender
-    type: fender
-    model: sensor
-    parent: base_link
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 3.1415]
-    enabled: true
-```
-</td>
-</tr>
-</table>
+<J100FenderSensor/>
 
 ### Top Plate
 The Jackal only has one type of top plate. The ark enclosure.
 
 #### Ark Enclosure
-<table>
-    <tr>
-        <td>
-            <center>
-            <figure>
-                <img
-                    src={require("../img/attachments/j100/top_plate_ark_enclosure.png").default}
-                    width="250"
-                />
-            </figure>
-            </center>
-        </td>
-<td>
-
-```yaml
-attachments:
-  - name: ark_enclosure
-    type: top_plate
-    model: ark_enclosure
-    parent: mid_mount
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    enabled: true
-```
-</td>
-</tr>
-</table>
+<J100TopPlateArkEnclosure/>
 
 ## Warthog W200 {#attachments-w200}
+import W200ArmMount from "/docs_versioned_docs/version-ros2humble/components/yaml/attachments/w200/arm_mount.mdx";
+import W200BulkheadArmMount from "/docs_versioned_docs/version-ros2humble/components/yaml/attachments/w200/bulkhead_arm_mount.mdx";
+import W200BulkheadDefault from "/docs_versioned_docs/version-ros2humble/components/yaml/attachments/w200/bulkhead_default.mdx";
+import W200Generator from "/docs_versioned_docs/version-ros2humble/components/yaml/attachments/w200/generator.mdx";
 
 ### Bulkhead
 The Warthog bulkhead is used to cover payloads and to add a second surface to which to attach more payloads.
 
 #### Default {#default-bulkhead}
-<table>
-    <tr>
-        <td>
-            <center>
-            <figure>
-                <img
-                    src={require("../img/attachments/w200/bulkhead_default.png").default}
-                    width="250"
-                />
-            </figure>
-            </center>
-        </td>
-<td>
-
-```yaml
-attachments:
-  - name: bulkhead
-    type: bulkhead
-    model: default
-    parent: default_mount
-    xyz: [0.00705, 0.0, 0.24184]
-    rpy: [0.0, 0.0, 0.0]
-    enabled: true
-```
-</td>
-</tr>
-</table>
+<W200BulkheadDefault/>
 
 #### Arm Mount {#arm-mount-bulkhead}
-<table>
-    <tr>
-        <td>
-            <center>
-            <figure>
-                <img
-                    src={require("../img/attachments/w200/bulkhead_arm_mount.png").default}
-                    width="250"
-                />
-            </figure>
-            </center>
-        </td>
-<td>
-
-```yaml
-attachments:
-  - name: bulkhead
-    type: bulkhead
-    model: arm_mount
-    parent: default_mount
-    xyz: [0.00705, 0.0, 0.24184]
-    rpy: [0.0, 0.0, 0.0]
-    enabled: true
-```
-</td>
-</tr>
-</table>
+<W200BulkheadArmMount/>
 
 ### Arm Mount
 If instead of using the **bulkhead** to add an arm mount. We can add the arm mount independently using the following entry.
-<table>
-    <tr>
-        <td>
-            <center>
-            <figure>
-                <img
-                    src={require("../img/attachments/w200/arm_mount.png").default}
-                    width="250"
-                />
-            </figure>
-            </center>
-        </td>
-<td>
 
-```yaml
-attachments:
-  - name: arm_mount
-    type: arm_mount
-    parent: default_mount
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    enabled: true
-```
-</td>
-</tr>
-</table>
+<W200ArmMount/>
 
 ### Generators
-<table>
-    <tr>
-        <td>
-            <center>
-            <figure>
-                <img
-                    src={require("../img/attachments/w200/generator.png").default}
-                    width="250"
-                />
-            </figure>
-            </center>
-        </td>
-<td>
-
-```yaml
-attachments:
-  - name: generator
-    type: generator
-    parent: default_mount
-    xyz: [-0.42506, 0.0, 0.0017]
-    rpy: [0.0, 0.0, 0.0]
-    enabled: true
-```
-</td>
-</tr>
-</table>
+<W200Generator/>
 
 
 ## Extras
