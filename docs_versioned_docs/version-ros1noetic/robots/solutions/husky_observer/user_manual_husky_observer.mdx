@@ -1580,7 +1580,8 @@ Disable any exisitng pan limits by opening the limits menu and making sure all t
   </figure>
 </center>
 
-Move the camera to a pan of -179 degrees. The easiest way to move the camera precisely is to launch the ROS driver on the Main Computer and use the `cmd` topic to move the camera:
+Move the camera to a pan of -179 degrees. The easiest way to move the camera precisely is to launch the ROS driver on the Main Computer and use the `cmd` topic to move the camera.
+Note that the driver expect the pan and tilt angles to be in radians.
 
 ```bash
 # Start the driver in one terminal
@@ -1588,7 +1589,7 @@ Move the camera to a pan of -179 degrees. The easiest way to move the camera pre
 roslaunch axis_camera axis.launch enable_ptz:=true username:=root password:=clearpath hostname:=192.168.131.10
 
 # In a second terminal, run
-rostopic pub /axis/cmd axis_camera/Axis "{pan: -179.0, tilt: 0.0, zoom: 1.0, focus: 0.0, brightness: 1.0, iris: 0.0, autofocus: true, autoiris: true}" -1
+rostopic pub /axis/cmd/position axis_msgs/Ptz "{pan: -3.12414, tilt: 0.0, zoom: 1.0}" -1"
 ```
 
 Once the camera finishes moving, set the left pan limit by pressing the left limit button:
@@ -1606,7 +1607,7 @@ Once the camera finishes moving, set the left pan limit by pressing the left lim
 Then move the camera to a pan of 179 degrees:
 
 ```bash
-rostopic pub /axis/cmd axis_camera/Axis "{pan: 179.0, tilt: 0.0, zoom: 1.0, focus: 0.0, brightness: 1.0, iris: 0.0, autofocus: true, autoiris: true}" -1
+rostopic pub /axis/cmd/position axis_msgs/Ptz "{pan: 3.12414, tilt: 0.0, zoom: 1.0}" -1"
 ```
 
 Once the camera finishes moving, click on the right pan limit button to set the right pan limit to 179 degrees.
@@ -1623,6 +1624,17 @@ Once the camera finishes moving, click on the right pan limit button to set the 
 
 Click the Done button to apply the new limits. Note that the camera will now have a 2-degree deadzone at the rear where
 it cannot point. This is an unfortunate but unavoidable side-effect of setting the limits this way.
+
+::: note
+
+In version `0.5.0` onward the `axis_camera` ROS driver uses radians instead of degrees.  If you have an older version of the driver
+installed, you can set the pan angles with this command instead:
+
+```bash
+rostopic pub /axis/cmd axis_camera/Axis "{pan: 179.0, tilt: 0.0, zoom: 1.0, focus: 0.0, brightness: 1.0, iris: 0.0, autofocus: true, autoiris: true}" -1
+```
+
+:::
 
 ### RealSense Front and Rear Rear Driving Camera Configuration
 
