@@ -1,0 +1,33 @@
+<table>
+    <tr>
+        <td>
+            <center>
+            <figure>
+                <img
+                    src={require("./img/hokuyo_ust.png").default}
+                    width="250"
+                />
+            </figure>
+            </center>
+        </td>
+<td>
+
+```yaml
+lidar2d:
+  - model: hokuyo_ust
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      urg_node:
+        laser_frame_id: lidar2d_0_laser
+        ip_address: 192.168.131.20
+        ip_port: 10940
+        angle_min: -2.356
+        angle_max: 2.356
+```
+</td>
+</tr>
+</table>
