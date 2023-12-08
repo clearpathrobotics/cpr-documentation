@@ -249,6 +249,7 @@ Clearpath robot services can now be installed with the following command:
 ```
 source /opt/ros/humble/setup.bash
 ros2 run clearpath_robot install
+sudo systemctl enable clearpath-robot
 ```
 
 This script uses [robot_upstart](https://github.com/clearpathrobotics/robot_upstart/tree/foxy-devel) to install the `systemd` services
