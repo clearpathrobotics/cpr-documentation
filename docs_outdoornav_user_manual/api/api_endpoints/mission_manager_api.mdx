@@ -112,6 +112,13 @@ Use with extreme caution; this procedure cannot be undone.
 **Description:** Delete the Mission with the given ID.  Waypoints that are included in this mission are not
 deleted, as they may be referenced by other Missions.
 
+#### mission_manager/delete_missions
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteMultiple](definitions.mdx#storage-deletemultiple)
+
+**Description:** Delete the missions with the given IDs. Waypoints that are part of these missions are not deleted,
+as they may be referenced by other Missions.
+
 #### mission_manager/delete_orphan_objects
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/DeleteEverything](definitions.mdx#storage-deleteeverything)
@@ -132,6 +139,12 @@ Use with caution; deleted items cannot be recovered.
 **Description:** Delete the Task with the given ID.  Any Waypoints that reference the deleted Task will be modified
 to omit this Task once it is deleted.
 
+#### mission_manager/delete_tasks
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteMultiple](definitions.mdx#storage-deletemultiple)
+
+**Description:** Delete the tasks with the given IDs.
+
 #### mission_manager/delete_waypoint
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/DeleteById](definitions.mdx#storage-deletebyid)
@@ -139,6 +152,13 @@ to omit this Task once it is deleted.
 **Description:** Delete the Waypoint with the given ID.  Tasks that are included in this mission are not
 deleted, as they may be referenced by other Waypoints.  Any Missions that reference the deleted Waypoint will be
 modified to omit this Waypoint once it is deleted.
+
+#### mission_manager/delete_waypoints
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteMultiple](definitions.mdx#storage-deletemultiple)
+
+**Description:** Delete the Waypoints with the given IDs. Tasks that are part of these Waypoints are not deleted,
+as they may be referenced by other Waypoints.
 
 #### mission_manager/export
 

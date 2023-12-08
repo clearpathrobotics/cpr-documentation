@@ -794,6 +794,16 @@ bool yes_i_am_absolutely_sure_i_want_to_do_this
 bool ok
 ```
 
+#### clearpth_mission_manager_msgs/srv/DeleteMultiple.srv {#storage-deletemultiple}
+
+```
+# A list of UUIDs of items we want to delete
+string[] uuids
+---
+# A list of UUIDs that we were asked to delete, but failed to
+string[] failed_uuids
+```
+
 #### clearpath_mission_manager_msgs/srv/ExportData.srv {#storage-exportdata}
 
 ```
