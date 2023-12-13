@@ -329,6 +329,10 @@ float64[] floats
 # String data to be passed to the action_server_name
 # The exact meaning of these values is dependent on the underlying service
 string[] strings
+
+# Boolean value which determines whether a mission using this task can continue
+# if this task fails to execute
+bool allow_failure
 ```
 
 #### clearpath_navigation_msgs/TrackError.msg {#msg-track-error}
@@ -390,6 +394,20 @@ string model
 string serial_id
 string hardware_revision
 string firmware_revision
+```
+
+#### clearpath_safety_msgs/Safety.msg {#msg-safety}
+
+```
+# Safety monitor message telling us if the safety monitor has been triggered and a message
+# indicating what caused the trigger
+
+uint8 SAFETY_ESTOP = 0
+uint8 SAFETY_SENSOR_TIMEOUT = 1
+
+bool safety_monitor_triggered
+uint8 trigger_type
+string message
 ```
 
 #### clearpath_safety_msgs/WatchdogStatus.msg {#msg-safety-watchdog}
@@ -776,13 +794,21 @@ bool yes_i_am_absolutely_sure_i_want_to_do_this
 bool ok
 ```
 
+#### clearpth_mission_manager_msgs/srv/DeleteMultiple.srv {#storage-deletemultiple}
+
+```
+# A list of UUIDs of items we want to delete
+string[] uuids
+---
+# A list of UUIDs that we were asked to delete, but failed to
+string[] failed_uuids
+```
+
 #### clearpath_mission_manager_msgs/srv/ExportData.srv {#storage-exportdata}
 
 ```
 ---
-# A base-64 encoded string representing a compressed version of
-# the database contents.
-# The data itself is a gzipped JSON string representing the database contents
+# A JSON string representing the database contents.
 # This can be written to a file or used with the ImportData.srv
 # to back-up/restore the database contents
 string data
@@ -853,9 +879,7 @@ clearpath_navigation_msgs/Waypoint waypoint
 #### clearpath_mission_manager_msgs/srv/ImportData.srv {#storage-importdata}
 
 ```
-# A base-64 encoded string representing a compressed version of
-# the database contents.
-# The data itself is a gzipped JSON string representing the database contents
+# A JSON string representing the database contents.
 # This is the same as the data output by the ExportData service, and is intended
 # to be used to restore the database to a previous state
 string data
@@ -1131,9 +1155,7 @@ bool ok
 
 ```
 ---
-# A base-64 encoded string representing a compressed version of
-# the database contents.
-# The data itself is a gzipped JSON string representing the database contents
+# A JSON string representing the database contents.
 # This can be written to a file or used with the ImportData.srv
 # to back-up/restore the database contents
 string data
@@ -1204,9 +1226,7 @@ cpr_navigation_msgs/Waypoint waypoint
 #### cpr_mission_manager_msgs/srv/ImportData.srv {#storage-importdata}
 
 ```
-# A base-64 encoded string representing a compressed version of
-# the database contents.
-# The data itself is a gzipped JSON string representing the database contents
+# A JSON string representing the database contents.
 # This is the same as the data output by the ExportData service, and is intended
 # to be used to restore the database to a previous state
 string data
@@ -1364,9 +1384,7 @@ bool ok
 
 ```
 ---
-# A base-64 encoded string representing a compressed version of
-# the database contents.
-# The data itself is a gzipped JSON string representing the database contents
+# A JSON string representing the database contents.
 # This can be written to a file or used with the ImportData.srv
 # to back-up/restore the database contents
 string data
@@ -1402,9 +1420,7 @@ cpr_mission_scheduler_msgs/Schedule schedule
 #### cpr_mission_scheduler_msgs/srv/ImportData.srv {#scheduler-importdata}
 
 ```
-# A base-64 encoded string representing a compressed version of
-# the database contents.
-# The data itself is a gzipped JSON string representing the database contents
+# A JSON string representing the database contents.
 # This is the same as the data output by the ExportData service, and is intended
 # to be used to restore the database to a previous state
 string data
@@ -1519,6 +1535,29 @@ bool success
 float32 percent_complete
 ```
 
+#### clearpath_navigation_msgs/action/ExecuteMissionByUuid.action {#action-execute-mission-by-uuid}
+
+```
+# Action definition for executing a mission by uuid
+
+# goal
+string uuid # UUID of The mission being executed
+
+# from_start = True -> Forces the mission to execute from the beginning
+bool from_start
+
+# If from_start = False, mission will be executed from the waypoint with UUID specified.
+# If from_start = False and no start_waypoint_uuid is specified then autonomy will pick the closest waypoint
+string start_waypoint_uuid
+---
+# result
+bool success
+---
+# feedback
+string state
+
+```
+
 #### clearpath_navigation_msgs/action/Mission.action {#action-mission}
 
 ```
@@ -1526,6 +1565,13 @@ float32 percent_complete
 
 # goal
 clearpath_navigation_msgs/Mission mission
+
+# from_start = True -> Forces the mission to execute from the beginning
+bool from_start
+
+# If from_start = False, mission will be executed from the start_waypoint specified.
+# If from_start = False and no start_waypoint is specified then autonomy will pick the closest waypoint
+clearpath_navigation_msgs/Waypoint start_waypoint
 ---
 # result
 bool success

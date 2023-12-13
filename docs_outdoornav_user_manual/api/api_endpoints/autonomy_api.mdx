@@ -197,7 +197,7 @@ direction).
 
 #### /safety/safety_stop
 
-&emsp;&emsp;**Message Type:** std_msgs/Bool
+&emsp;&emsp;**Message Type:** [clearpath_safety_msgs/Safety](definitions.mdx#msg-safety)
 
 &emsp;&emsp;**Description:** Flag denoting if autonomy should be stopped due to any
 of the following reasons: emergency stop active, one of the sensors has
@@ -474,8 +474,16 @@ package has been included.
 &emsp;&emsp;**Action Type:** [clearpath_navigation_msgs/action/Mission](definitions.mdx#action-mission)
 
 &emsp;&emsp;**Description:** Send goals for execution by the robot. This will
-include the goal, the viapoint(s), tasks, goal tolerances and goal
-heading.
+include the goal, the waypoint(s), tasks, goal tolerances, goal
+heading, a from_start flag, and an optional start_waypoint_uuid.
+
+#### /mission/by_id
+
+&emsp;&emsp;**Action Type:** [clearpath_navigation_msgs/action/ExecuteMissionByUuid](definitions.mdx#action-execute-mission-by-uuid)
+
+&emsp;&emsp;**Description:** Send goals for execution by the robot
+according to the specific mission uuid. This will include the goal, the waypoint(s), tasks,
+goal tolerances, goal heading, an optional start_waypoint_uuid, and a from_start flag.
 
 #### /undock
 

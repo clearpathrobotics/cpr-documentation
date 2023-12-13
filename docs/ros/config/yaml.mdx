@@ -134,7 +134,7 @@ sensors:
         camera:
           camera_name: camera_0
           device_type: d435
-          serial_no: '0'
+          serial_no: "0"
           enable_color: true
           rgb_camera.profile: 640,480,30
           enable_depth: true
@@ -267,9 +267,11 @@ At this point, with just the **serial_number** and **system** defined: our robot
 Every robot platform has unique structures such as versatile sensor mounting solutions, wireless charging receivers, and waterproofing enclosures; we refer to these as attachments.
 
 #### Joystick Controller
+
 We support two types of controllers:
-  - **ps4**: standard Playstation4 controller.
-  - **logitech**: Logitech F710
+
+- **ps4**: standard Playstation4 controller.
+- **logitech**: Logitech F710
 
 ```yaml
 controller: ps4 # or logitech
@@ -281,8 +283,8 @@ There are four types of attachments:
 
 1. **bumpers** modify the front face and rear face of the robot platform.
 2. **fenders** modify the area above the wheels on the front and rear of the platform.
-2. **top_plates** modify the top face of the robot platform.
-3. **structures** are large custom parts that are added atop the top plate.
+3. **top_plates** modify the top face of the robot platform.
+4. **structures** are large custom parts that are added atop the top plate.
 
 #### Husky A200 {#attachments-a200}
 
@@ -366,11 +368,13 @@ extras:
 ```
 
 #### ROS Parameters
+
 A common use case is to set and update the parameters to the `platform_velocity_controller` node. These can be used to modify the linear and angular velocity and acceleratation.
 
 These can be passed in as follows:
 
 **A200 Husky Controller Defaults:**
+
 ```yaml
 platform:
   extras:
@@ -387,8 +391,8 @@ platform:
         angular.z.min_acceleration": -6.0
 ```
 
-
 **J100 Jackal Controller Defaults:**
+
 ```yaml
 platform:
   extras:
@@ -655,6 +659,7 @@ fath_pivot:
 ```
 
 - **sick:** are mounts specifically designed to mount SICK LiDARs. The orientation of the LiDAR on the mount can be set to either `upright` or `inverted`.
+
 ```yaml
 sick:
   - parent: base_link
@@ -664,6 +669,7 @@ sick:
 ```
 
 - **post:** are vertical extrusion rails to which sensors can be added.
+
 ```yaml
 post:
   - parent: base_link
@@ -675,6 +681,7 @@ post:
 ```
 
 - **disk:** are circular plates which are used to mount circular sensors, i.e. the Velodyne
+
 ```yaml
 disk:
   - parent: base_link
@@ -827,6 +834,7 @@ gps:
 ```
 
 - **_garmin_18x_**
+
 ```yaml
 gps:
   - model: garmin_18x
@@ -843,6 +851,7 @@ gps:
 ```
 
 - **_novatel_smart6_**
+
 ```yaml
 gps:
   - model: novatel_smart6
@@ -859,6 +868,7 @@ gps:
 ```
 
 - **_novatel_smart7_**
+
 ```yaml
 gps:
   - model: novatel_smart7
@@ -911,6 +921,7 @@ imu:
 ```
 
 - **_redshift_um7:_**
+
 ```yaml
 imu:
   - model: redshift_um7
@@ -1078,7 +1089,7 @@ camera:
       camera:
         camera_name: camera_0
         device_type: d435
-        serial_no: '0'
+        serial_no: "0"
         enable_color: true
         rgb_camera.profile: 640,480,30
         enable_depth: true
@@ -1111,7 +1122,7 @@ sensors:
         camera:
           camera_name: camera_0
           device_type: d435
-          serial_no: '0'
+          serial_no: "0"
           enable_color: true
           rgb_camera.profile: 640,480,30
           enable_depth: true
@@ -1150,7 +1161,6 @@ sensors:
           model: VLP16
           fixed_frame: lidar3d_0_laser
           target_frame: lidar3d_0_laser
-
 ```
 
 </p>

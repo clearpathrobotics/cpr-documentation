@@ -6,6 +6,37 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
+## 0.10.0
+
+### New Features
+
+-   Added the ability to start mission from a specific Waypoint
+-   Added the ability to resume mission from current location
+-   Added the option to include on-start and on-stop tasks to a Mission
+-   Added the option to continue a Mission if a Task should fail
+-   Full release of the API examples repository to the public (link API examples top level page)
+
+### API Features
+
+-   Action definition changes (see [API Endpoints](./api/api_endpoints/autonomy_api))
+    -   Mission.action added from_start and *start_waypoint_uuid* fields
+    -   ExecuteMissionByUuid.action:  added from_start and *start_waypoint_uuid* fields
+-   Message Definition changes
+    -   Mission.msg: added an array of on_start and and array of on_stop tasks fields
+    -   Task.msg: added a boolean allow_failure field
+-   Updated /safety/safety_stop message type (see [Definitions](./api/api_endpoints/definitions.mdx#msg-safety))
+-   Added import/export services for /dock, /mission_manager/ and /mission_scheduler features
+
+### Bug Fixes
+
+-   1546: Robot cannot start mission part-way through if a task is assigned on any Waypoint prior to its location
+-   1764: Importing missions with docking tasks fails to bring in docks
+
+### Known Issues
+
+-   1396: Robot gets temporarily stuck at start of mission when near a Waypoint
+-   1844: [MPC] Maximum acceleration param doesn't appear to have any effect
+
 ## 0.9.0
 
 ### New Features
