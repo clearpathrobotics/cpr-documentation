@@ -9,7 +9,7 @@ Before flashing firmware, place your robot up on blocks. Firmware loading does n
 
 #### 1. Download the Clearpath Firmware package from the Clearpath package server
 
-On the robot PC, run the following commands:
+On the robot computer, run the following commands:
 
 ```
 sudo apt-get update
@@ -20,9 +20,9 @@ sudo apt-get install ros-humble-clearpath-firmware
 
 :::note
 
-Platforms with an ethernet connection to the MCU have the option of flashing over USB or ethernet.
+Platforms with an Ethernet connection to the MCU have the option of flashing over USB or Ethernet.
 If you are updating to ROS 2 Humble for the first time, you must use USB. If you are updating ROS 2 Humble firmware
-to a newer version, using ethernet is recommended. Skip this step if flashing over ethernet.
+to a newer version, using Ethernet is recommended. Skip this step if flashing over Ethernet.
 
 :::
 
@@ -33,7 +33,7 @@ to a newer version, using ethernet is recommended. Skip this step if flashing ov
   >
 
   The J100 MCU is mounted to the rear inside wall of the robot. To access it, open the lid, keeping the computer
-  tray secured to the underside of the lid. 
+  tray secured to the underside of the lid.
 
   <center>
     <figure>
@@ -56,16 +56,16 @@ to a newer version, using ethernet is recommended. Skip this step if flashing ov
         The <code>PWR_MODE</code> switch. Left is <code>NORM</code> or normal mode, right is <code>ALT</code> or bootloader mode. This is used for flashing the firmware.
       </li>
       <li>
-        The mini-USB port used for transmitting data. This should be connected to J100's PC for both normal operation and  firmware flashing.
+        The mini-USB port used for transmitting data. This should be connected to J100's computer for both normal operation and  firmware flashing.
       </li>
     </ol>
   </figure>
 
   **Place the J100 MCU into bootloader mode**
-  
-  Open the lid of the robot to expose the MCU and make sure the mini-USB cable is connected to the robot PC.
+
+  Open the lid of the robot to expose the MCU and make sure the mini-USB cable is connected to the robot computer.
   Switch the <code>PWR_MODE</code> switch from <code>NORM</code> to <code>ALT</code>. If the robot is on, press the <code>M_RST</code> button. Otherwise, turn the robot on with the power button.
-   
+
   </TabItem>
 
   <TabItem
@@ -100,7 +100,7 @@ to a newer version, using ethernet is recommended. Skip this step if flashing ov
   </figure>
 
   **Place the W200 MCU into bootloader mode**
-  
+
   While pressing <code>BT0</code> on the MCU, connect the external computer to Warthog's MCU using a USB cable.
 
   </TabItem>
@@ -129,7 +129,7 @@ flashing, you can attempt to flash again over USB.
 
 :::note
 
-If you flashed over ethernet, skip this step.
+If you flashed over Ethernet, skip this step.
 
 :::
 
@@ -138,10 +138,10 @@ If you flashed over ethernet, skip this step.
     value="J100"
     label="J100"
   >
-  
+
   Switch the <code>PWR_MODE</code> switch from <code>ALT</code> back to <code>NORM</code>. The robot will turn off.
   Power it back on with the power button.
-   
+
   </TabItem>
 
   <TabItem
