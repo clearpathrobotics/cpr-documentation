@@ -12,7 +12,9 @@ import Mesh from "/docs_versioned_docs/version-ros2humble/components/yaml/links/
 import Sphere from "/docs_versioned_docs/version-ros2humble/components/yaml/links/sphere.mdx";
 
 Links are any URDF primitive.
-> Just as is the case in URDF, links are added at the center of the primitive. In other words, you will need to slide up all links by half their height to have it "sit" on its parent link.
+:::tip keep the frames in mind:
+ Just as is the case in URDF, links have their frame at the center of the primitive. In other words, you will need to slide up all links by half their height to have it "sit" on its parent link.
+:::
 
 ## Frame
 Just a link without any geometry.
