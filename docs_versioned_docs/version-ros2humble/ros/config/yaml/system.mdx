@@ -14,14 +14,14 @@ The **hosts** section serves as a way to match IP addresses to hostnames. By def
 - The **self** entry refers to the hostname of the computer this configuration file will be loaded on.
 - The **platform** entry refers to the hostname and IP of the robot platform's main computer.
 - The **onboard** entry is used to define the hostname and IP of other computers on the robot.
-- The **remote** entry is used to define the hostname and IP of computers in the system that are not on the robot, such as a user's PC.
+- The **remote** entry is used to define the hostname and IP of computers in the system that are not on the robot, such as a user's computer.
 
 ## ROS 2 Environment
 
 The **ros2** sections is necessary to setup the ROS 2 middleware.
 
-- **username** must match the username of the user that is to run all ROS nodes.
-- **namespace** specified will be appended as a prefix to all sensor topics to prevent topic cloberring when multiple robots are on the same network and domain ID.
+- **username** must match the username that is used to run all ROS nodes.
+- **namespace** specified will be appended as a prefix to all sensor topics to prevent topics from being overloaded when multiple robots are on the same network and domain ID.
 - **domain_id** specifies the ROS 2 domain ID to use.
 - **rmw_implementation** specifies the ROS 2 middleware to use. **Currently, it only supports `rmw_fastrtps_cpp`.**
 - **workspaces** indicates a list of workspaces that need to be sourced by specifying the path to the setup.py
