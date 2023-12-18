@@ -23,7 +23,7 @@ import SickUpright from "/docs_versioned_docs/version-ros2humble/components/yaml
 Most sensors can use similar mounting structures. Therefore, we want to keep mounts separate from sensors, such that users could attach their own sensors to existing mounts.
 
 ## Riser
-A mounting plate with the defined number of rows and columns of the PACS™ **80mm x 80mm** grid.
+A mounting plate with the defined number of rows and columns of the PACS™ **80 mm X 80 mm** grid.
 
 :::warning not available without pacs:
  At this time, you will **need to use the PACS™ top plate**, only available using the `a200.top_plate` with `model: pacs`, to add these riser mounts. See the [**platform**](./platform.mdx) section for more information.
@@ -45,11 +45,11 @@ For example, we can add a riser with a 4 by 4 grid:
 <Riser4x4/>
 
 ## Bracket
-Brackets are small plates with **80mm x 80mm** screw holes that can be used to attach it to the PACS™ gird. They come in three different models.
+Brackets are small plates with **80 mm X 80 mm** screw holes that can be used to attach it to the PACS™ gird. They come in three different models.
 
-The **horizontal** and **vertical** models have screw holes to attach all small sensors such as camera, lidars, and IMU's.
+The **horizontal** and **vertical** models have screw holes to attach all small sensors such as camera, lidars, and IMUs.
 
-The **large** model have screw  holes to attach larger sensors such as the SwiftNav Duro receivers.
+The **large** model has screw  holes to attach larger sensors such as the SwiftNav Duro receivers.
 
 ### Horizontal Bracket
 <BracketHorizontal/>
@@ -61,7 +61,7 @@ The **large** model have screw  holes to attach larger sensors such as the Swift
 <BracketLarge/>
 
 ## Fath Pivot
-Camera mount with a single joint that can be adjusted to change the pitch of the camera. The angle of the joint is set using the **angle** parameter.
+Camera mounts with a single joint that can be adjusted to change the pitch of the camera. The angle of the joint is set using the **angle** parameter.
 <FathPivot/>
 
 ## SICK Mounts
@@ -75,7 +75,7 @@ The orientation of the LiDAR on the mount can be set to either `upright` or `inv
 <SickInverted/>
 
 ## Post
-Posts are vertical extrusion rails to which sensors can be added.
+Posts are vertical extrusion rails to where sensors can be added.
 
 These can be single, dual, and quad legs.
 
@@ -89,10 +89,10 @@ These can be single, dual, and quad legs.
 <PostQuad/>
 
 ## Disk
-Disk plates are circular which are use to mount circular sensors, such as the Velodyne LiDARs.
+Disk plates are used for circular sensors, such as the Velodyne LiDARs.
 <Disk/>
 
-We can also make use of the **post** to lift the **disk** mount.
+We can also lift the **disk** by using a **post**.
 <DiskPost/>
 
 
@@ -113,7 +113,7 @@ We can also make use of the **post** to lift the **disk** mount.
 
 In this sample, we will add a **bracket** to mount a LiDAR to the front of the **Husky A200**.
 
-We select the **_top_plate_mount_d1_**, i.e. the middle (**d**), front (**1**), 80mm x 80mm mounting location on the **pacs** top plate.
+We select the **_top_plate_mount_d1_**, i.e. the middle (**d**), front (**1**), 80 mm X 80 mm mounting location on the **PACS** top plate.
 
 ```yaml
 bracket:
@@ -137,7 +137,7 @@ Then, we want to add a camera to the sensor arch. However, we will complicate th
 
 We choose a **fath_pivot** mount, and then we set its **parent** to the **_sensor_arch_mount_**.
 
-Using the **xyz** entry, we lower the mount by 21mm to get it under the sensor arch; then, we roll it by PI to get it upside down.
+Using the **xyz** entry, we lower the mount by 21 mm to get it under the sensor arch; then, we roll it by $\pi$ to get it upside down.
 
 ```yaml
 fath_pivot:
