@@ -155,13 +155,13 @@ exists, the returned object will have a blank UUID.
 
 **Service Type:** [clearpath_mission_scheduler_msgs/srv/ImportData](definitions.mdx#scheduler-importdata)
 
-**Description:** Import data exported by the `export_data` service.  This will delete all schedules and replace the
-database contents with the imported data.
+**Description:** Import data exported by the `export_data` service.  This will add new schedules to the database
+but will not modify or delete any existing schedules.
 
 :::note
 
-This service is intended to be used in combination with the `export_data` service to facilitate backups or
-synchronizing schedules across multiple robots.
+This service is intended to be used in combination with the `export_data` service to facilitate deploying new
+schedules across multiple robots.
 
 :::
 
@@ -171,6 +171,20 @@ synchronizing schedules across multiple robots.
 
 **Description:** Remove the mission at a given position from a schedule, or remove all copies of a mission from a
 schedule
+
+### mission_scheduler/restore
+
+**Service Type:** [cpr_mission_scheduler_msgs/srv/ImportData](definitions.mdx#scheduler-importdata)
+
+**Description:** Restore data exported by the `export_data` service.  This will delete all schedules and replace the
+database contents with the imported data.
+
+:::note
+
+This service is intended to be used in combination with the `export_data` service to facilitate backups or
+synchronizing schedules across multiple robots.
+
+:::
 
 ### mission_scheduler/update_schedule
 
