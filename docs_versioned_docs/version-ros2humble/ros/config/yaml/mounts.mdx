@@ -1,0 +1,181 @@
+---
+title: Mounts
+sidebar_label: Mounts
+sidebar_position: 6
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+import BracketHorizontal from "/docs_versioned_docs/version-ros2humble/components/yaml/mounts/bracket_horizontal.mdx";
+import BracketLarge from "/docs_versioned_docs/version-ros2humble/components/yaml/mounts/bracket_large.mdx";
+import BracketVertical from "/docs_versioned_docs/version-ros2humble/components/yaml/mounts/bracket_vertical.mdx";
+import DiskPost from "/docs_versioned_docs/version-ros2humble/components/yaml/mounts/disk_post.mdx";
+import Disk from "/docs_versioned_docs/version-ros2humble/components/yaml/mounts/disk.mdx";
+import FathPivot from "/docs_versioned_docs/version-ros2humble/components/yaml/mounts/fath_pivot.mdx";
+import PostDual from "/docs_versioned_docs/version-ros2humble/components/yaml/mounts/post_dual.mdx";
+import PostQuad from "/docs_versioned_docs/version-ros2humble/components/yaml/mounts/post_quad.mdx";
+import PostSingle from "/docs_versioned_docs/version-ros2humble/components/yaml/mounts/post_single.mdx";
+import Riser1x7 from "/docs_versioned_docs/version-ros2humble/components/yaml/mounts/riser_1x7.mdx";
+import Riser4x4 from "/docs_versioned_docs/version-ros2humble/components/yaml/mounts/riser_4x4.mdx";
+import Riser8x7 from "/docs_versioned_docs/version-ros2humble/components/yaml/mounts/riser_8x7.mdx";
+import SickInverted from "/docs_versioned_docs/version-ros2humble/components/yaml/mounts/sick_inverted.mdx";
+import SickUpright from "/docs_versioned_docs/version-ros2humble/components/yaml/mounts/sick_upright.mdx";
+
+Most sensors can use similar mounting structures. Therefore, we want to keep mounts separate from sensors, such that users could attach their own sensors to existing mounts.
+
+## Riser
+A mounting plate with the defined number of rows and columns of the PACS™ **80 mm X 80 mm** grid.
+
+:::warning not available without pacs:
+ At this time, you will **need to use the PACS™ top plate**, only available using the `a200.top_plate` with `model: pacs`, to add these riser mounts. See the [**platform**](./platform.mdx) section for more information.
+:::
+
+### Preset Risers
+These are the most common riser sizes; therefore, we have accurate models of these plates.
+
+#### 8 X 7 Riser
+<Riser8x7/>
+
+#### 1 X 7 Riser
+<Riser1x7/>
+
+### Custom Risers
+To promote flexibility, the size of the risers can be changed to any size; however, there are no models for these, and instead will be generated using primitives.
+
+For example, we can add a riser with a 4 by 4 grid:
+<Riser4x4/>
+
+## Bracket
+Brackets are small plates with **80 mm X 80 mm** screw holes that can be used to attach it to the PACS™ gird. They come in three different models.
+
+The **horizontal** and **vertical** models have screw holes to attach all small sensors such as camera, lidars, and IMUs.
+
+The **large** model has screw holes to attach larger sensors such as the SwiftNav Duro receivers.
+
+### Horizontal Bracket
+<BracketHorizontal/>
+
+### Vertical Bracket
+<BracketVertical/>
+
+### Large Bracket
+<BracketLarge/>
+
+## Fath Pivot
+Camera mounts with a single joint that can be adjusted to change the pitch of the camera. The angle of the joint is set using the **angle** parameter.
+<FathPivot/>
+
+## SICK Mounts
+These mounts are specifically designed to mount SICK LiDARs, but can be used for other sensors if required.
+The orientation of the LiDAR on the mount can be set to either `upright` or `inverted`
+
+### Upright
+<SickUpright/>
+
+### Inverted
+<SickInverted/>
+
+## Post
+Posts are vertical extrusion rails to where sensors can be added.
+
+These can be single, dual, and quad legs.
+
+### Single
+<PostSingle/>
+
+### Dual
+<PostDual/>
+
+### Quad
+<PostQuad/>
+
+## Disk
+Disk plates are used for circular sensors, such as the Velodyne LiDARs.
+<Disk/>
+
+We can also lift the **disk** by using a **post**.
+<DiskPost/>
+
+
+## Sample
+
+<details><summary>Sample A200 Mounts Section</summary>
+<p>
+
+<center>
+  <figure>
+    <img
+      src={require("../img/husky_accessories_0.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with Covered User Bay</figcaption>
+  </figure>
+</center>
+
+In this sample, we will add a **bracket** to mount a LiDAR to the front of the **Husky A200**.
+
+We select the **_top_plate_mount_d1_**, in other words, the middle (**d**), front (**1**), 80 mm X 80 mm mounting location on the **PACS** top plate.
+
+```yaml
+bracket:
+  - parent: top_plate_mount_d1
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    model: horizontal
+```
+
+<center>
+  <figure>
+    <img
+      src={require("../img/husky_mounts_0.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with D1 Bracket</figcaption>
+  </figure>
+</center>
+
+Then, we want to add a camera to the sensor arch. However, we will complicate things by adding it upside down to the extrusion.
+
+We choose a **fath_pivot** mount, and then we set its **parent** to the **_sensor_arch_mount_**.
+
+Using the **xyz** entry, we lower the mount by 21 mm to get it under the sensor arch; then, we roll it by $\pi$ to get it upside down.
+
+```yaml
+fath_pivot:
+  - parent: sensor_arch_mount # mount atop the sensor arch
+    xyz: [0.0, 0.0, -0.021] # lower pivot mount to below the sensor arch
+    rpy: [3.1415, 0.0, 0.0] # roll pivot mount to flip it upside down
+    angle: 0.0
+```
+
+<center>
+  <figure>
+    <img
+      src={require("../img/husky_mounts_1.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with upside down Fath Pivot Mount</figcaption>
+  </figure>
+</center>
+
+Since we did not need a riser, we leave that section empty; the resulting **mounts** section:
+
+```yaml
+mounts:
+  bracket:
+    - parent: top_plate_mount_d1
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      model: horizontal
+  fath_pivot:
+    - parent: sensor_arch_mount
+      xyz: [0.0, 0.0, -0.021]
+      rpy: [3.1415, 0.0, 0.0]
+      angle: 0.0
+  riser: []
+  sick: []
+  post: []
+  disk: []
+```
+
+</p>
+</details>

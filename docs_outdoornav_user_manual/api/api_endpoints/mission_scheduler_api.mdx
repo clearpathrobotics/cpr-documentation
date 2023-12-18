@@ -38,7 +38,7 @@ nearest minute when displaying the countdown information to the user in any sort
 
 ### mission_scheduler/next_schedule
 
-**Message Type:** [cpr_mission_scheduler_msgs/msg/NextSchedule](definitions.mdx#scheduler-nextschedule)
+**Message Type:** [clearpath_mission_scheduler_msgs/msg/NextSchedule](definitions.mdx#scheduler-nextschedule)
 
 **Description:** Publishes the UUID and duration to the next scheduled mission.  If no missions are scheduled the UUID
 will be blank.
@@ -47,7 +47,7 @@ will be blank.
 
 ### mission_scheduler/state
 
-**Message Type:** [cpr_mission_scheduler_msgs/msg/StorageState](definitions.mdx#scheduler-state)
+**Message Type:** [clearpath_mission_scheduler_msgs/msg/StorageState](definitions.mdx#scheduler-state)
 
 **Description:** Publishes the current state of the database. Anything that needs to display the current set of
 schedules should subscribe to this topic
@@ -58,25 +58,25 @@ schedules should subscribe to this topic
 
 ### mission_scheduler/add_mission
 
-**Service Type:** [cpr_mission_manager_msgs/srv/AddRemoveById](definitions.mdx#storage-addremovebyid)
+**Service Type:** [clearpath_mission_manager_msgs/srv/AddRemoveById](definitions.mdx#storage-addremovebyid)
 
 **Description:** Add a mission to an existing schedule.
 
 ### mission_scheduler/clone_schedule
 
-**Service Type:** [cpr_mission_scheduler_msgs/srv/CloneSchedule](definitions.mdx#scheduler-cloneschedule)
+**Service Type:** [clearpath_mission_scheduler_msgs/srv/CloneSchedule](definitions.mdx#scheduler-cloneschedule)
 
 **Description:** Perform a deep-copy of an existing schedule
 
 ### mission_scheduler/create_schedule
 
-**Service Type:** [cpr_mission_scheduler_msgs/srv/CreateSchedule](definitions.mdx#scheduler-createschedule)
+**Service Type:** [clearpath_mission_scheduler_msgs/srv/CreateSchedule](definitions.mdx#scheduler-createschedule)
 
 **Description:** Create a new schedule
 
 ### mission_scheduler/delete_all_schedules
 
-**Service Type:** [cpr_mission_manager_msgs/srv/DeleteEverything](definitions.mdx#storage-deleteeverything)
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteEverything](definitions.mdx#storage-deleteeverything)
 
 **Description:** Delete all schedules.
 
@@ -88,7 +88,7 @@ This action is permanent and cannot be undone. Use with caution.
 
 ### mission_scheduler/delete_schedule
 
-**Service Type:** [cpr_mission_manager_msgs/srv/DeleteById](definitions.mdx#storage-deletebyid)
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteById](definitions.mdx#storage-deletebyid)
 
 **Description:** Delete a single schedule.
 
@@ -113,9 +113,9 @@ be run automatically.
 
 ### mission_scheduler/export
 
-**Service Type:** [cpr_mission_scheduler_msgs/srv/ExportData](definitions.mdx#scheduler-exportdata)
+**Service Type:** [clearpath_mission_scheduler_msgs/srv/ExportData](definitions.mdx#scheduler-exportdata)
 
-**Description:** Export all schedule data to a base64 string to it can be backed-up or copied to another robot.
+**Description:** Export all schedule data to a JSON string so it can be backed-up or copied to another robot.
 
 :::note
 
@@ -153,9 +153,30 @@ exists, the returned object will have a blank UUID.
 
 ### mission_scheduler/import
 
+**Service Type:** [clearpath_mission_scheduler_msgs/srv/ImportData](definitions.mdx#scheduler-importdata)
+
+**Description:** Import data exported by the `export_data` service.  This will add new schedules to the database
+but will not modify or delete any existing schedules.
+
+:::note
+
+This service is intended to be used in combination with the `export_data` service to facilitate deploying new
+schedules across multiple robots.
+
+:::
+
+### mission_scheduler/remove_mission
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/AddRemoveById](definitions.mdx#storage-addremovebyid)
+
+**Description:** Remove the mission at a given position from a schedule, or remove all copies of a mission from a
+schedule
+
+### mission_scheduler/restore
+
 **Service Type:** [cpr_mission_scheduler_msgs/srv/ImportData](definitions.mdx#scheduler-importdata)
 
-**Description:** Import data exported by the `export_data` service.  This will delete all schedules and replace the
+**Description:** Restore data exported by the `export_data` service.  This will delete all schedules and replace the
 database contents with the imported data.
 
 :::note
@@ -164,13 +185,6 @@ This service is intended to be used in combination with the `export_data` servic
 synchronizing schedules across multiple robots.
 
 :::
-
-### mission_scheduler/remove_mission
-
-**Service Type:** [cpr_mission_manager_msgs/srv/AddRemoveById](definitions.mdx#storage-addremovebyid)
-
-**Description:** Remove the mission at a given position from a schedule, or remove all copies of a mission from a
-schedule
 
 ### mission_scheduler/update_schedule
 
@@ -190,7 +204,7 @@ copy all values to the service request object, and then change the fields you wa
 
 ### mission_scheduler/run_now
 
-**Action Type:** [cpr_mission_scheduler_msgs/action/RunScheduleByUuid](definitions.mdx#scheduler-runschedulebyuuid)
+**Action Type:** [clearpath_mission_scheduler_msgs/action/RunScheduleByUuid](definitions.mdx#scheduler-runschedulebyuuid)
 
 **Description:** Execute the schedule with the given UUID. The `delay` parameter will defer the execution by the
 specified time.  This action can be used to run a disabled schedule, or run a schedule at a time other than its

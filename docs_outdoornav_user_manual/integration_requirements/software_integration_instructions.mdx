@@ -51,7 +51,7 @@ The script in the sections below will reboot the computer it is run on.
 For installations of the OutdoorNav software on the UGV computer (not a secondary or Starter Kit computer), run the following:
 
 ``` bash
-cd ~/cpr_outdoornav_launch/scripts
+cd ~/cpr_outdoornav_launch/scripts/
 sudo ./setup_computers.sh
 ```
 ##### Secondary or Starter Kit Computer
@@ -59,14 +59,14 @@ sudo ./setup_computers.sh
 Prior to running the script on the secondary or Starter Kit computer, ensure that you have the user and IP of the UGV computer that the secondary/starter kit computer is connected to. Run the following:
 
 ``` bash
-cd ~/cpr_outdoornav_launch/scripts
+cd ~/cpr_outdoornav_launch/scripts/
 sudo ./setup_computers.sh -b
 ```
 
 ### Install OutdoorNav Software {#install-outdoornav}
 
 ``` bash
-cd ~/cpr_outdoornav_launch/scripts/
+cd ~/cpr_outdoornav_launch/
 docker compose --profile outdoornav pull
 ```
 
@@ -101,9 +101,18 @@ nano outdoornav_tuning.env
 
 ### Start OutdoorNav
 
+For standard CPR UGVs (ie. not including Husky Observer), run the following to start OutdoorNav:
+
 ``` bash
 cd ~/cpr_outdoornav_launch/    # directory with docker-compose.yaml
 docker compose --profile outdoornav up -d --build
+```
+
+For Husky Observers, run the following to start OutdoorNav:
+
+``` bash
+cd ~/cpr_outdoornav_launch/    # directory with docker-compose.yaml
+docker compose --profile outdoornav --profile power up -d --build
 ```
 
 ### Test OutdoorNav Installation
