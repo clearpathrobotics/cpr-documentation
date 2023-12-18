@@ -596,11 +596,11 @@ bool success
 #### clearpath_dock_msgs/srv/RemoveDock.srv {#srv-remove-dock}
 
 ```
-# A dock information message that will be added to the docks list
+# A dock information message that will remove a dock from the docks list
 string uuid
 string name
 ---
-# True if the location was updated/added successfully, otherwise False
+# True if the dock was removed successfully, otherwise False
 bool success
 ```
 
@@ -1133,7 +1133,7 @@ clearpath_mission_scheduler_msgs/Schedule result
 # Service definition to enable/disable the delay compensation feature. If enabling, the delay to compensate for must be specified in the request.
 
 bool enable_delay_compensation
-uint16 delay
+uint16 delay                    # units: milliseconds
 ---
 bool success
 string message
@@ -1145,21 +1145,8 @@ string message
 # Service definition to enable/disable the path smoothing feature. If enabling, minimum turning radius must be specified in the request.
 
 bool enable_path_smoother
-float32 turn_radius
+float32 turn_radius         # units: meters
 float32 step_size
----
-bool success
-string message
-```
-
-#### clearpath_navigation_msgs/srv/SetPathShifter.srv {#srv-set-path-shifter}
-
-```
-# Service definition to enable/disable the path smoothing feature. If enabling, minimum turning radius must be specified in the request.
-
-bool enable_path_shifter
-float32 path_shift_offset
-float32 path_shift_time
 ---
 bool success
 string message
@@ -1171,7 +1158,7 @@ string message
 # Service definition to enable/disable the stop distance. If enabling, the stop distance must be specified in the request.
 
 bool enable_stop_distance
-float32 stop_distance
+float32 stop_distance      # units: meters
 ---
 bool success
 string message
@@ -1250,8 +1237,8 @@ float32 percent_complete
 # The UUID of the schedule to execute
 string uuid
 
-# Wait this long before starting the schedule
-duration delay
+# Wait this long before starting the schedule (ross:Duration msg, so the units are secs/nsecs)
+duration delay 
 ---
 # Did the schedule terminate successfully?
 bool success
