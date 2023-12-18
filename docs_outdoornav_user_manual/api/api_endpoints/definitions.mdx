@@ -880,6 +880,16 @@ string data
 clearpath_mission_manager_msgs/StorageState state
 ```
 
+#### clearpath_mission_manager_msgs/srv/ImportMission.srv {#storage-importmission}
+
+```
+# The Mission to import. All UUIDs will be re-generated
+clearpath_navigation_msgs/Mission mission
+---
+# The generated mission with new UUIDs
+clearpath_navigation_msgs/Mission mission
+```
+
 #### clearpath_mission_manager_msgs/srv/UpdateMission.srv {#storage-updatemission}
 
 ```
