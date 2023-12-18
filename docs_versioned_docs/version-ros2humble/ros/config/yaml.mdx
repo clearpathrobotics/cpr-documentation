@@ -1,0 +1,1195 @@
+---
+title: Robot YAML
+sidebar_label: Robot YAML
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+Our robots provide users with a wide range of customization options: sensors, sensor mounting structures, and custom-made parts. Matching the flexibility of our hardware, Clearpath's ROS 2 system is designed to keep all these customization decisions in a single configuration file.
+
+The **Clearpath Robot Configuration YAML**, or `robot.yaml` for short, contains all information pertinent to the entire robot system, allowing robot builders and users to quickly and easily modify any ROS 2 component.
+
+## Overview
+
+The `robot.yaml` is composed of five major sections:
+
+1. [**system**](#system) level information such as the robot's hostname, IP, and ROS middleware implementation.
+2. [**platform**](#platform) level configurations such as robot specific mounting structures and specifying an extra URDF to attach.
+3. [**links**](#links) that are URDF primitives: boxes, cylinders, and meshes.
+4. [**mounts**](#mounts) that are predefined, generic, sensor mounting structures.
+5. [**sensors**](#sensors) that are selected from an inventory of Clearpath supported sensors.
+
+Additionally, there are two other, required parameters:
+
+1. The robot's [**serial_number**](#serial-number); which is used to determine the model and version.
+2. The configuration **version** to use, as future updates are released.
+
+#### Sample
+
+<center>
+  <figure>
+    <img
+      src={require("./img/husky_sample.png").default}
+      width="500"
+    />
+    <figcaption>Sample customization Husky A200</figcaption>
+  </figure>
+</center>
+
+Below is the sample **Husky A200** robot YAML of the robot displayed above. In the following sections, we will reference each and every component of this sample file, and show how to robot looks as we build it up.
+
+Find more samples `robot.yaml` configuration files in the [Clearpath Configuration repository](https://github.com/clearpathrobotics/clearpath_config/).
+
+You can also skip to each section to get an explanation of each part of the sample configuration:
+
+1. [**Serial Number Sample**](#serial-sample)
+2. [**System Sample**](#system-sample)
+3. [**Platform Sample**](#platform-sample)
+4. [**Links Sample**](#links-sample)
+5. [**Mounts Sample**](#mounts-sample)
+6. [**Sensors Sample**](#sensors-sample)
+
+<details><summary>Sample A200 YAML</summary>
+<p>
+
+```yaml
+serial_number: a200-0000
+version: 0
+system:
+  hosts:
+    self: cpr-a200-0000
+    platform:
+      cpr-a200-0000: 192.168.131.1
+    onboard: {}
+    remote: {}
+  ros2:
+    username: administrator
+    namespace: a200_0000
+    domain_id: 0
+    rmw_implementation: rmw_fastrtps_cpp
+    workspaces: []
+platform:
+  controller: ps4
+  attachments:
+    front_bumper:
+      enabled: true
+      model: default
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      extension: 0.0
+    rear_bumper:
+      enabled: true
+      model: default
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      extension: 0.0
+    structure:
+      enabled: true
+      model: sensor_arch_300
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+    top_plate:
+      enabled: true
+      model: pacs
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+  extras:
+    urdf: null
+links:
+  box:
+    - name: user_bay_cover
+      parent: top_plate_link
+      xyz: [0.0, 0.0, 0.00735]
+      rpy: [0.0, 0.0, 0.0]
+      size: [0.4, 0.4, 0.002]
+  cylinder: []
+  frame: []
+  mesh: []
+  sphere: []
+mounts:
+  bracket:
+    - parent: top_plate_mount_d1
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      model: horizontal
+  fath_pivot:
+    - parent: sensor_arch_mount
+      xyz: [0.0, 0.0, -0.021]
+      rpy: [3.1415, 0.0, 0.0]
+      angle: 0.0
+  riser: []
+  sick: []
+  post: []
+  disk: []
+sensors:
+  camera:
+    - model: intel_realsense
+      urdf_enabled: true
+      launch_enabled: true
+      parent: fath_pivot_0_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ros_parameters:
+        camera:
+          camera_name: camera_0
+          device_type: d435
+          serial_no: '0'
+          enable_color: true
+          rgb_camera.profile: 640,480,30
+          enable_depth: true
+          depth_module.profile: 640,480,30
+          pointcloud.enable: true
+  gps: []
+  imu: []
+  lidar2d:
+    - model: hokuyo_ust
+      urdf_enabled: true
+      launch_enabled: true
+      parent: bracket_0_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ros_parameters:
+        urg_node:
+          laser_frame_id: lidar2d_0_laser
+          ip_address: 192.168.131.20
+          ip_port: 10940
+          angle_min: -2.356
+          angle_max: 2.356
+  lidar3d:
+    - model: velodyne_lidar
+      urdf_enabled: true
+      launch_enabled: true
+      parent: sensor_arch_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ros_parameters:
+        velodyne_driver_node:
+          frame_id: lidar3d_0_laser
+          device_ip: 192.168.131.25
+          port: 2368
+          model: VLP16
+        velodyne_transform_node:
+          model: VLP16
+          fixed_frame: lidar3d_0_laser
+          target_frame: lidar3d_0_laser
+```
+
+</p>
+</details>
+
+## Serial Number
+
+The Clearpath serial number is composed of two sections: an alpha-numerical code corresponding to the robot platform, followed by an integer corresponding to the unit number, and separated by a hyphen, `-`. e.g. `a200-0001`.
+
+At this moment, the supported robot platforms are:
+
+1. [Husky A200](../../robots/outdoor_robots/husky/user_manual_husky.mdx#introduction): `a200-0000`
+2. [Jackal J100](../../robots/outdoor_robots/jackal/user_manual_jackal.mdx#introduction): `j100-0000`
+
+Every robot platform has specific [attachments](#attachments), i.e. platform specific parts, that are selected based on the serial number passed. Therefore, it is required that a serial number is specified in the `robot.yaml`.
+
+### Sample {#serial-sample}
+
+In our sample, we use a **Husky A200** and therefore have set our serial number to:
+
+```yaml
+serial_number: "a200-0000"
+```
+
+## System
+
+Proper networking setup is crucial in setting up the ROS 2 middleware and ensure other onboard computers communicate reliably.
+
+### Hosts
+
+The **hosts** section serves as a way to match IP addresses to hostnames. By default, Clearpath robots use the serial number as the hostname and have a default IP of `192.168.131.1`.
+
+- The **self** entry refers to what hostname is this configuration file on.
+- The **platform** entry refers to the hostname and IP of the robot platform's main computer.
+- The **onboard** entry is used to define the hostname and IP of other computers on the robot.
+- The **remote** entry is used to define the hostname and IP of computers in the system that are not on the robot, such as a user's PC.
+
+### ROS 2 Environment
+
+The **ros2** sections is necessary to setup the ROS 2 middleware.
+
+- **username** must match the username of the user that is to run all ROS nodes.
+- **namespace** specified will be appended as a prefix to all sensor topics to prevent topic cloberring when multiple robots are on the same network and domain ID.
+- **domain_id** specifies the ROS 2 domain ID to use.
+- **rmw_implementation** specifies the ROS 2 middleware to use. **Currently, it only supports `rmw_fastrtps_cpp`.**
+- **workspaces** indicates a list of workspaces that need to be sourced by specifying the path to the setup.py
+
+### Sample {#system-sample}
+
+<details><summary>Sample A200 System Section</summary>
+<p>
+
+In our sample, we have a **Husky A200** platform whose primary computer has hostname: `cpr-a200-0000` and IP: `192.168.131.1`.
+
+And, note that this configuration YAML is meant to be on that primary computer, hence `self: cpr-a200-0000`.
+
+By default, all Clearpath robots use username `administrator` and the robot's namespace matches the `serial_number`.
+
+```yaml
+system:
+  hosts:
+    self: cpr-a200-0000
+    platform:
+      cpr-a200-0000: 192.168.131.1
+    onboard: {}
+    remote: {}
+  ros2:
+    username: administrator
+    namespace: a200_0000
+    domain_id: 0
+    rmw_implementation: rmw_fastrtps_cpp
+    workspaces: []
+```
+
+At this point, with just the **serial_number** and **system** defined: our robot is just the standard **Husky A200** platform, and looks like this:
+
+<center>
+  <figure>
+    <img
+      src={require("./img/husky_platform_0.png").default}
+      width="500"
+    />
+    <figcaption>Default Husky A200</figcaption>
+  </figure>
+</center>
+
+</p>
+</details>
+
+## Platform
+
+Every robot platform has unique structures such as versatile sensor mounting solutions, wireless charging receivers, and waterproofing enclosures; we refer to these as attachments.
+
+#### Joystick Controller
+We support two types of controllers:
+  - **ps4**: standard Playstation4 controller.
+  - **logitech**: Logitech F710
+
+```yaml
+controller: ps4 # or logitech
+```
+
+#### Attachments
+
+There are four types of attachments:
+
+1. **bumpers** modify the front face and rear face of the robot platform.
+2. **fenders** modify the area above the wheels on the front and rear of the platform.
+3. **top_plates** modify the top face of the robot platform.
+4. **structures** are large custom parts that are added atop the top plate.
+
+#### Husky A200 {#attachments-a200}
+
+The **Husky A200** has a few models for each of it's attachments:
+
+- **bumpers**:
+  - **_default:_** standard bumpers.
+  - **_wibotic:_** wireless charging receiver.
+
+```yaml
+front_bumper:
+  enabled: true
+  model: default # or wibotic
+  xyz: [0.0, 0.0, 0.0]
+  rpy: [0.0, 0.0, 0.0]
+  extension: 0.0
+rear_bumper:
+  enabled: true
+  model: default # or wibotic
+  xyz: [0.0, 0.0, 0.0]
+  rpy: [0.0, 0.0, 0.0]
+  extension: 0.0
+```
+
+- **top plate**:
+  - **_default:_** standard Husky A200 top plate.
+  - **_large:_** extended top plate, used to allow for enough space to mount large payloads.
+  - **_pacs:_** comes with **80x80 mm** mounting screw holes for versatile sensor placement.
+
+```yaml
+top_plate:
+  enabled: true
+  model: default # or 'pacs' or 'large'
+  xyz: [0.0, 0.0, 0.0]
+  rpy: [0.0, 0.0, 0.0]
+```
+
+- **struture**:
+  - **_sensor_arch_300:_** 300mm tall extrusion sensor arch.
+  - **_sensor_arch_510:_** 510mm tall extrusion sensor arch.
+
+```yaml
+structure:
+  enabled: false
+  model: sensor_arch_300 # or sensor_arch_510
+  xyz: [0.0, 0.0, 0.0]
+  rpy: [0.0, 0.0, 0.0]
+```
+
+#### Jackal J100 {#attachments-j100}
+
+The **Jackal J100** currently only has customization options with it's fenders.
+
+- **fenders** can be swapped from the `default` model to the `sensor` model that has a mounting location for a small lidar or camera.
+
+```yaml
+front_fender:
+  enabled: true # or false
+  model: default # or sensor
+  xyz: [0.0, 0.0, 0.0]
+  rpy: [0.0, 0.0, 0.0]
+rear_fender:
+  enabled: true # or false
+  model: default #  or sensor
+  xyz: [0.0, 0.0, 0.0]
+  rpy: [0.0, 0.0, 0.0]
+```
+
+#### Extras
+
+Despite all current customization options, we still would like our users to be able to add-in their existing custom URDF to the robot platform URDF and pass in and overwrite parameters to all platform nodes.
+Extras have the following entries:
+
+- **urdf:** absolute path to URDF to add to robot platform URDF.
+- **ros_parameters:** in YAML to pass in parameters to platform nodes. This is useful to change parameters such as the robot's velocity and acceleration.
+
+```yaml
+extras:
+  urdf: null # /absolute/path/to/urdf
+  ros_parameters: {} # node parameter
+```
+
+#### ROS Parameters
+A common use case is to set and update the parameters to the `platform_velocity_controller` node. These can be used to modify the linear and angular velocity and acceleratation.
+
+These can be passed in as follows:
+
+**A200 Husky Controller Defaults:**
+```yaml
+platform:
+  extras:
+    ros_parameters:
+      platform_velocity_controller:
+        wheel_radius": 0.1651
+        linear.x.max_velocity": 1.0
+        linear.x.min_velocity": -1.0
+        linear.x.max_acceleration": 3.0
+        linear.x.min_acceleration": -3.0
+        angular.z.max_velocity": 2.0
+        angular.z.min_velocity": -2.0
+        angular.z.max_acceleration": 6.0
+        angular.z.min_acceleration": -6.0
+```
+
+
+**J100 Jackal Controller Defaults:**
+```yaml
+platform:
+  extras:
+    ros_parameters:
+      platform_velocity_controller:
+        wheel_radius": 0.098
+        linear.x.max_velocity": 2.0
+        linear.x.min_velocity": -2.0
+        linear.x.max_acceleration": 20.0
+        linear.x.min_acceleration": -20.0
+        angular.z.max_velocity": 4.0
+        angular.z.min_velocity": -4.0
+        angular.z.max_acceleration": 25.0
+        angular.z.min_acceleration": -25.0
+```
+
+#### Sample {#platform-sample}
+
+<details><summary>Sample A200 Platform Section</summary>
+<p>
+
+<center>
+  <figure>
+    <img
+      src={require("./img/husky_platform_0.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with Default Top Plate</figcaption>
+  </figure>
+</center>
+
+In this sample, we swapped the top plate from the **_default_** model to the **_pacs_** model. Notice all the links added by the **_pacs_** plate below, compared to the **_default_** plate above.
+
+```yaml
+top_plate:
+  enabled: true
+  model: pacs # switched from 'default' to 'pacs'
+  xyz: [0.0, 0.0, 0.0]
+  rpy: [0.0, 0.0, 0.0]
+```
+
+<center>
+  <figure>
+    <img
+      src={require("./img/husky_platform_1.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with PACS Top Plate</figcaption>
+  </figure>
+</center>
+
+Then, we added a sensor arch to add our sample sensors to. We can do this by simply enabling the **structure** and setting the model to **_sensor_arch_300_**.
+
+```yaml
+structure:
+  enabled: true
+  model: sensor_arch_300
+  xyz: [0.0, 0.0, 0.0]
+  rpy: [0.0, 0.0, 0.0]
+```
+
+<center>
+  <figure>
+    <img
+      src={require("./img/husky_platform_2.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with 300mm Sensor Arch</figcaption>
+  </figure>
+</center>
+
+In terms of the **front_bumper** and **rear_bumper**, we left these as defaults. And, since we are not including any customization URDF or launch parameters; the resulting **platform** section look like this:
+
+```yaml
+platform:
+  controller: ps4
+  attachments:
+    front_bumper:
+      enabled: true
+      model: default
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      extension: 0.0
+    rear_bumper:
+      enabled: true
+      model: default
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      extension: 0.0
+    structure:
+      enabled: true
+      model: sensor_arch_300
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+    top_plate:
+      enabled: true
+      model: pacs
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+  extras:
+    urdf: null
+    ros_parameters: {}
+```
+
+</p>
+</details>
+
+## Links
+
+Links are any URDF primitive:
+
+1. **frame** in the URDF without any geometry, i.e. just a frame.
+
+```yaml
+frame:
+  - name: link_name
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+```
+
+2. **box** of given length, width, and height.
+
+```yaml
+box:
+  - name: box_name
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    size: [0.01, 0.01, 0.01]
+```
+
+3. **cylinder** of given radius and height.
+
+```yaml
+cylinder:
+  - name: cylinder_name
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    radius: 0.01
+    length: 0.01
+```
+
+4. **sphere** of given radius.
+
+```yaml
+sphere:
+  - name: sphere_name
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    radius: 0.01
+```
+
+5. **mesh** from a given absolute path to STL or OBJ file.
+
+```yaml
+mesh:
+  - name: mesh_name
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    visual: /absolute/path/to/mesh.stl
+```
+
+If a user needs to add a mesh or primitive to represent a payload on their robot, they can either create a URDF and use the platform extras, or they can add an link directly through the `robot.yaml`.
+
+Just as is the case in URDF, links are added at the center of the primitive. In other words, you will need to slide up all links by half their height to have it "sit" on its parent link.
+
+### Sample {#links-sample}
+
+<details><summary>Sample A200 Links Section</summary>
+<p>
+
+<center>
+  <figure>
+    <img
+      src={require("./img/husky_platform_2.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with Open User Bay</figcaption>
+  </figure>
+</center>
+
+In this sample, we will use links to add thin **box** to cover up the user bay.
+
+We add an entry under the **box** list:
+
+```yaml
+box:
+  - name: user_bay_cover
+    parent: top_plate_link # add it to the top_plate_link
+    xyz: [0.0, 0.0, 0.00735] # move it up 6.35mm (thickness of top plate) and move it up 1mm (half height of the box)
+    rpy: [0.0, 0.0, 0.0]
+    size: [0.4, 0.4, 0.002] # length 400mm, width 400mm and 2mm thick.
+```
+
+<center>
+  <figure>
+    <img
+      src={require("./img/husky_accessories_0.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with Covered User Bay</figcaption>
+  </figure>
+</center>
+
+We leave the rest of the lists all empty, for the resulting links section:
+
+```yaml
+links:
+  box:
+    - name: user_bay_cover
+      parent: top_plate_link
+      xyz: [0.0, 0.0, 0.00735]
+      rpy: [0.0, 0.0, 0.0]
+      size: [0.4, 0.4, 0.002]
+  cylinder: []
+  frame: []
+  mesh: []
+  sphere: []
+```
+
+</p>
+</details>
+
+## Mounts
+
+Most sensors can use similar mounting structures. Therefore, we want to keep mounts separate from sensors, such that users could attach their own sensors to existing mounts.
+
+The following **mounts** are available:
+
+- **riser:** a plate with the defined number of rows and columns of an **80mm x 80mm** grid.
+
+```yaml
+riser:
+  - parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    rows: 4 # rows of 80mm x 80mm grid
+    columns: 4 # columns of 80mm x 80mm grid
+    thickness: 0.00635
+```
+
+- **bracket:** a small **100mm x 100mm** plate with **80mm x 80mm** screw holes to attach it to the grid. It comes with hole patterns to attach all supported small sensors.
+
+```yaml
+bracket:
+  - parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    model: horizontal # or large or vertical
+```
+
+- **fath_pivot:** generally a camera mount on a single axis that can be adjusted to change the pitch of the camera.
+
+```yaml
+fath_pivot:
+  - parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    angle: 0.0 # in radian
+```
+
+- **sick:** are mounts specifically designed to mount SICK LiDARs. The orientation of the LiDAR on the mount can be set to either `upright` or `inverted`.
+```yaml
+sick:
+  - parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    model: inverted # or upright
+```
+
+- **post:** are vertical extrusion rails to which sensors can be added.
+```yaml
+post:
+  - parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    model: single # or dual or quad
+    spacing: 0.08 # distance between multiple posts if model is dual or quad
+    height: 0.075 # height of post
+```
+
+- **disk:** are circular plates which are used to mount circular sensors, i.e. the Velodyne
+```yaml
+disk:
+  - parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+```
+
+### Sample {#mounts-sample}
+
+<details><summary>Sample A200 Mounts Section</summary>
+<p>
+
+<center>
+  <figure>
+    <img
+      src={require("./img/husky_accessories_0.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with Covered User Bay</figcaption>
+  </figure>
+</center>
+
+In this sample, we will add a **bracket** to mount a LiDAR to the front of the **Husky A200**.
+
+We select the **_top_plate_mount_d1_**, i.e. the middle (**d**), front (**1**), 80mm x 80mm mounting location on the **pacs** top plate.
+
+```yaml
+bracket:
+  - parent: top_plate_mount_d1
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    model: horizontal
+```
+
+<center>
+  <figure>
+    <img
+      src={require("./img/husky_mounts_0.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with D1 Bracket</figcaption>
+  </figure>
+</center>
+
+Then, we want to add a camera to the sensor arch. However, we will complicate things by adding it upside down to the extrusion.
+
+We choose a **fath_pivot** mount, and then we set its **parent** to the **_sensor_arch_mount_**.
+
+Using the **xyz** entry, we lower the mount by 21mm to get it under the sensor arch; then, we roll it by PI to get it upside down.
+
+```yaml
+fath_pivot:
+  - parent: sensor_arch_mount # mount atop the sensor arch
+    xyz: [0.0, 0.0, -0.021] # lower pivot mount to below the sensor arch
+    rpy: [3.1415, 0.0, 0.0] # roll pivot mount to flip it upside down
+    angle: 0.0
+```
+
+<center>
+  <figure>
+    <img
+      src={require("./img/husky_mounts_1.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with upside down Fath Pivot Mount</figcaption>
+  </figure>
+</center>
+
+Since we did not need a riser, we leave that section empty; the resulting **mounts** section:
+
+```yaml
+mounts:
+  bracket:
+    - parent: top_plate_mount_d1
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      model: horizontal
+  fath_pivot:
+    - parent: sensor_arch_mount
+      xyz: [0.0, 0.0, -0.021]
+      rpy: [3.1415, 0.0, 0.0]
+      angle: 0.0
+  riser: []
+  sick: []
+  post: []
+  disk: []
+```
+
+</p>
+</details>
+
+## Sensors
+
+At Clearpath, we have been migrating our large inventory of tested sensor drivers from ROS 1 to ROS 2.
+
+Sensors are split up into sections:
+
+- **Cameras:** publish **_sensor_msgs/Image_** messages
+- **GPS:** publish **_sensor_msgs/NavSatFix_** messages
+- **IMU:** publish **_sensor_msgs/Imu_** messages
+- **LiDAR 2D:** publish **_sensor_msgs/LaserScan_** messages
+- **LiDAR 3D:** publish **_sensor_msgs/PointCloud2_** messages
+
+In ROS 2, sensors use a `ros_parameters` YAML that contains all launch parameters for the driver node. To facilitate complete customization of these node parameters, the `ros_parameters` section, under every sensor entry, serves as a way to pass those key-value pairs to the corresponding node.
+
+By default, we pass tested parameters that are used on Clearpath robots.
+
+### Cameras
+
+- **_intel_realsense:_**
+
+```yaml
+camera:
+  - model: intel_realsense
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      camera:
+        camera_name: camera_0
+        device_type: d435
+        serial_no: "0"
+        enable_color: true
+        rgb_camera.profile: 640,480,30
+        enable_depth: true
+        depth_module.profile: 640,480,30
+        pointcloud.enable: true
+```
+
+- **_flir_blackfly:_**
+
+```yaml
+camera:
+  - model: flir_blackfly
+    urdf_enabled: true
+    launch_enabled: true
+    parent: fath_pivot_0_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      flir_blackfly:
+        serial_number: 0
+```
+
+### GPS
+
+- **_swift_nav:_**
+
+```yaml
+gps:
+  - model: swiftnav_duro
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      duro_node:
+        gps_receiver_frame_id: gps_0_link
+        ip_address: 192.168.131.30
+        ip_port: 55555
+        imu_frame_id: gps_0_link
+```
+
+- **_garmin_18x_**
+```yaml
+gps:
+  - model: garmin_18x
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      nmea_navsat_driver:
+        frame_id: gps_0_link
+        port: /dev/ttyACM0
+        baud: 115200
+```
+
+- **_novatel_smart6_**
+```yaml
+gps:
+  - model: novatel_smart6
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      nmea_navsat_driver:
+        frame_id: gps_0_link
+        port: /dev/ttyACM0
+        baud: 115200
+```
+
+- **_novatel_smart7_**
+```yaml
+gps:
+  - model: novatel_smart7
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      nmea_navsat_driver:
+        frame_id: gps_0_link
+        port: /dev/ttyACM0
+        baud: 115200
+```
+
+### IMU
+
+- **_microstrain:_**
+
+```yaml
+imu:
+  - model: microstrain_imu
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      microstrain_inertial_driver:
+        imu_frame_id: imu_0_link
+        port: /dev/microstrain_main
+        use_enu_frame: true
+```
+
+- **_chrobotics_um6:_**
+
+```yaml
+imu:
+  - model: chrobotics_um6
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      um6_driver:
+        port: /dev/clearpath/imu
+        frame_id: imu_0_link
+        tf_ned_to_enu: true
+```
+
+- **_redshift_um7:_**
+```yaml
+imu:
+  - model: redshift_um7
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      um7_driver:
+        port: /dev/clearpath/imu
+        frame_id: imu_0_link
+        tf_ned_to_enu: true
+```
+
+### LiDAR 2D
+
+- **_hokuyo_ust:_**
+
+```yaml
+lidar2d:
+  - model: hokuyo_ust
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      urg_node:
+        laser_frame_id: lidar2d_0_laser
+        ip_address: 192.168.131.20
+        ip_port: 10940
+        angle_min: -2.356
+        angle_max: 2.356
+```
+
+- **_sick_lms1xx:_**
+
+```yaml
+lidar2d:
+  - model: sick_lms1xx
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      lms1xx:
+        frame_id: lidar2d_0_laser
+        host: 192.168.131.20
+        port: 2111
+```
+
+### LiDAR 3D
+
+- **_velodyne_lidar - 16:_**
+
+```yaml
+lidar3d:
+  - model: velodyne_lidar
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      velodyne_driver_node:
+        frame_id: lidar3d_0_laser
+        device_ip: 192.168.131.25
+        port: 2368
+        model: VLP16
+      velodyne_transform_node:
+        model: VLP16
+        fixed_frame: lidar3d_0_laser
+        target_frame: lidar3d_0_laser
+```
+
+
+- **_velodyne_lidar - 32C:_**
+
+```yaml
+  - model: velodyne_lidar
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      velodyne_driver_node:
+        frame_id: lidar3d_0_laser
+        device_ip: 192.168.131.25
+        port: 2368
+        model: 32C
+      velodyne_transform_node:
+        model: 32C
+        calibration: /opt/ros/humble/share/velodyne_pointcloud/params/VeloView-VLP-32C.yaml
+        fixed_frame: lidar3d_0_laser
+        target_frame: lidar3d_0_laser
+```
+
+### Sample {#sensors-sample}
+
+<details><summary>Sample A200 Sensors Section</summary>
+<p>
+
+<center>
+  <figure>
+    <img
+      src={require("./img/husky_mounts_1.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with upside down Fath Pivot Mount</figcaption>
+  </figure>
+</center>
+
+In this sample, we first add the `velodyne_lidar` to the `sensor_arch_mount` by simply changing the parent link.
+
+```yaml
+lidar3d:
+  - model: velodyne_lidar
+    urdf_enabled: true
+    launch_enabled: true
+    parent: sensor_arch_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      velodyne_driver_node:
+        frame_id: lidar3d_0_laser
+        device_ip: 192.168.131.25
+        port: 2368
+        model: VLP16
+      velodyne_transform_node:
+        model: VLP16
+        fixed_frame: lidar3d_0_laser
+        target_frame: lidar3d_0_laser
+```
+
+<center>
+  <figure>
+    <img
+      src={require("./img/husky_sensors_0.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with LiDAR 3D on Sensor Arch</figcaption>
+  </figure>
+</center>
+
+Next, we will add a `hokuyo_ust` to the **bracket** we added earlier. Since that is the first **bracket**, then it's mounting location will be: `bracket_0_mount`; setting the parent link of the sensor, we get:
+
+```yaml
+lidar2d:
+  - model: hokuyo_ust
+    urdf_enabled: true
+    launch_enabled: true
+    parent: bracket_0_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      urg_node:
+        laser_frame_id: lidar2d_0_laser
+        ip_address: 192.168.131.20
+        ip_port: 10940
+        angle_min: -2.356
+        angle_max: 2.356
+```
+
+<center>
+  <figure>
+    <img
+      src={require("./img/husky_sensors_1.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with LiDAR 2D on D1 Bracket</figcaption>
+  </figure>
+</center>
+
+For the final step, we will add an `intel_realsense` to the **fath_pivot** mount that we added. Because it is the first **fath_pivot**, it's mounting location will be: `fath_pivot_0_mount`; setting the parent link of the sensor:
+
+```yaml
+camera:
+  - model: intel_realsense
+    urdf_enabled: true
+    launch_enabled: true
+    parent: fath_pivot_0_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      camera:
+        camera_name: camera_0
+        device_type: d435
+        serial_no: '0'
+        enable_color: true
+        rgb_camera.profile: 640,480,30
+        enable_depth: true
+        depth_module.profile: 640,480,30
+        pointcloud.enable: true
+```
+
+<center>
+  <figure>
+    <img
+      src={require("./img/husky_sensors_2.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with Intel Realsense</figcaption>
+  </figure>
+</center>
+
+Leaving the other sections empty, leaves us with the full sensors section:
+
+```yaml
+sensors:
+  camera:
+    - model: intel_realsense
+      urdf_enabled: true
+      launch_enabled: true
+      parent: fath_pivot_0_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ros_parameters:
+        camera:
+          camera_name: camera_0
+          device_type: d435
+          serial_no: '0'
+          enable_color: true
+          rgb_camera.profile: 640,480,30
+          enable_depth: true
+          depth_module.profile: 640,480,30
+          pointcloud.enable: true
+  gps: []
+  imu: []
+  lidar2d:
+    - model: hokuyo_ust
+      urdf_enabled: true
+      launch_enabled: true
+      parent: bracket_0_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ros_parameters:
+        urg_node:
+          laser_frame_id: lidar2d_0_laser
+          ip_address: 192.168.131.20
+          ip_port: 10940
+          angle_min: -2.356
+          angle_max: 2.356
+  lidar3d:
+    - model: velodyne_lidar
+      urdf_enabled: true
+      launch_enabled: true
+      parent: sensor_arch_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ros_parameters:
+        velodyne_driver_node:
+          frame_id: lidar3d_0_laser
+          device_ip: 192.168.131.25
+          port: 2368
+          model: VLP16
+        velodyne_transform_node:
+          model: VLP16
+          fixed_frame: lidar3d_0_laser
+          target_frame: lidar3d_0_laser
+
+```
+
+</p>
+</details>

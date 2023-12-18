@@ -167,135 +167,6 @@ clearpath_navigation_msgs/Waypoint[] waypoints
 clearpath_navigation_msgs/Task[] tasks
 ```
 
-#### clearpath_mission_scheduler_msgs/msg/NextSchedule.msg
-
-```
-# The ID of the next schedule to start
-# Empty if nothing is scheduled
-string uuid
-
-# The time until the schedule starts (rounded to the nearest second)
-duration time_to_start
-```
-
-#### clearpath_mission_scheduler_msgs/msg/Schedule {#scheduler-schedule}
-
-```
-# Single-execution mode; the schedule starts at the designated time and runs once
-uint8 MODE_ONCE=0
-
-# Looping mode; the schedule starts at the designated time, and every loop_interval seconds after
-# for the designated number of repeats
-uint8 MODE_LOOP=1
-
-# Single-shot execution, but does NOT get added to the persistent storage
-# Equivalent to MODE_ONCE, but for one-off, throw-away schedules (e.g. "Run X in 5 minutes")
-uint8 MODE_TRANSIENT=2
-
-# The human-readable name for this schedule
-# Should be unique, but there's no hard requirement for it to be so
-string name
-
-# The unique ID of this schedule
-# A string of the form "12345678-90ab-cdef-1234-567890abcdef"
-string uuid
-
-# The time that this mission starts every day
-clearpath_mission_scheduler_msgs/UtcTime start_time
-
-# Either MODE_ONCE or MODE_LOOP to indicate the execution mode
-uint8 mode
-
-# In MODE_LOOP, how many times do we repeat the missions?
-uint8 loop_repeats
-
-# In MODE_LOOP, how long do we wait between executions?
-duration loop_interval
-
-# The ordered list of Mission UUIDs to execute
-string[] mission_ids
-
-# The minimum battery charge needed before we execute the missions
-# Must be in the range 0-1
-float32 min_battery
-
-# If the missions take longer than this to execute, assume the schedule has failed and alert the user
-# Set to zero to disable the timeout
-duration timeout
-
-# Is this schedule enabled?
-# Only enabled schedules will execute
-bool enabled
-```
-
-#### clearpath_mission_scheduler_msgs/msg/StorageState.msg {#scheduler-state}
-
-```
-# Single-execution mode; the schedule starts at the designated time and runs once
-uint8 MODE_ONCE=0
-
-# Looping mode; the schedule starts at the designated time, and every loop_interval seconds after
-# for the designated number of repeats
-uint8 MODE_LOOP=1
-
-# Single-shot execution, but does NOT get added to the persistent storage
-# Equivalent to MODE_ONCE, but for one-off, throw-away schedules (e.g. "Run X in 5 minutes")
-uint8 MODE_TRANSIENT=2
-
-# The human-readable name for this schedule
-# Should be unique, but there's no hard requirement for it to be so
-string name
-
-# The unique ID of this schedule
-# A string of the form "12345678-90ab-cdef-1234-567890abcdef"
-string uuid
-
-# The time that this mission starts every day
-clearpath_mission_scheduler_msgs/UtcTime start_time
-
-# Either MODE_ONCE or MODE_LOOP to indicate the execution mode
-uint8 mode
-
-# In MODE_LOOP, how many times do we repeat the missions?
-uint8 loop_repeats
-
-# In MODE_LOOP, how long do we wait between executions?
-duration loop_interval
-
-# The ordered list of Mission UUIDs to execute
-string[] mission_ids
-
-# The minimum battery charge needed before we execute the missions
-# Must be in the range 0-1
-float32 min_battery
-
-# If the missions take longer than this to execute, assume the schedule has failed and alert the user
-# Set to zero to disable the timeout
-duration timeout
-
-# Is this schedule enabled?
-# Only enabled schedules will execute
-bool enabled
-```
-
-#### clearpath_mission_scheduler_msgs/msg/UtcTime.msg {#scheduler-time}
-
-```
-# Represents a moment in time on a 24-hour clock
-
-# The hour, 0-23
-uint8 hour
-
-# The minute, 0-59
-uint8 minute
-
-# The second, 0-59
-uint8 second
-
-# Milliseconds, 0-999 (not typically needed)
-uint16 millisecond
-```
-
 #### clearpath_navigation_msgs/Mission.msg {#msg-navigation-mission}
 
 ```
@@ -549,6 +420,148 @@ bool[] lidar_watchdog_triggered
 bool[] camera_watchdog_triggered
 ```
 
+#### cpr_mission_manager_msgs/msg/StorageState.msg {#storage-storagestate}
+
+```
+# All missions defined in the database
+cpr_navigation_msgs/Mission[] missions
+
+# All waypoints defined in the database
+cpr_navigation_msgs/Waypoint[] waypoints
+
+# All tasks defined in the database
+cpr_navigation_msgs/Task[] tasks
+```
+
+#### cpr_mission_scheduler_msgs/msg/NextSchedule.msg
+
+```
+# The ID of the next schedule to start
+# Empty if nothing is scheduled
+string uuid
+
+# The time until the schedule starts (rounded to the nearest second)
+duration time_to_start
+```
+
+#### cpr_mission_scheduler_msgs/msg/Schedule {#scheduler-schedule}
+
+```
+# Single-execution mode; the schedule starts at the designated time and runs once
+uint8 MODE_ONCE=0
+
+# Looping mode; the schedule starts at the designated time, and every loop_interval seconds after
+# for the designated number of repeats
+uint8 MODE_LOOP=1
+
+# Single-shot execution, but does NOT get added to the persistent storage
+# Equivalent to MODE_ONCE, but for one-off, throw-away schedules (e.g. "Run X in 5 minutes")
+uint8 MODE_TRANSIENT=2
+
+# The human-readable name for this schedule
+# Should be unique, but there's no hard requirement for it to be so
+string name
+
+# The unique ID of this schedule
+# A string of the form "12345678-90ab-cdef-1234-567890abcdef"
+string uuid
+
+# The time that this mission starts every day
+cpr_mission_scheduler_msgs/UtcTime start_time
+
+# Either MODE_ONCE or MODE_LOOP to indicate the execution mode
+uint8 mode
+
+# In MODE_LOOP, how many times do we repeat the missions?
+uint8 loop_repeats
+
+# In MODE_LOOP, how long do we wait between executions?
+duration loop_interval
+
+# The ordered list of Mission UUIDs to execute
+string[] mission_ids
+
+# The minimum battery charge needed before we execute the missions
+# Must be in the range 0-1
+float32 min_battery
+
+# If the missions take longer than this to execute, assume the schedule has failed and alert the user
+# Set to zero to disable the timeout
+duration timeout
+
+# Is this schedule enabled?
+# Only enabled schedules will execute
+bool enabled
+```
+
+#### cpr_mission_scheduler_msgs/msg/StorageState.msg {#scheduler-state}
+
+```
+# Single-execution mode; the schedule starts at the designated time and runs once
+uint8 MODE_ONCE=0
+
+# Looping mode; the schedule starts at the designated time, and every loop_interval seconds after
+# for the designated number of repeats
+uint8 MODE_LOOP=1
+
+# Single-shot execution, but does NOT get added to the persistent storage
+# Equivalent to MODE_ONCE, but for one-off, throw-away schedules (e.g. "Run X in 5 minutes")
+uint8 MODE_TRANSIENT=2
+
+# The human-readable name for this schedule
+# Should be unique, but there's no hard requirement for it to be so
+string name
+
+# The unique ID of this schedule
+# A string of the form "12345678-90ab-cdef-1234-567890abcdef"
+string uuid
+
+# The time that this mission starts every day
+cpr_mission_scheduler_msgs/UtcTime start_time
+
+# Either MODE_ONCE or MODE_LOOP to indicate the execution mode
+uint8 mode
+
+# In MODE_LOOP, how many times do we repeat the missions?
+uint8 loop_repeats
+
+# In MODE_LOOP, how long do we wait between executions?
+duration loop_interval
+
+# The ordered list of Mission UUIDs to execute
+string[] mission_ids
+
+# The minimum battery charge needed before we execute the missions
+# Must be in the range 0-1
+float32 min_battery
+
+# If the missions take longer than this to execute, assume the schedule has failed and alert the user
+# Set to zero to disable the timeout
+duration timeout
+
+# Is this schedule enabled?
+# Only enabled schedules will execute
+bool enabled
+```
+
+#### cpr_mission_scheduler_msgs/msg/UtcTime.msg {#scheduler-time}
+
+```
+# Represents a moment in time on a 24-hour clock
+
+# The hour, 0-23
+uint8 hour
+
+# The minute, 0-59
+uint8 minute
+
+# The second, 0-59
+uint8 second
+
+# Milliseconds, 0-999 (not typically needed)
+uint16 millisecond
+```
+
 #### Standard ROS Messages {#std-ros-msgs}
 
 -   [actionlib_msgs/GoalID](http://docs.ros.org/en/noetic/api/actionlib_msgs/html/msg/GoalID.html)
@@ -596,11 +609,11 @@ bool success
 #### clearpath_dock_msgs/srv/RemoveDock.srv {#srv-remove-dock}
 
 ```
-# A dock information message that will remove a dock from the docks list
+# A dock information message that will be added to the docks list
 string uuid
 string name
 ---
-# True if the dock was removed successfully, otherwise False
+# True if the location was updated/added successfully, otherwise False
 bool success
 ```
 
@@ -648,6 +661,7 @@ uint32 gnss_samples
 bool success
 ```
 
+
 #### clearpath_mission_manager_msgs/srv/AddRemoveById.srv {#storage-addremovebyid}
 
 ```
@@ -668,25 +682,19 @@ bool ok
 
 #### clearpath_mission_manager_msgs/srv/CloneMission.srv {#storage-clonemission}
 ```
-# The UUID of the mission to clone
-string uuid
+# The desired name for the new mission
+string name
 
-# The new name for the mission
-# If blank, the old mission name will be re-used with -copy appended to the end
-string new_name
+# The additional configuration options
+# see clearpath_navigation_msgs/msg/Mission for details
+string onav_config
 
-# If true, the order of the waypoints within the cloned mission are reversed
-bool reverse
+# The ordered list of Waypoint UUIDs to include in this mission
+string[] waypoint_ids
 ---
-# The Mission with the given ID, or null if no Mission with that ID exists
-clearpath_navigation_msgs/Mission mission
+# The resulting Mission, with an auto-generated UUID is returned
+clearpath_navigation_msgs/Mission result
 ```
-
-:::note
-
-The `reverse` parameter was added in 0.9.0
-
-:::
 
 #### clearpath_mission_manager_msgs/srv/CreateMission.srv {#storage-createmission}
 
@@ -786,21 +794,13 @@ bool yes_i_am_absolutely_sure_i_want_to_do_this
 bool ok
 ```
 
-#### clearpth_mission_manager_msgs/srv/DeleteMultiple.srv {#storage-deletemultiple}
-
-```
-# A list of UUIDs of items we want to delete
-string[] uuids
----
-# A list of UUIDs that we were asked to delete, but failed to
-string[] failed_uuids
-```
-
 #### clearpath_mission_manager_msgs/srv/ExportData.srv {#storage-exportdata}
 
 ```
 ---
-# A JSON string representing the database contents.
+# A base-64 encoded string representing a compressed version of
+# the database contents.
+# The data itself is a gzipped JSON string representing the database contents
 # This can be written to a file or used with the ImportData.srv
 # to back-up/restore the database contents
 string data
@@ -871,23 +871,15 @@ clearpath_navigation_msgs/Waypoint waypoint
 #### clearpath_mission_manager_msgs/srv/ImportData.srv {#storage-importdata}
 
 ```
-# A JSON string representing the database contents.
+# A base-64 encoded string representing a compressed version of
+# the database contents.
+# The data itself is a gzipped JSON string representing the database contents
 # This is the same as the data output by the ExportData service, and is intended
 # to be used to restore the database to a previous state
 string data
 ---
 # The state of the database after importing the data
 clearpath_mission_manager_msgs/StorageState state
-```
-
-#### clearpath_mission_manager_msgs/srv/ImportMission.srv {#storage-importmission}
-
-```
-# The Mission to import. All UUIDs will be re-generated
-clearpath_navigation_msgs/Mission mission
----
-# The generated mission with new UUIDs
-clearpath_navigation_msgs/Mission mission
 ```
 
 #### clearpath_mission_manager_msgs/srv/UpdateMission.srv {#storage-updatemission}
@@ -965,7 +957,358 @@ string[] task_ids
 clearpath_navigation_msgs/Waypoint result
 ```
 
-#### clearpath_mission_scheduler_msgs/srv/CloneSchedule.srv {#scheduler-cloneschedule}
+#### clearpath_navigation_msgs/srv/SetDelayCompensation.srv {#srv-set-delay-compensation}
+
+```
+# Service definition to enable/disable the delay compensation feature. If enabling, the delay to compensate for must be specified in the request.
+
+bool enable_delay_compensation
+uint16 delay
+---
+bool success
+string message
+```
+
+#### clearpath_navigation_msgs/srv/SetPathSmoother.srv {#srv-set-path-smoother}
+
+```
+# Service definition to enable/disable the path smoothing feature. If enabling, minimum turning radius must be specified in the request.
+
+bool enable_path_smoother
+float32 turn_radius
+float32 step_size
+---
+bool success
+string message
+```
+
+#### clearpath_navigation_msgs/srv/SetPathShifter.srv {#srv-set-path-shifter}
+
+```
+# Service definition to enable/disable the path smoothing feature. If enabling, minimum turning radius must be specified in the request.
+
+bool enable_path_shifter
+float32 path_shift_offset
+float32 path_shift_time
+---
+bool success
+string message
+```
+
+#### clearpath_navigation_msgs/srv/SetStopDistance.srv {#srv-set-stop-distance}
+
+```
+# Service definition to enable/disable the stop distance. If enabling, the stop distance must be specified in the request.
+
+bool enable_stop_distance
+float32 stop_distance
+---
+bool success
+string message
+```
+
+#### cpr_mission_manager_msgs/srv/AddRemoveById.srv {#storage-addremovebyid}
+
+```
+# The UUID of the object we're inserting/removing
+# When removing, all instances with this UUID are deleted from the parent
+string uuid
+
+# The UUID of the parent object
+string parent_uuid
+
+# The zero-based index to insert the object into
+# Ignored when removing
+int32 position
+---
+# True if the object was added/removed successfully, otherwise False
+bool ok
+```
+
+#### cpr_mission_manager_msgs/srv/CloneMission.srv {#storage-clonemission}
+```
+# The UUID of the mission to clone
+string uuid
+
+# The new name for the mission
+# If blank, the old mission name will be re-used with -copy appended to the end
+string new_name
+
+# If true, the order of the waypoints within the cloned mission are reversed
+bool reverse
+---
+# The Mission with the given ID, or null if no Mission with that ID exists
+cpr_navigation_msgs/Mission mission
+```
+
+:::note
+
+The `reverse` parameter was added in 0.9.0
+
+:::
+
+#### cpr_mission_manager_msgs/srv/CreateMission.srv {#storage-createmission}
+
+```
+# The desired name for the new mission
+string name
+
+# The additional configuration options
+# see cpr_mission_manager_msgs/msg/Mission for details
+string onav_config
+
+# The ordered list of Waypoint UUIDs to include in this mission
+string[] waypoint_ids
+---
+# The resulting Mission, with an auto-generated UUID is returned
+cpr_navigation_msgs/Mission result
+```
+
+#### cpr_mission_manager_msgs/srv/CreateTask.srv {#storage-createtask}
+
+```
+# The desired name for the Task
+string name
+
+# The ROS Action to invoke to execute the task
+string service_call
+
+# The version of the task
+string version
+
+# The numerical arguments to pass to the service_call
+float64[] floats
+
+# The string arguments to pass to the service_call
+string[] strings
+
+# Optional list of Waypoint UUIDs to assign this task to automatically
+# The new task will be appended to the end of the existing Waypoints
+string[] assign_to
+---
+# The resulting Task with an auto-generated UUID is returned
+cpr_navigation_msgs/Task result
+```
+
+#### cpr_mission_manager_msgs/srv/CreateWaypoint.srv {#storage-createwaypoint}
+
+```
+# The desired name for the Waypoint
+string name
+
+# The latitude for the Waypoint in degrees
+float64 latitude
+
+# The longitude for the Waypoint in degrees
+float64 longitude
+
+# The compass heading in degrees for the Waypoint
+float64 heading
+
+# The position tolerance for the Waypoint in meters
+float64 position_tolerance
+
+# The orientation tolerance for the Waypoint in degrees
+float64 yaw_tolerance
+
+# Optional ordered list of Task UUIDs to execute at this Waypoint
+string[] task_ids
+
+# Optional list of Mission UUIDs to assign the new Waypoint to
+# The new Waypoint is appended to the end of the existing Missions
+string[] assign_to
+---
+# The resulting Waypoint with an auto-generated UUID is returned
+cpr_navigation_msgs/Waypoint result
+```
+
+#### cpr_mission_manager_msgs/srv/DeleteById.srv {#storage-deletebyid}
+
+```
+# The UUID of the object we want to delete
+string uuid
+---
+# True if the item was successfully deleted, otherwise False
+bool ok
+```
+
+#### cpr_mission_manager_msgs/srv/DeleteEverything.srv {#storage-deleteeverything}
+
+```
+# Used to permanently delete everything from the database.
+# Use this service at your own risk
+
+# This must be set to true to confirm you really want to delete everything
+bool yes_i_am_absolutely_sure_i_want_to_do_this
+---
+# True if the database was cleared, otherwise False
+bool ok
+```
+
+#### cpr_mission_manager_msgs/srv/ExportData.srv {#storage-exportdata}
+
+```
+---
+# A base-64 encoded string representing a compressed version of
+# the database contents.
+# The data itself is a gzipped JSON string representing the database contents
+# This can be written to a file or used with the ImportData.srv
+# to back-up/restore the database contents
+string data
+```
+
+#### cpr_mission_manager_msgs/srv/GetAllMissions.srv {#storage-getallmissions}
+
+```
+---
+# An array of all Missions defined in the database
+cpr_navigation_msgs/Mission[] missions
+```
+
+#### cpr_mission_manager_msgs/srv/GetAllTasks.srv {#storage-getalltasks}
+
+```
+---
+# The array of all Tasks defined in the database
+cpr_navigation_msgs/Task[] tasks
+```
+
+#### cpr_mission_manager_msgs/srv/GetAllWaypoints.srv {#storage-getallwaypoints}
+
+```
+---
+# The array of all Waypoints defined in the database
+cpr_navigation_msgs/Waypoint[] waypoints
+```
+
+#### cpr_mission_manager_msgs/srv/GetEverything.srv {#storage-geteverything}
+
+```
+---
+# All Missions, Waypoints, and Tasks defined in the database
+cpr_mission_manager_msgs/StorageState state
+```
+
+#### cpr_mission_manager_msgs/srv/GetMission.srv {#storage-getmission}
+
+```
+# The UUID of the Mission we want to retrieve
+string uuid
+---
+# The Mission with the given ID, or null if no Mission with that ID exists
+cpr_navigation_msgs/Mission mission
+```
+
+#### cpr_mission_manager_msgs/srv/GetTask.srv {#storage-gettask}
+
+```
+# The UUID of the Task we want to retrieve
+string uuid
+---
+# The Task with the given ID, or null if no Task with that ID exists
+cpr_navigation_msgs/Task task
+```
+
+#### cpr_mission_manager_msgs/srv/GetWaypoint.srv {#storage-getwaypoint}
+
+```
+# The UUID of the Waypoint we want to retrieve
+string uuid
+---
+# The Waypoint with the given ID, or null if no Waypoint with that ID exists
+cpr_navigation_msgs/Waypoint waypoint
+```
+
+#### cpr_mission_manager_msgs/srv/ImportData.srv {#storage-importdata}
+
+```
+# A base-64 encoded string representing a compressed version of
+# the database contents.
+# The data itself is a gzipped JSON string representing the database contents
+# This is the same as the data output by the ExportData service, and is intended
+# to be used to restore the database to a previous state
+string data
+---
+# The state of the database after importing the data
+cpr_mission_manager_msgs/StorageState state
+```
+
+#### cpr_mission_manager_msgs/srv/UpdateMission.srv {#storage-updatemission}
+
+```
+# The UUID of the mission we want to edit
+string uuid
+
+# The human-readable name for the Mission
+string name
+
+# The configuration parameters for the Mission
+string onav_config
+
+# The ordered list of Waypoint UUIDs to include in the Mission
+string[] waypoint_ids
+---
+# The edited Mission, or null if no mission with the given ID exists
+cpr_navigation_msgs/Mission result
+```
+
+#### cpr_mission_manager_msgs/srv/UpdateTask.srv {#storage-updatetask}
+
+```
+# The UUID of the Task to edit
+string uuid
+
+# The human-readable name for the Task
+string name
+
+# The ROS Action that the Task executes
+string service_call
+
+# The version of the Task
+string version
+
+# The numerical data to pass to the service_call
+float64[] floats
+
+# The string data to pass to the service_call
+string[] strings
+---
+# The edited Task, or null if no Task with the given ID exists
+cpr_navigation_msgs/Task result
+```
+
+#### cpr_mission_manager_msgs/srv/UpdateWaypoint.srv {#storage-updatewaypoint}
+
+```
+# The UUID of the Waypoint to edit
+string uuid
+
+# The human-readable name for the Waypoint
+string name
+
+# The latitude of the Waypoint in degrees
+float64 latitude
+
+# The longitude of the Waypoint in degrees
+float64 longitude
+
+# The compass heading of the Waypoint in degrees
+float64 heading
+
+# The Waypoint's position tolerance in meters
+float64 position_tolerance
+
+# The Waypoint's orientation tolerance in degrees
+float64 yaw_tolerance
+
+# The ordered list of Task UUIDs to execute at this Waypoint
+string[] task_ids
+---
+# The edited Waypoint, or null if no Waypoint with the given ID exists
+cpr_navigation_msgs/Waypoint result
+```
+
+#### cpr_mission_scheduler_msgs/srv/CloneSchedule.srv {#scheduler-cloneschedule}
 
 ```
 # The UUID of the schedule to clone
@@ -976,10 +1319,10 @@ string new_name
 ---
 # The cloned schedule
 # This should be identical to the original, but with a new name and new UUID
-clearpath_mission_scheduler_msgs/Schedule schedule
+cpr_mission_scheduler_msgs/Schedule schedule
 ```
 
-#### clearpath_mission_scheduler_msgs/srv/CreateSchedule.srv {#scheduler-createschedule}
+#### cpr_mission_scheduler_msgs/srv/CreateSchedule.srv {#scheduler-createschedule}
 
 ```
 # The human-readable name for this schedule
@@ -987,7 +1330,7 @@ clearpath_mission_scheduler_msgs/Schedule schedule
 string name
 
 # The time that this mission starts every day
-clearpath_mission_scheduler_msgs/UtcTime start_time
+cpr_mission_scheduler_msgs/UtcTime start_time
 
 # Either Schedule.MODE_ONCE, Schedule.MODE_LOOP, OR Schedule.MODE_TRANSIENT to indicate the execution mode
 uint8 mode
@@ -1016,10 +1359,10 @@ bool enabled
 ---
 
 # The created mission, as-saved on disk
-clearpath_mission_scheduler_msgs/Schedule result
+cpr_mission_scheduler_msgs/Schedule result
 ```
 
-#### clearpath_mission_scheduler_msgs/srv/EnableSchedule.srv {#scheduler-enableschedule}
+#### cpr_mission_scheduler_msgs/srv/EnableSchedule.srv {#scheduler-enableschedule}
 
 ```
 # The ID of the schedule to enable/disable
@@ -1035,24 +1378,26 @@ bool enable
 bool ok
 ```
 
-#### clearpath_mission_scheduler_msgs/srv/ExportData.srv {#scheduler-exportdata}
+#### cpr_mission_scheduler_msgs/srv/ExportData.srv {#scheduler-exportdata}
 
 ```
 ---
-# A JSON string representing the database contents.
+# A base-64 encoded string representing a compressed version of
+# the database contents.
+# The data itself is a gzipped JSON string representing the database contents
 # This can be written to a file or used with the ImportData.srv
 # to back-up/restore the database contents
 string data
 ```
 
-#### clearpath_mission_scheduler_msgs/srv/GetAllSchedules.srv {#scheduler-getallschedules}
+#### cpr_mission_scheduler_msgs/srv/GetAllSchedules.srv {#scheduler-getallschedules}
 
 ```
 ---
-clearpath_mission_scheduler_msgs/Schedule[] schedules
+cpr_mission_scheduler_msgs/Schedule[] schedules
 ```
 
-#### clearpath_mission_scheduler_msgs/srv/GetNextSchedule.srv {#scheduler-getnextschedule}
+#### cpr_mission_scheduler_msgs/srv/GetNextSchedule.srv {#scheduler-getnextschedule}
 
 ```
 ---
@@ -1064,27 +1409,29 @@ string uuid
 duration time_to_start
 ```
 
-#### clearpath_mission_scheduler_msgs/srv/GetSchedule.srv {#scheduler-getschedule}
+#### cpr_mission_scheduler_msgs/srv/GetSchedule.srv {#scheduler-getschedule}
 
 ```
 string uuid
 ---
-clearpath_mission_scheduler_msgs/Schedule schedule
+cpr_mission_scheduler_msgs/Schedule schedule
 ```
 
-#### clearpath_mission_scheduler_msgs/srv/ImportData.srv {#scheduler-importdata}
+#### cpr_mission_scheduler_msgs/srv/ImportData.srv {#scheduler-importdata}
 
 ```
-# A JSON string representing the database contents.
+# A base-64 encoded string representing a compressed version of
+# the database contents.
+# The data itself is a gzipped JSON string representing the database contents
 # This is the same as the data output by the ExportData service, and is intended
 # to be used to restore the database to a previous state
 string data
 ---
 # The state of the database after importing the data
-clearpath_mission_scheduler_msgs/StorageState state
+cpr_mission_scheduler_msgs/StorageState state
 ```
 
-#### clearpath_mission_scheduler_msgs/srv/UpdateSchedule.srv {scheduler-updateschedule}
+#### cpr_mission_scheduler_msgs/srv/UpdateSchedule.srv {scheduler-updateschedule}
 
 ```
 # The ID of the mission to edit
@@ -1095,7 +1442,7 @@ string uuid
 string name
 
 # The time that this mission starts every day
-clearpath_mission_scheduler_msgs/UtcTime start_time
+cpr_mission_scheduler_msgs/UtcTime start_time
 
 # Either Schedule.MODE_ONCE, Schedule.MODE_LOOP, OR Schedule.MODE_TRANSIENT to indicate the execution mode
 uint8 mode
@@ -1124,44 +1471,7 @@ bool enabled
 ---
 
 # The modified mission, as-saved on disk
-clearpath_mission_scheduler_msgs/Schedule result
-```
-
-#### clearpath_navigation_msgs/srv/SetDelayCompensation.srv {#srv-set-delay-compensation}
-
-```
-# Service definition to enable/disable the delay compensation feature. If enabling, the delay to compensate for must be specified in the request.
-
-bool enable_delay_compensation
-uint16 delay                    # units: milliseconds
----
-bool success
-string message
-```
-
-#### clearpath_navigation_msgs/srv/SetPathSmoother.srv {#srv-set-path-smoother}
-
-```
-# Service definition to enable/disable the path smoothing feature. If enabling, minimum turning radius must be specified in the request.
-
-bool enable_path_smoother
-float32 turn_radius         # units: meters
-float32 step_size
----
-bool success
-string message
-```
-
-#### clearpath_navigation_msgs/srv/SetStopDistance.srv {#srv-set-stop-distance}
-
-```
-# Service definition to enable/disable the stop distance. If enabling, the stop distance must be specified in the request.
-
-bool enable_stop_distance
-float32 stop_distance      # units: meters
----
-bool success
-string message
+cpr_mission_scheduler_msgs/Schedule result
 ```
 
 #### Standard ROS Services
@@ -1227,29 +1537,6 @@ bool success
 float32 percent_complete
 ```
 
-
-#### clearpath_mission_scheduler_msgs/action/RunScheduleByUuid.action {#scheduler-runschedulebyuuid}
-
-```
-# Action definition for executing a schedule on-demand
-# Potentially only useful for debugging
-
-# The UUID of the schedule to execute
-string uuid
-
-# Wait this long before starting the schedule (ros:Duration msg, so the units are secs/nsecs)
-duration delay 
----
-# Did the schedule terminate successfully?
-bool success
----
-# The ID of the mission we're executing right now
-string current_mission_uuid
-
-# One of "waiting" or "executing" indicating what the schedule is doing
-string state
-```
-
 #### clearpath_navigation_msgs/action/ExecuteMissionByUuid.action {#action-execute-mission-by-uuid}
 
 ```
@@ -1292,5 +1579,46 @@ clearpath_navigation_msgs/Waypoint start_waypoint
 bool success
 ---
 # feedback
+string state
+```
+
+#### clearpath_dock_msgs/action/Dock.action {#action-dock}
+
+```
+# Action definition for sending a Clearpath UGV to its charging dock.
+
+# goal
+uint8 DOCK = 0
+uint8 UNDOCK = 1
+float32 type
+float32 enable_predock
+---
+# result
+bool success
+---
+# feedback
+string state
+float64 dist_to_dock # (IN DEVELOPMENT)
+```
+
+#### cpr_mission_scheduler_msgs/action/RunScheduleByUuid.action {#scheduler-runschedulebyuuid}
+
+```
+# Action definition for executing a schedule on-demand
+# Potentially only useful for debugging
+
+# The UUID of the schedule to execute
+string uuid
+
+# Wait this long before starting the schedule
+duration delay
+---
+# Did the schedule terminate successfully?
+bool success
+---
+# The ID of the mission we're executing right now
+string current_mission_uuid
+
+# One of "waiting" or "executing" indicating what the schedule is doing
 string state
 ```

@@ -124,19 +124,19 @@ If this is not the case, it is the responsibility of the user to ensure that any
 other users’ home folders is backed up correctly.
 
 A common example of this might be if you have created customized URDF files to be loaded via environment
-variables (such as, `JACKAL_URDF_EXTRAS` for the Jackal) and have stored them outside any of the folders specified above, you must
+variables (e.g. `JACKAL_URDF_EXTRAS`) and have stored them outside any of the folders specified above, you must
 back these up yourself; `backup.sh` will not do this for you.
 
 ## Converting Environment Variables to Clearpath Config
 
 The environment variables used to define your robot in ROS 1 and ROS 2 Foxy can be converted to the `robot.yaml`
 format to maintain the same robot description when you upgrade to ROS 2 Humble.
-Below are some common examples. Visit the [robot.yaml documentation](../config/yaml/overview.mdx) for more details.
+Below are some common examples. Visit the [robot.yaml documentation](../config/yaml.mdx) for more details.
 
 ### Attachments
 
 Each platform has platform-specific attachments (formerly decorations) such as bumpers and top plates. These
-now reside under the [platform](../config/yaml/platform.mdx) section of the `robot.yaml` file.
+now reside under the [platform](../config/yaml.mdx#platform) section of the `robot.yaml` file.
 
 <Tabs groupId="platform_codes">
   <TabItem
@@ -151,6 +151,7 @@ export HUSKY_FRONT_BUMPER=1
 export HUSKY_REAR_BUMPER=1
 export HUSKY_FRONT_BUMPER_EXTEND=0
 export HUSKY_REAR_BUMPER_EXTEND=0.1
+export HUSKY_WIBOTIC_BUMPER=1
 export HUSKY_TOP_PLATE_ENABLED=1
 export HUSKY_LARGE_TOP_PLATE=1
 export HUSKY_USER_RAIL_ENABLED=0
@@ -165,36 +166,28 @@ export HUSKY_SENSOR_ARCH_RPY='0 0 0'
 ```
 platform:
   attachments:
-    - name: front_bumper
-      type: a200.bumper
+    front_bumper:
+      enabled: true           # HUSKY_FRONT_BUMPER=1
+      model: wibotic          # HUSKY_WIBOTIC_BUMPER=1
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      extension: 0.0          # HUSKY_FRONT_BUMPER_EXTEND=0
+    rear_bumper:
+      enabled: true           # HUSKY_REAR_BUMPER=1
       model: default
-      parent: front_bumper_mount
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
-      enabled: true                 # HUSKY_FRONT_BUMPER=1
-      extension: 0.0                # HUSKY_FRONT_BUMPER_EXTEND=0
-    - name: rear_bumper
-      type: a200.bumper
-      model: default
-      parent: rear_bumper_mount
+      extension: 0.1          # HUSKY_REAR_BUMPER_EXTEND=0.1
+    top_plate:
+      enabled: true           # HUSKY_TOP_PLATE_ENABLED=1
+      model: large            # HUSKY_LARGE_TOP_PLATE=1
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
-      enabled: true                 # HUSKY_REAR_BUMPER=1
-      extension: 0.1                # HUSKY_REAR_BUMPER_EXTEND=0.1
-    - name: top_plate
-      type: a200.top_plate
-      model: large                  # HUSKY_LARGE_TOP_PLATE=1
-      parent: mid_mount
-      xyz: [0.0, 0.0, 0.0]
-      rpy: [0.0, 0.0, 0.0]
-      enabled: true                 # HUSKY_TOP_PLATE_ENABLED=1
-    - name: sensor_arch
-      type: a200.sensor_arch
-      model: sensor_arch_300        # HUSKY_SENSOR_ARCH_HEIGHT='510'
-      parent: mid_mount
-      xyz: [0.0, 0.0, 0.0]          # HUSKY_SENSOR_ARCH_OFFSET='0 0 0'
-      rpy: [0.0, 0.0, 0.0]          # HUSKY_SENSOR_ARCH_RPY='0 0 0'
-      enabled: true
+    structure:
+      enabled: true           # HUSKY_SENSOR_ARCH=1
+      model: sensor_arch_510  # HUSKY_SENSOR_ARCH_HEIGHT='510'
+      xyz: [0.0, 0.0, 0.0]    # HUSKY_SENSOR_ARCH_OFFSET='0 0 0'
+      rpy: [0.0, 0.0, 0.0]    # HUSKY_SENSOR_ARCH_RPY='0 0 0'
 ```
   </TabItem>
   <TabItem
@@ -215,20 +208,16 @@ export JACKAL_REAR_ACCESSORY_FENDER=0
 ```
 platform:
   attachments:
-    - name: front_fender
-      type: fender
-      model: default
-      parent: base_link
+    front_fender:
+      enabled: true
+      model: sensor         # JACKAL_FRONT_ACCESSORY_FENDER=1
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
-      enabled: true         # JACKAL_FRONT_ACCESSORY_FENDER=1
-    - name: rear_fender
-      type: fender
-      model: default
-      parent: base_link
+    rear_fender:
+      enabled: true
+      model: default        # JACKAL_REAR_ACCESSORY_FENDER=0
       xyz: [0.0, 0.0, 0.0]
-      rpy: [0.0, 0.0, 3.1415]
-      enabled: false        # JACKAL_REAR_ACCESSORY_FENDER=0
+      rpy: [0.0, 0.0, 0.0]
 ```
   </TabItem>
 </Tabs>
@@ -236,7 +225,7 @@ platform:
 
 ### Sensors
 
-Sensors can be added under the [sensors](../config/yaml/sensors.mdx) key in the `robot.yaml` file. There is no longer
+Sensors can be added under the [sensors](../config/yaml.mdx#sensors) key in the `robot.yaml` file. There is no longer
 a concept of primary, secondary, etc. sensors. Rather, sensors are enumerated in the order that they are added to the config.
 Sensor topics will be automatically set to match the [Clearpath API](../api/sensors_api.mdx#2d-lidar-topics).
 
@@ -310,7 +299,7 @@ sensors:
     default
   >
 
-Environment variables:
+Environment variables: 
 
 ```
 # Primary Laser
@@ -440,7 +429,7 @@ sensors:
     default
   >
 
-Environment variables:
+Environment variables: 
 
 ```
 export JACKAL_LASER_3D=1
