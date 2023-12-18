@@ -1,0 +1,28 @@
+<table>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("./img/novatel_smart7.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+gps:
+  - model: novatel_smart7
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      nmea_navsat_driver:
+        frame_id: gps_0_link
+        port: /dev/ttyACM0
+        baud: 115200
+```
+</td>
+</tr>
+</table>
