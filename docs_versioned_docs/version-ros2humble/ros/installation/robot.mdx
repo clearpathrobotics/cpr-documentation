@@ -6,7 +6,7 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-import JackalFirmware from "../../components/_jackal_firmware.mdx";
+import ClearpathFirmware from "../../components/_clearpath_firmware.mdx";
 import StandardClearpathBridgeSetup from "../../components/_standard_clearpath_bridge_setup.mdx";
 import ComputerNetworkingSetupInstall from "../../components/_computer_networking_setup_install.mdx";
 
@@ -85,9 +85,7 @@ You should now be able to SSH into the robot by calling `ssh administrator@<robo
 
 All platforms with the exception of the A200 will require a firmware update to run ROS 2 Humble.
 
-### J100
-
-<JackalFirmware />
+<ClearpathFirmware />
 
 ## Package Install
 
@@ -109,7 +107,7 @@ For details on setting up custom network interface settings see [Clearpath Compu
 
 The `robot.yaml` file defines the configuration of the robot including the robot model, all
 supported accessories and any extra URDF elements or ROS parameters. Information about the Robot YAML
-is found in the [Robot Configuration](../config/yaml.mdx) section. This YAML is used to generate the launch,
+is found in the [Robot Configuration](../config/yaml/overview.mdx) section. This YAML is used to generate the launch,
 URDF and ROS parameter files during runtime.
 
 Create your `robot.yaml` file and then copy it into `/etc/clearpath/` and replace the existing file.
@@ -125,13 +123,11 @@ To start the services, call
 sudo systemctl daemon-reload && sudo systemctl start clearpath-robot.service
 ```
 
-#### Additional settings
-
-Certain sensors may require additional setup, please review the [Accessories](../../robots/accessories/accessories.mdx) pages
-for any additional instructions for the sensors that you are using. For example, the Blackfly camera has additional instructions
-listed under [software bringup](../../robots/accessories/sensors/cameras/flir_blackfly_s#software-bringup).
-
 ### Option 2: Manual Source Install
+
+<details><summary>Click to expand the manual source install instructions. Only use this option if you
+know what you are doing.</summary>
+<p>
 
 #### ROS 2 Humble
 
@@ -222,22 +218,22 @@ source /home/administrator/clearpath_ws/install/setup.bash
 :::note
 
 This workspace will also need to be sourced in your [robot.yaml](#robot-yaml) file as described
-in the [ROS2 Environment](../config/yaml.mdx#ros-2-environment) section.
+in the [ROS2 Environment](../config/yaml/system.mdx#ros-2-environment) section.
 
 :::
 
 #### Setup folder
 
-Create the setup folder where the [robot.yaml](../config/yaml.mdx) file will be stored, and where files will be generated:
+Create the setup folder where the [robot.yaml](../config/yaml/overview.mdx) file will be stored, and where files will be generated:
 
 ```
-sudo mkdir /etc/clearpath/ -p && sudo chmod 666 /etc/clearpath/
+sudo mkdir /etc/clearpath/ -p && sudo chmod 777 /etc/clearpath/
 ```
 #### Robot YAML
 
 The `robot.yaml` file defines the configuration of the robot including the robot model, all
 supported accessories and any extra URDF elements or ROS parameters. Information about the Robot YAML
-is found in the [Robot Configuration](../config/yaml.mdx) section. This YAML is used to generate the launch,
+is found in the [Robot Configuration](../config/yaml/overview.mdx) section. This YAML is used to generate the launch,
 URDF and ROS parameter files during runtime.
 
 Create your `robot.yaml` file and then copy it into `/etc/clearpath/`.
@@ -249,6 +245,7 @@ Clearpath robot services can now be installed with the following command:
 ```
 source /opt/ros/humble/setup.bash
 ros2 run clearpath_robot install
+sudo systemctl enable clearpath-robot
 ```
 
 This script uses [robot_upstart](https://github.com/clearpathrobotics/robot_upstart/tree/foxy-devel) to install the `systemd` services
@@ -271,3 +268,5 @@ source /etc/clearpath/setup.bash
 Certain sensors may require additional setup, please review the [Accessories](../../robots/accessories/accessories.mdx) pages
 for any additional instructions for the sensors that you are using. For example, the Blackfly camera has additional instructions
 listed under [software bringup](../../robots/accessories/sensors/cameras/flir_blackfly_s#software-bringup).
+</p>
+</details>
