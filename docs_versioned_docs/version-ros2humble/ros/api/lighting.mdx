@@ -6,13 +6,7 @@ toc_min_heading_level: 2
 toc_max_heading_level: 5
 ---
 
-:::note
-
-This section only applies to platforms with corner lights (D1X0, W200, R100).
-
-:::
-
-Corner lighting is unified for platforms that support it. Lighting is controlled by the [lighting node](https://github.com/clearpathrobotics/clearpath_common/tree/humble/clearpath_platform/src/lighting) which defines multiple lighting states.
+Corner lighting is unified for platforms that support it (D100, D150, R100, W200). Lighting is controlled by the [lighting node](https://github.com/clearpathrobotics/clearpath_common/tree/humble/clearpath_platform/src/lighting) which defines multiple lighting states.
 The platforms lighting state is determined based on data from multiple platform status topics. Lighting states are given a priority, such that the most important state (lowest priority value) is displayed first.
 
 The lighting node will publish the current lighting command directly to the MCU. It also subscribes to user lighting commands, and will instead publish those user commands if appropriate.
@@ -27,6 +21,7 @@ The lighting node will publish the current lighting command directly to the MCU.
       <th>Lighting Pattern</th>
       <th>Priority</th>
       <th>User commands allowed</th>
+      <th>Platform</th>
     </tr>
   </thead>
   <tbody>
@@ -42,6 +37,7 @@ The lighting node will publish the current lighting command directly to the MCU.
       </td>
       <td>0</td>
       <td>No</td>
+      <td>D100, D150, R100, W200</td>
     </tr>
     <tr>
       <td>Shore power Fault</td>
@@ -55,6 +51,7 @@ The lighting node will publish the current lighting command directly to the MCU.
       </td>
       <td>1</td>
       <td>No</td>
+      <td>D100, D150</td>
     </tr>
     <tr>
       <td>Shore Power and Charged</td>
@@ -68,6 +65,7 @@ The lighting node will publish the current lighting command directly to the MCU.
       </td>
       <td>2</td>
       <td>Yes</td>
+      <td>D100, D150</td>
     </tr>
     <tr>
       <td>Shore Power and Charging</td>
@@ -81,6 +79,7 @@ The lighting node will publish the current lighting command directly to the MCU.
       </td>
       <td>3</td>
       <td>Yes</td>
+      <td>D150</td>
     </tr>
     <tr>
       <td>Shore Power</td>
@@ -94,6 +93,7 @@ The lighting node will publish the current lighting command directly to the MCU.
       </td>
       <td>4</td>
       <td>Yes</td>
+      <td>D100, D150</td>
     </tr>
     <tr>
       <td>Charged</td>
@@ -107,6 +107,7 @@ The lighting node will publish the current lighting command directly to the MCU.
       </td>
       <td>5</td>
       <td>Yes</td>
+      <td>D100, D150, R100, W200</td>
     </tr>
     <tr>
       <td>Charging</td>
@@ -120,6 +121,7 @@ The lighting node will publish the current lighting command directly to the MCU.
       </td>
       <td>6</td>
       <td>Yes</td>
+      <td>D150, R100</td>
     </tr>
     <tr>
       <td>Stopped</td>
@@ -133,6 +135,7 @@ The lighting node will publish the current lighting command directly to the MCU.
       </td>
       <td>7</td>
       <td>No</td>
+      <td>D100, D150, R100, W200</td>
     </tr>
     <tr>
       <td>Needs Reset</td>
@@ -146,6 +149,7 @@ The lighting node will publish the current lighting command directly to the MCU.
       </td>
       <td>8</td>
       <td>No</td>
+      <td>R100</td>
     </tr>
     <tr>
       <td>Low Battery</td>
@@ -159,6 +163,7 @@ The lighting node will publish the current lighting command directly to the MCU.
       </td>
       <td>9</td>
       <td>No</td>
+      <td>D100, D150, R100, W200</td>
     </tr>
     <tr>
       <td>Driving</td>
@@ -172,6 +177,7 @@ The lighting node will publish the current lighting command directly to the MCU.
       </td>
       <td>10</td>
       <td>Yes</td>
+      <td>D100, D150, R100, W200</td>
     </tr>
     <tr>
       <td>Idle</td>
@@ -185,6 +191,7 @@ The lighting node will publish the current lighting command directly to the MCU.
       </td>
       <td>11</td>
       <td>Yes</td>
+      <td>D100, D150, R100, W200</td>
     </tr>
   </tbody>
 </table>
