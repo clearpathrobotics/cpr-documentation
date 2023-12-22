@@ -6,6 +6,30 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
+## 0.11.0
+
+### New Features
+
+-   Command Line Tool used to install/update/manage OutdoorNav
+-   Added the End User License Agreement to the UI upon start up
+-   Light and PTZ Pan/Tilt controls can now be mapped to a controller
+-   OutdoorNav/IndoorNav switch over improvements
+-   Can now place waypoints at UGV location via shortcut key (Shift + X)
+
+### API Features
+
+-   Can now delete multiple mission objects (missions, waypoints, tasks) in single call
+-   Stack Light can now be manually overridden/muted
+
+### Bug Fixes
+
+-   1688: Move PTZ task only ever uses the first PTZ camera's positions
+
+### Known Issues
+
+-   1396: Robot gets temporarily stuck at start of mission when near a Waypoint
+-   1844: [MPC] Maximum acceleration param doesn't appear to have any effect
+
 ## 0.10.0
 
 ### New Features
