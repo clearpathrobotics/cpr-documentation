@@ -13,66 +13,24 @@ Prior to installing the OutdoorNav software, ensure that you have completed the 
 
 All the following instructions, unless otherwise specified, are to be run on the OutdoorNav computer.
 
-### Clone OutdoorNav Repository {#clone-install-repo}
-
-The following repository is required to run the instructions in the subsequent sections.
+### Install Command-line Interface Tool (CLI) {#install-cli}
 
 <code>
 {`
-cd ~/
-git clone -b ${versions.outdoornav} https://gitlab.clearpathrobotics.com/cpr-outdoornav/cpr_outdoornav_launch.git
+sudo apt update
+sudo apt install python3-onav-cli
 `}
 </code>
 
-For remote installations, please contact Clearpath Robotics customer support in order to obtain the relevant information required to proceed.
+### Install OutdoorNav
 
-### Install Docker {#install-docker}
+<code>
+{`
+onav install -k <license_key>
+`}
+</code>
 
-``` bash
-cd ~/cpr_outdoornav_launch/scripts/
-./install_docker.sh
-```
-
-### Configure OutdoorNav Sensors {#configure-outdoornav-sensors}
-
-Prior to configuring the sensors, ensure that you have measured the position (XYZ) and orientation (RPY) of each of your sensors with respect to the `base_link`. See your results from the [Integration Requirements](hardware_integration_requirements/hardware_integration_requirements.mdx).
-
-``` bash
-cd ~/cpr_outdoornav_launch/scripts/
-./configure_outdoornav.sh
-```
-
-### Finalize Setup {#final-setup}
-
-The script in the sections below will reboot the computer it is run on.
-
-##### UGV Computer
-
-For installations of the OutdoorNav software on the UGV computer (not a secondary or Starter Kit computer), run the following:
-
-``` bash
-cd ~/cpr_outdoornav_launch/scripts/
-sudo ./setup_computers.sh
-```
-##### Secondary or Starter Kit Computer
-
-Prior to running the script on the secondary or Starter Kit computer, ensure that you have the user and IP of the UGV computer that the secondary/starter kit computer is connected to. Run the following:
-
-``` bash
-cd ~/cpr_outdoornav_launch/scripts/
-sudo ./setup_computers.sh -b
-```
-
-### Install OutdoorNav Software {#install-outdoornav}
-
-``` bash
-cd ~/cpr_outdoornav_launch/
-docker compose --profile outdoornav pull
-```
-
-:::note
-If you are installing the OutdoorNav software on a secondary or Starter Kit computer, you must also complete the [UGV Computer Checklist](platform_computer_checklist.mdx)
-:::
+where `license_key` is the the license key that you have been assigned. Only one license key can be used per UGV.
 
 ### Configure UGV Footprint {#configure-platform-footprint}
 
@@ -86,8 +44,8 @@ If the UGV has sensors and/or parts that protrude outside of the UGV body, then 
 Change the environment variables from the Table below, in the following file:
 
 ```
-cd ~/cpr_outdoornav_launch
-nano outdoornav_tuning.env
+cd /opt/onav/<version>/config
+nano autonomy.env
 ```
 
 | Environment Variable        | Description                            | Default |
@@ -98,22 +56,27 @@ nano outdoornav_tuning.env
 | **FOOTPRINT_OFFSET_NEG_Y**  | Distance from base_link to the furthest edge of any part/sensor at the right of the robot | -0.35 |
 
 
+### Start/Stop the OutdoorNav
 
-### Start OutdoorNav
+To start up the OutdoorNav software run:
 
-For standard CPR UGVs (ie. not including Husky Observer), run the following to start OutdoorNav:
+<code>
+{`
+onav start
+`}
+</code>
 
-``` bash
-cd ~/cpr_outdoornav_launch/    # directory with docker-compose.yaml
-docker compose --profile outdoornav up -d --build
-```
+If you wish to start individual profiles or services, run `onav start -h` to see available profiles/services.
 
-For Husky Observers, run the following to start OutdoorNav:
+To stop the OutdoorNav software run:
 
-``` bash
-cd ~/cpr_outdoornav_launch/    # directory with docker-compose.yaml
-docker compose --profile outdoornav --profile power up -d --build
-```
+<code>
+{`
+onav stop
+`}
+</code>
+
+For more information and available ONAV CLI commands, see the [Terminal Interface](../getting_started/terminal_interface.mdx) section.
 
 ### Test OutdoorNav Installation
 
@@ -129,7 +92,6 @@ rostopic echo -n 1 /localization/odom
 
 # GNSS units
 rostopic echo /sensors/gps_<sensor_num>/fix
-rostopic echo /sensors/gps_<sensor_num>/vel
 
 # IMU (if included)
 rostopic echo -n 1 /sensors/imu_<sensor_num>/data
@@ -139,14 +101,14 @@ rostopic echo /sensors/lidar_<sensor_num>/pointcloud
 rostopic echo /sensors/lidar_<sensor_num>/scan
 
 # Realsense D435 Front (if included)
-rostopic echo -n 1 /sensors/stereo_0/pointcloud
-rostopic echo -n 1 /sensors/stereo_0/image
-rostopic echo -n 1 /sensors/stereo_0/depth/image_rect_raw
+rostopic echo -n 1 /sensors/stereo_0/pointcloud --noarr
+rostopic echo -n 1 /sensors/stereo_0/image --noarr
+rostopic echo -n 1 /sensors/stereo_0/depth/image_rect_raw --noarr
 
 # Realsense D435 Rear (if included)
-rostopic echo -n 1 /sensors/stereo_1/pointcloud
-rostopic echo -n 1 /sensors/stereo_1/image
-rostopic echo -n 1 /sensors/stereo_1/depth/image_rect_raw
+rostopic echo -n 1 /sensors/stereo_1/pointcloud --noarr
+rostopic echo -n 1 /sensors/stereo_1/image --noarr
+rostopic echo -n 1 /sensors/stereo_1/depth/image_rect_raw --noarr
 ```
 
 <sensor_num> will be the number of the sensor as it was loaded into the software. Eg. If you have a VLP and an LMS1XX, then the VLP will be lidar_0, and the LMS1XX will be lidar_1. If we only have an LMS1XX, then it would be lidar_0. Ie. the 3D lidars have a higher "priority" and therefore will be loaded first.
