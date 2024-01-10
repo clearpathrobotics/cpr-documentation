@@ -15,7 +15,9 @@ mesh:
     parent: base_link
     xyz: [0.0, 0.0, 0.0]
     rpy: [0.0, 0.0, 0.0]
-    visual: /absolute/path/to/mesh.stl
+    visual:
+      package: package_name # optional
+      path:  relative/path/to/mesh/in/package.stl # or /absolute/path/to/mesh.stl
 ```
 </td>
 </tr>

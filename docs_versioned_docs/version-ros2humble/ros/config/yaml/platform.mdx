@@ -427,14 +427,22 @@ If instead of using the **bulkhead** to add an arm mount. We can add the arm mou
 Despite all current customization options, we still would like our users to be able to add-in their existing custom URDF to the robot platform URDF and pass in and overwrite parameters to all platform nodes.
 Extras have the following entries:
 
-- **urdf:** absolute path to URDF to add to robot platform URDF.
+- **urdf:** 
+  - **package:** name of the ROS 2 package that contains the extras URDF (optional).
+  - **path:** relative path within the package or absolute path to robot extras URDF
 - **ros_parameters:** in YAML to pass in parameters to platform nodes. This is useful to change parameters such as the robot's velocity and acceleration.
 
 ```yaml
 extras:
-  urdf: null # /absolute/path/to/urdf
-  ros_parameters: {} # node parameter
+  urdf: 
+    package: package_name
+    path: relative/path/to/urdf/in/package.urdf.xacro # or can contain /absolute/path/to/urdf.urdf.xacro
+  ros_parameters: {} # node parameters, see below
 ```
+
+:::note
+Remember, absolute paths start with `/` and relative paths do not.
+:::
 
 ### ROS Parameters
 A common use case is to set and update the parameters to the `platform_velocity_controller` node. These can be used to modify the linear and angular velocity and acceleratation.
@@ -589,7 +597,7 @@ platform:
       rpy: [0.0, 0.0, 0.0]
       enabled: true
   extras:
-    urdf: null
+    urdf: {}
     ros_parameters: {}
 ```
 
