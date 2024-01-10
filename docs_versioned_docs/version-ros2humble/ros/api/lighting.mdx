@@ -1,0 +1,197 @@
+---
+title: Lighting
+sidebar_label: Lighting
+sidebar_position: 5
+toc_min_heading_level: 2
+toc_max_heading_level: 5
+---
+
+Corner lighting is unified for platforms that support it (D100, D150, R100, W200). Lighting is controlled by the [lighting node](https://github.com/clearpathrobotics/clearpath_common/tree/humble/clearpath_platform/src/lighting) which defines multiple lighting states.
+The platforms lighting state is determined based on data from multiple platform status topics. Lighting states are given a priority, such that the most important state (lowest priority value) is displayed first.
+
+The lighting node will publish the current lighting command directly to the MCU. It also subscribes to user lighting commands, and will instead publish those user commands if appropriate.
+
+
+## Lighting States
+
+<table>
+  <thead>
+    <tr>
+      <th>Lighting State</th>
+      <th>Lighting Pattern</th>
+      <th>Priority</th>
+      <th>User commands allowed</th>
+      <th>Platform</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Battery Fault</td>
+      <td>
+      <center>
+        <img
+          src={require("./img/battery_fault.gif").default}
+          width="100"
+        />
+      </center>
+      </td>
+      <td>0</td>
+      <td>No</td>
+      <td>D100, D150, R100, W200</td>
+    </tr>
+    <tr>
+      <td>Shore Power Fault</td>
+      <td>
+      <center>
+        <img
+          src={require("./img/shore_fault.gif").default}
+          width="100"
+        />
+      </center>
+      </td>
+      <td>1</td>
+      <td>No</td>
+      <td>D100, D150</td>
+    </tr>
+    <tr>
+      <td>Shore Power and Charged</td>
+      <td>
+      <center>
+        <img
+          src={require("./img/shore_and_charged.gif").default}
+          width="100"
+        />
+      </center>
+      </td>
+      <td>2</td>
+      <td>Yes</td>
+      <td>D100, D150</td>
+    </tr>
+    <tr>
+      <td>Shore Power and Charging</td>
+      <td>
+      <center>
+        <img
+          src={require("./img/shore_and_charging.gif").default}
+          width="100"
+        />
+      </center>
+      </td>
+      <td>3</td>
+      <td>Yes</td>
+      <td>D150</td>
+    </tr>
+    <tr>
+      <td>Shore Power</td>
+      <td>
+      <center>
+        <img
+          src={require("./img/shore_power.png").default}
+          width="100"
+        />
+      </center>
+      </td>
+      <td>4</td>
+      <td>Yes</td>
+      <td>D100, D150</td>
+    </tr>
+    <tr>
+      <td>Charged</td>
+      <td>
+      <center>
+        <img
+          src={require("./img/charged.png").default}
+          width="100"
+        />
+      </center>
+      </td>
+      <td>5</td>
+      <td>Yes</td>
+      <td>D100, D150, R100, W200</td>
+    </tr>
+    <tr>
+      <td>Charging</td>
+      <td>
+      <center>
+        <img
+          src={require("./img/charging.gif").default}
+          width="100"
+        />
+      </center>
+      </td>
+      <td>6</td>
+      <td>Yes</td>
+      <td>D150, R100</td>
+    </tr>
+    <tr>
+      <td>Stopped</td>
+      <td>
+      <center>
+        <img
+          src={require("./img/stopped.gif").default}
+          width="100"
+        />
+      </center>
+      </td>
+      <td>7</td>
+      <td>No</td>
+      <td>D100, D150, R100, W200</td>
+    </tr>
+    <tr>
+      <td>Needs Reset</td>
+      <td>
+      <center>
+        <img
+          src={require("./img/needs_reset.gif").default}
+          width="100"
+        />
+      </center>
+      </td>
+      <td>8</td>
+      <td>No</td>
+      <td>R100</td>
+    </tr>
+    <tr>
+      <td>Low Battery</td>
+      <td>
+      <center>
+        <img
+          src={require("./img/low_battery.gif").default}
+          width="100"
+        />
+      </center>
+      </td>
+      <td>9</td>
+      <td>No</td>
+      <td>D100, D150, R100, W200</td>
+    </tr>
+    <tr>
+      <td>Driving</td>
+      <td>
+      <center>
+        <img
+          src={require("./img/driving.png").default}
+          width="100"
+        />
+      </center>
+      </td>
+      <td>10</td>
+      <td>Yes</td>
+      <td>D100, D150, R100, W200</td>
+    </tr>
+    <tr>
+      <td>Idle</td>
+      <td>
+      <center>
+        <img
+          src={require("./img/idle.png").default}
+          width="100"
+        />
+      </center>
+      </td>
+      <td>11</td>
+      <td>Yes</td>
+      <td>D100, D150, R100, W200</td>
+    </tr>
+  </tbody>
+</table>

@@ -33,9 +33,11 @@ A sphere of defined radius.
 <Sphere/>
 
 ## Mesh
-Include your custom mesh without creating a URDF of your own.
+Include your custom mesh without creating a URDF of your own. You can either provide an absolute link
+to the mesh file or if it is included in a ROS 2 package, then you can provide both the package name
+and relative link to the install location within the package.
 
-If you prefer to add a URDF instead, then you can link it directly through the `platform.extras` entry.
+If you prefer to add a URDF instead, then you can link it directly through the [`platform.extras`](platform.mdx#extras) entry.
 <Mesh/>
 
 ## Sample
