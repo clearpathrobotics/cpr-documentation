@@ -1,0 +1,249 @@
+---
+title: Command Line Interface
+sidebar_label: Command Line Interface
+sidebar_position: 3
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+By default, the OutdoorNav Software begins automatically when the system
+is powered on. This section outlines the OutdoorNav Command Line Interface (CLI),
+the set of commands that can be used by developers who are debugging
+the system or who want more precise control for managing the OutdoorNav
+software.
+
+## Connecting to the OutdoorNav Computer {#connecting-to-outdoornav-computer}
+
+To connect to your UGV, consult its corresponding user manual.
+
+If you are using a Clearpath Robotics UGV with a separate OutdoorNav Computer,
+first `ssh` to the UGV using the details provided in the UGV user
+manual. Then, if a separate OutdoorNav Computer exists, you can
+connect to it by running:
+
+``` bash
+ssh administrator@192.168.131.5
+```
+
+## OutdoorNav CLI Installation
+
+The OutdoorNav CLI is pre-installed on Clearpath robots. If it has not
+been installed on your system, it can be installed by running the following
+on the OutdoorNav Computer:
+
+```bash
+sudo apt-get install python3-onav-cli
+```
+
+:::note
+
+The command above requires that the Clearpath Package Server has been
+configured on your OutdoorNav Computer. This is pre-configured on
+Clearpath robots. Refer to details on the
+[Clearpath Package Server](http://packages.clearpathrobotics.com/) if
+this is not configured on your computer.
+
+:::
+
+## Listing the OutdoorNav CLI Commands and Getting Help
+
+To list all of the CLI commands, run the following on the OutdoorNav Computer:
+
+```bash
+onav help
+```
+
+The CLI commands are:
+
+-  `install`: Download and configure OutdoorNav
+-  `key`: Get, set, or delete your OutdoorNav license key
+-  `download`: Download OutdoorNav, but do not configure it
+-  `configure`: (Re)configure OutdoorNav
+-  `upgrade`: Upgrade OutdoorNav to the latest vesion
+-  `uninstall`: Uninstall OutdoorNav
+-  `depends`: Verify and install dependencies
+-  `start`: Start OutdoorNav
+-  `stop`: Stop OutdoorNav
+-  `status`: Check the status of OutdoorNav
+-  `logs`: View OutdoorNav logs
+-  `versions`: Print versions available to install
+-  `help`: Show available commands
+
+To get help on an individual command, use the `-h` option. For example, to
+get help on the `install` command, run `onav install -h`:
+
+```
+usage: onav install [-h] [-k KEY] [-b] [-c] [-H] VERSION
+
+positional arguments:
+  VERSION               The OutdoorNav version to install (e.g. 0.11.0)
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -k KEY, --key KEY     Your OutdoorNav installation key
+  -b, --backpack        Configure in backpack/bridged mode
+  -c, --clean           Clean any configurations from a prior installation
+```
+
+## Starting and Stopping the OutdoorNav Software {#starting-outdoornav}
+
+On UGV startup, all the sensors, the user interface, as well as the
+autonomy software are set to start automatically. When debugging or when
+greater control is desired, the CLI can be used to start and stop
+the OutdoorNav software, in whole or in part.
+
+To see the current status of OutdoorNav software, run:
+
+```bash
+onav status
+```
+
+To start the OutdoorNav software if it is not running, use the following command,
+which starts the latest version of the software by default:
+
+```bash
+onav start
+```
+
+To stop the OutdoorNav software, run:
+
+```bash
+onav stop
+```
+
+## Stopping and Restarting the Autonomy Software Only
+
+To use the UGV without the autonomy software, use the following
+command to stop the nodes and prevent them from automatic startup:
+
+``` bash
+onav stop -s autonomy
+```
+
+The autonomy software can be restarted by running:
+
+``` bash
+onav start -s autonomy
+```
+
+## Stopping/Restarting the Sensors
+
+To use the UGV without the sensors, use these commands to disable the
+nodes and prevent them from automatic startup:
+
+``` bash
+onav stop -s sensors
+```
+
+:::note
+
+This command will only disable the drivers for the sensors that are started
+by the OutdoorNav software. This includes the GNSS units, the Microstrain IMU,
+and any LiDAR/Stereo detection sources (not limited to Velodyne LiDARs, Realsense
+cameras, 2D Lidars).
+
+:::
+
+The sensors software can be restarted by running:
+
+```
+onav start -s sensors
+```
+
+## Accessing the OutdoorNav Software Logs
+
+To check the logs of the OutdoorNav software, use the `onav logs` command
+with the appropriate service. For example, to view the logs for the sensors
+service, run:
+
+```bash
+onav logs sensors
+```
+
+## Installing the OutdoorNav Software
+
+OutdoorNav is typically pre-installed on Clearpath robots, so most users should
+not need to do a first-time installation of the software, though the process
+is outlined below as a reference.
+
+As a first step, confirm that the robot has internet access. For example, confirm
+that the following command is successful:
+
+```
+ping 8.8.8.8
+```
+
+Second, the required dependencies need to be installed by running:
+
+```bash
+onav depends
+```
+
+Third, a key needs to be added onto the robot to enable the installation
+process. Contact [Clearpath Support](../support) if you did not receive your key.
+To add your key, run the following, replacing `<YOUR_KEY>` with the actual value:
+
+```bash
+onav key <YOUR_KEY>
+```
+
+Fourth, list the versions available for installation by running:
+
+```bash
+onav versions
+```
+
+Fifth, install the OutdoorNav software for the desired version (typically the
+newest version), by running the following, replacing `<TARGET_VERSION>` with
+the version to be installed:
+
+```bash
+onav install <TARGET_VERSION>
+```
+
+When prompted, trigger the reboot.
+
+Finally, following the reboot, run the following command to start the OutdoorNav
+software. This will only be required the first time after installation.
+
+```bash
+onav start <TARGET_VERSION>
+```
+
+## Upgrading the OutdoorNav Software
+
+After receiving a notice that a new version of the OutdoorNav Software is
+available, use the `onav install` command with the appropriate version.
+Note that `onav install` runs the following commands in sequence:
+
+-  `onav download`
+-  `onav configure`
+-  `onav upgrade`
+
+For example, to upgrade from 0.11.0 to 0.12.0, run the following command:
+
+```
+onav install 0.12.0
+```
+
+:::note
+
+The `download` step requires internet access to download the new software.
+Confirm that the OutdoorNav Computer has internet access by running a command
+such as:
+
+```
+ping 8.8.8.8
+```
+
+:::
+
+## Uninstalling Old Versions of OutdoorNav Software
+
+If old versions of OutdoorNav software are no longer being used, they can
+be removed with the `onav uninstall` command. For example, to uninstall 0.11.0
+run:
+
+```
+onav uninstall 0.11.0
+```
