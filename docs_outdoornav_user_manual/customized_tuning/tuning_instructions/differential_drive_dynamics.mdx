@@ -269,7 +269,14 @@ then proceed to the respective issue listed in
 
 #### Initialize Parameters {#initialize_parameters}
 
-1. Update the footprint offsets of the UGV in the `${HOME}/cpr_outdoornav_launch/outdoornav_tuning.env` file.
+1. Update the footprint offsets of the UGV in the `/opt/onav/<onav_version>/config/autonomy.env` file, where *onav_version*
+is the version of OutdoorNav that you are currently running.
+
+:::note
+
+This above file path is only valid for version after and including version 0.11.0.
+
+:::note
 
 <center>
   <figure>
@@ -386,10 +393,11 @@ The following parameters should then be modified to the desired velocity ($v_{de
 Finally, if you are increasing the velocity to a value greater than or equal to 4.0 m/s or if you
 are seeing that the velocity is being limited even after changing the above parameters, 
 it is possible to try and increase the size (width and height) of the local costmap in file:
-`~/cpr_outdoornav_launch/onav_robots/params/platform/navigation/costmap_local.yaml`.
-The limit in the velcoity is due to the fact that the lookahead distance at higher speeds ends 
-up exceeding the size of the local costmap. By increasing it, we allow the controller to 
-lookahead further and allow for that velocity increase.
+`/opt/onav/<onav_version>/app/autonomy/params/platform/navigation/costmap_local.yaml`, 
+where *onav_version* is the currently running version of OutdoorNav. The limit in the velcoity
+is due to the fact that the lookahead distance at higher speeds ends up exceeding the size of 
+the local costmap. By increasing it, we allow the controller to lookahead further and allow for 
+that velocity increase.
 
 #### Tune Goal State {#tune_goal_state}
 
