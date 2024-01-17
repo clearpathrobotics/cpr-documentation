@@ -10,7 +10,7 @@ toc_max_heading_level: 3
 
 | Parameter | Description | File | Default |
 |-----------|-------------|------|---------|
-| `ENABLE_COLLISION_AVOIDANCE` | Flag to enable/disable collision avoidance | ~/cpr_outdoornav_launch/outdoornav_tuning.env | false |
+| `ENABLE_COLLISION_AVOIDANCE` | Flag to enable/disable collision avoidance | `/opt/onav/<onav_version>/config/autonomy.env` | false |
 
 
 ## Costmap {#costmap_params}
@@ -20,7 +20,7 @@ toc_max_heading_level: 3
 The parameters related to the costmap, can be found here:
 
 ``` bash
-~/cpr_outdoornav_launch/onav_robots/params/<platform_type>/navigation/costmap_<global/local>.yaml
+/opt/onav/<onav_version>/app/autonomy/params/<platform_type>/navigation/costmap_<global/local>.yaml
 ```
 
 If they are not listed in the above file, it is because they are using the default values and are not being overwritten.
