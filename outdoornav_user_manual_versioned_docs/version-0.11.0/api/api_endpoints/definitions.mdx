@@ -1,0 +1,1296 @@
+---
+title: Definitions
+sidebar_label: Definitions
+sidebar_position: 6
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+### Message Definitions
+
+#### clearpath_control_msgs/ControlMode.msg {#msg-control-mode}
+
+```
+# Control mode message
+
+int8 NEUTRAL=0
+int8 MANUAL=1
+int8 AUTONOMY=2
+
+int8 mode
+```
+
+#### clearpath_control_msgs/ControlSelectionState.msg {#msg-control-selection-state}
+
+```
+# The complete state of the control selection module. This message includes the autonomy state as well as the navigation mode.
+
+ControlState autonomy
+ControlMode mode
+```
+
+#### clearpath_control_msgs/ControlState.msg {#msg-control-state}
+
+```
+# The autonomy state message, The autonomy can be either enabled/disabled and active/paused.
+
+bool enabled
+bool paused
+```
+
+#### clearpath_dock_msgs/DockInfo.msg {#msg-dock-info}
+
+```
+# Message definition containing the information of a single dock. This includes identifiers, lat/lon and orientation of the location of a dock.
+
+string name
+string uuid
+string frame
+string target_template
+
+# ISO 8601 date/time format of last successfull dock location setting
+string last_location_set_time
+
+# maximum allowable distance to allow for predocking. (ie. the distance within which the dock waypoint must be located)
+float32 max_predock_distance
+# the distance from the dock that the robot will navigate to prior to start docking
+float32 predock_distance
+
+# location of the dock
+float64 latitude
+float64 longitude
+float64 heading
+```
+
+#### clearpath_dock_msgs/DockProperties.msg {#msg-dock-properties}
+
+```
+# Message definition containing the properties for each of the docks available.
+
+clearpath_dock_msgs/DockInfo[] docks
+```
+
+#### clearpath_dock_msgs/DockState.msg {#msg-dock-state}
+
+```
+# Message definition containing information on what state the docking process is in.
+
+uint8 UNDOCKED = 0
+uint8 DOCKED = 1
+uint8 IN_PROGRESS = 2
+uint8 FAILED = 3
+uint8 CANCELLED = 4
+
+uint8 state
+```
+
+#### clearpath_dock_msgs/TargetTrackerState.msg {#msg-target-tracker-state}
+
+```
+# Message definition containing the state information of the target tracker.
+# This includes whether or not the tracker is active, whether the target is visible/lost, and the target pose and score of that pose.
+
+bool active
+
+# flag indicates if the target is visible or not
+bool target_locked
+
+geometry_msgs/PoseWithCovarianceStamped target_pose
+float32 score
+
+# the distance of the sensor_link to the dock target
+float64 distance_to_target
+```
+
+#### clearpath_localization_msgs/LocalizationStatus.msg {#msg-localization-status}
+
+```
+# Localization status message for all sources of localization
+
+std_msgs/Header header
+float32 accuracy # IN DEVELOPMENT
+
+# status information related to the GPS receiver units
+GNSSStatus position_gnss
+GNSSStatus heading_gnss
+GNSSStatus base_station_gnss
+
+bool dead_reckoning
+```
+
+#### clearpath_localization_msgs/GNSSStatus.msg {#msg-gnss-status}
+
+```
+# GNSS receiver status message
+
+uint8 POSITION_RECEIVER = 0
+uint8 HEADING_RECEIVER = 1
+uint8 BASE_STATION_RECEIVER = 2
+uint8 receiver_type
+
+uint8 POSITION_NO_FIX = 0
+uint8 POSITION_SPP = 1
+uint8 POSITION_SBAS = 2
+uint8 POSITION_RTK_FLOAT = 3
+uint8 POSITION_RTK_FIXED = 4
+uint8 position_fix_type
+
+uint8 HEADING_NOT_APPLICABLE = 0
+uint8 HEADING_NO_SOLUTION = 1
+uint8 HEADING_RTK_FLOAT = 2
+uint8 HEADING_RTK_FIXED = 3
+uint8 heading_fix_type
+
+uint8 num_connected_sats  # Number of satellites connected to the antenna/receiver
+uint8 num_sats_solution   # Number of sats used in solution
+float32[] cn0			  # The carrier-to-noise ratio of each connected satellite
+float64 correction_age    # Age of RTK corrections. -1 indicates none received
+```
+
+#### clearpath_mission_manager_msgs/msg/StorageState.msg {#storage-storagestate}
+
+```
+# The entire contents of the Mission database
+# Note that all of the following cases are valid:
+# - a Task can be referenced in multiple Waypoints
+# - a Waypoint can be referenced in multiple Missions
+# - a Waypoint can be orphaned (i.e. not included in any Missions)
+# - a Task can be orphaned (i.e. not included in any Waypoints)
+
+# All missions defined in the database
+clearpath_navigation_msgs/Mission[] missions
+
+# All waypoints defined in the database
+clearpath_navigation_msgs/Waypoint[] waypoints
+
+# All tasks defined in the database
+clearpath_navigation_msgs/Task[] tasks
+```
+
+#### clearpath_mission_scheduler_msgs/msg/NextSchedule.msg
+
+```
+# The ID of the next schedule to start
+# Empty if nothing is scheduled
+string uuid
+
+# The time until the schedule starts (rounded to the nearest second)
+duration time_to_start
+```
+
+#### clearpath_mission_scheduler_msgs/msg/Schedule {#scheduler-schedule}
+
+```
+# Single-execution mode; the schedule starts at the designated time and runs once
+uint8 MODE_ONCE=0
+
+# Looping mode; the schedule starts at the designated time, and every loop_interval seconds after
+# for the designated number of repeats
+uint8 MODE_LOOP=1
+
+# Single-shot execution, but does NOT get added to the persistent storage
+# Equivalent to MODE_ONCE, but for one-off, throw-away schedules (e.g. "Run X in 5 minutes")
+uint8 MODE_TRANSIENT=2
+
+# The human-readable name for this schedule
+# Should be unique, but there's no hard requirement for it to be so
+string name
+
+# The unique ID of this schedule
+# A string of the form "12345678-90ab-cdef-1234-567890abcdef"
+string uuid
+
+# The time that this mission starts every day
+clearpath_mission_scheduler_msgs/UtcTime start_time
+
+# Either MODE_ONCE or MODE_LOOP to indicate the execution mode
+uint8 mode
+
+# In MODE_LOOP, how many times do we repeat the missions?
+uint8 loop_repeats
+
+# In MODE_LOOP, how long do we wait between executions?
+duration loop_interval
+
+# The ordered list of Mission UUIDs to execute
+string[] mission_ids
+
+# The minimum battery charge needed before we execute the missions
+# Must be in the range 0-1
+float32 min_battery
+
+# If the missions take longer than this to execute, assume the schedule has failed and alert the user
+# Set to zero to disable the timeout
+duration timeout
+
+# Is this schedule enabled?
+# Only enabled schedules will execute
+bool enabled
+```
+
+#### clearpath_mission_scheduler_msgs/msg/StorageState.msg {#scheduler-state}
+
+```
+# Single-execution mode; the schedule starts at the designated time and runs once
+uint8 MODE_ONCE=0
+
+# Looping mode; the schedule starts at the designated time, and every loop_interval seconds after
+# for the designated number of repeats
+uint8 MODE_LOOP=1
+
+# Single-shot execution, but does NOT get added to the persistent storage
+# Equivalent to MODE_ONCE, but for one-off, throw-away schedules (e.g. "Run X in 5 minutes")
+uint8 MODE_TRANSIENT=2
+
+# The human-readable name for this schedule
+# Should be unique, but there's no hard requirement for it to be so
+string name
+
+# The unique ID of this schedule
+# A string of the form "12345678-90ab-cdef-1234-567890abcdef"
+string uuid
+
+# The time that this mission starts every day
+clearpath_mission_scheduler_msgs/UtcTime start_time
+
+# Either MODE_ONCE or MODE_LOOP to indicate the execution mode
+uint8 mode
+
+# In MODE_LOOP, how many times do we repeat the missions?
+uint8 loop_repeats
+
+# In MODE_LOOP, how long do we wait between executions?
+duration loop_interval
+
+# The ordered list of Mission UUIDs to execute
+string[] mission_ids
+
+# The minimum battery charge needed before we execute the missions
+# Must be in the range 0-1
+float32 min_battery
+
+# If the missions take longer than this to execute, assume the schedule has failed and alert the user
+# Set to zero to disable the timeout
+duration timeout
+
+# Is this schedule enabled?
+# Only enabled schedules will execute
+bool enabled
+```
+
+#### clearpath_mission_scheduler_msgs/msg/UtcTime.msg {#scheduler-time}
+
+```
+# Represents a moment in time on a 24-hour clock
+
+# The hour, 0-23
+uint8 hour
+
+# The minute, 0-59
+uint8 minute
+
+# The second, 0-59
+uint8 second
+
+# Milliseconds, 0-999 (not typically needed)
+uint16 millisecond
+```
+
+#### clearpath_navigation_msgs/Mission.msg {#msg-navigation-mission}
+
+```
+# Message definition for an OutdoorNav mission
+
+std_msgs/Header header
+
+# The human-readable name of this mission
+string name
+
+# A UUID string used to uniquely identify this mission
+string uuid
+
+# The ordered list of Waypoints that make up the mission
+clearpath_navigation_msgs/Waypoint[] waypoints
+
+# Configuration parameters for the mission
+# Additional details TBD
+string onav_config
+```
+
+#### clearpath_navigation_msgs/DistanceToGoal.msg {#msg-distance-to-goal}
+
+```
+# Message includes Euclidean and Path distance to goal
+
+float32 euclidean
+float32 path
+```
+
+#### clearpath_navigation_msgs/Metrics.msg {#msg-metrics}
+
+```
+# Message containing some metric information related to the autonomy metrics.
+
+float64 total_distance_travelled    # [m]
+float64 total_duration              # [s]
+
+uint64 num_missions_sent
+uint64 num_missions_completed
+uint64 num_replans
+uint64 num_recoveries
+uint64 num_tasks_executed
+```
+
+#### clearpath_navigation_msgs/MotionState.msg {#msg-motion-state}
+
+```
+# Motion state message to indicate the current motion, expected motion and the direction of travel of the robot.
+
+# State pertaining to current motion of the robot.
+uint8 MOTION_NORMAL=10
+uint8 MOTION_STOPPED=11
+uint8 MOTION_REVERSE=12
+uint8 MOTION_SLOWING=13 # Currently unused
+uint8 motion
+
+# State pertaining to the robot's movement along the path. Predictive, ie state
+# will be INDICATOR_LEFT_TURN if in or approaching a left turn.
+uint8 INDICATOR_NORMAL=20
+uint8 INDICATOR_LEFT_TURN=21
+uint8 INDICATOR_RIGHT_TURN=22
+uint8 INDICATOR_CLOCKWISE=23
+uint8 INDICATOR_COUNTERCLOCKWISE=24
+uint8 INDICATOR_HAZARD=25 # Currently unused
+uint8 indicator
+
+# Direction of travel of the robot relative to its physical forward direction.
+uint8 DIRECTION_FORWARD=30
+uint8 DIRECTION_REVERSE=31
+uint8 direction
+```
+
+#### clearpath_navigation_msgs/NavigationState.msg {#msg-navigation-state}
+
+```
+# Message containing the current navigation state(s). Navigation may be in multiple states.
+
+uint8 STATE_IDLE = 0
+uint8 STATE_COMPUTE_PATH = 1
+uint8 STATE_EXECUTE_PATH = 2
+uint8 STATE_REPLAN = 3
+uint8 STATE_NAVIGATING_AROUND_OBSTACLE = 4
+uint8 STATE_RECOVERY = 5
+uint8 STATE_LOST = 6
+uint8 STATE_DONE = 7
+uint8 STATE_SAFETY_STOP = 8
+uint8 STATE_PAUSE = 9
+uint8 STATE_DISABLE = 10
+
+uint8[] states
+```
+
+#### clearpath_navigation_msgs/OdomIntent.msg {#msg-odom-intent}
+
+```
+# Message containing current and predicted odom related information
+
+std_msgs/Header header
+
+# Current and predicted odom
+perception_navigation_msgs/Odom2DLean odom
+perception_navigation_msgs/Odom2DLean predicted_odom
+
+# Time offset corresponding to prediction
+float32 dt
+```
+
+#### clearpath_navigation_msgs/PointVector.msg {#msg-point-vector}
+
+```
+# Vector of point vectors (for GUI)
+std_msgs/Header header
+
+clearpath_navigation_msgs/Vector2D[] cloud
+```
+
+#### clearpath_navigation_msgs/Progress.msg (BETA) {#msg-navigation-progress}
+
+```
+# Message containing the completion percentage of the currently executed path and the current goal.
+
+float32 path_progress
+float32 goal_progress
+float32 mission_progress
+```
+
+#### clearpath_navigation_msgs/ScanPoints.msg {#msg-scan-points}
+
+```
+# Message definition for the detection points used by the navigation that relate to the detected obstacles.
+
+std_msgs/Header header
+
+string[] frames_vector
+clearpath_navigation_msgs/PointVector[] cloud_vector
+```
+
+#### clearpath_navigation_msgs/Task.msg {#msg-navigation-task}
+
+```
+# A single task that can be executed at a Waypoint
+
+# The human-readable name of this task
+string name
+
+# A UUID string to uniquely identify this Task
+string uuid
+
+# The ROS action that this task executes
+string action_server_name
+
+# The version of this task
+string version
+
+# Numerical/boolean data to be passed to the action_server_name
+# The exact meaning of these values is dependent on the underlying service
+float64[] floats
+
+# String data to be passed to the action_server_name
+# The exact meaning of these values is dependent on the underlying service
+string[] strings
+
+# Boolean value which determines whether a mission using this task can continue
+# if this task fails to execute
+bool allow_failure
+```
+
+#### clearpath_navigation_msgs/TrackError.msg {#msg-track-error}
+
+```
+# The path error message containing the off-path cross track error and the relative heading error to the path direction
+
+std_msgs/Header header
+float32 cross_track_error
+float32 heading_error
+```
+
+#### clearpath_navigation_msgs/Vector2D.msg {#msg-vector-2d}
+
+```
+# 2D Vector of floats (used for GUI)
+
+float32[2] point
+```
+
+#### clearpath_navigation_msgs/Waypoints.msg {#msg-navigation-waypoints}
+
+```
+# A single Waypoint along a Mission
+
+# A UUID string to uniquely identify this Waypoint
+string uuid
+
+# The human-readable name of this Waypoint
+string name
+
+# The latitude (in degrees) of this Waypoint
+float64 latitude
+
+# The longitude (in degrees) of this Waypoint
+float64 longitude
+
+# The compass heading (in degrees) of this Waypoint
+float64 heading
+
+# A radius in meters indicating the acceptable radius from the target location
+# Posititon tolerance is disabled if this value is negative
+float64 position_tolerance
+
+# A tolerance in degrees indicating the acceptable deviation from the heading
+# Heading tolerance is disabled if this value is negative
+float64 yaw_tolerance
+
+# The ordered set of Tasks to execute once the goal position & orientation are reached
+clearpath_navigation_msgs/Task[] tasks
+```
+
+#### clearpath_platform_msgs/PlatformID.msg {#msg-platform-id}
+
+```
+# Platform ID message containing the model, serial #, hardware and firmware versions
+
+string model
+string serial_id
+string hardware_revision
+string firmware_revision
+```
+
+#### clearpath_safety_msgs/Safety.msg {#msg-safety}
+
+```
+# Safety monitor message telling us if the safety monitor has been triggered and a message
+# indicating what caused the trigger
+
+uint8 SAFETY_ESTOP = 0
+uint8 SAFETY_SENSOR_TIMEOUT = 1
+
+bool safety_monitor_triggered
+uint8 trigger_type
+string message
+```
+
+#### clearpath_safety_msgs/WatchdogStatus.msg {#msg-safety-watchdog}
+
+```
+# Watchdog status message containing information related to sensor monitoring, emergency stop and safety stops
+
+bool[] gps_watchdog_triggered
+bool[] lidar_watchdog_triggered
+bool[] camera_watchdog_triggered
+```
+
+#### Standard ROS Messages {#std-ros-msgs}
+
+-   [actionlib_msgs/GoalID](http://docs.ros.org/en/noetic/api/actionlib_msgs/html/msg/GoalID.html)
+-   [diagnostic_msgs/DiagnosticArray](http://docs.ros.org/en/noetic/api/diagnostic_msgs/html/msg/DiagnosticArray.html)
+-   [geometry_msgs/PolygonStamped](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/PolygonStamped.html)
+-   [geometry_msgs/Polygon](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Polygon.html)
+-   [geometry_msgs/PoseArray](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/PoseArray.html)
+-   [geometry_msgs/Twist](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Twist.html)
+-   [nav_msgs/OccupancyGrid](http://docs.ros.org/en/noetic/api/nav_msgs/html/msg/OccupancyGrid.html)
+-   [nav_msgs/Odometry](http://docs.ros.org/en/noetic/api/nav_msgs/html/msg/Odometry.html)
+-   [nav_msgs/Path](http://docs.ros.org/en/noetic/api/nav_msgs/html/msg/Path.html)
+-   [sensor_msgs/Imu](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/Imu.html)
+-   [sensor_msgs/LaserScan](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/LaserScan.html)
+-   [sensor_msgs/NavSatFix](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/NavSatFix.html)
+-   [sensor_msgs/PointCloud2](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/PointCloud2.html)
+-   [std_msgs/Bool](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/Bool.html)
+-   [std_msgs/Empty](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/Empty.html)
+-   [std_msgs/String](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/String.html)
+-   [tf2_msgs/TFMessage](http://docs.ros.org/en/noetic/api/tf2_msgs/html/msg/TFMessage.html)
+-   [wireless_msgs/Connection](http://docs.ros.org/en/noetic/api/wireless_msgs/html/msg/Connection.html)
+
+------------------------------------------------------------------------
+
+### Service Definitions
+
+#### clearpath_control_msgs/srv/SetControlMode.srv {#srv-set-control-mode}
+
+```
+# Service definition to set the control mode
+
+clearpath_control_msgs/ControlMode mode
+---
+```
+
+#### clearpath_dock_msgs/srv/AddDock.srv {#srv-add-dock}
+
+```
+# A dock information message that will be added to the docks list
+clearpath_dock_msgs/DockInfo dock
+---
+# True if the location was updated/added successfully, otherwise False
+bool success
+```
+
+#### clearpath_dock_msgs/srv/RemoveDock.srv {#srv-remove-dock}
+
+```
+# A dock information message that will remove a dock from the docks list
+string uuid
+string name
+---
+# True if the dock was removed successfully, otherwise False
+bool success
+```
+
+#### clearpath_dock_msgs/srv/SetDockLocationById.srv {#srv-set-dock-location-by-id}
+
+```
+# The UUID of the dock we're setting a location for
+# If empty, a new dock is to be added with the location
+string uuid
+---
+# True if the location was updated/added successfully, otherwise False
+bool success
+```
+
+#### clearpath_dock_msgs/srv/SetDockLocationByName.srv {#srv-set-dock-location-by-name}
+
+```
+# The UUID of the dock we're setting a location for
+# If empty, a new dock is to be added with the location
+string name
+---
+# True if the location was updated/added successfully, otherwise False
+bool success
+```
+
+#### clearpath_localization_msgs/srv/SetDatum.srv {#srv-set-datum}
+
+```
+# Service definition to set the datum with a latitude (lat) and longitude (lon)
+
+float32 lat
+float32 lon
+---
+bool success
+```
+
+#### clearpath_localization_msgs/srv/ResetLocalization.srv {#srv-reset-localization}
+
+```
+# Service definition to reset the localization
+
+bool require_gnss
+uint32 gnss_samples
+---
+bool success
+```
+
+#### clearpath_mission_manager_msgs/srv/AddRemoveById.srv {#storage-addremovebyid}
+
+```
+# The UUID of the object we're inserting/removing
+# When removing, all instances with this UUID are deleted from the parent
+string uuid
+
+# The UUID of the parent object
+string parent_uuid
+
+# The zero-based index to insert the object into
+# Ignored when removing
+int32 position
+---
+# True if the object was added/removed successfully, otherwise False
+bool ok
+```
+
+#### clearpath_mission_manager_msgs/srv/CloneMission.srv {#storage-clonemission}
+```
+# The UUID of the mission to clone
+string uuid
+
+# The new name for the mission
+# If blank, the old mission name will be re-used with -copy appended to the end
+string new_name
+
+# If true, the order of the waypoints within the cloned mission are reversed
+bool reverse
+---
+# The Mission with the given ID, or null if no Mission with that ID exists
+clearpath_navigation_msgs/Mission mission
+```
+
+:::note
+
+The `reverse` parameter was added in 0.9.0
+
+:::
+
+#### clearpath_mission_manager_msgs/srv/CreateMission.srv {#storage-createmission}
+
+```
+# The desired name for the new mission
+string name
+
+# The additional configuration options
+# see clearpath_mission_manager_msgs/msg/Mission for details
+string onav_config
+
+# The ordered list of Waypoint UUIDs to include in this mission
+string[] waypoint_ids
+---
+# The resulting Mission, with an auto-generated UUID is returned
+clearpath_navigation_msgs/Mission result
+```
+
+#### clearpath_mission_manager_msgs/srv/CreateTask.srv {#storage-createtask}
+
+```
+# The desired name for the Task
+string name
+
+# The ROS Action to invoke to execute the task
+string service_call
+
+# The version of the task
+string version
+
+# The numerical arguments to pass to the service_call
+float64[] floats
+
+# The string arguments to pass to the service_call
+string[] strings
+
+# Optional list of Waypoint UUIDs to assign this task to automatically
+# The new task will be appended to the end of the existing Waypoints
+string[] assign_to
+---
+# The resulting Task with an auto-generated UUID is returned
+clearpath_navigation_msgs/Task result
+```
+
+#### clearpath_mission_manager_msgs/srv/CreateWaypoint.srv {#storage-createwaypoint}
+
+```
+# The desired name for the Waypoint
+string name
+
+# The latitude for the Waypoint in degrees
+float64 latitude
+
+# The longitude for the Waypoint in degrees
+float64 longitude
+
+# The compass heading in degrees for the Waypoint
+float64 heading
+
+# The position tolerance for the Waypoint in meters
+float64 position_tolerance
+
+# The orientation tolerance for the Waypoint in degrees
+float64 yaw_tolerance
+
+# Optional ordered list of Task UUIDs to execute at this Waypoint
+string[] task_ids
+
+# Optional list of Mission UUIDs to assign the new Waypoint to
+# The new Waypoint is appended to the end of the existing Missions
+string[] assign_to
+---
+# The resulting Waypoint with an auto-generated UUID is returned
+clearpath_navigation_msgs/Waypoint result
+```
+
+#### clearpath_mission_manager_msgs/srv/DeleteById.srv {#storage-deletebyid}
+
+```
+# The UUID of the object we want to delete
+string uuid
+---
+# True if the item was successfully deleted, otherwise False
+bool ok
+```
+
+#### clearpath_mission_manager_msgs/srv/DeleteEverything.srv {#storage-deleteeverything}
+
+```
+# Used to permanently delete everything from the database.
+# Use this service at your own risk
+
+# This must be set to true to confirm you really want to delete everything
+bool yes_i_am_absolutely_sure_i_want_to_do_this
+---
+# True if the database was cleared, otherwise False
+bool ok
+```
+
+#### clearpth_mission_manager_msgs/srv/DeleteMultiple.srv {#storage-deletemultiple}
+
+```
+# A list of UUIDs of items we want to delete
+string[] uuids
+---
+# A list of UUIDs that we were asked to delete, but failed to
+string[] failed_uuids
+```
+
+#### clearpath_mission_manager_msgs/srv/ExportData.srv {#storage-exportdata}
+
+```
+---
+# A JSON string representing the database contents.
+# This can be written to a file or used with the ImportData.srv
+# to back-up/restore the database contents
+string data
+```
+
+#### clearpath_mission_manager_msgs/srv/GetAllMissions.srv {#storage-getallmissions}
+
+```
+---
+# An array of all Missions defined in the database
+clearpath_navigation_msgs/Mission[] missions
+```
+
+#### clearpath_mission_manager_msgs/srv/GetAllTasks.srv {#storage-getalltasks}
+
+```
+---
+# The array of all Tasks defined in the database
+clearpath_navigation_msgs/Task[] tasks
+```
+
+#### clearpath_mission_manager_msgs/srv/GetAllWaypoints.srv {#storage-getallwaypoints}
+
+```
+---
+# The array of all Waypoints defined in the database
+clearpath_navigation_msgs/Waypoint[] waypoints
+```
+
+#### clearpath_mission_manager_msgs/srv/GetEverything.srv {#storage-geteverything}
+
+```
+---
+# All Missions, Waypoints, and Tasks defined in the database
+clearpath_mission_manager_msgs/StorageState state
+```
+
+#### clearpath_mission_manager_msgs/srv/GetMission.srv {#storage-getmission}
+
+```
+# The UUID of the Mission we want to retrieve
+string uuid
+---
+# The Mission with the given ID, or null if no Mission with that ID exists
+clearpath_navigation_msgs/Mission mission
+```
+
+#### clearpath_mission_manager_msgs/srv/GetTask.srv {#storage-gettask}
+
+```
+# The UUID of the Task we want to retrieve
+string uuid
+---
+# The Task with the given ID, or null if no Task with that ID exists
+clearpath_navigation_msgs/Task task
+```
+
+#### clearpath_mission_manager_msgs/srv/GetWaypoint.srv {#storage-getwaypoint}
+
+```
+# The UUID of the Waypoint we want to retrieve
+string uuid
+---
+# The Waypoint with the given ID, or null if no Waypoint with that ID exists
+clearpath_navigation_msgs/Waypoint waypoint
+```
+
+#### clearpath_mission_manager_msgs/srv/ImportData.srv {#storage-importdata}
+
+```
+# A JSON string representing the database contents.
+# This is the same as the data output by the ExportData service, and is intended
+# to be used to restore the database to a previous state
+string data
+---
+# The state of the database after importing the data
+clearpath_mission_manager_msgs/StorageState state
+```
+
+#### clearpath_mission_manager_msgs/srv/ImportMission.srv {#storage-importmission}
+
+```
+# The Mission to import. All UUIDs will be re-generated
+clearpath_navigation_msgs/Mission mission
+---
+# The generated mission with new UUIDs
+clearpath_navigation_msgs/Mission mission
+```
+
+#### clearpath_mission_manager_msgs/srv/UpdateMission.srv {#storage-updatemission}
+
+```
+# The UUID of the mission we want to edit
+string uuid
+
+# The human-readable name for the Mission
+string name
+
+# The configuration parameters for the Mission
+string onav_config
+
+# The ordered list of Waypoint UUIDs to include in the Mission
+string[] waypoint_ids
+---
+# The edited Mission, or null if no mission with the given ID exists
+clearpath_navigation_msgs/Mission result
+```
+
+#### clearpath_mission_manager_msgs/srv/UpdateTask.srv {#storage-updatetask}
+
+```
+# The UUID of the Task to edit
+string uuid
+
+# The human-readable name for the Task
+string name
+
+# The ROS Action that the Task executes
+string service_call
+
+# The version of the Task
+string version
+
+# The numerical data to pass to the service_call
+float64[] floats
+
+# The string data to pass to the service_call
+string[] strings
+---
+# The edited Task, or null if no Task with the given ID exists
+clearpath_navigation_msgs/Task result
+```
+
+#### clearpath_mission_manager_msgs/srv/UpdateWaypoint.srv {#storage-updatewaypoint}
+
+```
+# The UUID of the Waypoint to edit
+string uuid
+
+# The human-readable name for the Waypoint
+string name
+
+# The latitude of the Waypoint in degrees
+float64 latitude
+
+# The longitude of the Waypoint in degrees
+float64 longitude
+
+# The compass heading of the Waypoint in degrees
+float64 heading
+
+# The Waypoint's position tolerance in meters
+float64 position_tolerance
+
+# The Waypoint's orientation tolerance in degrees
+float64 yaw_tolerance
+
+# The ordered list of Task UUIDs to execute at this Waypoint
+string[] task_ids
+---
+# The edited Waypoint, or null if no Waypoint with the given ID exists
+clearpath_navigation_msgs/Waypoint result
+```
+
+#### clearpath_mission_scheduler_msgs/srv/CloneSchedule.srv {#scheduler-cloneschedule}
+
+```
+# The UUID of the schedule to clone
+string uuid
+
+# The name for the new copy of the schedule
+string new_name
+---
+# The cloned schedule
+# This should be identical to the original, but with a new name and new UUID
+clearpath_mission_scheduler_msgs/Schedule schedule
+```
+
+#### clearpath_mission_scheduler_msgs/srv/CreateSchedule.srv {#scheduler-createschedule}
+
+```
+# The human-readable name for this schedule
+# Should be unique, but there's no hard requirement for it to be so
+string name
+
+# The time that this mission starts every day
+clearpath_mission_scheduler_msgs/UtcTime start_time
+
+# Either Schedule.MODE_ONCE, Schedule.MODE_LOOP, OR Schedule.MODE_TRANSIENT to indicate the execution mode
+uint8 mode
+
+# In MODE_LOOP, how many times do we repeat the missions?
+uint8 loop_repeats
+
+# In MODE_LOOP, how long do we wait between executions?
+duration loop_interval
+
+# The ordered list of Mission UUIDs to execute
+string[] mission_ids
+
+# The minimum battery charge needed before we execute the missions
+# Must be in the range 0-1
+float32 min_battery
+
+# If the missions take longer than this to execute, assume the schedule has failed and alert the user
+# Set to zero to disable the timeout
+duration timeout
+
+# Is this schedule enabled?
+# Only enabled schedules will execute
+bool enabled
+
+---
+
+# The created mission, as-saved on disk
+clearpath_mission_scheduler_msgs/Schedule result
+```
+
+#### clearpath_mission_scheduler_msgs/srv/EnableSchedule.srv {#scheduler-enableschedule}
+
+```
+# The ID of the schedule to enable/disable
+string uuid
+
+# Should this schedule be enabled or disabled?
+bool enable
+
+---
+
+# True if we successfully enabled/disabled the schedule
+# False if there was an error or the schedule wasn't found
+bool ok
+```
+
+#### clearpath_mission_scheduler_msgs/srv/ExportData.srv {#scheduler-exportdata}
+
+```
+---
+# A JSON string representing the database contents.
+# This can be written to a file or used with the ImportData.srv
+# to back-up/restore the database contents
+string data
+```
+
+#### clearpath_mission_scheduler_msgs/srv/GetAllSchedules.srv {#scheduler-getallschedules}
+
+```
+---
+clearpath_mission_scheduler_msgs/Schedule[] schedules
+```
+
+#### clearpath_mission_scheduler_msgs/srv/GetNextSchedule.srv {#scheduler-getnextschedule}
+
+```
+---
+# The ID of the next schedule to start
+# Empty if nothing is scheduled
+string uuid
+
+# The time until the schedule starts (rounded to the nearest second)
+duration time_to_start
+```
+
+#### clearpath_mission_scheduler_msgs/srv/GetSchedule.srv {#scheduler-getschedule}
+
+```
+string uuid
+---
+clearpath_mission_scheduler_msgs/Schedule schedule
+```
+
+#### clearpath_mission_scheduler_msgs/srv/ImportData.srv {#scheduler-importdata}
+
+```
+# A JSON string representing the database contents.
+# This is the same as the data output by the ExportData service, and is intended
+# to be used to restore the database to a previous state
+string data
+---
+# The state of the database after importing the data
+clearpath_mission_scheduler_msgs/StorageState state
+```
+
+#### clearpath_mission_scheduler_msgs/srv/UpdateSchedule.srv {#scheduler-updateschedule}
+
+```
+# The ID of the mission to edit
+string uuid
+
+# The human-readable name for this schedule
+# Should be unique, but there's no hard requirement for it to be so
+string name
+
+# The time that this mission starts every day
+clearpath_mission_scheduler_msgs/UtcTime start_time
+
+# Either Schedule.MODE_ONCE, Schedule.MODE_LOOP, OR Schedule.MODE_TRANSIENT to indicate the execution mode
+uint8 mode
+
+# In MODE_LOOP, how many times do we repeat the missions?
+uint8 loop_repeats
+
+# In MODE_LOOP, how long do we wait between executions?
+duration loop_interval
+
+# The ordered list of Mission UUIDs to execute
+string[] mission_ids
+
+# The minimum battery charge needed before we execute the missions
+# Must be in the range 0-1
+float32 min_battery
+
+# If the missions take longer than this to execute, assume the schedule has failed and alert the user
+# Set to zero to disable the timeout
+duration timeout
+
+# Is this schedule enabled?
+# Only enabled schedules will execute
+bool enabled
+
+---
+
+# The modified mission, as-saved on disk
+clearpath_mission_scheduler_msgs/Schedule result
+```
+
+#### clearpath_navigation_msgs/srv/SetDelayCompensation.srv {#srv-set-delay-compensation}
+
+```
+# Service definition to enable/disable the delay compensation feature. If enabling, the delay to compensate for must be specified in the request.
+
+bool enable_delay_compensation
+uint16 delay                    # units: milliseconds
+---
+bool success
+string message
+```
+
+#### clearpath_navigation_msgs/srv/SetPathSmoother.srv {#srv-set-path-smoother}
+
+```
+# Service definition to enable/disable the path smoothing feature. If enabling, minimum turning radius must be specified in the request.
+
+bool enable_path_smoother
+float32 turn_radius         # units: meters
+float32 step_size
+---
+bool success
+string message
+```
+
+#### clearpath_navigation_msgs/srv/SetStopDistance.srv {#srv-set-stop-distance}
+
+```
+# Service definition to enable/disable the stop distance. If enabling, the stop distance must be specified in the request.
+
+bool enable_stop_distance
+float32 stop_distance      # units: meters
+---
+bool success
+string message
+```
+
+#### Standard ROS Services
+
+-   [std_srvs/Empty](http://docs.ros.org/en/noetic/api/std_srvs/html/srv/Empty.html)
+-   [std_srvs/SetBool](http://docs.ros.org/en/noetic/api/std_srvs/html/srv/SetBool.html)
+
+------------------------------------------------------------------------
+
+### Action Definitions
+
+#### clearpath_dock_msgs/action/Dock.action {#action-dock}
+
+```
+# Action definition for sending a Clearpath UGV to one of its charging dock.
+
+# goal
+string uuid
+bool local_mode
+---
+# result
+bool success
+---
+# feedback
+string state
+
+# the distance of the charger_link to the dock target
+float64 distance_to_dock
+```
+
+#### clearpath_dock_msgs/action/Undock.action {#action-undock}
+
+```
+# Action definition for undocking a Clearpath UGV from one of its charging docks.
+
+# goal
+string uuid
+---
+# result
+bool success
+---
+# feedback
+string state
+
+# the distance of the charger_link to the dock target
+float64 distance_to_dock
+```
+
+#### clearpath_localization_msgs/action/SurveyBaseStation.action {#action-survey-base-station}
+
+```
+# Action definition for surveying the base station
+
+# goal
+# the number of GPS fixes that will be used to compute to surveyed position
+uint32 number_of_desired_fixes
+---
+# result
+bool success
+---
+# feedback
+# current progress, as a percentage, of the surveying
+float32 percent_complete
+```
+
+
+#### clearpath_mission_scheduler_msgs/action/RunScheduleByUuid.action {#scheduler-runschedulebyuuid}
+
+```
+# Action definition for executing a schedule on-demand
+# Potentially only useful for debugging
+
+# The UUID of the schedule to execute
+string uuid
+
+# Wait this long before starting the schedule (ros:Duration msg, so the units are secs/nsecs)
+duration delay 
+---
+# Did the schedule terminate successfully?
+bool success
+---
+# The ID of the mission we're executing right now
+string current_mission_uuid
+
+# One of "waiting" or "executing" indicating what the schedule is doing
+string state
+```
+
+#### clearpath_navigation_msgs/action/ExecuteMissionByUuid.action {#action-execute-mission-by-uuid}
+
+```
+# Action definition for executing a mission by uuid
+
+# goal
+string uuid # UUID of The mission being executed
+
+# from_start = True -> Forces the mission to execute from the beginning
+bool from_start
+
+# If from_start = False, mission will be executed from the waypoint with UUID specified.
+# If from_start = False and no start_waypoint_uuid is specified then autonomy will pick the closest waypoint
+string start_waypoint_uuid
+---
+# result
+bool success
+---
+# feedback
+string state
+
+```
+
+#### clearpath_navigation_msgs/action/Mission.action {#action-mission}
+
+```
+# Action definition for sending a mission to the Clearpath OutdoorNav software
+
+# goal
+clearpath_navigation_msgs/Mission mission
+
+# from_start = True -> Forces the mission to execute from the beginning
+bool from_start
+
+# If from_start = False, mission will be executed from the start_waypoint specified.
+# If from_start = False and no start_waypoint is specified then autonomy will pick the closest waypoint
+clearpath_navigation_msgs/Waypoint start_waypoint
+---
+# result
+bool success
+---
+# feedback
+string state
+```
