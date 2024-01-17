@@ -274,7 +274,7 @@ is the version of OutdoorNav that you are currently running.
 
 :::note
 
-This above file path is only valid for version after and including version 0.11.0.
+This above file path is only valid for versions after and including version 0.11.0.
 
 :::note
 
@@ -394,7 +394,7 @@ Finally, if you are increasing the velocity to a value greater than or equal to 
 are seeing that the velocity is being limited even after changing the above parameters, 
 it is possible to try and increase the size (width and height) of the local costmap in file:
 `/opt/onav/<onav_version>/app/autonomy/params/platform/navigation/costmap_local.yaml`, 
-where *onav_version* is the currently running version of OutdoorNav. The limit in the velcoity
+where *onav_version* is the currently running version of OutdoorNav. The limit in the velocity
 is due to the fact that the lookahead distance at higher speeds ends up exceeding the size of 
 the local costmap. By increasing it, we allow the controller to lookahead further and allow for 
 that velocity increase.
