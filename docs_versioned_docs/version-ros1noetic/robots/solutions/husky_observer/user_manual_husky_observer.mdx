@@ -115,7 +115,17 @@ The stack lights are composed of two lights, the details of which are described 
 | On                    | Blue               | Robot is driving (autonomous mode).                                                            |
 | On                    | White              | Robot is ready to drive, but currently idle.                                                   |
 
-The Stack Lights can also be visible in the UI in both the upper right hand corner and as a widget in the status page.
+The stack lights can be muted by calling the `/lights/set_stack_mute` service with a value of True.  Users can also override Idle, Teleop and 
+Autonomous LED patterns by publishing to the `/lights/custom_stack_pattern` topic at 2Hz or faster. This topic takes a StackLightState message 
+object as input which consists of the following parameters:
+
+- `RYG color` - The RYG color of the stack light's top light
+- `bool strobe_on` - Boolean flag for whether the strobe light is on or not
+- `string message` - Human readable message for this particular stack light state
+
+The charging, error and warning states will override any custom patterns.
+
+The stack lights can also be visible in the UI in both the upper right hand corner and as a widget in the status page.
 
 <center>
   <figure>
@@ -849,6 +859,11 @@ enable button (either slow or turbo mode) and use the left thumbstick to drive H
     <figcaption>PS4 Controls Layout</figcaption>
   </figure>
 </center>
+
+Both the PTZ camera and the driving lights can also be controlled through the controller. While holding the 
+X button the left thumbstick controls the Pan and Tilt of the camera. While holding the O button the left thumbstick 
+controls the zoom. The D-Pad is used to control the driving lights, with the top button controlling the front driving 
+lights and the bottom button controlling the rear driving lights.
 
 #### Using ROS
 
