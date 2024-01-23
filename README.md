@@ -196,7 +196,7 @@ includeCurrentVersion: false,
 
 4. Build and test the changes (see steps 4-8 from the standard workflow above).
 
-5. Empty the docs folder.
+5. Empty the docs folder leaving only the .keep file (such that the folder is still tracked by git).
 
 6.  When ready, publish your branch on GitHub, and submit a Pull Request to merge your changes into the _development_ branch.
     Be sure to include the updates to the following:
