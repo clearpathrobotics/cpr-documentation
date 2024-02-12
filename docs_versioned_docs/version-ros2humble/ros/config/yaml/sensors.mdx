@@ -6,6 +6,7 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 import CHRoboticsUM6 from "/docs_versioned_docs/version-ros2humble/components/yaml/sensors/chrobotics_um6.mdx";
+import FlirBlackfly from "/docs_versioned_docs/version-ros2humble/components/yaml/sensors/flir_blackfly.mdx";
 import Garmin18x from "/docs_versioned_docs/version-ros2humble/components/yaml/sensors/garmin_18x.mdx";
 import HokuyoUST from "/docs_versioned_docs/version-ros2humble/components/yaml/sensors/hokuyo_ust.mdx";
 import IntelRealsense from "/docs_versioned_docs/version-ros2humble/components/yaml/sensors/intel_realsense.mdx";
@@ -32,8 +33,188 @@ In ROS 2, sensors use a `ros_parameters` YAML that contains all launch parameter
 By default, we pass tested parameters that are used on Clearpath robots.
 
 ## Cameras
+
+### Compressed and Theora Topics
+Using the `image_transport` package and the [image_transport_plugins](https://github.com/ros-perception/image_transport_plugins), it is possible to send compressed and stream images using ROS 2 messages.
+
+For example, the color image topic will have multiple versions:
+```bash
+/a200_0000/sensors/camera_0/color/image
+/a200_0000/sensors/camera_0/color/compressed
+/a200_0000/sensors/camera_0/color/theora
+```
+
+:::note
+
+The same publisher handles all three of these message types; therefore, limit number of subscribers to minimize the load on the camera driver node.
+
+:::
+
+Compressed and theora types are not standard ROS 2 types, and therefore, it is required to decompress the images into standard `sensor_msgs/Image` messages before attempting to view them using standard tools such as RViz.
+
+The `clearpath_sensors` package has launch files to convert from and to these compressed transport types. Therefore, make sure to have the package installed:
+```bash
+sudo apt install ros-humble-clearpath-sensors
+```
+
+#### Compressed
+Compressed image types are not serialized. These are images compressed using the JPEG format at 80% quality.
+
+Use the launch file `image_raw_to_compressed.launch.py` to compress `sensor_msgs/Image` messages into compressed messages.
+
+Assume we have the following image topic we would like to compress:
+```bash
+/a200_0000/sensors/camera_0/raw/image
+```
+
+Then, we can compress this image by launching the following:
+```bash
+ros2 launch clearpath_sensors image_raw_to_compressed.launch.py in_raw:=/a200_0000/sensors/camera_0/raw/image out_compressed:=/a200_0000/sensors/camera_0/raw/compressed
+```
+
+Now, we will have the following topics:
+```bash
+/a200_0000/sensors/camera_0/raw/image
+/a200_0000/sensors/camera_0/raw/compressed
+```
+
+To reverse this process, use the `image_compressed_to_raw.launch.py` to decompress back to `sensor_msgs/Image`:
+```bash
+ros2 launch clearpath_sensors image_compressed_to_raw.launch.py in_compressed:=/a200_0000/sensors/camera_0/raw/compressed out_raw:=/a200_0000/sensors/camera_0/decompressed/image
+```
+
+Now, we will have the following topics:
+```bash
+/a200_0000/sensors/camera_0/raw/image
+/a200_0000/sensors/camera_0/raw/compressed
+/a200_0000/sensors/camera_0/decompressed/image
+```
+
+#### Theora
+Theora topics encode images into a video stream. By default, these streams have an 800 kb/s rate.
+
+Theora messages are not serialized, however, the first message after launching the encoder transmits the header packet. This header packet includes all of the encoding information required to decode the subsequent video packets. Therefore, if that first message is dropped or missed, then decoding the video packets back to images is not possible.
+
+Therefore, it is important to have the decoder node running before launching the encoder node, such that the former will not miss the header packet.
+
+Assuming we have the following topic that we would like to stream:
+```bash
+/a200_0000/sensors/camera_0/raw/image
+```
+
+First, launch the decoder:
+```bash
+ros2 launch clearpath_sensors image_theora_to_raw.launch.py in_theora:=/a200_0000/sensors/camera_0/raw/theora out_raw:=/a200_0000/sensors/camera_0/decoded/image
+```
+
+Then, launch the encoder:
+```bash
+ros2 launch clearpath_sensors image_raw_to_theora.launch.py in_raw:=/a200_0000/sensors/camera_0/raw/image out_raw:=/a200_0000/sensors/camera_0/raw/theora
+```
+
+As long as the first header package is communicated without drops, the decoder will be able to decode and publish the raw image data:
+```bash
+/a200_0000/sensors/camera_0/raw/image
+/a200_0000/sensors/camera_0/raw/theora
+/a200_0000/sensors/camera_0/decoded/image
+```
+
+### Republishers
+All cameras publish to the `color/image` topic of type `sensor_msgs/Image`. However, we understand that sometimes this image may require downsampling, rectification, or cropping. To facilitate post processing images, we have included a method to easily add image processing nodes, leveraging composable nodes to maximize efficiency.
+
+:::note
+
+For more information on the image processing nodes see the [ROS wiki](https://wiki.ros.org/image_proc).
+
+:::
+
+Adding a republisher is simple.
+- Add a `republishers` tag under the `camera` entry.
+- Specify the `type` of republisher: `rectify` or `resize`.
+- Specify the `input` topic namespace. By default, it is `color` because the standard image topic will be `color/image`.
+- Specify the `output` topic namespace. By default, it is the type of the republisher: `{type}/image`.
+
+Configuring a republisher can be done by setting its node parameters using the `ros_parameters` section.
+- Under `ros_parameters` add an entry for the node `image_TYPE_INPUT`. Note, the node name depends on the `type` of republisher and the `input` name.
+- Add any parameter key, value pair to configure the node. Otherwise, it can be left empty to use defaults.
+
+### Rectify
+The `rectify` node takes the `camera_info` topic as a source of calibration parameters and applies an interpolation to rectify the raw images.
+
+To add a the rectify republisher add the following entries to the `camera` entry and its corresponding `ros_parameters` section.
+```yaml
+cameras:
+  - model: CAMERA_MODEL
+    republishers:
+      - type: rectify
+        input: color
+        output: rectify
+    ros_parameters:
+      CAMERA_NODE:
+        CAMERA_PARAMETER_KEY: CAMERA_PARAMETER_VALUE
+      image_rectify_color:
+        interpolation: 0
+```
+
+The `interpolation` parameter must be one of the following:
+- **0**: Nearest-neighbour.
+- **1**: Linear.
+- **2**: Cubic.
+- **3**: Area. Resampling using pixel area relation.
+- **4**: Lanczos4. Lanczos interpolation over 8x8 neighbourhood.
+
+:::note
+
+All UPPERCASE entries must be replaced based on the specific camera being used.
+
+:::
+
+### Resize
+The `resize` node uses the input image and resizes it.
+
+To add a resize republisher add teh following entreis to the `camera` entry and its corresponding `ros_parameters` section.
+```yaml
+cameras:
+  - model: CAMERA_MODEL
+    republishers:
+      - type: resize
+        input: color
+        output: resize
+    ros_parameters:
+      CAMERA_NODE:
+        CAMERA_PARAMETER_KEY: CAMERA_PARAMETER_VALUE
+      image_resize_color:
+        interpolation: 1
+        use_scale: True
+        scale_height: 1.0
+        scale_width: 1.0
+        height: -1
+        width: -1
+```
+If `use_scale` is set to `true`, then the `scale_height` and `scale_width` parameters will be used to resize the image. To reduce the size of the image by half, set `scale_height: 0.5` and `scale_width: 0.5`.
+
+If `use_scale` is set to `false`, then the `height` and `width` parameters will be used to resize the image. In this case, the exact pixel values of the desired image size can be passed.
+
+:::note
+
+The `scale_height` and `scale_width` parameters must be floating point values.
+
+The `height` and `width` parameters must be integer values.
+
+:::
+
+The `interpolation` parameters must be one of the following:
+- **0**: Nearest-neighbour.
+- **1**: Linear.
+- **2**: Cubic.
+- **3**: Area. Resampling using pixel area relation.
+- **4**: Lanczos4. Lanczos interpolation over 8x8 neighbourhood.
+
 ### Intel Realsense
 <IntelRealsense/>
+
+### Flir BlackflyS
+<FlirBlackfly/>
 
 ## GPS
 ### SwiftNav Duro
