@@ -97,6 +97,10 @@ Theora messages are not serialized, however, the first message after launching t
 
 Therefore, it is important to have the decoder node running before launching the encoder node, such that the former will not miss the header packet.
 
+:::warning
+Missing the header packet and being unable to decode the video packets is a known, long-standing issue with the `theora` image transport plugin. See this [issue](https://github.com/ros-perception/image_transport_plugins/issues/4) for more information.
+:::
+
 Assuming we have the following topic that we would like to stream:
 ```bash
 /a200_0000/sensors/camera_0/raw/image
