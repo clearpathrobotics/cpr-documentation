@@ -4,6 +4,7 @@ sidebar_position: 3
 ---
 
 import Support from "/components/support.mdx";
+import YAML from "/docs_versioned_docs/version-ros2humble/components/yaml/sensors/flir_blackfly.mdx";
 
 <center>
   <img
@@ -42,13 +43,7 @@ This sensor is included in the Clearpath Robotics robot package that is installe
 This allows you to add or remove the sensor from your robot's software description by modifying the
 [robot configuration yaml](../../../../ros/config/yaml/sensors.mdx#cameras).
 
-This sensor also requires additional changes beyond the robot.yaml file. These changes are included by default in the
-Clearpath ISO, but can also be applied using the following command:
-
-```bash
-ros2 run spinnaker_camera_driver linux_setup_flir
-```
-or by following the [manual setup instructions](https://github.com/ros-drivers/flir_camera_driver/blob/humble-devel/spinnaker_camera_driver/docs/linux_setup_flir.md).
+<YAML/>
 
 ---
 

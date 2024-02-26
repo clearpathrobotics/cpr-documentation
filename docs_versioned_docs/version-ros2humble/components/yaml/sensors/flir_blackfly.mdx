@@ -20,38 +20,57 @@ camera:
     ros_parameters:
       flir_blackfly:
         serial_number: ''
-        debug: false
-        compute_brightness: false
-        adjust_timestamp: true
-        dump_node_map: false
         gain_auto: Continuous
         pixel_format: BayerRG8
-        exposure_auto: Continuous
-        # These are useful for GigE cameras
-        # device_link_throughput_limit: 380000000
-        # gev_scps_packet_size: 9000
-        # ---- to reduce the sensor width and shift the crop
+        # Resolution
         # image_width: 1408
         # image_height: 1080
-        # offset_x: 16
+        # offset_x: 0
         # offset_y: 0
         # binning_x: 1
         # binning_y: 1
+        frame_rate_enable: true
         frame_rate_auto: Off
         frame_rate: 40.0
-        frame_rate_enable: true
-        buffer_queue_size: 1
-        trigger_mode: Off
-        chunk_mode_active: true
-        chunk_selector_frame_id: FrameID
-        chunk_enable_frame_id: true
-        chunk_selector_exposure_time: ExposureTime
-        chunk_enable_exposure_time: true
-        chunk_selector_gain: Gain
-        chunk_enable_gain: true
-        chunk_selector_timestamp: Timestamp
-        chunk_enable_timestamp: true
 ```
 </td>
 </tr>
 </table>
+
+#### Package and Setup
+The Flir Blackfly cameras use the `spinnaker_camera_driver` ROS 2 package. The driver is open source, maintained by the ROS community, and hosted on [GitHub](https://github.com/ros-drivers/flir_camera_driver). The `spinnaker_camera_driver` depends on the [Spinnaker SDK](https://www.flir.ca/products/spinnaker-sdk/), which is installed alongside the package.
+
+Before using the camera, the computer needs further setup. The setup can be done automatically using the [linux setup script](https://github.com/ros-drivers/flir_camera_driver/blob/humble-devel/spinnaker_camera_driver/scripts/linux_setup_flir):
+
+```bash
+ros2 run spinnaker_camera_driver linux_setup_flir
+```
+
+Or, manually by following the [instructions on the GitHub README](https://github.com/ros-drivers/flir_camera_driver/blob/humble-devel/spinnaker_camera_driver/docs/linux_setup_flir.md).
+
+For specifics on the way Clearpath's configuration system launches the camera, see the Flir Blackfly [launch file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/launch/flir_blackfly.launch.py) and the [default parameter file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/config/flir_blackfly.yaml) in `clearpath_sensors`.
+
+#### Serial Number
+The `serial_number` parameter must be set to successfully launch the node. The serial number can be found on the label on the camera. However, if this label is not available and the camera is a USB camera, connect the camera to the computer and use `lsusb` to its three digit `Bus` and `Device` number. Then, find the serial number using the following command, replacing `BUS` and `DEV` with the three digit numbers found in the previous step:
+```bash
+udevadm info --attribute-walk /dev/bus/usb/BUS/DEV | grep -i serial
+```
+
+The resulting output of the command should appear as:
+```bash
+ATTR{serial}=="013686A9"
+```
+
+Then, convert attirbute serial hexadecimal value to decimal representation and set it to the `serial_number` parameter. Convert values from hexadecimal to decimal representation using the following terminal command, where `HEX` needs to be swapped with the hexadecimal value:
+```bash
+echo $((16#HEX))
+```
+
+For the example above, the hexadecimal serial number `013686A9` would be converted to `20350633`. Use the decimal representation to set the parameter: `serial_number: 20350633`.
+
+#### Resolution
+The `image_height` and `image_width` parameters define the area of the raw image to crop. It does not downsample the image. Use the `offset_x` and `offset_y` parameters to change the origin of the cropped area. These parameters would be best used to define an area of interest.
+
+To reduce the size of the image using downsamlping, use the `binning_x` and `binning_y` parameters. These parameters define the number of pixels that will be binned together in each axis. If both `binning_x` and `binning_y` are set to `2`, then the resolution of the image will be halved.
+
+Reducing the resolution of the image improves the perfomance of the camera driver and network transit of image packets.

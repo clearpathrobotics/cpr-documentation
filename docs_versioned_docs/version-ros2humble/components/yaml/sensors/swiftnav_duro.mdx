@@ -27,3 +27,44 @@ gps:
 </td>
 </tr>
 </table>
+
+#### Package and Setup
+The SwiftNav Duro uses the `duro_gps_driver` ROS 2 driver. The driver is open source, maintained by the autonomous vehicle development team of Széchenyi University, and hosted on [GitHub](https://github.com/szenergy/duro_gps_driver).
+
+The `duro_gps_driver` and its dependency `libsbp`, the Swift binary protocol libray, must be built from source.
+
+Build and install the `libsbp`:
+```bash
+
+# Install build dependencies.
+sudo apt-get install build-essential pkg-config cmake doxygen check
+# Clone driver to home directory
+cd ~
+git clone https://github.com/swift-nav/libsbp.git
+# Checkout latest supported branch
+cd libsbp
+git checkout e149901e63ddcdb0d818adcd8f8e4dbd0e2738d6
+# Update submodules
+cd c
+git submodule update --init --recursive
+# Build and install
+mkdir build; cd build
+cmake ../
+make
+sudo make install
+
+```
+
+Build the `duro_gps_driver` in the ROS workspace.
+```bash
+
+# Clone driver to source directory
+cd ~/colcon_ws/src
+git clone https://github.com/szenergy/duro_gps_driver -b ros2-humble
+# Build the driver
+cd ~/colcon_ws
+colcon build --packages-select duro_gps_driver
+
+```
+
+For specifics on the way Clearpath's configuration system launches the `duro_gps_driver`, see the SwiftNav Duro [launch file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/launch/swiftnav_duro.launch.py) and the [default parameter file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/config/swiftnav_duro.yaml) in `clearpath_sensors`.
