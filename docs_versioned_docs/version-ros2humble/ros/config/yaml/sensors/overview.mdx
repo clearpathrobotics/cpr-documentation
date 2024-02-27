@@ -10,11 +10,11 @@ At Clearpath, we have been migrating our large inventory of tested sensor driver
 
 Sensors are split up into sections:
 
-- **Cameras:** publish **_sensor_msgs/Image_** messages
-- **GPS:** publish **_sensor_msgs/NavSatFix_** messages
-- **IMU:** publish **_sensor_msgs/Imu_** messages
-- **LiDAR 2D:** publish **_sensor_msgs/LaserScan_** messages
-- **LiDAR 3D:** publish **_sensor_msgs/PointCloud2_** messages
+- [**Cameras**](./cameras.mdx) publish **_sensor_msgs/Image_** messages
+- [**GPS**](./gps.mdx) publish **_sensor_msgs/NavSatFix_** messages
+- [**IMU**](./imu.mdx) publish **_sensor_msgs/Imu_** messages
+- [**LiDAR 2D**](./lidar2d.mdx) publish **_sensor_msgs/LaserScan_** messages
+- [**LiDAR 3D**](./lidar3d.mdx) publish **_sensor_msgs/PointCloud2_** messages
 
 In ROS 2, sensors use a `ros_parameters` YAML that contains all launch parameters for the driver node. To facilitate complete customization of these node parameters, the `ros_parameters` section, under every sensor entry, serves as a way to pass those key-value pairs to the corresponding node.
 
