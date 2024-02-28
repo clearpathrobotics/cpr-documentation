@@ -1,0 +1,132 @@
+---
+title: Customization Package
+sidebar_label: Customization Package
+sidebar_position: 5
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+The Clearpath configuration system provides a wide range of configuration options, but it is still limited to the set of standard payloads that are supported natively. However, it is possible to add custom meshes, URDF's, and launch files. To do so, it is recommended to follow the standard presented here to create a customization package.
+
+A customization package is a ROS source package, built from the ground up, specifically to extend the Clearpath configuration of a specific robot. The customization package contains two sub-packages, the description and bringup packages. The description package contains all extra visual descriptions of the robot, such as meshes and URDFs of payloads. The bringup package contains all launch and parameter files for payloads on the robot. The reason behind this division is to allow remote users that are interested only in visualizing and commanding the robot to only require the description package.
+
+Directory structure of a customization package.
+```
+project/
+├── project_description/
+│   ├── CMakeLists.txt
+│   ├── package.xml
+│   ├── meshes/
+│   │   └── mesh.stl
+│   └── urdf/
+│       └── project_description.urdf.xacro
+├── project_bringup/
+│   ├── CMakeLists.txt
+│   ├── package.xml
+│   ├── config/
+│   │   └── device.yaml
+│   └── launch/
+│       └── device.launch.py
+├── .git/
+├── robot.yaml
+└── README.md
+```
+
+A secondary goal of the customization package is to serve as a repository that contains the entire configuration of a robot. Therefore, it is recommended to keep the `robot.yaml` configuration file in the top directory and to symbolically link this versioned file to the `/etc/clearpath/robot.yaml` on the robot.
+
+### Create the Package
+Create the package within the `colcon_ws`. See the [**workspace creation**](./workspaces.mdx) documentation for more information on setting it up.
+
+Start by creating the main directory. Its name should match the name of the project repository. For the following examples, the project name will simply be a placeholder, `project`.
+```bash
+cd ~/colcon_ws/src
+mkdir project
+```
+
+Within this project directory, create the description and bringup packages.
+```bash
+cd ~/colcon_ws/src/project
+ros2 pkg create project_description --description "Project description package" --license "BSD-3-Clause"
+ros2 pkg create project_bringup --description "Project bringup package" --license "BSD-3-Clause"
+```
+
+Then, create the sub-directories within each of the packages.
+```bash
+cd ~/colcon_ws/src/project/project_description
+mkdir urdf meshes
+cd ~/colcon_ws/src/project/project_bringup
+mkdir config launch
+```
+
+For the final step, modify the `CMakeLists.txt` files in both packages to ensure that the description and bringup files are installed to the workspace.
+
+Add the following entry to the `project_description/CMakeLists.txt` file.
+```CMake
+install(DIRECTORY meshes urdf
+  DESTINATION share/${PROJECT_NAME}
+)
+```
+
+And, add the following entry to the `project_bringup/CMakeLists.txt` file.
+```CMake
+install(DIRECTORY config launch
+  DESTINATION share/${PROJECT_NAME}
+)
+```
+
+Now, all added files to the `meshes`, `urdf`, `config`, and `launch` directories will be installed to the `colcon_ws/install` directory, such that all other nodes will have access to these. Therefore, create
+
+### Include Package Description and Bringup in Configuration
+Once the packages have been setup and all customization files have been created and installed, it is possible to include these into the configuration file. By including these descriptions and bringups, the Clearpath configuration system will generate holistic, amalgamated files that will at launched at start-up.
+
+#### Directly Add Mesh to Configuration
+Meshes can be included directly or indirectly into the robot configuration. The direct approach is to add a `link` of type `mesh` in the configuration file and then specify the package name and path to the mesh. For example, in the directory structure exemplified above, there is a `mesh.stl` under the `meshes` directory in the `project_description` package. To directly add this `mesh.stl` to the configuration file, the following entry is included in `robot.yaml`.
+```yaml
+links:
+  mesh:
+    - name: mesh_name
+      parent: base_link
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      visual:
+        package: project_description
+        path:  meshes/mesh.stl
+```
+The location and orientation of the mesh can be set using the `parent`, `xyz`,
+and `rpy` parameters. The `name` of the link must be unique.
+
+#### Indirectly Add Mesh to Configuration through URDF
+Alternatively, meshes can be added indirectly through the URDF. In the description package, create a URDF that will include the mesh as a link, and then add that URDF to the `robot.yaml`. In the example directory above, there is a `project_description.urdf.xacro`. In this URDF, add the link and join it to the robot using a joint.
+```xml
+<!-- Add Mesh Link -->
+<link name="mesh_name_link">
+  <visual>
+    <material name="clearpath_black"/>
+    <geometry>
+      <mesh filename="package://project_description/meshes/mesh.stl"/>
+    </geometry>
+  </visual>
+  <collision>
+    <material name="clearpath_black"/>
+    <geometry>
+      <mesh filename="package://project_description/meshes/mesh.stl"/>
+    </geometry>
+  </collision>
+</link>
+
+<!-- Add Mesh Joint -->
+<joint name="mesh_name_joint" type="fixed">
+  <child link="mesh_name_link"/>
+  <parent link="base_link"/>
+  <origin xyz="0 0 0" rpy="0 0 0"/>
+</joint>
+```
+For more information on the URDF, see the ROS documentation on [links](https://wiki.ros.org/urdf/XML/link) and [joints](https://wiki.ros.org/urdf/XML/joint).
+
+Now that the mesh has been added to the file, the URDF can be included in the `robot.yaml`, by setting the extra URDF entry in the URDF
+```yaml
+platform:
+  extras:
+    package: project_description
+    path: urdf/project_description.urdf.xacro
+```
