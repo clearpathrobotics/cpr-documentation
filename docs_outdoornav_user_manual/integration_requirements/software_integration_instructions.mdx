@@ -26,11 +26,21 @@ sudo apt install python3-onav-cli
 
 <code>
 {`
-onav install -k <license_key>
+onav install -k <license_key> <VERSION>
 `}
 </code>
 
-where `license_key` is the license key that you have been assigned. Only one license key can be used per UGV.
+where `license_key` is the license key that you have been assigned and `VERSION` is the version
+of the software to be installed (eg. 0.11.0). Only one license key can be used per UGV.
+
+:::note
+
+In some cases, including first-time installations, a reboot is required after installing
+the required dependencies. In this case, it is necessary to re-run
+the `onav install -k <license_key> <VERSION>` command again following the reboot to complete
+the installation.
+
+:::
 
 ### Configure UGV Footprint {#configure-platform-footprint}
 

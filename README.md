@@ -88,6 +88,9 @@
 
 <details>
 
+<summary>Click to expand for details on how to update the OutdoorNav User Manual</summary>
+
+<br>
 The OutdoorNav User Manual is a "versioned" document, which means that a snapshot of the content is
 made to align with a release. This allows users to access version-specific copies of the
 documentation.
@@ -120,6 +123,9 @@ When it is time to publish a numbered release of the user manual:
 
 <details>
 
+<summary>Click to expand for details on how to update the IndoorNav User Manual</summary>
+
+<br>
 Follow the steps for the OutdoorNav User Manual workflow above, replacing
 **outdoornav** with **indoornav**.
 
@@ -129,6 +135,9 @@ Follow the steps for the OutdoorNav User Manual workflow above, replacing
 
 <details>
 
+<summary>Click to expand for details on how to update the Robots / ROS User Manual</summary>
+
+<br>
 The Robots / ROS sections of the website are a "versioned" document called `docs`, which means that a snapshot of the content is
 made to align with each ROS version. This allows users to access version-specific copies of the
 documentation.
@@ -143,19 +152,15 @@ Start by following step 1 & 2 [above](#workflow-for-making-updates).
 
 Next, to start the development of a new version, the latest released version of the documentation must be copied over into the `docs/` folder.
 
-For Example, for making a new release after humble, the contents of `docs_versioned_docs/version-ros2humble/` would be copied to replace the contents of `docs/`.
+For Example, for making a new release after humble, the contents of `docs_versioned_docs/version-ros2humble/` would be copied to `docs/`. This folder will then be built as the "next" version. Once enabled, this version will be available in the version drop down (just like how it is visible for OutdoorNav - http://docs.clearpathrobotics.com/docs_outdoornav_user_manual/next/index).
 
-Continue through to step 10 of the workflow above. Note that the updates will not affect
-the default view of the user manual, only the "next" version of the manual
-(eg. http://docs.clearpathrobotics.com/docs_outdoornav_user_manual/next/index). You can enable the visibility of the "next" version by setting
-
+Enable the visibility of the "next" version by setting 
 ```
 includeCurrentVersion: true,
 ```
-
 in `docusaurus.config.js` alongside `id: "docs",`. Ensure to reset this to false before releasing the changes.
 
-Once complete, continue to the release phase.
+Continue through to step 9 of the workflow above to complete the update. Once complete, continue to the release phase.
 
 > **Note**
 > The documentation includes unversioned mdx components from `components/` and versioned components from `docs/components/`. If versioning needs to be added move the component into the versioned folder for each version and remap the imports (using relative links).
@@ -189,8 +194,11 @@ When it is time to publish a new version of the manual:
 includeCurrentVersion: false,
 ```
 
-4.  Build and test the changes (see steps 4-8 from the standard workflow above).
-5.  When ready, publish your branch on GitHub, and submit a Pull Request to merge your changes into the _development_ branch.
+4. Build and test the changes (see steps 4-8 from the standard workflow above).
+
+5. Empty the docs folder leaving only the .keep file (such that the folder is still tracked by git).
+
+6.  When ready, publish your branch on GitHub, and submit a Pull Request to merge your changes into the _development_ branch.
     Be sure to include the updates to the following:
     - docs_versioned_docs/
     - docs_versioned_sidebars/
