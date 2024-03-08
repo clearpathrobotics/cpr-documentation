@@ -19,6 +19,7 @@ project/
 │   ├── meshes/
 │   │   └── mesh.stl
 │   └── urdf/
+│       ├── device.urdf.xacro
 │       └── project_description.urdf.xacro
 ├── project_bringup/
 │   ├── CMakeLists.txt
@@ -26,7 +27,8 @@ project/
 │   ├── config/
 │   │   └── device.yaml
 │   └── launch/
-│       └── device.launch.py
+│       ├── device.launch.py
+│       └── project_bringup.launch.py
 ├── .git/
 ├── robot.yaml
 └── README.md
@@ -127,6 +129,36 @@ Now that the mesh has been added to the file, the URDF can be included in the `r
 ```yaml
 platform:
   extras:
-    package: project_description
-    path: urdf/project_description.urdf.xacro
+    urdf:
+      package: project_description
+      path: urdf/project_description.urdf.xacro
+```
+
+#### Adding Launch File to Configuration
+A launch file can be added to the configuration in the same way that a URDF was in the previous section.
+```yaml
+platform:
+  extras:
+    launch:
+      package: project_bringup
+      path: launch/project_bringup.launch.py
+```
+
+Only a single extra launch file can be set in the configuration file. However, it is possible to include multiple launch files within the selected one. From the example above, assume `device.launch.py` is a launch file that brings up a device with `device.yaml` parameters, and it is required that it is included in the main `project_bringup.launch.py`.
+```python
+def generate_launch_description():
+    # Package Directory
+    pkg_project_bringup = FindPackageShare('project_bringup')
+
+    # Launch File
+    device_launch = PathJoinSubstitution([pkg_project_bringup, 'launch', 'device.launch.py'])
+
+    # Include Launch
+    include_launch = IncludeLaunchDescription(PythonLaunchDescriptionSource([device_launch]))
+
+    # Launch Description
+    ld = LaunchDescription()
+    ld.add_action(include_launch)
+    return ld
+
 ```
