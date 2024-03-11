@@ -3,11 +3,7 @@ title: Overview
 sidebar_position: 1
 ---
 
-:::note
-
-Contact our Support team at <support@clearpathrobotics.com> if you have any questions.
-
-:::
+import Ros2NetworkingOverview from "/docs_versioned_docs/version-ros2humble/components/networking/_ros2_networking_overview.mdx";
 
 ### SSH and SFTP
 
@@ -15,7 +11,7 @@ Clearpath robots ship with an SSH server operating on port 22 for remote login. 
 file-transfer to/from the robot if needed. By default you can log in using the default username and password for the
 robot.
 
-### Internal Networking
+### Wired LAN IP Addresses {#ip-addresses}
 
 All Clearpath robots use the `192.168.131.0/24` subnet for any permanently-installed network hardware. This includes,
 but may not be limited to
@@ -31,6 +27,18 @@ there is normally not a DHCP server operating on this subnet.
 
 For a list of standard payload IP addresses, please see [network IP addresses](network_ip_addresses.mdx).
 
+### ROS 2 Networking {#ros2-networking}
+
+<Ros2NetworkingOverview/>
+
+Further information on [ROS 2 Networking](ros2-networking.mdx).
+
+:::tip
+
+For the best chance of success, use a high speed, high bandwidth network and monitor the network usage.
+
+:::
+
 ### Clock Synchronization
 
 If your robot contains multiple computers, their clocks must remain synchronized to allow proper communication between
@@ -38,3 +46,9 @@ ROS nodes running on each one. Clearpath configures the computers to use `chrony
 primary PC being the authoritative source for the others.
 
 For details on configuring `chrony`, please see [configuring NTP](ntp.mdx).
+
+:::note
+
+Contact our Support team at <support@clearpathrobotics.com> if you have any questions.
+
+:::

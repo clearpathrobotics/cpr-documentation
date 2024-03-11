@@ -1,0 +1,242 @@
+---
+title: ROS 2 Networking
+sidebar_position: 3
+---
+
+## Overview
+
+import Ros2NetworkingOverview from "/docs_versioned_docs/version-ros2humble/components/networking/_ros2_networking_overview.mdx";
+
+<Ros2NetworkingOverview/>
+
+## How Discovery Works
+
+### Simple Discovery
+
+Participants (nodes) send periodic multicast announcement messages over the network with their unicast addresses, and
+then all participants share discovery information (such as topics, action servers, etc.) with all other participants.
+This means that all participants get information about all other participants irrelevant of whether or not they need
+that information.
+
+The following diagram depicts three Husky A200's set up with simple discovery and illustrates how different
+combinations of settings work. The robot type is not important, and the same diagram can be made for any
+combination of Clearpath robots.
+
+<center>
+  <figure>
+    <img
+      src={require("./img/ros2-fastdds-simple-discovery-diagram.png").default}
+      width="1000"
+    />
+  </figure>
+</center>
+
+For more detailed information regarding Fast DDS or simple discovery, visit the
+[eProsima Fast DDS documentation](https://fast-dds.docs.eprosima.com/en/latest/fastdds/ros2/ros2.html).
+
+Additional details on how to select simple disocvery in the `robot.yaml` config file are available in the
+[Middleware section of Robot Configuration](../config/yaml/system.mdx#middleware).
+
+### Discovery Server
+
+A discovery server is a process running on a computer that serves to record and report ROS discovery information.
+A server can be though of as a look up table for ROS discovery information. When a participant (node) starts, it
+checks in with the servers to share its discovery information and request what information it is looking for.
+In this way, particpants only get discovery information and establish communication as necessary. A participant
+does not know all of the information that is available, only where to find the fellow participants that it needs.
+
+There can be multiple servers in a given system. These can be used for redundancy or to segregate information.
+
+The following diagram depicts three Husky A200's set up with discovery server and illustrates how different
+combinations of settings work. The `ROS_DISCOVERY_SERVER` environment variable indicates which discovery servers
+a given robot should communicate with. The robot type is not important and the same diagram can be made for any
+combination of Clearpath robots.
+
+<center>
+  <figure>
+    <img
+      src={require("./img/ros2-fastdds-discovery-server-diagram.png").default}
+      width="1000"
+    />
+  </figure>
+</center>
+
+For more detailed information regarding Fast DDS or discovery server, visit the
+[eProsima Fast DDS documentation](https://fast-dds.docs.eprosima.com/en/latest/fastdds/ros2/ros2.html).
+
+## Choosing a Configuration
+
+The first decision is choosing between simple discovery and discovery server. If simple discovery works for you then
+there is no need to change from the default operation. Simple discovery generally allows for any ROS 2 and Fast DDS
+enabled device running the default settings to connect to the system with no additional configuration.
+
+:::tip
+
+If you want to run multiple independent simple discovery systems on the same network, you can segregate them by
+using different ROS Domain IDs.
+
+:::
+
+You may want or need to switch to discovery server for any of the following reasons:
+- If your network does not support multicasting (often true on school or corporate networks)
+- If you have a large system (several robots or an excess number of nodes/topics)
+- If you want to control which devices have access to which information
+- If you have a weak network (for example in cases of long range wireless connection)
+
+:::note
+
+Certain networks (such as school or corporate networks) may have additional restrictions that prevent even
+ROS 2 with discovery server from operating. In these situations consider meeting with the IT group or the network
+administrator to determine if ROS 2 is allowed to run on that network or if you can run the system on a separate
+dedicated network.
+
+:::
+
+## Discovery Server Configurations
+
+There are multiple different ways to configure discovery server depending on which ROS 2 devices need to connect.
+This section will go over some basic configurations and is generalized for use as an introduction. It does not
+describe all possible configurations. The `ROS_DISCOVERY_SERVER` environment variable, shown in the various diagrams,
+indicates which discovery servers a given robot is connected to. Additionally, communication will be referred to
+in terms of seeing ROS 2 topics although this is representative of all nodes, topics, action servers, etc. 
+
+:::note
+
+For all configurations, it is very important for all discovery servers in the system to be included in the `servers`
+list in the `robot.yaml` config. This is because each discovery server must have a unique ID number which
+is used both to launch the server and to connect to the server. This ID is automatically assigned by the Clearpath
+packages.
+
+:::
+
+### 1. Fully Connected {#fully-connected}
+
+This configuration is the simplest to set up using the `robot.yaml` config. It allows all robots to operate
+independently but also allows any ROS 2 device in the system to see all of the topics from all of the
+ROS 2 devices. This is done by having a local discovery server on each robot and pointing each ROS 2 device
+in the system at all of the discovery servers in the system.
+
+<center>
+  <figure>
+    <img
+      src={require("./img/ros2-fastdds-fully-connected-diagram.png").default}
+      width="500"
+    />
+  </figure>
+</center>
+
+This configuration is achieved by listing all of the computers' hostnames in the
+[`servers` section](../config/yaml/system.mdx#servers) on all of the robots. Including the remote PC allows
+the remote PC to also have a discovery server running and thus operate independently from the robots as
+well as communicating with all of the robots. However, the discovery server must also be set up separately on the
+remote PC (only required to allow the remote PC to run ROS 2 nodes independently from the robots).
+
+The middleware section for the system in the diagram would look like the following on all devices:
+
+```yaml
+middleware:
+  implementation: rmw_fastrtps_cpp
+  discovery: server
+  servers:
+    - hostname: cpr-a200-0000
+    - hostname: cpr-a200-0001
+    - hostname: remote-pc
+```
+
+Additional details on the available fields for the `robot.yaml` config file are available in the
+[Middleware section of Robot Configuration](../config/yaml/system.mdx#middleware).
+
+### 2. Command Center {#command-center}
+
+In this configuration you have many robots that each operate independently and a remote PC that
+checks in and communicates with each of the robots. Each of the robots will have and refer to their own local
+discovery server. This allows the onboard ROS 2 nodes to communicate without any external network connection.
+The remote PC will be pointed at the discovery servers on each and every robot. This will allow the
+remote PC to see all of the topics on all of the robots at the same time. In turn, each of the robots will be
+able to see all of the topics launched on the remote PC. Including a discovery server on the remote PC as well
+allows it to run ROS 2 nodes independently from the robots.
+
+The key difference between this configuration and the fully connected configuration is that the robots cannot
+communicate with each other. This may be beneficial if the network is weak, or if there is an excess number of
+robots.
+
+<center>
+  <figure>
+    <img
+      src={require("./img/ros2-fastdds-command-center-diagram.png").default}
+      width="600"
+    />
+  </figure>
+</center>
+
+This configuration is achieved by listing all of the computers' hostnames in the
+[`servers` section](../config/yaml/system.mdx#servers) on all of the robots but setting `enabled` to `False` for
+every server entry except for that specific robot. This tells the robot to only use its own discovery server.
+The Remote PC should have all of the servers enabled, telling it to connect to all discovery servers in the system.
+This servers list must include the remote PC if a discovery server is being run on the remote PC. However, the discovery
+server must also be set up separately on the remote PC.
+
+The middleware section of the config for the system in the diagram would look like the following for `cpr-a200-0000`:
+
+```yaml
+middleware:
+  implementation: rmw_fastrtps_cpp
+  discovery: server
+  servers:
+    - hostname: cpr-a200-0000
+    - hostname: cpr-a200-0001
+      enabled: False
+    - hostname: remote-pc
+      enabled: False
+```
+
+It would look like the following for `cpr-a200-0001`:
+
+```yaml
+middleware:
+  implementation: rmw_fastrtps_cpp
+  discovery: server
+  servers:
+    - hostname: cpr-a200-0000
+      enabled: False
+    - hostname: cpr-a200-0001
+    - hostname: remote-pc
+      enabled: False
+```
+
+And the following for the Remote PC:
+
+```yaml
+middleware:
+  implementation: rmw_fastrtps_cpp
+  discovery: server
+  servers:
+    - hostname: cpr-a200-0000
+    - hostname: cpr-a200-0001
+    - hostname: remote-pc
+```
+
+Additional details on the available fields for the `robot.yaml` config file are available in the
+[Middleware section of Robot Configuration](../config/yaml/system.mdx#middleware).
+
+## Remote PC Setup {#remote-pc}
+
+Use the `robot.yaml` from one of the robots in order to set up the remote PC. The `servers` list must include all of
+the discovery servers and all of the ones that the remote PC should be connecting with must not be disabled.
+
+1. Regenerate the `setup.bash` every time the `servers` list changes in any way (as per [remote PC install instructions](../installation/remote_pc.mdx#setup-folder))
+
+2. If a discovery server is intended to be run on the remote PC then generate and run the discovery-server-start launch file.
+
+To generate the launch script:
+
+```
+source /opt/ros/humble/setup.bash
+ros2 run clearpath_generator_common generate_discovery_server -s ~/clearpath
+```
+
+To launch the server
+
+```
+bash -e ~/clearpath/discovery-server-start 
+```
