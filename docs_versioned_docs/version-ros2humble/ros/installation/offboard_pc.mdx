@@ -1,25 +1,25 @@
 ---
-title: Remote Computer setup
-sidebar_label: Remote Computer
+title: Offboard Computer Setup
+sidebar_label: Offboard Computer
 sidebar_position: 3
 toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-A remote computer can be used to visualise and interact with the robot. The robot can also be
-[simulated](../tutorials/simulator/overview.mdx) on a remote computer to safely test software before
+An offboard computer can be used to visualise and interact with the robot. The robot can also be
+[simulated](../tutorials/simulator/overview.mdx) on an offboard computer to safely test software before
 deploying to a physical robot.
 
 ### Operating System (OS) {#operating-system}
 
 ROS 2 Humble uses [Ubuntu 22.04](https://releases.ubuntu.com/jammy/) as its Tier 1 operating system. Though other
 operating systems are supported,
-it is highly recommended to use Ubuntu 22.04. For the remote computer, Ubuntu 22.04 Desktop should be installed.
+it is highly recommended to use Ubuntu 22.04. For the offboard computer, Ubuntu 22.04 Desktop should be installed.
 
 ### Networking
 
-The remote computer should be connected to the same Wi-Fi network as the robot computer, or should be connected via
-ethernet. If connected over ethernet, set the static IP of the remote computer to use the `192.168.131.1/24` network
+The offboard computer should be connected to the same Wi-Fi network as the robot computer, or should be connected via
+ethernet. If connected over ethernet, set the static IP of the offboard computer to use the `192.168.131.1/24` network
 with an IP address that won't interfere with other devices on the network, such as `192.168.131.99`.
 
 ### ROS 2 Humble
@@ -40,12 +40,12 @@ This package will install launch and configuration files for visualising and int
 
 ### Setup Folder
 
-The remote computer will need a copy of the [robot.yaml](../config/yaml/overview.mdx) file to generate the same `setup.bash`
+The offboard computer will need a copy of the [robot.yaml](../config/yaml/overview.mdx) file to generate the same `setup.bash`
 file as the robot.
 
 1. **Create the folder**
 
-For the remote computer we can create the `clearpath` folder in the home directory:
+For the offboard computer we can create the `clearpath` folder in the home directory:
 
 ```
 mkdir ~/clearpath/
@@ -58,7 +58,7 @@ cp /path/to/robot.yaml ~/clearpath/
 ```
 
 :::note
-If you have workspaces defined in the `robot.yaml` that do not exist on the remote computer, remove them.
+If you have workspaces defined in the `robot.yaml` that do not exist on the offboard computer, remove them.
 :::
 
 3. **Generate the `setup.bash` file**
@@ -74,4 +74,4 @@ Add the following line to your `~/.bashrc` file to automatically source the gene
 source ~/clearpath/setup.bash
 ```
 
-4. If you are using Fast DDS Discovery Server, follow the instructions on the [ROS 2 networking page](../networking/ros2-networking.mdx#remote-pc).
+4. If you are using Fast DDS Discovery Server, follow the instructions on the [ROS 2 networking page](../networking/ros2-networking.mdx#offboard-pc).

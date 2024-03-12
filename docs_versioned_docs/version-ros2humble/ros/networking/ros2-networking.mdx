@@ -14,7 +14,7 @@ import Ros2NetworkingOverview from "/docs_versioned_docs/version-ros2humble/comp
 ### Simple Discovery
 
 Participants (nodes) send periodic multicast announcement messages over the network with their unicast addresses, and
-then all participants share discovery information (such as topics, action servers, etc.) with all other participants.
+then all participants share discovery information (such as topics, and action servers.) with all other participants.
 This means that all participants get information about all other participants irrelevant of whether or not they need
 that information.
 
@@ -40,7 +40,7 @@ Additional details on how to select simple disocvery in the `robot.yaml` config 
 ### Discovery Server
 
 A discovery server is a process running on a computer that serves to record and report ROS discovery information.
-A server can be though of as a look up table for ROS discovery information. When a participant (node) starts, it
+A server can be thought of as a look up table for ROS discovery information. When a participant (node) starts, it
 checks in with the servers to share its discovery information and request what information it is looking for.
 In this way, particpants only get discovery information and establish communication as necessary. A participant
 does not know all of the information that is available, only where to find the fellow participants that it needs.
@@ -98,7 +98,7 @@ There are multiple different ways to configure discovery server depending on whi
 This section will go over some basic configurations and is generalized for use as an introduction. It does not
 describe all possible configurations. The `ROS_DISCOVERY_SERVER` environment variable, shown in the various diagrams,
 indicates which discovery servers a given robot is connected to. Additionally, communication will be referred to
-in terms of seeing ROS 2 topics although this is representative of all nodes, topics, action servers, etc. 
+in terms of seeing ROS 2 topics although this is representative of all nodes, topics, action servers, and so on. 
 
 :::note
 
@@ -126,10 +126,10 @@ in the system at all of the discovery servers in the system.
 </center>
 
 This configuration is achieved by listing all of the computers' hostnames in the
-[`servers` section](../config/yaml/system.mdx#servers) on all of the robots. Including the remote PC allows
-the remote PC to also have a discovery server running and thus operate independently from the robots as
+[`servers` section](../config/yaml/system.mdx#servers) on all of the robots. Including the offboard computer allows
+the offboard computer to also have a discovery server running and thus operate independently from the robots as
 well as communicating with all of the robots. However, the discovery server must also be set up separately on the
-remote PC (only required to allow the remote PC to run ROS 2 nodes independently from the robots).
+offboard computer (only required to allow the offboard computer to run ROS 2 nodes independently from the robots).
 
 The middleware section for the system in the diagram would look like the following on all devices:
 
@@ -140,7 +140,7 @@ middleware:
   servers:
     - hostname: cpr-a200-0000
     - hostname: cpr-a200-0001
-    - hostname: remote-pc
+    - hostname: offboard-computer
 ```
 
 Additional details on the available fields for the `robot.yaml` config file are available in the
@@ -148,12 +148,12 @@ Additional details on the available fields for the `robot.yaml` config file are 
 
 ### 2. Command Center {#command-center}
 
-In this configuration you have many robots that each operate independently and a remote PC that
+In this configuration you have many robots that each operate independently and an offboard computer that
 checks in and communicates with each of the robots. Each of the robots will have and refer to their own local
 discovery server. This allows the onboard ROS 2 nodes to communicate without any external network connection.
-The remote PC will be pointed at the discovery servers on each and every robot. This will allow the
-remote PC to see all of the topics on all of the robots at the same time. In turn, each of the robots will be
-able to see all of the topics launched on the remote PC. Including a discovery server on the remote PC as well
+The offboard computer will be pointed at the discovery servers on each and every robot. This will allow the
+offboard computer to see all of the topics on all of the robots at the same time. In turn, each of the robots will be
+able to see all of the topics launched on the offboard computer. Including a discovery server on the offboard computer as well
 allows it to run ROS 2 nodes independently from the robots.
 
 The key difference between this configuration and the fully connected configuration is that the robots cannot
@@ -172,9 +172,9 @@ robots.
 This configuration is achieved by listing all of the computers' hostnames in the
 [`servers` section](../config/yaml/system.mdx#servers) on all of the robots but setting `enabled` to `False` for
 every server entry except for that specific robot. This tells the robot to only use its own discovery server.
-The Remote PC should have all of the servers enabled, telling it to connect to all discovery servers in the system.
-This servers list must include the remote PC if a discovery server is being run on the remote PC. However, the discovery
-server must also be set up separately on the remote PC.
+The offboard computer should have all of the servers enabled, telling it to connect to all discovery servers in the system.
+This servers list must include the offboard computer if a discovery server is being run on the offboard computer. However, the discovery
+server must also be set up separately on the offboard computer.
 
 The middleware section of the config for the system in the diagram would look like the following for `cpr-a200-0000`:
 
@@ -186,7 +186,7 @@ middleware:
     - hostname: cpr-a200-0000
     - hostname: cpr-a200-0001
       enabled: False
-    - hostname: remote-pc
+    - hostname: offboard-computer
       enabled: False
 ```
 
@@ -200,11 +200,11 @@ middleware:
     - hostname: cpr-a200-0000
       enabled: False
     - hostname: cpr-a200-0001
-    - hostname: remote-pc
+    - hostname: offboard-computer
       enabled: False
 ```
 
-And the following for the Remote PC:
+And the following for the offboard computer:
 
 ```yaml
 middleware:
@@ -213,20 +213,20 @@ middleware:
   servers:
     - hostname: cpr-a200-0000
     - hostname: cpr-a200-0001
-    - hostname: remote-pc
+    - hostname: offboard-computer
 ```
 
 Additional details on the available fields for the `robot.yaml` config file are available in the
 [Middleware section of Robot Configuration](../config/yaml/system.mdx#middleware).
 
-## Remote PC Setup {#remote-pc}
+## Offboard Computer Setup {#offboard-pc}
 
-Use the `robot.yaml` from one of the robots in order to set up the remote PC. The `servers` list must include all of
-the discovery servers and all of the ones that the remote PC should be connecting with must not be disabled.
+Use the `robot.yaml` from one of the robots in order to set up the offboard computer. The `servers` list must include all of
+the discovery servers and all of the ones that the offboard computer should be connecting with must not be disabled.
 
-1. Regenerate the `setup.bash` every time the `servers` list changes in any way (as per [remote PC install instructions](../installation/remote_pc.mdx#setup-folder))
+1. Regenerate the `setup.bash` every time the `servers` list changes in any way (as per [offboard computer install instructions](../installation/offboard_pc.mdx#setup-folder))
 
-2. If a discovery server is intended to be run on the remote PC then generate and run the discovery-server-start launch file.
+2. If a discovery server is intended to be run on the offboard computer then generate and run the discovery-server-start launch file.
 
 To generate the launch script:
 
