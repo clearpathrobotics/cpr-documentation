@@ -690,6 +690,81 @@ uint32 gnss_samples
 ---
 bool success
 ```
+#### clearpath_mission_manager_msgs/srv/AddNetworkEdge.srv {#storage-addnetworkedge}
+
+```
+# The UUID of the map we're operating on
+string map_id
+
+# The UUIDs of the start and end points for this edge
+string start_point_id
+string end_point_id
+
+# The operational radius around the edge
+float32 radius
+
+# The speed limit when driving along this edge
+float32 speed_limit
+
+# An additional cost factor to prioritize certain edges over others in the planner
+# Higher costs -> edge is less likely to be included in the planned route
+# Expected range is (0.0, 100.0) (exclusive range).
+# Values outside the expected range will be treated as the default 1.0
+float32 cost_factor
+
+# If true, we add 2 edges, with the second one having inverted start and end points
+bool symmetrical
+
+---
+
+# The generated edge(s)
+clearpath_navigation_msgs/NetworkEdge[] edges
+```
+
+#### clearpath_mission_manager_msgs/srv/AddNetworkPath.srv {#storage-addnetworkpath}
+
+```
+# The lat-lon locations of the points to add
+float64[] latitudes
+float64[] longitudes
+
+# The UUID of the map we're adding points to
+string map_id
+
+# If true, bidirectional edges are added between the points
+bool symmetrical
+
+---
+bool success
+string message
+```
+
+#### clearpath_mission_manager_msgs/srv/AddNetworkPoint.srv {#storage-addnetworkpoint}
+
+```
+# The location of this point on the map
+float64 latitude
+float64 longitude
+
+# The UUID of the map we're adding this point to
+string map_id
+
+# Optional list of node IDs in the map we want to connect to the new node
+# This specifies edges originating in the given nodes, pointing to the new node
+string[] connect_from
+
+# Optional list of node IDs in the map we want to connect to the new node
+# This specifies edges originating at the new node, pointing to the nodes with the given UUIDs
+string[] connect_to
+
+# If true, bidirectional edge are added between the nodes specified in connect_from and connect_to
+bool symmetrical
+
+---
+
+# The added point, with generated UUID
+clearpath_navigation_msgs/NetworkPoint point
+```
 
 #### clearpath_mission_manager_msgs/srv/AddRemoveById.srv {#storage-addremovebyid}
 
@@ -730,6 +805,38 @@ clearpath_navigation_msgs/Mission mission
 The `reverse` parameter was added in 0.9.0
 
 :::
+
+#### clearpath_mission_manager_msgs/srv/CloneNetworkMap.srv {#storage-clonenetworkmap}
+
+```
+# The UUID of the map to clone
+string uuid
+
+# The new name for the map
+# If blank, the old map name will be re-used with -copy appended to the end
+string new_name
+
+---
+# The newly-created copy of the original map, with a new name and new UUID
+clearpath_navigation_msgs/NetworkMap map
+```
+
+#### clearpath_mission_manager_msgs/srv/CloneNetworkMission.srv {#storage-clonenetworkmission}
+
+```
+# The UUID of the mission to clone
+string uuid
+
+# The new name for the mission
+# If blank, the old mission name will be re-used with -copy appended to the end
+string new_name
+
+# If true, the order of the waypoints within the cloned mission are reversed
+bool reverse
+---
+# The Mission with the given ID, or null if no Mission with that ID exists
+clearpath_navigation_msgs/NetworkMission mission
+```
 
 #### clearpath_mission_manager_msgs/srv/CreateMission.srv {#storage-createmission}
 
@@ -857,6 +964,21 @@ string data
 clearpath_navigation_msgs/Mission[] missions
 ```
 
+#### clearpath_mission_manager_msgs/srv/GetAllNetworkMaps.srv {#storage-getallnetworkmaps}
+
+```
+---
+clearpath_navigation_msgs/NetworkMap[] maps
+```
+
+#### clearpath_mission_manager_msgs/srv/GetAllNetworkMissions.srv {#storage-getallnetworkmissions}
+
+```
+---
+# An array of all Missions defined in the database
+clearpath_navigation_msgs/NetworkMission[] missions
+```
+
 #### clearpath_mission_manager_msgs/srv/GetAllTasks.srv {#storage-getalltasks}
 
 ```
@@ -889,6 +1011,25 @@ string uuid
 ---
 # The Mission with the given ID, or null if no Mission with that ID exists
 clearpath_navigation_msgs/Mission mission
+```
+
+#### clearpath_mission_manager_msgs/srv/GetnetworkMap.srv {#storage-getnetworkmap}
+
+```
+# The UUID of the NetworkMap we want to retrieve
+string uuid
+---
+clearpath_navigation_msgs/NetworkMap map
+```
+
+#### clearpath_mission_manager_msgs/srv/GetNetworkMission.srv {#storage-getnetworkmission}
+
+```
+# The UUID of the NetworkMission we want to retrieve
+string uuid
+---
+# The Mission with the given ID, or null if no Mission with that ID exists
+clearpath_navigation_msgs/NetworkMission mission
 ```
 
 #### clearpath_mission_manager_msgs/srv/GetTask.srv {#storage-gettask}
@@ -933,6 +1074,50 @@ clearpath_navigation_msgs/Mission mission
 clearpath_navigation_msgs/Mission mission
 ```
 
+#### clearpath_mission_manager_msgs/srv/ImportNetworkMap.srv {#storage-importnetworkmap}
+
+```
+# The map to import. UUIDs that do not already exist are added, but objects with existing UUIDs
+# are re-used
+clearpath_navigation_msgs/NetworkMap map
+---
+# The imported map
+clearpath_navigation_msgs/NetworkMap map
+```
+
+#### clearpath_mission_manager_msgs/srv/ImportNetworkMission.srv {#storage-importnetworkmission}
+
+```
+# The mission to import. UUIDs that do not already exist are added, but objects with existing UUIDs
+# are re-used
+clearpath_navigation_msgs/NetworkMission mission
+---
+# The imported mission
+clearpath_navigation_msgs/NetworkMission mission
+```
+
+#### clearpath_mission_manager_msgs/srv/SplitNetworkEdge.srv {#storage-splitnetworkedge}
+
+```
+# Splits an edge on a NetworkMap to connect to a new point
+
+# The UUID of the map to edit
+string map_id
+
+# The UUID of the edge we want to split
+string edge_id
+
+# The position of the new point to create
+float64 new_point_latitude
+float64 new_point_longitude
+
+# If true, we also split the reverse edge (if it exists)
+bool symmetrical
+---
+# The map in its new state
+clearpath_navigation_msgs/NetworkMap result
+```
+
 #### clearpath_mission_manager_msgs/srv/UpdateMission.srv {#storage-updatemission}
 
 ```
@@ -950,6 +1135,161 @@ string[] waypoint_ids
 ---
 # The edited Mission, or null if no mission with the given ID exists
 clearpath_navigation_msgs/Mission result
+```
+
+#### clearpath_mission_manager_msgs/srv/UpdateNetworkEdge.srv {#storage-updatenetworkedge}
+
+```
+# The UUID of the map we're operating on
+string map_id
+
+# The UUIDs of the start and end points for this edge
+string uuid
+
+# The UUIDs of the start & end points of the edge we're editing
+# Ignored if null/empty
+string start_point_id
+string end_point_id
+
+# The operational radius around the edge
+float32 radius
+
+# The speed limit when driving along this edge
+float32 speed_limit
+
+# An additional cost factor to prioritize certain edges over others in the planner
+# Higher costs -> edge is less likely to be included in the planned route
+# Expected range is (0.0, 100.0) (exclusive range).
+# Values outside the expected range will be treated as the default 1.0
+float32 cost_factor
+
+---
+
+# The updated edge
+clearpath_navigation_msgs/NetworkEdge result
+```
+
+#### clearpath_mission_manager_msgs/srv/UpdateNetworkEdges.srv {#storage-updatenetworkedges}
+
+```
+# Update multiple edges in a single map
+
+# The UUID of the map we're operating on
+string map_id
+
+# The UUIDs of the start and end points for this edge
+string[] uuids
+
+# The operational radii around the edges
+# Ignored if negative
+float32[] radii
+
+# The speed limit when driving along the edges
+# Ignored if negative
+float32[] speed_limits
+
+# The cost factors of the edges
+float32[] cost_factors
+
+---
+
+# The updated edge
+clearpath_navigation_msgs/NetworkEdge[] result
+```
+
+#### clearpath_mission_manager_msgs/srv/UpdateNetworkMap.srv {#storage-updatenetworkmap}
+
+```
+string uuid
+
+string name
+float32 default_radius
+float32 default_speed_limit
+---
+clearpath_navigation_msgs/NetworkMap result
+```
+
+#### clearpath_mission_manager_msgs/srv/UpdateNetworkMission.srv {#storage-updatenetworkmission}
+
+```
+# The UUID of the mission we want to edit
+string uuid
+
+# The desired name for the new mission
+string name
+
+# The additional configuration options
+# see clearpath_navigation_msgs/msg/Mission for details
+string onav_config
+
+# The ordered list of Waypoint UUIDs to include in this mission
+string[] waypoint_ids
+
+# The ordered list of Task UUIDs to include in the on_start Task Array
+string[] on_start_ids
+
+# The ordered list of Task UUIDs to include in the on_stop Task Array
+string[] on_stop_ids
+
+# Boolean value indicating whether robot should attempt 'return to dock' behavior
+# when battery level drops below return_to_dock_battery_level
+bool return_to_dock_enabled
+
+# Dock UUID that the robot should return to for 'return to dock' behavior
+string return_to_dock_id
+
+# Value from 0 to 1 indicating what charge level the robot will return to dock at
+float32 return_to_dock_battery_level
+
+# Value from 0 to 1 indicating what charge level the robot should resume this mission at
+# after returning to dock for recharging
+float32 resume_mission_battery_level
+
+# Boolean value indicating whether 'network' level replanning should be performed
+# in the event that a network edge is deemed un-traversable (e.g., due to obstacles)
+bool network_replan_enabled
+
+---
+# The resulting Mission, with an auto-generated UUID is returned
+clearpath_navigation_msgs/NetworkMission result
+```
+
+#### clearpath_mission_manager_msgs/srv/UpdateNetworkPoint.srv {#storage-updatenetworkpoint}
+
+```
+# The UUID of the map we're working on
+string map_id
+
+# The UUID of the point to edit
+string uuid
+
+# The location of this point on the map
+float64 latitude
+float64 longitude
+
+---
+
+# The added point, with generated UUID
+clearpath_navigation_msgs/NetworkPoint result
+```
+
+#### clearpath_mission_manager_msgs/srv/UpdateNetworkPoints.srv {#storage-updatenetworkpoints}
+
+```
+# The UUID of the map we're working on
+string map_id
+
+# The UUID of the points to edit
+string[] uuids
+
+# The location of the points on the map, in the same order as uuids
+float64[] latitudes
+float64[] longitudes
+
+---
+
+# The added point, with generated UUID
+clearpath_navigation_msgs/NetworkPoint[] result
 ```
 
 #### clearpath_mission_manager_msgs/srv/UpdateTask.srv {#storage-updatetask}
@@ -1006,6 +1346,17 @@ string[] task_ids
 ---
 # The edited Waypoint, or null if no Waypoint with the given ID exists
 clearpath_navigation_msgs/Waypoint result
+```
+
+#### clearpath_mission_manager_msgs/srv/ValidateNetworkMap.srv {#storage-validatenetworkmap}
+
+```
+# Checks that a Network of Paths map is valid and error/warning-free
+
+# The UUID of the map to check
+string uuid
+---
+clearpath_mission_manager_msgs/NetworkMapState state
 ```
 
 #### clearpath_mission_scheduler_msgs/srv/CloneSchedule.srv {#scheduler-cloneschedule}
