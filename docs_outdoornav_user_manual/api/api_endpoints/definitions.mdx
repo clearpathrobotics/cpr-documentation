@@ -147,6 +147,49 @@ float32[] cn0			  # The carrier-to-noise ratio of each connected satellite
 float64 correction_age    # Age of RTK corrections. -1 indicates none received
 ```
 
+#### clearpath_mission_manager_msgs/msg/NetworkEdgeReq.msg {#storage-networkedgereq}
+
+```
+string start_point_id
+string end_point_id
+
+float32 speed_limit
+
+float32 radius
+```
+
+#### clearpath_mission_manager_msgs/msg/NetworkMapState.msg {#storage-networkmapstate}
+
+```
+# The UUID of the map
+string uuid
+
+# True if the map actually exists and was found
+bool exists
+
+# The number of disconnected sub-graphs of the map
+# Normally this will be 1 (i.e. the map is a single graph that is connected)
+# but there are circumstances where the user may intentionally want 2+ disconnected graphs
+# (e.g. a separate graph for each side of a fence, where the only connection between the two
+# sides is an out-of-bounds, teleop-only road)
+int32 num_subgraphs
+
+# If the map has any disconnected vertices, we enumerate them here by their ID
+# If size_exceeded is true, this list may be empty or incomplete (see below)
+string[] disconnected_point_ids
+
+# True if the map is too big for the validation to run on it
+# Maps with more than 1000 vertices or 8000 edges will not be fully tests
+bool size_exceeded
+```
+
+#### clearpath_mission_manager_msgs/msg/NetworkMapValidityState.msg {#storage-networkmapvaliditystate}
+
+```
+# Reports the validity of all network of paths maps registered with the mission manager
+clearpath_mission_manager_msgs/NetworkMapState[] map_states
+```
+
 #### clearpath_mission_manager_msgs/msg/StorageState.msg {#storage-storagestate}
 
 ```
@@ -1238,7 +1281,7 @@ float32 percent_complete
 string uuid
 
 # Wait this long before starting the schedule (ros:Duration msg, so the units are secs/nsecs)
-duration delay 
+duration delay
 ---
 # Did the schedule terminate successfully?
 bool success
