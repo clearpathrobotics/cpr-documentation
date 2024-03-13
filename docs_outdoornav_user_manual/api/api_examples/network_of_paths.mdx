@@ -1,0 +1,585 @@
+---
+title: Network of Paths
+sidebar_label: Monitor Status
+sidebar_position: 4
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+## Overview
+
+Network of paths uses a directed graph to define the robot's valid driving area. When executing a mission the robot
+plans its route to follow the edges of the graph to get from waypoint to waypoint.  The exact route taken is dynamic
+and may change depending on the robot's exact starting location, detected obstacles along some edges, and the geometry
+of the graph itself.
+
+![](/img/outdoornav_images/parking_lot_map.png)
+
+
+## Creating a map
+
+To create a map, use the `/mission_manager/create_network_map` service:
+
+```python
+#!/usr/bin/env python3
+
+import rospy
+from clearpath_mission_manager_msgs.srv import *
+
+rospy.init_node("map_maker_example")
+
+map_maker_service = rospy.ServiceProxy("/mission_manager/create_network_map", CreateNetworkMap)
+map = map_maker_service("Example Map", 2.5, 1.0, [], []).result
+
+print(map)
+```
+
+This program produces an empty map with an automatically generated UUID:
+
+```yaml
+name: "Example Map"
+uuid: "c7c6bd2e-06dd-4f61-9ab0-f81fa896a915"
+default_radius: 2.5
+default_speed_limit: 1.0
+points: []
+connections: []
+```
+
+From here you can use the `/mission_manager/add_network_point` and `/mission_manager/add_network_edge` services to
+add vertices and connect them. However, this can be very slow if your map is large. A faster way is to include the
+vertices and edges in the request to create the map:
+
+```python
+#!/usr/bin/env python3
+
+import rospy
+
+from clearpath_mission_manager_msgs.msg import *
+from clearpath_mission_manager_msgs.srv import *
+from clearpath_navigation_msgs.msg import *
+
+# A tuple of TAG, lat, lon, alt
+# Generated with Google Earth -- the altitude is not used
+# The tag is used as a placeholder for the generated UUIDs to simplify defining the edges ourselves
+COORDINATES = [
+  ("A", -97.28322817327727,50.12300747122199,0),
+  ("B", -97.28217525643019,50.12171056479555,0), # the first intersection, connects to C and L
+  ("C", -97.28326793963477,50.11981930442499,0), # the second intersection, connects to D and H
+  ("D", -97.28483408203536,50.11926816962462,0),
+  ("E", -97.28486964915798,50.11761512315844,0),
+  ("F", -97.28166555083155,50.11758334859005,0),
+  ("G", -97.28229122963415,50.11952637327663,0),
+  ("H", -97.28167846932446,50.11913714171172,0), # the third intersection, connects to I and C
+
+  # A dead-end side-branch
+  ("I", -97.28219097560832,50.11973533270263,0), # forks from H
+  ("J", -97.28249905504131,50.1199092365631,0),
+  ("K", -97.28242834054022,50.12013941719884,0),
+
+  # Another dead-end side-branch
+  ("L", -97.28242899160524,50.12209511863426,0), # forks from B
+  ("M", -97.28246941874356,50.12229616417419,0),
+  ("N", -97.28325139122391,50.12230651895854,0),
+]
+
+DEFAULT_RADIUS = 2.5
+DEFAULT_SPEED_LIMIT = 1.0
+
+rospy.init_node("map_maker_example_2")
+
+map_maker_service = rospy.ServiceProxy("/mission_manager/create_network_map", CreateNetworkMap)
+map = map_maker_service(
+  "Example Map", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT,
+
+  # The vertices
+  # This is just a simple array of NetworkPoint objects. Each must have a unique ID, a one-letter tag in this
+  # example
+  [
+    NetworkPoint(c[0], c[1], c[2]) for c in COORDINATES
+  ],
+
+  # The edges. This defines the geometry of the map
+  # Edges are unidirectional, so we must manually add edges going in both directions where necessary
+  [
+    NetworkEdgeReq("A", "B", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+    NetworkEdgeReq("B", "A", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+
+    NetworkEdgeReq("B", "C", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+    NetworkEdgeReq("C", "B", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+
+    NetworkEdgeReq("C", "D", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+    NetworkEdgeReq("D", "C", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+
+    NetworkEdgeReq("D", "E", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+    NetworkEdgeReq("E", "D", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+
+    NetworkEdgeReq("E", "F", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+    NetworkEdgeReq("F", "E", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+
+    NetworkEdgeReq("F", "G", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+    NetworkEdgeReq("G", "F", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+
+    NetworkEdgeReq("G", "H", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+    NetworkEdgeReq("H", "G", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+
+    NetworkEdgeReq("H", "C", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT), # end of the main road & loop
+    NetworkEdgeReq("H", "C", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+
+    NetworkEdgeReq("H", "I", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+    NetworkEdgeReq("I", "H", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+
+    NetworkEdgeReq("I", "J", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+    NetworkEdgeReq("J", "I", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+
+    NetworkEdgeReq("J", "K", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+    NetworkEdgeReq("K", "J", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT), # end of one fork
+
+    NetworkEdgeReq("B", "L", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+    NetworkEdgeReq("L", "B", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+
+    NetworkEdgeReq("L", "M", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+    NetworkEdgeReq("M", "L", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+
+    NetworkEdgeReq("M", "N", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+    NetworkEdgeReq("N", "M", DEFAULT_RADIUS, DEFAULT_SPEED_LIMIT),
+  ]
+).result
+
+print(map)
+```
+
+This example produces a graph that looks like this when viewed on a satellite map:
+![](/img/network-map-google-earth.png)
+
+The program's output looks like this:
+```yaml
+name: "Example Map"
+uuid: "c7415337-e38c-4873-b3b9-e05866e49742"
+default_radius: 2.5
+default_speed_limit: 1.0
+points:
+  -
+    uuid: "880baefc-e231-4bc2-9ffb-19817d20bd40"
+    latitude: -97.28322817327727
+    longitude: 50.12300747122199
+  -
+    uuid: "bd74fc37-8693-4b6f-8ac0-b7fce244f109"
+    latitude: -97.2821752564302
+    longitude: 50.12171056479555
+  -
+    uuid: "d42d8d86-041a-46c9-af50-d0311617dc53"
+    latitude: -97.28326793963477
+    longitude: 50.11981930442499
+  -
+    uuid: "cf1eecc2-7238-48c8-862a-78e7f0d5e45c"
+    latitude: -97.28483408203536
+    longitude: 50.11926816962462
+  -
+    uuid: "b4853a02-ff97-49d9-b5b7-3031900f3798"
+    latitude: -97.28486964915798
+    longitude: 50.11761512315844
+  -
+    uuid: "fd86b7a9-5f21-4cbd-9d38-6e296520655e"
+    latitude: -97.28166555083155
+    longitude: 50.11758334859005
+  -
+    uuid: "4c41910d-9ac6-45f7-bf9a-fe3364f3a414"
+    latitude: -97.28229122963415
+    longitude: 50.11952637327663
+  -
+    uuid: "d06a1126-130b-427d-a63f-0e7d2098a74c"
+    latitude: -97.28167846932446
+    longitude: 50.11913714171172
+  -
+    uuid: "82831743-27b0-41cb-9cb4-111140789d9f"
+    latitude: -97.28219097560832
+    longitude: 50.11973533270263
+  -
+    uuid: "54f78202-d436-4577-871f-7fb05edd0546"
+    latitude: -97.28249905504131
+    longitude: 50.1199092365631
+  -
+    uuid: "b04eb783-5049-4211-a33d-0d319323d3ed"
+    latitude: -97.28242834054022
+    longitude: 50.12013941719884
+  -
+    uuid: "0aa59f14-ec21-49f7-987a-962400467c62"
+    latitude: -97.28242899160524
+    longitude: 50.12209511863426
+  -
+    uuid: "dc4a4043-0832-4ad8-8d31-0adbfe0b7ea9"
+    latitude: -97.28246941874356
+    longitude: 50.12229616417419
+  -
+    uuid: "5e6db708-4fd2-455b-b604-502f425e0c03"
+    latitude: -97.28325139122391
+    longitude: 50.12230651895854
+connections:
+  -
+    uuid: "6dcbaaed-40bf-4cb5-83d8-b0d905f9d84b"
+    start_point:
+      uuid: "880baefc-e231-4bc2-9ffb-19817d20bd40"
+      latitude: -97.28322817327727
+      longitude: 50.12300747122199
+    end_point:
+      uuid: "bd74fc37-8693-4b6f-8ac0-b7fce244f109"
+      latitude: -97.2821752564302
+      longitude: 50.12171056479555
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "351bfc55-85e8-4336-8179-b7206cdb5636"
+    start_point:
+      uuid: "bd74fc37-8693-4b6f-8ac0-b7fce244f109"
+      latitude: -97.2821752564302
+      longitude: 50.12171056479555
+    end_point:
+      uuid: "880baefc-e231-4bc2-9ffb-19817d20bd40"
+      latitude: -97.28322817327727
+      longitude: 50.12300747122199
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "3da53c42-e252-40c8-a7ab-b58397209055"
+    start_point:
+      uuid: "bd74fc37-8693-4b6f-8ac0-b7fce244f109"
+      latitude: -97.2821752564302
+      longitude: 50.12171056479555
+    end_point:
+      uuid: "d42d8d86-041a-46c9-af50-d0311617dc53"
+      latitude: -97.28326793963477
+      longitude: 50.11981930442499
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "e3bd32ca-3fc3-4c58-8b5a-52e6d72a4eb0"
+    start_point:
+      uuid: "d42d8d86-041a-46c9-af50-d0311617dc53"
+      latitude: -97.28326793963477
+      longitude: 50.11981930442499
+    end_point:
+      uuid: "bd74fc37-8693-4b6f-8ac0-b7fce244f109"
+      latitude: -97.2821752564302
+      longitude: 50.12171056479555
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "a6a75a30-0304-45a0-8836-beb50b232d56"
+    start_point:
+      uuid: "d42d8d86-041a-46c9-af50-d0311617dc53"
+      latitude: -97.28326793963477
+      longitude: 50.11981930442499
+    end_point:
+      uuid: "cf1eecc2-7238-48c8-862a-78e7f0d5e45c"
+      latitude: -97.28483408203536
+      longitude: 50.11926816962462
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "4359f3a7-3893-4307-9381-639f202a58a8"
+    start_point:
+      uuid: "cf1eecc2-7238-48c8-862a-78e7f0d5e45c"
+      latitude: -97.28483408203536
+      longitude: 50.11926816962462
+    end_point:
+      uuid: "d42d8d86-041a-46c9-af50-d0311617dc53"
+      latitude: -97.28326793963477
+      longitude: 50.11981930442499
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "8e8c0ce6-18ce-4fb7-ab52-7179eee3a905"
+    start_point:
+      uuid: "cf1eecc2-7238-48c8-862a-78e7f0d5e45c"
+      latitude: -97.28483408203536
+      longitude: 50.11926816962462
+    end_point:
+      uuid: "b4853a02-ff97-49d9-b5b7-3031900f3798"
+      latitude: -97.28486964915798
+      longitude: 50.11761512315844
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "02b4c52e-d877-428e-ad47-9f7e93ef0d71"
+    start_point:
+      uuid: "b4853a02-ff97-49d9-b5b7-3031900f3798"
+      latitude: -97.28486964915798
+      longitude: 50.11761512315844
+    end_point:
+      uuid: "cf1eecc2-7238-48c8-862a-78e7f0d5e45c"
+      latitude: -97.28483408203536
+      longitude: 50.11926816962462
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "8b823140-8ef7-4b13-b5b9-1d405d63d6ed"
+    start_point:
+      uuid: "b4853a02-ff97-49d9-b5b7-3031900f3798"
+      latitude: -97.28486964915798
+      longitude: 50.11761512315844
+    end_point:
+      uuid: "fd86b7a9-5f21-4cbd-9d38-6e296520655e"
+      latitude: -97.28166555083155
+      longitude: 50.11758334859005
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "9d733830-8ab4-4218-9dc6-ffd5bf25cb69"
+    start_point:
+      uuid: "fd86b7a9-5f21-4cbd-9d38-6e296520655e"
+      latitude: -97.28166555083155
+      longitude: 50.11758334859005
+    end_point:
+      uuid: "b4853a02-ff97-49d9-b5b7-3031900f3798"
+      latitude: -97.28486964915798
+      longitude: 50.11761512315844
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "e1580163-744d-4619-a0a8-041ae37f81c8"
+    start_point:
+      uuid: "fd86b7a9-5f21-4cbd-9d38-6e296520655e"
+      latitude: -97.28166555083155
+      longitude: 50.11758334859005
+    end_point:
+      uuid: "4c41910d-9ac6-45f7-bf9a-fe3364f3a414"
+      latitude: -97.28229122963415
+      longitude: 50.11952637327663
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "61d0257f-f707-4f7c-bc9d-d32ed71898f5"
+    start_point:
+      uuid: "4c41910d-9ac6-45f7-bf9a-fe3364f3a414"
+      latitude: -97.28229122963415
+      longitude: 50.11952637327663
+    end_point:
+      uuid: "fd86b7a9-5f21-4cbd-9d38-6e296520655e"
+      latitude: -97.28166555083155
+      longitude: 50.11758334859005
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "3bd2ede5-85ba-4b46-816d-6fd269c6f4f9"
+    start_point:
+      uuid: "4c41910d-9ac6-45f7-bf9a-fe3364f3a414"
+      latitude: -97.28229122963415
+      longitude: 50.11952637327663
+    end_point:
+      uuid: "d06a1126-130b-427d-a63f-0e7d2098a74c"
+      latitude: -97.28167846932446
+      longitude: 50.11913714171172
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "10763184-8113-4d46-a6cb-6426666ea7c5"
+    start_point:
+      uuid: "d06a1126-130b-427d-a63f-0e7d2098a74c"
+      latitude: -97.28167846932446
+      longitude: 50.11913714171172
+    end_point:
+      uuid: "4c41910d-9ac6-45f7-bf9a-fe3364f3a414"
+      latitude: -97.28229122963415
+      longitude: 50.11952637327663
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "fbb1f3da-165b-42c8-9fd4-07e6228af585"
+    start_point:
+      uuid: "d06a1126-130b-427d-a63f-0e7d2098a74c"
+      latitude: -97.28167846932446
+      longitude: 50.11913714171172
+    end_point:
+      uuid: "d42d8d86-041a-46c9-af50-d0311617dc53"
+      latitude: -97.28326793963477
+      longitude: 50.11981930442499
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "4019eacc-ebe7-4c76-8a40-58e4ecdd6dc3"
+    start_point:
+      uuid: "d06a1126-130b-427d-a63f-0e7d2098a74c"
+      latitude: -97.28167846932446
+      longitude: 50.11913714171172
+    end_point:
+      uuid: "d42d8d86-041a-46c9-af50-d0311617dc53"
+      latitude: -97.28326793963477
+      longitude: 50.11981930442499
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "20fe3bb2-4a03-4070-b19b-f52a732e8f66"
+    start_point:
+      uuid: "d06a1126-130b-427d-a63f-0e7d2098a74c"
+      latitude: -97.28167846932446
+      longitude: 50.11913714171172
+    end_point:
+      uuid: "82831743-27b0-41cb-9cb4-111140789d9f"
+      latitude: -97.28219097560832
+      longitude: 50.11973533270263
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "c8182336-ecb6-42e2-a92a-f7f2614614cb"
+    start_point:
+      uuid: "82831743-27b0-41cb-9cb4-111140789d9f"
+      latitude: -97.28219097560832
+      longitude: 50.11973533270263
+    end_point:
+      uuid: "d06a1126-130b-427d-a63f-0e7d2098a74c"
+      latitude: -97.28167846932446
+      longitude: 50.11913714171172
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "603da4f2-9d6f-4ded-8441-e50a3abaf1b7"
+    start_point:
+      uuid: "82831743-27b0-41cb-9cb4-111140789d9f"
+      latitude: -97.28219097560832
+      longitude: 50.11973533270263
+    end_point:
+      uuid: "54f78202-d436-4577-871f-7fb05edd0546"
+      latitude: -97.28249905504131
+      longitude: 50.1199092365631
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "54e76de3-0d22-4cf7-b261-7e8c977bd02d"
+    start_point:
+      uuid: "54f78202-d436-4577-871f-7fb05edd0546"
+      latitude: -97.28249905504131
+      longitude: 50.1199092365631
+    end_point:
+      uuid: "82831743-27b0-41cb-9cb4-111140789d9f"
+      latitude: -97.28219097560832
+      longitude: 50.11973533270263
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "f0b0e70b-02d3-42bc-804c-669fa87a2282"
+    start_point:
+      uuid: "54f78202-d436-4577-871f-7fb05edd0546"
+      latitude: -97.28249905504131
+      longitude: 50.1199092365631
+    end_point:
+      uuid: "b04eb783-5049-4211-a33d-0d319323d3ed"
+      latitude: -97.28242834054022
+      longitude: 50.12013941719884
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "c6c1d2fb-6544-49c4-a35c-868a4c84f961"
+    start_point:
+      uuid: "b04eb783-5049-4211-a33d-0d319323d3ed"
+      latitude: -97.28242834054022
+      longitude: 50.12013941719884
+    end_point:
+      uuid: "54f78202-d436-4577-871f-7fb05edd0546"
+      latitude: -97.28249905504131
+      longitude: 50.1199092365631
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "7000fc4b-abaf-446d-9aa5-1a53dec03c40"
+    start_point:
+      uuid: "bd74fc37-8693-4b6f-8ac0-b7fce244f109"
+      latitude: -97.2821752564302
+      longitude: 50.12171056479555
+    end_point:
+      uuid: "0aa59f14-ec21-49f7-987a-962400467c62"
+      latitude: -97.28242899160524
+      longitude: 50.12209511863426
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "0bfc3979-27ea-4fae-b7fa-607a87c3efaa"
+    start_point:
+      uuid: "0aa59f14-ec21-49f7-987a-962400467c62"
+      latitude: -97.28242899160524
+      longitude: 50.12209511863426
+    end_point:
+      uuid: "bd74fc37-8693-4b6f-8ac0-b7fce244f109"
+      latitude: -97.2821752564302
+      longitude: 50.12171056479555
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "b4950981-1613-4a40-b5aa-ac48e5000185"
+    start_point:
+      uuid: "0aa59f14-ec21-49f7-987a-962400467c62"
+      latitude: -97.28242899160524
+      longitude: 50.12209511863426
+    end_point:
+      uuid: "dc4a4043-0832-4ad8-8d31-0adbfe0b7ea9"
+      latitude: -97.28246941874356
+      longitude: 50.12229616417419
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "e2b8a728-cb2a-41c2-ae61-1f39015c0554"
+    start_point:
+      uuid: "dc4a4043-0832-4ad8-8d31-0adbfe0b7ea9"
+      latitude: -97.28246941874356
+      longitude: 50.12229616417419
+    end_point:
+      uuid: "0aa59f14-ec21-49f7-987a-962400467c62"
+      latitude: -97.28242899160524
+      longitude: 50.12209511863426
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "a2ecadab-942f-4bfb-8b2f-859ee27b5dfa"
+    start_point:
+      uuid: "dc4a4043-0832-4ad8-8d31-0adbfe0b7ea9"
+      latitude: -97.28246941874356
+      longitude: 50.12229616417419
+    end_point:
+      uuid: "5e6db708-4fd2-455b-b604-502f425e0c03"
+      latitude: -97.28325139122391
+      longitude: 50.12230651895854
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+  -
+    uuid: "818bd191-4d85-4f95-9aeb-de769a2e1c71"
+    start_point:
+      uuid: "5e6db708-4fd2-455b-b604-502f425e0c03"
+      latitude: -97.28325139122391
+      longitude: 50.12230651895854
+    end_point:
+      uuid: "dc4a4043-0832-4ad8-8d31-0adbfe0b7ea9"
+      latitude: -97.28246941874356
+      longitude: 50.12229616417419
+    radius: 1.0
+    speed_limit: 2.5
+    cost_factor: 1.0
+```
+
+Note that in the process of creating the map, all of the points' UUIDs have been regenerated. This is to ensure that
+all points saved on the robot have unique identifiers.
