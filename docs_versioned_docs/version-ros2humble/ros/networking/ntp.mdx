@@ -9,10 +9,10 @@ with each other. This is essential for ROS, as many types of data are time-sensi
 ### Chrony
 
 Clearpath uses a Linux package called `chrony` to provide clock synchronization across multiple devices inside a robot.
-The robot's primary PC acts as the main NTP source for other computers inside the robot.
+The robot's primary computer acts as the main NTP source for other computers inside the robot.
 
 To (re-)configure `chrony`, edit the file `/etc/chrony/chrony.conf`. The following shows the default configuration
-for the primary PC:
+for the primary computer:
 
 ```
 # Welcome to the chrony configuration file. See chrony.conf(5) for more
@@ -66,7 +66,7 @@ local stratum 10
 allow 192.168.131/24
 ```
 
-For secondary PCs inside the robot, the `chrony` configuration file is very similar, but adds a new `server` directive
+For secondary computers inside the robot, the `chrony` configuration file is very similar, but adds a new `server` directive
 after the `pool`, and omits the final `local` and `allow` sections:
 
 ```
@@ -91,7 +91,7 @@ pool 0.ubuntu.pool.ntp.org iburst maxsources 1
 pool 1.ubuntu.pool.ntp.org iburst maxsources 1
 pool 2.ubuntu.pool.ntp.org iburst maxsources 2
 
-# Add the robot's primary PC as an NTP source
+# Add the robot's primary computer as an NTP source
 server 192.168.131.1 offline minpoll 8
 
 # This directive specify the location of the file containing ID/key pairs for
