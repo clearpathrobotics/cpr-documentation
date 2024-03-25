@@ -10,15 +10,18 @@
 <td>
 
 ```yaml
-attachments:
-  - name: top_plate
-    type: a200.top_plate
-    model: default
-    parent: mid_mount
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    enabled: true
+platform:
+  attachments:
+    - name: top_plate
+      type: a200.top_plate
+      model: default
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      enabled: true
 ```
 </td>
 </tr>
 </table>
+
+Attach accessories to the top plate mounts by setting the accessory's `parent` parameter to either `top_plate_rear_mount`, `top_plate_default_mount`, or `top_plate_front_mount`. The mounts are displayed as axes in the image above.
