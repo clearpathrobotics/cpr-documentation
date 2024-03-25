@@ -1,0 +1,30 @@
+---
+title: Overview
+sidebar_label: Overview
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 5
+---
+
+Each robot platform has its own unique set of attachments. To facilitate customization, any attachment from any robot platform can be added on any other robot platform.
+
+There is a default `parent` link at which these attachments are added. However, the `parent` link can be changed to wherever attachment needs to be placed.
+
+Additionally, all attachments can be moved around using the `xyz` parameter to translate and the `rpy` parameter to rotate.
+
+Each attachment requires two parameters. The `name` parameter that will define the name of the links and joints added to URDF, and the `type` parameter which defines which type of attachment is to be added.
+
+Some attachment types will have the same `type` parameter across different platforms. In that case, if you'd like to use the attachment that belongs to a specific platform, you will need to prefix the `type` parameter with the platform that it belongs to. For example, `top_plate` would become `a200.top_plate`. If no prefix is set, then the platform defined in the `serial_number` will be used.
+
+See the following pages for details:
+- [**A200 Attachments**](./a200.mdx):
+    - [**a200.bumper**](./a200.mdx#bumper)
+    - [**a200.top_plate**](./a200.mdx#top-plate)
+    - [**a200.sensor_arch**](./a200.mdx#sensor-arch)
+- [**J100 Attachments**](./j100.mdx):
+    - [**j100.fenders**](./j100.mdx#fenders)
+    - [**j100.top_plate**](./j100.mdx#top-plate)
+- [**W200 Attachments**](./w200.mdx):
+    - [**w200.bulkhead**](./w200.mdx#bulkhead)
+    - [**w200.arm_mount**](./w200.mdx#arm-mount)
+    - [**w200.generator**](./w200.mdx#generator)

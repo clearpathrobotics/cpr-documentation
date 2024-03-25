@@ -1,0 +1,121 @@
+---
+title: Platform Overview
+sidebar_label: Overview
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 5
+---
+Every robot platform has unique structures such as versatile sensor mounting solutions, wireless charging receivers, and waterproofing enclosures; we refer to these as **attachments**.
+
+Additionally, each robot also supports specific batteries and battery configurations that must be set accurately to ensure proper battery management.
+
+Furthermore, the robot platform nodes can be modified by the user through the extras section. In particular, an extra URDF can be appended to the robot's URDF, a launch file can be added to the robot's launch file, and ROS parameters can be modified directly by setting the key, value pairs.
+
+The platform section is divided into the following sections:
+- [**Attachments**](./attachments/overview.mdx)
+- [**Battery**](./battery.mdx)
+- [**Controller**](./controller.mdx)
+- [**Extras**](./extras.mdx)
+
+## Sample
+
+<details><summary>Sample A200 Platform Section</summary>
+<p>
+
+<center>
+  <figure>
+    <img
+      src={require("../../img/husky_platform_0.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with Default Top Plate</figcaption>
+  </figure>
+</center>
+
+In this sample, we swapped the top plate from the **_default_** model to the **_pacs_** model. Notice all the links added by the **_pacs_** plate below, compared to the **_default_** plate above.
+
+```yaml
+  - name: top_plate
+    type: a200.top_plate
+    model: pacs # switched from 'default' to 'pacs'
+    parent: mid_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    enabled: true
+```
+
+<center>
+  <figure>
+    <img
+      src={require("../../img/husky_platform_1.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with PACS Top Plate</figcaption>
+  </figure>
+</center>
+
+Then, we added a sensor arch to add our sample sensors to. We can do this by adding the **attachment**, **sensor_arch** and setting the model to **_sensor_arch_300_**.
+
+```yaml
+  - name: sensor_arch
+    type: a200.sensor_arch
+    model: sensor_arch_300
+    parent: mid_mount
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    enabled: true
+```
+
+<center>
+  <figure>
+    <img
+      src={require("../../img/husky_platform_2.png").default}
+      width="500"
+    />
+    <figcaption>Husky A200 with 300mm Sensor Arch</figcaption>
+  </figure>
+</center>
+
+In terms of the **front_bumper** and **rear_bumper**, we left these as defaults. And, since we are not including any customization URDF or launch parameters; the resulting **platform** section look like this:
+
+```yaml
+platform:
+  controller: ps4
+  attachments:
+    - name: front_bumper
+      type: a200.bumper
+      model: default
+      parent: front_bumper_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      enabled: true
+      extension: 0.0
+    - name: rear_bumper
+      type: a200.bumper
+      model: default
+      parent: rear_bumper_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      enabled: true
+      extension: 0.0
+    - name: top_plate
+      type: a200.top_plate
+      model: pacs
+      parent: mid_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      enabled: true
+    - name: sensor_arch
+      type: a200.sensor_arch
+      model: sensor_arch_300
+      parent: mid_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      enabled: true
+  extras:
+    urdf: {}
+    ros_parameters: {}
+```
+
+</p>
+</details>

@@ -1,0 +1,286 @@
+---
+title: Battery
+sidebar_label: Battery
+sidebar_position: 3
+toc_min_heading_level: 2
+toc_max_heading_level: 5
+---
+
+Each robot platform can support different types of batteries, and in different configurations. The configuration is how
+many batteries the robot has in series and parallel. A configuration of S2P1 indicates that there is one row of two batteries in series. S4P3
+indicates that there are 3 parallel rows of 4 batteries in series, for a total of 12 batteries.
+
+Some robots support "smart" batteries which have built in battery management system (BMS). If these batteries are specified, a corresponding driver node will
+be launched as part of the platform service. For batteries without a BMS, the [battery state estimator](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_diagnostics/clearpath_diagnostics/battery_state/battery_state_estimator)
+node will be launched. This node will interpolate the state of charge of the robot from measured battery voltages.
+
+The battery state of the platform is available on the `platform/bms/state` topic.
+
+:::note
+
+For systems without a BMS, the state of charge should be treated as a rough estimate. This is especially true with Lead Acid batteries.
+
+:::
+
+
+# A200 Husky
+<table>
+  <thead>
+    <tr>
+      <th>Battery</th>
+      <th>Chemistry</th>
+      <th>Nominal Voltage (V)</th>
+      <th>Capacity (Ah)</th>
+      <th>Configurations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>ES20_12C</code></td>
+      <td>Lead Acid</td>
+      <td>12.0</td>
+      <td>20.0</td>
+      <td>S2P1</td>
+    </tr>
+    <tr>
+      <td><code>HE2613</code></td>
+      <td>Lithium Ion</td>
+      <td>25.9</td>
+      <td>12.8</td>
+      <td>S1P3<br/>S1P4</td>
+    </tr>
+  </tbody>
+</table>
+
+
+## J100 Jackal
+<table>
+  <thead>
+    <tr>
+      <th>Battery</th>
+      <th>Chemistry</th>
+      <th>Nominal Voltage (V)</th>
+      <th>Capacity (Ah)</th>
+      <th>Configurations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>HE2613</code></td>
+      <td>Lithium Ion</td>
+      <td>25.9</td>
+      <td>12.8</td>
+      <td>S1P1</td>
+    </tr>
+  </tbody>
+</table>
+
+
+## W200 Warthog
+<table>
+  <thead>
+    <tr>
+      <th>Battery</th>
+      <th>Chemistry</th>
+      <th>Nominal Voltage (V)</th>
+      <th>Capacity (Ah)</th>
+      <th>Configurations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>U1_35</code></td>
+      <td>Lead Acid</td>
+      <td>12.0</td>
+      <td>35.0</td>
+      <td>S4P3</td>
+    </tr>
+    <tr>
+      <td><code>NEC_ALM12V35</code></td>
+      <td>Lithium Ion</td>
+      <td>13.2</td>
+      <td>35.0</td>
+      <td>S4P3</td>
+    </tr>
+    <tr>
+      <td><code>VALENCE_U24_12XP</code></td>
+      <td>Lithium Ion</td>
+      <td>12.8</td>
+      <td>118.0</td>
+      <td>S4P1</td>
+    </tr>
+    <tr>
+      <td><code>VALENCE_U27_12XP</code></td>
+      <td>Lithium Ion</td>
+      <td>12.8</td>
+      <td>144.0</td>
+      <td>S4P1</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<!-- TODO: Uncomment these platforms when they are supported -->
+
+<!-- <details><summary>DD100</summary>
+<p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Battery</th>
+      <th>Chemistry</th>
+      <th>Nominal Voltage (V)</th>
+      <th>Capacity (Ah)</th>
+      <th>Configurations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>TLV1222</code></td>
+      <td>Lead Acid</td>
+      <td>12.0</td>
+      <td>22.0</td>
+      <td>S1P1</td>
+    </tr>
+    <tr>
+      <td><code>PH3054</code></td>
+      <td>Lithium Ion</td>
+      <td>14.4</td>
+      <td>33.6</td>
+      <td>S1P1</td>
+    </tr>
+  </tbody>
+</table>
+
+</p>
+</details>
+
+<details><summary>DO100</summary>
+<p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Battery</th>
+      <th>Chemistry</th>
+      <th>Nominal Voltage (V)</th>
+      <th>Capacity (Ah)</th>
+      <th>Configurations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>TLV1222</code></td>
+      <td>Lead Acid</td>
+      <td>12.0</td>
+      <td>22.0</td>
+      <td>S1P1<br/>S1P2<br/>S1P3</td>
+    </tr>
+    <tr>
+      <td><code>PH3054</code></td>
+      <td>Lithium Ion</td>
+      <td>14.4</td>
+      <td>33.6</td>
+      <td>S1P1<br/>S1P2<br/>S1P3</td>
+    </tr>
+  </tbody>
+</table>
+
+</p>
+</details>
+
+<details><summary>DD150</summary>
+<p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Battery</th>
+      <th>Chemistry</th>
+      <th>Nominal Voltage (V)</th>
+      <th>Capacity (Ah)</th>
+      <th>Configurations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>TLV1222</code></td>
+      <td>Lead Acid</td>
+      <td>12.0</td>
+      <td>22.0</td>
+      <td>S1P1</td>
+    </tr>
+    <tr>
+      <td><code>RB20</code></td>
+      <td>Lithium Ion</td>
+      <td>12.8</td>
+      <td>20.0</td>
+      <td>S1P1</td>
+    </tr>
+  </tbody>
+</table>
+
+</p>
+</details>
+
+<details><summary>DO150</summary>
+<p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Battery</th>
+      <th>Chemistry</th>
+      <th>Nominal Voltage (V)</th>
+      <th>Capacity (Ah)</th>
+      <th>Configurations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>TLV1222</code></td>
+      <td>Lead Acid</td>
+      <td>12.0</td>
+      <td>22.0</td>
+      <td>S1P1<br/>S1P2<br/>S1P3</td>
+    </tr>
+    <tr>
+      <td><code>RB20</code></td>
+      <td>Lithium Ion</td>
+      <td>12.8</td>
+      <td>20.0</td>
+      <td>S1P1<br/>S1P2<br/>S1P3</td>
+    </tr>
+  </tbody>
+</table>
+
+</p>
+</details>
+
+<details><summary>R100</summary>
+<p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Battery</th>
+      <th>Chemistry</th>
+      <th>Nominal Voltage (V)</th>
+      <th>Capacity (Ah)</th>
+      <th>Configurations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>8A31DTM</code></td>
+      <td>Lead Acid</td>
+      <td>12.0</td>
+      <td>105.0</td>
+      <td>S2P1</td>
+    </tr>
+  </tbody>
+</table>
+
+</p>
+</details> -->
