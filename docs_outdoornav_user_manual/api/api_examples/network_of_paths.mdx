@@ -15,6 +15,12 @@ of the graph itself.
 
 ![](/img/outdoornav_images/parking_lot_map.png)
 
+:::note
+
+All services in the `mission_manager` namespace are provided by OutdoorNav's `misssion_manager` node. This node is part
+of the `autonomy` docker service.
+
+:::
 
 ## Creating a map
 
@@ -583,3 +589,54 @@ connections:
 
 Note that in the process of creating the map, all of the points' UUIDs have been regenerated. This is to ensure that
 all points saved on the robot have unique identifiers.
+
+
+## Executing a mission
+
+To execute a Network of Paths mission, you need to know the UUID of the mission to execute and the UUID of the map. The
+UUIDs are generated when the objects are created, so you may need to search the available objects to determine the
+appropriate mission & map if you have more than one.
+
+```python
+from clearpath_mission_manager_msgs.msg import *
+from clearpath_mission_manager_msgs.srv import *
+
+import actionlib
+import rospy
+
+# 1) Get all of the Network of Paths maps and missions from the mission manager
+all_maps_srv = rospy.ServiceProxy("/mission_manager/get_all_network_maps", GetAllNetworkMaps)
+all_missions_srv = rospy.ServiceProxy("/mission_manager/get_all_network_missions", GetAllNetworkMissions)
+maps = all_maps_srv()
+missions = all_missions_srv()
+
+# Do a simple search for the map with the desired name
+# You can replace the name, or search for any other attribute of the NetworkMap object
+map = None
+for m in maps:
+    if m.name == "My Map":
+        map = m
+        break
+
+# As above, but looking for the desired mission instead of the desired map
+mission = None
+for m in missions:
+    if m.name == "My Mission":
+        mission = m
+        break
+
+
+# we have the map & the mission; we can run the mission
+if map and mission:
+    # 1) create the actionlib client
+    mission_execution_client = actionlib.SimpleActionClient("/autonomy/network_mission", ExecuteNetworkMissionByUuidAction)
+
+    # 2) create the goal
+    goal = ExecuteNetworkMissionByUuidGoal(mission.uuid, map.uuid)
+
+    # 3) send the goal to the server
+    mission_execution_client.send_goal(goal)
+
+    # 4) Wait for the mission to finish executing
+    mission_execution_client.wait_for_result()
+```
