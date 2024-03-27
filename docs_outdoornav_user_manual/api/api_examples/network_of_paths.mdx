@@ -64,8 +64,8 @@ from clearpath_mission_manager_msgs.msg import *
 from clearpath_mission_manager_msgs.srv import *
 from clearpath_navigation_msgs.msg import *
 
-# A tuple of TAG, lat, lon, alt
-# Generated with Google Earth -- the altitude is not used
+# A tuple of (TAG, longitude, latitude, altitude), copied from a Google Earth KML file
+# Tags are added manually to identify each coordinate
 # The tag is used as a placeholder for the generated UUIDs to simplify defining the edges ourselves
 COORDINATES = [
   ("A", -97.28322817327727,50.12300747122199,0),
@@ -101,7 +101,7 @@ map = map_maker_service(
   # This is just a simple array of NetworkPoint objects. Each must have a unique ID, a one-letter tag in this
   # example
   [
-    NetworkPoint(c[0], c[1], c[2]) for c in COORDINATES
+    NetworkPoint(c[1], c[0], c[2]) for c in COORDINATES  # Note that NetworkPoint uses latitude first!
   ],
 
   # The edges. This defines the geometry of the map
@@ -154,434 +154,431 @@ map = map_maker_service(
 print(map)
 ```
 
-This example produces a graph that looks like this when viewed on a satellite map:
-![](/img/outdoornav_images/network-map-google-earth.png)
-
 The program's output looks like this:
 ```yaml
 name: "Example Map"
-uuid: "c7415337-e38c-4873-b3b9-e05866e49742"
+uuid: "3b3bed4e-bcfb-40d4-bc2e-3d5e904890cf"
 default_radius: 2.5
 default_speed_limit: 1.0
 points:
   -
-    uuid: "880baefc-e231-4bc2-9ffb-19817d20bd40"
-    latitude: -97.28322817327727
-    longitude: 50.12300747122199
+    uuid: "1bef3d7d-3ead-49c7-9306-ede6c4030ebb"
+    latitude: 50.12300747122199
+    longitude: -97.28322817327727
   -
-    uuid: "bd74fc37-8693-4b6f-8ac0-b7fce244f109"
-    latitude: -97.2821752564302
-    longitude: 50.12171056479555
+    uuid: "a56eb1c5-3bee-4d4a-84e0-780651db67cd"
+    latitude: 50.12171056479555
+    longitude: -97.2821752564302
   -
-    uuid: "d42d8d86-041a-46c9-af50-d0311617dc53"
-    latitude: -97.28326793963477
-    longitude: 50.11981930442499
+    uuid: "1efac02f-8dfc-4826-a4cc-894d2cac16f9"
+    latitude: 50.11981930442499
+    longitude: -97.28326793963477
   -
-    uuid: "cf1eecc2-7238-48c8-862a-78e7f0d5e45c"
-    latitude: -97.28483408203536
-    longitude: 50.11926816962462
+    uuid: "7bd501a1-ef93-46b9-a440-213755522954"
+    latitude: 50.11926816962462
+    longitude: -97.28483408203536
   -
-    uuid: "b4853a02-ff97-49d9-b5b7-3031900f3798"
-    latitude: -97.28486964915798
-    longitude: 50.11761512315844
+    uuid: "9e6c1b11-8430-4986-9091-da440b57df85"
+    latitude: 50.11761512315844
+    longitude: -97.28486964915798
   -
-    uuid: "fd86b7a9-5f21-4cbd-9d38-6e296520655e"
-    latitude: -97.28166555083155
-    longitude: 50.11758334859005
+    uuid: "7a0d3f02-85c3-4907-9bb8-0b2245736b9b"
+    latitude: 50.11758334859005
+    longitude: -97.28166555083155
   -
-    uuid: "4c41910d-9ac6-45f7-bf9a-fe3364f3a414"
-    latitude: -97.28229122963415
-    longitude: 50.11952637327663
+    uuid: "0b289f8f-86b8-413f-b35e-cadbd5c4ef31"
+    latitude: 50.11952637327663
+    longitude: -97.28229122963415
   -
-    uuid: "d06a1126-130b-427d-a63f-0e7d2098a74c"
-    latitude: -97.28167846932446
-    longitude: 50.11913714171172
+    uuid: "6db9a882-d40b-4050-ad60-3947c4a936d0"
+    latitude: 50.11913714171172
+    longitude: -97.28167846932446
   -
-    uuid: "82831743-27b0-41cb-9cb4-111140789d9f"
-    latitude: -97.28219097560832
-    longitude: 50.11973533270263
+    uuid: "05b6fb7f-b071-4aa2-b253-1fdf942097c9"
+    latitude: 50.11973533270263
+    longitude: -97.28219097560832
   -
-    uuid: "54f78202-d436-4577-871f-7fb05edd0546"
-    latitude: -97.28249905504131
-    longitude: 50.1199092365631
+    uuid: "e77610aa-132d-45b1-83e2-0f8c9b5eafff"
+    latitude: 50.1199092365631
+    longitude: -97.28249905504131
   -
-    uuid: "b04eb783-5049-4211-a33d-0d319323d3ed"
-    latitude: -97.28242834054022
-    longitude: 50.12013941719884
+    uuid: "8a013830-fb3a-4225-84d3-946810dede60"
+    latitude: 50.12013941719884
+    longitude: -97.28242834054022
   -
-    uuid: "0aa59f14-ec21-49f7-987a-962400467c62"
-    latitude: -97.28242899160524
-    longitude: 50.12209511863426
+    uuid: "d42dd9ce-dc49-4226-ab28-18ac644da0f6"
+    latitude: 50.12209511863426
+    longitude: -97.28242899160524
   -
-    uuid: "dc4a4043-0832-4ad8-8d31-0adbfe0b7ea9"
-    latitude: -97.28246941874356
-    longitude: 50.12229616417419
+    uuid: "aa198f25-78b5-48e0-a9df-750ffb4080a5"
+    latitude: 50.12229616417419
+    longitude: -97.28246941874356
   -
-    uuid: "5e6db708-4fd2-455b-b604-502f425e0c03"
-    latitude: -97.28325139122391
-    longitude: 50.12230651895854
+    uuid: "4d6addba-73f4-4373-8e3c-0f7caf155283"
+    latitude: 50.12230651895854
+    longitude: -97.28325139122391
 connections:
   -
-    uuid: "6dcbaaed-40bf-4cb5-83d8-b0d905f9d84b"
+    uuid: "9152c6ee-6cb0-4a6a-a1a3-a156c137e10b"
     start_point:
-      uuid: "880baefc-e231-4bc2-9ffb-19817d20bd40"
-      latitude: -97.28322817327727
-      longitude: 50.12300747122199
+      uuid: "1bef3d7d-3ead-49c7-9306-ede6c4030ebb"
+      latitude: 50.12300747122199
+      longitude: -97.28322817327727
     end_point:
-      uuid: "bd74fc37-8693-4b6f-8ac0-b7fce244f109"
-      latitude: -97.2821752564302
-      longitude: 50.12171056479555
+      uuid: "a56eb1c5-3bee-4d4a-84e0-780651db67cd"
+      latitude: 50.12171056479555
+      longitude: -97.2821752564302
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "351bfc55-85e8-4336-8179-b7206cdb5636"
+    uuid: "af77ee8c-9460-4c4a-bb23-d8eab4877bd8"
     start_point:
-      uuid: "bd74fc37-8693-4b6f-8ac0-b7fce244f109"
-      latitude: -97.2821752564302
-      longitude: 50.12171056479555
+      uuid: "a56eb1c5-3bee-4d4a-84e0-780651db67cd"
+      latitude: 50.12171056479555
+      longitude: -97.2821752564302
     end_point:
-      uuid: "880baefc-e231-4bc2-9ffb-19817d20bd40"
-      latitude: -97.28322817327727
-      longitude: 50.12300747122199
+      uuid: "1bef3d7d-3ead-49c7-9306-ede6c4030ebb"
+      latitude: 50.12300747122199
+      longitude: -97.28322817327727
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "3da53c42-e252-40c8-a7ab-b58397209055"
+    uuid: "077e176e-531a-4afa-9c55-48496ddb19a3"
     start_point:
-      uuid: "bd74fc37-8693-4b6f-8ac0-b7fce244f109"
-      latitude: -97.2821752564302
-      longitude: 50.12171056479555
+      uuid: "a56eb1c5-3bee-4d4a-84e0-780651db67cd"
+      latitude: 50.12171056479555
+      longitude: -97.2821752564302
     end_point:
-      uuid: "d42d8d86-041a-46c9-af50-d0311617dc53"
-      latitude: -97.28326793963477
-      longitude: 50.11981930442499
+      uuid: "1efac02f-8dfc-4826-a4cc-894d2cac16f9"
+      latitude: 50.11981930442499
+      longitude: -97.28326793963477
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "e3bd32ca-3fc3-4c58-8b5a-52e6d72a4eb0"
+    uuid: "8f605876-10d0-43bf-ade3-4acec11b90a4"
     start_point:
-      uuid: "d42d8d86-041a-46c9-af50-d0311617dc53"
-      latitude: -97.28326793963477
-      longitude: 50.11981930442499
+      uuid: "1efac02f-8dfc-4826-a4cc-894d2cac16f9"
+      latitude: 50.11981930442499
+      longitude: -97.28326793963477
     end_point:
-      uuid: "bd74fc37-8693-4b6f-8ac0-b7fce244f109"
-      latitude: -97.2821752564302
-      longitude: 50.12171056479555
+      uuid: "a56eb1c5-3bee-4d4a-84e0-780651db67cd"
+      latitude: 50.12171056479555
+      longitude: -97.2821752564302
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "a6a75a30-0304-45a0-8836-beb50b232d56"
+    uuid: "98cdf58f-76d1-4b00-8119-44850b20c006"
     start_point:
-      uuid: "d42d8d86-041a-46c9-af50-d0311617dc53"
-      latitude: -97.28326793963477
-      longitude: 50.11981930442499
+      uuid: "1efac02f-8dfc-4826-a4cc-894d2cac16f9"
+      latitude: 50.11981930442499
+      longitude: -97.28326793963477
     end_point:
-      uuid: "cf1eecc2-7238-48c8-862a-78e7f0d5e45c"
-      latitude: -97.28483408203536
-      longitude: 50.11926816962462
+      uuid: "7bd501a1-ef93-46b9-a440-213755522954"
+      latitude: 50.11926816962462
+      longitude: -97.28483408203536
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "4359f3a7-3893-4307-9381-639f202a58a8"
+    uuid: "94f20e66-aea9-4ea8-8029-31eba37ba800"
     start_point:
-      uuid: "cf1eecc2-7238-48c8-862a-78e7f0d5e45c"
-      latitude: -97.28483408203536
-      longitude: 50.11926816962462
+      uuid: "7bd501a1-ef93-46b9-a440-213755522954"
+      latitude: 50.11926816962462
+      longitude: -97.28483408203536
     end_point:
-      uuid: "d42d8d86-041a-46c9-af50-d0311617dc53"
-      latitude: -97.28326793963477
-      longitude: 50.11981930442499
+      uuid: "1efac02f-8dfc-4826-a4cc-894d2cac16f9"
+      latitude: 50.11981930442499
+      longitude: -97.28326793963477
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "8e8c0ce6-18ce-4fb7-ab52-7179eee3a905"
+    uuid: "356d56a0-1165-48ef-87ab-b3e289b6d275"
     start_point:
-      uuid: "cf1eecc2-7238-48c8-862a-78e7f0d5e45c"
-      latitude: -97.28483408203536
-      longitude: 50.11926816962462
+      uuid: "7bd501a1-ef93-46b9-a440-213755522954"
+      latitude: 50.11926816962462
+      longitude: -97.28483408203536
     end_point:
-      uuid: "b4853a02-ff97-49d9-b5b7-3031900f3798"
-      latitude: -97.28486964915798
-      longitude: 50.11761512315844
+      uuid: "9e6c1b11-8430-4986-9091-da440b57df85"
+      latitude: 50.11761512315844
+      longitude: -97.28486964915798
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "02b4c52e-d877-428e-ad47-9f7e93ef0d71"
+    uuid: "40438b94-fd92-4e95-bb31-1737d235c8ca"
     start_point:
-      uuid: "b4853a02-ff97-49d9-b5b7-3031900f3798"
-      latitude: -97.28486964915798
-      longitude: 50.11761512315844
+      uuid: "9e6c1b11-8430-4986-9091-da440b57df85"
+      latitude: 50.11761512315844
+      longitude: -97.28486964915798
     end_point:
-      uuid: "cf1eecc2-7238-48c8-862a-78e7f0d5e45c"
-      latitude: -97.28483408203536
-      longitude: 50.11926816962462
+      uuid: "7bd501a1-ef93-46b9-a440-213755522954"
+      latitude: 50.11926816962462
+      longitude: -97.28483408203536
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "8b823140-8ef7-4b13-b5b9-1d405d63d6ed"
+    uuid: "97e40361-123c-4f33-9dae-3bd293d5a001"
     start_point:
-      uuid: "b4853a02-ff97-49d9-b5b7-3031900f3798"
-      latitude: -97.28486964915798
-      longitude: 50.11761512315844
+      uuid: "9e6c1b11-8430-4986-9091-da440b57df85"
+      latitude: 50.11761512315844
+      longitude: -97.28486964915798
     end_point:
-      uuid: "fd86b7a9-5f21-4cbd-9d38-6e296520655e"
-      latitude: -97.28166555083155
-      longitude: 50.11758334859005
+      uuid: "7a0d3f02-85c3-4907-9bb8-0b2245736b9b"
+      latitude: 50.11758334859005
+      longitude: -97.28166555083155
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "9d733830-8ab4-4218-9dc6-ffd5bf25cb69"
+    uuid: "5ca07677-1ec9-4355-bfdb-f04801d18feb"
     start_point:
-      uuid: "fd86b7a9-5f21-4cbd-9d38-6e296520655e"
-      latitude: -97.28166555083155
-      longitude: 50.11758334859005
+      uuid: "7a0d3f02-85c3-4907-9bb8-0b2245736b9b"
+      latitude: 50.11758334859005
+      longitude: -97.28166555083155
     end_point:
-      uuid: "b4853a02-ff97-49d9-b5b7-3031900f3798"
-      latitude: -97.28486964915798
-      longitude: 50.11761512315844
+      uuid: "9e6c1b11-8430-4986-9091-da440b57df85"
+      latitude: 50.11761512315844
+      longitude: -97.28486964915798
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "e1580163-744d-4619-a0a8-041ae37f81c8"
+    uuid: "ac299ea0-18f0-42ed-ab82-01c4789c979d"
     start_point:
-      uuid: "fd86b7a9-5f21-4cbd-9d38-6e296520655e"
-      latitude: -97.28166555083155
-      longitude: 50.11758334859005
+      uuid: "7a0d3f02-85c3-4907-9bb8-0b2245736b9b"
+      latitude: 50.11758334859005
+      longitude: -97.28166555083155
     end_point:
-      uuid: "4c41910d-9ac6-45f7-bf9a-fe3364f3a414"
-      latitude: -97.28229122963415
-      longitude: 50.11952637327663
+      uuid: "0b289f8f-86b8-413f-b35e-cadbd5c4ef31"
+      latitude: 50.11952637327663
+      longitude: -97.28229122963415
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "61d0257f-f707-4f7c-bc9d-d32ed71898f5"
+    uuid: "754ad065-c3e8-41de-b0c2-a32e7247db40"
     start_point:
-      uuid: "4c41910d-9ac6-45f7-bf9a-fe3364f3a414"
-      latitude: -97.28229122963415
-      longitude: 50.11952637327663
+      uuid: "0b289f8f-86b8-413f-b35e-cadbd5c4ef31"
+      latitude: 50.11952637327663
+      longitude: -97.28229122963415
     end_point:
-      uuid: "fd86b7a9-5f21-4cbd-9d38-6e296520655e"
-      latitude: -97.28166555083155
-      longitude: 50.11758334859005
+      uuid: "7a0d3f02-85c3-4907-9bb8-0b2245736b9b"
+      latitude: 50.11758334859005
+      longitude: -97.28166555083155
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "3bd2ede5-85ba-4b46-816d-6fd269c6f4f9"
+    uuid: "dcd5ca9f-5ad7-4404-a6a2-c5ab8b3bb0f5"
     start_point:
-      uuid: "4c41910d-9ac6-45f7-bf9a-fe3364f3a414"
-      latitude: -97.28229122963415
-      longitude: 50.11952637327663
+      uuid: "0b289f8f-86b8-413f-b35e-cadbd5c4ef31"
+      latitude: 50.11952637327663
+      longitude: -97.28229122963415
     end_point:
-      uuid: "d06a1126-130b-427d-a63f-0e7d2098a74c"
-      latitude: -97.28167846932446
-      longitude: 50.11913714171172
+      uuid: "6db9a882-d40b-4050-ad60-3947c4a936d0"
+      latitude: 50.11913714171172
+      longitude: -97.28167846932446
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "10763184-8113-4d46-a6cb-6426666ea7c5"
+    uuid: "66884078-ab62-439b-be51-3446cf92809e"
     start_point:
-      uuid: "d06a1126-130b-427d-a63f-0e7d2098a74c"
-      latitude: -97.28167846932446
-      longitude: 50.11913714171172
+      uuid: "6db9a882-d40b-4050-ad60-3947c4a936d0"
+      latitude: 50.11913714171172
+      longitude: -97.28167846932446
     end_point:
-      uuid: "4c41910d-9ac6-45f7-bf9a-fe3364f3a414"
-      latitude: -97.28229122963415
-      longitude: 50.11952637327663
+      uuid: "0b289f8f-86b8-413f-b35e-cadbd5c4ef31"
+      latitude: 50.11952637327663
+      longitude: -97.28229122963415
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "fbb1f3da-165b-42c8-9fd4-07e6228af585"
+    uuid: "948eca22-3bf2-443a-b117-a551c6503c2a"
     start_point:
-      uuid: "d06a1126-130b-427d-a63f-0e7d2098a74c"
-      latitude: -97.28167846932446
-      longitude: 50.11913714171172
+      uuid: "6db9a882-d40b-4050-ad60-3947c4a936d0"
+      latitude: 50.11913714171172
+      longitude: -97.28167846932446
     end_point:
-      uuid: "d42d8d86-041a-46c9-af50-d0311617dc53"
-      latitude: -97.28326793963477
-      longitude: 50.11981930442499
+      uuid: "1efac02f-8dfc-4826-a4cc-894d2cac16f9"
+      latitude: 50.11981930442499
+      longitude: -97.28326793963477
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "4019eacc-ebe7-4c76-8a40-58e4ecdd6dc3"
+    uuid: "9e445547-0e42-4ba4-8411-6228288d3ae8"
     start_point:
-      uuid: "d06a1126-130b-427d-a63f-0e7d2098a74c"
-      latitude: -97.28167846932446
-      longitude: 50.11913714171172
+      uuid: "6db9a882-d40b-4050-ad60-3947c4a936d0"
+      latitude: 50.11913714171172
+      longitude: -97.28167846932446
     end_point:
-      uuid: "d42d8d86-041a-46c9-af50-d0311617dc53"
-      latitude: -97.28326793963477
-      longitude: 50.11981930442499
+      uuid: "1efac02f-8dfc-4826-a4cc-894d2cac16f9"
+      latitude: 50.11981930442499
+      longitude: -97.28326793963477
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "20fe3bb2-4a03-4070-b19b-f52a732e8f66"
+    uuid: "d15e27d7-e4aa-479c-b9bf-705c70ccbdfc"
     start_point:
-      uuid: "d06a1126-130b-427d-a63f-0e7d2098a74c"
-      latitude: -97.28167846932446
-      longitude: 50.11913714171172
+      uuid: "6db9a882-d40b-4050-ad60-3947c4a936d0"
+      latitude: 50.11913714171172
+      longitude: -97.28167846932446
     end_point:
-      uuid: "82831743-27b0-41cb-9cb4-111140789d9f"
-      latitude: -97.28219097560832
-      longitude: 50.11973533270263
+      uuid: "05b6fb7f-b071-4aa2-b253-1fdf942097c9"
+      latitude: 50.11973533270263
+      longitude: -97.28219097560832
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "c8182336-ecb6-42e2-a92a-f7f2614614cb"
+    uuid: "1295c8da-65df-4b5b-a214-f7579ad7179d"
     start_point:
-      uuid: "82831743-27b0-41cb-9cb4-111140789d9f"
-      latitude: -97.28219097560832
-      longitude: 50.11973533270263
+      uuid: "05b6fb7f-b071-4aa2-b253-1fdf942097c9"
+      latitude: 50.11973533270263
+      longitude: -97.28219097560832
     end_point:
-      uuid: "d06a1126-130b-427d-a63f-0e7d2098a74c"
-      latitude: -97.28167846932446
-      longitude: 50.11913714171172
+      uuid: "6db9a882-d40b-4050-ad60-3947c4a936d0"
+      latitude: 50.11913714171172
+      longitude: -97.28167846932446
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "603da4f2-9d6f-4ded-8441-e50a3abaf1b7"
+    uuid: "be0f8c9f-0f42-4f9a-9140-050ac617cd10"
     start_point:
-      uuid: "82831743-27b0-41cb-9cb4-111140789d9f"
-      latitude: -97.28219097560832
-      longitude: 50.11973533270263
+      uuid: "05b6fb7f-b071-4aa2-b253-1fdf942097c9"
+      latitude: 50.11973533270263
+      longitude: -97.28219097560832
     end_point:
-      uuid: "54f78202-d436-4577-871f-7fb05edd0546"
-      latitude: -97.28249905504131
-      longitude: 50.1199092365631
+      uuid: "e77610aa-132d-45b1-83e2-0f8c9b5eafff"
+      latitude: 50.1199092365631
+      longitude: -97.28249905504131
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "54e76de3-0d22-4cf7-b261-7e8c977bd02d"
+    uuid: "6b1a04c8-e5d9-441d-b7d2-5426070d210f"
     start_point:
-      uuid: "54f78202-d436-4577-871f-7fb05edd0546"
-      latitude: -97.28249905504131
-      longitude: 50.1199092365631
+      uuid: "e77610aa-132d-45b1-83e2-0f8c9b5eafff"
+      latitude: 50.1199092365631
+      longitude: -97.28249905504131
     end_point:
-      uuid: "82831743-27b0-41cb-9cb4-111140789d9f"
-      latitude: -97.28219097560832
-      longitude: 50.11973533270263
+      uuid: "05b6fb7f-b071-4aa2-b253-1fdf942097c9"
+      latitude: 50.11973533270263
+      longitude: -97.28219097560832
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "f0b0e70b-02d3-42bc-804c-669fa87a2282"
+    uuid: "bee2318d-0e19-427b-aa15-a5aa195212be"
     start_point:
-      uuid: "54f78202-d436-4577-871f-7fb05edd0546"
-      latitude: -97.28249905504131
-      longitude: 50.1199092365631
+      uuid: "e77610aa-132d-45b1-83e2-0f8c9b5eafff"
+      latitude: 50.1199092365631
+      longitude: -97.28249905504131
     end_point:
-      uuid: "b04eb783-5049-4211-a33d-0d319323d3ed"
-      latitude: -97.28242834054022
-      longitude: 50.12013941719884
+      uuid: "8a013830-fb3a-4225-84d3-946810dede60"
+      latitude: 50.12013941719884
+      longitude: -97.28242834054022
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "c6c1d2fb-6544-49c4-a35c-868a4c84f961"
+    uuid: "159619a1-9a8e-41d0-b41b-918b187ac70c"
     start_point:
-      uuid: "b04eb783-5049-4211-a33d-0d319323d3ed"
-      latitude: -97.28242834054022
-      longitude: 50.12013941719884
+      uuid: "8a013830-fb3a-4225-84d3-946810dede60"
+      latitude: 50.12013941719884
+      longitude: -97.28242834054022
     end_point:
-      uuid: "54f78202-d436-4577-871f-7fb05edd0546"
-      latitude: -97.28249905504131
-      longitude: 50.1199092365631
+      uuid: "e77610aa-132d-45b1-83e2-0f8c9b5eafff"
+      latitude: 50.1199092365631
+      longitude: -97.28249905504131
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "7000fc4b-abaf-446d-9aa5-1a53dec03c40"
+    uuid: "79e510bd-5f24-4251-9169-995f30212966"
     start_point:
-      uuid: "bd74fc37-8693-4b6f-8ac0-b7fce244f109"
-      latitude: -97.2821752564302
-      longitude: 50.12171056479555
+      uuid: "a56eb1c5-3bee-4d4a-84e0-780651db67cd"
+      latitude: 50.12171056479555
+      longitude: -97.2821752564302
     end_point:
-      uuid: "0aa59f14-ec21-49f7-987a-962400467c62"
-      latitude: -97.28242899160524
-      longitude: 50.12209511863426
+      uuid: "d42dd9ce-dc49-4226-ab28-18ac644da0f6"
+      latitude: 50.12209511863426
+      longitude: -97.28242899160524
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "0bfc3979-27ea-4fae-b7fa-607a87c3efaa"
+    uuid: "720679a5-2eda-4f21-b430-9ea34be3076d"
     start_point:
-      uuid: "0aa59f14-ec21-49f7-987a-962400467c62"
-      latitude: -97.28242899160524
-      longitude: 50.12209511863426
+      uuid: "d42dd9ce-dc49-4226-ab28-18ac644da0f6"
+      latitude: 50.12209511863426
+      longitude: -97.28242899160524
     end_point:
-      uuid: "bd74fc37-8693-4b6f-8ac0-b7fce244f109"
-      latitude: -97.2821752564302
-      longitude: 50.12171056479555
+      uuid: "a56eb1c5-3bee-4d4a-84e0-780651db67cd"
+      latitude: 50.12171056479555
+      longitude: -97.2821752564302
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "b4950981-1613-4a40-b5aa-ac48e5000185"
+    uuid: "40fdd435-c7da-4e91-895b-e3dd3c872dbd"
     start_point:
-      uuid: "0aa59f14-ec21-49f7-987a-962400467c62"
-      latitude: -97.28242899160524
-      longitude: 50.12209511863426
+      uuid: "d42dd9ce-dc49-4226-ab28-18ac644da0f6"
+      latitude: 50.12209511863426
+      longitude: -97.28242899160524
     end_point:
-      uuid: "dc4a4043-0832-4ad8-8d31-0adbfe0b7ea9"
-      latitude: -97.28246941874356
-      longitude: 50.12229616417419
+      uuid: "aa198f25-78b5-48e0-a9df-750ffb4080a5"
+      latitude: 50.12229616417419
+      longitude: -97.28246941874356
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "e2b8a728-cb2a-41c2-ae61-1f39015c0554"
+    uuid: "fff60db8-90ce-484b-ba44-a0637263f727"
     start_point:
-      uuid: "dc4a4043-0832-4ad8-8d31-0adbfe0b7ea9"
-      latitude: -97.28246941874356
-      longitude: 50.12229616417419
+      uuid: "aa198f25-78b5-48e0-a9df-750ffb4080a5"
+      latitude: 50.12229616417419
+      longitude: -97.28246941874356
     end_point:
-      uuid: "0aa59f14-ec21-49f7-987a-962400467c62"
-      latitude: -97.28242899160524
-      longitude: 50.12209511863426
+      uuid: "d42dd9ce-dc49-4226-ab28-18ac644da0f6"
+      latitude: 50.12209511863426
+      longitude: -97.28242899160524
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "a2ecadab-942f-4bfb-8b2f-859ee27b5dfa"
+    uuid: "995875bd-55dd-418b-81cc-72f3d957d119"
     start_point:
-      uuid: "dc4a4043-0832-4ad8-8d31-0adbfe0b7ea9"
-      latitude: -97.28246941874356
-      longitude: 50.12229616417419
+      uuid: "aa198f25-78b5-48e0-a9df-750ffb4080a5"
+      latitude: 50.12229616417419
+      longitude: -97.28246941874356
     end_point:
-      uuid: "5e6db708-4fd2-455b-b604-502f425e0c03"
-      latitude: -97.28325139122391
-      longitude: 50.12230651895854
+      uuid: "4d6addba-73f4-4373-8e3c-0f7caf155283"
+      latitude: 50.12230651895854
+      longitude: -97.28325139122391
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
   -
-    uuid: "818bd191-4d85-4f95-9aeb-de769a2e1c71"
+    uuid: "9fc59ccd-75a7-4b0a-ab3e-d3c6e9bd9fb9"
     start_point:
-      uuid: "5e6db708-4fd2-455b-b604-502f425e0c03"
-      latitude: -97.28325139122391
-      longitude: 50.12230651895854
+      uuid: "4d6addba-73f4-4373-8e3c-0f7caf155283"
+      latitude: 50.12230651895854
+      longitude: -97.28325139122391
     end_point:
-      uuid: "dc4a4043-0832-4ad8-8d31-0adbfe0b7ea9"
-      latitude: -97.28246941874356
-      longitude: 50.12229616417419
+      uuid: "aa198f25-78b5-48e0-a9df-750ffb4080a5"
+      latitude: 50.12229616417419
+      longitude: -97.28246941874356
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
@@ -590,6 +587,131 @@ connections:
 Note that in the process of creating the map, all of the points' UUIDs have been regenerated. This is to ensure that
 all points saved on the robot have unique identifiers.
 
+### Getting the coordinates for vertices
+
+The coordinates for the vertices in the example above were generated by drawing the desired paths using Google Earth's
+path tool. The project was exported as a KML file, which can be opened in a text editor:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+  <name>Untitled</name>
+  <gx:CascadingStyle kml:id="__managed_style_1EF00888ED2FB5E604EF">
+    <Style>
+      <IconStyle>
+        <Icon>
+          <href>https://earth.google.com/earth/rpc/cc/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+        </Icon>
+        <hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+      </LabelStyle>
+      <LineStyle>
+        <color>ff2dc0fb</color>
+        <width>4</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>40ffffff</color>
+      </PolyStyle>
+      <BalloonStyle>
+        <displayMode>hide</displayMode>
+      </BalloonStyle>
+    </Style>
+  </gx:CascadingStyle>
+  <gx:CascadingStyle kml:id="__managed_style_2832AC86D92FB5E604EF">
+    <Style>
+      <IconStyle>
+        <scale>1.2</scale>
+        <Icon>
+          <href>https://earth.google.com/earth/rpc/cc/icon?color=1976d2&amp;id=2000&amp;scale=4</href>
+        </Icon>
+        <hotSpot x="64" y="128" xunits="pixels" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+      </LabelStyle>
+      <LineStyle>
+        <color>ff2dc0fb</color>
+        <width>6</width>
+      </LineStyle>
+      <PolyStyle>
+        <color>40ffffff</color>
+      </PolyStyle>
+      <BalloonStyle>
+        <displayMode>hide</displayMode>
+      </BalloonStyle>
+    </Style>
+  </gx:CascadingStyle>
+  <StyleMap id="__managed_style_08F931B1C22FB5E604EF">
+    <Pair>
+      <key>normal</key>
+      <styleUrl>#__managed_style_1EF00888ED2FB5E604EF</styleUrl>
+    </Pair>
+    <Pair>
+      <key>highlight</key>
+      <styleUrl>#__managed_style_2832AC86D92FB5E604EF</styleUrl>
+    </Pair>
+  </StyleMap>
+  <Placemark id="00CEDFEAA82F6E7DC6A6">
+    <name>Main Path</name>
+    <LookAt>
+      <longitude>-97.28114320519418</longitude>
+      <latitude>50.1207190898435</latitude>
+      <altitude>255.3655780539208</altitude>
+      <heading>1.174355479883316</heading>
+      <tilt>0</tilt>
+      <gx:fovy>35</gx:fovy>
+      <range>1653.897493233089</range>
+      <altitudeMode>absolute</altitudeMode>
+    </LookAt>
+    <styleUrl>#__managed_style_08F931B1C22FB5E604EF</styleUrl>
+    <LineString>
+      <coordinates>
+        -97.28322817327727,50.12300747122199,0 -97.28326793963477,50.11981930442499,0 -97.28483408203536,50.11926816962462,0 -97.28486964915798,50.11761512315844,0 -97.28166555083155,50.11758334859005,0 -97.28167846932446,50.11913714171172,0 -97.28229122963415,50.11952637327663,0 -97.28219097560832,50.11973533270263,0 -97.28249905504131,50.1199092365631,0 -97.28242834054022,50.12013941719884,0
+      </coordinates>
+    </LineString>
+  </Placemark>
+  <Placemark id="0DDE7678C62F6E7DF885">
+    <name>Side Path</name>
+    <LookAt>
+      <longitude>-97.28114320516248</longitude>
+      <latitude>50.1207190898435</latitude>
+      <altitude>255.3655780539208</altitude>
+      <heading>1.174355479883316</heading>
+      <tilt>0</tilt>
+      <gx:fovy>35</gx:fovy>
+      <range>1653.897493233089</range>
+      <altitudeMode>absolute</altitudeMode>
+    </LookAt>
+    <styleUrl>#__managed_style_08F931B1C22FB5E604EF</styleUrl>
+    <LineString>
+      <coordinates>
+        -97.28217525643019,50.12171056479555,0 -97.28242899160524,50.12209511863426,0 -97.28246941874356,50.12229616417419,0 -97.28325139122391,50.12230651895854,0
+      </coordinates>
+    </LineString>
+  </Placemark>
+</Document>
+</kml>
+```
+
+![](/img/outdoornav_images/network-map-google-earth.png)
+
+The `<coordinate>` tags contain space-separated lists of the form `lon_0,lat_0,alt_0 lon_1,lat_1,alt_1 lon_2,lat_2,alt_2 ...`.
+By copying these lists into Python and converting them to Lists or Tuples you can create the lists of coordinates:
+
+```python
+# KML coordinates:
+# <coordinates>
+#   -97.28217525643019,50.12171056479555,0 -97.28242899160524,50.12209511863426,0 -97.28246941874356,50.12229616417419,0 -97.28325139122391,50.12230651895854,0
+# </coordinates>
+
+lon_lat_alt = [
+  (-97.28217525643019, 50.12171056479555, 0),
+  (-97.28242899160524, 50.12209511863426, 0),
+  (-97.28246941874356, 50.12229616417419, 0),
+  (-97.28325139122391, 50.12230651895854, 0)
+]
+```
 
 ## Executing a mission
 
