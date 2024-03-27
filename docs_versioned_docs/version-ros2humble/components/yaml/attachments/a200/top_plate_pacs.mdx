@@ -10,15 +10,18 @@
 <td>
 
 ```yaml
-attachments:
-  - name: top_plate
-    type: a200.top_plate
-    model: pacs
-    parent: mid_mount
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    enabled: true
+platform:
+  attachments:
+    - name: top_plate
+      type: a200.top_plate
+      model: pacs
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      enabled: true
 ```
 </td>
 </tr>
 </table>
+
+Attach accessories to the top plate mounts by setting the accessory's `parent` parameter to one of the grid mounting locations displayed above. The grid mounting locations span from `top_plate_mount_a1` to `top_plate_mount_g8`, where the front left-most location is the `a1` mount and the bottom right-most location is the `g8` mount. The letters correspond to the columns and the number to the rows.

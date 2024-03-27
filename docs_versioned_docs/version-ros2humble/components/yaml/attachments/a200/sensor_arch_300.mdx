@@ -10,15 +10,18 @@
 <td>
 
 ```yaml
-attachments:
-  - name: sensor_arch
-    type: a200.sensor_arch
-    model: sensor_arch_300
-    parent: mid_mount
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    enabled: true
+platform:
+  attachments:
+    - name: sensor_arch
+      type: a200.sensor_arch
+      model: sensor_arch_300
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      enabled: true
 ```
 </td>
 </tr>
 </table>
+
+Attach accessories to the sensor arch mount by setting the accessory's `parent` parameter to `arch_sensor_mount`.

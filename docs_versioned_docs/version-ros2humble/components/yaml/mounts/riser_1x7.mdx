@@ -10,14 +10,19 @@
 <td>
 
 ```yaml
-riser:
-  - parent: top_plate_mount_a1
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    rows: 1 # rows of 80mm x 80mm grid
-    columns: 7 # columns of 80mm x 80mm grid
-    thickness: 0.00635
+mounts:
+  riser:
+    - parent: top_plate_mount_a1
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      rows: 1 # rows of 80mm x 80mm grid
+      columns: 7 # columns of 80mm x 80mm grid
+      thickness: 0.00635
 ```
 </td>
 </tr>
 </table>
+
+Attach an accessory to the riser by setting the accessory's `parent` parameter to one of the mounts, `riser_0_mount_a1` to `riser_0_mount_g1`.
+
+The mounting location names are based of the existing grid. If the riser is added to the second row instead by setting the `parent` parameter to `top_plate_mount_a2`, then the mounts will be named `riser_0_mount_a2` to `riser_0_mount_g1`.

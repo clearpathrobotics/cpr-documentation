@@ -10,12 +10,15 @@
 <td>
 
 ```yaml
-bracket:
-  - parent: base_link
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    model: large
+mounts:
+  bracket:
+    - parent: base_link
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      model: large
 ```
 </td>
 </tr>
 </table>
+
+Attach an accessory to the large bracket by setting the accessory's `parent` parameter to `bracket_0_mount`.

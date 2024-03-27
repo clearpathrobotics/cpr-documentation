@@ -10,14 +10,19 @@
 <td>
 
 ```yaml
-riser:
-  - parent: top_plate_mount_a1
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    rows: 8 # rows of 80mm x 80mm grid
-    columns: 7 # columns of 80mm x 80mm grid
-    thickness: 0.00635
+mounts:
+  riser:
+    - parent: top_plate_mount_a1
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      rows: 8 # rows of 80mm x 80mm grid
+      columns: 7 # columns of 80mm x 80mm grid
+      thickness: 0.00635
 ```
 </td>
 </tr>
 </table>
+
+Attach an accessory to the riser by setting the accessory's `parent` parameter to one of the mounts, `riser_0_mount_a1` to `riser_0_mount_g8`.
+
+It is not recommended to change the parent link of the 8 x 7 riser as it will not align with the top plate.

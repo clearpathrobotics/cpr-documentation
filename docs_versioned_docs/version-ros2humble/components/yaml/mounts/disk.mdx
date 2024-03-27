@@ -10,11 +10,14 @@
 <td>
 
 ```yaml
-disk:
-  - parent: base_link
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
+mounts:
+  disk:
+    - parent: base_link
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
 ```
 </td>
 </tr>
 </table>
+
+Attach an accessory to the disk post mount by setting the accessory's `parent` parameter to `disk_0_mount`.

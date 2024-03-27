@@ -10,14 +10,17 @@
 <td>
 
 ```yaml
-attachments:
-  - name: arm_mount
-    type: arm_mount
-    parent: default_mount
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    enabled: true
+platform:
+  attachments:
+    - name: arm_plate
+      type: w200.arm_plate
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      enabled: true
 ```
 </td>
 </tr>
 </table>
+
+Attach accessories to the arm plate mount by setting the accessory's `parent` parameter to `arm_plate_mount`. The mount is displayed as an axis in the image above.

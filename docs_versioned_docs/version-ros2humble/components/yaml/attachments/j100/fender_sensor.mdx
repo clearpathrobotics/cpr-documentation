@@ -10,22 +10,25 @@
 <td>
 
 ```yaml
-attachments:
-  - name: front_fender
-    type: fender
-    model: sensor
-    parent: base_link
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    enabled: true
-  - name: rear_fender
-    type: fender
-    model: sensor
-    parent: base_link
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 3.1415]
-    enabled: true
+platform:
+  attachments:
+    - name: front_fender
+      type: j100.fender
+      model: sensor
+      parent: base_link
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      enabled: true
+    - name: rear_fender
+      type: j100.fender
+      model: sensor
+      parent: base_link
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 3.1415]
+      enabled: true
 ```
 </td>
 </tr>
 </table>
+
+Attach accessories to the front and rear fender mounts by setting the accessory's `parent` parameter to `front_fender_mount` or `rear_fender_mount`. The mounts are displayed as axes in the image above.
