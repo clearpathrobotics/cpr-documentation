@@ -7,8 +7,8 @@ toc_max_heading_level: 4
 ---
 
 import ClearpathFirmware from "../../components/_clearpath_firmware.mdx";
-import StandardClearpathBridgeSetup from "../../components/_standard_clearpath_bridge_setup.mdx";
-import ComputerNetworkingSetupInstall from "../../components/_computer_networking_setup_install.mdx";
+import StandardClearpathBridgeSetup from "../../components/networking/_standard_clearpath_bridge_setup.mdx";
+import ComputerNetworkingSetupInstall from "../../components/networking/_computer_networking_setup_install.mdx";
 
 ## Operating System (OS) {#operating-system}
 
@@ -65,7 +65,7 @@ SSID, and `PASSWORD_GOES_HERE` with your Wi-Fi password.
 Save the file and call `sudo netplan apply` to apply the changes. Check `ip a` again to make sure that
 an IP address has been assigned to your Wi-Fi interface.
 
-You should now be able to SSH into the robot by calling `ssh administrator@<robot_ip>` from a remote computer.
+You should now be able to SSH into the robot by calling `ssh administrator@<robot_ip>` from an offboard computer.
 
 :::note
 
@@ -79,7 +79,7 @@ Replace `<interface>` with the name of your disabled Wi-Fi interface.
 The robot's computer can also be connected to a DHCP network over Ethernet. Connect an Ethernet cable
 to the built-in Ethernet port on the robot's computer and check that an IP has been assigned with `ip a`.
 
-You should now be able to SSH into the robot by calling `ssh administrator@<robot_ip>` from a remote computer.
+You should now be able to SSH into the robot by calling `ssh administrator@<robot_ip>` from an offboard computer.
 
 ## Firmware Update
 

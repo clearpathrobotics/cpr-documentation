@@ -5,6 +5,8 @@ sidebar_position: 5
 toc_min_heading_level: 2
 toc_max_heading_level: 5
 ---
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 Despite all current customization options, we still would like our users to be able to add-in their existing custom URDF to the robot platform URDF and pass in and overwrite parameters to all platform nodes.
 Extras have the following entries:
@@ -19,6 +21,9 @@ extras:
   urdf:
     package: package_name
     path: relative/path/to/urdf/in/package.urdf.xacro # or can contain /absolute/path/to/urdf.urdf.xacro
+  launch:
+    package: package_name
+    path: relative/path/to/launch/in/package.launch.py
   ros_parameters: {} # node parameters, see below
 ```
 
@@ -30,8 +35,10 @@ Remember, absolute paths start with `/` and relative paths do not.
 A common use case is to set and update the parameters to the `platform_velocity_controller` node. These can be used to modify the linear and angular velocity and acceleratation.
 
 These can be passed in as follows:
+<Tabs groupId="platform">
+  <TabItem value="A200" label="A200" default>
 
-#### A200 Husky Parameters:
+**A200 Husky Controller Defaults:**
 ```yaml
 platform:
   extras:
@@ -47,9 +54,11 @@ platform:
         angular.z.max_acceleration: 6.0
         angular.z.min_acceleration: -6.0
 ```
-<br/>
 
-#### J100 Jackal Parameters:
+  </TabItem>
+  <TabItem value="J100" label="J100">
+
+**J100 Jackal Controller Defaults:**
 ```yaml
 platform:
   extras:
@@ -65,9 +74,11 @@ platform:
         angular.z.max_acceleration: 25.0
         angular.z.min_acceleration: -25.0
 ```
-<br/>
 
-#### W200 Warthog Parameters:
+  </TabItem>
+  <TabItem value="W200" label="W200">
+
+**W200 Warthog Controller Defaults:**
 ```yaml
 platform:
   extras:
@@ -83,4 +94,6 @@ platform:
         angular.z.max_acceleration: 40.0
         angular.z.min_acceleration: -40.0
 ```
-<br/>
+
+  </TabItem>
+</Tabs>

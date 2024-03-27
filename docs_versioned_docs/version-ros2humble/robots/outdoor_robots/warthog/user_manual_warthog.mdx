@@ -100,13 +100,13 @@ Obstruction of water flow may result in damage to the internal electrical compon
 
 The User Breakout Panel provides access to the user power panel, as well as USB, serial, and ethernet ports.
 The power panel can be used to power your payloads.
-The USB 3.0 and Ethernet ports are connected directly to the onboard PC.
+The USB 3.0 and Ethernet ports are connected directly to the onboard computer.
 To connect a device to the onboard network, it's suggested to give it a static IP in the _192.168.131.xxx_ subnet, avoiding IPs in use by the following pre-existing devices:
 
-|  IP address   | Description                                   |
-| :-----------: | :-------------------------------------------- |
-| 192.168.131.1 | Onboard PC (all ports, br0 network interface) |
-| 192.168.131.2 | Ethernet-connected MCU                        |
+|  IP address   | Description                                         |
+| :-----------: | :-------------------------------------------------- |
+| 192.168.131.1 | Onboard Computer (all ports, br0 network interface) |
+| 192.168.131.2 | Ethernet-connected MCU                              |
 
 Typically addresses numbered 192.168.131.100 and above will not collide with any of Warthog's payloads.
 Please see [Electrical Integration](integration_warthog/integration_warthog.mdx#warthog-electrical-integration) for more information.
@@ -182,7 +182,7 @@ and yaw in aircraft, and care should be taken to ensure that data is interpreted
 You are ready to go! This section details how to get Warthog into action.
 To begin, place Warthog "up on blocks", making sure that the wheels are clear of the ground.
 
-For most Warthog setups, there will be an Onboard Computer which is directly connected to the Warthog and a Remote Computer which is used to control Husky and gather data.
+For most Warthog setups, there will be an Onboard Computer which is directly connected to the Warthog and an Offboard Computer which is used to control Husky and gather data.
 These two computers must be set up to communicate with each other.
 
 ### Onboard Computer Setup

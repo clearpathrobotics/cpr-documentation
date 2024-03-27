@@ -41,7 +41,7 @@ equipment will be included per your specific configuration, plus further documen
 
 Jackal is built around a computer running Ubuntu (Intel-based computer or Jetson developer kit), paired
 with a 32-bit microcontroller MCU. The MCU handles IO, power supply monitoring and motor control, as well as supplying
-data from the integrated IMU and GPS receiver. The communication channel between the MCU and PC is a Full
+data from the integrated IMU and GPS receiver. The communication channel between the MCU and computer is a Full
 Speed USB connection, with the MCU operating as a standard serial CDC device.
 
 The communication protocol used is rosserial. An instance of the `rosserial_server` serial node is embedded
@@ -200,7 +200,7 @@ taken to ensure that data is interpreted correctly.
 You are ready to go! This section details how to get Jackal into action.
 To begin, place Jackal "up on blocks" as described in the [Safety](#safety) section, making sure that the wheels are clear of the ground.
 
-For most Jackal setups, there will be an Onboard Computer which is directly connected to the Jackal and a Remote Computer
+For most Jackal setups, there will be an Onboard Computer which is directly connected to the Jackal and an Offboard Computer
 which is used to control Jackal and gather data. These two computers must be set up to communicate with each other.
 
 ### Onboard Computer Setup
