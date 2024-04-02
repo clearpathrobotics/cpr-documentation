@@ -387,6 +387,14 @@ service instead.
 
 :::
 
+#### mission_manager/split_network_edge
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/SplitNetworkEdge](definitions.mxd#storage-splitnetworkedge)
+
+**Description:** Split an edge of network of paths map to create 2 edges connected to a new vertex between them.  If
+`symmetrical` is set to `true` the new edges will be bidirectional, otherwise only the edge going in one direction is
+split.
+
 #### mission_manager/update_mission
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/UpdateMission](definitions.mdx#storage-updatemission)
