@@ -10,12 +10,15 @@
 <td>
 
 ```yaml
-sick:
-  - parent: base_link
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    model: inverted
+mounts:
+  sick:
+    - parent: base_link
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      model: inverted
 ```
 </td>
 </tr>
 </table>
+
+Attach an accessory to the SICK mount by setting the accessory's `parent` parameter to `sick_0_mount`.

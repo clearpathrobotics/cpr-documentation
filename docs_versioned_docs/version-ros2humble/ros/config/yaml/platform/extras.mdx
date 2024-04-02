@@ -1,0 +1,99 @@
+---
+title: Extras
+sidebar_label: Extras
+sidebar_position: 5
+toc_min_heading_level: 2
+toc_max_heading_level: 5
+---
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Despite all current customization options, we still would like our users to be able to add-in their existing custom URDF to the robot platform URDF and pass in and overwrite parameters to all platform nodes.
+Extras have the following entries:
+
+- **urdf:**
+  - **package:** name of the ROS 2 package that contains the extras URDF (optional).
+  - **path:** relative path within the package or absolute path to robot extras URDF
+- **ros_parameters:** in YAML to pass in parameters to platform nodes. This is useful to change parameters such as the robot's velocity and acceleration.
+
+```yaml
+extras:
+  urdf:
+    package: package_name
+    path: relative/path/to/urdf/in/package.urdf.xacro # or can contain /absolute/path/to/urdf.urdf.xacro
+  launch:
+    package: package_name
+    path: relative/path/to/launch/in/package.launch.py
+  ros_parameters: {} # node parameters, see below
+```
+
+:::note
+Remember, absolute paths start with `/` and relative paths do not.
+:::
+
+### ROS Parameters
+A common use case is to set and update the parameters to the `platform_velocity_controller` node. These can be used to modify the linear and angular velocity and acceleratation.
+
+These can be passed in as follows:
+<Tabs groupId="platform">
+  <TabItem value="A200" label="A200" default>
+
+**A200 Husky Controller Defaults:**
+```yaml
+platform:
+  extras:
+    ros_parameters:
+      platform_velocity_controller:
+        wheel_radius: 0.1651
+        linear.x.max_velocity: 1.0
+        linear.x.min_velocity: -1.0
+        linear.x.max_acceleration: 3.0
+        linear.x.min_acceleration: -3.0
+        angular.z.max_velocity: 2.0
+        angular.z.min_velocity: -2.0
+        angular.z.max_acceleration: 6.0
+        angular.z.min_acceleration: -6.0
+```
+
+  </TabItem>
+  <TabItem value="J100" label="J100">
+
+**J100 Jackal Controller Defaults:**
+```yaml
+platform:
+  extras:
+    ros_parameters:
+      platform_velocity_controller:
+        wheel_radius: 0.098
+        linear.x.max_velocity: 2.0
+        linear.x.min_velocity: -2.0
+        linear.x.max_acceleration: 20.0
+        linear.x.min_acceleration: -20.0
+        angular.z.max_velocity: 4.0
+        angular.z.min_velocity: -4.0
+        angular.z.max_acceleration: 25.0
+        angular.z.min_acceleration: -25.0
+```
+
+  </TabItem>
+  <TabItem value="W200" label="W200">
+
+**W200 Warthog Controller Defaults:**
+```yaml
+platform:
+  extras:
+    ros_parameters:
+      platform_velocity_controller:
+        wheel_radius: 0.3
+        linear.x.max_velocity: 5.0
+        linear.x.min_velocity: -5.0
+        linear.x.max_acceleration: 50.0
+        linear.x.min_acceleration: -50.0
+        angular.z.max_velocity: 4.0
+        angular.z.min_velocity: -4.0
+        angular.z.max_acceleration: 40.0
+        angular.z.min_acceleration: -40.0
+```
+
+  </TabItem>
+</Tabs>
