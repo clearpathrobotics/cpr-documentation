@@ -12,12 +12,54 @@ import ComputerNetworkingSetupInstall from "../../components/networking/_compute
 
 ## Operating System (OS) {#operating-system}
 
-ROS 2 Humble uses [Ubuntu 22.04](https://releases.ubuntu.com/jammy/) as its Tier 1 operating system.
-Though other operating systems are supported,
-it is highly recommended to use Ubuntu 22.04. For the robot computer, Ubuntu 22.04 Server should be
-installed. The server version of the OS will not install a graphical user interface (GUI).
+ROS 2 Humble uses Ubuntu 22.04 as its Tier 1 operating system.
+Though other operating systems are supported, it is highly recommended to use Ubuntu 22.04. 
+The preferred method is using the Clearpath Robotics ISO image, which is covered in this section.
 
-When prompted, set the username to `administrator`.
+:::note
+
+The Clearpath Robotics ISO image only targets x86 computers (`amd64` architecture).
+
+:::
+
+Clearpath provides a lightly customized installation image of Ubuntu 22.04 that automatically has the needed script to setup the robot.
+To install the software on a physical robot through the Clearpath Robotics ISO image, you will first need a USB drive of at least 4 GB
+to create the installation media, an ethernet cable, a monitor, and a keyboard.
+
+1.  Download the [ROS 2 Humble ISO image](https://packages.clearpathrobotics.com/stable/images/1.0.0/).
+
+2.  Copy the image to a USB drive using `unetbootin`, `rufus`, `balena etcher`, or a similar program. For example:
+
+    ```
+    sudo unetbootin isofile="clearpath-jammy-humble-autoinstall.iso"
+    ```
+
+3.  Connect your robot computer to internet access (via wired Ethernet), a keyboard, and a monitor.
+    Make sure that the robot is connected to shore power (where applicable) or that the robot's battery is fully charged.
+
+    :::caution
+
+    The next step wipes your robot's hard drive, so make sure you have that important data backed up.
+
+    :::
+
+4.  Boot your robot computer from the USB drive and let the installer work its magic.
+
+    :::note
+
+    You may need to configure the computer's BIOS to prioritize booting from the USB drive.
+    On most common motherboards, pressing `Delete` during the initial startup will open the BIOS for configuration.
+
+    :::
+
+5.  The setup process will be automated and may take a long time depending on the speed of your internet connection.
+6.  Once the setup process is complete, the computer will turn off.
+    Please unplug the USB drive and turn the computer back on.
+7.  On first boot, the username will be `administrator` and the password will be `clearpath`.
+    You should use the `passwd` utility to change the `administrator` account password.
+8.  Log on to the computer and run `bash -e clearpath_computer_installer.sh` to install the needed software.
+    This will take a while to complete and has a prompts that must be answered.
+
 
 ## Internet Connection
 
