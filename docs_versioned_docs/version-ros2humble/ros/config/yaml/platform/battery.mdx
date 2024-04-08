@@ -1,0 +1,107 @@
+---
+title: Battery
+sidebar_label: Battery
+sidebar_position: 3
+toc_min_heading_level: 2
+toc_max_heading_level: 5
+---
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Each robot platform can support different types of batteries, and in different configurations. The configuration is how
+many batteries the robot has in series and parallel.A configuration of S2P1 indicates that there is one row of two batteries in series. S4P3
+indicates that there are 3 parallel rows of 4 batteries in series, for a total of 12 batteries.
+
+Some robots support "smart" batteries which have built in battery management system (BMS). If these batteries are specified, a corresponding driver node will
+be launched as part of the platform service. For batteries without a BMS, the [battery state estimator](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_diagnostics/clearpath_diagnostics/battery_state/battery_state_estimator)
+node will be launched. This node will interpolate the state of charge of the robot from measured battery voltages.
+
+The battery state of the platform is available on the `platform/bms/state` topic.
+
+:::note
+
+For systems without a BMS, the state of charge should be treated as a rough estimate. This is especially true with Lead Acid batteries.
+
+:::
+
+
+<Tabs groupId="platform">
+  <TabItem value="A200" label="A200" default>
+
+| Battery | Chemistry | Nominal Voltage (V) | Capacity (Ah) | Configurations |
+|:-:|:-:|:-:|:-:|:-:|
+| `ES20_12C` | Lead Acid | 12.0 | 20.0 | S2P1 |
+| `HE2613` | Lithium Ion | 25.9 | 12.8 | S1P3<br/>S1P4 |
+
+  </TabItem>
+  <TabItem value="J100" label="J100">
+
+| Battery | Chemistry | Nominal Voltage (V) | Capacity (Ah) | Configurations |
+|:-:|:-:|:-:|:-:|:-:|
+| `HE2613` | Lithium Ion | 25.9 | 12.8 | S1P1 |
+
+  </TabItem>
+  <TabItem value="W200" label="W200">
+
+| Battery | Chemistry | Nominal Voltage (V) | Capacity (Ah) | Configurations |
+|:-:|:-:|:-:|:-:|:-:|
+| `U1_35` | Lead Acid | 12.0 | 35.0 | S4P3 |
+| `NEC_ALM12V35` | Lithium Ion | 13.2 | 35.0 | S4P3 |
+| `VALENCE_U24_12XP` | Lithium Ion | 12.8 | 118.0 | S4P1 |
+| `VALENCE_U27_12XP` | Lithium Ion | 12.8 | 144.0 | S4P1 |
+
+  </TabItem>
+
+<!-- TODO: Uncomment these platforms when they are supported -->
+
+<!--
+  <TabItem value="DD100" label="DD100">
+
+| Battery | Chemistry | Nominal Voltage (V) | Capacity (Ah) | Configurations |
+|:-:|:-:|:-:|:-:|:-:|
+| `TLV1222` | Lead Acid | 12.0 | 22.0 | S1P1 |
+| `PH3054` | Lithium Ion | 14.4 | 33.6 | S1P1 |
+
+  </TabItem>
+  <TabItem value="DO100" label="DO100">
+
+| Battery | Chemistry | Nominal Voltage (V) | Capacity (Ah) | Configurations |
+|:-:|:-:|:-:|:-:|:-:|
+| `TLV1222` | Lead Acid | 12.0 | 22.0 | S1P1<br/>S1P2<br/>S1P3 |
+| `PH3054` | Lithium Ion | 14.4 | 33.6 | S1P1<br/>S1P2<br/>S1P3 |
+
+  </TabItem>
+  <TabItem value="DD150" label="DD150">
+
+| Battery | Chemistry | Nominal Voltage (V) | Capacity (Ah) | Configurations |
+|:-:|:-:|:-:|:-:|:-:|
+| `TLV1222` | Lead Acid | 12.0 | 22.0 | S1P1 |
+| `RB20` | Lithium Ion | 12.8 | 20.0 | S1P1 |
+
+  </TabItem>
+  <TabItem value="DO150" label="DO150">
+
+| Battery | Chemistry | Nominal Voltage (V) | Capacity (Ah) | Configurations |
+|:-:|:-:|:-:|:-:|:-:|
+| `TLV1222` | Lead Acid | 12.0 | 22.0 | S1P1<br/>S1P2<br/>S1P3 |
+| `RB20` | Lithium Ion | 12.8 | 20.0 | S1P1<br/>S1P2<br/>S1P3 |
+
+  </TabItem>
+  <TabItem value="R100" label="R100">
+
+| Battery | Chemistry | Nominal Voltage (V) | Capacity (Ah) | Configurations |
+|:-:|:-:|:-:|:-:|:-:|
+| `8A31DTM` | Lead Acid | 12.0 | 105.0 | S2P1 |
+
+  </TabItem>
+-->
+
+</Tabs>
+
+For example for an A200:
+
+```yaml
+battery:
+  model: ES20_12C
+  configuration: S2P1
+```

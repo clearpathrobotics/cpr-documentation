@@ -10,13 +10,16 @@
 <td>
 
 ```yaml
-post:
-  - parent: base_link
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    model: single
-    height: 0.075 # height of post
+mounts:
+  post:
+    - parent: base_link
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      model: single
+      height: 0.075 # height of post
 ```
 </td>
 </tr>
 </table>
+
+Attach an accessory to the post by setting the accessory's `parent` parameter to `post_0_mount`.

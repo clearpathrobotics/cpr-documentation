@@ -28,3 +28,8 @@ lidar2d:
 </td>
 </tr>
 </table>
+
+#### Package and Setup
+The Hokuyo UST uses the `urg_node` ROS 2 package. The driver is open source, maintained by the ROS community, and hosted on [GitHub](https://github.com/ros-drivers/urg_node).
+
+For more specifics on the way the Clearpath's configuration system launches the driver, see the Hokuyo UST [launch file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/launch/hokuyo_ust.launch.py) and the [default parameter file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/config/hokuyo_ust.yaml) in `clearpath_sensors`.
