@@ -16,6 +16,49 @@ The OutdoorNav software publishes to the topics in this section either
 all the time or while an autonomous navigation missions is running. They
 can be used to monitor the behaviour of OutdoorNav.
 
+
+#### /assisted_teleop/cmd_vel
+
+&emsp;&emsp;**Message Type:** geometry_msgs/Twist
+
+&emsp;&emsp;**Description:** The safe output velocity from the assisted teleop node
+computes. If assisted teleop is enabled the UGV will use this velocity.
+
+#### /assisted_teleop/footprint
+
+&emsp;&emsp;**Message Type:** geometry_msgs/Polygon
+
+&emsp;&emsp;**Description:** The sfootprint that the assisted teleop node uses to compute
+if it is in a collision state.
+
+#### /assisted_teleop/obstacle_map
+
+&emsp;&emsp;**Message Type:** [clearpath_safety_msgs/ObstacleMap](definitions.mdx#msg-obstacle-map)
+
+&emsp;&emsp;**Description:** The radial mapping of detected obstacles used to populate the joystick
+on the OutdoorNav UI.
+
+#### /assisted_teleop/safe_path
+
+&emsp;&emsp;**Message Type:** nav_msgs/Path
+
+&emsp;&emsp;**Description:** The path used by assisted teleop to lookahead for collisions.
+
+#### /assisted_teleop/safety_footprints
+
+&emsp;&emsp;**Message Type:** nav_msgs/Path
+
+&emsp;&emsp;**Description:** Footprint sets used for detecting obstacles and slowing
+down the robot to a standstill. The footprints are modular in size
+according to the current velocity of the robot.
+
+#### /assisted_teleop/state
+
+&emsp;&emsp;**Message Type:** [clearpath_safety_msgs/AssistedTeleopState](definitions.mdx#msg-assisted-teleop-state)
+
+&emsp;&emsp;**Description:** The current state of the assisted teleop node including
+any error conditions that may occur.
+
 #### /control_selection/control_state
 
 &emsp;&emsp;**Message Type:** [clearpath_control_msgs/ControlSelectionState](definitions.mdx#msg-control-selection-state)
@@ -116,7 +159,7 @@ Unknown space that the robot uses to detect obstacles.
 
 #### /navigation/local_plan
 
-&emsp;&emsp;**Message Type:** nav_msgs/msg/Path
+&emsp;&emsp;**Message Type:** nav_msgs/Path
 
 &emsp;&emsp;**Description:** The MPC local plan that the navigation uses to control
 the robot along the reference path.
