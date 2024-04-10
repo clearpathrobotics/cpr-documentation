@@ -18,21 +18,31 @@ methods that can be used to stop the moving UGV.
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/ui_teleop_components-0_8_0.png" />
+    <img src="/img/outdoornav_images/ui_manual_mode_page.png" />
     <figcaption>Teleoperation Components</figcaption>
   </figure>
 </center>
 
-1.  **Speedometer:** An indicator of the UGV's current forward speed.
+1.  **Error/Warning Bar:** A bar along the top of the page reporting
+    the error or warning status of the Assisted Teleoperation feature.
 2.  **Joystick:** The joystick will allow the user to move the UGV
     manually from the UI. Motion can be sent to the UGV in 360°
     directions and the speed can be controlled by the distance of the
-    joystick from its neutral position.
-3.  **Sensitivity Scale:** A UGV-specific scale that controls the
-    maximum allowable UGV velocities at each level. The maximum linear
-    velocity is 1.0 meters per second and the maximum angular velocity
-    is 0.5 radians per second. The scale levels are 100%, 80%, 50% and
-    20%, with the default set to 80%.
+    joystick from its neutral position. Four fixed direction buttons are
+    now present to move the UGV in purely forward/reverse directions or
+    clockwise/counter-clockwise. Finally, we overlay an obstacle map 
+    on top of the joystick, representing obstacle distances from the 
+    UGV.
+3.  **Speedometer:** An indicator of the UGV's current linear speed.
+4.  **Sensitivity Scale:** A UGV-specific scale that controls the
+    maximum allowable UGV velocities at each level. The default maximum 
+    linear velocity is 1.0 meters per second and the maximum angular 
+    velocity is 0.5 radians per second. These can be changed in the
+    [General Settings](./ui_overview.mdx#config-general-settings) page.
+    The scale levels are 100%, 80%, 50% and 20%, with the default set 
+    to 80%.
+5.  **Teleop Assist Toggle:** The "Teleop Assist" toggle can be used to
+    enable/disable the Assisted Teleoperation feature.
 
 ## Monitor Wireless Strength
 
