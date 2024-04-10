@@ -588,6 +588,36 @@ uint8 trigger_type
 string message
 ```
 
+#### clearpath_safety_msgs/AssistedTeleopState.msg {#msg-assisted-teleop-state}
+
+```
+# Assisted teleoperation message indicating the current state of the protection
+
+uint8 STATE_ACTIVE = 0
+uint8 STATE_DISABLED = 1
+uint8 STATE_COLLISION_IMMINENT = 2
+uint8 STATE_STOPPED = 3
+uint8 STATE_COLLISION = 4
+uint8 STATE_ERROR = 5
+uint8 state
+
+uint8 ASSIST_ON = 100
+uint8 ASSIST_OFF_SERVICE = 101
+uint8 ASSIST_OFF_JOYSTICK_OVERRIDE = 102
+uint8 ASSIST_OFF_SENSOR_TIMEOUT = 103
+uint8 assist_off_trigger
+
+string error_message
+```
+
+#### clearpath_safety_msgs/ObstacleMap.msg {#msg-obstacle-map}
+
+```
+# Assisted teleoperation message indicating the threat level of obstacles surrounding the platform
+
+float32[] threat_level
+```
+
 #### clearpath_safety_msgs/WatchdogStatus.msg {#msg-safety-watchdog}
 
 ```
@@ -947,6 +977,9 @@ bool ok
 ```
 # A list of UUIDs of items we want to delete
 string[] uuids
+
+# An optional ID of the parent object we're deleting from
+string parent_id
 ---
 # A list of UUIDs that we were asked to delete, but failed to
 string[] failed_uuids
