@@ -22,7 +22,7 @@ mode.
 </center>
 
 1.  **Menu:** A dropdown menu allowing the user to access the Dashboard
-    (ie. Home), Settings, Status, Scheduler and Help pages. The Operator 
+    (ie. Home), Settings, Status, Scheduler, Help, and File pages. The User 
     can also run the UI Virtual Tour from this menu.
 
 2.  **Feedback Bar:** The feedback bar will display information
@@ -67,44 +67,26 @@ mode.
     cellular connections a cellular indicator will appear next to the 
     wifi icon with the currently active connection being highlighted in green.
 
-10. **Views List:** A dropdown list of available views, detailed later
+10. **Stack Light:** If a Stack Light is configured for the UGV its current status 
+    will show here.  
+
+11. **Views List:** A dropdown list of available views, detailed later
     in this section. Some of the available views are Map, Camera and 3D
     views, etc.
 
-11. **Record Audio:** If the UGV is equipped with a microphone the user 
+12. **Local Docking/Undocking:** The local docking/undocking buttons used
+    to dock/undock the UGV. The UGV must have it's charging adaptor facing the dock 
+    when performing the local dock action.
+
+13. **Lights Control:** If the UGV is equipped with software controllable lights they can be 
+    controlled through a simple drop down button as well as relevant hotkeys, 
+    depending on the configuration.
+
+14. **Record Audio:** If the UGV is equipped with a microphone the user 
     can start/stop recording manually by clicking this icon.
 
-12. **Mission List:** View the list of Missions that Operator(s) have
-    created.
-
-13. **Edit Mission Toggle:** This toggle allows the Operator to start
-    creating Waypoints for the current Mission. The Operator will also be able to
-    drag and drop Waypoints in this mode. Once this button is enabled,
-    the Waypoint Mode will be available for selection. When a Mission is 
-    started this toggle will be disabled (ie. the Operator will not be able 
-    to modify/add Waypoints).
-
-    :::note
-
-    If the toggle is enabled while an autonomous Mission is running, it
-    will cancel the current Mission.
-    
-    :::
-
-14. **Waypoint Panel Toggle:** View list of Waypoints in the current Mission.
-
-15. **Waypoint Drop Button:** The Waypoint indicator marker on the
-    bottom bar allows the Operator to place a Waypoint at the location of the UGV. 
-    This action can also be triggered by using the shortcut key combination Shift + X.
-
-16. **Start Button:** Start the current Mission.
-
-17. **Pause Button:** Pause the current Mission. Pressing the start button
-    while paused will continue the current Mission.
-
-18. **Stop Button:** Cancel the Mission or Task that is currently being
-    executed. Pressing the start button while when stopped will restart
-    the list of steps in the current Mission.
+15. **Mission Execution Buttons:** These buttons allow users to Start, Pause and Stop an 
+    autonomous mission.
 
 
 By opening the dropdown list "Views", on the right side of the UI, the
@@ -113,7 +95,6 @@ Operator can access the following views:
 -   Map View
 -   PTZ Camera View (if available)
 -   Front/Back Camera View (if available)
--   3D View
 
 ## Map View
 
@@ -127,28 +108,22 @@ Operator can access the following views:
 1.  **Zoom Buttons:** These buttons allow the user to zoom in/out of the
     map levels.
 2.  **Zoom-to-Fit Button:** This button will zoom the map to where there
-    is activity (ie. where the datum is set or where Waypoints have been
+    is activity (ie. where the datum is set or where features have been
     set on the map.
-3.  **Pointer Mode Button:** This button allows the user to move the map
-    and select point on the map to see their coordinate (lat/lon or
-    x/y).
-4.  **Waypoint Mode Button:** This button allows the user to place
-    Waypoints on the map. Users can also select existing Waypoints to
-    modify/delete them.
-5.  **UGV:** The blue arrow represents the UGV. Its location is its
+3.  **UGV:** The blue arrow represents the UGV. Its location is its
     position in the world frame and its orientation is the heading in
     the world frame.
-6.  **Base Station:** The yellow antenna icon is the last known location of
+4.  **Base Station:** The yellow antenna icon is the last known location of
     the base station based on the last survey performed. By clicking it the 
     user will be presented with the base station's coordinates, when it was 
     surveyed, and how many samples were taken during the survey.
-
-7.  **Datum:** The blue Waypoint marker on the map view represents the
+5.  **Dock:** If a dock is configured for the UGV it will appear on the map in 
+    this format. When in Waypoint mode the Docks pre-dock radius will appear as 
+    a circle around the dock when in Edit Mission mode.
+6.  **Datum:** The blue Waypoint marker on the map view represents the
     location of the reference point (ie. (x,y)=(0,0)) of the world
     coordinate system. The world (ie. map) coordinate system is in the
     ENU convention.
-8.  **Scale:** The scale representing the ratio of a distance on the map
-    to the corresponding distance on the ground.
 
 ## Camera Views
 
@@ -229,7 +204,7 @@ acquired by the VLP-16 LiDAR.
 
 ## System Configuration
 
-### General Settings
+### General Settings {#config-general-settings}
 
 The General settings section can be found in through the upper left hand menu and allows the Operator to modify 
 general features of the UGV.
@@ -265,6 +240,26 @@ toggle does not disable the path deviation distance feature.
 
 If the UGV is equipped with a Low Power Module this toggle allows the user to switch the UGV into a low power state that will drastically 
 limit functionality but help conserve power. This mode is best used to help better facilitate charging while the UGV is not in use.
+
+### Aerial Overlay Settings
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_map_settings.png" />
+    <figcaption>Aerial Overlay settings</figcaption>
+  </figure>
+</center>
+
+To access the Aerial Overlay Settings: Menu → Settings → Aerial Overlay:
+
+1.  **Offset:** The map tiles used in this software are not
+    perfectly aligned with the real world. Therefore, the user may need
+    to apply an offset to the map so that the UGV's position in the
+    real world matches its position on the map.
+2.  **Change Datum:** The datum is represented by a blue marker on the
+    map and should be set to a location within 10km of the test site.
+    The user can change this value in the Map Settings page. Enter the
+    new values and click the "Set Datum" button.
 
 ### Map Source Configuration
 
@@ -421,3 +416,203 @@ below.
 Once your map tiles are available on the network, you can follow the
 steps in [Using Custom Maps](#using_custom_maps) to have the
 Web UI use your custom tiles.
+
+## Autonomous Features
+
+There are presently 2 autonomous modes that the UGV can be used in, [Waypoint Mode](ui_waypoint_mode.mdx) and [Map Mode](ui_map_mode.mdx).  
+While each mode leverages different features, some are shared and are elaborated on here. 
+
+:::note 
+
+Some objects that appear on the overlay have context menus associated with them. However there is a known issue related to opening this context menu
+between Autonomy modes. At present to open a context menu in the Waypoint Mode, left click the object, and when in Map Mode right click the object. 
+This issue will be reconciled in a future release.
+
+:::
+
+### Tasks 
+
+When running a mission autonomously the user can assign tasks to various events. These tasks, along with their decoration icons, are found below:
+
+-   <img src="/img/outdoornav_images/task_dock.png" width="30px"/> <strong>Dock Robot: </strong>
+    Will dock the UGV to begin charging the UGV's
+    battery. There are 3 kinds of docking that can be used; Network, Radius and Local. 
+    See [Autonomous Docking](#autonomous-docking) for more information on 
+    the autonomous docking feature.
+
+-   <img src="/img/outdoornav_images/movePTZTask.png" width="30px"/>  <strong>Move PTZ: </strong>
+    Will move the PTZ camera to the position selected
+    in the task settings.
+
+    Settings: Select the camera position. See
+    [Pan-Tilt-Zoom (PTZ) View](ui_overview.mdx#ptz-view) for details on how to
+    save camera positions.
+
+-   <img src="/img/outdoornav_images/task_camera.png" width="30px"/>  <strong>Save Image: </strong>
+    Will save an image using one of the UGV camera(s)
+    to the /opt/onav/saved_files/media/... directory and can be retrieved using a tool
+    such as FileZilla or by navigating to the Files section in the hamburger menu.
+
+    Settings: Select which camera the image will be saved from.
+
+-   <img src="/img/outdoornav_images/task_record.png" width="30px"/>/<img src="/img/outdoornav_images/task_stopRecord.png" width="30px"/> <strong>Start/Stop Video Recording: </strong>
+    Will start/stop recording video using one of the
+    UGV camera(s) to the /opt/onav/saved_files/media/... folder and can be retrieved
+    using a tool such as FileZilla or by navigating to the Files section in the hamburger menu.
+
+    Settings: Select which camera the recording will come from.
+
+-   <img src="/img/outdoornav_images/task_audio.png" width="30px"/> <strong>Start/Stop Audio Recording:</strong>
+    Will start/stop recording audio using one of the
+    UGV microphone(s) to the /opt/onav/saved_files/media/... folder and can be retrieved
+    using a tool such as FileZilla or by navigating to the Files section in the hamburger menu.
+
+    Settings: Select which microphone the recording will come from.
+
+-   <img src="/img/outdoornav_images/task_undock.png" width="30px"/> <strong>Undock UGV: </strong>
+    Will undock the UGV from the autocharge dock. Once
+    completed, the UGV can be sent on autonomous missions. It is
+    often recommended to place the undock task first in the list of Waypoints or as a start Mission Task;
+    that way, the UGV will automatically continue towards its next
+    Waypoint once undocked.
+
+    :::note
+
+    If the users places the Undock Task in the start Mission event for a Waypoint Mission the first Waypoint should be 
+    approximately 2-3 meters behind the UGV's docked position.
+
+    :::
+
+-   <img src="/img/outdoornav_images/task_wait.png" width="30px"/> <strong>Wait: </strong>
+    Will pause and wait for the specified number of
+    seconds at the end of the Waypoint.
+
+    Settings: Enter the amount of time to wait, in seconds.
+
+-   <img src="/img/outdoornav_images/task_custom.png" width="30px"/> <strong>New Custom Task: </strong>
+    Creates a new custom task that is defined by the user. 
+    <center>
+      <figure>
+        <img src="/img/outdoornav_images/custom_task_settings.png"/>
+        <figcaption>Custom Task Settings Dialog</figcaption>
+      </figure>
+    </center>
+    
+    - Task Name: Task name that will show up in the list of available tasks on the UI.
+    - Action Server Name: The namespace of the custom task action server.
+    - Float CSV: A list of comma seperated float values that consist of the numerical inputs to the custom task.
+    - String CSV: A list of comma seperated string values that consist of the semantic inputs to the custom task.
+
+    See the [Custom Tasks](../features/custom_tasks.mdx) section 
+    for details on how to develop custom tasks for your application.
+
+
+:::note
+
+If a Waypoint/Goalpoint has more than one task assigned to it, the icon will
+be replaced with a sheet of paper icon like so: <img src="/img/outdoornav_images/task_multi.png" width="30px"/>
+
+:::
+
+### Autonomous Docking
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_map_with_dock.png" />
+    <figcaption>Dock Icon</figcaption>
+  </figure>
+</center>
+
+### Docking The UGV
+
+To dock the UGV autonomously the user can use the following methods:
+
+#### Dock (Local)
+
+If there is a valid dock within its driveable range the UGV will attempt to dock. 
+This docking method can be done by selecting the Dock button in the bottom bar or by adding a 
+"Dock Robot (Local)" task to either an event or a mission point. 
+
+#### Dock (Radius)
+
+If the UGV is within the specified docks radius the UGV will first navigate to a predock location 
+and then attempt to dock. When in Waypoint Mode a user can dock via this method as follows:
+
+-   Enable the "Edit Mission" toggle.
+-   Maneuver the UGV so that is somewhere within the dock's radius.
+-   Click the dock that the UGV will be docking at and select "Dock Robot Here".
+
+This docking method can also be accomplished by adding a "Dock Robot (Radius)" task to either 
+an event or a mission point. A dock will need to be provided for the task to function which can be done 
+through the task settings modal.
+
+#### Dock (Network) 
+
+:::note 
+
+This mode is only available in [Map mode](ui_map_mode.mdx). Please see the Map mode page for further
+details on map generation.
+
+:::
+
+If the UGV and the dock are within a map's driveable area the UGV will first navigate to a 
+predock location based on the map paths available. A user can dock manually using this method as follows:
+
+-   Enable the "Edit Map" toggle. 
+-   Maneuver the UGV so that is within the driveable range of the map. 
+-   Ensure the dock is within the driveable range of the map.
+-   Right click the dock that the UGV will be docking at and select "Dock Robot Here".
+
+This docking method can also be accomplished by adding a "Dock Robot (Network)" task to either an 
+event or a mission point. A dock will need to be provided for the task to function which can be done 
+through the task settings modal.
+
+### Undocking The UGV
+
+To undock the UGV autonomously, the user can apply a "Undock Robot" task to a mission event or 
+point. The user can also click the Undock button in the bottom bar's left hand corner.
+
+### Compatibility with a Doghouse
+
+In order for the autonomous docking feature to be compatible with a doghouse, the
+doghouse must conform to a few specifications:
+
+-   Must be installed on a flat surface, and have no elevation change between the
+    charge-dock and the outdoor surface (ie. no ramp into the doghouse).
+-   Must be greater than 1.2 m wide.
+-   Must be between 1.5 and 2.5 m long.
+-   Dock target should be installed centered along the back of the doghouse.
+
+### Recover from Failed Docking or Undocking
+
+If for any reason, the docking or undocking tasks fail, the user can:
+
+-   Manually drive the UGV towards the dock target, aligning the
+    charging unit with the receiver on the UGV.
+-   Manually drive the UGV in reverse away from the dock target. It is
+    suggested that the user reverse roughly 2-3 meters away from the target,
+    then wait 1-2 minutes before starting any autonomous navigation
+    missions.
+
+## Switching to IndoorNav
+
+If it is included in the UGV, IndoorNav can be executed through the OutdoorNav software. 
+To switch between the modes in OutdoorNav select the 'Navigation Mode' option found
+in the hamburger menu. This will navigate to a page that shows the current mode and 
+provides an option to switch. When in IndoorNav mode the user may navigate to 
+the IndoorNav Web GUI directly or work within the OutdoorNav view as can be seen 
+below.
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_indoor_nav.png" width="600px" />
+  </figure>
+</center>
+
+:::note
+
+When in IndoorNav mode the OutdoorNav Autonomy software is switched off. The UI will 
+disable OutdoorNav UI features related to Autonomy but will still allow users the 
+option to view camera streams.
+
+:::

@@ -1,6 +1,6 @@
 ---
-title: Web UI Autonomous Mode
-sidebar_label: Web UI Autonomous Mode
+title: Web UI Waypoint Mode
+sidebar_label: Web UI Waypoint Mode
 sidebar_position: 3
 toc_min_heading_level: 2
 toc_max_heading_level: 4
@@ -38,26 +38,6 @@ These components are referred to throughout this manual.
     Waypoint appears between two other waypoints when in edit mode. The user can 
     drag and drop this ghost waypoint to add a new waypoint to the mission between
     the other two waypoints.
-
-## Map Settings
-
-<center>
-  <figure>
-    <img src="/img/outdoornav_images/ui_map_settings.png" />
-    <figcaption>Map settings</figcaption>
-  </figure>
-</center>
-
-To access the Map Settings: Menu → Settings → Map:
-
-1.  **Map Offset:** The map tiles used in this software are not
-    perfectly aligned with the real world. Therefore, the user may need
-    to apply an offset to the map so that the UGV's position in the
-    real world matches its position on the map.
-2.  **Change Datum:** The datum is represented by a blue marker on the
-    map and should be set to a location within 10km of the test site.
-    The user can change this value in the Map Settings page. Enter the
-    new values and click the "Set Datum" button.
 
 ## Mission Creation
 
@@ -153,69 +133,6 @@ To add a Task to the end of a Mission:
     assigned to them based on placement). Waypoints in the table will also have a small icon to indicate
     if tasks are assigned to the Waypoint accordingly.
 
-    -   <img src="/img/outdoornav_images/dockTask_40px.png" width="30px"/> <strong>Dock UGV: </strong>
-        Will dock the UGV to begin charging the UGV's
-        battery. See [Autonomous Docking](#autonomous-docking)
-        for more information on the autonomous docking feature.
-
-    -   <img src="/img/outdoornav_images/cameraTask_40px.png" width="30px"/>  <strong>Move PTZ: </strong>
-        Will move the PTZ camera to the position selected
-        in the task settings.
-
-        Settings: Select the camera position. See
-        [Pan-Tilt-Zoom (PTZ) View](ui_overview.mdx#ptz-view) for details on how to
-        save camera positions.
-
-    -   <img src="/img/outdoornav_images/cameraTask_40px.png" width="30px"/>  <strong>Save Image: </strong>
-        Will save an image using one of the UGV camera(s)
-        to the **/opt/onav/saved_files/media/...** directory and can be retrieved using a tool
-        such as Filezilla.
-
-        Settings: Select which camera the image will be saved from.
-
-    -   <img src="/img/outdoornav_images/recordTask_40px.png" width="30px"/> <strong>Start/Stop Video Recording: </strong>
-        Will start/stop recording video using one of the
-        UGV camera(s) to the **/opt/onav/saved_files/media/...** folder and can be retrieved
-        using a tool such as Filezilla.
-
-        Settings: Select which camera the recording will come from.
-
-    -   <img src="/img/outdoornav_images/undockTask_40px.png" width="30px"/> <strong>Undock UGV: </strong>
-        Will undock the UGV from the autocharge dock. Once
-        completed, the UGV can be sent on autonomous missions. It is
-        often recommended to place the undock task first in the list of Waypoints or as a start Mission Task;
-        that way, the UGV will automatically continue towards its next
-        Waypoint once undocked.
-
-        :::note
-
-        If the users places the Undock Task in the start Mission event the first Waypoint should be 
-        approximately 2-3 meters behind the UGVs docked position.
-
-        :::
-
-    -   <img src="/img/outdoornav_images/waitTask_40px.png" width="30px"/> <strong>Wait: </strong>
-        Will pause and wait for the specified number of
-        seconds at the end of the Waypoint.
-
-        Settings: Enter the amount of time to wait, in seconds.
-    
-    -   <img src="/img/outdoornav_images/customTask_40px.png" width="30px"/> <strong>New Custom Task: </strong>
-        Creates a new custom task that is defined by the user. 
-        <center>
-          <figure>
-            <img src="/img/outdoornav_images/custom_task_settings.png"/>
-            <figcaption>Custom Task Settings Dialog</figcaption>
-          </figure>
-        </center>
-        
-        - Task Name: Task name that will show up in the list of available tasks on the UI.
-        - Action Server Name: The namespace of the custom task action server.
-        - Float CSV: A list of comma seperated float values that consist of the numerical inputs to the custom task.
-        - String CSV: A list of comma seperated string values that consist of the semantic inputs to the custom task.
-
-        See the [Custom Tasks](../features/custom_tasks.mdx) section 
-        for details on how to develop custom tasks for your application.
 4.  The check box next to the Task name controls mission behaviour in the event that the Task fails.  If the checkbox is 
     checked the Mission will proceed to the next step in it's process, such as the next task or navigating to the next Waypoint. 
     If its not checked, the Mission will become cancelled upon the Task's failure.
@@ -320,7 +237,7 @@ UGV is returned within the navigable area defined by the path contraint.
 ### Start Mission
 
 There are multiple ways to start a Mission. At the bottom of the UI, the user has the ability to start the currently
-selected Mission by clicking the "Play" button <img src="/img/outdoornav_images/ui_start_button.png" width="16px"/>. 
+selected Mission by clicking the "Play" button <img src="/img/outdoornav_images/ui_start_button_simple.png" width="16px"/>. 
 Starting the Mission this will start the Mission from the first Waypoint. The user may also select the drop down next to the button 
 to start the Mission from the current UGV position. This is a useful way to start a Mission in the event that the UGV was blocked by 
 obstacles that were later moved. Another way that a user can start a Mission is by selecting a waypoint in edit mode and then clicking on 
@@ -352,83 +269,3 @@ running mission or task by clicking the "Stop" button <img src="/img/outdoornav_
 mission/task has been cancelled this button will turn red. The name of
 the mission/task will be shown to be cancelled in the feedback bar.
 
-## Autonomous Docking
-
-<center>
-  <figure>
-    <img src="/img/outdoornav_images/ui_map_with_dock.png" />
-    <figcaption>Dock Icon</figcaption>
-  </figure>
-</center>
-
-### Docking The UGV
-
-To dock the UGV autonomously, the user should follow these steps:
-
--   Enable the "Edit Mission" toggle.
--   Create a Mission whose Waypoints approach the dock from the front and
-    whose final Waypoint is within the maximum predock distance which is shown as a circle around the dock.
--   Enable the Waypoints Panel toggle to view the list of Waypoints, rename the last
-    Waypoint to "Dock Waypoint" or something descriptive and add the "Dock
-    UGV" Task to this Waypoint.  If there is more than one dock in the system the user will
-    have to open the task options and select the dock name from the list.
--   Run the Mission.
-
-### Undocking The UGV
-
-To undock the UGV autonomously, the user should follow these steps:
-
--   Enable the "Edit Mission" toggle. Select the "Waypoint Mode"
-    button.
--   Select the Waypoint icon on the bottom bar to create a Waypoint at the 
-    current location of the UGV. This step should either be it's own mission 
-    or it should be the starting point of a mission.
--   Enable the Waypoints Panel toggle to view the list of Waypoints, rename this
-    Waypoint to "Undock Waypoint" or something descriptive and add the
-    "Undock UGV" task to the Waypoint that was just created.
--   Run the Mission.
-
-### Compatibility with a Doghouse
-
-In order for the autonomous docking feature to be compatible with a doghouse, the
-doghouse must conform to a few specifications:
-
--   Must be installed on a flat surface, and have no elevation change between the
-    charge-deck and the outdoor surface (ie. no ramp into the doghouse).
--   Must be greater than 1.2 m wide.
--   Must be between 1.5 and 2.5 m long.
--   Dock target should be installed centered along the back of the doghouse.
-
-### Recover from Failed Docking or Undocking
-
-If for any reason, the docking or undocking tasks fail, the user can:
-
--   Manually drive the UGV towards the dock target, aligning the
-    charging unit with the receiver on the UGV.
--   Manually drive the UGV in reverse away from the dock target. It is
-    suggested that the user reverse roughly 2-3 meters away from the target,
-    then wait 1-2 minutes before starting any autonomous navigation
-    missions.
-
-## Switching to IndoorNav
-
-If it is included in the UGV, IndoorNav can be executed through the OutdoorNav software. 
-To switch between the modes in OutdoorNav select the 'Navigation Mode' option found
-in the hamburger menu. This will navigate to a page that shows the current mode and 
-provides an option to switch. When in IndoorNav mode the user may navigate to 
-the IndoorNav Web GUI directly or work within the OutdoorNav view as can be seen 
-below.
-
-<center>
-  <figure>
-    <img src="/img/outdoornav_images/ui_indoor_nav.png" width="600px" />
-  </figure>
-</center>
-
-:::note
-
-When in IndoorNav mode the OutdoorNav Autonomy software is switched off. The UI will 
-disable OutdoorNav UI features related to Autonomy but will still allow users the 
-option to view camera streams.
-
-:::

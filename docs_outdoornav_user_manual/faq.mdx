@@ -10,7 +10,7 @@ toc_max_heading_level: 4
 
 1.  **How do I start, pause or stop a mission?**
 
-    A mission can be started in a few different ways, i) through the web user interface (See [Mission Execution](./web_user_interface/ui_autonomous_mode.mdx#mission-execution)) or,
+    A mission can be started in a few different ways, i) through the web user interface (See [Mission Execution](./web_user_interface/ui_waypoint_mode.mdx#mission-execution)) or,
     ii) through the ROS API (See [API Examples](./api/api_examples/api_examples.mdx)).
 
 2.  **When I start a mission the UGV does not move. What could be the
@@ -101,7 +101,7 @@ ping 192.168.131.30
     These types of warnings appear on the UI under two conditions:
     i)  If the robot indicator (blue arrow on the UI) is not within 3.0 meters of the first Waypoint (the Green one on the UI).
     ii) If the robot is outside of the allowable navigable space (defined by the path contraint, default: 3.0 meters around the reference path). 
-    Enable the visualization of the [path contraint](./web_user_interface/ui_autonomous_mode.mdx#constrained_path) and Teleop the robot back into the
+    Enable the visualization of the [path contraint](./web_user_interface/ui_waypoint_mode.mdx#constrained_path) and Teleop the robot back into the
     navigable space.
 
 6.  **How can I remove certain sensors from the collision avoidance pipeline?**
@@ -127,7 +127,7 @@ ping 192.168.131.30
 
 2.  **How do I add a Task to a Waypoint on the UI?**
 
-    See [Add Task to Waypoint](./web_user_interface/ui_autonomous_mode.mdx#add-task) for information on how
+    See [Add Task to Waypoint](./web_user_interface/ui_waypoint_mode.mdx#add-task) for information on how
     to add a Task to a Waypoint.
 
 3.  **Why is the "Save Image" Task failing?**
@@ -145,7 +145,7 @@ ping 192.168.131.30
 5. **What to do if my custom task is not working?**
 
     Ensure that you have followed the [Custom Tasks](./features/custom_tasks.mdx) instructions. When adding the
-    custom task to a Waypoint, it is important to double check that all the [fields](./web_user_interface/ui_autonomous_mode.mdx#add-task) 
+    custom task to a Waypoint, it is important to double check that all the [fields](./web_user_interface/ui_waypoint_mode.mdx#add-task) 
     for your custom task are correct.
 
 6.  **Why are either of the GNSS Status indicator (POS and/or DIR) on the UI not Green?**
