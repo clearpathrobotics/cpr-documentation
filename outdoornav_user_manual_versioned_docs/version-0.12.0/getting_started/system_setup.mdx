@@ -1,0 +1,230 @@
+---
+title: System Setup
+sidebar_label: System Setup
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+This section outlines how to set up your OutdoorNav system for some
+preliminary testing with the OutdoorNav Software on a UGV. For details
+on simulation, refer to [Simulation](../simulation.mdx).
+
+These instructions assume that the UGV is already powered ON.
+
+<iframe width="696" height="358" src="https://www.youtube.com/embed/Ny2QVNocabc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> 
+
+## Connecting to Web UI {#connecting_to_web_ui}
+
+The web server for the UI typically runs on a computer on the UGV. As
+such, it is necessary for the networking setup on the UGV to be complete
+and for all related hardware to be powered on.
+
+:::note
+
+In the case of Clearpath Robotics OutdoorNav Hardware, ensure that the
+Base Station is powered ON.
+
+:::
+
+Follow the steps below to connect to the Web UI.
+
+1.  Connect your computer to the same network as the UGV.
+
+    :::note
+
+    For Clearpath Robotics OutdoorNav Hardware, use the Base Station
+    network. Enter the network list and find the wireless network
+    related for your UGV. The SSID of the network is located in the
+    Robosmith manual that was shipped with your UGV.
+
+    :::
+
+2.  Open an Internet browser (preferably Chrome) on your computer.
+
+3.  Enter the UGV's IP address followed by a forward slash in the
+    search bar. A bookmark of this page can also be created for future
+    sessions.
+
+    :::note
+
+    For Clearpath Robotics OutdoorNav Hardware, this will be
+    **192.168.131.1/** for normal use cases and **192.168.131.5/** for
+    systems with a separate OutdoorNav computer (including the
+    OutdoorNav Starter Kit and the OutdoorNav Backpack.
+
+    :::
+
+The above steps will open the Web UI, which will allow the user to
+operate the UGV in Manual Mode (teleoperation) or in Autonomous Mode
+(missions). Upon startup the user will be presented with a page that 
+shows the End-User License Agreement. This page will be visible each 
+time the UGV is restarted but only on the first navigation to the page.
+The EULA should be reviewed prior to using the system.
+
+## Loading Map Tiles {#loading_map_tiles}
+
+The Web UI does not cache map tiles on the browser; therefore, the user
+will need to ensure their computer has a connection to an Internet
+source to load the map tiles. There are a several options to achieve
+this:
+
+1.  If the system includes a Base Station that is connected to the
+    Internet, you will be able to access the Internet and therefore map
+    tiles over the base station network without needing any further
+    updates.
+2.  Connect your phone via USB to your computer (or tablet) and enable
+    USB tethering on your phone to share the Internet from your phone.
+3.  Switch your computer (or tablet) to a network that is connected to
+    the Internet, zoom in/out of the map to load the tiles then switch
+    back to the original network.
+
+## Survey Base Station {#survey_base_station}
+
+If your system includes a Base Station, it must be surveyed using the
+steps below to be able to to operate the UGV autonomously.
+
+1.  Access the Menu &srarr; Settings &srarr; Map.
+2.  In the **Survey Base Station** section, click the **Start** button
+    begin the surveying process.
+
+During surveying, the Status Indicator will turn orange <img src="/img/outdoornav_images/ui_survey_warning.png" width="150px" />
+and return to its green default state when surveying is
+done <img src="/img/outdoornav_images/ui_status_indicators.png" width="150px" />.
+Only then should the UGV be sent on autonomous missions.
+The entire surveying will take approximately 5 minutes. A feedback bar
+will also be displayed showing the current progress of the surveying. Do
+not refresh the page or you will lose the feedback bar.
+
+:::warning
+
+For an accurate survey, do NOT move the Base Station during this
+process. After the surveying has completed, the Base Station should not
+be moved unless required. If you need to move the Base Station or it has
+been moved accidentally, the surveying process needs to be run again.
+
+:::
+
+## Set Datum
+
+Before operating the UGV autonomously, the user will need to set the
+datum, which is the reference point in the world coordinate frame.
+
+1.  Access the Menu &srarr; Settings &srarr; Map.
+
+2.  In the **Change Datum** section, enter the latitude and longitude of
+    a location close to the test site (within 10km). Decimal lat/lon are
+    expected. Use a minimum of 6 decimal places.
+
+3.  Click **Set Datum** button to set the new datum.
+
+    The user should see the blue dot (datum) and the blue arrow (UGV)
+    move to the test site. If the GPS status indicators are green, the
+    UGV should be at its correct position on the map as well as facing
+    in the correct direction.
+
+## Set Dock Location
+
+:::note
+
+If the Clearpath Robotics autonomous docking package has been purchased,
+follow these instructions to set up the dock location. Otherwise, this
+section can be skipped.
+
+:::
+
+:::warning
+
+Keep the area around the dock free of objects and people. There is no
+obstacle detection between the pre-docking point and the dock;
+similarly, there is no obstacle detection during the undocking
+operation.
+
+:::
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/dock_target.png" />
+    <figcaption>Autocharge Dock</figcaption>
+  </figure>
+</center>
+
+Before being able to dock the UGV autonomously, set up the dock
+location. Follow these steps to position the UGV in its correct position
+and orientation.
+
+1.  Power ON the UGV and computer and wait for the system to finish
+    booting. For example, on the Clearpath Robotics Husky, booting is
+    complete when the COMM indicator turns green.
+
+2.  Start by manually driving the UGV to the dock target and align it as
+    straight and centered as possible so that it begins charging. The
+    Wibotic receiver on the UGV should be centered longitudinally and
+    laterally with the circle on the Wibotic transmitter (TR-300).
+
+3.  Let the UGV sit in this position for 2 minutes to acquire an RTK GPS
+    fix. The POS (position) and DIR (heading) GPS status indicators on
+    the UI should read as follows: <img src="/img/outdoornav_images/ui_status_indicators.png" width="150px" />.
+
+    **If the GPS status indicators are yellow or red, the selected
+    location of the dock is NOT appropriate. Please change the dock
+    location such that the GPS antennas have a clearer visibility.**
+
+4.  On the UI, access the drop down menu on the top-left of the page,
+    select **Settings** and click the **Add New Dock Location** button. The
+    dock location will be stored in 5 - 10 seconds as data is collected.
+
+If the Base Station has been moved (and therefore been resurveyed), or
+if the dock has been moved to a new location, the user will need to
+reset the location of the dock. This is done in the following manner:
+
+1.  Repeat the previous set of instructions from step 1 to 4.
+
+2.  While in **Edit Mode** select the dock on the UI. A drop down should appear
+    with the option to reset the dock location.  Select that option.
+
+3.  After approximately 5 - 10 seconds the dock location should be updated and the UI will 
+    reflect the change accordingly.
+
+## Checking GPS RTK Fix {#checking-gpt-rtk-fix}
+
+Each time the UGV has been powered up (or moved from a GPS-denied
+environment to a GPS-available environment), let the UGV sit in this
+position for 2 minutes to acquire an RTK GPS fix. The POS (position) and
+DIR (heading) GPS status indicators on the UI should be green: <img src="/img/outdoornav_images/ui_status_indicators.png" width="150px" />.
+
+**If the GPS status indicators are yellow or red, the selected location
+does not have an adequate GPS signal. Move the UGV such that the GPS
+antennas have a clearer visibility.**
+
+If using Switft Navigation Duros and/or a Clearpath Robotics Base
+Station, each of these will have a solid blue LED on all of them when
+the RTK GPS fix is acquired.
+
+## Recording a Rosbag
+
+See the [ROSbag Recorder](../features/rosbag_recorder.mdx) section for details on recording ROS data either.
+
+## Subsequent Sections
+
+The following sections of this manual will outline the instructions for
+different tasks that can be accomplished while operating the UGV.
+
+1.  **Web User Interface:**
+    -   Overview of the Web UI components as well as the available views
+        and icons/buttons associated with them.
+
+    -   Overview of the buttons required to operate the UGV in Manual
+        Mode (teleoperation).
+
+    -   Overview of how to send missions using the Map mode.
+
+    -   Overview of how to send missions using the Waypoint mode.
+
+2.  **Application Programming Interface:** Details on how to control the
+    UGV programmatically.
+3.  **OutdoorNav Features** Details on the features available as part of the
+    navigation software.
+4.  **Simulation:** Details on how to simulate autonomous operation of
+    the UGV.
+5.  **FAQs:** A list of frequently asked questions.

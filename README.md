@@ -154,10 +154,12 @@ Next, to start the development of a new version, the latest released version of 
 
 For Example, for making a new release after humble, the contents of `docs_versioned_docs/version-ros2humble/` would be copied to `docs/`. This folder will then be built as the "next" version. Once enabled, this version will be available in the version drop down (just like how it is visible for OutdoorNav - http://docs.clearpathrobotics.com/docs_outdoornav_user_manual/next/index).
 
-Enable the visibility of the "next" version by setting 
+Enable the visibility of the "next" version by setting
+
 ```
 includeCurrentVersion: true,
 ```
+
 in `docusaurus.config.js` alongside `id: "docs",`. Ensure to reset this to false before releasing the changes.
 
 Continue through to step 9 of the workflow above to complete the update. Once complete, continue to the release phase.
@@ -198,11 +200,11 @@ includeCurrentVersion: false,
 
 5. Empty the docs folder leaving only the .keep file (such that the folder is still tracked by git).
 
-6.  When ready, publish your branch on GitHub, and submit a Pull Request to merge your changes into the _development_ branch.
-    Be sure to include the updates to the following:
-    - docs_versioned_docs/
-    - docs_versioned_sidebars/
-    - docs_versions.json
+6. When ready, publish your branch on GitHub, and submit a Pull Request to merge your changes into the _development_ branch.
+   Be sure to include the updates to the following:
+   - docs_versioned_docs/
+   - docs_versioned_sidebars/
+   - docs_versions.json
 
 </details>
 
