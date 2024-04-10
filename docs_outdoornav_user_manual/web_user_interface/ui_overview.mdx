@@ -67,21 +67,25 @@ mode.
     cellular connections a cellular indicator will appear next to the 
     wifi icon with the currently active connection being highlighted in green.
 
-10. **Stack Light:** If a Stack Light is configured for the UGV it's current status 
+10. **Stack Light:** If a Stack Light is configured for the UGV its current status 
     will show here.  
 
 11. **Views List:** A dropdown list of available views, detailed later
     in this section. Some of the available views are Map, Camera and 3D
     views, etc.
 
-12. **Lights Control:** If the UGV is equipped with software controllable lightes they can be 
+12. **Local Docking/Undocking:** The local docking/undocking buttons used
+    to dock/undock the UGV. The UGV must have it's charging adaptor facing the dock 
+    when performing the local dock action.
+
+13. **Lights Control:** If the UGV is equipped with software controllable lights they can be 
     controlled through a simple drop down button as well as relevant hotkeys, 
     depending on the configuration.
 
-13. **Record Audio:** If the UGV is equipped with a microphone the user 
+14. **Record Audio:** If the UGV is equipped with a microphone the user 
     can start/stop recording manually by clicking this icon.
 
-14. **Mission Execution Buttons:** These buttons allow users to Start, Pause and Stop an 
+15. **Mission Execution Buttons:** These buttons allow users to Start, Pause and Stop an 
     autonomous mission.
 
 
@@ -416,7 +420,7 @@ Web UI use your custom tiles.
 ## Autonomous Features
 
 There are presently 2 autonomous modes that the UGV can be used in, [Waypoint Mode](ui_waypoint_mode.mdx) and [Map Mode](ui_map_mode.mdx).  
-While each mode leverages different features some are shared and are elaborated here. 
+While each mode leverages different features, some are shared and are elaborated on here. 
 
 :::note 
 
@@ -428,7 +432,7 @@ This issue will be reconciled in a future release.
 
 ### Tasks 
 
-When running a mission autonomously the user can assign tasks to various events. These tasks, along with their decoration icons are found below:
+When running a mission autonomously the user can assign tasks to various events. These tasks, along with their decoration icons, are found below:
 
 -   <img src="/img/outdoornav_images/task_dock.png" width="30px"/> <strong>Dock Robot: </strong>
     Will dock the UGV to begin charging the UGV's
@@ -447,21 +451,21 @@ When running a mission autonomously the user can assign tasks to various events.
 -   <img src="/img/outdoornav_images/task_camera.png" width="30px"/>  <strong>Save Image: </strong>
     Will save an image using one of the UGV camera(s)
     to the /opt/onav/saved_files/media/... directory and can be retrieved using a tool
-    such as Filezilla or by navigating to the Files section in the hamburger menu.
+    such as FileZilla or by navigating to the Files section in the hamburger menu.
 
     Settings: Select which camera the image will be saved from.
 
 -   <img src="/img/outdoornav_images/task_record.png" width="30px"/>/<img src="/img/outdoornav_images/task_stopRecord.png" width="30px"/> <strong>Start/Stop Video Recording: </strong>
     Will start/stop recording video using one of the
     UGV camera(s) to the /opt/onav/saved_files/media/... folder and can be retrieved
-    using a tool such as Filezilla or by navigating to the Files section in the hamburger menu.
+    using a tool such as FileZilla or by navigating to the Files section in the hamburger menu.
 
     Settings: Select which camera the recording will come from.
 
 -   <img src="/img/outdoornav_images/task_audio.png" width="30px"/> <strong>Start/Stop Audio Recording:</strong>
     Will start/stop recording audio using one of the
     UGV microphone(s) to the /opt/onav/saved_files/media/... folder and can be retrieved
-    using a tool such as Filezilla or by navigating to the Files section in the hamburger menu.
+    using a tool such as FileZilla or by navigating to the Files section in the hamburger menu.
 
     Settings: Select which microphone the recording will come from.
 
@@ -475,7 +479,7 @@ When running a mission autonomously the user can assign tasks to various events.
     :::note
 
     If the users places the Undock Task in the start Mission event for a Waypoint Mission the first Waypoint should be 
-    approximately 2-3 meters behind the UGVs docked position.
+    approximately 2-3 meters behind the UGV's docked position.
 
     :::
 
@@ -525,7 +529,7 @@ To dock the UGV autonomously the user can use the following methods:
 
 #### Dock (Local)
 
-If there is a valid dock within it's drivable range the UGV will attempt to dock. 
+If there is a valid dock within its driveable range the UGV will attempt to dock. 
 This docking method can be done by selecting the Dock button in the bottom bar or by adding a 
 "Dock Robot (Local)" task to either an event or a mission point. 
 
@@ -551,7 +555,7 @@ details on map generation.
 
 :::
 
-If the UGV and the dock are within a map's driveable aread the UGV will first navigate to a 
+If the UGV and the dock are within a map's driveable area the UGV will first navigate to a 
 predock location based on the map paths available. A user can dock manually using this method as follows:
 
 -   Enable the "Edit Map" toggle. 
@@ -574,7 +578,7 @@ In order for the autonomous docking feature to be compatible with a doghouse, th
 doghouse must conform to a few specifications:
 
 -   Must be installed on a flat surface, and have no elevation change between the
-    charge-deck and the outdoor surface (ie. no ramp into the doghouse).
+    charge-dock and the outdoor surface (ie. no ramp into the doghouse).
 -   Must be greater than 1.2 m wide.
 -   Must be between 1.5 and 2.5 m long.
 -   Dock target should be installed centered along the back of the doghouse.

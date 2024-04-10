@@ -13,7 +13,7 @@ read and the Operator is aware of possible hazards when using this product as we
 methods that can be used to stop the moving UGV.
 
 The Map Mode of OutdoorNav Software uses a set of robotic
-navigation modules that allows the Operator(s) to define drivable paths and 
+navigation modules that allows the Operator(s) to define driveable paths and 
 then execute missions using these maps. The UGV leverages these paths 
 along with specified goal points to calculate a route.  Operators can 
 define one-way or two-way paths, speed limits for paths, allowable 
@@ -25,7 +25,7 @@ The list below defines what a "Map" and "Mission" are in relation to the Map mod
 their relevant components. These terms are referred to throughout this page.
 
 -   **Mission** A Mission is a set of one or more Goalpoints.
--   **Map** A Operator created map that goes over the aerial view and is used to define valid drivable 
+-   **Map** A Operator created map that goes over the aerial view and is used to define valid driveable 
     areas for a mission.
 -   **Point** A map point used to help define a path. 
 -   **Path** A connection between two points that the UGV can travel along for missions. Can be defined as
@@ -64,7 +64,7 @@ their relevant components. These terms are referred to throughout this page.
 
       - <img src="/img/outdoornav_images/disconnected_maps_icon.png" width="30px"/> <strong>Disconnected Maps: </strong>
       There are groups of paths that are not connected and are treated as separate maps. This may be desired by the Operator but 
-      it can lead to situations where the UGV has sections that aren't navigatable. 
+      it can lead to situations where the UGV has sections that aren't navigable. 
 
 2.  **Edit Map Toggle:** This toggle allows the Operator to start
     creating Points and Paths for the current Map. The Operator will also be able to
@@ -361,3 +361,17 @@ At the bottom of the UI, the Operator has the ability to stop the currently
 running mission or task by clicking the "Stop" button <img src="/img/outdoornav_images/ui_stop_button.png" width="16px"/>. When the
 mission/task has been cancelled this button will turn red. The name of
 the mission/task will be shown to be cancelled in the feedback bar.
+
+### Navigate to GoToPoint
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_goto_point.png" />
+    <figcaption>GoToPoint with preview path</figcaption>
+  </figure>
+</center>
+
+When a Map has been created a user can right click on a path or a path's driveable area to place a GoToPoint.  This 
+point will be a single point that will also create a small overlay to allow users to start or cancel the "Go To" 
+execution. Before starting the execution the GoToPoint can be dragged to any driveable area or rotated using the CTRL 
+key just like with Goalpoints.  
