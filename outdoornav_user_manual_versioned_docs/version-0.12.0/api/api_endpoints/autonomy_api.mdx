@@ -1,0 +1,536 @@
+---
+title: Autonomy API
+sidebar_label: Autonomy API
+sidebar_position: 3
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+The Autonomy provides some relevant topics and services suitable for
+controlling and monitoring the robot as it is performing autonomous
+navigation.
+
+### Topics Published by Autonomy
+
+The OutdoorNav software publishes to the topics in this section either
+all the time or while an autonomous navigation missions is running. They
+can be used to monitor the behaviour of OutdoorNav.
+
+
+#### /assisted_teleop/cmd_vel
+
+&emsp;&emsp;**Message Type:** geometry_msgs/Twist
+
+&emsp;&emsp;**Description:** The safe output velocity from the assisted teleop node
+computes. If assisted teleop is enabled the UGV will use this velocity.
+
+#### /assisted_teleop/footprint
+
+&emsp;&emsp;**Message Type:** geometry_msgs/Polygon
+
+&emsp;&emsp;**Description:** The footprint that the assisted teleop node uses to compute
+if it is in a collision state.
+
+#### /assisted_teleop/obstacle_map
+
+&emsp;&emsp;**Message Type:** [clearpath_safety_msgs/ObstacleMap](definitions.mdx#msg-obstacle-map)
+
+&emsp;&emsp;**Description:** The radial mapping of detected obstacles used to populate the joystick
+on the OutdoorNav UI.
+
+#### /assisted_teleop/safe_path
+
+&emsp;&emsp;**Message Type:** nav_msgs/Path
+
+&emsp;&emsp;**Description:** The path used by assisted teleop to lookahead for collisions.
+
+#### /assisted_teleop/safety_footprints
+
+&emsp;&emsp;**Message Type:** nav_msgs/Path
+
+&emsp;&emsp;**Description:** Footprint sets used for detecting obstacles and slowing
+down the robot to a standstill. The footprints are modular in size
+according to the current velocity of the robot.
+
+#### /assisted_teleop/state
+
+&emsp;&emsp;**Message Type:** [clearpath_safety_msgs/AssistedTeleopState](definitions.mdx#msg-assisted-teleop-state)
+
+&emsp;&emsp;**Description:** The current state of the assisted teleop node including
+any error conditions that may occur.
+
+#### /control_selection/control_state
+
+&emsp;&emsp;**Message Type:** [clearpath_control_msgs/ControlSelectionState](definitions.mdx#msg-control-selection-state)
+
+&emsp;&emsp;**Description:** Indicates the complete state of control selection
+including autonomy state and mode.
+
+#### /control_selection/current_mode
+
+&emsp;&emsp;**Message Type:** [clearpath_control_msgs/ControlMode](definitions.mdx#msg-control-mode)
+
+&emsp;&emsp;**Description:** Current control mode (NEUTRAL, MANUAL, AUTONOMY).
+
+#### /dock/feedback
+
+&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/DockActionFeedback](definitions.mdx#action-dock)
+
+&emsp;&emsp;**Description:** Feedback topic from the dock action.
+
+#### /dock/result
+
+&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/DockActionResult](definitions.mdx#action-dock)
+
+&emsp;&emsp;**Description:** Result topic from the dock action.
+
+#### /dock/properties
+
+&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/DockProperties](definitions.mdx#msg-dock-properties)
+
+&emsp;&emsp;**Description:**  A list of docks, in which each dock includes information related to
+the location, id, etc...
+
+#### /dock/state
+
+&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/DockState](definitions.mdx#msg-dock-state)
+
+&emsp;&emsp;**Description:**  The current state of the docking process.
+
+#### /localization/odom
+
+&emsp;&emsp;**Message Type:** nav_msgs/Odometry
+
+&emsp;&emsp;**Description:** The robot's current pose and velocity.
+
+#### /localization/status
+
+&emsp;&emsp;**Message Type:** [clearpath_localization_msgs/LocalizationStatus](definitions.mdx#msg-localization-status)
+
+&emsp;&emsp;**Description:** Current localization status. Includes accuracy, GNSS
+status, and whether the robot is dead reckoning.
+
+#### /mission/feedback
+
+&emsp;&emsp;**Message Type:** clearpath_navigation_msgs/MissionActionFeedback
+
+&emsp;&emsp;**Description:** Feedback topic from the mission action.
+
+#### /mission/result
+
+&emsp;&emsp;**Message Type:** clearpath_navigation_msgs/MissionActionResult
+
+&emsp;&emsp;**Description:** Result topic from the mission action.
+
+#### /navigation/cmd_vel
+
+&emsp;&emsp;**Message Type:** geometry_msgs/Twist
+
+&emsp;&emsp;**Description:** This output commanded velocity from the autonomy
+software (OutdoorNav) to control the velocity of the platform. It is
+commonly relayed directly into the UGV's velocity controller.
+
+#### /navigation/distance_to_goal
+
+&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/DistanceToGoal](definitions.mdx#msg-distance-to-goal)
+
+&emsp;&emsp;**Description:** The current Euclidean distance and the path distance,
+in meters, from the robot to its current goal.
+
+#### /navigation/footprint
+
+&emsp;&emsp;**Message Type:** geometry_msgs/Polygon
+
+&emsp;&emsp;**Description:** The footprint of the robot.
+
+#### /navigation/global_costmap
+
+&emsp;&emsp;**Message Type:** nav_msgs/OccupancyGrid
+
+&emsp;&emsp;**Description:** An occupancy grid consisting of the Free, Occupied or
+Unknown space that the robot uses to plan paths in the environment.
+
+#### /navigation/local_costmap
+
+&emsp;&emsp;**Message Type:** nav_msgs/OccupancyGrid
+
+&emsp;&emsp;**Description:** An occupancy grid consisting of the Free, Occupied or
+Unknown space that the robot uses to detect obstacles.
+
+#### /navigation/local_plan
+
+&emsp;&emsp;**Message Type:** nav_msgs/Path
+
+&emsp;&emsp;**Description:** The MPC local plan that the navigation uses to control
+the robot along the reference path.
+
+#### /navigation/metrics
+
+&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/Metrics](definitions.mdx#msg-metrics)
+
+&emsp;&emsp;**Description:** This topic provides metric information regarding the lifetime of
+the navigation. This includes the total distance travelled, duration run, as well as mission 
+information such as how many missions have been sent, how many have been completed and the number
+of replanning maneuvers, recoveries and number of tasks executed.
+
+#### /navigation/motion_state
+
+&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/MotionState](definitions.mdx#msg-motion-state)
+
+&emsp;&emsp;**Description:** This topic provides information about the motion state
+of the robot. This includes information about whether the robot is
+moving or stopped. Whether it is about to make a turn and the direction
+of the turn, and the direction of travel of the robot in regards to its
+physical orientation.
+
+#### /navigation/odom_intent (IN DEVELOPMENT)
+
+&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/OdomIntent](definitions.mdx#msg-odom-intent)
+
+&emsp;&emsp;**Description:** The robot's current pose and velocity as well as an
+intended pose and velocity in the immediate future.
+
+#### /navigation/path
+
+&emsp;&emsp;**Message Type:** geometry_msgs/PoseArray
+
+&emsp;&emsp;**Description:** The path that the robot is currently traversing. This
+is initialized with the initial path and may be updated with paths
+generated from replanning maneuvers.
+
+#### /navigation/progress (BETA)
+
+&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/Progress](definitions.mdx#msg-navigation-progress)
+
+&emsp;&emsp;**Description:** The completion percentage of the current path, the
+current goal and the current mission.
+
+#### /navigation/safety_footprints
+
+&emsp;&emsp;**Message Type:** geometry_msgs/PolygonStamped
+
+&emsp;&emsp;**Description:** Footprint sets used for detecting obstacles and slowing
+down the robot to a standstill. The footprints are modular in size
+according to the current velocity of the robot.
+
+#### /navigation/scan_points (IN DEVELOPMENT)
+
+&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/ScanPoints](definitions.mdx#msg-scan-points)
+
+&emsp;&emsp;**Description:** Scans and pointclouds from the various ROS message
+formats converted into a simple PointVector format that can be easily
+consumed by the UI.
+
+#### /navigation/state (BETA)
+
+&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/NavigationState](definitions.mdx#msg-navigation-state)
+
+&emsp;&emsp;**Description:** The current navigation state. The available states are
+COMPUTE PATH, EXECUTE, REPLAN, NAVIGATING AROUND OBSTACLE, RECOVERY,
+IDLE, PAUSE, ESTOP, LOST. Multiple simultaneous states are possible.
+
+#### /navigation/track_error
+
+&emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/TrackError](definitions.mdx#msg-track-error)
+
+&emsp;&emsp;**Description:** The current crosstrack error (ie. the off-path distance
+between the robot and the reference path) and as well as the heading
+error (ie. the difference between the current heading and the path
+direction).
+
+#### /safety/safety_stop
+
+&emsp;&emsp;**Message Type:** [clearpath_safety_msgs/Safety](definitions.mdx#msg-safety)
+
+&emsp;&emsp;**Description:** Flag denoting if autonomy should be stopped due to any
+of the following reasons: emergency stop active, one of the sensors has
+triggered the safety monitor watchdog.
+
+#### /safety/watchdog_status (IN DEVELOPMENT)
+
+&emsp;&emsp;**Message Type:** [clearpath_safety_msgs/WatchdogStatus](definitions.mdx#msg-safety-watchdog)
+
+&emsp;&emsp;**Description:** Provides a list of status flags for each of the
+possible sensors that may trigger a safety stop. The watchdog will
+trigger if the sensor times out (ie. does not publish a relevant ROS
+message for 1 second).
+
+#### /target_tracker/state
+
+&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/TargetTrackerState](definitions.mdx#msg-target-tracker-state)
+
+&emsp;&emsp;**Description:** The state information for target tracker used as part of docking.
+
+#### /undock/feedback
+
+&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/UndockActionFeedback](definitions.mdx#action-undock)
+
+&emsp;&emsp;**Description:** Feedback topic from the undock action.
+
+#### /undock/result
+
+&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/UndockActionResult](definitions.mdx#action-undock)
+
+&emsp;&emsp;**Description:** Result topic from the undock action.
+
+------------------------------------------------------------------------
+
+### Topics Subscribed to by Autonomy
+
+The OutdoorNav software subscribes to the topics in this section. They
+can be used to control the behaviour of OutdoorNav.
+
+#### /platform/cmd_vel
+
+&emsp;&emsp;**Message Type:** geometry_msgs/Twist
+
+&emsp;&emsp;**Description:** Platform-level commanded velocity. This should be the velocity tracked by the platforms velocity controller.
+
+#### /mission/cancel
+
+&emsp;&emsp;**Message Type:** actionlib_msgs/GoalID
+
+&emsp;&emsp;**Description:** This topic is used to cancel all the missions that have
+been sent to the OutdoorNav software.
+
+#### /mission/goal
+
+&emsp;&emsp;**Message Type:** clearpath_navigation_msgs/msg/MissionActionGoal
+
+&emsp;&emsp;**Description:** This topic is used to send a goal to the OutdoorNav
+software. The goal can consist of a series of Waypoints and must include
+a Goal point.
+
+#### /dock/cancel
+
+&emsp;&emsp;**Message Type:** actionlib_msgs/GoalID
+
+&emsp;&emsp;**Description:** This topic is used to cancel the docking process that has been
+initialized by a previously sent goal.
+
+#### /dock/goal
+
+&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/msg/DockActionGoal](definitions.mdx#action-dock)
+
+&emsp;&emsp;**Description:** This topic is used to send a goal to the docking process.
+The goal consists of the UUID of the dock to dock at as well as wether or not local docking
+should be performed.
+
+#### /undock/cancel
+
+&emsp;&emsp;**Message Type:** actionlib_msgs/GoalID
+
+&emsp;&emsp;**Description:** This topic is used to cancel the undocking process that has been
+initialized by a previously sent goal.
+
+#### /undock/goal
+
+&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/msg/UndockActionGoal](definitions.mdx#action-undock)
+
+&emsp;&emsp;**Description:** This topic is used to send a goal to the undocking process.
+The goal is empty since we always consider undocking to be a local undocking process.
+
+------------------------------------------------------------------------
+
+### Services Exported by Autonomy
+
+#### /control_selection/set_mode
+
+&emsp;&emsp;**Service Type:** [clearpath_control_msgs/srv/SetControlMode](definitions.mdx#srv-set-control-mode)
+
+&emsp;&emsp;**Description:** Change the current control mode from NEUTRAL to MANUAL
+or AUTONOMY.
+
+#### /control_selection/autonomy_pause
+
+&emsp;&emsp;**Service Type:** std_srvs/SetBool
+
+&emsp;&emsp;**Description:** Pause the autonomy when it is currently in AUTONOMY
+mode. Will only pause when autonomy is active.
+
+#### /control_selection/autonomy_resume
+
+&emsp;&emsp;**Service Type:** std_srvs/SetBool
+
+&emsp;&emsp;**Description:** Resume the autonomy when it is current mode is in
+AUTONOMY. Will only resume if the robot is in a paused state.
+
+#### /dock/add
+
+&emsp;&emsp;**Service Type:** [clearpath_dock_msgs/srv/AddDock](definitions.mdx#srv-add-dock)
+
+&emsp;&emsp;**Description:** Add a dock to the database of docks. Complete list of dock information is required as input.
+The new dock will appear on the UI.
+
+#### /dock/remove
+
+&emsp;&emsp;**Service Type:** [clearpath_dock_msgs/srv/RemoveDock](definitions.mdx#srv-remove-dock)
+
+&emsp;&emsp;**Description:** Remove and existing dock from the database. Input to this service requires ether the UUID
+or the semantic name of the dock.
+
+#### /dock/clear_data
+
+&emsp;&emsp;**Service Type:** [std_srvs/srv/Trigger](definitions.mdx#srv-clear-dock-data)
+
+&emsp;&emsp;**Description:** Remove all existing dock data from storage.
+
+#### /dock/set_location/by_id
+
+&emsp;&emsp;**Service Type:** [clearpath_dock_msgs/srv/SetDockLocationByID](definitions.mdx#srv-set-dock-location-by-id)
+
+&emsp;&emsp;**Description:** Can be used to either set up a new dock (empty string in the uuid field), or update
+the location of an existing dock (where the `uuid` field is required).
+
+#### /dock/set_location/by_name
+
+&emsp;&emsp;**Service Type:** [clearpath_dock_msgs/srv/SetDockLocationByName](definitions.mdx#srv-set-dock-location-by-name)
+
+&emsp;&emsp;**Description:** Can be used to update the location of an existing dock. Requires the semantic name 
+of the dock to be input into the `name` field.
+
+#### /localization/set_datum
+
+&emsp;&emsp;**Service Type:** [clearpath_localization_msgs/srv/SetDatum](definitions.mdx#srv-set-datum)
+
+&emsp;&emsp;**Description:** This service is used to manually set the datum
+parameters of OutdoorNav running on the UGV. After setting the datum
+parameter, this service also reinitializes the states of the
+localization according to the current sensor readings. If you are
+sending a mission to the UGV without using the UI and through the API,
+you must call this service before sending the mission.
+
+#### /localization/reset
+
+&emsp;&emsp;**Service Type:** [clearpath_localization_msgs/srv/ResetLocalization](definitions.mdx#srv-reset-localization)
+
+&emsp;&emsp;**Description:** This service can be used to trigger a reset of the UGVs localization.
+
+#### /navigation/set_collision_avoidance
+
+&emsp;&emsp;**Service Type:** std_srvs/SetBool
+
+&emsp;&emsp;**Description:** Modify the state of the collision avoidance feature. If
+True, collision avoidance is ENABLED and the robot will use its lidar(s)
+to detect and maneuver around obstacles. If False, collision avoidance
+is DISABLED and the robot will NOT use its lidar(s) to detect and
+maneuver around obstacles. Disabling this feature is not recommended and
+should be used with caution.
+
+:::note
+
+1.  This feature does not take effect immediately when the service is
+    called, but only takes effect at the next Goal.
+
+2. Disabling collision avoidance also disables the continuous planner, in such a case where the
+   continuous planner is enabled. When re-enabling the collision avoidance,
+   the continuous planner must also be re-enabled using the following API service.
+
+:::
+
+#### /navigation/set_continuous_planner
+
+&emsp;&emsp;**Service Type:** std_srvs/SetBool
+
+&emsp;&emsp;**Description:** Modify the state of the continuous planning feature. If
+True, continuous planning is ENABLED and the robot will proactively
+attempt to generate a path around detected obstacles. If False,
+continuous planning is DISABLED and the robot will stop in front of
+obstacles before generating a path around the obstacle.
+
+:::note
+
+1.  This feature takes effect immediately once the service is called.
+2.  This service needs to be called if you are re-enabling the collision
+    avoidance and want the continuous planner to be active. Disabling
+    collision avoidance will have disabled the continous planner.
+
+:::
+
+#### /navigation/set_path_smoother
+
+&emsp;&emsp;**Service Type:** [clearpath_navigation_msgs/srv/SetPathSmoother](definitions.mdx#srv-set-path-smoother)
+
+&emsp;&emsp;**Description:** Modify the state of the path smoothing feature. If
+True, path smoothing is ENABLED and curved paths will be generated
+according to the specified turning radius. If False, path smoothing is
+DISABLED and point-to-point paths will be generated.
+
+:::note
+
+This feature takes effect immediately once the service is called.
+
+:::
+
+#### /navigation/set_path shifter
+
+&emsp;&emsp;**Service Type:** [clearpath_navigation_msgs/srv/SetPathShifter](definitions.mdx#srv-set-path-shifter)
+
+&emsp;&emsp;**Description:** Modify the state of the path shifting feature. If True,
+path shifting is ENABLED and the reference path will be automatically
+shifted as it veers off the reference path (to prevent oscillations). If
+False, path shifting is DISABLED and normal behaviour is active.
+
+:::note
+
+This feature takes effect immediately once the service is called.
+
+:::
+
+#### /navigation/set_stop_distance (IN DEVELOPMENT)
+
+&emsp;&emsp;**Service Type:** [clearpath_navigation_msgs/srv/SetStopDistance](definitions.mdx#srv-set-stop-distance)
+
+&emsp;&emsp;**Description:** Modify the state of the stop distance feature. If True,
+the stop distance feature is ENABLED and the robot will stop the
+specified distance from obstacles. If False, the stop distance feature
+is DISABLED and the robot will stop the default distance from obstacles.
+
+#### /navigation/set_delay_compensation (IN DEVELOPMENT)
+
+&emsp;&emsp;**Service Type:** [clearpath_navigation_msgs/srv/SetDelayCompensation](definitions.mdx#srv-set-delay-compensation)
+
+&emsp;&emsp;**Description:** Modify the state of the delay compensation feature. If
+True, delay compensation is ENABLED and the controller will compensate
+for low-level mechanical delays. If False, delay compensation is
+DISABLED and the normal behaviour is expected.
+
+------------------------------------------------------------------------
+
+### Actions Exported by Autonomy
+
+#### /dock
+
+&emsp;&emsp;**Action Type:** [clearpath_dock_msgs/action/Dock](definitions.mdx#action-dock)
+
+&emsp;&emsp;**Description:** Send the robot to the charging dock, if the docking
+package has been included.
+
+#### /localization/survey
+
+&emsp;&emsp;**Action Type:** [clearpath_localization_msgs/action/SurveyBaseStation](definitions.mdx#action-survey-base-station)
+
+&emsp;&emsp;**Description:** Start surveying the base station, if available.
+
+#### /mission
+
+&emsp;&emsp;**Action Type:** [clearpath_navigation_msgs/action/Mission](definitions.mdx#action-mission)
+
+&emsp;&emsp;**Description:** Send goals for execution by the robot. This will
+include the goal, the waypoint(s), tasks, goal tolerances, goal
+heading, a from_start flag, and an optional start_waypoint_uuid.
+
+#### /mission/by_id
+
+&emsp;&emsp;**Action Type:** [clearpath_navigation_msgs/action/ExecuteMissionByUuid](definitions.mdx#action-execute-mission-by-uuid)
+
+&emsp;&emsp;**Description:** Send goals for execution by the robot
+according to the specific mission uuid. This will include the goal, the waypoint(s), tasks,
+goal tolerances, goal heading, an optional start_waypoint_uuid, and a from_start flag.
+
+#### /undock
+
+&emsp;&emsp;**Action Type:** [clearpath_dock_msgs/action/Dock](definitions.mdx#action-undock)
+
+&emsp;&emsp;**Description:** Undock the robot to the charging dock, if the docking
+package has been included.
