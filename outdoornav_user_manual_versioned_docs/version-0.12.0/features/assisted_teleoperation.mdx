@@ -1,0 +1,105 @@
+---
+title: Assisted Teleoperation
+sidebar_label: Assisted Teleoperation
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+:::danger SAFETY WARNING
+
+Making changes to any of the following variables will decrease system safety. It is recommended that users
+only modify these parameters in consultation with [Clearpath Robotics Support](../support.mdx).
+
+:::
+
+:::note
+
+Changes to any of the following variables will only take effect after power cycling the UGV.
+
+:::
+
+
+As of version 0.12.0, the OutdoorNav software contains an assisted teleoperation feature that will help users
+teleoperate their UGV safely, without worry of colliding into obstacles.
+
+<center>
+  <figure>
+    <img
+      src="/img/outdoornav_images/assisted_teleop_twist_mux.png"
+      width="1000"
+    />
+    <figcaption>Block Diagram of Assisted Teleoperation Twist Mux</figcaption>
+  </figure>
+</center>
+
+
+The assisted teleoperation feature is intended to work with the following sources of velocity input:
+
+| Input source | Topic  |
+|--------------|--------|
+| UI Joystick         | `/ui_teleop/cmd_vel` |
+| PS4 Controlller     | `/bluetooth_teleop/cmd_vel` or `/joy_teleop/cmd_vel`|
+| Logitech Controller | `/joy_teleop/cmd_vel` | 
+
+
+The Assisted teleop feature will **NOT** work on the following sources of velocity input:
+
+| Input source | Topic |
+|--------------|-------|
+| External Command   | `/cmd_vel` |
+| Keyboard Command   | `/kb_teleop/cmd_vel` |
+| Interactive Marker | `/twist_marker_server/cmd_vel` |
+
+The Assisted Teleoperation feature can be activated/deactivated according to your required application requirements.
+This can be done by setting the **ENABLE_ASSISTED_TELEOP** environment variable in the 
+`/opt/onav/<onav_version>/config/autonomy.env` file, where *onav_version*
+is the currently running version of OutdoorNav.
+
+## Functionality
+
+The intended purpose for the assisted teleoperation feature is to provide some software level safety for users while they are teleoperating the UGV.
+This feature is intended to solely provide software level safety and does not use any hardware level PLCs to trigger a motor disconnect. It is to be
+treated as a tool that provides a sense of security to the user, such that they will not accidentally crash the UGV any obstacles. The feature
+constantly monitors the 2D/3D LiDAR sensor data that it is provided and uses this information to control the velocity of the UGV. As the UGV 
+approaches obstacles, it will decrease the velocity of the UGV and will bring the UGV to a complete stop if the user continues to drive 
+towards the oncoming obstacle.
+
+For visualization details of the assisted teleoperation feature, please consult the [UI Manual Mode](../web_user_interface/ui_manual_mode.mdx) page.
+
+### Enable/Disable from the UI
+
+From the OutdoorNav UI you are able to enable/disable the "Teleop Assist" by using the toggle that is located by the UI joystick.
+
+### Enable/Disable using Joystick
+
+To disable the "Teleop Assist" when driving the UGV with the PS4 or Logitech controllers, you will need to press and hold the following button:
+
+| Controller Type  | Button |
+|--------------|-------|
+| PS4 controller   | **O** |
+| Logitech controller   | **B** |
+
+### Error/Warnings
+
+OutdoorNav will throw warnings and display them on the UI related to the status of the assisted teleoperation feature.
+Below are the errors/warnings you may see:
+
+| Error/Warning | Reason |
+|---------------|--------|
+| **"Error: Failed to communicate with the Assisted Teleop node"** | The assisted teleoperation node is not running or has crashed |
+| **"Error: No sensors configured"**  | The assisted teleoperation node is running but no sensors have been configured to be used as obstacle detection sources |
+| **"Error: Invalid twist_mux configuration"** | The twists mux configuration has been modified and does not satisfy the requirements for safe operation under the requirements of assisted teleoperation  |
+| **"Error: Unknown platform type"** | The assisted teleoperation node cannot determine the type of platform you are on |
+| **"WARNING: Assisted teleoperation OFF due to service"** | The UI toggle switch or the `/assisted_teleop/enable` service has disabled assisted teloperation |
+| **"WARNING: Assisted teleoperation OFF due to joystick override"** | The enable/disable button on the UGV remote joystick has been pressed |
+| **"WARNING: Assisted teleoperation OFF due to sensor timeout"** | Communication has been lost between the assisted teloperation node and one of the configured 2D/3D detection sensors. |
+| **"Warning: Robot is in a collision state and cannot be driven while assisted teleop is enabled. Please disable assisted teleop to recover."** | The robot is is a state where is is too close to an obstacle. This will mostly occur when you are at a charge dock but may also occur if you are driving/rotating in a tight space. You may need to disable the Teleop Assist to continue remote operation |
+
+
+## Limitations
+
+The assisted teleoperation features has similar limitations to those of our collision avoidance features. 
+Performance degradation will be experiences in rain and/or snow conditions, as well as in tall grass environments.
+The assisted teleoperation feature also only work if obstacles are detected by the 3D sensors. If obstacles appear
+in any of the UGVs blind spots, the assisted teleoperation feature will not prevent collision with these obstacles.
