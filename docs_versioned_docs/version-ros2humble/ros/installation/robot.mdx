@@ -238,6 +238,9 @@ sudo apt install python3-vcstool
 cd ~/clearpath_ws
 wget https://raw.githubusercontent.com/clearpathrobotics/clearpath_robot/main/dependencies.repos
 vcs import src < dependencies.repos
+cd ~/clearpath_ws/src
+git clone https://github.com/clearpathrobotics/clearpath_robot.git
+cd ~/clearpath_ws
 rosdep install -r --from-paths src -i -y
 ```
 
