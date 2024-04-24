@@ -16,11 +16,12 @@ import Support from "/components/support.mdx";
 
 ### Overview
 
-Warthog contains a 48 V lead-acid battery pack, consisting of four 12 V lead-acid batteries, or a lithium battery pack, consisting of four 118 Ah 12.8 V batteries
+Warthog contains a 48 V lead-acid battery pack, consisting of four 12 V lead-acid batteries, or a LiFEPO<sub>4</sub> battery pack, consisting of four 118 Ah 12.8 V batteries
 connected in a 4S1P configuration with a single Battery Management System (BMS) control unit. Battery configuration may vary with each unit. In order to
-maximize performance, it's important to ensure that the battery level across each set of lead-acid or lithium batteries is within 0.1-0.2 V.
+maximize performance, it's important to ensure that the battery level across each set of lead-acid or LiFEPO<sub>4</sub> batteries is within 0.1-0.2 V.
 If the batteries exceed this tolerance, it's advised to charge them to within tolerance before wiring these packs in parallel. The overall battery life
-will vary depending upon the usage of the unit.
+will vary depending upon the usage of the unit. The typical lifetime of a lead-acid battery pack is approximately 250-300 charge/discharge cycles,
+depending on the depth of discharge.
 
 ### Battery Management System
 
@@ -30,7 +31,15 @@ If your Warthog is equipped with a lead-acid battery pack, you can ignore this s
 
 :::
 
-If your Warthog is equipped with a lithium battery pack, it is also equipped with a single Battery Management System (BMS) control unit.
+:::note
+
+Your charger must be disconnected completely from the Warthog when not charging the unit. Leaving the cable plugged
+into the Warthog enables the BMS system to be powered on fully even when the robot is off, which will cause the
+batteries to be drained to an over-discharged state.
+
+:::
+
+If your Warthog is equipped with a LiFEPO<sub>4</sub> battery pack, it is also equipped with a single Battery Management System (BMS) control unit.
 The main function of the BMS is to:
 
 - Protect the individual modules from being overcharged or excessively discharged.
@@ -95,7 +104,7 @@ charging.
 #### To Connect the Charger
 
 1. Plug in the charger DC output cable (heavier gauge cable).
-2. Plug in the charger auxiliary control cable. (Note: Only relevant to Warthogs with lithium batteries.)
+2. Plug in the charger auxiliary control cable. (Note: Only relevant to Warthogs with LiFEPO<sub>4</sub> batteries.)
 3. Plug the charger into AC power (directly to the wall outlet, no extension cords).
 4. This can be done with or without power on Warthog being on (however the note above applies: at least once every 2-3 weeks, the charge
    process needs to be allowed to fully balance the system).
@@ -142,12 +151,12 @@ Please contact Clearpath Robotics for additional information about Warthog's bat
 
 ---
 
-## Tread Upgrade
+## Tracks Upgrade
 
-If your unit came equipped with the tread upgrade, please keep the following considerations in mind:
+If your unit came equipped with the tracks upgrade, please keep the following considerations in mind:
 
-- The tread drive units pull considerably more current to operate.
-  It is advised to operate a tread Warthog at reduced speeds, either through ROS commands or by reducing the speed scale when operating with the Futaba controller.
+- The tracks drive units pull considerably more current to operate.
+  It is advised to operate a Warthog with tracks at reduced speeds, either through ROS commands or by reducing the speed scale when operating with the Futaba controller.
 - Due to the increased drive current, expect lower battery life than a wheeled Warthog.
   It is recommend to drive at reduced speeds to increase battery life.
 - It is possible to trigger an over current error in the motor controller by increasing speed drastically shortly after resetting a stop condition.
