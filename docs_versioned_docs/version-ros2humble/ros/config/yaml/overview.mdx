@@ -13,6 +13,7 @@ The **Clearpath Robot Configuration YAML**, or `robot.yaml` for short, contains 
 ## Outline
 
 The `robot.yaml` is composed of five major sections:
+
 1. [**system**](./system.mdx) level information such as the robot's hostname, IP, and ROS middleware implementation.
 2. [**platform**](./platform.mdx) level configurations such as robot specific mounting structures and parameters.
 3. [**links**](./links.mdx) of standard URDF primitives such as boxes, cylinders, and meshes.
@@ -142,7 +143,7 @@ sensors:
         camera:
           camera_name: camera_0
           device_type: d435
-          serial_no: '0'
+          serial_no: "0"
           enable_color: true
           rgb_camera.profile: 640,480,30
           enable_depth: true

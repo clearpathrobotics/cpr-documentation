@@ -7,7 +7,7 @@ sidebar_position: 3
 
 import Ros2NetworkingOverview from "/docs_versioned_docs/version-ros2humble/components/networking/_ros2_networking_overview.mdx";
 
-<Ros2NetworkingOverview/>
+<Ros2NetworkingOverview />
 
 ## How Discovery Works
 
@@ -78,6 +78,7 @@ using different ROS Domain IDs.
 :::
 
 You may want or need to switch to discovery server for any of the following reasons:
+
 - If your network does not support multicasting (often true on school or corporate networks)
 - If you have a large system (several robots or an excess number of nodes/topics)
 - If you want to control which devices have access to which information
@@ -98,7 +99,7 @@ There are multiple different ways to configure discovery server depending on whi
 This section will go over some basic configurations and is generalized for use as an introduction. It does not
 describe all possible configurations. The `ROS_DISCOVERY_SERVER` environment variable, shown in the various diagrams,
 indicates which discovery servers a given robot is connected to. Additionally, communication will be referred to
-in terms of seeing ROS 2 topics although this is representative of all nodes, topics, action servers, and so on. 
+in terms of seeing ROS 2 topics although this is representative of all nodes, topics, action servers, and so on.
 
 :::note
 
@@ -238,5 +239,5 @@ ros2 run clearpath_generator_common generate_discovery_server -s ~/clearpath
 To launch the server
 
 ```
-bash -e ~/clearpath/discovery-server-start 
+bash -e ~/clearpath/discovery-server-start
 ```

@@ -8,10 +8,9 @@ toc_max_heading_level: 3
 
 ## General Environment Variables {#general_collision_avoidance_params}
 
-| Parameter | Description | File | Default |
-|-----------|-------------|------|---------|
-| `ENABLE_COLLISION_AVOIDANCE` | Flag to enable/disable collision avoidance | `/opt/onav/<onav_version>/config/autonomy.env` | false |
-
+| Parameter                    | Description                                | File                                           | Default |
+| ---------------------------- | ------------------------------------------ | ---------------------------------------------- | ------- |
+| `ENABLE_COLLISION_AVOIDANCE` | Flag to enable/disable collision avoidance | `/opt/onav/<onav_version>/config/autonomy.env` | false   |
 
 ## Costmap {#costmap_params}
 
@@ -19,19 +18,18 @@ toc_max_heading_level: 3
 
 The parameters related to the costmap, can be found here:
 
-``` bash
+```bash
 /opt/onav/<onav_version>/app/autonomy/params/<platform_type>/navigation/costmap_<global/local>.yaml
 ```
 
 If they are not listed in the above file, it is because they are using the default values and are not being overwritten.
 
-
 The following parameters can be used to modify the costmap, specifically when trying to tune
 collision avoidance.
 
-| Parameter | Description | Namespace | SI Units |
-|-----------|-------------|-----------|:--------:|
-| `width` | The width of the costmap | [/navigation/*&ltglobal/local&gt*_costmap](#file_location) | **m** |
-| `height` | The height of the costmap | [/navigation/*&ltglobal/local&gt*_costmap](#file_location) | **m** |
-| `inflation_radius` | The radius to which the map inflates obstacle cost values | [/navigation/*&ltglobal/local&gt*_costmap/inflation](#file_location) | **m** |
-| `cost_scaling_factor` | A scaling factor to apply to cost values during inflation. The cost function is computed as follows for all cells in the costmap further than the inscribed radius distance and closer than the inflation radius distance away from an actual obstacle | [/navigation/*&ltglobal/local&gt*_costmap/inflation](#file_location) | - |
+| Parameter             | Description                                                                                                                                                                                                                                            | Namespace                                                             | SI Units |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------- | :------: |
+| `width`               | The width of the costmap                                                                                                                                                                                                                               | [/navigation/_&ltglobal/local&gt_\_costmap](#file_location)           |  **m**   |
+| `height`              | The height of the costmap                                                                                                                                                                                                                              | [/navigation/_&ltglobal/local&gt_\_costmap](#file_location)           |  **m**   |
+| `inflation_radius`    | The radius to which the map inflates obstacle cost values                                                                                                                                                                                              | [/navigation/_&ltglobal/local&gt_\_costmap/inflation](#file_location) |  **m**   |
+| `cost_scaling_factor` | A scaling factor to apply to cost values during inflation. The cost function is computed as follows for all cells in the costmap further than the inscribed radius distance and closer than the inflation radius distance away from an actual obstacle | [/navigation/_&ltglobal/local&gt_\_costmap/inflation](#file_location) |    -     |

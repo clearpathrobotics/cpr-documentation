@@ -8,7 +8,7 @@ toc_max_heading_level: 4
 
 ## The Code
 
-``` python
+```python
 #! /usr/bin/env python3
 
 import rospy
@@ -75,7 +75,7 @@ if __name__ == '__main__':
 
 ## The Code Explained
 
-``` python
+```python
 import rospy
 from cpr_outdoornav_api_examples_lib.ros_node import RosNode
 from cpr_outdoornav_api_examples_lib.waypoint import Waypoint
@@ -86,11 +86,11 @@ from cpr_outdoornav_api_examples_lib.localization_status import LocalizationStat
 from cpr_outdoornav_api_examples_lib.navigation_status import NavigationStatusMonitor
 ```
 
-Import the `RosNode`, `Waypoint`, `Mission` classes which will be used to create the mission to be executed. We also import the 
+Import the `RosNode`, `Waypoint`, `Mission` classes which will be used to create the mission to be executed. We also import the
 `PlatformStatusMonitor`, `ControlStatusMonitor`, `LocalizationStatusMonitor`, `NavigationStatusMonitor` classes which are set up to monitor the topics
 relavant to the platform, localization, contrle selection an navigation modules respectively.
 
-``` python
+```python
         waypoints = [
             Waypoint("A", "uuid-waypoint-1", 50.1094938, -97.3191085),
             Waypoint("B", "uuid-waypoint-2", 50.1095100, -97.3192000),
@@ -100,9 +100,9 @@ relavant to the platform, localization, contrle selection an navigation modules 
 ```
 
 After initializing the ROS node, we create a mission manually by first creating a list of Waypoint objects and then adding then using the waypoint list
-to construct the Mission object. 
+to construct the Mission object.
 
-``` python
+```python
         self._platform_status = PlatformStatusMonitor()
         self._control_status = ControlStatusMonitor()
         self._localization_status = LocalizationStatusMonitor()
@@ -111,7 +111,7 @@ to construct the Mission object.
 
 We then initialize the platform, control, localization and navigation monitors, which subscribes to several API topics.
 
-``` python
+```python
     def _reportStatus(self):
         """Report the current status."""
 
@@ -124,7 +124,7 @@ We then initialize the platform, control, localization and navigation monitors, 
 
 The `_reportStatus()` function outputs the results of the monitors to the ROS logs. This includes both the internal ROS logs as well as terminal output.
 
-``` python
+```python
     def run(self):
         """Execute the mission and report status."""
 
@@ -140,7 +140,7 @@ The `_reportStatus()` function outputs the results of the monitors to the ROS lo
 The `run()` function starts the mission and checks for completion. Every seconds we run the `reportStatus()` function to output the status information.
 Once complete we terminate the example code.
 
-``` python
+```python
 if __name__ == '__main__':
     if MonitorStatus().run():
         print("Mission completed successfully")
@@ -148,5 +148,5 @@ if __name__ == '__main__':
         print("Mission failed")
 ```
 
-The main python execution block. We first initialize the example class (runs the __init__ function) and then execute the run() function which
+The main python execution block. We first initialize the example class (runs the **init** function) and then execute the run() function which
 executes the mission and outputs the status information.

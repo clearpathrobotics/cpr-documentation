@@ -23,11 +23,13 @@ lidar2d:
         host: 192.168.131.20
         port: 2111
 ```
+
 </td>
 </tr>
 </table>
 
 #### Package and Setup
+
 The SICK LMS1xx laser scan uses the `lms1xx` ROS 2 package. The driver is open source, maintained by Clearpath, and hosted on [GitHub](https://github.com/clearpathrobotics/lms1xx).
 
 For more specifics on the way Clearpath's configuration system launches the `lms1xx` driver, see the SICK LMS1xx [launch file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/launch/sick_lms1xx.launch.py) and the [default parameter file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/config/sick_lms1xx.yaml) in `clearpath_sensors`.

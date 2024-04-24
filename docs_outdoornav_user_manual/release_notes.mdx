@@ -9,302 +9,303 @@ toc_max_heading_level: 4
 ## 0.12.0
 
 ### New Features
--   Modified mission planning modes. Now includes:
-    -   Map mode (which allows the user to create maps of an environment 
-        and send mission using said map)
-    -   Waypoint mode (which allows the user to create more direct mission 
-        by placing waypoints directly on the Aerial overlay)
--   Added an Assisted teleoperation feature to prevent robot collisions with 
-    obstacles when it is being teleoperated.
--   Added the upgrade command to the CLI tool. Customers can now upgrade their 
-    software as long as they are eligible to be upgraded to the newest version. 
-    Please contact [Support](./support.mdx) for more information.
--   New visualization of status command in CLI tool
--   Added a filebrowser extension to access/view the robot filesystem for easier 
-    media access
+
+- Modified mission planning modes. Now includes:
+  - Map mode (which allows the user to create maps of an environment
+    and send mission using said map)
+  - Waypoint mode (which allows the user to create more direct mission
+    by placing waypoints directly on the Aerial overlay)
+- Added an Assisted teleoperation feature to prevent robot collisions with
+  obstacles when it is being teleoperated.
+- Added the upgrade command to the CLI tool. Customers can now upgrade their
+  software as long as they are eligible to be upgraded to the newest version.
+  Please contact [Support](./support.mdx) for more information.
+- New visualization of status command in CLI tool
+- Added a filebrowser extension to access/view the robot filesystem for easier
+  media access
 
 ### API Features
 
--   Added new message definitions and service calls for the storage/editing of Maps
+- Added new message definitions and service calls for the storage/editing of Maps
 
 ### Bug Fixes
 
--   1973: Fixed python “machineid” error during installation
--   2089: Fixed the no serial number on /platform/id topic
--   2169: Fixed the mission manager/scheduler still requesting during Teleop only mode
+- 1973: Fixed python “machineid” error during installation
+- 2089: Fixed the no serial number on /platform/id topic
+- 2169: Fixed the mission manager/scheduler still requesting during Teleop only mode
 
 ### Known Issues
 
--   1396: Robot gets temporarily stuck at start of mission when near a Waypoint
--   1844: [MPC] Maximum acceleration param doesn't appear to have any effect
--   2332: upgrading from 0.11 to 0.12.0 in teleoperation only configuration and Q62 
-    installed causes duplication of axis driver. Please contact [Support](./support.mdx)
-    if you run into this issue.
--   2344: Autonomy not going down during low-power mode
--   2360: Waypoint/Map modes use different mouse click to open context menus
+- 1396: Robot gets temporarily stuck at start of mission when near a Waypoint
+- 1844: [MPC] Maximum acceleration param doesn't appear to have any effect
+- 2332: upgrading from 0.11 to 0.12.0 in teleoperation only configuration and Q62
+  installed causes duplication of axis driver. Please contact [Support](./support.mdx)
+  if you run into this issue.
+- 2344: Autonomy not going down during low-power mode
+- 2360: Waypoint/Map modes use different mouse click to open context menus
 
 ## 0.11.0
 
 ### New Features
 
--   Command Line Tool used to install/update/manage OutdoorNav
--   Added the End User License Agreement to the UI upon start up
--   Light and PTZ Pan/Tilt controls can now be mapped to a controller
--   OutdoorNav/IndoorNav switch over improvements
--   Can now place waypoints at UGV location via shortcut key (Shift + X)
+- Command Line Tool used to install/update/manage OutdoorNav
+- Added the End User License Agreement to the UI upon start up
+- Light and PTZ Pan/Tilt controls can now be mapped to a controller
+- OutdoorNav/IndoorNav switch over improvements
+- Can now place waypoints at UGV location via shortcut key (Shift + X)
 
 ### API Features
 
--   Can now delete multiple mission objects (missions, waypoints, tasks) in single call
--   Stack Light can now be manually overridden/muted
--   Added ability to import single missions to the robot
+- Can now delete multiple mission objects (missions, waypoints, tasks) in single call
+- Stack Light can now be manually overridden/muted
+- Added ability to import single missions to the robot
 
 ### Bug Fixes
 
--   1688: Move PTZ task only ever uses the first PTZ camera's positions
--   2011: Filter false "Move PTZ Failure" notifications when moving PTZ camera
+- 1688: Move PTZ task only ever uses the first PTZ camera's positions
+- 2011: Filter false "Move PTZ Failure" notifications when moving PTZ camera
 
 ### Known Issues
 
--   1396: Robot gets temporarily stuck at start of mission when near a Waypoint
--   1844: [MPC] Maximum acceleration param doesn't appear to have any effect
+- 1396: Robot gets temporarily stuck at start of mission when near a Waypoint
+- 1844: [MPC] Maximum acceleration param doesn't appear to have any effect
 
 ## 0.10.0
 
 ### New Features
 
--   Added the ability to start mission from a specific Waypoint
--   Added the ability to resume mission from current location
--   Added the option to include on-start and on-stop tasks to a Mission
--   Added the option to continue a Mission if a Task should fail
--   Full release of the API examples repository to the public (link API examples top level page)
+- Added the ability to start mission from a specific Waypoint
+- Added the ability to resume mission from current location
+- Added the option to include on-start and on-stop tasks to a Mission
+- Added the option to continue a Mission if a Task should fail
+- Full release of the API examples repository to the public (link API examples top level page)
 
 ### API Features
 
--   Action definition changes (see [API Endpoints](./api/api_endpoints/autonomy_api.mdx))
-    -   Mission.action added from_start and *start_waypoint_uuid* fields
-    -   ExecuteMissionByUuid.action:  added from_start and *start_waypoint_uuid* fields
--   Message Definition changes
-    -   Mission.msg: added an array of on_start and and array of on_stop tasks fields
-    -   Task.msg: added a boolean allow_failure field
--   Updated /safety/safety_stop message type (see [Definitions](./api/api_endpoints/definitions.mdx#msg-safety))
--   Added import/export services for /dock, /mission_manager/ and /mission_scheduler features
+- Action definition changes (see [API Endpoints](./api/api_endpoints/autonomy_api.mdx))
+  - Mission.action added from_start and _start_waypoint_uuid_ fields
+  - ExecuteMissionByUuid.action: added from_start and _start_waypoint_uuid_ fields
+- Message Definition changes
+  - Mission.msg: added an array of on_start and and array of on_stop tasks fields
+  - Task.msg: added a boolean allow_failure field
+- Updated /safety/safety_stop message type (see [Definitions](./api/api_endpoints/definitions.mdx#msg-safety))
+- Added import/export services for /dock, /mission_manager/ and /mission_scheduler features
 
 ### Bug Fixes
 
--   1546: Robot cannot start mission part-way through if a task is assigned on any Waypoint prior to its location
--   1764: Importing missions with docking tasks fails to bring in docks
+- 1546: Robot cannot start mission part-way through if a task is assigned on any Waypoint prior to its location
+- 1764: Importing missions with docking tasks fails to bring in docks
 
 ### Known Issues
 
--   1396: Robot gets temporarily stuck at start of mission when near a Waypoint
--   1844: [MPC] Maximum acceleration param doesn't appear to have any effect
+- 1396: Robot gets temporarily stuck at start of mission when near a Waypoint
+- 1844: [MPC] Maximum acceleration param doesn't appear to have any effect
 
 ## 0.9.0
 
 ### New Features
 
--   Operators can now Schedule Missions to run at specific times (see [Mission Scheduler](./features/mission_scheduler.mdx))
--   Added in support for BulletCat12 Microhard WiFi and Cellular connections
--   Allow Audio recording as both tasks and manual operations if UGV has Microphones
--   Create custom tasks that can be run during missions (see [Custom Tasks](./features/custom_tasks.mdx))
--   If installed with PDU, UGV can be set to Low Power mode to better conserve power
--   New navigation topics added to ROS Autonomy API (see [API Endpoints](./api/api_endpoints/autonomy_api.mdx)):
-    - /navigation/progress
-    - /navigation/motion_state
-    - /navigation/metrics
--   Improved precision of docking
--   Improved autonomy feedback when something goes wrong in the mission to increase the diagnosability of the error
--   Updated Navigation features available to the customer:
-    - Continuous Replanning renamed to Continuous Planning and is always enabled.
-    - Constrained Planning is always enabled. Environment Variable to update the path constraint has been modified 
+- Operators can now Schedule Missions to run at specific times (see [Mission Scheduler](./features/mission_scheduler.mdx))
+- Added in support for BulletCat12 Microhard WiFi and Cellular connections
+- Allow Audio recording as both tasks and manual operations if UGV has Microphones
+- Create custom tasks that can be run during missions (see [Custom Tasks](./features/custom_tasks.mdx))
+- If installed with PDU, UGV can be set to Low Power mode to better conserve power
+- New navigation topics added to ROS Autonomy API (see [API Endpoints](./api/api_endpoints/autonomy_api.mdx)):
+  - /navigation/progress
+  - /navigation/motion_state
+  - /navigation/metrics
+- Improved precision of docking
+- Improved autonomy feedback when something goes wrong in the mission to increase the diagnosability of the error
+- Updated Navigation features available to the customer:
+  - Continuous Replanning renamed to Continuous Planning and is always enabled.
+  - Constrained Planning is always enabled. Environment Variable to update the path constraint has been modified
     (see [Navigation](./features/navigation.mdx))
-    - Removed Obstacle Avoidance Mode. The UGV will always attempt to avoid obstacles.
-    - Removed Path Smoothing. This is always enabled.
-    - Docking feature added for customers who have purchased a dock. 
+  - Removed Obstacle Avoidance Mode. The UGV will always attempt to avoid obstacles.
+  - Removed Path Smoothing. This is always enabled.
+  - Docking feature added for customers who have purchased a dock.
 
-### Bug Fixes 
+### Bug Fixes
 
--   1324: Allow single Waypoint missions and/or tasks on first waypoint (required for undocking through tasks).
--   1340: Undocking not working through tasks
--   1607: Fixed MovePTZ task failures
+- 1324: Allow single Waypoint missions and/or tasks on first waypoint (required for undocking through tasks).
+- 1340: Undocking not working through tasks
+- 1607: Fixed MovePTZ task failures
 
-### Known Issues 
+### Known Issues
 
--   131: Software upgrade process not documented fully.
--   609: Realsense D435 collision avoidance not fully tuned.
--   751: Wireless icon in UI doesn't work for Ubiquity hardware.
--   1396: Robot gets temporarily stuck at start of mission when near a Waypoint.
--   1546: Robot cannot start mission part-way through if a task is assigned on any Waypoint prior to its location.
+- 131: Software upgrade process not documented fully.
+- 609: Realsense D435 collision avoidance not fully tuned.
+- 751: Wireless icon in UI doesn't work for Ubiquity hardware.
+- 1396: Robot gets temporarily stuck at start of mission when near a Waypoint.
+- 1546: Robot cannot start mission part-way through if a task is assigned on any Waypoint prior to its location.
 
 ## 0.8.0
 
 ### New Features
 
--   Inertial Measurement Units (IMUs) integrated into localization.
--   Added localization status topic (see [API Endpoints](./api/api_endpoints/autonomy_api.mdx#localizationstatus)).
--   Added re-localization service (see [API Endpoints](./api/api_endpoints/definitions.mdx#srv-reset-localization)).
--   Additional diagnostic information in the status view.
--   Docking improvements including: multiple docks, visual representation of docks on map, 
-    local docking/undocking through teleop view. Docking only functional with 2D LiDARs.
--   Customization & Tuning Appendix C added. Lists of tuning parameters for navigation
-    and collision avoidance are now available. As well as, instructions/process on how to
-    tune UGVs with differential drive dynamics. Instructions for UGVs with Ackermann dynamics
-    are on their way.
+- Inertial Measurement Units (IMUs) integrated into localization.
+- Added localization status topic (see [API Endpoints](./api/api_endpoints/autonomy_api.mdx#localizationstatus)).
+- Added re-localization service (see [API Endpoints](./api/api_endpoints/definitions.mdx#srv-reset-localization)).
+- Additional diagnostic information in the status view.
+- Docking improvements including: multiple docks, visual representation of docks on map,
+  local docking/undocking through teleop view. Docking only functional with 2D LiDARs.
+- Customization & Tuning Appendix C added. Lists of tuning parameters for navigation
+  and collision avoidance are now available. As well as, instructions/process on how to
+  tune UGVs with differential drive dynamics. Instructions for UGVs with Ackermann dynamics
+  are on their way.
 
-### Bug Fixes 
+### Bug Fixes
 
--   1134: Display/Hide Datum Point not working.
--   1139: Issues with non-husky platforms. 
--   1137: Refreshing page re-enables edit button while mission running.
--   1276: Feedback added for incorrect first Waypoint placement.
+- 1134: Display/Hide Datum Point not working.
+- 1139: Issues with non-husky platforms.
+- 1137: Refreshing page re-enables edit button while mission running.
+- 1276: Feedback added for incorrect first Waypoint placement.
 
 ### Known Issues
 
--   131: Software upgrade process not documented fully.
--   609: Realsense D435 collision avoidance not fully tuned.
--   751: Wireless icon in UI doesn't work for Ubiquity hardware.
--   1138: Issues with greying out Waypoints in edge cases.
--   1324: Allow single Waypoint missions and/or tasks on first waypoint (required for undocking through tasks).
--   1340: Undocking not working through tasks.
+- 131: Software upgrade process not documented fully.
+- 609: Realsense D435 collision avoidance not fully tuned.
+- 751: Wireless icon in UI doesn't work for Ubiquity hardware.
+- 1138: Issues with greying out Waypoints in edge cases.
+- 1324: Allow single Waypoint missions and/or tasks on first waypoint (required for undocking through tasks).
+- 1340: Undocking not working through tasks.
 
 ## 0.7.0
 
 ### New Features
 
--   Goal terminology has been removed from the mission generation nomenclature (see 
-    [Definitions](./web_user_interface/ui_waypoint_mode.mdx#definitions)) 
-    Users can now add tasks, apply final headings, and set navigation tolerances 
-    to any Waypoint in a Mission.
--   Drag and Drop of Waypoints now available in Edit Mode.
--   New Waypoints can be inserted between existing Waypoints in a Mission. 
--   Mission API now available to create/edit/load missions, waypoints and tasks.
--   Mission execution via mission ID is now available.
--   The base station location is now displayed in the UI after carrying out an automated survey.
--   New coloring scheme for GNSS status icons to provide more accurate information.
+- Goal terminology has been removed from the mission generation nomenclature (see
+  [Definitions](./web_user_interface/ui_waypoint_mode.mdx#definitions))
+  Users can now add tasks, apply final headings, and set navigation tolerances
+  to any Waypoint in a Mission.
+- Drag and Drop of Waypoints now available in Edit Mode.
+- New Waypoints can be inserted between existing Waypoints in a Mission.
+- Mission API now available to create/edit/load missions, waypoints and tasks.
+- Mission execution via mission ID is now available.
+- The base station location is now displayed in the UI after carrying out an automated survey.
+- New coloring scheme for GNSS status icons to provide more accurate information.
 
 ### Bug Fixes
 
--   996: Axis camera missing ptz_state
+- 996: Axis camera missing ptz_state
 
 ### Known Issues
 
--   131: Software upgrade process not documented fully.
--   609: Realsense D435 collision avoidance not fully tuned.
--   751: Wireless icon in UI doesn't work for Ubiquity hardware.
--   1134: Display/Hide Datum point not working.
--   1137: Refreshing page re-enables edit button while mission running.
--   1138: Issues with greying out Waypoints in edge cases.
+- 131: Software upgrade process not documented fully.
+- 609: Realsense D435 collision avoidance not fully tuned.
+- 751: Wireless icon in UI doesn't work for Ubiquity hardware.
+- 1134: Display/Hide Datum point not working.
+- 1137: Refreshing page re-enables edit button while mission running.
+- 1138: Issues with greying out Waypoints in edge cases.
 
 ## 0.6.0
 
 ### New Features
 
--   OutdoorNav ROS API updated. API now divided into Platform and
-    Autonomy sections. See [API Overview](./api/api_overview.mdx)
-    for more details.
--   Simulation environment created with charge dock, base station and
-    camera plugins.
--   Added deviation path visualization to UI when constrained replanning
-    is enabled.
--   Modified goalpoint icons to reflect tasks assigned to them.
--   Added the ability to record rosbags from UI.
--   Added GPS signal strength to status page.
--   Added improvements to PTZ controls (cosmetic changes, ability to
-    disable zoom, added a reset mark).
--   User can set map source from OpenStreet, MapBox, Bing Maps, or
-    custom map tiles through UI.
+- OutdoorNav ROS API updated. API now divided into Platform and
+  Autonomy sections. See [API Overview](./api/api_overview.mdx)
+  for more details.
+- Simulation environment created with charge dock, base station and
+  camera plugins.
+- Added deviation path visualization to UI when constrained replanning
+  is enabled.
+- Modified goalpoint icons to reflect tasks assigned to them.
+- Added the ability to record rosbags from UI.
+- Added GPS signal strength to status page.
+- Added improvements to PTZ controls (cosmetic changes, ability to
+  disable zoom, added a reset mark).
+- User can set map source from OpenStreet, MapBox, Bing Maps, or
+  custom map tiles through UI.
 
 ### Bug Fixes
 
--   632: Prevent users from changing mission while a mission is running.
--   661: Removed map view when no map is provided in default-state.json.
-    file.
--   712: Fixed front end hanging when user opens menu from any view
-    other than main view.
--   716: Removed connecting lines from disabled goals.
+- 632: Prevent users from changing mission while a mission is running.
+- 661: Removed map view when no map is provided in default-state.json.
+  file.
+- 712: Fixed front end hanging when user opens menu from any view
+  other than main view.
+- 716: Removed connecting lines from disabled goals.
 
 ### Known Issues
 
--   131: Software upgrade process not documented fully.
--   609: Realsense D435 collision avoidance not fully tuned.
--   751: Wireless icon in UI doesn't work for Ubiquity hardware.
--   756: Waypoints stop turning grey when they are hit if a waypoint is
-    skipped.
+- 131: Software upgrade process not documented fully.
+- 609: Realsense D435 collision avoidance not fully tuned.
+- 751: Wireless icon in UI doesn't work for Ubiquity hardware.
+- 756: Waypoints stop turning grey when they are hit if a waypoint is
+  skipped.
 
 ## 0.5.0
 
 ### New Features
 
--   Sensor Kit Options: Starter, Standard, Backpack.
--   New localization module.
--   Added support for UBlox F9K and F9P GNSS receivers in the
-    localization module.
--   Added support for either single or dual Swiftnav Duro/Piksi GNSS
-    receiver(s) in the localization module.
--   Added support for Realsense D435 camera in collision avoidance
-    module.
--   New/updated user modifiable environment variables for sensor and
-    navigation tuning.
--   Added a Virtual Guided tour of the application for first time users.
--   Added StreetView and Bing map tiles (to existing MapBox tile).
--   Allow users to specify custom map tile source.
--   Added cosmetic changes to traversed waypoints as well as a robot.
-    status icon with ROS topic health information.
+- Sensor Kit Options: Starter, Standard, Backpack.
+- New localization module.
+- Added support for UBlox F9K and F9P GNSS receivers in the
+  localization module.
+- Added support for either single or dual Swiftnav Duro/Piksi GNSS
+  receiver(s) in the localization module.
+- Added support for Realsense D435 camera in collision avoidance
+  module.
+- New/updated user modifiable environment variables for sensor and
+  navigation tuning.
+- Added a Virtual Guided tour of the application for first time users.
+- Added StreetView and Bing map tiles (to existing MapBox tile).
+- Allow users to specify custom map tile source.
+- Added cosmetic changes to traversed waypoints as well as a robot.
+  status icon with ROS topic health information.
 
 ### Bug Fixes
 
--   253: Replace default camera image for camera views when stream is
-    unavailable.
--   281: Fixed navigation latched in a PAUSE state.
--   574: Fixed map settings page to not rerender when robots position
-    changes.
+- 253: Replace default camera image for camera views when stream is
+  unavailable.
+- 281: Fixed navigation latched in a PAUSE state.
+- 574: Fixed map settings page to not rerender when robots position
+  changes.
 
 ### Known Issues
 
--   131: Software upgrade process not documented fully.
--   609: Realsense D435 collision avoidance not fully tuned.
+- 131: Software upgrade process not documented fully.
+- 609: Realsense D435 collision avoidance not fully tuned.
 
 ## 0.4.0
 
 ### New Features
 
--   Improved wireless charger docking workflow and added ROS Noetic
-    docking support.
--   Added option to record videos from cameras.
--   Improved Docker setup to allow concurrent installation with
-    IndoorNav.
--   Added initial support for integration with
-    [Formant](https://formant.io/).
--   Added Docker installation support for Jackal and Warthog robots.
+- Improved wireless charger docking workflow and added ROS Noetic
+  docking support.
+- Added option to record videos from cameras.
+- Improved Docker setup to allow concurrent installation with
+  IndoorNav.
+- Added initial support for integration with
+  [Formant](https://formant.io/).
+- Added Docker installation support for Jackal and Warthog robots.
 
 ### Bug Fixes
 
--   480: Added rate limiter for continuous planner.
--   490: Fixed base station survey pop up to better reflect survey time.
+- 480: Added rate limiter for continuous planner.
+- 490: Fixed base station survey pop up to better reflect survey time.
 
 ### Known Issues
 
--   131: Software upgrade process not documented fully.
+- 131: Software upgrade process not documented fully.
 
 ## 0.3.0
 
 ### New Features
 
--   Upgraded from ROS Melodic to ROS Noetic.
--   Published initial performance metrics.
--   Updated system architecture to work in Docker containers.
+- Upgraded from ROS Melodic to ROS Noetic.
+- Published initial performance metrics.
+- Updated system architecture to work in Docker containers.
 
 ### Bug Fixes
 
--   266: Allowed map offsets to be set more than once without needing to
-    reset them back to zero.
--   365: Updated costmap to handle large stop distances properly.
--   377: Fixed handling of goal tolerances of 0.02m or less.
--   389: Fixed issue with goal being skipped in some cases where final
-    heading was specified.
+- 266: Allowed map offsets to be set more than once without needing to
+  reset them back to zero.
+- 365: Updated costmap to handle large stop distances properly.
+- 377: Fixed handling of goal tolerances of 0.02m or less.
+- 389: Fixed issue with goal being skipped in some cases where final
+  heading was specified.
 
 ### Known Issues
 
--   131: Software upgrade process not documented fully.
--   150: Docking not yet implemented in Noetic.
+- 131: Software upgrade process not documented fully.
+- 150: Docking not yet implemented in Noetic.

@@ -23,14 +23,17 @@ imu:
         port: /dev/microstrain_main
         use_enu_frame: true
 ```
+
 </td>
 </tr>
 </table>
 
 #### Package and Setup
+
 The MicroStrain GX devices use the `microstain_inertial` ROS 2 package. The driver is open source, maintained by MicroStrain, and hosted on [GitHub](https://github.com/LORD-MicroStrain/microstrain_inertial).
 
 For more specifics on the way Clearpath's configuration system launches the `microstrain_inertial` driver, see the MicroStrain GX [launch file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/launch/microstrain_imu.launch.py) and the [default parameter file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/config/microstrain_imu.yaml) in `clearpath_sensors`.
 
 #### Device Path
+
 The `port` ROS parameter must be set to the device path of the MicroStrain device. The `microstrain_inertial` package installs its UDEV rule, which will add the `/dev/microstrain_main` device.

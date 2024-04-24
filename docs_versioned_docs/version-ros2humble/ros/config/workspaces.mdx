@@ -9,7 +9,9 @@ toc_max_heading_level: 4
 All ROS packages that are required to be built from source must be built within a ROS workspace. A workspace is directory structure that standardizes and streamlines the build process of ROS packages. See the official ROS 2 Humble workspace documentation for more information. In the following sections, we will cover the steps required to build a workspace.
 
 # Creating a Workspace
+
 As a standard at Clearpath, name the workspace the `colcon_ws` and create it in the home directory.
+
 ```bash
 cd ~
 mkdir -p colcon_ws/src
@@ -18,7 +20,9 @@ mkdir -p colcon_ws/src
 Clone all packages into the source directory, `~/colcon_ws/src`.
 
 # Building a Workspace
+
 Before building the workspace, use `rosdep` to install all required dependencies.
+
 ```bash
 cd ~/colcon_ws
 rosdep install --from-paths src --ignore-src -r
@@ -37,6 +41,7 @@ It is recommended to install the packages using symbolic links. These links will
 Furthermore, it is also recommended to build packages from source if debugging is not required. This is done by adding the arguments `--cmake-args -DCMAKE_BUILD_TYPE=Release`.
 
 **Release build with symbolic link install:**
+
 ```bash
 cd ~/colcon_ws
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
@@ -45,6 +50,7 @@ colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
 If building a package that has already been installed, it is required to allow overriding the existing version. To do so, use the `--allow-overriding` flag followed by the name of packages to override separated by spaces.
 
 **Release build with symbolic link install that overrides existing packages:**
+
 ```bash
 cd ~/colcon_ws
 colcon build --allow-overriding PKG_NAME_1 [PKG_NAME_2] --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
@@ -53,13 +59,16 @@ colcon build --allow-overriding PKG_NAME_1 [PKG_NAME_2] --symlink-install --cmak
 Lastly, it is also possible to build a single package at a time. This is particularly useful when working on a single package that requires rebuilding while several other packages in the workspace do not need to be rebuilt.
 
 **Single package release build with symbolic link install and override:**
+
 ```bash
 cd ~/colcon_ws
 colcon build --packages-select PKG_NAME --allow-overriding PKG_NAME --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
 ```
 
 # Source the Workspace
+
 Once the workspace has been built sucessfully, the workspace needs to be sourced before ROS commands can be used to launch any of the nodes of the packages built. To do so:
+
 ```bash
 source ~/colcon_ws/install/setup.bash
 ```
@@ -67,11 +76,12 @@ source ~/colcon_ws/install/setup.bash
 It is necessary to source the workspace in every terminal instance. Alternatively, it is recommended to add the sourcing command to the `~/.bashrc` file such that the workspace is automatically sourced whenever a terminal is instantiated.
 
 It is also necessary to add the path to the workspace setup file into the Clearpath configuration file. To do so add the following entry into the `robot.yaml` file:
+
 ```yaml
 system:
   ros2:
     workspaces:
       - "/home/administrator/colcon_ws/install/setup.bash"
 ```
-Replace `administrator` in the path with the name of the user in whose home directory the workspace was added. For more information on the Clearpth configuration system see the [**Robot YAML**](./yaml/system.mdx) documentation.
 
+Replace `administrator` in the path with the name of the user in whose home directory the workspace was added. For more information on the Clearpth configuration system see the [**Robot YAML**](./yaml/system.mdx) documentation.

@@ -24,16 +24,19 @@ gps:
         ip_port: 55555
         imu_frame_id: gps_0_link
 ```
+
 </td>
 </tr>
 </table>
 
 #### Package and Setup
+
 The SwiftNav Duro uses the `duro_gps_driver` ROS 2 driver. The driver is open source, maintained by the autonomous vehicle development team of Széchenyi University, and hosted on [GitHub](https://github.com/szenergy/duro_gps_driver).
 
 The `duro_gps_driver` and its dependency `libsbp`, the Swift binary protocol libray, must be built from source.
 
 Build and install the `libsbp`:
+
 ```bash
 
 # Install build dependencies.
@@ -56,6 +59,7 @@ sudo make install
 ```
 
 Build the `duro_gps_driver` in the ROS workspace.
+
 ```bash
 
 # Clone driver to source directory

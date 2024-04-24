@@ -29,6 +29,7 @@ On offboard computers, such as our users' computers, we recommend using `$HOME/c
 However, you can choose whatever directory you'd like to use, just be mindful that contents may be deleted and recreated by our generator scripts. We will refer to this directory as the **setup_path**.
 
 Make sure to put your robot configuration file, `robot.yaml`, into the **setup_path**.
+
 > The configuration file must be named `robot.yaml`.
 
 You can get a sample `robot.yaml` file from the [Clearpath Configuration repository](https://github.com/clearpathrobotics/clearpath_config/).
@@ -44,6 +45,7 @@ To run the node:
 ```bash
 ros2 launch clearpath_viz view_model.launch.py setup_path:=SETUP_PATH
 ```
+
 > Replace `SETUP_PATH` with the path to the directory where the `robot.yaml` is located.
 
 > Do not include `~` in the `SETUP_PATH`, use `$HOME` instead.

@@ -13,8 +13,8 @@
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc",
-    "format-check": "prettier --check components docs src README.md",
-    "format-write": "prettier --write components docs src README.md"
+    "format-check": "prettier --check components docs_indoornav_user_manual docs_outdoornav_user_manual docs_versioned_docs src README.md",
+    "format-write": "prettier --write components docs_indoornav_user_manual docs_outdoornav_user_manual docs_versioned_docs src README.md"
   },
   "dependencies": {
     "@docusaurus/core": "^2.1.0",

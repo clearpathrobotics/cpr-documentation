@@ -23,14 +23,17 @@ imu:
         frame_id: imu_0_link
         tf_ned_to_enu: true
 ```
+
 </td>
 </tr>
 </table>
 
 #### Package and Setup
+
 The CHRobotics UM6 IMU uses the `umx_driver` ROS 2 package. The driver is open source, maintained by the ROS community, and hosted on [GitHub](https://github.com/ros-drivers/um7).
 
 For more specifics on the way Clearpath's configuration system launches the `umx_driver`, see the CHRobotics UM6 [launch file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/launch/chrobotics_um6.launch.py) and the [default parameter file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/config/chrobotics_um6.yaml) in `clearpath_sensors`.
 
 #### Device Path
+
 The `port` ROS parameter must be set to the device path of the CHRobotics UM6. To simplify this process, use the `/dev/clearpath/imu` path. This path is only available when the Clearpath robot UDEV rules are installed. These are installed alongside the `clearpath_robot` package. If the IMU is connected, but the `/dev/clearpath/imu` device is not, check the file `/lib/udev/rules.d/60-ros-humble-clearpath-robot.rules` exists.

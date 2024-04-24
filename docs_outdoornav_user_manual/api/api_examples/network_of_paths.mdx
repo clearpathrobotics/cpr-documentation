@@ -9,7 +9,7 @@ toc_max_heading_level: 4
 ## Overview
 
 Network of paths uses a directed graph to define the robot's valid driving area. When executing a mission the robot
-plans its route to follow the edges of the graph to get from waypoint to waypoint.  The exact route taken is dynamic
+plans its route to follow the edges of the graph to get from waypoint to waypoint. The exact route taken is dynamic
 and may change depending on the robot's exact starting location, detected obstacles along some edges, and the geometry
 of the graph itself.
 
@@ -155,71 +155,57 @@ print(map)
 ```
 
 The program's output looks like this:
+
 ```yaml
 name: "Example Map"
 uuid: "3b3bed4e-bcfb-40d4-bc2e-3d5e904890cf"
 default_radius: 2.5
 default_speed_limit: 1.0
 points:
-  -
-    uuid: "1bef3d7d-3ead-49c7-9306-ede6c4030ebb"
+  - uuid: "1bef3d7d-3ead-49c7-9306-ede6c4030ebb"
     latitude: 50.12300747122199
     longitude: -97.28322817327727
-  -
-    uuid: "a56eb1c5-3bee-4d4a-84e0-780651db67cd"
+  - uuid: "a56eb1c5-3bee-4d4a-84e0-780651db67cd"
     latitude: 50.12171056479555
     longitude: -97.2821752564302
-  -
-    uuid: "1efac02f-8dfc-4826-a4cc-894d2cac16f9"
+  - uuid: "1efac02f-8dfc-4826-a4cc-894d2cac16f9"
     latitude: 50.11981930442499
     longitude: -97.28326793963477
-  -
-    uuid: "7bd501a1-ef93-46b9-a440-213755522954"
+  - uuid: "7bd501a1-ef93-46b9-a440-213755522954"
     latitude: 50.11926816962462
     longitude: -97.28483408203536
-  -
-    uuid: "9e6c1b11-8430-4986-9091-da440b57df85"
+  - uuid: "9e6c1b11-8430-4986-9091-da440b57df85"
     latitude: 50.11761512315844
     longitude: -97.28486964915798
-  -
-    uuid: "7a0d3f02-85c3-4907-9bb8-0b2245736b9b"
+  - uuid: "7a0d3f02-85c3-4907-9bb8-0b2245736b9b"
     latitude: 50.11758334859005
     longitude: -97.28166555083155
-  -
-    uuid: "0b289f8f-86b8-413f-b35e-cadbd5c4ef31"
+  - uuid: "0b289f8f-86b8-413f-b35e-cadbd5c4ef31"
     latitude: 50.11952637327663
     longitude: -97.28229122963415
-  -
-    uuid: "6db9a882-d40b-4050-ad60-3947c4a936d0"
+  - uuid: "6db9a882-d40b-4050-ad60-3947c4a936d0"
     latitude: 50.11913714171172
     longitude: -97.28167846932446
-  -
-    uuid: "05b6fb7f-b071-4aa2-b253-1fdf942097c9"
+  - uuid: "05b6fb7f-b071-4aa2-b253-1fdf942097c9"
     latitude: 50.11973533270263
     longitude: -97.28219097560832
-  -
-    uuid: "e77610aa-132d-45b1-83e2-0f8c9b5eafff"
+  - uuid: "e77610aa-132d-45b1-83e2-0f8c9b5eafff"
     latitude: 50.1199092365631
     longitude: -97.28249905504131
-  -
-    uuid: "8a013830-fb3a-4225-84d3-946810dede60"
+  - uuid: "8a013830-fb3a-4225-84d3-946810dede60"
     latitude: 50.12013941719884
     longitude: -97.28242834054022
-  -
-    uuid: "d42dd9ce-dc49-4226-ab28-18ac644da0f6"
+  - uuid: "d42dd9ce-dc49-4226-ab28-18ac644da0f6"
     latitude: 50.12209511863426
     longitude: -97.28242899160524
-  -
-    uuid: "aa198f25-78b5-48e0-a9df-750ffb4080a5"
+  - uuid: "aa198f25-78b5-48e0-a9df-750ffb4080a5"
     latitude: 50.12229616417419
     longitude: -97.28246941874356
-  -
-    uuid: "4d6addba-73f4-4373-8e3c-0f7caf155283"
+  - uuid: "4d6addba-73f4-4373-8e3c-0f7caf155283"
     latitude: 50.12230651895854
     longitude: -97.28325139122391
 connections:
-  -
-    uuid: "9152c6ee-6cb0-4a6a-a1a3-a156c137e10b"
+  - uuid: "9152c6ee-6cb0-4a6a-a1a3-a156c137e10b"
     start_point:
       uuid: "1bef3d7d-3ead-49c7-9306-ede6c4030ebb"
       latitude: 50.12300747122199
@@ -231,8 +217,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "af77ee8c-9460-4c4a-bb23-d8eab4877bd8"
+  - uuid: "af77ee8c-9460-4c4a-bb23-d8eab4877bd8"
     start_point:
       uuid: "a56eb1c5-3bee-4d4a-84e0-780651db67cd"
       latitude: 50.12171056479555
@@ -244,8 +229,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "077e176e-531a-4afa-9c55-48496ddb19a3"
+  - uuid: "077e176e-531a-4afa-9c55-48496ddb19a3"
     start_point:
       uuid: "a56eb1c5-3bee-4d4a-84e0-780651db67cd"
       latitude: 50.12171056479555
@@ -257,8 +241,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "8f605876-10d0-43bf-ade3-4acec11b90a4"
+  - uuid: "8f605876-10d0-43bf-ade3-4acec11b90a4"
     start_point:
       uuid: "1efac02f-8dfc-4826-a4cc-894d2cac16f9"
       latitude: 50.11981930442499
@@ -270,8 +253,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "98cdf58f-76d1-4b00-8119-44850b20c006"
+  - uuid: "98cdf58f-76d1-4b00-8119-44850b20c006"
     start_point:
       uuid: "1efac02f-8dfc-4826-a4cc-894d2cac16f9"
       latitude: 50.11981930442499
@@ -283,8 +265,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "94f20e66-aea9-4ea8-8029-31eba37ba800"
+  - uuid: "94f20e66-aea9-4ea8-8029-31eba37ba800"
     start_point:
       uuid: "7bd501a1-ef93-46b9-a440-213755522954"
       latitude: 50.11926816962462
@@ -296,8 +277,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "356d56a0-1165-48ef-87ab-b3e289b6d275"
+  - uuid: "356d56a0-1165-48ef-87ab-b3e289b6d275"
     start_point:
       uuid: "7bd501a1-ef93-46b9-a440-213755522954"
       latitude: 50.11926816962462
@@ -309,8 +289,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "40438b94-fd92-4e95-bb31-1737d235c8ca"
+  - uuid: "40438b94-fd92-4e95-bb31-1737d235c8ca"
     start_point:
       uuid: "9e6c1b11-8430-4986-9091-da440b57df85"
       latitude: 50.11761512315844
@@ -322,8 +301,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "97e40361-123c-4f33-9dae-3bd293d5a001"
+  - uuid: "97e40361-123c-4f33-9dae-3bd293d5a001"
     start_point:
       uuid: "9e6c1b11-8430-4986-9091-da440b57df85"
       latitude: 50.11761512315844
@@ -335,8 +313,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "5ca07677-1ec9-4355-bfdb-f04801d18feb"
+  - uuid: "5ca07677-1ec9-4355-bfdb-f04801d18feb"
     start_point:
       uuid: "7a0d3f02-85c3-4907-9bb8-0b2245736b9b"
       latitude: 50.11758334859005
@@ -348,8 +325,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "ac299ea0-18f0-42ed-ab82-01c4789c979d"
+  - uuid: "ac299ea0-18f0-42ed-ab82-01c4789c979d"
     start_point:
       uuid: "7a0d3f02-85c3-4907-9bb8-0b2245736b9b"
       latitude: 50.11758334859005
@@ -361,8 +337,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "754ad065-c3e8-41de-b0c2-a32e7247db40"
+  - uuid: "754ad065-c3e8-41de-b0c2-a32e7247db40"
     start_point:
       uuid: "0b289f8f-86b8-413f-b35e-cadbd5c4ef31"
       latitude: 50.11952637327663
@@ -374,8 +349,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "dcd5ca9f-5ad7-4404-a6a2-c5ab8b3bb0f5"
+  - uuid: "dcd5ca9f-5ad7-4404-a6a2-c5ab8b3bb0f5"
     start_point:
       uuid: "0b289f8f-86b8-413f-b35e-cadbd5c4ef31"
       latitude: 50.11952637327663
@@ -387,8 +361,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "66884078-ab62-439b-be51-3446cf92809e"
+  - uuid: "66884078-ab62-439b-be51-3446cf92809e"
     start_point:
       uuid: "6db9a882-d40b-4050-ad60-3947c4a936d0"
       latitude: 50.11913714171172
@@ -400,8 +373,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "948eca22-3bf2-443a-b117-a551c6503c2a"
+  - uuid: "948eca22-3bf2-443a-b117-a551c6503c2a"
     start_point:
       uuid: "6db9a882-d40b-4050-ad60-3947c4a936d0"
       latitude: 50.11913714171172
@@ -413,8 +385,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "9e445547-0e42-4ba4-8411-6228288d3ae8"
+  - uuid: "9e445547-0e42-4ba4-8411-6228288d3ae8"
     start_point:
       uuid: "6db9a882-d40b-4050-ad60-3947c4a936d0"
       latitude: 50.11913714171172
@@ -426,8 +397,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "d15e27d7-e4aa-479c-b9bf-705c70ccbdfc"
+  - uuid: "d15e27d7-e4aa-479c-b9bf-705c70ccbdfc"
     start_point:
       uuid: "6db9a882-d40b-4050-ad60-3947c4a936d0"
       latitude: 50.11913714171172
@@ -439,8 +409,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "1295c8da-65df-4b5b-a214-f7579ad7179d"
+  - uuid: "1295c8da-65df-4b5b-a214-f7579ad7179d"
     start_point:
       uuid: "05b6fb7f-b071-4aa2-b253-1fdf942097c9"
       latitude: 50.11973533270263
@@ -452,8 +421,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "be0f8c9f-0f42-4f9a-9140-050ac617cd10"
+  - uuid: "be0f8c9f-0f42-4f9a-9140-050ac617cd10"
     start_point:
       uuid: "05b6fb7f-b071-4aa2-b253-1fdf942097c9"
       latitude: 50.11973533270263
@@ -465,8 +433,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "6b1a04c8-e5d9-441d-b7d2-5426070d210f"
+  - uuid: "6b1a04c8-e5d9-441d-b7d2-5426070d210f"
     start_point:
       uuid: "e77610aa-132d-45b1-83e2-0f8c9b5eafff"
       latitude: 50.1199092365631
@@ -478,8 +445,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "bee2318d-0e19-427b-aa15-a5aa195212be"
+  - uuid: "bee2318d-0e19-427b-aa15-a5aa195212be"
     start_point:
       uuid: "e77610aa-132d-45b1-83e2-0f8c9b5eafff"
       latitude: 50.1199092365631
@@ -491,8 +457,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "159619a1-9a8e-41d0-b41b-918b187ac70c"
+  - uuid: "159619a1-9a8e-41d0-b41b-918b187ac70c"
     start_point:
       uuid: "8a013830-fb3a-4225-84d3-946810dede60"
       latitude: 50.12013941719884
@@ -504,8 +469,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "79e510bd-5f24-4251-9169-995f30212966"
+  - uuid: "79e510bd-5f24-4251-9169-995f30212966"
     start_point:
       uuid: "a56eb1c5-3bee-4d4a-84e0-780651db67cd"
       latitude: 50.12171056479555
@@ -517,8 +481,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "720679a5-2eda-4f21-b430-9ea34be3076d"
+  - uuid: "720679a5-2eda-4f21-b430-9ea34be3076d"
     start_point:
       uuid: "d42dd9ce-dc49-4226-ab28-18ac644da0f6"
       latitude: 50.12209511863426
@@ -530,8 +493,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "40fdd435-c7da-4e91-895b-e3dd3c872dbd"
+  - uuid: "40fdd435-c7da-4e91-895b-e3dd3c872dbd"
     start_point:
       uuid: "d42dd9ce-dc49-4226-ab28-18ac644da0f6"
       latitude: 50.12209511863426
@@ -543,8 +505,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "fff60db8-90ce-484b-ba44-a0637263f727"
+  - uuid: "fff60db8-90ce-484b-ba44-a0637263f727"
     start_point:
       uuid: "aa198f25-78b5-48e0-a9df-750ffb4080a5"
       latitude: 50.12229616417419
@@ -556,8 +517,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "995875bd-55dd-418b-81cc-72f3d957d119"
+  - uuid: "995875bd-55dd-418b-81cc-72f3d957d119"
     start_point:
       uuid: "aa198f25-78b5-48e0-a9df-750ffb4080a5"
       latitude: 50.12229616417419
@@ -569,8 +529,7 @@ connections:
     radius: 1.0
     speed_limit: 2.5
     cost_factor: 1.0
-  -
-    uuid: "9fc59ccd-75a7-4b0a-ab3e-d3c6e9bd9fb9"
+  - uuid: "9fc59ccd-75a7-4b0a-ab3e-d3c6e9bd9fb9"
     start_point:
       uuid: "4d6addba-73f4-4373-8e3c-0f7caf155283"
       latitude: 50.12230651895854

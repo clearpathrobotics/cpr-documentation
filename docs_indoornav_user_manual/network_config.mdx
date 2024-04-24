@@ -129,7 +129,7 @@ Once you have configured the network interfaces and confirmed that the
 communication works, ensure that the dedicated IndoorNav port is set in
 the `cpr_indoornav` package's `config/cyclone_dds.xml` file:
 
-``` xml
+```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <CycloneDDS xmlns="https://cdds.io/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
@@ -168,7 +168,7 @@ sudo a2enmod rewrite
 Create (or edit) `/etc/apache2/conf-enabled/clearpath.conf` to contain
 the following:
 
-``` 
+```
 Listen 2000
 Listen 2001
 Listen 5000

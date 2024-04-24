@@ -7,7 +7,7 @@ toc_max_heading_level: 4
 ---
 
 The Mission Scheduler API provides a ROS interface for creating, deleting, editing, and executing missions on a daily
-schedule.  Schedules are stored in a database-like structure on-disk, and can be executed manually or automatically.
+schedule. Schedules are stored in a database-like structure on-disk, and can be executed manually or automatically.
 
 The web UI is the primary method of creating and modifying schedules, though the ROS API is available should you wish
 to write your own interface or create automation tools to interact with the scheduler.
@@ -18,6 +18,7 @@ A schedule consists of one or more missions to be executed in the specified orde
 consistency the start time is expressed as a 24-hour time in UTC.
 
 The schedule must be in one of 3 modes:
+
 - `MODE_ONCE` -- the mission is executed exactly once per day, at the indicted UTC time
 - `MODE_LOOP` -- the mission is executed a set number of times per day, starting at the indicated UTC time and repeating
   at fixed intervals until the desired number of repetitions is reached
@@ -30,7 +31,7 @@ at least one mission.
 
 ### A Note on Schedule Timing
 
-Automatically-scheduled missions are executed at the provided time +/- 10 seconds.  The duration provided by the
+Automatically-scheduled missions are executed at the provided time +/- 10 seconds. The duration provided by the
 `next_schedule` topic and `get_next_schedule` service is therefore approximate. We recommend rounding the time to the
 nearest minute when displaying the countdown information to the user in any sort of GUI.
 
@@ -40,7 +41,7 @@ nearest minute when displaying the countdown information to the user in any sort
 
 **Message Type:** [clearpath_mission_scheduler_msgs/msg/NextSchedule](definitions.mdx#scheduler-nextschedule)
 
-**Description:** Publishes the UUID and duration to the next scheduled mission.  If no missions are scheduled the UUID
+**Description:** Publishes the UUID and duration to the next scheduled mission. If no missions are scheduled the UUID
 will be blank.
 
 **Update Rate:** 1Hz
@@ -139,7 +140,7 @@ there are no enabled schedules) the UUID will be blank.
 
 :::note
 
-The duration is the approximate time left before the schedule will be started automatically.  Schedules will start at
+The duration is the approximate time left before the schedule will be started automatically. Schedules will start at
 their designated start time +/- 10 seconds.
 
 :::
@@ -155,7 +156,7 @@ exists, the returned object will have a blank UUID.
 
 **Service Type:** [clearpath_mission_scheduler_msgs/srv/ImportData](definitions.mdx#scheduler-importdata)
 
-**Description:** Import data exported by the `export_data` service.  This will add new schedules to the database
+**Description:** Import data exported by the `export_data` service. This will add new schedules to the database
 but will not modify or delete any existing schedules.
 
 :::note
@@ -176,7 +177,7 @@ schedule
 
 **Service Type:** [cpr_mission_scheduler_msgs/srv/ImportData](definitions.mdx#scheduler-importdata)
 
-**Description:** Restore data exported by the `export_data` service.  This will delete all schedules and replace the
+**Description:** Restore data exported by the `export_data` service. This will delete all schedules and replace the
 database contents with the imported data.
 
 :::note
@@ -207,7 +208,7 @@ copy all values to the service request object, and then change the fields you wa
 **Action Type:** [clearpath_mission_scheduler_msgs/action/RunScheduleByUuid](definitions.mdx#scheduler-runschedulebyuuid)
 
 **Description:** Execute the schedule with the given UUID. The `delay` parameter will defer the execution by the
-specified time.  This action can be used to run a disabled schedule, or run a schedule at a time other than its
+specified time. This action can be used to run a disabled schedule, or run a schedule at a time other than its
 scheduled start time.
 
 **Feedback Rate:** 1Hz

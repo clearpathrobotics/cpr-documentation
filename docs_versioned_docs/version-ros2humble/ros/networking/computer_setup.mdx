@@ -2,6 +2,7 @@
 title: Clearpath Computer Setup
 sidebar_position: 2
 ---
+
 import ComputerNetworkingSetupInstall from "../../components/networking/_computer_networking_setup_install.mdx";
 import StandardClearpathBridgeSetup from "../../components/networking/_standard_clearpath_bridge_setup.mdx";
 
@@ -13,12 +14,12 @@ import StandardClearpathBridgeSetup from "../../components/networking/_standard_
 
 ### Custom Networking
 
-The `clearpath-computer-setup` tool can also be used to set up custom network interfaces. 
+The `clearpath-computer-setup` tool can also be used to set up custom network interfaces.
 
 1. Navigate to the **Netplan Setup** menu and use the bridge, Ethernet, or Wi-Fi setup menus to add configurations.
 2. Once you are done configuring, return to the **Netplan Setup** menu and select **Write Configuration YAML**. You will be prompted for a file name. The file should be
-placed under `/etc/netplan/` to take effect, and the naming convention is a two digit number followed by a unique name.
-For example, `/etc/netplan/50-home-wifi.yaml`.
+   placed under `/etc/netplan/` to take effect, and the naming convention is a two digit number followed by a unique name.
+   For example, `/etc/netplan/50-home-wifi.yaml`.
 
 :::note
 

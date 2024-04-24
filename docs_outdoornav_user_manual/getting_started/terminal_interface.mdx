@@ -21,7 +21,7 @@ first `ssh` to the UGV using the details provided in the UGV user
 manual. Then, if a separate OutdoorNav Computer exists, you can
 connect to it by running:
 
-``` bash
+```bash
 ssh administrator@192.168.131.5
 ```
 
@@ -55,19 +55,19 @@ onav help
 
 The CLI commands are:
 
--  `install`: Download and configure OutdoorNav
--  `key`: Get, set, or delete your OutdoorNav license key
--  `download`: Download OutdoorNav, but do not configure it
--  `configure`: (Re)configure OutdoorNav
--  `upgrade`: Upgrade OutdoorNav to the latest vesion
--  `uninstall`: Uninstall OutdoorNav
--  `depends`: Verify and install dependencies
--  `start`: Start OutdoorNav
--  `stop`: Stop OutdoorNav
--  `status`: Check the status of OutdoorNav
--  `logs`: View OutdoorNav logs
--  `versions`: Print versions available to install
--  `help`: Show available commands
+- `install`: Download and configure OutdoorNav
+- `key`: Get, set, or delete your OutdoorNav license key
+- `download`: Download OutdoorNav, but do not configure it
+- `configure`: (Re)configure OutdoorNav
+- `upgrade`: Upgrade OutdoorNav to the latest vesion
+- `uninstall`: Uninstall OutdoorNav
+- `depends`: Verify and install dependencies
+- `start`: Start OutdoorNav
+- `stop`: Stop OutdoorNav
+- `status`: Check the status of OutdoorNav
+- `logs`: View OutdoorNav logs
+- `versions`: Print versions available to install
+- `help`: Show available commands
 
 To get help on an individual command, use the `-h` option. For example, to
 get help on the `install` command, run `onav install -h`:
@@ -116,13 +116,13 @@ onav stop
 To use the UGV without the autonomy software, use the following
 command to stop the nodes and prevent them from automatic startup:
 
-``` bash
+```bash
 onav stop -s autonomy
 ```
 
 The autonomy software can be restarted by running:
 
-``` bash
+```bash
 onav start -s autonomy
 ```
 
@@ -131,7 +131,7 @@ onav start -s autonomy
 To use the UGV without the sensors, use these commands to disable the
 nodes and prevent them from automatic startup:
 
-``` bash
+```bash
 onav stop -s sensors
 ```
 
@@ -214,7 +214,7 @@ onav start <TARGET_VERSION>
 
 After receiving a notice that a new version of the OutdoorNav Software is
 available, use the `onav upgrade` command with the appropriate version.
-For example, to upgrade to the newest avialbel version that you are eligible 
+For example, to upgrade to the newest avialbel version that you are eligible
 to receive, run the following command:
 
 ```

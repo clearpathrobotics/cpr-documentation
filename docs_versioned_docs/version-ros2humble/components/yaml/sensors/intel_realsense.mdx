@@ -28,24 +28,29 @@ camera:
         depth_module.profile: 640,480,30
         pointcloud.enable: true
 ```
+
 </td>
 </tr>
 </table>
 
 #### Package and Setup
+
 The Intel Realsense cameras use the `realsense_ros` ROS 2 driver. The driver is open source, maintained by Intel, and hosted on [GitHub](https://github.com/IntelRealSense/realsense-ros). The `realsense_ros` nodes depends on the the `librealsense2` [SDK](https://github.com/IntelRealSense/librealsense). Both packages will be installed alongside the `clearpath_sensors` package.
 
 For specifics on the way Clearpath's configuration system launches the camera, see the Intel Realsense [launch file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/launch/intel_realsense.launch.py) and the [default parameter file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/config/intel_realsense.yaml) in `clearpath_sensors`.
 
 #### Device Type and Serial Number
+
 The `device_type` and `serial_no` parameters must be set accurately to successfully launch the node. Both of these values can be found using the SDK utility.
 
 Use the following command to see a list of connected Intel Realsense devices:
+
 ```bash
 rs-fw-update
 ```
 
 When ran without any arguments, the `rs-fw-update` will return information about the connected devices, as is shown below:
+
 ```bash
 Nothing to do, run again with -h for help
 

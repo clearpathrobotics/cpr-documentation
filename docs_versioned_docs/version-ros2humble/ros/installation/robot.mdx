@@ -13,7 +13,7 @@ import ComputerNetworkingSetupInstall from "../../components/networking/_compute
 ## Operating System (OS) {#operating-system}
 
 ROS 2 Humble uses Ubuntu 22.04 as its Tier 1 operating system.
-Though other operating systems are supported, it is highly recommended to use Ubuntu 22.04. 
+Though other operating systems are supported, it is highly recommended to use Ubuntu 22.04.
 The preferred method is using the Clearpath Robotics ISO image, which is covered in this section.
 
 :::note
@@ -59,7 +59,6 @@ to create the installation media, an ethernet cable, a monitor, and a keyboard.
     You should use the `passwd` utility to change the `administrator` account password.
 8.  Log on to the computer and run `bash -e clearpath_computer_installer.sh` to install the needed software.
     This will take a while to complete and has a prompts that must be answered.
-
 
 ## Internet Connection
 
@@ -259,7 +258,6 @@ right under where ROS is sourced:
 source /home/administrator/clearpath_ws/install/setup.bash
 ```
 
-
 :::note
 
 This workspace will also need to be sourced in your [robot.yaml](#robot-yaml) file as described
@@ -274,6 +272,7 @@ Create the setup folder where the [robot.yaml](../config/yaml/overview.mdx) file
 ```
 sudo mkdir /etc/clearpath/ -p && sudo chmod 777 /etc/clearpath/
 ```
+
 #### Robot YAML
 
 The `robot.yaml` file defines the configuration of the robot including the robot model, all
@@ -313,5 +312,6 @@ source /etc/clearpath/setup.bash
 Certain sensors may require additional setup, please review the [Accessories](../../robots/accessories/accessories.mdx) pages
 for any additional instructions for the sensors that you are using. For example, the Blackfly camera has additional instructions
 listed under [software bringup](../../robots/accessories/sensors/cameras/flir_blackfly_s#software-bringup).
+
 </p>
 </details>

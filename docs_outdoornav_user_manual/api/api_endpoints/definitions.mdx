@@ -630,26 +630,26 @@ bool[] camera_watchdog_triggered
 
 #### Standard ROS Messages {#std-ros-msgs}
 
--   [actionlib_msgs/GoalID](http://docs.ros.org/en/noetic/api/actionlib_msgs/html/msg/GoalID.html)
--   [diagnostic_msgs/DiagnosticArray](http://docs.ros.org/en/noetic/api/diagnostic_msgs/html/msg/DiagnosticArray.html)
--   [geometry_msgs/PolygonStamped](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/PolygonStamped.html)
--   [geometry_msgs/Polygon](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Polygon.html)
--   [geometry_msgs/PoseArray](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/PoseArray.html)
--   [geometry_msgs/Twist](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Twist.html)
--   [nav_msgs/OccupancyGrid](http://docs.ros.org/en/noetic/api/nav_msgs/html/msg/OccupancyGrid.html)
--   [nav_msgs/Odometry](http://docs.ros.org/en/noetic/api/nav_msgs/html/msg/Odometry.html)
--   [nav_msgs/Path](http://docs.ros.org/en/noetic/api/nav_msgs/html/msg/Path.html)
--   [sensor_msgs/Imu](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/Imu.html)
--   [sensor_msgs/LaserScan](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/LaserScan.html)
--   [sensor_msgs/NavSatFix](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/NavSatFix.html)
--   [sensor_msgs/PointCloud2](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/PointCloud2.html)
--   [std_msgs/Bool](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/Bool.html)
--   [std_msgs/Empty](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/Empty.html)
--   [std_msgs/String](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/String.html)
--   [tf2_msgs/TFMessage](http://docs.ros.org/en/noetic/api/tf2_msgs/html/msg/TFMessage.html)
--   [wireless_msgs/Connection](http://docs.ros.org/en/noetic/api/wireless_msgs/html/msg/Connection.html)
+- [actionlib_msgs/GoalID](http://docs.ros.org/en/noetic/api/actionlib_msgs/html/msg/GoalID.html)
+- [diagnostic_msgs/DiagnosticArray](http://docs.ros.org/en/noetic/api/diagnostic_msgs/html/msg/DiagnosticArray.html)
+- [geometry_msgs/PolygonStamped](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/PolygonStamped.html)
+- [geometry_msgs/Polygon](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Polygon.html)
+- [geometry_msgs/PoseArray](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/PoseArray.html)
+- [geometry_msgs/Twist](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Twist.html)
+- [nav_msgs/OccupancyGrid](http://docs.ros.org/en/noetic/api/nav_msgs/html/msg/OccupancyGrid.html)
+- [nav_msgs/Odometry](http://docs.ros.org/en/noetic/api/nav_msgs/html/msg/Odometry.html)
+- [nav_msgs/Path](http://docs.ros.org/en/noetic/api/nav_msgs/html/msg/Path.html)
+- [sensor_msgs/Imu](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/Imu.html)
+- [sensor_msgs/LaserScan](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/LaserScan.html)
+- [sensor_msgs/NavSatFix](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/NavSatFix.html)
+- [sensor_msgs/PointCloud2](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/PointCloud2.html)
+- [std_msgs/Bool](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/Bool.html)
+- [std_msgs/Empty](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/Empty.html)
+- [std_msgs/String](http://docs.ros.org/en/noetic/api/std_msgs/html/msg/String.html)
+- [tf2_msgs/TFMessage](http://docs.ros.org/en/noetic/api/tf2_msgs/html/msg/TFMessage.html)
+- [wireless_msgs/Connection](http://docs.ros.org/en/noetic/api/wireless_msgs/html/msg/Connection.html)
 
-------------------------------------------------------------------------
+---
 
 ### Service Definitions
 
@@ -726,6 +726,7 @@ uint32 gnss_samples
 ---
 bool success
 ```
+
 #### clearpath_mission_manager_msgs/srv/AddNetworkEdge.srv {#storage-addnetworkedge}
 
 ```
@@ -821,6 +822,7 @@ bool ok
 ```
 
 #### clearpath_mission_manager_msgs/srv/CloneMission.srv {#storage-clonemission}
+
 ```
 # The UUID of the mission to clone
 string uuid
@@ -1599,10 +1601,10 @@ string message
 
 #### Standard ROS Services
 
--   [std_srvs/Empty](http://docs.ros.org/en/noetic/api/std_srvs/html/srv/Empty.html)
--   [std_srvs/SetBool](http://docs.ros.org/en/noetic/api/std_srvs/html/srv/SetBool.html)
+- [std_srvs/Empty](http://docs.ros.org/en/noetic/api/std_srvs/html/srv/Empty.html)
+- [std_srvs/SetBool](http://docs.ros.org/en/noetic/api/std_srvs/html/srv/SetBool.html)
 
-------------------------------------------------------------------------
+---
 
 ### Action Definitions
 
@@ -1659,7 +1661,6 @@ bool success
 # current progress, as a percentage, of the surveying
 float32 percent_complete
 ```
-
 
 #### clearpath_mission_scheduler_msgs/action/RunScheduleByUuid.action {#scheduler-runschedulebyuuid}
 

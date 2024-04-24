@@ -6,9 +6,10 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-import versions from "@site/static/versions.js"
+import versions from "@site/static/versions.js";
 
 Prior to installing the OutdoorNav software, ensure that you have completed the relevant [Hardware Kit Checklist](hardware_integration_requirements/hardware_integration_requirements.mdx). If installing on a secondary/backpack/Starter Kit computer, ensure to have also completed the:
+
 - [Interface Control Checklist](interface_control_requirements.mdx)
 
 All the following instructions, unless otherwise specified, are to be run on the OutdoorNav computer.
@@ -16,7 +17,7 @@ All the following instructions, unless otherwise specified, are to be run on the
 ### Install Command-line Interface Tool (CLI) {#install-cli}
 
 <code>
-{`
+  {`
 sudo apt update
 sudo apt install python3-onav-cli
 `}
@@ -25,7 +26,7 @@ sudo apt install python3-onav-cli
 ### Install OutdoorNav
 
 <code>
-{`
+  {`
 onav install -k <license_key> <VERSION>
 `}
 </code>
@@ -46,10 +47,10 @@ the installation.
 
 If the UGV has sensors and/or parts that protrude outside of the UGV body, then a few environment variables will need to be modified to adjust the footprint of the robot. Things that could be extending past the footprint could include but are not limited to:
 
--   GPS antennae,
--   Charging receivers,
--   Arms,
--   etc...
+- GPS antennae,
+- Charging receivers,
+- Arms,
+- etc...
 
 Change the environment variables from the Table below, in the following file:
 
@@ -58,20 +59,19 @@ cd /opt/onav/<version>/config
 nano autonomy.env
 ```
 
-| Environment Variable        | Description                            | Default |
-|-----------------------------|----------------------------------------|---------|
-| **FOOTPRINT_OFFSET_POS_X**  | Distance from base_link to the furthest edge of any part/sensor at the front of the robot | 0.5   |
-| **FOOTPRINT_OFFSET_NEG_X**  | Distance from base_link to the furthest edge of any part/sensor at the rear of the robot  | -0.5  |
-| **FOOTPRINT_OFFSET_POS_Y**  | Distance from base_link to the furthest edge of any part/sensor at the left of the robot  | 0.35  |
-| **FOOTPRINT_OFFSET_NEG_Y**  | Distance from base_link to the furthest edge of any part/sensor at the right of the robot | -0.35 |
-
+| Environment Variable       | Description                                                                               | Default |
+| -------------------------- | ----------------------------------------------------------------------------------------- | ------- |
+| **FOOTPRINT_OFFSET_POS_X** | Distance from base_link to the furthest edge of any part/sensor at the front of the robot | 0.5     |
+| **FOOTPRINT_OFFSET_NEG_X** | Distance from base_link to the furthest edge of any part/sensor at the rear of the robot  | -0.5    |
+| **FOOTPRINT_OFFSET_POS_Y** | Distance from base_link to the furthest edge of any part/sensor at the left of the robot  | 0.35    |
+| **FOOTPRINT_OFFSET_NEG_Y** | Distance from base_link to the furthest edge of any part/sensor at the right of the robot | -0.35   |
 
 ### Start/Stop the OutdoorNav
 
 To start up the OutdoorNav software run:
 
 <code>
-{`
+  {`
 onav start
 `}
 </code>
@@ -81,7 +81,7 @@ If you wish to start individual profiles or services, run `onav start -h` to see
 To stop the OutdoorNav software run:
 
 <code>
-{`
+  {`
 onav stop
 `}
 </code>
@@ -94,7 +94,7 @@ For more information and available ONAV CLI commands, see the [Terminal Interfac
 
 2. Check the following topics and make sure there is data being published to them:
 
-``` bash
+```bash
 rostopic echo -n 1 /platform/odom
 rostopic echo -n 1 /platform/cmd_vel
 
@@ -105,7 +105,7 @@ rostopic echo /sensors/gps_<sensor_num>/fix
 
 # IMU (if included)
 rostopic echo -n 1 /sensors/imu_<sensor_num>/data
- 
+
 # Velodyne/Ouster/LMS1XX/Hokuyo/OutdoorScan (if included)
 rostopic echo /sensors/lidar_<sensor_num>/pointcloud
 rostopic echo /sensors/lidar_<sensor_num>/scan
