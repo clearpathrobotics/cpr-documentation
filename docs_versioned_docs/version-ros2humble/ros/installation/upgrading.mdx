@@ -196,6 +196,7 @@ platform:
       rpy: [0.0, 0.0, 0.0]          # HUSKY_SENSOR_ARCH_RPY='0 0 0'
       enabled: true
 ```
+
   </TabItem>
   <TabItem
     value="J100"
@@ -230,16 +231,15 @@ platform:
       rpy: [0.0, 0.0, 3.1415]
       enabled: false        # JACKAL_REAR_ACCESSORY_FENDER=0
 ```
+
   </TabItem>
 </Tabs>
-
 
 ### Sensors
 
 Sensors can be added under the [sensors](../config/yaml/sensors/overview.mdx) key in the `robot.yaml` file. There is no longer
 a concept of primary, secondary, etc. sensors. Rather, sensors are enumerated in the order that they are added to the config.
 Sensor topics will be automatically set to match the [Clearpath API](../api/sensors_api.mdx#2d-lidar-topics).
-
 
 #### 2D Lidar
 
@@ -303,6 +303,7 @@ sensors:
         min_ang: -2.391
         max_ang: 2.391
 ```
+
   </TabItem>
   <TabItem
     value="J100"
@@ -368,6 +369,7 @@ sensors:
         min_ang: -2.391
         max_ang: 2.391
 ```
+
   </TabItem>
 </Tabs>
 
@@ -433,6 +435,7 @@ sensors:
         port: 2368
         model: VLP16
 ```
+
   </TabItem>
   <TabItem
     value="J100"
@@ -473,6 +476,7 @@ sensors:
         port: 2368
         model: VLP16
 ```
+
   </TabItem>
 </Tabs>
 
@@ -570,6 +574,7 @@ sensors:
                                           # HUSKY_REALSENSE_SECONDARY_DEPTH_FRAMERATE='30'
         pointcloud.enable: true           # HUSKY_REALSENSE_SECONDARY_POINTCLOUD_ENABLED=1
 ```
+
   </TabItem>
 </Tabs>
 
@@ -607,6 +612,7 @@ sensors:
       port: /dev/microstrain    # HUSKY_IMU_PORT='/dev/microstrain'
       use_enu_frame: true
 ```
+
   </TabItem>
   <TabItem
     value="J100"
@@ -641,6 +647,7 @@ sensors:
       port: /dev/microstrain
       use_enu_frame: true
 ```
+
   </TabItem>
 </Tabs>
 
@@ -675,6 +682,7 @@ sensors:
         port:"/dev/clearpath/gps"   # HUSKY_NAVSAT_PORT=/dev/clearpath/gps
         baud: 19200                 # HUSKY_NAVSAT_BAUD=19200
 ```
+
   </TabItem>
   <TabItem
     value="J100"
@@ -715,9 +723,11 @@ sensors:
         port:"/dev/clearpath/gps"   # JACKAL_NAVSAT_PORT="/dev/clearpath/gps"
         baud: 57600                 # JACKAL_NAVSAT_BAUD=57600
 ```
+
   </TabItem>
 </Tabs>
 
 ## Next steps
+
 Once everything is backed up and you have created your robot.yaml file, the next step is to go through
 the [robot install instructions](robot.mdx). This will involve installing the new OS.

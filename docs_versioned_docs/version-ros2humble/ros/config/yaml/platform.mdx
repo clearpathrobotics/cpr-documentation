@@ -5,6 +5,7 @@ sidebar_position: 4
 toc_min_heading_level: 2
 toc_max_heading_level: 5
 ---
+
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
@@ -26,9 +27,11 @@ Every robot platform has unique structures such as versatile sensor mounting sol
 Each robot also supports specific batteries and battery configurations.
 
 ## Joystick Controller
+
 We support two types of controllers:
-  - **ps4**: standard Playstation4 controller.
-  - **logitech**: Logitech F710
+
+- **ps4**: standard Playstation4 controller.
+- **logitech**: Logitech F710
 
 ```yaml
 controller: ps4 # or logitech
@@ -52,31 +55,30 @@ For systems without a BMS, the state of charge should be treated as a rough esti
 
 :::
 
-
 <Tabs groupId="platform">
   <TabItem value="A200" label="A200" default>
 
-| Battery | Chemistry | Nominal Voltage (V) | Capacity (Ah) | Configurations |
-|:-:|:-:|:-:|:-:|:-:|
-| `ES20_12C` | Lead Acid | 12.0 | 20.0 | S2P1 |
-| `HE2613` | Lithium Ion | 25.9 | 12.8 | S1P3<br/>S1P4 |
+|  Battery   |  Chemistry  | Nominal Voltage (V) | Capacity (Ah) | Configurations |
+| :--------: | :---------: | :-----------------: | :-----------: | :------------: |
+| `ES20_12C` |  Lead Acid  |        12.0         |     20.0      |      S2P1      |
+|  `HE2613`  | Lithium Ion |        25.9         |     12.8      | S1P3<br/>S1P4  |
 
   </TabItem>
   <TabItem value="J100" label="J100">
 
-| Battery | Chemistry | Nominal Voltage (V) | Capacity (Ah) | Configurations |
-|:-:|:-:|:-:|:-:|:-:|
-| `HE2613` | Lithium Ion | 25.9 | 12.8 | S1P1 |
+| Battery  |  Chemistry  | Nominal Voltage (V) | Capacity (Ah) | Configurations |
+| :------: | :---------: | :-----------------: | :-----------: | :------------: |
+| `HE2613` | Lithium Ion |        25.9         |     12.8      |      S1P1      |
 
   </TabItem>
   <TabItem value="W200" label="W200">
 
-| Battery | Chemistry | Nominal Voltage (V) | Capacity (Ah) | Configurations |
-|:-:|:-:|:-:|:-:|:-:|
-| `U1_35` | Lead Acid | 12.0 | 35.0 | S4P3 |
-| `NEC_ALM12V35` | Lithium Ion | 13.2 | 35.0 | S4P3 |
-| `VALENCE_U24_12XP` | Lithium Ion | 12.8 | 118.0 | S4P1 |
-| `VALENCE_U27_12XP` | Lithium Ion | 12.8 | 144.0 | S4P1 |
+|      Battery       |  Chemistry  | Nominal Voltage (V) | Capacity (Ah) | Configurations |
+| :----------------: | :---------: | :-----------------: | :-----------: | :------------: |
+|      `U1_35`       |  Lead Acid  |        12.0         |     35.0      |      S4P3      |
+|   `NEC_ALM12V35`   | Lithium Ion |        13.2         |     35.0      |      S4P3      |
+| `VALENCE_U24_12XP` | Lithium Ion |        12.8         |     118.0     |      S4P1      |
+| `VALENCE_U27_12XP` | Lithium Ion |        12.8         |     144.0     |      S4P1      |
 
   </TabItem>
 
@@ -149,101 +151,124 @@ Some attachment types will have the same `type` parameter across different platf
 ### Husky A200 {#attachments-a200}
 
 #### Bumper
+
 The A200 can have bumpers of a variable length. By setting the `extension` parameter, the bumper can be extended if required.
 
 By default, we have two bumpers, on the front and rear of the robot.
 
 <A200Bumper />
 
-
 #### Top Plate
+
 The A200 has three types of top plates that modify the mounting surface of the robot.
 
 ##### Default
+
 The **default** top plate is mounted atop a user rail that can be used to mount certain payload inside the chassis and right below the top plate.
-<A200TopPlateDefault/>
-<br/>
+
+<A200TopPlateDefault />
+<br />
 
 ##### Large
+
 The **large** top plate does not have a user rail and is primarily used to mount larger payloads such as manipulators on the robot.
-<A200TopPlateLarge/>
-<br/>
+
+<A200TopPlateLarge />
+<br />
 
 ##### PACS
+
 The **pacs** top plate does not have a user rail. It has an opening to access the user bay within the chassis. It comes with the grid of mounting holes of the PACS™ **80mm x 80mm** grid.
-<A200TopPlatePACS/>
-<br/>
+
+<A200TopPlatePACS />
+<br />
 
 #### Sensor Arch
+
 The A200 has two types of sensor archs which are used to mount sensors from a vantage point.
 
 ##### Sensor Arch 300
-<A200SensorArch300/>
-<br/>
+
+<A200SensorArch300 />
+<br />
 
 ##### Sensor Arch 510
-<A200SensorArch510/>
-<br/>
+
+<A200SensorArch510 />
+<br />
 
 ### Jackal J100 {#attachments-j100}
 
 #### Fenders
+
 There are two types of fenders that can be equipped on the **J100** platform.
 
 ##### Default Fenders
+
 The **default** fenders are the standard fenders that come with every **J100**.
 
 The front and rear fender entries are indepenent from each other such that they can be modified independently.
-<J100FenderDefault/>
-<br/>
+
+<J100FenderDefault />
+<br />
 
 ##### Sensor Fenders
+
 The **default** fenders are the standard fenders that come with every **J100**.
 
 The front and rear fender entries are indepenent from each other such that they can be modified independently.
-<J100FenderSensor/>
-<br/>
+
+<J100FenderSensor />
+<br />
 
 #### Top Plate
+
 The Jackal only has one type of top plate. The ark enclosure.
 
 ##### Ark Enclosure
-<J100TopPlateArkEnclosure/>
-<br/>
+
+<J100TopPlateArkEnclosure />
+<br />
 
 ### Warthog W200 {#attachments-w200}
 
 #### Bulkhead
+
 The Warthog bulkhead is used to cover payloads and to add a second surface to which to attach more payloads.
 
 ##### Default {#default-bulkhead}
-<W200BulkheadDefault/>
-<br/>
+
+<W200BulkheadDefault />
+<br />
 
 ##### Arm Mount {#arm-mount-bulkhead}
-<W200BulkheadArmMount/>
-<br/>
+
+<W200BulkheadArmMount />
+<br />
 
 #### Arm Mount
+
 If instead of using the **bulkhead** to add an arm mount. We can add the arm mount independently using the following entry.
 
-<W200ArmMount/>
+<W200ArmMount />
 
 ### Generators
-<W200Generator/>
+
+<W200Generator />
 
 ## Extras
+
 Despite all current customization options, we still would like our users to be able to add-in their existing custom URDF to the robot platform URDF and pass in and overwrite parameters to all platform nodes.
 Extras have the following entries:
 
-- **urdf:** 
+- **urdf:**
   - **package:** name of the ROS 2 package that contains the extras URDF (optional).
   - **path:** relative path within the package or absolute path to robot extras URDF
 - **ros_parameters:** in YAML to pass in parameters to platform nodes. This is useful to change parameters such as the robot's velocity and acceleration.
 
 ```yaml
 extras:
-  urdf: 
+  urdf:
     package: package_name
     path: relative/path/to/urdf/in/package.urdf.xacro # or can contain /absolute/path/to/urdf.urdf.xacro
   ros_parameters: {} # node parameters, see below
@@ -254,13 +279,16 @@ Remember, absolute paths start with `/` and relative paths do not.
 :::
 
 ### ROS Parameters
+
 A common use case is to set and update the parameters to the `platform_velocity_controller` node. These can be used to modify the linear and angular velocity and acceleratation.
 
 These can be passed in as follows:
+
 <Tabs groupId="platform">
   <TabItem value="A200" label="A200" default>
 
 **A200 Husky Controller Defaults:**
+
 ```yaml
 platform:
   extras:
@@ -281,6 +309,7 @@ platform:
   <TabItem value="J100" label="J100">
 
 **J100 Jackal Controller Defaults:**
+
 ```yaml
 platform:
   extras:
@@ -301,6 +330,7 @@ platform:
   <TabItem value="W200" label="W200">
 
 **W200 Warthog Controller Defaults:**
+
 ```yaml
 platform:
   extras:
@@ -338,13 +368,13 @@ platform:
 In this sample, we swapped the top plate from the **_default_** model to the **_pacs_** model. Notice all the links added by the **_pacs_** plate below, compared to the **_default_** plate above.
 
 ```yaml
-  - name: top_plate
-    type: a200.top_plate
-    model: pacs # switched from 'default' to 'pacs'
-    parent: mid_mount
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    enabled: true
+- name: top_plate
+  type: a200.top_plate
+  model: pacs # switched from 'default' to 'pacs'
+  parent: mid_mount
+  xyz: [0.0, 0.0, 0.0]
+  rpy: [0.0, 0.0, 0.0]
+  enabled: true
 ```
 
 <center>
@@ -360,13 +390,13 @@ In this sample, we swapped the top plate from the **_default_** model to the **_
 Then, we added a sensor arch to add our sample sensors to. We can do this by adding the **attachment**, **sensor_arch** and setting the model to **_sensor_arch_300_**.
 
 ```yaml
-  - name: sensor_arch
-    type: a200.sensor_arch
-    model: sensor_arch_300
-    parent: mid_mount
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    enabled: true
+- name: sensor_arch
+  type: a200.sensor_arch
+  model: sensor_arch_300
+  parent: mid_mount
+  xyz: [0.0, 0.0, 0.0]
+  rpy: [0.0, 0.0, 0.0]
+  enabled: true
 ```
 
 <center>

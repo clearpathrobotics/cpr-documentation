@@ -16,7 +16,6 @@ The OutdoorNav software publishes to the topics in this section either
 all the time or while an autonomous navigation missions is running. They
 can be used to monitor the behaviour of OutdoorNav.
 
-
 #### /assisted_teleop/cmd_vel
 
 &emsp;&emsp;**Message Type:** geometry_msgs/Twist
@@ -88,14 +87,14 @@ including autonomy state and mode.
 
 &emsp;&emsp;**Message Type:** [clearpath_dock_msgs/DockProperties](definitions.mdx#msg-dock-properties)
 
-&emsp;&emsp;**Description:**  A list of docks, in which each dock includes information related to
+&emsp;&emsp;**Description:** A list of docks, in which each dock includes information related to
 the location, id, etc...
 
 #### /dock/state
 
 &emsp;&emsp;**Message Type:** [clearpath_dock_msgs/DockState](definitions.mdx#msg-dock-state)
 
-&emsp;&emsp;**Description:**  The current state of the docking process.
+&emsp;&emsp;**Description:** The current state of the docking process.
 
 #### /localization/odom
 
@@ -169,7 +168,7 @@ the robot along the reference path.
 &emsp;&emsp;**Message Type:** [clearpath_navigation_msgs/Metrics](definitions.mdx#msg-metrics)
 
 &emsp;&emsp;**Description:** This topic provides metric information regarding the lifetime of
-the navigation. This includes the total distance travelled, duration run, as well as mission 
+the navigation. This includes the total distance travelled, duration run, as well as mission
 information such as how many missions have been sent, how many have been completed and the number
 of replanning maneuvers, recoveries and number of tasks executed.
 
@@ -273,7 +272,7 @@ message for 1 second).
 
 &emsp;&emsp;**Description:** Result topic from the undock action.
 
-------------------------------------------------------------------------
+---
 
 ### Topics Subscribed to by Autonomy
 
@@ -330,7 +329,7 @@ initialized by a previously sent goal.
 &emsp;&emsp;**Description:** This topic is used to send a goal to the undocking process.
 The goal is empty since we always consider undocking to be a local undocking process.
 
-------------------------------------------------------------------------
+---
 
 ### Services Exported by Autonomy
 
@@ -386,7 +385,7 @@ the location of an existing dock (where the `uuid` field is required).
 
 &emsp;&emsp;**Service Type:** [clearpath_dock_msgs/srv/SetDockLocationByName](definitions.mdx#srv-set-dock-location-by-name)
 
-&emsp;&emsp;**Description:** Can be used to update the location of an existing dock. Requires the semantic name 
+&emsp;&emsp;**Description:** Can be used to update the location of an existing dock. Requires the semantic name
 of the dock to be input into the `name` field.
 
 #### /localization/set_datum
@@ -422,9 +421,9 @@ should be used with caution.
 1.  This feature does not take effect immediately when the service is
     called, but only takes effect at the next Goal.
 
-2. Disabling collision avoidance also disables the continuous planner, in such a case where the
-   continuous planner is enabled. When re-enabling the collision avoidance,
-   the continuous planner must also be re-enabled using the following API service.
+2.  Disabling collision avoidance also disables the continuous planner, in such a case where the
+    continuous planner is enabled. When re-enabling the collision avoidance,
+    the continuous planner must also be re-enabled using the following API service.
 
 :::
 
@@ -495,7 +494,7 @@ True, delay compensation is ENABLED and the controller will compensate
 for low-level mechanical delays. If False, delay compensation is
 DISABLED and the normal behaviour is expected.
 
-------------------------------------------------------------------------
+---
 
 ### Actions Exported by Autonomy
 

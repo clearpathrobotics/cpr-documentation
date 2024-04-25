@@ -23,14 +23,17 @@ gps:
         port: "/dev/clearpath/gps"
         baud: 115200
 ```
+
 </td>
 </tr>
 </table>
 
 #### Package and Setup
+
 The Novatel Smart6 GNSS antenna uses the `nmea_navsat_driver` ROS 2 driver. The driver is open source, maintained by the community, and hosted on [GitHub](https://github.com/ros-drivers/nmea_navsat_driver).
 
 For specifics on the way Clearpath's configuration system launches the sensor driver, see the Novatel Smart6 [launch file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/launch/novatel_smart6.launch.py) and the [default parameter file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/config/novatel_smart6.yaml) in `clearpath_sensors`.
 
 #### Device Path
+
 The `port` ROS parameter must be set to the device path of the Novatel Smart6. To simplify this process, use the `/dev/clearpath/gps` path. This path is only available when the Clearpath robot UDEV rules are installed. These are installed alongside the `clearpath_robot` package. If the receiver is connected, but the `/dev/clearpath/gps` device is not, check the file `/lib/udev/rules.d/60-ros-humble-clearpath-robot.rules` exists.

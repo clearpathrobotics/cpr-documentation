@@ -6,9 +6,9 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-Users can create their custom tasks for their application following a specific template. 
-When creating these tasks, the user should begin by creating a python file in the 
-**/opt/onav/<onav_version>/app/custom_tasks/** directory, where *onav_version*
+Users can create their custom tasks for their application following a specific template.
+When creating these tasks, the user should begin by creating a python file in the
+**/opt/onav/<onav_version>/app/custom_tasks/** directory, where _onav_version_
 is the currently running version of OutdoorNav. The file should be written following
 the instructions provided below:
 
@@ -21,27 +21,27 @@ from onav_tasks.custom_task_base import *
 ```
 
 2. The user should then create a class name to replace `CustomTask` and initialize it with the
-`CustomTaskBase`'s __init__ function and the action server name for the task.
+   `CustomTaskBase`'s **init** function and the action server name for the task.
 
 ```python
 class CustomTask(CustomTaskBase):
   def __init__(self):
     # The derived class must always call the super() and provide the action server name.
-    # This name will need to be unique among custom tasks and must match what is in the 
-    # UI. 
+    # This name will need to be unique among custom tasks and must match what is in the
+    # UI.
     super().__init__("custom_task_name")
 ```
 
 :::note
 
-The `CustomTaskBase` exposes a `SimpleActionServer` (see <a href="http://wiki.ros.org/actionlib_tutorials/Tutorials/Writing%20a%20Simple%20Action%20Server%20using%20the%20Execute%20Callback%20%28Python%29">here</a> 
-for further details) object as `_as`, a `UITaskFeedback` object as `_feedback` and a `UITaskResults` object as `_result` to be used as part of 
+The `CustomTaskBase` exposes a `SimpleActionServer` (see <a href="http://wiki.ros.org/actionlib_tutorials/Tutorials/Writing%20a%20Simple%20Action%20Server%20using%20the%20Execute%20Callback%20%28Python%29">here</a>
+for further details) object as `_as`, a `UITaskFeedback` object as `_feedback` and a `UITaskResults` object as `_result` to be used as part of
 the tasks functionality.
 
 :::
 
 3. The last requirement is that the `CustomTask` needs to have the `run_task(self, goal)` function be defined,
-which takes in the UITaskGoal.
+   which takes in the UITaskGoal.
 
 ```python
   def run_task(self, goal):
@@ -49,20 +49,19 @@ which takes in the UITaskGoal.
 
 :::note
 
-When running the task users may handle errors through the action servers `set_aborted()` function.  When this function is called the entire mission 
+When running the task users may handle errors through the action servers `set_aborted()` function. When this function is called the entire mission
 will be aborted.
 
 :::
 
 4. Restarting the UGV will trigger the system to load the custom task that was created, making it available for mission use.
-If a custom task is not configured properly the custom task manager will ignore the task and proceed loading in the next task while logging an error with ROS. 
-
+   If a custom task is not configured properly the custom task manager will ignore the task and proceed loading in the next task while logging an error with ROS.
 
 ## Sample Custom Tasks
 
 ### Input Looper
 
-Below is a sample template file named "input_looper.py" which iterates throught the two data variables and publishes them to the feedback 
+Below is a sample template file named "input_looper.py" which iterates throught the two data variables and publishes them to the feedback
 topic. If neither of the variables have any data in them the task is aborted.
 
 ```python
@@ -73,8 +72,8 @@ from onav_tasks.custom_task_base import *
 class InputLooperTask(CustomTaskBase):
   def __init__(self):
     # The derived class must always call the super() and provide the action server name.
-    # This name will need to be unique among custom tasks and must match what is in the 
-    # UI. 
+    # This name will need to be unique among custom tasks and must match what is in the
+    # UI.
     super().__init__("input_looper")
 
   def run_task(self, goal):
@@ -85,15 +84,15 @@ class InputLooperTask(CustomTaskBase):
 
     # Loop through the strings and float values and publish them each to the /input_looper/feedback topic
     for string in goal.strings:
-      self._feedback.state = string      
+      self._feedback.state = string
       self._as.publish_feedback(self._feedback)
-      
+
     for num in goal.floats:
       self._feedback.state = str(num)
       self._as.publish_feedback(self._feedback)
 
-    # Returning True or False will not currently impact the mission but will write the current state to the 
-    # /task/result topic accordingly.  
+    # Returning True or False will not currently impact the mission but will write the current state to the
+    # /task/result topic accordingly.
     return True
 ```
 
@@ -133,7 +132,6 @@ class RecorGNSSTask(CustomTaskBase):
             self.gps_lat = msg.latitude
             self.gps_lon = msg.longitude
 ```
-
 
 ### Move PTZ camera to a Lat/Lon
 

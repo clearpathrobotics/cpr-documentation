@@ -3,12 +3,14 @@ eProsima Fast DDS as the middleware implementation. This middleware has two supp
 Discovery and Discovery Server. Each of these discovery mechanisms has their own use case:
 
 **Simple Discovery**
+
 - Default, does not require manual setup
 - Generally operates on the basis that any ROS 2 devices on the network should be discoverable and connect automatically
 - Requires multicasting on the network (may be restricted on school or corporate networks)
 - Good for simple systems (small number of robots on a dedicated local network)
 
 **Discovery Server**
+
 - Requires manual configuration in the robot.yaml
 - Generally operates on the basis that ROS 2 networks should be controlled and can only discover other devices as directed
 - Does not require multicasting (more likely to work on school or corporate networks)

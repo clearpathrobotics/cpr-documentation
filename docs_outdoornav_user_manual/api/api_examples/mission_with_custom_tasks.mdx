@@ -11,7 +11,7 @@ Before being able to run the examples similar to the one explained below, it is 
 
 ## The Code
 
-``` python
+```python
 #! /usr/bin/env python3
 
 import rospy
@@ -34,7 +34,7 @@ class MissionWithCustomTask(RosNode):
     called to record the timestamp, goal name, and GPS coordinates. Since this is a custom task,
     it is necessary to create an actionlib server to implement the custom task.
 
-    The main component of this example is the mission builder, which builds up the set of goals, 
+    The main component of this example is the mission builder, which builds up the set of goals,
     including information on the custom tasks, and runs the mission, to execute the custom task.
 
     The coordinates used in this example are based on the cpr_agriculture_gazebo
@@ -127,7 +127,7 @@ if __name__ == '__main__':
 
 ## The Code Explained
 
-``` python
+```python
 import rospy
 import actionlib
 from cpr_outdoornav_api_examples_lib.ros_node import RosNode
@@ -136,10 +136,10 @@ from cpr_outdoornav_api_examples_lib.mission import Mission
 from clearpath_navigation_msgs.msg import Task, UITaskResult, UITaskAction
 ```
 
-Import the `RosNode`, `Waypoint` and `Mission` classes which will be used to create the mission to be executed. 
-We also import the `Task` and `UITask` messages which are used to generate the action servers. 
+Import the `RosNode`, `Waypoint` and `Mission` classes which will be used to create the mission to be executed.
+We also import the `Task` and `UITask` messages which are used to generate the action servers.
 
-``` python
+```python
     class MissionBuilder:
         """Creates and runs the mission, including custom tasks."""
 
@@ -184,11 +184,11 @@ We also import the `Task` and `UITask` messages which are used to generate the a
             self._mission = Mission("Custom task mission", "uuid-mission-1", waypoints)
 ```
 
-We create the `MissionBuilder` subclass that will create the mission to be executed. We initialize custom task objects 
+We create the `MissionBuilder` subclass that will create the mission to be executed. We initialize custom task objects
 where we specify the `action_server_name` field with the specific action of the custom task. These are then added to the
 Waypoints as a list of tasks and the Mission object is created.
 
-``` python
+```python
     def __init__(self):
         """Initializes ROS, the custom task server, GPS subscriber and mission."""
 
@@ -198,7 +198,7 @@ Waypoints as a list of tasks and the Mission object is created.
 
 We initialize the example class by starting a ROS node and initialize the mission to be executed.
 
-``` python
+```python
     def run(self):
         """Execute the mission.
 
@@ -218,7 +218,7 @@ We initialize the example class by starting a ROS node and initialize the missio
 
 The `run()` function starts the mission and checks for completion. Once complete we terminate the example code.
 
-``` python
+```python
 if __name__ == '__main__':
     if MissionWithCustomTask().run():
         print("Mission completed successfully")
@@ -227,7 +227,5 @@ if __name__ == '__main__':
     rospy.signal_shutdown('Done')
 ```
 
-The main python execution block. We first initialize the example class (runs the __init__ function) and then execute the run() function which
+The main python execution block. We first initialize the example class (runs the **init** function) and then execute the run() function which
 executes the mission and outputs the status information.
-
-

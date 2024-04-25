@@ -23,14 +23,17 @@ gps:
         port: "/dev/clearpath/gps"
         baud: 115200
 ```
+
 </td>
 </tr>
 </table>
 
 #### Package and Setup
+
 The Garmin 18x GPS sensor uses the `nmea_navsat_driver` ROS 2 driver. The driver is open source, maintained by the community, and hosted on [GitHub](https://github.com/ros-drivers/nmea_navsat_driver).
 
 For specifics on the way Clearpath's configuration system launches the sensor driver, see the Garmin 18x [launch file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/launch/garmin_18x.launch.py) and the [default parameter file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/config/garmin_18x.yaml) in `clearpath_sensors`.
 
 #### Device Path
+
 The `port` ROS parameter must be set to the device path of the Garmin 18x. To simplify this process, use the `/dev/clearpath/gps` path. This path is only available when the Clearpath robot UDEV rules are installed. These are installed alongside the `clearpath_robot` package. If the receiver is connected, but the `/dev/clearpath/gps` device is not, check the file `/lib/udev/rules.d/60-ros-humble-clearpath-robot.rules` exists.

@@ -5,6 +5,7 @@ sidebar_position: 5
 toc_min_heading_level: 2
 toc_max_heading_level: 5
 ---
+
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
@@ -32,13 +33,16 @@ Remember, absolute paths start with `/` and relative paths do not.
 :::
 
 ### ROS Parameters
+
 A common use case is to set and update the parameters to the `platform_velocity_controller` node. These can be used to modify the linear and angular velocity and acceleratation.
 
 These can be passed in as follows:
+
 <Tabs groupId="platform">
   <TabItem value="A200" label="A200" default>
 
 **A200 Husky Controller Defaults:**
+
 ```yaml
 platform:
   extras:
@@ -59,6 +63,7 @@ platform:
   <TabItem value="J100" label="J100">
 
 **J100 Jackal Controller Defaults:**
+
 ```yaml
 platform:
   extras:
@@ -79,6 +84,7 @@ platform:
   <TabItem value="W200" label="W200">
 
 **W200 Warthog Controller Defaults:**
+
 ```yaml
 platform:
   extras:

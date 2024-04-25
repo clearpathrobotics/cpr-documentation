@@ -5,6 +5,7 @@ sidebar_position: 6
 toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
+
 import BracketHorizontal from "/docs_versioned_docs/version-ros2humble/components/yaml/mounts/bracket_horizontal.mdx";
 import BracketLarge from "/docs_versioned_docs/version-ros2humble/components/yaml/mounts/bracket_large.mdx";
 import BracketVertical from "/docs_versioned_docs/version-ros2humble/components/yaml/mounts/bracket_vertical.mdx";
@@ -23,28 +24,35 @@ import SickUpright from "/docs_versioned_docs/version-ros2humble/components/yaml
 Most sensors can use similar mounting structures. Therefore, we want to keep mounts separate from sensors, such that users could attach their own sensors to existing mounts.
 
 ## Riser
+
 A mounting plate with the defined number of rows and columns of the PACS™ **80 mm X 80 mm** grid.
 
 :::warning not available without pacs:
- At this time, you will **need to use the PACS™ top plate**, only available using the `a200.top_plate` with `model: pacs`, to add these riser mounts. See the [**platform**](./platform.mdx) section for more information.
+At this time, you will **need to use the PACS™ top plate**, only available using the `a200.top_plate` with `model: pacs`, to add these riser mounts. See the [**platform**](./platform.mdx) section for more information.
 :::
 
 ### Preset Risers
+
 These are the most common riser sizes; therefore, we have accurate models of these plates.
 
 #### 8 X 7 Riser
-<Riser8x7/>
+
+<Riser8x7 />
 
 #### 1 X 7 Riser
-<Riser1x7/>
+
+<Riser1x7 />
 
 ### Custom Risers
+
 To promote flexibility, the size of the risers can be changed to any size; however, there are no models for these, and instead will be generated using primitives.
 
 For example, we can add a riser with a 4 by 4 grid:
-<Riser4x4/>
+
+<Riser4x4 />
 
 ## Bracket
+
 Brackets are small plates with **80 mm X 80 mm** screw holes that can be used to attach it to the PACS™ gird. They come in three different models.
 
 The **horizontal** and **vertical** models have screw holes to attach all small sensors such as camera, lidars, and IMUs.
@@ -52,49 +60,63 @@ The **horizontal** and **vertical** models have screw holes to attach all small 
 The **large** model has screw holes to attach larger sensors such as the SwiftNav Duro receivers.
 
 ### Horizontal Bracket
-<BracketHorizontal/>
+
+<BracketHorizontal />
 
 ### Vertical Bracket
-<BracketVertical/>
+
+<BracketVertical />
 
 ### Large Bracket
-<BracketLarge/>
+
+<BracketLarge />
 
 ## Fath Pivot
+
 Camera mounts with a single joint that can be adjusted to change the pitch of the camera. The angle of the joint is set using the **angle** parameter.
-<FathPivot/>
+
+<FathPivot />
 
 ## SICK Mounts
+
 These mounts are specifically designed to mount SICK LiDARs, but can be used for other sensors if required.
 The orientation of the LiDAR on the mount can be set to either `upright` or `inverted`
 
 ### Upright
-<SickUpright/>
+
+<SickUpright />
 
 ### Inverted
-<SickInverted/>
+
+<SickInverted />
 
 ## Post
+
 Posts are vertical extrusion rails to where sensors can be added.
 
 These can be single, dual, and quad legs.
 
 ### Single
-<PostSingle/>
+
+<PostSingle />
 
 ### Dual
-<PostDual/>
+
+<PostDual />
 
 ### Quad
-<PostQuad/>
+
+<PostQuad />
 
 ## Disk
+
 Disk plates are used for circular sensors, such as the Velodyne LiDARs.
-<Disk/>
+
+<Disk />
 
 We can also lift the **disk** by using a **post**.
-<DiskPost/>
 
+<DiskPost />
 
 ## Sample
 

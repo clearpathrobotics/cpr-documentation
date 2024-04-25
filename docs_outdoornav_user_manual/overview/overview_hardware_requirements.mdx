@@ -22,23 +22,23 @@ Therefore, OutdoorNav Software requires that the UGV must accept the
 control commands sent in the [ROS Twist message](http://docs.ros.org/en/noetic/api/geometry_msgs/html/msg/Twist.html)
 format. More detailed requirements are outlined in the following table.
 
-| # |  Requirement                      | Notes |
-| - | --------------------------------- | ----------------------------------- |
-| 1 | The UGV must be a differential drive or Ackermann drive configuration | Ackerman drive is currently available as a custom implementation; standard in 2023 |
-| 2 | The UGV must have velocity control of the wheels and provide kinematic control of the platform | |
-| 3 | The UGV shall provide odometry feedback of the wheel direction and velocities and/or steering position | Recommended encoder resolution of 500 ticks per revolution or greater |
-| 4 | The UGV should have an emergency stop system with status feedback | |
-| 5 | The UGV must accept ROS 1 Twist Commands on the `/cmd_vel` topic | See [API Endpoints](../api/api_endpoints/api_endpoints.mdx); ROS 2 interface available in future release |
-| 6 | The UGV must provide odometry and status feedback through ROS topics | See [API Endpoints](../api/api_endpoints/api_endpoints.mdx) |
+| #   | Requirement                                                                                            | Notes                                                                                                    |
+| --- | ------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
+| 1   | The UGV must be a differential drive or Ackermann drive configuration                                  | Ackerman drive is currently available as a custom implementation; standard in 2023                       |
+| 2   | The UGV must have velocity control of the wheels and provide kinematic control of the platform         |                                                                                                          |
+| 3   | The UGV shall provide odometry feedback of the wheel direction and velocities and/or steering position | Recommended encoder resolution of 500 ticks per revolution or greater                                    |
+| 4   | The UGV should have an emergency stop system with status feedback                                      |                                                                                                          |
+| 5   | The UGV must accept ROS 1 Twist Commands on the `/cmd_vel` topic                                       | See [API Endpoints](../api/api_endpoints/api_endpoints.mdx); ROS 2 interface available in future release |
+| 6   | The UGV must provide odometry and status feedback through ROS topics                                   | See [API Endpoints](../api/api_endpoints/api_endpoints.mdx)                                              |
 
 ## Typical Hardware
 
 While a variety of different sensors and equipment can be used with
 OutdoorNav Software, the following are used most commonly:
 
--   Clearpath Robotics UGV: Jackal, Husky or Warthog
--   GPS System: Dual DURO RTK system or NovAtel Terrastar
--   IMU: Microstrain 3DM-GX5-25
--   3D Laser Sensor: Velodyne VLP-16
--   Tablet Computer: Getac F110
--   Clearpath Long Range Network Station with RTK corrections ("Base Station")
+- Clearpath Robotics UGV: Jackal, Husky or Warthog
+- GPS System: Dual DURO RTK system or NovAtel Terrastar
+- IMU: Microstrain 3DM-GX5-25
+- 3D Laser Sensor: Velodyne VLP-16
+- Tablet Computer: Getac F110
+- Clearpath Long Range Network Station with RTK corrections ("Base Station")

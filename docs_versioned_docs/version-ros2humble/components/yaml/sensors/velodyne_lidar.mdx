@@ -57,23 +57,24 @@ lidar3d:
 </table>
 
 #### Package and Setup
+
 The Velodyne LiDARs use the `velodyne_driver` ROS 2 Package. The driver is open source, maintained by the ROS community, and hosted on [GitHub](https://github.com/ros-drivers/velodyne). Unlike other drivers, the visual description of the device is hosted in a separate repository. The description package, along with the simulator, is maintained by Dataspeed and hosted on [BitBucket](https://bitbucket.org/DataspeedInc/velodyne_simulator).
 
 For more specifics on the way Clearpath's configuration system launches the `velodyne_driver`, see the Velodyne [launch file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/launch/velodyne_lidar.launch.py) and the [default parameter file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/config/velodyne_lidar.yaml) in `clearpath_sensors`.
 
 #### Model
+
 There are several types of Velodyne LiDAR. To switch between these, the `model` parameter must be set under the both the `velodyne_driver_node` and the `velodyne_transform_node`, and the `calibration` parameter must be set under the `velodyne_transform_node`.
 
-| Name | Model | Calibration |
-|------|-------|-------------|
-|Puck|"VLP16"|"VLP16db.yaml"|
-|Puck Hi-Res|"VLP16"|"VLP16_hires_db.yaml"|
-|Ultra Puck|"32C"|"VeloView-VLP-32C.yaml"|
-|VLS-128|"VLS128"|"VLS128.yaml"|
-|HDL-32E|"32E"|"32db.yaml"|
-|HDL-64E|"64E"|"64e_utexas.yaml"|
-|HDL-64ES2|"64E_S2"|"64e_s2.1-sztaki.yaml"|
-|HDL-64ES3|"64E_S3"|"64e_s3-xiesc.yaml"|
+| Name        | Model    | Calibration             |
+| ----------- | -------- | ----------------------- |
+| Puck        | "VLP16"  | "VLP16db.yaml"          |
+| Puck Hi-Res | "VLP16"  | "VLP16_hires_db.yaml"   |
+| Ultra Puck  | "32C"    | "VeloView-VLP-32C.yaml" |
+| VLS-128     | "VLS128" | "VLS128.yaml"           |
+| HDL-32E     | "32E"    | "32db.yaml"             |
+| HDL-64E     | "64E"    | "64e_utexas.yaml"       |
+| HDL-64ES2   | "64E_S2" | "64e_s2.1-sztaki.yaml"  |
+| HDL-64ES3   | "64E_S3" | "64e_s3-xiesc.yaml"     |
 
 When setting the `calibration` parameter, prepend the path `/opt/ros/humble/share/velodyne_pointcloud/params/` to the calibration file name in the table above.
-
