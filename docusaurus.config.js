@@ -44,7 +44,7 @@ const config = {
         remarkPlugins: [math],
         rehypePlugins: [katex],
         showLastUpdateTime: true,
-        versions: { 
+        versions: {
           ros2humble: {
             label: 'ROS 2 Humble',
           },
@@ -79,6 +79,10 @@ const config = {
         showLastUpdateTime: true,
         includeCurrentVersion: true,
       },
+    ],
+    [
+      "@docusaurus/theme-mermaid",
+      {}
     ],
   ],
 
@@ -166,6 +170,12 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
+      },
+      mermaid: {
+        theme: {light: "default", dark: 'dark'},
+      },
+      markdown: {
+        mermaid: true,
       },
     }),
 
