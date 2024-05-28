@@ -44,7 +44,19 @@ By running the **bash**, **description**, **launch**, and **parameter** generato
 
 <Mermaid
   value={`
-    %%{ init: { 'flowchart': { 'curve': '' } } }%%
+    %%{ \
+      init: { \
+        'themeVariables': { \
+          'fontSize': '16px' \
+        }, \
+        'flowchart':  { \
+          'curve': 'stepAfter', \
+          'rankSpacing': 20 , \
+          'nodeSpacing': 50, \
+          'diagramPadding': 0 \
+        } \
+      } \
+    }%%
     flowchart LR
       %% Robot Yaml
       yaml(((robot.yaml)))
@@ -77,7 +89,6 @@ By running the **bash**, **description**, **launch**, and **parameter** generato
         localization-.->launch
       end
       classDef generator stroke-width:4px
-      classDef block troke-width:2px,stroke-dasharray: 5 5
       class g_bash generator
       class g_urdf generator
       class g_param generator
@@ -89,7 +100,19 @@ By running the **bash**, **description**, **launch**, and **parameter** generato
 Using the **parameter** and **launch** file generators, a pair of files is created for each sensor defined in the configuration file. Each sensor is enumerated given its order in sensor section of the **robot.yaml**. For example, if two cameras are added, then the first will be named **camera_0** and the second **camera_1**, irrespective of the model of camera. Each sensor launch file generated is included in the top level **sensors-service.launch.py** which is ran by the service.
 <Mermaid
   value={`
-    %%{ init: { 'flowchart': { 'curve': '' } } }%%
+    %%{ \
+      init: { \
+        'themeVariables': { \
+          'fontSize': '16px' \
+        }, \
+        'flowchart':  { \
+          'curve': 'stepAfter', \
+          'rankSpacing': 20 , \
+          'nodeSpacing': 50, \
+          'diagramPadding': 0 \
+        } \
+      } \
+    }%%
     flowchart LR
       %% Robot Yaml
       yaml(((robot.yaml)))
@@ -139,7 +162,6 @@ Using the **parameter** and **launch** file generators, a pair of files is creat
         extras_launch-.-sensor_launch
       end
       classDef generator stroke-width:4px
-      classDef block troke-width:2px,stroke-dasharray: 5 5
       class g_bash generator
       class g_urdf generator
       class g_param generator
