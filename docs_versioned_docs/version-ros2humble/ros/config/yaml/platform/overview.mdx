@@ -38,7 +38,7 @@ In this sample, we swapped the top plate from the **_default_** model to the **_
   - name: top_plate
     type: a200.top_plate
     model: pacs # switched from 'default' to 'pacs'
-    parent: mid_mount
+    parent: default_mount
     xyz: [0.0, 0.0, 0.0]
     rpy: [0.0, 0.0, 0.0]
     enabled: true
@@ -60,7 +60,7 @@ Then, we added a sensor arch to add our sample sensors to. We can do this by add
   - name: sensor_arch
     type: a200.sensor_arch
     model: sensor_arch_300
-    parent: mid_mount
+    parent: default_mount
     xyz: [0.0, 0.0, 0.0]
     rpy: [0.0, 0.0, 0.0]
     enabled: true
@@ -104,14 +104,14 @@ platform:
     - name: top_plate
       type: a200.top_plate
       model: pacs
-      parent: mid_mount
+      parent: default_mount
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
       enabled: true
     - name: sensor_arch
       type: a200.sensor_arch
       model: sensor_arch_300
-      parent: mid_mount
+      parent: default_mount
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
       enabled: true
