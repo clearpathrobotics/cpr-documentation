@@ -5,6 +5,7 @@ sidebar_position: 2
 toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
+import Mermaid from '@theme/Mermaid';
 
 Part of the appeal of using the robot YAML configuration file is that it allows us to generate the necessary files
 to operate the robot at runtime. There are 4 types of files that need to be generated: bash shell scripts, URDF description files,
@@ -37,6 +38,136 @@ The launch generator creates ROS 2 [python launch files](https://docs.ros.org/en
 ### Parameter
 
 The parameter generator creates `.yaml` ROS parameter files that are used by the corresponding launch file. Each node has default parameters set that the user can overwrite by setting them in the robot configuration YAML.
+
+### Platform Generation
+By running the **bash**, **description**, **launch**, and **parameter** generators, the launch file and all necessary configuration files to run the platform nodes are created in the directory **/etc/clearpath/platform**. The top level launch file to start all platform related nodes is the **platform-service.launch.py**, which is generated in the **/etc/clearpath/platform/launch** directory by the **launch** generator. Each Clearpath platform robot has its own configuration files, but ultimately all parameter files generated in the same directory and the launch procedure is the same for every platform.
+
+<Mermaid
+  value={`
+    %%{ \
+      init: { \
+        'themeVariables': { \
+          'fontSize': '16px' \
+        }, \
+        'flowchart':  { \
+          'curve': 'stepAfter', \
+          'rankSpacing': 20 , \
+          'nodeSpacing': 50, \
+          'diagramPadding': 0 \
+        } \
+      } \
+    }%%
+    flowchart LR
+      %% Robot Yaml
+      yaml(((robot.yaml)))
+      %% Generators
+      g_bash{{<a href='https://github.com/clearpathrobotics/clearpath_common/blob/humble/clearpath_generator_common/clearpath_generator_common/bash/generator.py'><b>Bash Generator</b></a>}}
+      g_urdf{{<a href='https://github.com/clearpathrobotics/clearpath_common/blob/humble/clearpath_generator_common/clearpath_generator_common/description/generator.py'><b>Description Generator</b></a>}}
+      g_launch{{<a href='https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_generator_robot/clearpath_generator_robot/launch/generator.py'><b>Launch Generator</b></a>}}
+      g_param{{<a href='https://github.com/clearpathrobotics/clearpath_common/blob/humble/clearpath_generator_common/clearpath_generator_common/param/generator.py'><b>Parameter Generator</b></a>}}
+      %% Generated Files
+      bash([<div><b>setup.bash</b></div><div>/etc/clearpath/setup.bash</div>])
+      urdf([<div><b>robot.urdf.xacro</b></div><div>/etc/clearpath/robot.urdf.xacro</div>])
+      launch[[<div><b>platform-service.launch.py</b></div><div>/etc/clearpath/platform/launch/platform-service.launch.py</div>]]
+      control([<div><b>control.yaml</b></div><div>/etc/clearpath/platform/config/control.yaml</div>])
+      localization([<div><b>localization.yaml</b></div><div>/etc/clearpath/platform/config/localization.yaml</div>])
+      subgraph Clearpath Generators
+        yaml-.-g_bash
+        yaml-.-g_urdf
+        yaml-.-g_launch
+        yaml-.-g_param
+      end
+      g_bash-->bash
+      g_urdf-->urdf
+      g_launch-->launch
+      g_param-->control
+      g_param-->localization
+      subgraph Clearpath Platform Service
+        bash-.->launch
+        urdf-.->launch
+        control-.->launch
+        localization-.->launch
+      end
+      classDef generator stroke-width:4px
+      class g_bash generator
+      class g_urdf generator
+      class g_param generator
+      class g_launch generator
+  `}
+/>
+
+### Sensors Generation
+Using the **parameter** and **launch** file generators, a pair of files is created for each sensor defined in the configuration file. Each sensor is enumerated given its order in sensor section of the **robot.yaml**. For example, if two cameras are added, then the first will be named **camera_0** and the second **camera_1**, irrespective of the model of camera. Each sensor launch file generated is included in the top level **sensors-service.launch.py** which is ran by the service.
+<Mermaid
+  value={`
+    %%{ \
+      init: { \
+        'themeVariables': { \
+          'fontSize': '16px' \
+        }, \
+        'flowchart':  { \
+          'curve': 'stepAfter', \
+          'rankSpacing': 20 , \
+          'nodeSpacing': 50, \
+          'diagramPadding': 0 \
+        } \
+      } \
+    }%%
+    flowchart LR
+      %% Robot Yaml
+      yaml(((robot.yaml)))
+      %% Generators
+      g_launch{{<a href='https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_generator_robot/clearpath_generator_robot/launch/generator.py'><b>Launch Generator</b></a>}}
+      g_param{{<a href='https://github.com/clearpathrobotics/clearpath_common/blob/humble/clearpath_generator_common/clearpath_generator_common/param/generator.py'><b>Parameter Generator</b></a>}}
+      %% Generated Launch Files
+      sensor_launch[[<div><b>sensor-service.launch.py</b></div><div>/etc/clearpath/sensors/launch/sensors-service.launch.py</div>]]
+      camera_launch[[<div><b>camera_0.launch.py</b></div><div>/etc/clearpath/sensors/launch/camera_0.launch.py</div>]]
+      gps_launch[[<div><b>gps_0.launch.py</b></div><div>/etc/clearpath/sensors/launch/gps_0.launch.py</div>]]
+      imu_launch[[<div><b>imu_0.launch.py</b></div><div>/etc/clearpath/sensors/launch/imu_0.launch.py</div>]]
+      lidar2d_launch[[<div><b>lidar2d_0.launch.py</b></div><div>/etc/clearpath/sensors/launch/lidar2d_0.launch.py</div>]]
+      lidar3d_launch[[<div><b>lidar3d_0.launch.py</b></div><div>/etc/clearpath/sensors/launch/lidar3d_0.launch.py</div>]]
+      extras_launch[[<div><i>extras</i><b>.launch.py</b></div><div>package://<i>extras_package</i>/<i>extras_path</i>/<i>extras</i>.launch.py</div>]]
+      %% Generated Parameter Files
+      camera_param([<div><b>camera_0.yaml</b></div><div>/etc/clearpath/sensors/config/camera_0.yaml</div>])
+      gps_param([<div><b>gps_0.yaml</b></div><div>/etc/clearpath/sensors/config/gps_0.yaml</div>])
+      imu_param([<div><b>imu_0.yaml</b></div><div>/etc/clearpath/sensors/config/imu_0.yaml</div>])
+      lidar2d_param([<div><b>lidar2d_0.yaml</b></div><div>/etc/clearpath/sensors/config/lidar2d_0.yaml</div>])
+      lidar3d_param([<div><b>lidar3d_0.yaml</b></div><div>/etc/clearpath/sensors/config/lidar3d_0.yaml</div>])
+      subgraph Clearpath Generators
+        yaml-.-g_launch
+        yaml-.-g_param
+      end
+      g_launch-->sensor_launch
+      g_launch-->camera_launch
+      g_launch-->gps_launch
+      g_launch-->imu_launch
+      g_launch-->lidar2d_launch
+      g_launch-->lidar3d_launch
+      g_param-->camera_param
+      g_param-->gps_param
+      g_param-->imu_param
+      g_param-->lidar2d_param
+      g_param-->lidar3d_param
+      subgraph Clearpath Sensors Service
+        camera_param-.-camera_launch
+        gps_param-.-gps_launch
+        imu_param-.-imu_launch
+        lidar2d_param-.-lidar2d_launch
+        lidar3d_param-.-lidar3d_launch
+        camera_launch-.-sensor_launch
+        gps_launch-.-sensor_launch
+        imu_launch-.-sensor_launch
+        lidar2d_launch-.-sensor_launch
+        lidar3d_launch-.-sensor_launch
+        extras_launch-.-sensor_launch
+      end
+      classDef generator stroke-width:4px
+      class g_bash generator
+      class g_urdf generator
+      class g_param generator
+      class g_launch generator
+  `}
+/>
 
 ### Setup folder structure
 
