@@ -99,7 +99,7 @@ Operator can access the following views:
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/ui_map_view.png" />
+    <img src="/img/outdoornav_images/ui_map_view_0_13_0.png" />
     <figcaption>Map View</figcaption>
   </figure>
 </center>
@@ -108,18 +108,42 @@ Operator can access the following views:
     map levels.
 2.  **Zoom-to-Fit Button:** This button will zoom the map to where there
     is activity (ie. where the datum is set or where features have been
-    set on the map.
-3.  **UGV:** The blue arrow represents the UGV. Its location is its
+    set on the map.)
+3.  **Zoom-to-Robot Button:** This button will zoom in the map to where the UGV 
+    is presently located.
+4.  **Edit Mode Buttons:** This button will allow the user to set the current map edit mode.  
+    By clicking the button, a panel opens on the right with the available modes to edit with.
+    <center>
+      <figure>
+        <video autoplay="true" loop="true">
+          <source src="/video/outdoornav_videos/editModes.mp4"/>
+        </video>
+        <figcaption>Changing Edit Modes</figcaption>
+      </figure>
+    </center>
+5.  **Layers Menu:** This button opens the Layers menu which allows users to show and hide elements on the map.
+    Points of interest in particular can be hidden by tags specifically as well as generally hiding them.
+    <center>
+      <figure>
+        <video autoplay="true" loop="true" width="800">
+          <source src="/video/outdoornav_videos/ui_layers_show_hide.mp4"/>
+        </video>
+        <figcaption>Hiding and Showing Layers</figcaption>
+      </figure>
+    </center>  
+6.  **Table Button:** This button opens the Map/Mission table. When in Waypoint Mode it will open the table directly, while in 
+    Map mode it will allow users to select the table to open or open a table based on which mode is being editted.
+7.  **Dock:** If a dock is configured for the UGV it will appear on the map in 
+    this format. When in Waypoint mode the Docks pre-dock radius will appear as 
+    a circle around the dock when in Edit Mission mode.
+8.  **UGV:** The blue arrow represents the UGV. Its location is its
     position in the world frame and its orientation is the heading in
     the world frame.
-4.  **Base Station:** The yellow antenna icon is the last known location of
+9.  **Base Station:** The yellow antenna icon is the last known location of
     the base station based on the last survey performed. By clicking it the 
     user will be presented with the base station's coordinates, when it was 
     surveyed, and how many samples were taken during the survey.
-5.  **Dock:** If a dock is configured for the UGV it will appear on the map in 
-    this format. When in Waypoint mode the Docks pre-dock radius will appear as 
-    a circle around the dock when in Edit Mission mode.
-6.  **Datum:** The blue Waypoint marker on the map view represents the
+10.  **Datum:** The blue Waypoint marker on the map view represents the
     location of the reference point (ie. (x,y)=(0,0)) of the world
     coordinate system. The world (ie. map) coordinate system is in the
     ENU convention.
