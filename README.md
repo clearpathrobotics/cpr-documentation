@@ -374,3 +374,113 @@ Links to headings must not include an extra slash between the name of the page a
     Finally, select _OK_, and _Save_
 
     <img src="/static/img/readme_images/readme_solidworks_image_4.png" width="800"/>
+
+## Mermaid Diagrams
+Mermaid is a JavaScript based diagram generator that uses Markdown for descriptions and is available to docusaurus through a [plug-in](https://docusaurus.io/docs/next/markdown-features/diagrams).
+
+To get started with Mermaid diagrams, use their [live tool](https://mermaid.live/edit). The live viewing tool is useful to explore the various diagrams using their readily available templates.
+>> Currently, we are on version 2.4.3 of the Mermaid plug-in. Therefore, not all of the templates in the live version are available.
+
+Although Mermaid is more complicated to use than other tools, it is easy to version and outputs HTML objects; the resulting diagrams can include links and the text within it is searchable. Additionally, HTML tags can be included within the diagrams for further customization. Refer to the [Mermaid Documentation](https://mermaid.js.org/intro/getting-started.html) for more details on the diagram descriptions.
+
+### Themes
+In the [Docusaurus configuration file](./docusaurus.config.js), we have defined the site-wide themes for the Mermaid diagrams. Mermaid offers a choice of five different themes to choose from. There is a way to call the `mermaidAPI` to set a customized site-wide theme, however, this has not yet been implemented.
+
+See their [theming documentation](https://mermaid.js.org/config/theming.html) for more information.
+
+### Creating a Diagram
+In Docusaurus, we can use a [dyanmic Mermaid component](https://docusaurus.io/docs/next/markdown-features/diagrams#component) to define and load diagrams.
+
+First, we import the dynamic component.
+```
+import Mermaid from '@theme/Mermaid';
+```
+
+Then, we instantiate the component with the graph passed in as an argument.
+```
+<Mermaid
+  value={`
+    graph TD;
+      A-->B;
+      A-->C;
+      B-->D;
+      C-->D;
+  `}
+/>
+```
+
+### Configuring the Diagram
+Diagrams can be modified indepent from the site-wide theme and configuration using [directives](https://mermaid.js.org/config/directives.html). Essentially, these directives are used to pass in an initialization configuration to the local diagram that overrides the existing global configuration.
+
+For example, we can modify the way the arrow connecting two nodes is generated. Instead of the default, we can set the `curve` parameter to `step` to have the generated arrow move in steps rather than a smooth curve.
+```
+<Mermaid
+  value={`
+    %%{ \
+      init: { \
+        'flowchart': { \
+          'curve': 'step'
+        } \
+      } \
+    }%%
+    flowchart TD;
+      A-->B;
+      A-->C;
+      B-->D;
+      C-->D;
+  `}
+/>
+```
+
+Notice that when defining a directive within the dynamic component, we must end every line with a backslash `\`. Make sure to not have any trailing commas, `,`, at the end of a list or dictionary.
+
+See the [flowchart configuration](
+https://mermaid.js.org/config/schema-docs/config-defs-flowchart-diagram-config.html) to see all the settings specific to flowcharts that can be modified with directives.
+
+You may notice that there is no way to set the font size through the diagram's configuration. Instead that must be done by modifying the theme variables.
+```
+<Mermaid
+  value={`
+    %%{ \
+      init: { \
+        'themeVariables': { \
+          'fontSize': '16px'
+        } \
+        'flowchart': { \
+          'curve': 'step'
+        } \
+      } \
+    }%%
+    flowchart TD;
+      A-->B;
+      A-->C;
+      B-->D;
+      C-->D;
+  `}
+/>
+```
+See the (Mermaid configuration)[https://mermaid.js.org/config/schema-docs/config.html] documentation page for an exhaustive list of parameters.
+
+
+Even though the font size has been modified, the rendered diagram's font may not appear to change size. Instead, the text size will remain a relatively similar size while the boxes and arrows appear smaller. Therefore, the sure-fire method to set a font size is to use HTML `<font size=10></font>` tags to wrap the text within a node.
+```
+<Mermaid
+  value={`
+    %%{ \
+      init: { \
+        'themeVariables': { \
+          'fontSize': '16px'
+        } \
+        'flowchart': { \
+          'curve': 'step'
+        } \
+      } \
+    }%%
+    flowchart TD;
+      A-->B(<font size=10>B Text<font>);
+      A-->C;;
+      B-->D;
+      C-->D;
+  `}
+/>
+```

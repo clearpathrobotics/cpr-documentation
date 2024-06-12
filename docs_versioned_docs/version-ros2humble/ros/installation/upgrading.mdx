@@ -136,7 +136,7 @@ Below are some common examples. Visit the [robot.yaml documentation](../config/y
 ### Attachments
 
 Each platform has platform-specific attachments (formerly decorations) such as bumpers and top plates. These
-now reside under the [platform](../config/yaml/platform.mdx) section of the `robot.yaml` file.
+now reside under the [platform](../config/yaml/platform/attachments/overview.mdx) section of the `robot.yaml` file.
 
 <Tabs groupId="platform_codes">
   <TabItem
@@ -536,7 +536,7 @@ sensors:
     xyz: [0.0, 0.0, 0.0]                  # HUSKY_REALSENSE_XYZ='0 0 0'
     rpy: [0.0, 0.0, 0.0]                  # HUSKY_REALSENSE_RPY='0 0 0'
     ros_parameters:
-      camera:
+      intel_realsense:
         camera_name: camera_0
         device_type: d435
         serial_no: "0"                    # HUSKY_REALSENSE_SERIAL='0'
@@ -556,7 +556,7 @@ sensors:
     xyz: [0.0, 0.0, 0.0]                  # HUSKY_REALSENSE_SECONDARY_XYZ='0 0 0'
     rpy: [0.0, 0.0, 0.0]                  # HUSKY_REALSENSE_SECONDARY_RPY='0 0 0'
     ros_parameters:
-      camera:
+      intel_realsense:
         camera_name: camera_1
         device_type: d435
         serial_no: "1"                    # HUSKY_REALSENSE_SECONDARY_SERIAL='1'
