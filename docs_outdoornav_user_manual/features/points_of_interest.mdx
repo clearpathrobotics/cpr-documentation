@@ -1,0 +1,59 @@
+---
+title: Points of Interest
+sidebar_label: Points of Interest
+sidebar_position: 6
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+
+As of version 0.13.0, the OutdoorNav software contains the ability for users to set
+up Points of Interest (POI) on their map. POIs are intended to be static locations,
+landmarks, objects of interest, etc... that a user is able to either navigate to or inspect.
+
+Points of Interest include the following attributes that are used to locate it on the map
+
+- Name
+- Latitude/longitude location
+- Elevation (above ground level)
+- Heading (optional)
+- Tags (optional)
+- Custom fields
+
+From the user interface, users are able to show all/hide all POIs as well as show and hide POIs
+accordidng to their tags. The hotkey, **R**, opens the layers drop down menu and the user can 
+then click to show/hide the POIs according to their tags. See the 
+[UI](../support.mdx) page for more information regarding the UI components of POIs.
+
+### Tags
+
+A POI can have 1 or more tags that help classify the POI as part of different groups. By default
+the `goto` and `inspect` tags are available for selection on creation of a POI, but custom tags
+can be added to each POI as the user sees fit.
+
+
+## Custom Fields
+
+We also allow the user to define custom fields as part of the POI. These must be defined in a [
+JSON](https://www.json.org/json-en.html) formatted string. For example, we want to set a POI at
+a gas meter and we want to set the minimum and maximum values that the meter can read. We would 
+input the following string into the custom fields input box on the UI:
+
+```
+{
+  "minimum_value": "0.0"
+  "maximum_value": "1000.0"
+  "units": "cubic ft"
+}
+```
+
+Another example would be if you are inspecting solar panels at a solar farm you might create POIs
+with the following cusotm fields:
+
+```
+{
+  "minimum_temperature": "-50.0"
+  "maximum_temparature": "100.0"
+  "units": "C"
+}
+```
