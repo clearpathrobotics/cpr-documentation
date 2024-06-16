@@ -238,6 +238,81 @@ between the robot and the reference path) and as well as the heading
 error (ie. the difference between the current heading and the path
 direction).
 
+#### /onav_log/delete_record
+
+&emsp;&emsp;**Message Type:** [clearpath_logger_msgs/DeleteLog](definitions.mdx#srv-log-deletelog)
+
+&emsp;&emsp;**Description:** Deletes a log as specified by the UUID provided. If the purge flag is set the log will be removed from 
+the internal records entirely. If not, then the record will be marked as deleted and the meta data preserved, though log data will still 
+be deleted.
+
+#### /onav_log/download_kmz
+
+&emsp;&emsp;**Message Type:** [clearpath_logger_msgs/DownloadLog](definitions.mdx#srv-log-downloadlog)
+
+&emsp;&emsp;**Description:** Converts the record with the given UUID into a KMZ file.
+
+#### /onav_log/download_zip
+
+&emsp;&emsp;**Message Type:** [clearpath_logger_msgs/DownloadLog](definitions.mdx#srv-log-downloadlog)
+
+&emsp;&emsp;**Description:** Zips the raw contents of the record.
+
+#### /onav_log/get_all_logs
+
+&emsp;&emsp;**Message Type:** [clearpath_logger_msgs/GetAllLogs](definitions.mdx#srv-log-getalllogs)
+
+&emsp;&emsp;**Description:** Gets an array of all Event logs recorded in the database.
+
+#### /onav_log/record_custom_event
+
+&emsp;&emsp;**Message Type:** [clearpath_logger_msgs/RecordCustomEvent](definitions.mdx#srv-log-recordcustomevent)
+
+&emsp;&emsp;**Description:** Adds a custom event to the currently recording log. Automatic telemetry, like power and location are added to the event if possible.
+
+#### /onav_log/record_error_event
+
+&emsp;&emsp;**Message Type:** [clearpath_logger_msgs/RecordErrorEvent](definitions.mdx#srv-log-recorderrorevent)
+
+&emsp;&emsp;**Description:** Add an error/debugging event to the currently recording log.
+
+#### /onav_log/record_event
+
+&emsp;&emsp;**Message Type:** [clearpath_logger_msgs/RecordEvent](definitions.mdx#srv-log-recordevent)
+
+&emsp;&emsp;**Description:** Add a fully formed event to the currently recording log.
+
+#### /onav_log/record_location_event
+
+&emsp;&emsp;**Message Type:** [clearpath_logger_msgs/RecordLocationEvent](definitions.mdx#srv-log-recordlocationevent)
+
+&emsp;&emsp;**Description:** Adds a location event to the currently recording log. Automatic telemetry like power is added to the event if possible.
+
+#### /onav_log/record_media_event
+
+&emsp;&emsp;**Message Type:** [clearpath_logger_msgs/RecordMediaEvent](definitions.mdx#srv-log-recordmediaevent)
+
+&emsp;&emsp;**Description:** Adds a media-recording event to the currently recording log. The media file is symlinked into the log directory.
+Automatic telemetry like power is added to the event if possible.
+
+#### /onav_log/record_power_event
+
+&emsp;&emsp;**Message Type:** [clearpath_logger_msgs/RecordPowerEvent](definitions.mdx#srv-log-recordpowerevent)
+
+&emsp;&emsp;**Description:** Add a power event to the currently recording log. Automatic telemetry like location is added to the event if possible.
+
+#### /onav_log/start_recording
+
+&emsp;&emsp;**Message Type:** [clearpath_logger_msgs/StartRecording](definitions.mdx#srv-log-startrecording)
+
+&emsp;&emsp;**Description:** Start recording a new log.
+
+#### /onav_log/stop_recording
+
+&emsp;&emsp;**Message Type:** [clearpath_logger_msgs/StopRecording](definitions.mdx#srv-log-stoprecording)
+
+&emsp;&emsp;**Description:** Stop the active log.
+
 #### /safety/safety_stop
 
 &emsp;&emsp;**Message Type:** [clearpath_safety_msgs/Safety](definitions.mdx#msg-safety)

@@ -222,7 +222,7 @@ general features of the UGV.
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/ui_general_settings.png" />
+    <img src="/img/outdoornav_images/ui_general_settings_0_13_0.png" />
     <figcaption>General Settings Page</figcaption>
   </figure>
 </center>
@@ -240,12 +240,6 @@ feature only affects the manual save image option found on each relevant camera 
 
 If the UGV is equipped with SIM card and can switch between Cellular and WiFi connections, the Operator can manually trigger this 
 change through the general settings page.  This switchover will take approximately 30 seconds and will require a refresh on the UI.
-
-#### Show Path Deviation Distance
-
-When a mission is running the UGV will have a maximum path deviation distance that it shouldn't cross if it needs to replan.  If this 
-toggle is set to true, while in edit mode this buffer is shown over top of the path as the Operator creates/edits the mission.  This 
-toggle does not disable the path deviation distance feature.
 
 #### Low Power Mode
 
@@ -504,6 +498,11 @@ When running a mission autonomously the user can assign tasks to various events.
     seconds at the end of the Waypoint.
 
     Settings: Enter the amount of time to wait, in seconds.
+
+-   <img src="/img/outdoornav_images/task_inspect.png" width="30px"/> <strong>Inspect POI: </strong>
+    Will move the PTZ camera to inspect a specified Point of interest.
+
+    Settings: Select the inspectable Point of Interest and enter in the zoom level to use.
 
 -   <img src="/img/outdoornav_images/task_custom.png" width="30px"/> <strong>New Custom Task: </strong>
     Creates a new custom task that is defined by the user. 

@@ -41,21 +41,20 @@ These components are referred to throughout this manual.
 
 ## Mission Creation
 
-To create a new Mission first ensure that the UI is in "Edit Mode" (
-select the pencil icon in the bottom bar). Then open the drop down menu in the bottom
-bar and select the "Add Mission" option. This will allow the user to create a new Mission 
-which can then be defined with Waypoints. 
+To create a new Mission first ensure that the UI is in "Waypoint Edit Mode" (open the map edit modes and select the waypoint icon). 
+Then open the drop down menu in the bottom bar and select the "Add Mission" option. This will allow the user to create a new Mission 
+which can then be defined with Waypoints. If there are no missions presently in the system a user can start adding waypoints directly. 
+This will create a new mission named "Mission - [Current Date]" which can be changed later in the waypoint table.
 
 ### Waypoint Mode
 
-To add new Waypoints to a Mission while edit mode is enabled select the 
-"Waypoint Mode" button. This will allow the user to place Waypoints at 
-locations where the user clicks on the map. These will appear as red 
-Waypoints with the exception of the first waypoint (green) and the last waypoint (yellow).
+To add new Waypoints to a Mission while edit mode is enabled simply click on the map
+where the waypoint needs to be. These will appear as red Waypoints with the exception 
+of the first waypoint (green) and the last waypoint (yellow).
 
 :::note
 
-**The first Waypoint in the Mission must be within 3.0 meters of the UGV's current position.**
+**When running a mission the first Waypoint must be within 3.0 meters of the UGV's current position.**
 
 :::
 
@@ -68,7 +67,7 @@ modify their positions.
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/ui_waypoint_panel.png" />
+    <img src="/img/outdoornav_images/ui_waypoint_panel_0_13_0.png" />
     <figcaption>Waypoint Panel</figcaption>
   </figure>
 </center>
@@ -84,6 +83,11 @@ also rename the mission and apply Tasks to when the Mission starts and stops.
 To rename the Mission click the Mission name as it appears in the upper left
 hand corner.  This should change the text into an input box that can then be 
 modified. Press enter/click aside to save the change.
+
+### Mission ID 
+
+To help facilitate API usage the user can copy the mission's UUID from this section to then put 
+in a script or an API call.
 
 ### Mission Tasks
 
@@ -116,7 +120,7 @@ To rename a Waypoint follow these steps:
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/ui_waypoint_tasks.png" />
+    <img src="/img/outdoornav_images/ui_waypoint_tasks_0_13_0.png" />
     <figcaption>Add Task to Waypoint</figcaption>
   </figure>
 </center>
@@ -148,8 +152,6 @@ To add a Task to the end of a Mission:
 
 ### Advanced Settings
 
-<iframe width="696" height="358" src="https://youtube.com/embed/V6K2VXM5EaU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 #### Waypoint Heading
 
 When creating a Waypoint, the user has the option of setting a final heading
@@ -173,7 +175,7 @@ on their settings icon.
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/ui_adv_waypoint_settings.png" />
+    <img src="/img/outdoornav_images/ui_adv_waypoint_settings_0_13_0.png" />
     <figcaption>Waypoint Advanced Settings</figcaption>
   </figure>
 </center>
@@ -202,25 +204,14 @@ orientation values, in meters and degrees, respectively.
 
 ### Constrained Replanning {#constrained_path}
 
-To enable the visualization of the contrained area of traversal (defined by 
-the path contraint around the reference path), navigate to the General settings
-in the hamburger menu. Enable/disable the visualization of the path ui_route_deviation
-distance using the switch button (see image below).
+If a constrained/drivable path is set the user can visualize this path by using the layers view.
+The purpose of this area is to help ensure that the UGV does not deviate too far from the 
+planned route.
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/ui_general_settings.png" />
-    <figcaption>General settings</figcaption>
-  </figure>
-</center>
-
-Once enabled the area of possible deviation will show
-over the planned route as can be seen in the following figure.
-
-<center>
-  <figure>
-    <img src="/img/outdoornav_images/ui_route_deviation.png" />
-    <figcaption>Route with maximum path deviation</figcaption>
+    <video autoplay="true" loop="true" src="/video/outdoornav_videos/ui_show_hide_path.mp4" width="700"/>
+    <figcaption>Showing/Hiding Constrained Path</figcaption>
   </figure>
 </center>
 

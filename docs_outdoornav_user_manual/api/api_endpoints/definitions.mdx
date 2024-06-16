@@ -147,6 +147,168 @@ float32[] cn0			  # The carrier-to-noise ratio of each connected satellite
 float64 correction_age    # Age of RTK corrections. -1 indicates none received
 ```
 
+#### clearpath_logger_msgs/Event.msg {#msg-log-event}
+
+```
+################################################################################
+## Universal log event. Represents a single even recorded to the log
+################################################################################
+
+# Tag for events that include a media_path
+string TAG_MEDIA = media
+
+# Tag indicating that the event's charger status & battery level have been set
+string TAG_POWER = power
+
+# Tag indicating that the event's GPS position has been set
+string TAG_LOCATION = location
+
+# Tag indicating that the event's odometry data has been set
+string TAG_ODOMETRY = odom
+
+# Tag indicating that the event's velocity data has been set
+string TAG_VELOCITY = vel
+
+# Tag indicating that the event's error/debugging data has been set
+string TAG_ERROR = error
+
+# Tag indicating that this event was automatically recorded telemetry
+string TAG_AUTO_TELEMETRY = auto_telemetry
+
+################################################################################
+## Header & general meta-data about the event
+################################################################################
+
+# Header
+# - seq: the order of this event within its parent ExecutionLog
+# - frame_id: the sensor/manipulator frame referenced by the frame_pose field
+# - stamp: the time that this event occurred
+std_msgs/Header header
+
+################################################################################
+## Media & sensor data
+################################################################################
+
+# If this even has media, this is its path on-disk
+string media_path
+
+# If this event has media, this is its MIME type
+# May be left blank
+string media_mime_type
+
+# The pose of the sensor/manipulator frame given by header.frame_id relative to
+# base_link
+geometry_msgs/Pose frame_pose
+
+################################################################################
+## Robot location, orientation, velocity
+################################################################################
+
+# The robot's latitude, longitude, and heading as recorded by the GPS
+# - lat: decimal degrees
+# - lon: decimal degrees
+# - heading: ENU orientation in radians
+geometry_msgs/Point lat_lon_heading
+
+# The robot's location relative to the odometry frame
+nav_msgs/Odometry odometry
+
+# The robot's linear & angular velocity
+geometry_msgs/Twist velocity
+
+################################################################################
+## Power & battery
+################################################################################
+
+# The 0-1 charge level of the battery
+float32 battery_percent
+
+# True of the robot's battery is charging, otherwise False
+bool charging
+
+# True if power-saving/low-power mode is enabled, otherwise False
+bool power_saver
+
+################################################################################
+## Error and debugging events
+################################################################################
+
+# An error code indicating the type of error
+int32 error_code
+
+# A diagnostic error message, or non-integer error code
+string error_msg
+
+# The name of the module/process/pipeline/etc... that signalled the error
+string error_component
+
+################################################################################
+## Custom fields for expansion
+################################################################################
+
+# Arbitrary free-form tags usable to annotate custom data
+string[] tags
+
+# Arbitrary JSON-formatted data that can contain user-defined fields
+string custom_fields_json
+```
+
+#### clearpath_logger_msgs/EventLog.msg {#msg-log-eventlog}
+
+```
+################################################################################
+## A log representing a single mission execution
+################################################################################
+
+# The log is currently active and being modified
+int32 STATE_ACTIVE = 0
+
+# The log is old and closed
+int32 STATE_CLOSED = 1
+
+# The master record of the log exists, but its data has been deleted from the disk
+int32 STATE_DELETED = 2
+
+# The state of the log on disk
+int32 state
+
+# The time the log started recording
+time start_time
+
+# The time the log stopped recording
+time end_time
+
+# This execution's unique ID
+string uuid
+
+# A descriptive name for the log to be displayed in the GUI. Does not need to be unique
+string name
+
+# The total percentage of the battery used during the execution
+# This measures only negative changes, not positive ones
+# e.g. if the robot uses 75% of the battery, returns to dock to recharge to full
+# and then finishes the mission using another 75% of the battery, this value
+# will read 1.5
+float32 battery_percent_used
+
+# The total distance driven by the robot (approximate) during the execution (meters)
+# The exact path used to calculate the distance may be simplified and subject to
+# sensor noise/error
+float32 distance_driven
+
+# A custom JSON field for adding additional custom metrics, meta-data, etc... as needed
+string custom_fields_json
+
+# The list of events recorded in this execution
+clearpath_logger_msgs/Event[] events
+```
+
+#### clearpath_logger_msgs/EventLogs.msg {#msg-log-eventlogs}
+
+```
+clearpath_logger_msgs/EventLog[] logs
+```
+
 #### clearpath_mission_manager_msgs/msg/NetworkEdgeReq.msg {#storage-networkedgereq}
 
 ```
@@ -726,6 +888,153 @@ uint32 gnss_samples
 ---
 bool success
 ```
+
+#### clearpath_logger_msgs/DeleteLog.srv {#srv-log-deletelog}
+
+```
+string uuid
+bool delete_media
+bool purge_record
+---
+bool success
+```
+
+#### clearpath_logger_msgs/DownloadLog.srv {#srv-log-downloadlog}
+
+```
+# The UUID of the recording to download
+string log_uuid
+---
+# The on-disk path the the generated archive
+string path
+
+# If True at least one media file from the recording has been moved/deleted
+bool media_missing
+```
+
+#### clearpath_logger_msgs/GetAllLogs.srv {#srv-log-getalllogs}
+
+```
+---
+clearpath_logger_msgs/EventLog[] logs
+```
+
+#### clearpath_logger_msgs/RecordCustomEvent.srv {#srv-log-recordcustomevent}
+
+```
+# A valid JSON string containing the custom data to be recorded
+string custom_fields_json
+
+# Tags to add to the event
+string[] tags
+
+# Optional frame ID relevant to the event
+string frame_id
+---
+clearpath_logger_msgs/Event event
+```
+
+#### clearpath_logger_msgs/RecordErrorEvent.srv {#srv-log-recorderrorevent}
+
+```
+# An error code indicating the type of error
+int32 error_code
+
+# A diagnostic error message, or non-integer error code
+string error_msg
+
+# The name of the module/process/pipeline/etc... that signalled the error
+string error_component
+---
+clearpath_logger_msgs/Event event
+```
+
+#### clearpath_logger_msgs/RecordEvent.srv {#srv-log-recordevent}
+
+```
+# The event to be recorded
+# If the header's stamp is not zero the header will be modified to be the current time
+# Otherwise the provided time will be used without verification
+clearpath_logger_msgs/Event event
+---
+# The event as it was recorded, after any modifications made for serialization
+clearpath_logger_msgs/Event event
+```
+
+#### clearpath_logger_msgs/RecordLocationEvent.srv {#srv-log-recordlocationevent}
+
+```
+# The robot's current latitude (decimal degrees)
+float64 latitude
+
+# The robot's current longitude (decimal degrees)
+float64 longitude
+
+# The robot's current heading (cardinal direction in decimal degrees)
+float64 heading
+
+# The robot's current linear & angular velocity
+geometry_msgs/Twist velocity
+
+# The robot's current odometry location
+nav_msgs/Odometry odometry
+
+# Tags for the event
+# Should contain one or more of Event.TAG_LOCATION, TAG_ODOMETRY, or TAG_VELOCITY
+string[] tags
+---
+clearpath_logger_msgs/Event event
+```
+
+#### clearpath_logger_msgs/RecordMediaEvent.srv {#srv-log-recordmediaevent}
+
+```
+# The path to the media file on-disk
+string media_path
+
+# A MIME type string indicating the media type
+# May be left blank if desired
+string mime_type
+
+# The frame ID for the sensor that recorded the media
+# Leave blank if the sensor has no frame/TF data associated with it
+string frame_id
+---
+# The logged event
+clearpath_logger_msgs/Event event
+```
+
+#### clearpath_logger_msgs/RecordPowerEvent.srv {#srv-log-recordpowerevent}
+
+```
+# The battery's current level
+# 0.0 to 1.0
+float32 battery_percent
+
+# Is the battery currently charging?
+bool charging
+---
+clearpath_logger_msgs/Event event
+```
+
+#### clearpath_logger_msgs/StartRecording.srv {#srv-log-startrecording}
+
+```
+# A human-readable name for the log
+string name
+---
+clearpath_logger_msgs/EventLog log
+```
+
+#### clearpath_logger_msgs/StopRecording.srv {#srv-log-stoprecording}
+
+```
+# Additional custom end-of-mission metrics to record as part of the log
+string custom_fields_json
+---
+clearpath_logger_msgs/EventLog log
+```
+
 #### clearpath_mission_manager_msgs/srv/AddNetworkEdge.srv {#storage-addnetworkedge}
 
 ```
