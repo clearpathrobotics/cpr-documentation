@@ -26,30 +26,30 @@ software architecture section for more information.
 The list below defines what a "Mission" is as well as its components.
 These components are referred to throughout this manual.
 
--   **Mission** A Mission is a set of one or more Waypoints.
--   **Path** The list of Waypoints that will determine the path 
-    for the specific Mission.
--   **Waypoint** A Waypoint is any geographical point referenced by its
-    position relative to the datum in meters. 
--   **Task** A Task is an automated activity or wait time implemented as
-    a ROS action at a specific Waypoint. Tasks are called in the order they are 
-    added to a Waypoint.
--   **Ghost Waypoint** A transparent waypoint that is not part of the mission. This
-    Waypoint appears between two other waypoints when in edit mode. The user can 
-    drag and drop this ghost waypoint to add a new waypoint to the mission between
-    the other two waypoints.
+- **Mission** A Mission is a set of one or more Waypoints.
+- **Path** The list of Waypoints that will determine the path
+  for the specific Mission.
+- **Waypoint** A Waypoint is any geographical point referenced by its
+  position relative to the datum in meters.
+- **Task** A Task is an automated activity or wait time implemented as
+  a ROS action at a specific Waypoint. Tasks are called in the order they are
+  added to a Waypoint.
+- **Ghost Waypoint** A transparent waypoint that is not part of the mission. This
+  Waypoint appears between two other waypoints when in edit mode. The user can
+  drag and drop this ghost waypoint to add a new waypoint to the mission between
+  the other two waypoints.
 
 ## Mission Creation
 
-To create a new Mission first ensure that the UI is in "Waypoint Edit Mode" (open the map edit modes and select the waypoint icon). 
-Then open the drop down menu in the bottom bar and select the "Add Mission" option. This will allow the user to create a new Mission 
-which can then be defined with Waypoints. If there are no missions presently in the system a user can start adding waypoints directly. 
+To create a new Mission first ensure that the UI is in "Waypoint Edit Mode" (open the map edit modes and select the waypoint icon).
+Then open the drop down menu in the bottom bar and select the "Add Mission" option. This will allow the user to create a new Mission
+which can then be defined with Waypoints. If there are no missions presently in the system a user can start adding waypoints directly.
 This will create a new mission named "Mission - [Current Date]" which can be changed later in the waypoint table.
 
 ### Waypoint Mode
 
 To add new Waypoints to a Mission while edit mode is enabled simply click on the map
-where the waypoint needs to be. These will appear as red Waypoints with the exception 
+where the waypoint needs to be. These will appear as red Waypoints with the exception
 of the first waypoint (green) and the last waypoint (yellow).
 
 :::note
@@ -59,8 +59,8 @@ of the first waypoint (green) and the last waypoint (yellow).
 :::
 
 As Waypoints are placed, a "ghost waypoint" will appear between each pair of real
-Waypoints and can be dragged to a new spot to insert a real Waypoint 
-between them.  Waypoints can also be dragged and dropped on the map to 
+Waypoints and can be dragged to a new spot to insert a real Waypoint
+between them. Waypoints can also be dragged and dropped on the map to
 modify their positions.
 
 ### Waypoint Panel
@@ -74,26 +74,26 @@ modify their positions.
 
 Enable the "Waypoint Panel" toggle to open the list of available Waypoints
 within the selected Mission as shown in the figure above. The user can
-now rearrange the list, rename Waypoints, add Tasks to the Waypoints, 
-and modify the final heading and/or tolerance of each Waypoint. The user can 
+now rearrange the list, rename Waypoints, add Tasks to the Waypoints,
+and modify the final heading and/or tolerance of each Waypoint. The user can
 also rename the mission and apply Tasks to when the Mission starts and stops.
 
 ### Rename Mission
 
 To rename the Mission click the Mission name as it appears in the upper left
-hand corner.  This should change the text into an input box that can then be 
+hand corner. This should change the text into an input box that can then be
 modified. Press enter/click aside to save the change.
 
-### Mission ID 
+### Mission ID
 
-To help facilitate API usage the user can copy the mission's UUID from this section to then put 
+To help facilitate API usage the user can copy the mission's UUID from this section to then put
 in a script or an API call.
 
 ### Mission Tasks
 
-A Mission can have Tasks assigned to when it starts and when it stops. These 
+A Mission can have Tasks assigned to when it starts and when it stops. These
 Tasks will run in the order they are listed in and will always run whenever the Mission
-starts or stops.  
+starts or stops.
 
 ### Rearrange List of Waypoints
 
@@ -107,11 +107,11 @@ By default, once Waypoints are created they are assigned a default name
 which is the word "Waypoint" followed by a numeric value representing the
 the number of Waypoints that have been created plus one. The user has the
 option to rename these Waypoints in order for them to have more descriptive
-meaning. 
+meaning.
 
 To rename a Waypoint follow these steps:
 
-1.  Enable the "Waypoint Panel" toggle. See [Waypoint Panel](#waypoint-panel) 
+1.  Enable the "Waypoint Panel" toggle. See [Waypoint Panel](#waypoint-panel)
     for further details.
 2.  Click the name of the Waypoint which the user wants to rename.
 3.  Erase the current name and type the new name.
@@ -137,8 +137,8 @@ To add a Task to the end of a Mission:
     assigned to them based on placement). Waypoints in the table will also have a small icon to indicate
     if tasks are assigned to the Waypoint accordingly.
 
-4.  The check box next to the Task name controls mission behaviour in the event that the Task fails.  If the checkbox is 
-    checked the Mission will proceed to the next step in it's process, such as the next task or navigating to the next Waypoint. 
+4.  The check box next to the Task name controls mission behaviour in the event that the Task fails. If the checkbox is
+    checked the Mission will proceed to the next step in it's process, such as the next task or navigating to the next Waypoint.
     If its not checked, the Mission will become cancelled upon the Task's failure.
 5.  Click the Gear icon next to the selected Task to add the required
     Settings.
@@ -164,11 +164,11 @@ by clicking the "Gear" icon.
 To set the Waypoint's final heading, the user will need to check the
 "Final Heading Enabled" checkbox and enter the heading value in
 degrees. The heading indicator on the top bar can be used to help set
-this value. See the figure below showing the advanced settings. 
+this value. See the figure below showing the advanced settings.
 
 :::note
 
-Waypoints that have a heading or tolerance assigned to them will show a different colour 
+Waypoints that have a heading or tolerance assigned to them will show a different colour
 on their settings icon.
 
 :::
@@ -205,20 +205,25 @@ orientation values, in meters and degrees, respectively.
 ### Constrained Replanning {#constrained_path}
 
 If a constrained/drivable path is set the user can visualize this path by using the layers view.
-The purpose of this area is to help ensure that the UGV does not deviate too far from the 
+The purpose of this area is to help ensure that the UGV does not deviate too far from the
 planned route.
 
 <center>
   <figure>
-    <video autoplay="true" loop="true" src="/video/outdoornav_videos/ui_show_hide_path.mp4" width="700"/>
+    <video
+      autoplay="true"
+      loop="true"
+      src="/video/outdoornav_videos/ui_show_hide_path.mp4"
+      width="700"
+    />
     <figcaption>Showing/Hiding Constrained Path</figcaption>
   </figure>
 </center>
 
 :::note
 
-If the UGV is manually driven outside of the constrained replanning area 
-while a Mission is running, the Mission will not be able to be resumed until the 
+If the UGV is manually driven outside of the constrained replanning area
+while a Mission is running, the Mission will not be able to be resumed until the
 UGV is returned within the navigable area defined by the path contraint.
 
 :::
@@ -228,10 +233,10 @@ UGV is returned within the navigable area defined by the path contraint.
 ### Start Mission
 
 There are multiple ways to start a Mission. At the bottom of the UI, the user has the ability to start the currently
-selected Mission by clicking the "Play" button <img src="/img/outdoornav_images/ui_start_button_simple.png" width="16px"/>. 
-Starting the Mission this will start the Mission from the first Waypoint. The user may also select the drop down next to the button 
-to start the Mission from the current UGV position. This is a useful way to start a Mission in the event that the UGV was blocked by 
-obstacles that were later moved. Another way that a user can start a Mission is by selecting a waypoint in edit mode and then clicking on 
+selected Mission by clicking the "Play" button <img src="/img/outdoornav_images/ui_start_button_simple.png" width="16px"/>.
+Starting the Mission this will start the Mission from the first Waypoint. The user may also select the drop down next to the button
+to start the Mission from the current UGV position. This is a useful way to start a Mission in the event that the UGV was blocked by
+obstacles that were later moved. Another way that a user can start a Mission is by selecting a waypoint in edit mode and then clicking on
 "Start Mission from Here" option. If the UGV is within 3 metres of that Waypoint the Mission will start from there.
 
 <center>
@@ -241,7 +246,7 @@ obstacles that were later moved. Another way that a user can start a Mission is 
   </figure>
 </center>
 
-When the Mission has been started the Play button will turn green, regardless of how it has been started. 
+When the Mission has been started the Play button will turn green, regardless of how it has been started.
 
 ### Pause Mission
 
@@ -259,4 +264,3 @@ At the bottom of the UI, the user has the ability to stop the currently
 running mission or task by clicking the "Stop" button <img src="/img/outdoornav_images/ui_stop_button.png" width="16px"/>. When the
 mission/task has been cancelled this button will turn red. The name of
 the mission/task will be shown to be cancelled in the feedback bar.
-

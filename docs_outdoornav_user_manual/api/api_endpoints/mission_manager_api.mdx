@@ -6,8 +6,8 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-The Mission Manager API allows creation, deletion, and modification of OutdoorNav missions.  Mission data is stored
-in a databse-like structure on-disk.  The web UI is the primary method of managing missions, but this service
+The Mission Manager API allows creation, deletion, and modification of OutdoorNav missions. Mission data is stored
+in a databse-like structure on-disk. The web UI is the primary method of managing missions, but this service
 API provides the ability to write your own UI if desired.
 
 ### Topics Exported by Mission Manager
@@ -37,7 +37,7 @@ edges can be added by setting `symmetrical` to `true`.
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/AddNetworkEdge](definitions.mdx#storage-addnetworkpath)
 
-**Description:** Adds multiple points and edges to an existing network of paths map.  Vertices are supplied in-order,
+**Description:** Adds multiple points and edges to an existing network of paths map. Vertices are supplied in-order,
 with edges automatically added between adjacent vertices.
 
 #### mission_manager/add_network_point
@@ -57,27 +57,27 @@ existing vertices by specifying the connecting points' UUIDs.
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/AddRemoveById](definitions.mdx#storage-addremovebyid)
 
-**Description:** Add an existing Task to an existing Waypoint.  If the `position` parameter is negative the Task
+**Description:** Add an existing Task to an existing Waypoint. If the `position` parameter is negative the Task
 is added to the end of the Waypoint's `tasks` list.
 
 #### mission_manager/add_waypoint_to_mission
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/AddRemoveById](definitions.mdx#storage-addremovebyid)
 
-**Description:** Add an existing Waypoint to an existing Mission.  If the `position` parameter is negative the Waypoint
+**Description:** Add an existing Waypoint to an existing Mission. If the `position` parameter is negative the Waypoint
 is added to the end of the Task's `waypoints` list.
 
 #### mission_manager/clone_mission
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/CloneMission](definitions.mdx#storage-clonemission)
 
-**Description:** Create a deep-copy of a Mission.  The new Mission will be given the provided name, or reuse the original
+**Description:** Create a deep-copy of a Mission. The new Mission will be given the provided name, or reuse the original
 mission's name wth `-copy` appended to the end if no name is provided. All Waypoints and their associated Tasks are also
-deep-copied.  If the `reverse` parameter is set to `true` the order of waypoints is reversed in the new mission.
+deep-copied. If the `reverse` parameter is set to `true` the order of waypoints is reversed in the new mission.
 
 :::note
 
-In 0.8.0 onward, all missions are required to have unique names.  If the specified name is not unique the cloning will
+In 0.8.0 onward, all missions are required to have unique names. If the specified name is not unique the cloning will
 fail. Cloning a mission multiple times without specifying a unique name will add incrementing numbers to the suffix:
 `-copy` for the first, `-copy1` for the second, `-copy2` for the third, and so on.
 
@@ -117,7 +117,7 @@ The `reverse` parameter was added in 0.9.0 and is not available in older version
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/GetWaypoint](definitions.mdx#storage-getwaypoint)
 
-**Description:** Create a deep-copy of a Waypoint.  The new Waypoint will be renamed to have `-copy` at the end. All
+**Description:** Create a deep-copy of a Waypoint. The new Waypoint will be renamed to have `-copy` at the end. All
 Tasks in the original Waypoint are also duplicated.
 
 #### mission_manager/create_mission
@@ -128,7 +128,7 @@ Tasks in the original Waypoint are also duplicated.
 
 :::note
 
-In 0.8.0 onward, all missions are required to have unique names.  Creating a mission with a duplicate mission will fail.
+In 0.8.0 onward, all missions are required to have unique names. Creating a mission with a duplicate mission will fail.
 
 :::
 
@@ -178,7 +178,7 @@ Use with extreme caution; this procedure cannot be undone.
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/DeleteById](definitions.mdx#storage-deletebyid)
 
-**Description:** Delete the Mission with the given ID.  Waypoints that are included in this mission are not
+**Description:** Delete the Mission with the given ID. Waypoints that are included in this mission are not
 deleted, as they may be referenced by other Missions.
 
 #### mission_manager/delete_missions
@@ -204,7 +204,7 @@ as they may be referenced by other Missions.
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/DeleteById](definitions.mdx#storage-deletebyid)
 
-**Description:** Delete a network of paths map.  All vertices and edges contained within the map are also deleted.
+**Description:** Delete a network of paths map. All vertices and edges contained within the map are also deleted.
 
 #### mission_manager/delete_network_mission
 
@@ -249,7 +249,7 @@ Use with caution; deleted items cannot be recovered.
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/DeleteById](definitions.mdx#storage-deletebyid)
 
-**Description:** Delete the Task with the given ID.  Any Waypoints that reference the deleted Task will be modified
+**Description:** Delete the Task with the given ID. Any Waypoints that reference the deleted Task will be modified
 to omit this Task once it is deleted.
 
 #### mission_manager/delete_tasks
@@ -262,8 +262,8 @@ to omit this Task once it is deleted.
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/DeleteById](definitions.mdx#storage-deletebyid)
 
-**Description:** Delete the Waypoint with the given ID.  Tasks that are included in this mission are not
-deleted, as they may be referenced by other Waypoints.  Any Missions that reference the deleted Waypoint will be
+**Description:** Delete the Waypoint with the given ID. Tasks that are included in this mission are not
+deleted, as they may be referenced by other Waypoints. Any Missions that reference the deleted Waypoint will be
 modified to omit this Waypoint once it is deleted.
 
 #### mission_manager/delete_waypoints
@@ -379,7 +379,7 @@ should subscribe to the `mission_manager/state` topic.
 
 :::note
 
-All imported Missions, Tasks, and Waypoints are added to the existing database.  Items whose UUIDs already exist will
+All imported Missions, Tasks, and Waypoints are added to the existing database. Items whose UUIDs already exist will
 be skipped & the existing copies re-used. This allows you to copy all mission objects from one robot to another.
 
 To delete all data and restore a backup, instead of merging with existing data, use the `/mission_manager/restore`
@@ -403,13 +403,13 @@ service instead.
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/AddRemoveById](definitions.mdx#storage-addremovebyid)
 
-**Description:** Remove a Task from a Waypoint.  All instances of the Task are removed from the given Waypoint.
+**Description:** Remove a Task from a Waypoint. All instances of the Task are removed from the given Waypoint.
 
 #### mission_manager/remove_waypoint_from_mission
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/AddRemoveById](definitions.mdx#storage-addremovebyid)
 
-**Description:** Remove a Waypoint from a Mission.  All instances of the Waypoint are removed from the given Mission.
+**Description:** Remove a Waypoint from a Mission. All instances of the Waypoint are removed from the given Mission.
 
 #### mission_manager/restore
 
@@ -432,7 +432,7 @@ service instead.
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/SplitNetworkEdge](definitions.mdx#storage-splitnetworkedge)
 
-**Description:** Split an edge of network of paths map to create 2 edges connected to a new vertex between them.  If
+**Description:** Split an edge of network of paths map to create 2 edges connected to a new vertex between them. If
 `symmetrical` is set to `true` the new edges will be bidirectional, otherwise only the edge going in one direction is
 split.
 
@@ -440,11 +440,11 @@ split.
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/UpdateMission](definitions.mdx#storage-updatemission)
 
-**Description:** Modify a Mission.  All attributes of the Mission are replaced with the provided values.
+**Description:** Modify a Mission. All attributes of the Mission are replaced with the provided values.
 
 :::note
 
-In 0.8.0 onward, all missions are required to have unique names.  Assigning a name that is already in-use will result
+In 0.8.0 onward, all missions are required to have unique names. Assigning a name that is already in-use will result
 in an error.
 
 :::
@@ -495,13 +495,13 @@ in an error.
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/UpdateTask](definitions.mdx#storage-updatetask)
 
-**Description:** Modify a Task.  All attributes of the Task are replaced with the provided values.
+**Description:** Modify a Task. All attributes of the Task are replaced with the provided values.
 
 #### mission_manager/update_waypoint
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/UpdateWaypoint](definitions.mdx#storage-updatewaypoint)
 
-**Description:** Modify a Waypoint.  All attributes of the Waypoint are replaced with the provided values.
+**Description:** Modify a Waypoint. All attributes of the Waypoint are replaced with the provided values.
 
 #### mission_manager/validate_network_map
 

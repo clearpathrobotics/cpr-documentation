@@ -51,7 +51,7 @@ Follow these steps to calibrate the IMU on your machine:
 2.  Perform the following command to make the calibration script
     executable:
 
-    ``` bash
+    ```bash
     $ sudo chmod +x calibration.py
     ```
 
@@ -75,7 +75,7 @@ Follow these steps to calibrate the IMU on your machine:
 
 5.  Launch the calibration using the following command:
 
-    ``` bash
+    ```bash
     $ roslaunch magnetometer_display magnetometer.launch
     ```
 
@@ -96,8 +96,7 @@ Follow these steps to calibrate the IMU on your machine:
     <center>
       <figure>
         <img src="/img/outdoornav_images/mag_calib3.png" />
-        <figcaption>Magnetometer calibration, ellipsoid fit
-        parameters</figcaption>
+        <figcaption>Magnetometer calibration, ellipsoid fit parameters</figcaption>
       </figure>
     </center>
 
@@ -118,9 +117,9 @@ Follow these steps to calibrate the IMU on your machine:
     as follows (to account for the NED to ENU transform the driver
     applies):
 
-    -   Launch file X = Terminal Y
-    -   Launch file Y = Terminal X
-    -   Launch file Z = -Terminal Z
+    - Launch file X = Terminal Y
+    - Launch file Y = Terminal X
+    - Launch file Z = -Terminal Z
 
 ## RTK Positioning GPS Setup
 
@@ -138,115 +137,115 @@ console](https://support.swiftnav.com/support/solutions/articles/44001903699-ins
 
 ### Base Station GPS Configuration
 
--   Connect the Swift Navigation device to a computer via USB or the USB
-    to Serial Adapter cable.
+- Connect the Swift Navigation device to a computer via USB or the USB
+  to Serial Adapter cable.
 
--   Open Swift Console and connect to the device.
+- Open Swift Console and connect to the device.
 
--   Set the following options in the **ethernet** section as shown in
-    the figure below.
+- Set the following options in the **ethernet** section as shown in
+  the figure below.
 
-    1.  ip_config_mode: `Static`
-    2.  ip_address: `192.168.131.30`
-    3.  netmask: `255.255.255.0`
+  1.  ip_config_mode: `Static`
+  2.  ip_address: `192.168.131.30`
+  3.  netmask: `255.255.255.0`
 
-    <center>
-      <figure>
-        <img src="/img/outdoornav_images/ip_base.png" />
-        <figcaption>Base Station Ethernet settings</figcaption>
-      </figure>
-    </center>
+  <center>
+    <figure>
+      <img src="/img/outdoornav_images/ip_base.png" />
+      <figcaption>Base Station Ethernet settings</figcaption>
+    </figure>
+  </center>
 
--   Set the following options in the **tcp_server1** section as show in
-    the figure below.
+- Set the following options in the **tcp_server1** section as show in
+  the figure below.
 
-    1.  mode: `SBP`
-    2.  port: `55556`
-    3.  enabled_sbp_messages: `72,74,117,65535`
+  1.  mode: `SBP`
+  2.  port: `55556`
+  3.  enabled_sbp_messages: `72,74,117,65535`
 
-    <center>
-      <figure>
-        <img src="/img/outdoornav_images/server_base.png" />
-        <figcaption>Base Station TCP1 Server settings</figcaption>
-      </figure>
-    </center>
+  <center>
+    <figure>
+      <img src="/img/outdoornav_images/server_base.png" />
+      <figcaption>Base Station TCP1 Server settings</figcaption>
+    </figure>
+  </center>
 
--   Set the following options in the **solution** section as shown in
-    the figure below.
+- Set the following options in the **solution** section as shown in
+  the figure below.
 
-    1.  soln_freq: `10`
-    2.  correction_age_max: `30`
-    3.  output_every_n_obs: `10`
-    4.  dgnss_solution_mode: `Low Latency`
+  1.  soln_freq: `10`
+  2.  correction_age_max: `30`
+  3.  output_every_n_obs: `10`
+  4.  dgnss_solution_mode: `Low Latency`
 
-    <center>
-      <figure>
-        <img src="/img/outdoornav_images/solution_base.png" />
+  <center>
+    <figure>
+      <img src="/img/outdoornav_images/solution_base.png" />
       <figcaption>Base Station Solution settings</figcaption>
-      </figure>
-    </center>
+    </figure>
+  </center>
 
--   Next the Base Station has to be surveyed. There are two ways of
-    doing this which are explained in [RTK Survey Positioning](#base-station-survey).
--   Click Save to Flash.
--   Close Swift Console.
--   Disconnect the device from the computer.
+- Next the Base Station has to be surveyed. There are two ways of
+  doing this which are explained in [RTK Survey Positioning](#base-station-survey).
+- Click Save to Flash.
+- Close Swift Console.
+- Disconnect the device from the computer.
 
 ### UGV Position GPS Configuration {#ugv-position-gps-config}
 
--   Connect the Swift Navigation device to a computer via USB or the USB
-    to Serial Adapter cable.
+- Connect the Swift Navigation device to a computer via USB or the USB
+  to Serial Adapter cable.
 
--   Open Swift Console and connect to the device.
+- Open Swift Console and connect to the device.
 
--   Set the following options in the **ethernet** section as shown in
-    the figure below.
+- Set the following options in the **ethernet** section as shown in
+  the figure below.
 
-    1.  ip_config_mode: `Static`
-    2.  ip_address: `192.168.131.31`
-    3.  netmask: `255.255.255.0`
-    
-    <center>
-      <figure>
-        <img src="/img/outdoornav_images/rover_position_ip.png" />
-        <figcaption>UGV GPS Ethernet settings</figcaption>
-      </figure>
-    </center>
+  1.  ip_config_mode: `Static`
+  2.  ip_address: `192.168.131.31`
+  3.  netmask: `255.255.255.0`
 
--   Set the following options in the **tcp_client0** section as show in
-    the figure below.
+  <center>
+    <figure>
+      <img src="/img/outdoornav_images/rover_position_ip.png" />
+      <figcaption>UGV GPS Ethernet settings</figcaption>
+    </figure>
+  </center>
 
-    1.  mode: `SBP`
-    2.  port: `192.168.131.30:55556`
-    3.  enabled_sbp_messages: `0`
-    
-    <center>
-      <figure>
-        <img src="/img/outdoornav_images/rover_position_client.png" />
-        <figcaption>UGV GPS TCP Client0 settings</figcaption>
-      </figure>
-    </center>
+- Set the following options in the **tcp_client0** section as show in
+  the figure below.
 
--   Set the following options in the **solution** section as show in the
-    figure below.
+  1.  mode: `SBP`
+  2.  port: `192.168.131.30:55556`
+  3.  enabled_sbp_messages: `0`
 
-    1.  soln_freq: `10`
-    2.  correction_age_max: `30`
-    3.  output_every_n_obs: `10`
-    4.  dgnss_solution_mode: `Low Latency`
-    
-    <center>
-      <figure>
-        <img src="/img/outdoornav_images/rtk_fix.png" />
-        <figcaption>UGV GPS Solution settings</figcaption>
-      </figure>
-    </center>
+  <center>
+    <figure>
+      <img src="/img/outdoornav_images/rover_position_client.png" />
+      <figcaption>UGV GPS TCP Client0 settings</figcaption>
+    </figure>
+  </center>
 
--   Click Save to Flash.
+- Set the following options in the **solution** section as show in the
+  figure below.
 
--   Close Swift Console.
+  1.  soln_freq: `10`
+  2.  correction_age_max: `30`
+  3.  output_every_n_obs: `10`
+  4.  dgnss_solution_mode: `Low Latency`
 
--   Disconnect the device from the computer.
+  <center>
+    <figure>
+      <img src="/img/outdoornav_images/rtk_fix.png" />
+      <figcaption>UGV GPS Solution settings</figcaption>
+    </figure>
+  </center>
+
+- Click Save to Flash.
+
+- Close Swift Console.
+
+- Disconnect the device from the computer.
 
 Once you have entered these settings. Connect your computer to the Wi-Fi
 network of the Base Station. Also make sure that the UGC (which is
@@ -254,25 +253,25 @@ connected to the UGV GPS unit) is also connected to the Base Station
 Wifi. The you should be able to verify connectivity across the devices.
 To check the Base Station, complete the following steps.
 
--   Open Swift Console on you computer
--   Select **TCP/IP**
--   For IP Address enter `192.168.131.30`
--   For IP Port enter `55555`
--   Click **OK**
--   Select the **Observations** tab
--   In the **Remote** section you should see observation data from your
-    UGV.
+- Open Swift Console on you computer
+- Select **TCP/IP**
+- For IP Address enter `192.168.131.30`
+- For IP Port enter `55555`
+- Click **OK**
+- Select the **Observations** tab
+- In the **Remote** section you should see observation data from your
+  UGV.
 
 To check the UGV, complete the following steps.
 
--   Open Swift Console
--   Select **TCP/IP**
--   For IP Address enter `192.168.131.31`
--   For IP Port enter `55555`
--   Click **OK**
--   Select the **Observations** tab
--   In the **Remote** section you should see observation data from your
-    Base Station.
+- Open Swift Console
+- Select **TCP/IP**
+- For IP Address enter `192.168.131.31`
+- For IP Port enter `55555`
+- Click **OK**
+- Select the **Observations** tab
+- In the **Remote** section you should see observation data from your
+  Base Station.
 
 Further information on [RTK setup](https://swiftnav.freshdesk.com/support/solutions/articles/44001904334-piksi-multi-gnss-rtk-position-with-stationary-base%7D%7Bhttps://swiftnav.freshdesk.com/support/solutions/articles/44001904334-piksi-multi-gnss-rtk-position-with-stationary-base)
 is available from SwiftNav.
@@ -337,7 +336,7 @@ The `ethz_piksi_ros` repository should be installed in the UGV's
 Base Station network, `ssh` into the UGV's computer and run the
 following:
 
-``` bash
+```bash
 roslaunch {robot_name}_gps_navigation geodetic_survey.launch
 ```
 
