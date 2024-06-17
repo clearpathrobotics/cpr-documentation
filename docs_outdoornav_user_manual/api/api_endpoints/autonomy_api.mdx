@@ -242,7 +242,7 @@ direction).
 &emsp;&emsp;**Message Type:** [clearpath_logger_msgs/DeleteLog](definitions.mdx#srv-log-deletelog)
 
 &emsp;&emsp;**Description:** Deletes a log as specified by the UUID provided. If the purge flag is set the log will be removed from
-the internal records entirely. If not, then the record will be marked as deleted and the meta data preserved, though log data will still
+the internal records entirely. If not, then the record will be marked as deleted and the meta data preserved, though the log data will still
 be deleted.
 
 #### /onav_log/download_kmz
@@ -261,7 +261,7 @@ be deleted.
 
 &emsp;&emsp;**Message Type:** [clearpath_logger_msgs/GetAllLogs](definitions.mdx#srv-log-getalllogs)
 
-&emsp;&emsp;**Description:** Gets an array of all Event logs recorded in the database.
+&emsp;&emsp;**Description:** Returns an array of all Event logs recorded in the database.
 
 #### /onav_log/record_custom_event
 
@@ -310,7 +310,7 @@ Automatic telemetry like power is added to the event if possible.
 
 &emsp;&emsp;**Message Type:** [clearpath_logger_msgs/StopRecording](definitions.mdx#srv-log-stoprecording)
 
-&emsp;&emsp;**Description:** Stop the active log.
+&emsp;&emsp;**Description:** Stop recording the active log.
 
 #### /safety/safety_stop
 
