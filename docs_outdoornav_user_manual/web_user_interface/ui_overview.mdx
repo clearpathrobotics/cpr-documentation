@@ -217,8 +217,8 @@ available views.
 
 ### General Settings {#config-general-settings}
 
-The General settings section can be found in through the upper left hand menu and allows the Operator to modify 
-general features of the UGV.
+The General settings section can be found accessing the  **Menu** &srarr; **Settings** &srarr; **General** and allows the user to modify 
+some general settings, both for the UI and the UGV.
 
 <center>
   <figure>
@@ -260,7 +260,7 @@ maximum speeds of the UGV itself.
   </figure>
 </center>
 
-To access the Aerial Overlay Settings: Menu → Settings → Aerial Overlay:
+To access the Aerial Overlay Settings: **Menu** → **Settings** → **Aerial Overlay**:
 
 1.  **Offset:** The map tiles used in this software are not
     perfectly aligned with the real world. Therefore, the user may need
@@ -270,6 +270,9 @@ To access the Aerial Overlay Settings: Menu → Settings → Aerial Overlay:
     map and should be set to a location within 10km of the test site.
     The user can change this value in the Map Settings page. Enter the
     new values and click the "Set Datum" button.
+3.  **Survey Base Station:** This button starts the survey process, which takes about 5 
+    minutes to complete. Updated RTK corrections are sent to the position GNSS unit once
+    the surveying has completed.
 
 ### Map Source Configuration
 
@@ -296,7 +299,7 @@ select these maps in the Web UI is simple.
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/map_settings_osm.png" />
+    <img src="/img/outdoornav_images/map_settings_osm_0_13_0.png" />
     <figcaption>Using Map Settings to select OpenStreetMap</figcaption>
   </figure>
 </center>
@@ -319,7 +322,7 @@ below.
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/map_settings_mapbox.png" />
+    <img src="/img/outdoornav_images/map_settings_mapbox_0_13_0.png" />
     <figcaption>Using Map Settings to select MapBox</figcaption>
   </figure>
 </center>
@@ -342,7 +345,7 @@ outlined below.
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/map_settings_bing.png" />
+    <img src="/img/outdoornav_images/map_settings_bing_0_13_0.png" />
     <figcaption>Using Map Settings to select Bing Maps</figcaption>
   </figure>
 </center>
@@ -373,7 +376,7 @@ by using the steps below.
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/map_settings_custom.png" />
+    <img src="/img/outdoornav_images/map_settings_custom_0_13_0.png" />
     <figcaption>Using Map Settings to select Custom maps</figcaption>
   </figure>
 </center>
@@ -427,7 +430,7 @@ Once your map tiles are available on the network, you can follow the
 steps in [Using Custom Maps](#using_custom_maps) to have the
 Web UI use your custom tiles.
 
-## Autonomous Features
+## Autonomy Features
 
 There are presently 2 autonomous modes that the UGV can be used in, [Waypoint Mode](ui_waypoint_mode.mdx) and [Map Mode](ui_map_mode.mdx).  
 While each mode leverages different features, some are shared and are elaborated on here. 
@@ -528,6 +531,74 @@ If a Waypoint/Goalpoint has more than one task assigned to it, the icon will
 be replaced with a sheet of paper icon like so: <img src="/img/outdoornav_images/task_multi.png" width="30px"/>
 
 :::
+
+### Points of Interest
+
+Users are now able to add Points of Interest (POI) onto their map, marking a location or an object that is persistent
+across both "Map" and "Waypoint" planning modes. The intended use for the points of interest feature is to allow the 
+user to set up locations that they know will almost never change and be able to for example navigate, inspect these 
+locations.
+
+#### Creating POIs
+
+To create a POI, ensure that you are in "POI edit mode" (Hotkey, e+4). Click on the map to place your POI and assign
+the POI a name. You also have the ability on creation to assign a heading, tags and custom fields (all optional).
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_poi_edit.png" />
+    <figcaption>Point of Interest creation</figcaption>
+  </figure>
+</center>
+
+#### Editing POIs
+
+To edit an existing POI, right click the POI and select Edit. This will allow you to modify any of the existing properties
+of the POI. If you want to simply modify the heading of a POI, you can use the CTRL hotkey to enable heading modification
+and rotate the POI to your desired heading. See video below for an example of the editing the heading of a POI using the 
+(CTRL hotkey).
+
+<center>
+  <figure>
+    <video autoplay="true" loop="true">
+      <source src="/video/outdoornav_videos/ui_rotating_poi.mp4"/>
+    </video>
+    <figcaption>Rotating a Point of Interests heading</figcaption>
+  </figure>
+</center>
+
+#### Predefined actions
+
+If a POI is assigned one of the two predefined tags, `goto` and/or `inspect`, the user will have the ability to perform
+some quick actions when they right click the POI. In "Map mode" only, not in "Waypoint mode", if the POI has a `goto` tag, 
+the user will see a `Go To` option in the right click options that will autonomously navigate the UGV to the location of 
+the POI (if it is within the bounds of the current network). If the POI has an `inspect` tag, the user will see an `Inspect`
+option in the right click options that will move the PTZ camera to view the POI when clicked. See the below image for an
+example of a POI that has both the `goto` and `inspect` tags, and therefore has the `Go To` and `Inspect` action options
+when right clicked.
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_poi_actions.png" />
+    <figcaption>Point of Interest actions</figcaption>
+  </figure>
+</center>
+
+#### Creating Missions from POIs
+
+If the user wants your UGV to navigate to a set of predefined locations they can create POI's for each of these stops and leverage 
+them accordingly. By entering the network mission edit mode (hotkey: e+3), the user can simply click on the POIs in order of 
+traversal to create your network mission. The network goals that are created on each click of a POI will place a Goal at the 
+exact location of the POI and will also use the heading that has been defined by the POI.
+
+<center>
+  <figure>
+    <video autoplay="true" loop="true">
+      <source src="/video/outdoornav_videos/ui_goal_point_poi.mp4"/>
+    </video>
+    <figcaption>Creating a Goal from a POI</figcaption>
+  </figure>
+</center>
 
 ### Autonomous Docking
 

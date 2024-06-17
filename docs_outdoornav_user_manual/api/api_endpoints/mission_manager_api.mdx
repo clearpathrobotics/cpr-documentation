@@ -47,6 +47,12 @@ with edges automatically added between adjacent vertices.
 **Description:** Adds a single vertex to a network of paths map. The new vertex can optionally be connected to
 existing vertices by specifying the connecting points' UUIDs.
 
+#### mission_manager/add_tag
+
+**Service Type:** [clearpath_mission_manager_msgs/AddRemoveTag](definitions.mdx#storage-addremovetag)
+
+**Description:** Add a tag to the specific object according to its UUID.
+
 #### mission_manager/add_task_to_waypoint
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/AddRemoveById](definitions.mdx#storage-addremovebyid)
@@ -95,6 +101,12 @@ The `reverse` parameter was added in 0.9.0 and is not available in older version
 
 **Description:** Create a deep-copy of a network of paths mission
 
+#### mission_manager/clone_point_of_interest
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/ClonePointOfInterest](definitions.mdx#storage-clonepointofinterest)
+
+**Description:** Create a deep-copy of a point of interest
+
 #### mission_manager/clone_task
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/GetTask](definitions.mdx#storage-gettask)
@@ -131,6 +143,12 @@ In 0.8.0 onward, all missions are required to have unique names.  Creating a mis
 **Service Type:** [clearpath_mission_manager_msgs/srv/CreateNetworkMission](definitions.mdx#storage-createnetworkmission)
 
 **Description:** Create a new network of paths mission
+
+#### mission_manager/create_point_of_interest
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/CreatePointOfInterest](definitions.mdx#storage-createpointofinterest)
+
+**Description:** Create a new point of interest
 
 #### mission_manager/create_task
 
@@ -221,6 +239,12 @@ Use with caution; deleted items cannot be recovered.
 
 :::
 
+#### mission_manager/delete_point_of_interest
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteById](definitions.mdx#storage-deletebyid)
+
+**Description:** Delete the point of interest specified by the UUID.
+
 #### mission_manager/delete_task
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/DeleteById](definitions.mdx#storage-deletebyid)
@@ -293,6 +317,12 @@ should subscribe to the `mission_manager/state` topic.
 
 **Description:** Get all network of paths missions defined in the database.
 
+#### mission_manager/get_all_points of interest
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetAllPointsOfInterest](definitions.mdx#storage-getallpointsofinterest)
+
+**Description:** Get all points of interest defined in the database.
+
 #### mission_manager/get_all_tasks
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/GetAllTasks](definitions.mdx#storage-getalltasks)
@@ -322,6 +352,12 @@ should subscribe to the `mission_manager/state` topic.
 **Service Type:** [clearpath_mission_manager_msgs/srv/GetNetworkMission](definitions.mdx#storage-getnetworkmission)
 
 **Description:** Get the network of paths mission with the specified ID.
+
+#### mission_manager/get_point_of_interest
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetPointOfInterest](definitions.mdx#storage-getpointofinterest)
+
+**Description:** Get the point of interest with the specified ID.
 
 #### mission_manager/get_task
 
@@ -357,6 +393,11 @@ service instead.
 
 **Description:** Add existing Mission to the database. All UUIDs will be regenerated.
 
+#### mission_manager/remove_tag
+
+**Service Type:** [clearpath_mission_manager_msgs/AddRemoveTag](definitions.mdx#storage-addremovetag)
+
+**Description:** Remove a tag to the specific object according to its UUID.
 
 #### mission_manager/remove_task_from_waypoint
 
@@ -441,6 +482,12 @@ in an error.
 #### mission_manager/update_network_points
 
 **Service Type:** [clearpath_mission_manager_msgs/srv/UpdateNetworkPoints](definitions.mdx#storage-updatenetworkpoints)
+
+**Description:** Modify multiple network of paths vertices
+
+#### mission_manager/update_point_of_interest
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/UpdatePointOfInterest](definitions.mdx#storage-updatepointofinterest)
 
 **Description:** Modify multiple network of paths vertices
 

@@ -8,6 +8,15 @@ toc_max_heading_level: 4
 
 ### Message Definitions
 
+#### clearpath_configuration_msgs/AutonomyConfig.msg {#msg-autonomy-config}
+
+```
+# Autonomy configuration message
+
+string version
+float64 uptime (not yet implemented)
+```
+
 #### clearpath_control_msgs/ControlMode.msg {#msg-control-mode}
 
 ```
@@ -376,6 +385,9 @@ clearpath_navigation_msgs/NetworkMission[] network_missions
 
 # All network of paths maps in the database
 clearpath_navigation_msgs/NetworkMap[] network_maps
+
+# Points of interest
+clearpath_navigation_msgs/PointOfInterest[] points_of_interest
 ```
 
 #### clearpath_mission_scheduler_msgs/msg/NextSchedule.msg
@@ -613,6 +625,43 @@ perception_navigation_msgs/Odom2DLean predicted_odom
 
 # Time offset corresponding to prediction
 float32 dt
+```
+
+#### clearpath_navigation_msgs/PointOfInterest.msg {#msg-point-of-interest}
+
+```
+# Message containing the data used to represent a Point of interest (POI)
+
+# If this tag is present, the POI can be used as a navigation goal
+string TAG_GOTO = goto
+
+# If this tag is present, the POI can be set as the target for a PTZ camera action
+string TAG_INSPECT = inspect
+
+# A UUID string to uniquely identify this POI
+string uuid
+
+# The human-readable name of this POI
+string name
+
+# The latitude (in decimal degrees) of this POI
+float64 latitude
+
+# The longitude (in decinal degrees) of this POI
+float64 longitude
+
+# The height above ground level (in meters)
+float64 elevation
+
+# The compass heading (in degrees) of this POI (optional)
+bool enable_heading
+float64 heading
+
+# A set of labels assigned to the POI in order to categorize it
+string[] tags
+
+# A JSON formatted string that contains user defined POI fields
+string custom_fields_json
 ```
 
 #### clearpath_navigation_msgs/PointVector.msg {#msg-point-vector}
@@ -1129,6 +1178,19 @@ int32 position
 bool ok
 ```
 
+#### clearpath_mission_manager_msgs/srv/AddRemoveTag.srv {#storage-addremovetag}
+
+```
+# The UUID of the item whose tags we're modifying
+string uuid
+
+# The tag to add/remove
+string tag
+---
+# The item's tags after modification
+string[] tags
+```
+
 #### clearpath_mission_manager_msgs/srv/CloneMission.srv {#storage-clonemission}
 ```
 # The UUID of the mission to clone
@@ -1183,6 +1245,16 @@ bool reverse
 clearpath_navigation_msgs/NetworkMission mission
 ```
 
+#### clearpath_mission_manager_msgs/srv/ClonePointOfInterest.srv {#storage-clonepointofinterest}
+
+```
+string uuid
+
+string new_name
+---
+clearpath_navigation_msgs/PointOfInterest result
+```
+
 #### clearpath_mission_manager_msgs/srv/CreateMission.srv {#storage-createmission}
 
 ```
@@ -1198,6 +1270,34 @@ string[] waypoint_ids
 ---
 # The resulting Mission, with an auto-generated UUID is returned
 clearpath_navigation_msgs/Mission result
+```
+
+#### clearpath_mission_manager_msgs/srv/CreatePointOfInterest.srv {#storage-createpointofinterest}
+
+```
+# The human-readable name of this POI
+string name
+
+# The latitude (in decimal degrees) of this POI
+float64 latitude
+
+# The longitude (in decinal degrees) of this POI
+float64 longitude
+
+# The height above ground level (in meters)
+float64 elevation
+
+# The compass heading (in degrees) of this POI (optional)
+bool enable_heading
+float64 heading
+
+# A set of labels assigned to the POI in order to categorize it
+string[] tags
+
+# A JSON formatted string that contains user defined POI fields
+string custom_fields_json
+---
+clearpath_navigation_msgs/PointOfInterest result
 ```
 
 #### clearpath_mission_manager_msgs/srv/CreateTask.srv {#storage-createtask}
@@ -1327,6 +1427,13 @@ clearpath_navigation_msgs/NetworkMap[] maps
 clearpath_navigation_msgs/NetworkMission[] missions
 ```
 
+#### clearpath_mission_manager_msgs/srv/GetAllPointsOfInterest.srv {#storage-getallpointsofinterest}
+
+```
+---
+clearpath_navigation_msgs/PointOfInterest[] points_of_interest
+```
+
 #### clearpath_mission_manager_msgs/srv/GetAllTasks.srv {#storage-getalltasks}
 
 ```
@@ -1361,7 +1468,7 @@ string uuid
 clearpath_navigation_msgs/Mission mission
 ```
 
-#### clearpath_mission_manager_msgs/srv/GetnetworkMap.srv {#storage-getnetworkmap}
+#### clearpath_mission_manager_msgs/srv/GetNetworkMap.srv {#storage-getnetworkmap}
 
 ```
 # The UUID of the NetworkMap we want to retrieve
@@ -1378,6 +1485,14 @@ string uuid
 ---
 # The Mission with the given ID, or null if no Mission with that ID exists
 clearpath_navigation_msgs/NetworkMission mission
+```
+
+#### clearpath_mission_manager_msgs/srv/GetPointOfInterest.srv {#storage-getpointofinterest}
+
+```
+string uuid
+---
+clearpath_navigation_msgs/PointOfInterest point_of_interest
 ```
 
 #### clearpath_mission_manager_msgs/srv/GetTask.srv {#storage-gettask}
@@ -1638,6 +1753,37 @@ float64[] longitudes
 
 # The added point, with generated UUID
 clearpath_navigation_msgs/NetworkPoint[] result
+```
+
+#### clearpath_mission_manager_msgs/srv/UpdatePointOfInterest.srv {#storage-updatepointofinterest}
+
+```
+# The ID of the point to edit
+string uuid
+
+# The human-readable name of this POI
+string name
+
+# The latitude (in decimal degrees) of this POI
+float64 latitude
+
+# The longitude (in decinal degrees) of this POI
+float64 longitude
+
+# The height above ground level (in meters)
+float64 elevation
+
+# The compass heading (in degrees) of this POI (optional)
+bool enable_heading
+float64 heading
+
+# A set of labels assigned to the POI in order to categorize it
+string[] tags
+
+# A JSON formatted string that contains user defined POI fields
+string custom_fields_json
+---
+clearpath_navigation_msgs/PointOfInterest result
 ```
 
 #### clearpath_mission_manager_msgs/srv/UpdateTask.srv {#storage-updatetask}
@@ -1915,41 +2061,96 @@ string message
 
 ### Action Definitions
 
-#### clearpath_dock_msgs/action/Dock.action {#action-dock}
+#### clearpath_camera_msgs/action/InspectPOI.action {#action-inspect-poi}
 
 ```
-# Action definition for sending a Clearpath UGV to one of its charging dock.
+# Action definition for inspecting a Point of Interest (POI) with a PTZ mounted on the Clearpth UGV
 
 # goal
-string uuid
-bool local_mode
+string poi_uuid
+float32 zoom
+
 ---
 # result
 bool success
+string message
+
 ---
 # feedback
-string state
-
-# the distance of the charger_link to the dock target
-float64 distance_to_dock
+string message
 ```
 
-#### clearpath_dock_msgs/action/Undock.action {#action-undock}
+#### clearpath_dock_msgs/action/LocalDock.action {#action-local-dock}
 
 ```
 # Action definition for undocking a Clearpath UGV from one of its charging docks.
 
 # goal
-string uuid
+
 ---
 # result
 bool success
+string message
+
 ---
 # feedback
-string state
+string message
+```
 
-# the distance of the charger_link to the dock target
-float64 distance_to_dock
+#### clearpath_dock_msgs/action/LocalDock.action {#action-local-undock}
+
+```
+# Action definition for undocking a Clearpath UGV from one of its charging docks.
+
+# goal
+float32 undock_distance
+
+---
+# result
+bool success
+string message
+
+---
+# feedback
+string message
+```
+
+#### clearpath_dock_msgs/action/NetworkDock.action {#action-network-dock}
+
+```
+# Action definition for undocking a Clearpath UGV from one of its charging docks.
+
+# goal
+string dock_uuid
+string network_uuid
+
+---
+# result
+bool success
+string message
+
+---
+# feedback
+string message
+clearpath_navigation_msgs/NetworkMissionSegment network_plan
+```
+
+#### clearpath_dock_msgs/action/RadiusDock.action {#action-radius-dock}
+
+```
+# Action definition for undocking a Clearpath UGV from one of its charging docks.
+
+# goal
+string dock_uuid
+
+---
+# result
+bool success
+string message
+
+---
+# feedback
+string message
 ```
 
 #### clearpath_localization_msgs/action/SurveyBaseStation.action {#action-survey-base-station}
@@ -2012,7 +2213,68 @@ bool success
 ---
 # feedback
 string state
+```
 
+#### clearpath_navigation_msgs/action/ExecuteNetworkGoTo.action {#action-execute-network-goto}
+
+```
+# Action definition for sending a mission to the Clearpath OutdoorNav software
+
+# goal
+string map_uuid
+clearpath_navigation_msgs/Waypoint waypoint
+
+---
+# result
+
+uint8 UNKNOWN = 0
+uint8 CANCELLED = 1
+uint8 COLLISION = 2
+uint8 PLANNING = 3
+uint8 START_TASKS = 4
+uint8 END_TASKS = 5
+uint8 MISSION_TASKS = 6
+uint8 code
+
+bool success
+string message
+
+---
+# feedback
+string message
+clearpath_navigation_msgs/NetworkMissionSegment network_plan
+```
+
+#### clearpath_navigation_msgs/action/ExecuteNetworkMissionByUuid.action {#action-execute-network-mission-byuuid}
+
+```
+# Action definition for executing a NetworkMission by uuid
+
+# goal
+string mission_uuid
+string map_uuid
+
+---
+# result
+
+uint8 UNKNOWN = 0
+uint8 CANCELLED = 1
+uint8 COLLISION = 2
+uint8 PLANNING = 3
+uint8 START_TASKS = 4
+uint8 END_TASKS = 5
+uint8 MISSION_TASKS = 6
+uint8 code
+
+bool success
+string message
+clearpath_navigation_msgs/NetworkGoalState[] goal_states
+
+---
+# feedback
+string message
+clearpath_navigation_msgs/NetworkGoalState[] goal_states
+clearpath_navigation_msgs/NetworkMissionSegment network_plan
 ```
 
 #### clearpath_navigation_msgs/action/Mission.action {#action-mission}
@@ -2035,4 +2297,44 @@ bool success
 ---
 # feedback
 string state
+```
+
+#### clearpath_navigation_msgs/action/NetworkGoToPOI.action {#action-network-goto-poi}
+
+```
+# Action definition for sending the Clearpath UGV to a Point of Interest (POI)
+
+# goal
+string poi_uuid
+string map_uuid
+
+---
+# result
+bool success
+string message
+
+---
+# feedback
+string message
+clearpath_navigation_msgs/NetworkMissionSegment network_plan
+```
+
+#### clearpath_navigation_msgs/action/RecordPath.action {#action-record-path}
+
+```
+# Action definition for sending the Clearpath UGV to a Point of Interest (POI)
+
+# goal
+string poi_uuid
+string map_uuid
+
+---
+# result
+bool success
+string message
+
+---
+# feedback
+string message
+clearpath_navigation_msgs/NetworkMissionSegment network_plan
 ```

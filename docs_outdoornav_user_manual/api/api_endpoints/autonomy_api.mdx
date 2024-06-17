@@ -574,12 +574,29 @@ DISABLED and the normal behaviour is expected.
 
 ### Actions Exported by Autonomy
 
-#### /dock
+#### /autonomy/dock/local
 
-&emsp;&emsp;**Action Type:** [clearpath_dock_msgs/action/Dock](definitions.mdx#action-dock)
+&emsp;&emsp;**Action Type:** [clearpath_dock_msgs/action/LocalDock](definitions.mdx#action-local-dock)
 
-&emsp;&emsp;**Description:** Send the robot to the charging dock, if the docking
-package has been included.
+&emsp;&emsp;**Description:** Send the robot to the charging dock, if the UGV is facing and within range of a dock.
+
+#### /autonomy/dock/network
+
+&emsp;&emsp;**Action Type:** [clearpath_dock_msgs/action/NetworkDock](definitions.mdx#action-network-dock)
+
+&emsp;&emsp;**Description:** Send the robot to the charging dock by navigating through an existing network map.
+
+#### /autonomy/dock/radius
+
+&emsp;&emsp;**Action Type:** [clearpath_dock_msgs/action/RadiusDock](definitions.mdx#action-radius-dock)
+
+&emsp;&emsp;**Description:** Send the robot to the charging dock if the UGV is within a certain radius of the dock.
+
+#### /autonomy/inspect_poi
+
+&emsp;&emsp;**Action Type:** [clearpath_camera_msgs/action/InspectPOIAction](definitions.mdx#action-inspect-poi)
+
+&emsp;&emsp;**Description:** Action call to move the PTZ camera to look at a POI.
 
 #### /localization/survey
 
@@ -587,7 +604,7 @@ package has been included.
 
 &emsp;&emsp;**Description:** Start surveying the base station, if available.
 
-#### /mission
+#### /autonomy/mission
 
 &emsp;&emsp;**Action Type:** [clearpath_navigation_msgs/action/Mission](definitions.mdx#action-mission)
 
@@ -595,13 +612,19 @@ package has been included.
 include the goal, the waypoint(s), tasks, goal tolerances, goal
 heading, a from_start flag, and an optional start_waypoint_uuid.
 
-#### /mission/by_id
+#### /autonomy/mission/by_id
 
 &emsp;&emsp;**Action Type:** [clearpath_navigation_msgs/action/ExecuteMissionByUuid](definitions.mdx#action-execute-mission-by-uuid)
 
 &emsp;&emsp;**Description:** Send goals for execution by the robot
 according to the specific mission uuid. This will include the goal, the waypoint(s), tasks,
 goal tolerances, goal heading, an optional start_waypoint_uuid, and a from_start flag.
+
+#### /autonomy/network_goto
+
+&emsp;&emsp;**Action Type:** [clearpath_navigation_msgs/action/ExecuteNetworkGoTo](definitions.mdx#action-execute-network-goto)
+
+&emsp;&emsp;**Description:** Send the UGV to a location within the network.
 
 #### /undock
 
