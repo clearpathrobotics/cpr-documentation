@@ -45,7 +45,7 @@ their relevant components. These terms are referred to throughout this page.
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/ui_map_mode_bottom_bar.png" />
+    <img src="/img/outdoornav_images/ui_map_mode_bottom_bar_0_13_0.png" />
     <figcaption>Map Mode Bottom Bar</figcaption>
   </figure>
 </center>
@@ -66,39 +66,15 @@ their relevant components. These terms are referred to throughout this page.
       There are groups of paths that are not connected and are treated as separate maps. This may be desired by the Operator but 
       it can lead to situations where the UGV has sections that aren't navigable. 
 
-2.  **Edit Map Toggle:** This toggle allows the Operator to start
-    creating Points and Paths for the current Map. The Operator will also be able to
-    drag and drop Points in this mode. Once this button is enabled,
-    the Path Type Button and Point Drop Button will be visible and useable. 
+2.  **Path Type Button:** The Path connection button that is used to set the type of path being connected between 
+    points (one-way/two-way). When in connection mode the button will be highlighted. To disable connection mode click the button or 
+    press the ESC key.
 
-    :::note
+3.  **Point Drop Button:** Drops a point at the UGV's current location. This action can also be accomplished by pressing Shift + P. 
 
-    If the toggle is enabled while an autonomous Mission is running, it
-    will cancel the current Mission.
-    
-    :::
+4.  **Mission List** Contains the list of Missions that Operator(s) have created. 
 
-3.  **Map Panel Toggle:** View/Edit details of the current Map including number or points, paths, and default settings.
-
-4.  **Path Type Button:** The Path connection button that is used to set the type of path being connected between 
-    points (one-way/two-way). When in connection mode the button will be highlighted. 
-
-5.  **Point Drop Button:** Drops a point at the UGV's current location. This action can also be accomplished by pressing Shift + P. 
-
-6.  **Mission List** Contains the list of Missions that Operator(s) have created. 
-
-7.  **Edit Mission Toggle** This toggle allows the Operator to start creating Goalpoints and editing currently existing Goalpoints. Once this button 
-    is enabled the Goalpoint Drop button will become visible and useable.
-
-    :::note
-
-    Only one mode at a time can be enabled. If Edit Mission is toggled the Edit Map Toggle will be set to false.
-
-    :::
-
-8.  **Mission Panel Toggle:** View/Edit details of the current Mission including a list of the Goalpoints, Mission tasks, and Return to dock functionality. 
-
-9.  **Goalpoint Drop Button:** The Goalpoint indicator marker on the
+5.  **Goalpoint Drop Button:** The Goalpoint indicator marker on the
     bottom bar allows the Operator to place a Goalpoint at the location of the UGV. 
     This action can also be triggered by using the shortcut key combination Shift + X.
 
@@ -108,7 +84,8 @@ Before creating a mission the Operator will need to first create a map that the 
 to generate paths.  First ensure that the UI is in "Map Edit Mode" (select the pencil icon in the bottom bar next to
 the map selection drop down). Open the drop down menu and select the "Add Map" option.  From here the Operator can create 
 a new map from scratch, clone the current map that is open or import a previously exported map. Once created the Operator can 
-start placing points and building paths.
+start placing points and building paths.  If there are no maps in the system the Operator can also start placing points and the 
+system will automatically create a map for them with default settings.  
 
 ### Map Points
 
@@ -374,4 +351,6 @@ the mission/task will be shown to be cancelled in the feedback bar.
 When a Map has been created a user can right click on a path or a path's driveable area to place a GoToPoint.  This 
 point will be a single point that will also create a small overlay to allow users to start or cancel the "Go To" 
 execution. Before starting the execution the GoToPoint can be dragged to any driveable area or rotated using the CTRL 
-key just like with Goalpoints.  
+key just like with Goalpoints.
+
+A user can also right click on any Point of Interest that has the "Go To" tag and navigate to it in the same way.
