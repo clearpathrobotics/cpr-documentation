@@ -6,7 +6,7 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-import ComponentIntroductionHusky from "/components/introduction_husky.mdx";
+import ComponentIntroductionHusky from "/components/introduction_husky_a300.mdx";
 import Support from "/components/support.mdx";
 import ComponentUsingRos from "/components/using_ros.mdx";
 import ComponentCommonSafeWorkProcedures from "/components/common_safe_work_procedures.mdx";
@@ -16,22 +16,26 @@ import ComponentSafetyWarning from "/components/safety_warning.mdx";
 
 ## Introduction
 
-Husky is a rugged and easy-to-use unmanned ground robot for rapid prototyping and research applications.
+Husky A300 is a rugged and easy-to-use unmanned ground robot for research applications,
+rapid deployments, and deployments.
+It is available both as a standard platform and as an autonomous mobile platform (AMP).
 
 <ComponentSafetyWarning />
 
 ### Shipment Contents
 
-Your Husky shipment contains the following:
+Your Husky A300 standard platform shipment contains the following:
 
-- Clearpath Robotics Husky
-- 24 V Sealed Lead-Acid Battery Pack
-- Battery Door Cover
-- Battery Charger
+- Clearpath Robotics Husky A300 robot
+- Two, four, or six LiFePO<sub>4</sub> batteries
+- One battery charger
+- One PS4 remote control
 - Lockout Keys (2X)
-- Power Connectors (3X)
+- Integrated computer
+- Integrated IMU
 
-If you purchased standard payload modules or custom integration services with Husky, then additional equipment will be included per your specific configuration, plus further documentation as required.
+If you purchased the AMP variant, standard payload modules or custom integration services with Husky, then additional equipment
+will be included per your specific configuration, plus further documentation as required.
 
 ### Hardware Overview
 
@@ -39,20 +43,27 @@ If you purchased standard payload modules or custom integration services with Hu
 
 Husky is built around a computer running Ubuntu (Intel-based computer or Jetson developer kit), paired with a 32-bit microcontroller MCU.
 The MCU handles power supply monitoring and motor control.
-The communication channel between the MCU and computer is a serial connection.
+The communication channel between the MCU and computer is an Ethernet connection.
 
 #### Exterior Features
 
 The Husky exterior is shown below and includes:
 
-- Extruded aluminum mounting rail
-- User payload area, including user power panel
+- Chassis
+- Wheels and motors
+- User payload area, including cable passthrough ports
 - Front and rear bumper bars
-- Battery bay
-- Status panel
-- Power button
-- Motion Stop button and lockout
+- Status display
+- Status lights
+- Buttons and lockouts
+- On/Off breaker
+- Battery charge port
+- Debug ports
+- Airflow intake and exhaust
 
+TODO: images
+
+<!--
 <center>
   <figure>
     <img
@@ -72,7 +83,74 @@ The Husky exterior is shown below and includes:
     <figcaption>Husky exterior, rear view</figcaption>
   </figure>
 </center>
+-->
 
+#### Chassis
+
+The chassis contains the robots batteries, electonics, and cooling systems. It is an IP54-rated enclosure.
+
+#### Wheels and Motors
+
+Husky is equipped with four wheels, each with its own motor. Power and control cables connect the motors to
+the chassis internals.
+
+#### User Payload Area
+
+Additional payloads such IMUs, lidars, cameras, GPS, manipulators and many more can be integrated with Husky,
+either as part of your Husky purchase or installed after receiving your Husky. You can find a list of supported
+packages and related documentation for payloads in this documention portal, under the following.
+
+- [Computers](../../../accessories/computers/computers.mdx)
+- [Sensors](../../../accessories/sensors/sensors.mdx)
+- [Manipulators](../../../accessories/manipulators/manipulators.mdx)
+- [Accessories](../../../accessories/add-ons/add-ons.mdx)
+
+In addition, refer to [Husky Integration](integration_husky) for details on how to integrate your own payload or
+how to integrate a payload kit from Clearpath Robotics. Each payload kit that ships from Clearpath Robotics
+comes with a custom mounting bracket and cabling for easy attachment to Husky.
+
+#### Front and Rear Bumper Bars
+
+The front and rear bumper bars not only offer protection for Husky, they can be used as lift points
+for Husky (TODO: confirm) and are rated to four times the robot weight, including maximum rated payload
+as specified in [System Specifications](#system-specifications). Refer to TODO for more details on how
+to ensure system stability when lifting the robot by the bumper bars.
+
+#### Status Display
+
+Husky is equipped with an electronic paper display that provides details on the robot's status.
+
+The display is shown below and includes the following.
+
+TODO: update icons
+
+|                                  Icon                                    | Description                                                                                                                                                                                                                                                                                                                                                                                                                |
+| :----------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <img src="/img/robot_images/husky_images/robot_husky_3.png" width="50"/> | **Battery Status** The four segments provide an approximate indication of the relative lifetime remaining in the battery.                                                                                                                                                                 |
+| <img src="/img/robot_images/dingo_images/icon-comms.png" width="50"/>    | **Comms indictor**: Indicates when communication between the MCU and computer has been established; has an "X" when communication has not been established.                                                                                                                                                                                                                                                                                       |
+| <img src="/img/robot_images/dingo_images/icon-wifi.png" width="50"/>     | **Wi-Fi indicator**: Indicates when Wi-Fi is connected; has an "X" when Wi-Fi has not been connected.                                                                                                                                                                                                                                                                                                                                   |
+| TODO                                                                     | TODO |
+
+TODO: image
+
+#### Status Lights
+
+TODO: got to here
+
+Warthog includes four RGB status lights, one on each corner of the chassis. These lights
+express system status according to the table below, but in the absence of one of the low-level conditions, they can
+be commanded from ROS to display indications from autonomy or other higher-level software.
+See http://wiki.ros.org/warthog_base for information on commanding the body lights.
+
+| Front Lights    | Rear Lights     | System State                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| :-------------- | :-------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Solid red       | Solid red       | The MCU is not in contact with the computer. That is, the `rosserial` connection is not active. This condition will be seen briefly on startup while Warthog's computer is booting up. If it persists, or is seen after initialization, either the base node on the computer has crashed, the network switch has failed, or a serious MCU error has occurred. If you suspect one of these conditions, please contact support. |
+| Flashing red    | Flashing red    | Stop mode is engaged. To disengage, twist the mushroom buttons on the Warthog and on the Wireless Stop remote to ensure that they are unlatched. See also [Using the Wireless Stop Remote](#using-the-wireless-stop-remote).                                                                                                                                                                                                  |
+| Flashing orange | Flashing orange | Motor drivers not yet ready to drive. The motors have a brief initialization sequence which must complete after a stop condition clears before they are ready to drive. If this condition persists, please contact our support team.                                                                                                                                                                                          |
+| Pulsing orange  | Pulsing orange  | Battery is low. Connect Warthog to the charger.                                                                                                                                                                                                                                                                                                                                                                               |
+| Solid white     | Solid red       | Normal operation; Warthog is ready to drive. This status may be overridden by publishing your own light patterns to the `/cmd_lights` ROS topic.                                                                                                                                                                                                                                                                              |
+
+<!--
 #### Status Panel
 
 The status panel is a display of LED indicators located on the rear of the chassis which provide information about the current status of Husky.
@@ -86,7 +164,12 @@ The indicators are described in the table below.
 | <img src="/img/robot_images/husky_images/robot_husky_6.png" width="50"/> | **Emergency Stop Status** Illuminates red when Husky will not drive due to the emergency stop being activated, either onboard or wireless (if available).                                                                                                                                     |
 | <img src="/img/robot_images/husky_images/robot_husky_7.png" width="50"/> | **Charge Indicator** Illuminates red when Husky user power is being supplied externally.                                                                                                                                                                                                      |
 
+-->
+
 #### Buttons and Lockouts
+
+- Power, Restart, and Emergency Stop buttons
+- Lockout
 
 The silver button at the top of the Status Panel is used to power the Husky on and off. From the "off" state, pressing the button
 will cause the Husky to power on and a blue ring at the edge of the button will be illuminated. From the "on" state, pressing
@@ -94,13 +177,22 @@ the button will cause the Husky to power off and the blue ring will no longer be
 
 See [Stop button and Lockout](#husky-stop-button-and-lockout) for details of the Stop button and Lockout.
 
-#### Payloads
+#### On/Off Breaker
 
-Additional payloads such IMUs, lidars, cameras, GPS, manipulators and many more can be integrated with Husky, either as part of your Husky purchase or installed after receiving your Husky.
-You can find a list of supported packages and related documentation for payloads in this documention portal, under the [Computers](../../accessories/computers/computers.mdx),
-[Sensors](../../accessories/sensors/sensors.mdx), [Manipulators](../../accessories/manipulators/manipulators.mdx), and [Accessories](../../accessories/add-ons/add-ons.mdx) sections.
-In addition, refer to [Husky Integration](integration_husky/integration_husky.mdx) for details on how to integrate your own payload or how to integrate a payload kit from Clearpath Robotics.
-Each payload kit that ships from Clearpath Robotics comes with a custom mounting bracket and cabling for easy attachment to Husky.
+TODO
+
+#### Battery Charge Port
+
+TODO: note on shore power
+TODO: note on available chargers
+
+#### Debug Ports
+
+TODO: Ethernet, USB, and HDMI debug ports
+
+#### Airflow Intake and Exhaust
+
+TODO: Cooling ingress and egress ports
 
 #### Orientation References
 
@@ -132,7 +224,7 @@ $v$ represents the instantaneous translational speed of the platform and $\omega
 $v_{r}$ and $v_{l}$ are the right and left wheel velocities, respectively. <br />
 $W$ is the effective track of the robot, 0.555 m.
 
-### System Specifications
+### System Specifications  {#system-specifications}
 
 | Specification                  | Measurement                                                              |
 | :----------------------------- | :----------------------------------------------------------------------- |
@@ -184,8 +276,10 @@ These two computers must be set up to communicate with each other.
 
 ### Onboard Computer Setup
 
+TODO: move to integration
+
 If you purchased an Onboard Computer from Clearpath Robotics with Husky, it is already installed, connected, and powered.
-If not, or to set up your own Onboard Computer, see the [Husky Tutorials](tutorials_husky.mdx).
+If not, or to set up your own Onboard Computer, see the [Husky Tutorials](tutorials_husky).
 
 Note that the Onboard Computer must be connected to Husky's serial port, which is located in the user power panel accessible from the User Bay.
 
@@ -236,14 +330,14 @@ This indicates that ROS is up on the computer and has established communications
 ### Network Configuration
 
 To get Husky connected to your local Wi-Fi network, you must first access the Onboard Computer using a wired connection to the robot.
-See the [Husky Tutorials](tutorials_husky.mdx) for details.
+See the [Husky Tutorials](tutorials_husky) for details.
 
 ### Connecting and Using the Controller {#controller}
 
 To use your controller, it must be paired with your Husky and powered on.
 If your purchased the Onboard Computer from Clearpath Robotics, your controller is already paired with your Husky.
 If your controller has become unpaired or if you wish to pair a new controller, following the instructions in the
-[Husky Tutorials](tutorials_husky.mdx).
+[Husky Tutorials](tutorials_husky).
 
 To teleoperate Husky, first release the motion stop. Then, referring to the following images, press the enable button (either slow or fast mode) and use the left thumbstick to drive Husky.
 
@@ -266,9 +360,14 @@ To teleoperate Husky, first release the motion stop. Then, referring to the foll
 
 ### Using ROS
 
-<ComponentUsingRos />
+Robot Operating System (ROS) is an extensible framework for controlling and working with robotic systems.
+Clearpath Robotics recommends using ROS with your robot. If this is your first time using ROS, it is strongly
+recommended to run through our series of [ROS tutorials](../../../../ros) to learn
+the basics of ROS.
 
 ### Battery Charging
+
+TODO: changes
 
 The battery shipped with Husky A200 may be charged outside the robot or while still inside of Husky.
 If charging while installed, you will need to open the access door to the battery area, and disconnect the battery from the MCU board.
@@ -295,6 +394,12 @@ Some older Husky chargers use a three-state charge cycle. For those older charge
 ---
 
 ## Safety Considerations {#safety}
+
+TODO:
+
+- Check Observer documentation
+- Check OTTO documentation
+- FCC/ICES section?
 
 Clearpath Robotics is committed to high standards of safety.
 Husky contains several features to protect the safety of users and the integrity of the robot.
