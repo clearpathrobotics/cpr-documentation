@@ -14,38 +14,296 @@ import ComponentSafetyWarning from "/components/safety_warning.mdx";
 
 <ComponentIntroductionHusky />
 
+## Important SAFETY INFORMATION
+
+<center>
+  <img
+    src="/img/robot_images/husky_observer_images/safety_information.png"
+    width="800"
+  />
+</center>
+
+The top priority of Clearpath Robotics is the safety of its users. Clearpath Robotics produces high power and
+fast-moving pieces of machinery that potentially could cause serious injury, including death, if improperly used
+or maintained. In order to inform our users of some of these risks, throughout Clearpath Robotics documentation
+you will see safety messages corresponding to either a DANGER, WARNING, or CAUTION level as shown
+above.
+
+---
+
+## Hazards and Awareness
+
+### General Hazard Labels
+
+Review the following to learn more about the labels that may be used on Clearpath Robotics products. Hazards
+can also apply to attachments and accessories used in conjunction with a Clearpath Robotics product.
+
+TODO: does this list need to be updated based on the risk assessment?
+TODO: other possible risks per O100:
+
+- grounding electrical hazard
+- harmful battery substance (was Environmental Hazard)
+- lock-out/tag-out
+- personal protective equipment (PPE) requirement
+
+|                                      **Label**                                       | **Label Title**               | **Label Description**                                                                                                                                                                                              |
+| :----------------------------------------------------------------------------------: | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+|  <img src="/img/robot_images/husky_observer_images/automatic_motion_hazard.png" />   | Automatic Motion Hazard       | Clearpath Robotics robots may suddenly begin moving autonomously or when being driven manually. Always be aware of Clearpath Robotics products and their potential for movement.                                   |
+|      <img src="/img/robot_images/husky_observer_images/crushing_hazard.png" />       | Crushing Risk                 | Objects or personnel can be crushed between the Clearpath Robotics robot and another object. Keep hands and other objects clear of crush points at all times. Keep clear of all docking Clearpath Robotics robots. |
+|  <img src="/img/robot_images/husky_observer_images/electrical_shock_hazard.png" />   | Electrical Shock Risk         | Clearpath Robotics robots contain circuitry and batteries that may cause electrical shock if not properly insulated.                                                                                               |
+|    <img src="/img/robot_images/husky_observer_images/entanglement_hazard.png" />     | Entanglement Risk             | Clearpath Robotics robots as well as their sensors can lead to entanglement for hair or dangling materials during their rotation. Keep dangling materials/hair away from Clearpath Robotics robots during motion.  |
+|    <img src="/img/robot_images/husky_observer_images/environmental_hazard.png" />    | Environmental Hazard          | Clearpath Robotics robots contain batteries and materials that may require special disposal methods. Consult local regulations.                                                                                    |
+|   <img src="/img/robot_images/husky_observer_images/falling_object_hazard.png" />    | Falling Object Risk           | Beware of objects that may have shifted in any Clearpath Robotics robot crate as they pose a risk of falling when opened.                                                                                          |
+|  <img src="/img/robot_images/husky_observer_images/high_surface_temp_hazard.png" />  | High Surface Temperature Risk | Robot PC heat sinks and robot motors can become extremely hot during operation.                                                                                                                                    |
+|       <img src="/img/robot_images/husky_observer_images/impact_hazard.png" />        | Impact Risk                   | Clearpath Robotics robots travelling through a facility can potentially impact objects and personnel. Keep clear of all docking Clearpath Robotics robots.                                                         |
+|   <img src="/img/robot_images/husky_observer_images/laser_radiation_hazard.png" />   | Laser Radiation Risk          | Clearpath Robotics robots may use Class 1 laser products. These provide no hazard during normal use, however it is not recommended to stare directly into the beam(s).                                             |
+|  <img src="/img/robot_images/husky_observer_images/material_hazard_lithium.png" />   | Material Hazard - Lithium     | Robot batteries contain harmful material. Always use proper handling procedures when handling robot batteries.                                                                                                     |
+| <img src="/img/robot_images/husky_observer_images/manual_load_lifting_hazard.png" /> | Manual Load Lifting Risk      | Always use ergonomic techniques when manually lifting loads.                                                                                                                                                       |
+|      <img src="/img/robot_images/husky_observer_images/pinching_hazard.png" />       | Pinching Risk                 | Keep hands and other objects clear of pinch points at all times. Keep clear of all docking Clearpath Robotics robots.                                                                                              |
+|   <img src="/img/robot_images/husky_observer_images/radio_frequency_hazard.png" />   | Radio Frequency Risk          | Clearpath Robotics robots and/or accesories may use radio frequency (RF) radiating antennas. These provide no hazard during normal use, however prolonged exposure around the antenna is not recommended.          |
+|      <img src="/img/robot_images/husky_observer_images/tripping_hazard.png" />       | Tripping Hazard               | Clearpath Robotics products may pose a tripping hazard.                                                                                                                                                            |
+
+### Safety Awareness
+
+Personnel present during the operation of a Clearpath Robotics robot need to be made aware or be accompanied by personnel who
+are familiar with the specific risks and hazards associated with automated mobile robots (AMR).
+The following checklist identifies basic topics that should be addressed by site-specific worker and visitor
+safety orientation training.
+
+<center>
+  <img
+    src="/img/robot_images/husky_observer_images/caution_awareness.png"
+    width="800"
+  />
+</center>
+
+- Proper PPE must be worn, including safety footwear (ie. steel toe).
+- Crossing into the path of a moving Clearpath Robotics robot should be avoided, as well as placing or throwing obstacles into the path of a moving Clearpath Robotics robot.
+- Be aware that a Clearpath Robotics robot can be anywhere in the operating area at any time, and may pose a tripping hazard even when not in motion.
+- Personnel need to be aware of operation limitations, such as slopes, negative and overhanging obstacles.
+- Personnel need to be aware of the Clearpath Robotics robot docking and charging areas, where detection fields are reduced.
+- Personnel should be aware of areas where Clearpath Robotics robots travel through narrow aisles/corridors resulting in reduced clearance between
+  Clearpath Robotics robots and personnel and aisles/corridors shared between Clearpath Robotics robots, other vehicles, and personnel.
+- Personnel should be aware that Clearpath Robotics robot LiDAR safety scanners use a class 1 laser and high intensity LEDs.
+- Personnel should keep all loose clothing and body parts away from Clearpath Robotics robots, accessories, attachments, and payloads,
+  while they are in autonomous operation. Using an Emergency Stop button is the only acceptable manner of interacting with a Clearpath Robotics
+  robot or attachment while it is being operated autonomously.
+
+In addition to the preceding basic items for all workers and visitors, the following should be considered for facility personnel, including drivers of other robots:
+
+- High traffic areas, tight clearance areas, emergency exits, and areas around obstacles that are outside the field of view of safety sensors (i.e.
+  overhanging obstacles) should have bollards placed around them so that Clearpath Robotics robots do not drive or stop in those areas.
+- When required to move a product manually, personnel must ensure it is in an Emergency Stop state or shut down completely and should not push manually for prolonged periods.
+- Alert personnel that while operating a Clearpath Robotics robot outside of the Autonomy State, they are solely responsible for obstacle and collision avoidance.
+- Maintenance not outlined in either this document or the operations and maintenance manual can only be performed by a Clearpath Robotics Authorized Personnel.
+
+### Operating Environment Awareness
+
+Clearpath Robotics robots, attachments, and accessories are designed to in certain operating environments in which they can operate safely and navigate properly.
+
+- Clearpath Robotics robots should never be driven onto curbs higher than 150 mm or across gaps or depressions in the ground that may result in
+  damage to the vehicle drive systems, attachments, or accessories -- for example, at the top of stairs, at a cliff edge, or at large potholes.
+- Clearpath Robotics robot drive wheels should never be manually bypassed on a ramp condition
+  as this may lead to robots navigating erratically and losing control. If stopped on a slope
+  greater than 4° (6.4 % grade), the robot may begin to roll and may present a hazard.
+
+### Payload Maximums
+
+Clearpath Robotics products support a specific maximum payload. Clearpath Robotics robot maximum payloads change when
+an attachment or accessory is connected because of the weight of the attachment/accessory itself. In the
+case of an attachment/accessory-equipped Clearpath Robotics robot, payloads should not exceed the maximum
+payload documented on the Attachment Nameplate. (TODO: what is the Attachment Nameplate)
+
+TODO: Caution box: Loading a Clearpath Robotics product with more weight than specified by the attachment,
+accessory, or base Clearpath Robotics robot (when no attachment is present) will prevent Clearpath Robotics robots from
+correctly determining stopping distances and may also damage the vehicle, attachment, or
+accessory. Never load a Clearpath Robotics product with more weight than is specified by the
+current signage on each Clearpath Robotics robot and accompanying attachment or accessory.
+
+### Battery Handling
+
+Like most applications using batteries with Lithium technology, special precautions should be taken to
+handle this type of material. Battery packs should only be handled by trained personnel to ensure proper
+handling. Be aware of the operating environments for Clearpath Robotics robots and, more specifically, the battery pack.
+
+TODO: Warning box: Whenever completing inspections or maintenance on or around the areas of a Clearpath Robotics robot
+battery pack, follow the proper Lock-Out Tag-Out Procedure for the applicable vehicle. Not
+properly following the Lock-Out Tag-Out procedure can result in live voltage locations on the
+Clearpath Robotics robot. Always be sure to lock-out the vehicle before proceeding with inspections and
+maintenance.
+
+### Disclaimer
+
+The information found within this documentation is subject to change without notice. This document may
+be periodically reviewed and revised in the future. Clearpath Robotics assumes no responsibility for any errors or
+omissions that may appear in this document. In no event shall Clearpath Robotics be liable for any costs or
+damages arising from the use of this document or the hardware and software described within. The
+reference documents listed in this manual shall be applicable at the latest revision in effect.
+
+While Clearpath Robotics does its best to inform its users of potential risks, it is impossible to provide an
+exhaustive list of all possible hazards in your environment.
+
+It is the responsibility of the user to be familiar with all applicable safety standards and ensure that the hardware,
+software, and/or services delivered by Clearpath Robotics (collectively referred to as the "Product") are maintained
+and operated in a safe manner, in a suitable environment, and in accordance with the recommended maintenance requirements
+prescribed by Clearpath Robotics.
+
+Without limiting the foregoing, it is the user's responsibility to ensure that personnel operating the Product are
+adequately trained and comply with all laws, regulations, codes, and safe practices, including health and safety and
+workers' compensation laws, applicable to the user's activities and its ownership, possession, and use of the Product.
+Modification, removal or addition of components, or changes to the functionality or operation of the Product in any way,
+except as expressly authorized by Clearpath Robotics, may jeopardize the safety of the Product. If at any time you have
+any questions or concerns regarding the safe operation of your Clearpath Robotics product, contact [Support](#support).
+
+If at any time you have any questions or concerns regarding the safe operation of your Clearpath Robotics product,
+contact [Support](#support).
+
+---
+
+## Intended Use
+
+Husky is intended for use in:
+
+- indoor and outdoor research laboratories and light industrial environments for inspection, materials transport, and manipulation;
+- environments free of vertical drops greater than 200 mm;
+- environments free of fast-moving people or vehicles;
+- environments free of glass or transparent plastic floors or walls;
+- temperatures between -20 °C and +40 °C;
+- environments free of open water or other liquids deeper than 20 mm;
+- environments free of grades greater than 7%.
+
+The system is intended to be operated by trained personnel familiar with mobile robotic technology.
+It is intended to be monitored constantly by those personnel during operation.
+
+The system is intended to be operated around trained personnel familiar with the hazards that the system presents.
+
+The system is intended to be operated in the as-furnished condition, without additional equipment, payload or passengers.
+
+---
+
 ## Introduction
 
 Husky A300 is a rugged and easy-to-use unmanned ground robot for research applications,
-rapid deployments, and deployments.
+rapid prototyping, and deployments.
 It is available both as a standard platform and as an autonomous mobile platform (AMP).
 
-<ComponentSafetyWarning />
+---
 
-### Shipment Contents
+## Product Safety
 
-Your Husky A300 standard platform shipment contains the following:
+### Important Notes
 
-- Clearpath Robotics Husky A300 robot
-- Two, four, or six LiFePO<sub>4</sub> batteries
-- One battery charger
-- One PS4 remote control
-- Lockout Keys (2X)
-- Integrated computer
-- Integrated IMU
+- Read all instructions before using this product.
+- Familiarize yourself with the [System Specifications](#system-specifications).
 
-If you purchased the AMP variant, standard payload modules or custom integration services with Husky, then additional equipment
-will be included per your specific configuration, plus further documentation as required.
+### Risk Reduction
 
-### Hardware Overview
+Despite the safety features Clearpath Robotics has put into place, the Husky A300 is heavy and capable
+of moving quickly. The best way to ensure protection of life and equipment around the Husky A300
+is to keep a safe distance from it and pay attention to the status lights and auditory warnings to
+anticipate the robot's intentions. If work is being performed on the charge system, follow local Lock-Out
+Tag-Out procedures for safety.
 
-#### System Architecture
+See [Basic Usage](#basic-usage) for more detail.
+
+### Hazards
+
+The Husky A300 presents a number of risks to users even during the course of normal operation.
+All users should familiarize themselves with the potential hazards of the system so they can anticipate and
+avoid them.
+
+The hazards currently identified are as follows:
+
+TODO: update based on risk assessment
+
+### Safety System Functionality
+
+Two methods are used to reduce the system risk:
+
+- The robot is equipped with front and rear Emergency Stop buttons within easy reach of robot.
+- The robot is equipped with an electrical braking system that limits the maximum speed of the robot
+  when engaging the Emergency Stop on an incline.
+
+The safety of each Clearpath Robotics robot needs to be evaluated in the context of the installation where it is used.
+Environmental and process factors in each installation will ultimately govern the risk of injury resulting from
+the interaction of people or equipment in the operating environment with the robot.
+
+TODO: need more notes and justification here.
+
+---
+
+## In Case of a Collision
+
+In case of a collision:
+
+1. Stop the robot by pressing a red Emergency Stop button on the robot or an equipped attachment.
+1. Is anyone hurt? Administer first aid immediately. Seek medical attention if necessary. Follow
+   workplace injury and accident reporting procedures.
+1. Document the incident.
+   1. Note the time and place.
+   1. Note which robot was involved.
+   1. Interview any witnesses.
+   1. Take photos or make a drawing.
+1. Assess the state of the robot.
+   1. Visually inspect the robot for damage and take photos of any damage found.
+   1. If there is no visible damage, observe the robot after it returns to service.
+   1. If any irregularities or differences in its behavior are observed, remove the affected robot
+      from service and contact [Support](#support). If the damage is extensive, wait for
+      communication from Clearpath Robotics before returning the robot to service.
+
+---
+
+## System Overview
+
+### System Specifications  {#system-specifications}
+
+| Specification                  | Measurement                                                              |
+| :----------------------------- | :----------------------------------------------------------------------- |
+| Dimension, Length              | TODO mm                                                                  |
+| Dimension, Width               | TODO mm                                                                  |
+| Dimension, Height              | TODO mm                                                                  |
+| Track Width                    | TODO mm                                                                  |
+| Wheelbase Length               | TODO mm                                                                  |
+| Ground Clearance               | 130 mm                                                                   |
+| Mass                           | 80 kg                                                                    |
+| Maximum Payload¹               | 100 kg                                                                   |
+| All-terrain Payload²           | 50 kg                                                                    |
+| Speed, Maximum                 | 2.0 m/s                                                                  |
+| Climb Grade                    | 30 °                                                                     |
+| Traversal Grade / Sideslope    | 30 °                                                                     |
+| Operating Temperature          | -20 °C to 40 °C                                                          |
+| Storage Temperature            | -20 °C to TODO °C                                                        |
+| Operating Relative Humidity    | 0 to 85% non-condensing                                                  |
+| Operating Time, Average        | 4 hours                                                                  |
+| Operating Time, Standby        | 8 hours                                                                  |
+| Battery                        | 48 Ah @ 24 V (standard) or 96 Ah @ 24 V (upgrade), LiFePO<sub>4</sub>    |
+| Battery Charger                | Short-circuit, over-current, over-voltage and reverse voltage protection |
+| Charge Time                    | 1-2 hours                                                                |
+| User Power                     | 12 V @ 10 A, 24 V @ 5 A, VBAT @ 5 A  (TODO: confirm)                     |
+| Environmental                  | IP54                                                                     |
+
+_¹ Continuous operation on relatively flat terrain with wide turns._ <br />
+_² Robot climbing 30° grade with high-mounted payload, or turning in place in high-friction conditions._
+
+TODO: update image
+<center>
+  <img
+    src="/img/robot_images/husky_images/robot_husky_19.png"
+    width="600"
+  />
+</center>
+
+### System Architecture
 
 Husky is built around a computer running Ubuntu (Intel-based computer or Jetson developer kit), paired with a 32-bit microcontroller MCU.
 The MCU handles power supply monitoring and motor control.
 The communication channel between the MCU and computer is an Ethernet connection.
 
-#### Exterior Features
+---
+
+## Components Overview
+
+### Exterior Features
 
 The Husky exterior is shown below and includes:
 
@@ -55,10 +313,8 @@ The Husky exterior is shown below and includes:
 - Front and rear bumper bars
 - Status display
 - Status lights
-- Buttons and lockouts
-- On/Off breaker
-- Battery charge port
-- Debug ports
+- Buttons
+- Protected Access Panel (On/Off breaker, battery charge port, HDMI/USB/Ethernet debug ports)
 - Airflow intake and exhaust
 
 TODO: images
@@ -85,16 +341,16 @@ TODO: images
 </center>
 -->
 
-#### Chassis
+### Chassis
 
 The chassis contains the robots batteries, electonics, and cooling systems. It is an IP54-rated enclosure.
 
-#### Wheels and Motors
+### Wheels and Motors
 
 Husky is equipped with four wheels, each with its own motor. Power and control cables connect the motors to
 the chassis internals.
 
-#### User Payload Area
+### User Payload Area
 
 Additional payloads such IMUs, lidars, cameras, GPS, manipulators and many more can be integrated with Husky,
 either as part of your Husky purchase or installed after receiving your Husky. You can find a list of supported
@@ -109,14 +365,14 @@ In addition, refer to [Husky Integration](integration_husky) for details on how 
 how to integrate a payload kit from Clearpath Robotics. Each payload kit that ships from Clearpath Robotics
 comes with a custom mounting bracket and cabling for easy attachment to Husky.
 
-#### Front and Rear Bumper Bars
+### Front and Rear Bumper Bars
 
 The front and rear bumper bars not only offer protection for Husky, they can be used as lift points
 for Husky (TODO: confirm) and are rated to four times the robot weight, including maximum rated payload
 as specified in [System Specifications](#system-specifications). Refer to TODO for more details on how
 to ensure system stability when lifting the robot by the bumper bars.
 
-#### Status Display
+### Status Display
 
 Husky is equipped with an electronic paper display that provides details on the robot's status.
 
@@ -133,68 +389,93 @@ TODO: update icons
 
 TODO: image
 
-#### Status Lights
+### Status Lights
 
-TODO: got to here
+Husky includes four status lights, one on each corner of the chassis. These lights
+indicate the system status according to the table below. In addition, when in the
+"Idle" and "Driving" states, the status lights can be commanded from ROS to display
+indications from autonomy or other higher-level software by publishing to
+the TODO topic.
 
-Warthog includes four RGB status lights, one on each corner of the chassis. These lights
-express system status according to the table below, but in the absence of one of the low-level conditions, they can
-be commanded from ROS to display indications from autonomy or other higher-level software.
-See http://wiki.ros.org/warthog_base for information on commanding the body lights.
+| System State (lowest to highest priority) | Light Output | Description |
+| :---------------------------------------- | :----------- | :---------- |
+| Idle                                      | Front LEDs solid white (low intensity), rear LEDs solid red (low intensity) | The robot is idle (normal operation). |
+| Driving                                   | Front LEDs solid white (medium intensity), rear LEDs solid red (medium intensity) | The robot is driving (normal operation). |
+| Low Battery                               | Pulsing orange | The robot's batteries are in a low charge state. Connect the robot to a charger. |
+| Emergency Stop Engaged                    | Flashing red | Emergency Stop mode is engaged. To disengage, twist both red mushroom buttons on the robot to ensure that they are unlatched and press the Restart button. |
+| Charging (wired or wireless)              | Pulsing green | The robot's batteries are being charger, either from the wired/manual charger or the wireless charger. |
+| Motor Fault                               | Flashing red at the corner with the motor fault; solid red for the other corners. | An error has been detected with the motor or its controller. Please contact support. |
+| Battery Fault                             | Flashing yellow and red | An error has been detected with the battery. Please contact support. |
+| Light Control Fault (or bootup)           | Solid red    | The MCU is not in contact with the computer. This condition will be seen briefly on startup while robot's computer is booting up. If it persists, or is seen after initialization, either the base node on the computer has crashed, the network switch has failed, or a serious MCU error has occurred. If you suspect one of these conditions, please contact support. |
 
-| Front Lights    | Rear Lights     | System State                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| :-------------- | :-------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Solid red       | Solid red       | The MCU is not in contact with the computer. That is, the `rosserial` connection is not active. This condition will be seen briefly on startup while Warthog's computer is booting up. If it persists, or is seen after initialization, either the base node on the computer has crashed, the network switch has failed, or a serious MCU error has occurred. If you suspect one of these conditions, please contact support. |
-| Flashing red    | Flashing red    | Stop mode is engaged. To disengage, twist the mushroom buttons on the Warthog and on the Wireless Stop remote to ensure that they are unlatched. See also [Using the Wireless Stop Remote](#using-the-wireless-stop-remote).                                                                                                                                                                                                  |
-| Flashing orange | Flashing orange | Motor drivers not yet ready to drive. The motors have a brief initialization sequence which must complete after a stop condition clears before they are ready to drive. If this condition persists, please contact our support team.                                                                                                                                                                                          |
-| Pulsing orange  | Pulsing orange  | Battery is low. Connect Warthog to the charger.                                                                                                                                                                                                                                                                                                                                                                               |
-| Solid white     | Solid red       | Normal operation; Warthog is ready to drive. This status may be overridden by publishing your own light patterns to the `/cmd_lights` ROS topic.                                                                                                                                                                                                                                                                              |
+### Buttons
 
-<!--
-#### Status Panel
+#### Emergency Stop Buttons
 
-The status panel is a display of LED indicators located on the rear of the chassis which provide information about the current status of Husky.
-The indicators are described in the table below.
+The Husky is equipped with two Emergency Stop buttons, one at the front and one at the rear. Pressing either of
+these buttons removes power from the drivetrain. To clear the stop condition, all Emergency Stop buttons must
+be disengaged and the Restart Button must be pressed. Refer to TODO for more details.
 
-|                                   Icon                                   | Description                                                                                                                                                                                                                                                                                   |
-| :----------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <img src="/img/robot_images/husky_images/robot_husky_3.png" width="50"/> | **Battery Status** The four LED segments provide an approximate indication of the relative lifetime remaining in the battery.                                                                                                                                                                 |
-| <img src="/img/robot_images/husky_images/robot_husky_4.png" width="50"/> | **Communication Status** When green, Husky is receiving a stream of correctly-formatted motion commands, and is ready to drive. When yellow, Husky is receiving commands, but will not drive due to emergency stop or another error. When red, serial communications are currently timed-out. |
-| <img src="/img/robot_images/husky_images/robot_husky_5.png" width="50"/> | **General Error Status** Illuminates red when Husky will not drive due to an error state. Such states include emergency stop, insufficient battery power, or an unspecified software error.                                                                                                   |
-| <img src="/img/robot_images/husky_images/robot_husky_6.png" width="50"/> | **Emergency Stop Status** Illuminates red when Husky will not drive due to the emergency stop being activated, either onboard or wireless (if available).                                                                                                                                     |
-| <img src="/img/robot_images/husky_images/robot_husky_7.png" width="50"/> | **Charge Indicator** Illuminates red when Husky user power is being supplied externally.                                                                                                                                                                                                      |
+#### Restart Button
 
--->
+To clear the stop condition, all Emergency Stop buttons must
+be disengaged and the black Restart Button (TODO: symbol to match robot) must be pressed. Refer to TODO for more details.
 
-#### Buttons and Lockouts
+Pressing the Restart Button will have no effect when not in the stop condition or when one or more Emergency Stop
+buttons are engaged.
 
-- Power, Restart, and Emergency Stop buttons
-- Lockout
+#### Power Button
 
-The silver button at the top of the Status Panel is used to power the Husky on and off. From the "off" state, pressing the button
-will cause the Husky to power on and a blue ring at the edge of the button will be illuminated. From the "on" state, pressing
-the button will cause the Husky to power off and the blue ring will no longer be illuminated.
+The black power button (TODO: symbol to match robot) is used to power the robot on and off. From the "off" state, pressing
+the button will cause the robot to power on. From the "on" state, pressing the button will cause the robot to power off.
 
-See [Stop button and Lockout](#husky-stop-button-and-lockout) for details of the Stop button and Lockout.
+### Protected Access Panel
+
+The rear of the robot has an access panel, protected by a lockout, that contains the Battery Charge Port, On/Off Breaker,
+and Debug Ports. Opening the access panel cover puts the robot into a stop condition to prevent the robot from driving
+while cables may be connected. To clear the stop condition, close the access panel cover and the Restart Button. 
+Refer to TODO for more details.
+
+TODO: image when cover closed and with cover opened
+
+#### Lockout
+
+When equipped with a lock, the lockout prevents access to the On/Off Breaker, Battery Charge Port, and Debug Ports.
 
 #### On/Off Breaker
 
-TODO
+When the breaker is in the "off" position, the On/Off Breaker (TODO: image) disconnects the internal batteries from the rest of
+the robot's systems. In this position:
+
+- the Power Button can be used to turn the robot on/off only if a charger is connected;
+- the robot will be off (unpowered) if no charger is connected and any Power Button presses will no effect.
+
+When the breaker is in the "on" position:
+
+- the Power Button can be used to turn the robot on/off.
+
+Note that the can be charged (manual and wireless charger options) regardless of the On/Off Breaker position.
+
+Note also that Husky ships with the breaker in the "off" position to prevent battery drain during shipping.
 
 #### Battery Charge Port
 
-TODO: note on shore power
-TODO: note on available chargers
+The charger included in your Husky shipment can be used to charge the robot's internal batteries by connecting it
+to the Battery Charge Port. Refer to TODO for additional information on charging the robot's batteries.
+
+Note that the charger also functions as "shore power", providing power to the robot indefinitely while connected.
 
 #### Debug Ports
 
-TODO: Ethernet, USB, and HDMI debug ports
+The robot is equipped with a Gigabit Ethernet port, a USB 3.0 (Type A) port, and an HDMI port. These can be used for debugging on the
+robot without needing internal access to the robot. These ports are all connected directly to the robot's computer.
 
-#### Airflow Intake and Exhaust
+### Airflow Intake and Exhaust
 
-TODO: Cooling ingress and egress ports
+The robot is equipped with a cooling system with an air intake at the front of the robot and exhaust at the rear
+of the robot. The amount of airflow scales automatically depending on the temperature measured internally.
 
-#### Orientation References
+### Orientation References
 
 The reference frame used by all Clearpath Robotics ground robots is based on ISO 8855, and is shown in the figure below.
 Husky's front is shown.
@@ -208,7 +489,7 @@ The direction of the axes differs from those used for roll, pitch, and yaw in ai
   />
 </center>
 
-#### Robot Equations
+### Robot Equations
 
 As a starting point, Clearpath Robotics recommends using the following relationship between wheel velocity and platform velocity:
 
@@ -222,124 +503,91 @@ $$
 
 $v$ represents the instantaneous translational speed of the platform and $\omega$ the instantaneous rotational speed. <br />
 $v_{r}$ and $v_{l}$ are the right and left wheel velocities, respectively. <br />
-$W$ is the effective track of the robot, 0.555 m.
-
-### System Specifications  {#system-specifications}
-
-| Specification                  | Measurement                                                              |
-| :----------------------------- | :----------------------------------------------------------------------- |
-| Dimension, Length              | 990 mm                                                                   |
-| Dimension, Width               | 670 mm                                                                   |
-| Dimension, Height              | 390 mm                                                                   |
-| Track Width                    | 550 mm                                                                   |
-| Wheelbase Length               | 512 mm                                                                   |
-| Ground Clearance               | 130 mm                                                                   |
-| Mass                           | 50 kg                                                                    |
-| Maximum Payload¹               | 75 kg                                                                    |
-| All-terrain Payload²           | 20 kg                                                                    |
-| Speed, Maximum                 | 1 m/s                                                                    |
-| Climb Grade                    | 45 °                                                                     |
-| Traversal Grade / Sideslope    | 30 °                                                                     |
-| Operating Temperature, Minimum | -10 °C                                                                   |
-| Operating Temperature, Maximum | 40 °C (not in direct sunlight)                                           |
-| Operating Time, Average        | 3 hours                                                                  |
-| Operating Time, Standby        | 8 hours                                                                  |
-| Battery                        | 20 Ah @ 24 V, sealed lead-acid                                           |
-| Battery Charger                | Short-circuit, over-current, over-voltage and reverse voltage protection |
-| Charge Time                    | 10 hours                                                                 |
-| User Power, 2021 and older     | 5 V, 12 V, V-battery, each fused at 5 A                                  |
-| User Power, 2022 and newer     | 12 V @ 7.5 A, 24 V @ 3 A, VBAT @ 5 A                                     |
-| Communication                  | RS-232, 115200 baud                                                      |
-| Wheel Encoders                 | 78,000 ticks/m                                                           |
-| Internal Sensing               | Battery Status, Wheel Odometry, Motor Currents                           |
-| Environmental                  | IP44 (base Husky); IP30 (with computer); IP55 (with weatherproofing kit) |
-
-_¹Continuous operation on relatively flat terrain with wide turns._ <br />
-_²robot climbing 30° grade with high-mounted payload, or turning in place in high-friction conditions._
-
-<center>
-  <img
-    src="/img/robot_images/husky_images/robot_husky_19.png"
-    width="600"
-  />
-</center>
+$W$ is the effective track of the robot, 0.555 m. (TODO)
 
 ---
 
-## Getting Started
+## Unboxing
 
-You are ready to go! This section details how to get Husky into action.
+### Time Required
+
+Approximately 15 minutes.
+
+### Required tools
+
+- #2 Robinson or #2 Phillips screwdriver
+
+### What's Inside
+
+Your Husky A300 standard platform shipment contains the following:
+
+- Clearpath Robotics Husky A300 robot
+   - Two or four LiFePO<sub>4</sub> batteries (integrated)
+   - Computer (integrated)
+- One battery charger
+- One PS4 controller
+
+If you purchased the AMP variant, standard payload modules or custom integration services with Husky, then additional equipment
+will be included per your specific configuration, plus further documentation as required.
+
+### Unboxing the Husky A300
+
+1. TODO: add steps and images
+
+---
+
+## Basic Usage  {#basic-usage}
+
+This section describes the operation of the Husky.
+
+### Lock-Out/Tag-Out
+
+TODO: got to here.
+
+### Starting Up
+
+### Shutting Down
+
+### Charging
+
+### Moving an Unpowered or Disabled Husky
+
+### Connecting to Husky
+
+
+TODO
+
+
+
+
 To begin, place Husky "up on blocks" as described in the [Safety](#safety) section, making sure that the wheels are clear of the ground.
 
-For most Husky setups, there will be an Onboard Computer which is directly connected to the Husky and an Offboard Computer which is used to control Husky and gather data.
-These two computers must be set up to communicate with each other.
-
-### Onboard Computer Setup
-
-TODO: move to integration
-
-If you purchased an Onboard Computer from Clearpath Robotics with Husky, it is already installed, connected, and powered.
-If not, or to set up your own Onboard Computer, see the [Husky Tutorials](tutorials_husky).
-
-Note that the Onboard Computer must be connected to Husky's serial port, which is located in the user power panel accessible from the User Bay.
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/husky_images/robot_husky_11.png"
-      width="600"
-    />
-    <figcaption>Husky's serial port</figcaption>
-  </figure>
-</center>
-
-The connector is a female DE-9, suitable for connection directly to a USB-serial adaptor or to a computer serial port via a straight-through modem cable (not a null modem cable).
-How you connect the Onboard Computer to Husky depends on whether the Onboard Computer has a dedicated serial port.
-Husky is delivered with a USB-serial adaptor.
+For most Husky deployments, its built-in computer has a network (wired or wireless) to an Offboard Computer that is used to control Husky and gather data.
 
 ### Powering Up
 
-Husky comes with the battery fully charged and installed, but disconnected for safety during shipping.
-To reconnect the battery:
+To power on Husky:
 
-- Ensure Husky's main power button is in the "off" position and that stop mode is activated.
-- Using curled index fingers to grip the battery door latches, press with thumbs on the latch buttons
-  and lift the battery door free of the chassis.
-- Carefully connect the battery plug to the mating connector in the fuse panel.
-  Ensure that it is firmly seated and clicks into place.
-  It will be difficult to connect it in the incorrect polarity.
-- Replace the battery door cover, ensuring that it clicks into place and is flush with the rear panel.
-
-<center>
-  <img
-    src="/img/robot_images/husky_images/robot_husky_13.png"
-    width="600"
-  />
-</center>
-
-To power on Husky, firmly press the power button located above the status panel.
-It will illuminate blue, and the status panel lights will show a brief test pattern.
-The `COMM` status light will turn red, as the computer is not yet communicating with Husky.
-
-The `STOP` status light will be red if the Stop button is pressed.
-If the Stop button is not pressed, press it and verify that the `STOP` light illuminates.
-Leave the platform in stop mode until it is successfully receiving commands, indicated by the `COMM` status light turning green or yellow.
-If a computer was purchased with Husky, it will be setup to interface automatically upon startup; 60-90 seconds after booting up, `COMM` status light will change from red to green (or yellow, depending on the stop mode status).
-This indicates that ROS is up on the computer and has established communications with the Husky base.
+- Open the Access Panel cover, set the On/Off Breaker to the "on" position, and close the Access Panel cover.
+- Press and release the Power Button.
+- Wait one minute for the robot to initialize fully. During this time, the Status Lights will be solid red.
+  Once initialized, the front lights should be solid white and the rear lights should be solid red.
+  The Status Display should also indicate that there are no errors (TODO: image) and that there are
+  no communication errors (TODO: image).
 
 ### Network Configuration
 
-To get Husky connected to your local Wi-Fi network, you must first access the Onboard Computer using a wired connection to the robot.
+To get Husky connected to your local Wi-Fi network, you must first access the built-in computer using a
+wired connection to the robot.
 See the [Husky Tutorials](tutorials_husky) for details.
 
 ### Connecting and Using the Controller {#controller}
 
 To use your controller, it must be paired with your Husky and powered on.
-If your purchased the Onboard Computer from Clearpath Robotics, your controller is already paired with your Husky.
-If your controller has become unpaired or if you wish to pair a new controller, following the instructions in the
-[Husky Tutorials](tutorials_husky).
+Follow the instructions in the [Husky Tutorials](tutorials_husky) as needed.
 
-To teleoperate Husky, first release the motion stop. Then, referring to the following images, press the enable button (either slow or fast mode) and use the left thumbstick to drive Husky.
+To teleoperate Husky, first clear any stop conditions. Then, referring to the following images, press the
+enable button (either slow or fast mode) and use the left thumbstick to drive Husky.
 
 <center>
   <figure>
@@ -348,13 +596,6 @@ To teleoperate Husky, first release the motion stop. Then, referring to the foll
       width="400"
     />
     <figcaption>PS4 Contoller</figcaption>
-  </figure>
-  <figure>
-    <img
-      src="/img/robot_images/common_images/controller_logitech.png"
-      width="400"
-    />
-    <figcaption>Logitech F710 Contoller</figcaption>
   </figure>
 </center>
 
@@ -365,31 +606,31 @@ Clearpath Robotics recommends using ROS with your robot. If this is your first t
 recommended to run through our series of [ROS tutorials](../../../../ros) to learn
 the basics of ROS.
 
+Husky A300 is compatible with ROS 2 Jazzy.
+
 ### Battery Charging
 
-TODO: changes
+Husky A300 ships with its batteries installed and they are designed to be charged in place. The batteries
+may be charged with the standard manual/wired charger with the optional wireless charger upgrade kit.
 
-The battery shipped with Husky A200 may be charged outside the robot or while still inside of Husky.
-If charging while installed, you will need to open the access door to the battery area, and disconnect the battery from the MCU board.
-From there:
+#### Manual/Wired Charging
 
-1.  Connect the DC output cable from the charger to the battery terminal connector.
-2.  Plug the charger power cord into the charger and then into a wall receptacle.
-3.  The LED light on the charger will illuminate red.
-4.  When battery is fully charged, the LED light will turn green.
-5.  Unplug the charger from the wall and then disconnect it from the battery.
+The steps
+to charge the batteries are outlined below. Note that the batteries can be charge regarless of whether
+the robot is powered on or powered off, though the charge will progress more quickly when the robot
+is powered off.
 
-The battery charger shipped with Clearpath Robotics's lead-acid battery-powered products uses a two-state charge cycle.
+1.  Open the Access Panel cover to expose the Battery Charger Port.
+1.  Connect the DC output cable from the charger to the battery terminal connector (red-to-red, black-to-black).
+1.  Plug the charger power cord into the charger (if applicable) and then into a wall receptacle.
+    The LED on the charger will illuminate TODO.
+1.  When battery is fully charged, the LED light will TODO.
+1.  Unplug the charger from the wall and then disconnect it from the Battery Charger Port.
+1.  Close the Access Panel cover.
 
-1.  A fast, high current initial charge, until the battery voltage reaches 27.2 V.
-2.  A topping charge, during which the battery charges at 27.2 V constant voltage.
+#### Wireless Charging
 
-:::note
-
-Some older Husky chargers use a three-state charge cycle. For those older chargers, the LED light turns off
-(rather than green) when charging is complete.
-
-:::
+TODO: Need Wiferion details
 
 ---
 
@@ -496,6 +737,24 @@ Monitoring these fields over longer periods of operation will allow you to ensur
 ### Recommended Safe Work Procedures
 
 <ComponentCommonSafeWorkProcedures />
+
+---
+
+## Disposal
+
+TODO
+
+---
+
+## Declarations
+
+### Supplier's Declaration of Conformity
+
+TODO
+
+### EC - Declaration of Conformity
+
+TODO
 
 ---
 
