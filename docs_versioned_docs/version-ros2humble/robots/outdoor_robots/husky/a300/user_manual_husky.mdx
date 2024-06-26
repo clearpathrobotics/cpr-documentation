@@ -168,7 +168,7 @@ Husky is intended for use in:
 - environments free of vertical drops greater than 200 mm;
 - environments free of fast-moving people or vehicles;
 - environments free of glass or transparent plastic floors or walls;
-- temperatures between -20 °C and +40 °C;
+- temperatures between -20°C and +40°C;
 - environments free of open water or other liquids deeper than 20 mm;
 - environments free of grades greater than 7%.
 
@@ -229,6 +229,99 @@ Environmental and process factors in each installation will ultimately govern th
 the interaction of people or equipment in the operating environment with the robot.
 
 TODO: need more notes and justification here.
+
+### General Warnings
+
+Husky is a rugged and high-performance robot.
+For the safety of yourself and others, always conduct initial experiments and software development with
+the robot raised off the ground. Place a wooden crate, a set of sawhorses, a sturdy storage tub, or any
+other solid flat structure having a height greater than 150 mm under Husky to keep the wheels clear of the
+ground ("up on blocks").
+
+When starting out, favour slower wheel speeds. Husky's control loops can accurately maintain velocities as low as 0.1 m/s.
+Operating at such speeds will give you more time to react if things don't go quite as you expect.
+
+When Husky is operating, keep clear of the wheels.
+
+### Stop Button and Lockout {#husky-stop-button-and-lockout}
+
+:::warning
+
+Ensure the Stop button is accessible at all times.
+Avoid mounting payloads that extend over the rear of Husky and would occlude the Stop button.
+
+:::
+
+The motion-stop function allows a person in the physical vicinity of the robot to halt its motion and prevent re-initiation of motion.
+Power supply to Husky's motor drivers is enabled by a normally-open relay, which is closed in series with the stop switch.
+This motion-stop system is intended for use in emergency situations.
+The motion stop system should not be used as the means of controlling robot motion during regular operation.
+
+When in stop mode, the status panel stop light will illuminate red and Husky will not drive.
+The commands received during stop mode are not buffered; Husky will always act on the latest commands received.
+This means that if the commands are stopped before the stop is released, the Husky will not move.
+If the commands are continued, Husky will move at the speed commanded once the stop is released.
+
+This "Stop" function can be asserted by pressing the red stop actuator present at the rear of the Husky, opposite the status panel, as shown in the following figure.
+The motion-stop function can be reset by twisting the depressed actuator until it returns to an extended position.
+There is no second "start" action required to reset the stop function.
+The robot may begin moving again immediately after the stop actuator has returned to its extended position.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_images/robot_husky_10.png"
+      width="600"
+    />
+    <figcaption>Stop button and Lockout</figcaption>
+  </figure>
+</center>
+
+The lockout provides a way to secure Husky from performing any type of motion.
+When in lockout mode, the robot will still power on, but the motors will not drive.
+
+### Electrical System
+
+Husky is powered by a single 24 V sealed lead-acid battery, similar to the type found in electric wheelchairs, golf carts, and other devices.
+Husky's battery is capable of delivering 1800 W, similar to wall mains.
+This gives Husky's motors their great performance, however, it is also enough power to cause severe bodily harm.
+Please observe the following precautions:
+
+- Do not tamper with the plug attached to the battery.
+- Do not tamper with the fuse panel, except to check and change the fuses, and to connect and disconnect the battery plug.
+- Do not operate Husky without the battery door in place.
+  The battery is not restrained without the door, and will come loose, damaging the fuse panel.
+- Charge the battery only with the charger provided by Clearpath Robotics.
+- Please dispose of the batteries properly.
+
+### Lifting and Transport
+
+For the safety of users and to maximize the lifetime of Husky, please observe the following when manually transporting the robot:
+
+- Husky should be lifted by two persons, firmly gripping the front and rear bumper-bars.
+  The battery can be removed to lighten the load of a manual transport.
+- Ensure that Husky is in Stop mode when transporting short distances and powered off when transporting longer distances.
+- It is not advised to push Husky, as this can cause damage to the motors.
+
+### Performance Considerations
+
+Included in Husky are native software checks and limits to protect the robot.
+However, it is recommended to monitor the system's status during usage with the `/status` and `/diagnostics` topics.
+These topics provide useful information regarding voltages, currents, temperatures and general health of the system.
+
+The total current draw does not include the motors drivers; it is the current consumed by the MCU and user power ports.
+Husky's motors are rated to draw 10.7 A continuous, but they will spike to several times higher than this, particularly when traversing rough terrain and when turning on the spot.
+To reduce current draw, consider commanding wider-radius turns from your control software.
+
+The temperature is measured in the motor drivers and on the motor casings; the coils inside the motor casings cannot be measured.
+Therefore, it is important to note that the temperature measured on the motor casings is a lagging indicator of the temperature of the coils inside the casing.
+Be aware of the delay in heat propagation on the motors during heavy use.
+The thermal limit of the system is 50 °C, and the system will shut down if this limit is reached.
+Monitoring these fields over longer periods of operation will allow you to ensure that you are not putting excessive wear on Husky's motors.
+
+### Recommended Safe Work Procedures
+
+<ComponentCommonSafeWorkProcedures />
 
 ---
 
@@ -544,49 +637,180 @@ This section describes the operation of the Husky.
 
 TODO: got to here.
 
+Only trained personnel authorised by Clearpath Robotics shall open the Husky A300.
+
+Prior to performing any maintenance, always follow the Lock-Out Tag-Out procedure to deactivate
+a Husky A300.
+
+TODO: Danger: The On/Off Breaker terminal connected to the battery (displayed below) is live even when the
+vehicle is locked out. This terminal is protected with a rubber cover (TODO: confirm). Do not remove this or any
+other terminal covers. The main chassis will act as the negative side of the battery (TODO: confirm). It the vehicle
+is correctly locked out, all live terminals are protected. The vehicle must be locked out to
+properly protect the remaining connections.
+
+Normal maintenance will not require the user to open the Husky A300 to expose
+these connections. (TODO: confirm)
+
+TODO: image of live connections
+
+TODO: Caution: Safety boots or shoes with steel toes should be worn at all times while working with a Husky A300.
+
+#### Husky A300 Lock-Out Tag-Out
+
+1. Press one of the Emergency Stop buttons.
+1. Press and hold the Power Button for one second, then release it.
+1. Wait until all lights on Husky have turned off (up to 10 seconds). This indicates that all electronics have
+   powered off.
+1. Open the Access Panel cover, set the On/Off Breaker to the "off" position, and close the Access Panel cover.
+1. Clamp the Lock-Out Tag-Out lock to prevent the Access Panel cover from being opened.
+
+TODO: image with lock applied
+
 ### Starting Up
 
-### Shutting Down
-
-### Charging
-
-### Moving an Unpowered or Disabled Husky
-
-### Connecting to Husky
-
-
-TODO
-
-
-
-
-To begin, place Husky "up on blocks" as described in the [Safety](#safety) section, making sure that the wheels are clear of the ground.
-
-For most Husky deployments, its built-in computer has a network (wired or wireless) to an Offboard Computer that is used to control Husky and gather data.
-
-### Powering Up
+Before turning on Husky the first time, place Husky "up on blocks", making sure that the wheels are clear
+of the ground. This reduces hazards while becoming familiar with how the various subsystems work.
 
 To power on Husky:
 
-- Open the Access Panel cover, set the On/Off Breaker to the "on" position, and close the Access Panel cover.
-- Press and release the Power Button.
-- Wait one minute for the robot to initialize fully. During this time, the Status Lights will be solid red.
-  Once initialized, the front lights should be solid white and the rear lights should be solid red.
-  The Status Display should also indicate that there are no errors (TODO: image) and that there are
-  no communication errors (TODO: image).
+1. Open the Access Panel cover, set the On/Off Breaker to the "on" position, and close the Access Panel cover.
+1. Press and hold the Power Button for 1 second and then release it.
+1. Wait one minute for the robot to initialize fully. During startup, the Status Lights will be solid red.
+   Once initialized, the front lights should be solid white and the rear lights should be solid red.
+   The Status Display should also indicate that there are no errors (TODO: image) and that there are
+   no communication errors (TODO: image).
+1. TODO: will the user need to press the E-stop Restart button (similar to OTTO 100) each time after power up?
 
-### Network Configuration
+### Shutting Down  {#shutting-down}
 
-To get Husky connected to your local Wi-Fi network, you must first access the built-in computer using a
-wired connection to the robot.
+If you are servicing, transporting, or storing Husky, perform the Lock-Out/Tag-Out procedure; otherwise,
+perform the steps below.
+
+To power off Husky:
+
+1. Press and hold the Power Button for 1 second and then release it.
+1. Wait until all lights on Husky have turned off (up to 10 seconds). This indicates that all electronics have
+   powered off.
+
+
+### Charging
+
+TODO: Danger: Only original chargers from Clearpath Robotics should be used when charging the Husky A300 to
+avoid any damage to the batteries.
+
+Husky A300 ships with its batteries installed and they charged in place. The batteries
+may be charged with the standard manual/wired charger or with the optional wireless charger upgrade kit.
+
+#### Manual/Wired Charging
+
+The steps to charge the batteries are outlined below. Note that the batteries can be charge regardless
+of whether the robot is powered on or powered off, though the charge will progress more quickly when the
+robot is powered off.
+
+1.  Open the Access Panel cover to expose the Battery Charger Port.
+1.  Connect the DC output cable from the charger to the battery terminal connector (red-to-red, black-to-black).
+1.  Plug the charger power cord into the charger (if applicable) and then into a wall receptacle.
+    The LED on the charger will illuminate TODO.
+1.  When battery is fully charged, the LED light will TODO.
+1.  Unplug the charger from the wall and then disconnect it from the Battery Charger Port.
+1.  Close the Access Panel cover.
+
+#### Wireless Charging
+
+TODO: Need Wiferion details
+
+### Moving an Unpowered or Disabled Husky
+
+It is much easier to manually push an unpowered robot than one that is powered, as a powered robot will
+resist and attempt to hold its position, possibly resulting in damage to the robot. Pushing an unpowered
+robot at normal speeds will not damage it.
+
+To shut down Husky and move it manually:
+
+1. Follow the steps in [Shutting Down](#shutting-down), including the Lock-Out/Tag-Out procedure.
+1. Carefully remove or fully secure any payloads on Husky.
+1. Carefully push or transport Husky to the desired location.
+1. After moving Husky, make sure to position it on level ground to prevent it from rolling.
+
+TODO: Warning: Pushing a Husky using a powered device to push it at higher speeds, such as
+pushing it with a forklift, can damage the internal circuitry. Do not do this under any
+circumstances. If a Husky needs to be moved manually over longer distances, it
+should be lifted and secured to a travelling vehicle or palette for transport.
+
+### Husky Networking
+
+Husky provides both Ethernet and Wi-Fi network connection options. The details below outline
+the configuration for the different options.
+
+#### Connecting to Husky over an Ethernet Connection  {#ethernet-connection}
+
+Regardless of the Wi-Fi mode, Husky can always be access over an Ethernet connection. Follow
+the steps below to connect to Husky over an Ethernet connection.
+
+1. Open the Access Panel cover on Husky to expose the debug Ethernet port.
+1. Connect an Ethernet cable from Husky's debug Ethernet port to a computer.
+1. Set the computer's IP address and netmask as shown below. For more details,
+   refer to TODO tutorial.
+   - IP Address: 192.168.131.100
+   - Netmask: 255.255.255.0
+1. Confirm that you can ping Husky from the computer's terminal window in Linux or the
+   command prompt in Windows by entering the following command:
+   ```ping 192.168.13.1```
+   The output should be similar to the following.
+   TODO: image of ping command.
+1. TODO: SSH to the computer; covered in tutorial?
+
+#### Husky Wi-Fi Network Configuration
+
+Husky's Wi-Fi can be configured in one of two modes: access point mode and client mode.
+The default is access point mode.
+
+In access point mode, Husky operates as a Wi-Fi access point, allowing devices such
+as laptop computers to connect to Husky over Wi-Fi directly without the use of additional
+network equipment such as routers. This mode may be useful for simple test environments
+(or initial setup) when there is no additional network equipment available. See
+[Configuring Husky as a Wi-Fi Access Point](#wifi-access-point) for details.
+
+In client mode, Husky's Wi-Fi is used to connect to an existing network. This mode
+is used for most deployments.
+
+##### Configuring Husky as a Wi-Fi Access Point  {#wifi-access-point}
+
+TODO: Do we want to make this option available? How would the user switch to this mode?
+
+In access point mode, a computer can connect to Husky using the following
+settings:
+
+- SSID: `Husky-A300-<serial_number>`, where `<serial_number>` is the serial number shown
+  on the robot's label. TODO: where is the label
+- Password: `clearpath`
+- Computer Wi-Fi interface set up with DHCP enabled (to have IP address assigned automatically)
+- `ping 10.42.0.1` to confirm access to Husky from the computer
+
+To switch from client mode to access point mode:
+
+- TODO: how to switch
+- See ros/networking/computer_setup#custom-networking as backup
+
+##### Connecting Husky to a Network over Wi-Fi
+
+To get Husky connected to your local Wi-Fi network:
+
+1. Following the steps for [Connecting to Husky over an Ethernet Connection](#ethernet-connection).
+1. TODO: any steps for selecting client mode rather than access point mode?
+1. TODO: edit `/etc/netplan/60-wifi.yaml`?? SSID + password
+
+
 See the [Husky Tutorials](tutorials_husky) for details.
+
 
 ### Connecting and Using the Controller {#controller}
 
 To use your controller, it must be paired with your Husky and powered on.
-Follow the instructions in the [Husky Tutorials](tutorials_husky) as needed.
+Follow the instructions in the [Joystick Controller Pairing](../../../../ros/installation/controller)
+to pair the controller to Husky.
 
-To teleoperate Husky, first clear any stop conditions. Then, referring to the following images, press the
+To teleoperate Husky, first clear any stop conditions. Then, referring to the following images, press an
 enable button (either slow or fast mode) and use the left thumbstick to drive Husky.
 
 <center>
@@ -608,141 +832,29 @@ the basics of ROS.
 
 Husky A300 is compatible with ROS 2 Jazzy.
 
-### Battery Charging
-
-Husky A300 ships with its batteries installed and they are designed to be charged in place. The batteries
-may be charged with the standard manual/wired charger with the optional wireless charger upgrade kit.
-
-#### Manual/Wired Charging
-
-The steps
-to charge the batteries are outlined below. Note that the batteries can be charge regarless of whether
-the robot is powered on or powered off, though the charge will progress more quickly when the robot
-is powered off.
-
-1.  Open the Access Panel cover to expose the Battery Charger Port.
-1.  Connect the DC output cable from the charger to the battery terminal connector (red-to-red, black-to-black).
-1.  Plug the charger power cord into the charger (if applicable) and then into a wall receptacle.
-    The LED on the charger will illuminate TODO.
-1.  When battery is fully charged, the LED light will TODO.
-1.  Unplug the charger from the wall and then disconnect it from the Battery Charger Port.
-1.  Close the Access Panel cover.
-
-#### Wireless Charging
-
-TODO: Need Wiferion details
-
 ---
 
-## Safety Considerations {#safety}
+## Maintenance
 
-TODO:
-
-- Check Observer documentation
-- Check OTTO documentation
-- FCC/ICES section?
-
-Clearpath Robotics is committed to high standards of safety.
-Husky contains several features to protect the safety of users and the integrity of the robot.
-
-### General Warnings
-
-Husky is a rugged and high-performance robot.
-For the safety of yourself and others, always conduct initial experiments and software development with
-the robot raised off the ground. Place a wooden crate, a set of sawhorses, a sturdy storage tub, or any
-other solid flat structure having a height greater than 150 mm under Husky to keep the wheels clear of the
-ground ("up on blocks").
-
-When starting out, favour slower wheel speeds. Husky's control loops can accurately maintain velocities as low as 0.1 m/s.
-Operating at such speeds will give you more time to react if things don't go quite as you expect.
-
-When Husky is operating, keep clear of the wheels, paying particular attention to the pinch hazard which exists between each wheel and the end of the corresponding bumper bar.
-
-### Stop Button and Lockout {#husky-stop-button-and-lockout}
-
-:::warning
-
-Ensure the Stop button is accessible at all times.
-Avoid mounting payloads that extend over the rear of Husky and would occlude the Stop button.
-
-:::
-
-The motion-stop function allows a person in the physical vicinity of the robot to halt its motion and prevent re-initiation of motion.
-Power supply to Husky's motor drivers is enabled by a normally-open relay, which is closed in series with the stop switch.
-This motion-stop system is intended for use in emergency situations.
-The motion stop system should not be used as the means of controlling robot motion during regular operation.
-
-When in stop mode, the status panel stop light will illuminate red and Husky will not drive.
-The commands received during stop mode are not buffered; Husky will always act on the latest commands received.
-This means that if the commands are stopped before the stop is released, the Husky will not move.
-If the commands are continued, Husky will move at the speed commanded once the stop is released.
-
-This "Stop" function can be asserted by pressing the red stop actuator present at the rear of the Husky, opposite the status panel, as shown in the following figure.
-The motion-stop function can be reset by twisting the depressed actuator until it returns to an extended position.
-There is no second "start" action required to reset the stop function.
-The robot may begin moving again immediately after the stop actuator has returned to its extended position.
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/husky_images/robot_husky_10.png"
-      width="600"
-    />
-    <figcaption>Stop button and Lockout</figcaption>
-  </figure>
-</center>
-
-The lockout provides a way to secure Husky from performing any type of motion.
-When in lockout mode, the robot will still power on, but the motors will not drive.
-
-### Electrical System
-
-Husky is powered by a single 24 V sealed lead-acid battery, similar to the type found in electric wheelchairs, golf carts, and other devices.
-Husky's battery is capable of delivering 1800 W, similar to wall mains.
-This gives Husky's motors their great performance, however, it is also enough power to cause severe bodily harm.
-Please observe the following precautions:
-
-- Do not tamper with the plug attached to the battery.
-- Do not tamper with the fuse panel, except to check and change the fuses, and to connect and disconnect the battery plug.
-- Do not operate Husky without the battery door in place.
-  The battery is not restrained without the door, and will come loose, damaging the fuse panel.
-- Charge the battery only with the charger provided by Clearpath Robotics.
-- Please dispose of the batteries properly.
-
-### Lifting and Transport
-
-For the safety of users and to maximize the lifetime of Husky, please observe the following when manually transporting the robot:
-
-- Husky should be lifted by two persons, firmly gripping the front and rear bumper-bars.
-  The battery can be removed to lighten the load of a manual transport.
-- Ensure that Husky is in Stop mode when transporting short distances and powered off when transporting longer distances.
-- It is not advised to push Husky, as this can cause damage to the motors.
-
-### Performance Considerations
-
-Included in Husky are native software checks and limits to protect the robot.
-However, it is recommended to monitor the system's status during usage with the `/status` and `/diagnostics` topics.
-These topics provide useful information regarding voltages, currents, temperatures and general health of the system.
-
-The total current draw does not include the motors drivers; it is the current consumed by the MCU and user power ports.
-Husky's motors are rated to draw 10.7 A continuous, but they will spike to several times higher than this, particularly when traversing rough terrain and when turning on the spot.
-To reduce current draw, consider commanding wider-radius turns from your control software.
-
-The temperature is measured in the motor drivers and on the motor casings; the coils inside the motor casings cannot be measured.
-Therefore, it is important to note that the temperature measured on the motor casings is a lagging indicator of the temperature of the coils inside the casing.
-Be aware of the delay in heat propagation on the motors during heavy use.
-The thermal limit of the system is 50 °C, and the system will shut down if this limit is reached.
-Monitoring these fields over longer periods of operation will allow you to ensure that you are not putting excessive wear on Husky's motors.
-
-### Recommended Safe Work Procedures
-
-<ComponentCommonSafeWorkProcedures />
+See [Husky A300 Maintenance](maintenance_husky) for details on Husky maintenance.
 
 ---
 
 ## Disposal
 
-TODO
+Always observe environmental protection regulations valid to your region. 
+
+If disassembling the Husky A300 for disposal, pass on any commercially-viable disassembled
+components for recycling. Separate materials as far as possible by type.
+
+Do not incinerate or dispose of the batteries. Return end-of-life or defective batteries to your nearest
+recycling center per appropriate local regulations.
+
+---
+
+## Troubleshooting
+
+See [Husky A300 Troubleshooting](troubleshooting_husky) for details on Husky troubleshooting.
 
 ---
 
@@ -750,11 +862,11 @@ TODO
 
 ### Supplier's Declaration of Conformity
 
-TODO
+TODO: FCC
 
-### EC - Declaration of Conformity
+<!-- ### EC - Declaration of Conformity
 
-TODO
+-->
 
 ---
 
