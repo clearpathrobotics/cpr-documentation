@@ -1,8 +1,10 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+import {themes as prismThemes} from 'prism-react-renderer';
+
+const lightCodeTheme = prismThemes.github;
+const darkCodeTheme = prismThemes.dracula;
 const math = require("remark-math");
 const katex = require("rehype-katex");
 
@@ -23,13 +25,18 @@ const config = {
   presets: [
     [
       "classic",
-      /** @type {import('@docusaurus/preset-classic').Options} */
-      ({
+      {
         docs: false,
+        //docs: {
+        //  admonitions: {
+        //    keywords: ['safety-danger'],
+        //    extendDefaults: true,
+        //  },
+        //},
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
-      }),
+      },
     ],
   ],
 
@@ -53,6 +60,10 @@ const config = {
           }
         },
         includeCurrentVersion: false,
+        admonitions: {
+          keywords: ['safety-danger', 'safety-warning', 'safety-caution'],
+          extendDefaults: true,
+        },
       },
     ],
     [

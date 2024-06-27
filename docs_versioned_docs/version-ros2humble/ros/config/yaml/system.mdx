@@ -104,39 +104,40 @@ servers:
 
 ## Sample
 
-<details><summary>Sample A200 System Section</summary>
-<p>
+<details>
+  <summary>Sample A200 System Section</summary>
+  <p>
 
-In our sample, we have a **Husky A200** platform whose primary computer has the hostname: `cpr-a200-0000` and IP: `192.168.131.1`.
+  In our sample, we have a **Husky A200** platform whose primary computer has the hostname: `cpr-a200-0000` and IP: `192.168.131.1`.
 
-By default, all Clearpath robots use the username `administrator` and the robot's namespace matches the `serial_number`.
+  By default, all Clearpath robots use the username `administrator` and the robot's namespace matches the `serial_number`.
 
-```yaml
-system:
-  username: administrator
-  hosts:
-    - hostname: cpr-a200-0000
-      ip: 192.168.131.1
-  ros2:
-    namespace: a200_0000
-    domain_id: 0
-    middleware:
-      implementation: rmw_fastrtps_cpp
-      discovery: simple
-    workspaces: []
-```
+  ```yaml
+  system:
+    username: administrator
+    hosts:
+      - hostname: cpr-a200-0000
+        ip: 192.168.131.1
+    ros2:
+      namespace: a200_0000
+      domain_id: 0
+      middleware:
+        implementation: rmw_fastrtps_cpp
+        discovery: simple
+      workspaces: []
+  ```
 
-At this point, with just the **serial_number** and **system** defined, our robot is just the standard **Husky A200** platform, and looks like this:
+  At this point, with just the **serial_number** and **system** defined, our robot is just the standard **Husky A200** platform, and looks like this:
 
-<center>
-  <figure>
-    <img
-      src={require("../img/husky_platform_0.png").default}
-      width="500"
-    />
-    <figcaption>Default Husky A200</figcaption>
-  </figure>
-</center>
+  <center>
+    <figure>
+      <img
+        src={require("../img/husky_platform_0.png").default}
+        width="500"
+      />
+      <figcaption>Default Husky A200</figcaption>
+    </figure>
+  </center>
 
-</p>
+  </p>
 </details>

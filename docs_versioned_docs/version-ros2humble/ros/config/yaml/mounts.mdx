@@ -98,84 +98,85 @@ We can also lift the **disk** by using a **post**.
 
 ## Sample
 
-<details><summary>Sample A200 Mounts Section</summary>
-<p>
+<details>
+  <summary>Sample A200 Mounts Section</summary>
+  <p>
 
-<center>
-  <figure>
-    <img
-      src={require("../img/husky_accessories_0.png").default}
-      width="500"
-    />
-    <figcaption>Husky A200 with Covered User Bay</figcaption>
-  </figure>
-</center>
+  <center>
+    <figure>
+      <img
+        src={require("../img/husky_accessories_0.png").default}
+        width="500"
+      />
+      <figcaption>Husky A200 with Covered User Bay</figcaption>
+    </figure>
+  </center>
 
-In this sample, we will add a **bracket** to mount a LiDAR to the front of the **Husky A200**.
+  In this sample, we will add a **bracket** to mount a LiDAR to the front of the **Husky A200**.
 
-We select the **_top_plate_mount_d1_**, in other words, the middle (**d**), front (**1**), 80 mm X 80 mm mounting location on the **PACS** top plate.
+  We select the **_top_plate_mount_d1_**, in other words, the middle (**d**), front (**1**), 80 mm X 80 mm mounting location on the **PACS** top plate.
 
-```yaml
-bracket:
-  - parent: top_plate_mount_d1
-    xyz: [0.0, 0.0, 0.0]
-    rpy: [0.0, 0.0, 0.0]
-    model: horizontal
-```
-
-<center>
-  <figure>
-    <img
-      src={require("../img/husky_mounts_0.png").default}
-      width="500"
-    />
-    <figcaption>Husky A200 with D1 Bracket</figcaption>
-  </figure>
-</center>
-
-Then, we want to add a camera to the sensor arch. However, we will complicate things by adding it upside down to the extrusion.
-
-We choose a **fath_pivot** mount, and then we set its **parent** to the **_sensor_arch_mount_**.
-
-Using the **xyz** entry, we lower the mount by 21 mm to get it under the sensor arch; then, we roll it by $\pi$ to get it upside down.
-
-```yaml
-fath_pivot:
-  - parent: sensor_arch_mount # mount atop the sensor arch
-    xyz: [0.0, 0.0, -0.021] # lower pivot mount to below the sensor arch
-    rpy: [3.1415, 0.0, 0.0] # roll pivot mount to flip it upside down
-    angle: 0.0
-```
-
-<center>
-  <figure>
-    <img
-      src={require("../img/husky_mounts_1.png").default}
-      width="500"
-    />
-    <figcaption>Husky A200 with upside down Fath Pivot Mount</figcaption>
-  </figure>
-</center>
-
-Since we did not need a riser, we leave that section empty; the resulting **mounts** section:
-
-```yaml
-mounts:
+  ```yaml
   bracket:
     - parent: top_plate_mount_d1
       xyz: [0.0, 0.0, 0.0]
       rpy: [0.0, 0.0, 0.0]
       model: horizontal
-  fath_pivot:
-    - parent: sensor_arch_mount
-      xyz: [0.0, 0.0, -0.021]
-      rpy: [3.1415, 0.0, 0.0]
-      angle: 0.0
-  riser: []
-  sick: []
-  post: []
-  disk: []
-```
+  ```
 
-</p>
+  <center>
+    <figure>
+      <img
+        src={require("../img/husky_mounts_0.png").default}
+        width="500"
+      />
+      <figcaption>Husky A200 with D1 Bracket</figcaption>
+    </figure>
+  </center>
+
+  Then, we want to add a camera to the sensor arch. However, we will complicate things by adding it upside down to the extrusion.
+
+  We choose a **fath_pivot** mount, and then we set its **parent** to the **_sensor_arch_mount_**.
+
+  Using the **xyz** entry, we lower the mount by 21 mm to get it under the sensor arch; then, we roll it by $\pi$ to get it upside down.
+
+  ```yaml
+  fath_pivot:
+    - parent: sensor_arch_mount # mount atop the sensor arch
+      xyz: [0.0, 0.0, -0.021] # lower pivot mount to below the sensor arch
+      rpy: [3.1415, 0.0, 0.0] # roll pivot mount to flip it upside down
+      angle: 0.0
+  ```
+
+  <center>
+    <figure>
+      <img
+        src={require("../img/husky_mounts_1.png").default}
+        width="500"
+      />
+      <figcaption>Husky A200 with upside down Fath Pivot Mount</figcaption>
+    </figure>
+  </center>
+
+  Since we did not need a riser, we leave that section empty; the resulting **mounts** section:
+
+  ```yaml
+  mounts:
+    bracket:
+      - parent: top_plate_mount_d1
+        xyz: [0.0, 0.0, 0.0]
+        rpy: [0.0, 0.0, 0.0]
+        model: horizontal
+    fath_pivot:
+      - parent: sensor_arch_mount
+        xyz: [0.0, 0.0, -0.021]
+        rpy: [3.1415, 0.0, 0.0]
+        angle: 0.0
+    riser: []
+    sick: []
+    post: []
+    disk: []
+  ```
+
+  </p>
 </details>

@@ -40,7 +40,7 @@ contained between a pair of launch tags
 </launch>
 ```
 
-To actually start a node, the <node\> tags are used, the pkg, type and
+To actually start a node, the \<node\> tags are used, the pkg, type and
 name argument are required.
 
 ```
@@ -107,16 +107,16 @@ on-board PC on startup to get things going.
 </launch>
 ```
 
-The first thing to notice is the <launch\> tags which are required for
+The first thing to notice is the \<launch\> tags which are required for
 all launch files. The next line finds what port Husky is connected to,
 and saves it to an argument named "port". The node "kinematic_node"
 from the package"clearpath_base" is then started in the "husky" name
 space.
 
-Parameters within the <node\> tags are private to that namepace. The
+Parameters within the \<node\> tags are private to that namepace. The
 "port" argument that was defined earlier is set to the port parameter.
 Several other parameters are populated using the YAML format with
-<parameter\> tags.
+\<parameter\> tags.
 
 Along with the kinematic_node node, this launch file also starts
 husky_base_diagnositcs and husky_base_odom. You can see that the

@@ -889,7 +889,7 @@ modes for deploying Husky Observer, which are outlined below.
 | Network Mode          | Description                                                                                                      | Base Station Setup        | Robot Setup                                                                                                                                                 | Tablet Setup                                                                                                                                                                                  | OutdoorNav URL via Local WiFi | OutdoorNav URL via Internet/Cellular      |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------------------------------------- |
 | Base Station          | Base Station with WiFi for near-range operations; optional LTE also available on robot for long-range operations | Pre-configured at factory | Pre-configured at factory; see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup                                            | Pre-configured at factory                                                                                                                                                                     | http://192.168.132.1:8080     | See [Remote Access Setup](#remote-access) |
-| Customer WiFi Network | Customer WiFi for near-range operations; optional LTE also available on robot for long-range operations          | N/A                       | See [Updating the WiFi SSID or Password on Robot](#robot-wifi-setup); see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup | See [Windows 10 instructions](https://support.microsoft.com/en-us/windows/connect-to-a-wi-fi-network-in-windows-1f881677-b569-0cd5-010d-e3cd3579d263) for connecting to Customer WiFi network | http://<customer_IP>:8080     | See [Remote Access Setup](#remote-access) |
+| Customer WiFi Network | Customer WiFi for near-range operations; optional LTE also available on robot for long-range operations          | N/A                       | See [Updating the WiFi SSID or Password on Robot](#robot-wifi-setup); see also [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for optional setup | See [Windows 10 instructions](https://support.microsoft.com/en-us/windows/connect-to-a-wi-fi-network-in-windows-1f881677-b569-0cd5-010d-e3cd3579d263) for connecting to Customer WiFi network | http://\<customer_IP\>:8080   | See [Remote Access Setup](#remote-access) |
 | Cellular Only         | Uses cellular in robot + separate cellular in Tablet                                                             | N/A                       | See [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for setup                                                                                     | Pre-configured at factory or use USB-tethering to a cell phone                                                                                                                                | N/A                           | See [Remote Access Setup](#remote-access) |
 
 <center>
@@ -914,10 +914,7 @@ modes for deploying Husky Observer, which are outlined below.
     />
     <figcaption>
       Cellular Only Mode
-      <br />(<a
-        href="https://www.flaticon.com/free-icons/wifi"
-        title="wifi icons"
-      >
+      <br />(<a href="https://www.flaticon.com/free-icons/wifi" title="wifi icons">
         Some icons created by Freepik - Flaticon
       </a>)
     </figcaption>
@@ -1212,7 +1209,7 @@ Husky Observer has been validated with the [SwiftNav Skylark](https://www.swiftn
 service. Follow the steps below to set up the Skylark service.
 
 1. [Sign up for a Skylark account](https://account.swiftnav.com/sign-up) if you do not have one. (Note that Clearpath does not provide a Skylark account.)
-1. Create a Skylark subscription (https://{your_account_name}.account.swiftnav.com/subscriptions) from the subscriptions tab.
+1. Create a Skylark subscription (https://\{your_account_name\}.account.swiftnav.com/subscriptions) from the subscriptions tab.
 1. Create a new Device in the "Devices" tab corresponding to the robot that will be receiving the corrections.
 1. Configure the "position" SwiftNav Duro to communicate with the Skylark service.
    1. Ensure that the [Swift Console](https://support.swiftnav.com/support/solutions/articles/44001903699-installing-swift-console)

@@ -56,8 +56,8 @@ between Nodes and Nodelets, which is why we use a dynamic wrapping Node
 below.
 
 You don't actually NEED the wrapping node - you can run the nodelet
-with [nodelet standalone pkg/nodelet]{.title-ref}. However this
-precludes using [rosrun pkg node]{.title-ref}, which is very
+with [nodelet standalone pkg/nodelet]\{.title-ref\}. However this
+precludes using [rosrun pkg node]\{.title-ref\}, which is very
 user-friendly.
 
 Now that I've convinced you, please read the rest of the nodelet docs:

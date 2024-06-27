@@ -58,7 +58,7 @@ a /dev/hokuyo symlink to an IMU. There are many potential matching tags,
 and the best way to pick the useful ones is to get all the device
 attributes straight from udev.
 
-Run the following command, inserting a **<devpath\>** such as
+Run the following command, inserting a **\<devpath\>** such as
 **/dev/ttyACM0**:
 
 ```
@@ -66,7 +66,7 @@ udevadm info -a -p $(udevadm info -q path -n <devpath>)
 ```
 
 You will get a list of all device attributes visible to udev. looking at
-device [/dev/ttyACM0]{.title-ref}
+device [/dev/ttyACM0]\{.title-ref\}
 
 ```bash
 KERNEL=="ttyACM0"
@@ -97,7 +97,7 @@ SUBSYSTEM=="tty", KERNEL=="ttyACM[0-9]*", ATTRS{idVendor}=="0483", ATTRS{idProdu
 Due to the way udev is designed, you can only pull in the tags from one
 parent device. So in the above example you can always use the KERNEL and
 theSUBSYSTEM tag in your udev rule, but you cannot use both DRIVERS
-andATTRS{idVendor} to do matching. Usually this is not a problem, since
+and ATTRS\{idVendor\} to do matching. Usually this is not a problem, since
 idVendor and idProduct are always present, and identify the majority of
 device types uniquely.
 
@@ -197,7 +197,7 @@ udevadm test $(udevadm info -q path -n /dev/ttyACM0)
 ## Things to keep in mind
 
 - Check that your rule follows the naming convention --
-  <priority\>-<device name\>.rules. Technically you can have
+  \<priority\>-\<device name\>.rules. Technically you can have
   multiple rules for the same device, and the number determines what
   order they'd get executed in. Since we're writing addon rules, a
   priority of 99 is safest.

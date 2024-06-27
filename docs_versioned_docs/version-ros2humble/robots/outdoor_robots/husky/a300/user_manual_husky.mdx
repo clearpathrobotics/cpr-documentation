@@ -16,12 +16,30 @@ import ComponentSafetyWarning from "/components/safety_warning.mdx";
 
 ## Important SAFETY INFORMATION
 
-<center>
-  <img
-    src="/img/robot_images/husky_observer_images/safety_information.png"
-    width="800"
-  />
-</center>
+:::safety-danger[DANGER]
+
+Failure to follow these instructions <u>will</u> result in SERIOUS INJURY, INCLUDING DEATH.
+
+:::
+
+<br/>
+
+:::safety-warning[WARNING]
+
+Failure to follow these instructions may result in SERIOUS INJURY, INCLUDING DEATH.
+
+:::
+
+<br/>
+
+:::safety-caution[CAUTION]
+
+Failure to follow these instructions  may result in INJURY or DAMAGE to the system and or
+property.
+
+:::
+
+<br/>
 
 The top priority of Clearpath Robotics is the safety of its users. Clearpath Robotics produces high power and
 fast-moving pieces of machinery that potentially could cause serious injury, including death, if improperly used
@@ -70,12 +88,11 @@ are familiar with the specific risks and hazards associated with automated mobil
 The following checklist identifies basic topics that should be addressed by site-specific worker and visitor
 safety orientation training.
 
-<center>
-  <img
-    src="/img/robot_images/husky_observer_images/caution_awareness.png"
-    width="800"
-  />
-</center>
+:::safety-caution[CAUTION]
+
+Additional items may need to be addressed based on the site-specific risk assessment.
+
+:::
 
 - Proper PPE must be worn, including safety footwear (ie. steel toe).
 - Crossing into the path of a moving Clearpath Robotics robot should be avoided, as well as placing or throwing obstacles into the path of a moving Clearpath Robotics robot.
@@ -412,28 +429,6 @@ The Husky exterior is shown below and includes:
 
 TODO: images
 
-<!--
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/husky_images/robot_husky_1.png"
-      width="600"
-    />
-    <figcaption>Husky exterior, front view</figcaption>
-  </figure>
-</center>
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/husky_images/robot_husky_2.png"
-      width="600"
-    />
-    <figcaption>Husky exterior, rear view</figcaption>
-  </figure>
-</center>
--->
-
 ### Chassis
 
 The chassis contains the robots batteries, electonics, and cooling systems. It is an IP54-rated enclosure.
@@ -587,15 +582,15 @@ The direction of the axes differs from those used for roll, pitch, and yaw in ai
 As a starting point, Clearpath Robotics recommends using the following relationship between wheel velocity and platform velocity:
 
 $$
-v=\cfrac{v_{r}+v_{l}}{2}
+v=\cfrac\{v_\{r\}+v_\{l\}\}\{2\}
 $$
 
 $$
-\omega=\cfrac{v_{r}-v_{l}}{W}
+\omega=\cfrac\{v_\{r\}-v_\{l\}\}\{W\}
 $$
 
 $v$ represents the instantaneous translational speed of the platform and $\omega$ the instantaneous rotational speed. <br />
-$v_{r}$ and $v_{l}$ are the right and left wheel velocities, respectively. <br />
+$v_\{r\}$ and $v_\{l\}$ are the right and left wheel velocities, respectively. <br />
 $W$ is the effective track of the robot, 0.555 m. (TODO)
 
 ---
@@ -647,6 +642,16 @@ vehicle is locked out. This terminal is protected with a rubber cover (TODO: con
 other terminal covers. The main chassis will act as the negative side of the battery (TODO: confirm). It the vehicle
 is correctly locked out, all live terminals are protected. The vehicle must be locked out to
 properly protect the remaining connections.
+
+:::safety-warning[CAUTION]
+
+The On/Off Breaker terminal connected to the battery (displayed below) is live even when the
+vehicle is locked out. This terminal is protected with a rubber cover (TODO: confirm). Do not remove this or any
+other terminal covers. The main chassis will act as the negative side of the battery (TODO: confirm). It the vehicle
+is correctly locked out, all live terminals are protected. The vehicle must be locked out to
+properly protect the remaining connections.
+
+:::
 
 Normal maintenance will not require the user to open the Husky A300 to expose
 these connections. (TODO: confirm)

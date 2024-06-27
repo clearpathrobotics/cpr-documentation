@@ -52,3 +52,8 @@
 a {
   color: #3869e5;
 }
+
+safety-icon {
+  float: right;
+  margin: 0 0 0 15px;
+}

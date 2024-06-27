@@ -42,57 +42,58 @@ If you prefer to add a URDF instead, then you can link it directly through the [
 
 ## Sample
 
-<details><summary>Sample A200 Links Section</summary>
-<p>
+<details>
+  <summary>Sample A200 Links Section</summary>
+  <p>
 
-<center>
-  <figure>
-    <img
-      src={require("../img/husky_platform_2.png").default}
-      width="500"
-    />
-    <figcaption>Husky A200 with Open User Bay</figcaption>
-  </figure>
-</center>
+  <center>
+    <figure>
+      <img
+        src={require("../img/husky_platform_2.png").default}
+        width="500"
+      />
+      <figcaption>Husky A200 with Open User Bay</figcaption>
+    </figure>
+  </center>
 
-In this sample, we will use links to add thin **box** to cover up the user bay.
+  In this sample, we will use links to add thin **box** to cover up the user bay.
 
-We add an entry under the **box** list:
+  We add an entry under the **box** list:
 
-```yaml
-box:
-  - name: user_bay_cover
-    parent: top_plate_link # add it to the top_plate_link
-    xyz: [0.0, 0.0, 0.00735] # move it up 6.35mm (thickness of top plate) and move it up 1mm (half height of the box)
-    rpy: [0.0, 0.0, 0.0]
-    size: [0.4, 0.4, 0.002] # length 400mm, width 400mm and 2mm thick.
-```
-
-<center>
-  <figure>
-    <img
-      src={require("../img/husky_accessories_0.png").default}
-      width="500"
-    />
-    <figcaption>Husky A200 with Covered User Bay</figcaption>
-  </figure>
-</center>
-
-We leave the rest of the lists all empty, for the resulting links section:
-
-```yaml
-links:
+  ```yaml
   box:
     - name: user_bay_cover
-      parent: top_plate_link
-      xyz: [0.0, 0.0, 0.00735]
+      parent: top_plate_link # add it to the top_plate_link
+      xyz: [0.0, 0.0, 0.00735] # move it up 6.35mm (thickness of top plate) and move it up 1mm (half height of the box)
       rpy: [0.0, 0.0, 0.0]
-      size: [0.4, 0.4, 0.002]
-  cylinder: []
-  frame: []
-  mesh: []
-  sphere: []
-```
+      size: [0.4, 0.4, 0.002] # length 400mm, width 400mm and 2mm thick.
+  ```
 
-</p>
+  <center>
+    <figure>
+      <img
+        src={require("../img/husky_accessories_0.png").default}
+        width="500"
+      />
+      <figcaption>Husky A200 with Covered User Bay</figcaption>
+    </figure>
+  </center>
+
+  We leave the rest of the lists all empty, for the resulting links section:
+
+  ```yaml
+  links:
+    box:
+      - name: user_bay_cover
+        parent: top_plate_link
+        xyz: [0.0, 0.0, 0.00735]
+        rpy: [0.0, 0.0, 0.0]
+        size: [0.4, 0.4, 0.002]
+    cylinder: []
+    frame: []
+    mesh: []
+    sphere: []
+  ```
+
+  </p>
 </details>
