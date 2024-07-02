@@ -311,7 +311,7 @@ The packages have are installed in the _package.json_ and imported into the proj
 You simply need to add your equations to your Markdown file, keeping all the elements between opening an closing tags _$_.
 
 $$
-\omega=\cfrac\{v_\{r\}-v_\{l\}\}\{W\}
+\omega=\cfrac{v_{r}-v_{l}}{W}
 $$
 
 You can test equation syntax using [this tool](https://katex.org/) from KaTex.

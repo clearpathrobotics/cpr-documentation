@@ -246,8 +246,8 @@ TODO: update based on risk assessment
 Two methods are used to reduce the system risk:
 
 - The robot is equipped with front and rear Emergency Stop buttons within easy reach of robot.
-- The robot is equipped with an electrical braking system that limits the maximum speed of the robot
-  when engaging the Emergency Stop on an incline.
+- The robot is equipped with an electrical braking system that reduces the speed of the robot
+  when engaging the Emergency Stop, especially when on an incline.
 
 The safety of each Clearpath Robotics robot needs to be evaluated in the context of the installation where it is used.
 Environmental and process factors in each installation will ultimately govern the risk of injury resulting from
@@ -268,29 +268,29 @@ Operating at such speeds will give you more time to react if things don't go qui
 
 When Husky is operating, keep clear of the wheels.
 
-### Stop Button and Lockout {#husky-stop-button-and-lockout}
+### Emergency Stop Button {#husky-emergency-stop-button}
 
-:::warning
+:::safety-warning[WARNING]
 
-Ensure the Stop button is accessible at all times.
-Avoid mounting payloads that extend over the rear of Husky and would occlude the Stop button.
+Ensure the two Emergency Stop buttons are accessible at all times.
+Avoid mounting payloads that extend over the front or rear of Husky and would occlude the Emergency Stop buttons.
 
 :::
 
-The motion-stop function allows a person in the physical vicinity of the robot to halt its motion and prevent re-initiation of motion.
-Power supply to Husky's motor drivers is enabled by a normally-open relay, which is closed in series with the stop switch.
-This motion-stop system is intended for use in emergency situations.
-The motion stop system should not be used as the means of controlling robot motion during regular operation.
+The emergency stop function allows a person in the physical vicinity of the robot to disconnect drivetrain power.
+(TODO: outline situations in which the robot will and will not stop)
+Power supply to Husky's motor drivers is enabled by a normally-open relay, which is closed in series with the emergency stop switch.
+This emergency system is intended for use in emergency situations.
+The emergency stop system should not be used as the means of controlling robot motion during regular operation.
 
-When in stop mode, the status panel stop light will illuminate red and Husky will not drive.
-The commands received during stop mode are not buffered; Husky will always act on the latest commands received.
+When in emergency stop mode, the status lights will illuminate red and Husky will not drive.
+The commands received during emergency stop mode are not buffered; Husky will always act on the latest commands received.
 This means that if the commands are stopped before the stop is released, the Husky will not move.
-If the commands are continued, Husky will move at the speed commanded once the stop is released.
+If the commands are continued, Husky will move at the speed commanded once the stop is released and motion is re-enabled.
 
-This "Stop" function can be asserted by pressing the red stop actuator present at the rear of the Husky, opposite the status panel, as shown in the following figure.
-The motion-stop function can be reset by twisting the depressed actuator until it returns to an extended position.
-There is no second "start" action required to reset the stop function.
-The robot may begin moving again immediately after the stop actuator has returned to its extended position.
+This Emergency Stop function can be asserted by pressing either of the red stop actuators present at the front and rear of the Husky, as shown in the following figure.
+The Emergency Stop function can be reset by twisting all depressed actuators until they return to their extended positions, then pressing the Restart button.
+The robot may begin moving again immediately after the Restart button has been pressed.
 
 <center>
   <figure>
@@ -298,24 +298,21 @@ The robot may begin moving again immediately after the stop actuator has returne
       src="/img/robot_images/husky_images/robot_husky_10.png"
       width="600"
     />
-    <figcaption>Stop button and Lockout</figcaption>
+    <figcaption>TODO: update: Stop button</figcaption>
   </figure>
 </center>
 
-The lockout provides a way to secure Husky from performing any type of motion.
-When in lockout mode, the robot will still power on, but the motors will not drive.
+TODO: Remote e-stop + lockout
 
 ### Electrical System
 
-Husky is powered by a single 24 V sealed lead-acid battery, similar to the type found in electric wheelchairs, golf carts, and other devices.
-Husky's battery is capable of delivering 1800 W, similar to wall mains.
+Husky is powered by two or more 24 V LiFePO<sub>4</sub> batteries, similar to the type found in electric wheelchairs, golf carts, and other devices.
+Husky's batteries are capable of delivering 1800 W (TODO: check), similar to wall mains.
 This gives Husky's motors their great performance, however, it is also enough power to cause severe bodily harm.
 Please observe the following precautions:
 
 - Do not tamper with the plug attached to the battery.
-- Do not tamper with the fuse panel, except to check and change the fuses, and to connect and disconnect the battery plug.
-- Do not operate Husky without the battery door in place.
-  The battery is not restrained without the door, and will come loose, damaging the fuse panel.
+- Do not tamper with the fuse panel, except to check and change the fuses.
 - Charge the battery only with the charger provided by Clearpath Robotics.
 - Please dispose of the batteries properly.
 
@@ -324,9 +321,8 @@ Please observe the following precautions:
 For the safety of users and to maximize the lifetime of Husky, please observe the following when manually transporting the robot:
 
 - Husky should be lifted by two persons, firmly gripping the front and rear bumper-bars.
-  The battery can be removed to lighten the load of a manual transport.
-- Ensure that Husky is in Stop mode when transporting short distances and powered off when transporting longer distances.
-- It is not advised to push Husky, as this can cause damage to the motors.
+- Ensure that Husky is in Emergency Stop mode when transporting short distances and powered off when transporting longer distances.
+- It is not advised to push Husky at speeds greater than 1 m/s, as this can cause damage to the motors.
 
 ### Performance Considerations
 
@@ -334,13 +330,11 @@ Included in Husky are native software checks and limits to protect the robot.
 However, it is recommended to monitor the system's status during usage with the `/status` and `/diagnostics` topics.
 These topics provide useful information regarding voltages, currents, temperatures and general health of the system.
 
-The total current draw does not include the motors drivers; it is the current consumed by the MCU and user power ports.
+TODO: The total current draw does not include the motors drivers; it is the current consumed by the MCU and user power ports.
 Husky's motors are rated to draw 10.7 A continuous, but they will spike to several times higher than this, particularly when traversing rough terrain and when turning on the spot.
 To reduce current draw, consider commanding wider-radius turns from your control software.
 
-The temperature is measured in the motor drivers and on the motor casings; the coils inside the motor casings cannot be measured.
-Therefore, it is important to note that the temperature measured on the motor casings is a lagging indicator of the temperature of the coils inside the casing.
-Be aware of the delay in heat propagation on the motors during heavy use.
+TODO: The temperature is measured in the motor drivers and at the motor coils.
 The thermal limit of the system is 50 °C, and the system will shut down if this limit is reached.
 Monitoring these fields over longer periods of operation will allow you to ensure that you are not putting excessive wear on Husky's motors.
 
@@ -413,9 +407,11 @@ TODO: update image
 
 ### System Architecture
 
-Husky is built around a computer running Ubuntu (Intel-based computer or Jetson developer kit), paired with a 32-bit microcontroller MCU.
+Husky is built around a computer running Ubuntu (Intel-based computer or Jetson developer kit), paired with a 32-bit microcontroller unit (MCU).
 The MCU handles power supply monitoring and motor control.
 The communication channel between the MCU and computer is an Ethernet connection.
+
+TODO: image
 
 ---
 
@@ -439,7 +435,7 @@ TODO: images
 
 ### Chassis
 
-The chassis contains the robots batteries, electonics, and cooling systems. It is an IP54-rated enclosure.
+The chassis contains the robot's batteries, electonics, and cooling systems. It is an IP54-rated enclosure.
 
 ### Wheels and Motors
 
@@ -495,14 +491,16 @@ the TODO topic.
 
 | System State (lowest to highest priority) | Light Output | Description |
 | :---------------------------------------- | :----------- | :---------- |
-| Idle                                      | Front LEDs solid white (low intensity), rear LEDs solid red (low intensity) | The robot is idle (normal operation). |
-| Driving                                   | Front LEDs solid white (medium intensity), rear LEDs solid red (medium intensity) | The robot is driving (normal operation). |
-| Low Battery                               | Pulsing orange | The robot's batteries are in a low charge state. Connect the robot to a charger. |
-| Emergency Stop Engaged                    | Flashing red | Emergency Stop mode is engaged. To disengage, twist both red mushroom buttons on the robot to ensure that they are unlatched and press the Restart button. |
-| Charging (wired or wireless)              | Pulsing green | The robot's batteries are being charger, either from the wired/manual charger or the wireless charger. |
-| Motor Fault                               | Flashing red at the corner with the motor fault; solid red for the other corners. | An error has been detected with the motor or its controller. Please contact support. |
-| Battery Fault                             | Flashing yellow and red | An error has been detected with the battery. Please contact support. |
 | Light Control Fault (or bootup)           | Solid red    | The MCU is not in contact with the computer. This condition will be seen briefly on startup while robot's computer is booting up. If it persists, or is seen after initialization, either the base node on the computer has crashed, the network switch has failed, or a serious MCU error has occurred. If you suspect one of these conditions, please contact support. |
+| Battery Fault                             | <img src="/img/robot_images/common_images/lighting_images/battery_fault.gif" width="100"/> | An error has been detected with the battery. Please contact support. |
+| Motor Fault                               | Flashing red at the corner with the motor fault; solid red for the other corners. | An error has been detected with the motor or its controller. Please contact support. |
+| Charged                                   | <img src="/img/robot_images/common_images/lighting_images/shore_and_charged.gif" width="100"/> | The robot's batteries are charged fully. Shore power is available for the robot to operate (excluding drive motors). |
+| Charging (wired or wireless)              | <img src="/img/robot_images/common_images/lighting_images/shore_and_charging.gif" width="100"/> | The robot's batteries are being charged, either from the wired/manual charger or the wireless charger. This also provides shore power for the robot to operate (excluding drive motors). |
+| Emergency Stop Engaged                    | <img src="/img/robot_images/common_images/lighting_images/stopped.gif" width="100"/> | Emergency Stop mode is engaged. To disengage, twist both red mushroom buttons on the robot to ensure that they are unlatched and press the Restart button. |
+| Needs Restart (after Emergency Stop)      | <img src="/img/robot_images/common_images/lighting_images/needs_reset.gif" width="100"/> | The Emergency Stop buttons have been disengaged but the Restart button still needs to be pressed to resume driving. |
+| Low Battery                               | <img src="/img/robot_images/common_images/lighting_images/low_battery.gif" width="100"/> | The robot's batteries are in a low charge state. Connect the robot to a charger. |
+| Driving                                   | <img src="/img/robot_images/common_images/lighting_images/driving.png" width="100"/> | The robot is driving (normal operation). |
+| Idle                                      | <img src="/img/robot_images/common_images/lighting_images/idle.png" width="100"/> | The robot is idle (normal operation). |
 
 ### Buttons
 
@@ -530,13 +528,14 @@ the button will cause the robot to power on. From the "on" state, pressing the b
 The rear of the robot has an access panel, protected by a lockout, that contains the Battery Charge Port, On/Off Breaker,
 and Debug Ports. Opening the access panel cover puts the robot into a stop condition to prevent the robot from driving
 while cables may be connected. To clear the stop condition, close the access panel cover and the Restart Button. 
-Refer to TODO for more details.
 
 TODO: image when cover closed and with cover opened
 
 #### Lockout
 
 When equipped with a lock, the lockout prevents access to the On/Off Breaker, Battery Charge Port, and Debug Ports.
+
+TODO: image
 
 #### On/Off Breaker
 
@@ -550,21 +549,33 @@ When the breaker is in the "on" position:
 
 - the Power Button can be used to turn the robot on/off.
 
-Note that the can be charged (manual and wireless charger options) regardless of the On/Off Breaker position.
+:::note
 
-Note also that Husky ships with the breaker in the "off" position to prevent battery drain during shipping.
+The robot can be charged (manual and wireless charger options) regardless of the On/Off Breaker position.
+
+:::
+
+:::note
+
+Husky ships with the breaker in the "off" position to prevent battery drain during shipping.
+
+:::
 
 #### Battery Charge Port
 
 The charger included in your Husky shipment can be used to charge the robot's internal batteries by connecting it
 to the Battery Charge Port. Refer to TODO for additional information on charging the robot's batteries.
 
-Note that the charger also functions as "shore power", providing power to the robot indefinitely while connected.
+:::note
+
+The charger also functions as "shore power", providing power to the robot indefinitely while connected.
+
+:::
 
 #### Debug Ports
 
-The robot is equipped with a Gigabit Ethernet port, a USB 3.0 (Type A) port, and an HDMI port. These can be used for debugging on the
-robot without needing internal access to the robot. These ports are all connected directly to the robot's computer.
+The robot is equipped with a Gigabit Ethernet port, a USB 3.0 (Type A) port, and an HDMI port. These can be used for debugging
+without needing internal access to the robot. These ports are all connected directly to the robot's computer.
 
 ### Airflow Intake and Exhaust
 
@@ -574,7 +585,7 @@ of the robot. The amount of airflow scales automatically depending on the temper
 ### Orientation References
 
 The reference frame used by all Clearpath Robotics ground robots is based on ISO 8855, and is shown in the figure below.
-Husky's front is shown.
+Husky's front is shown. (TODO: new image)
 When commanded with a positive translational velocity (forward), wheels travel in the positive X-direction.
 The direction of the axes differs from those used for roll, pitch, and yaw in aircraft, and care should be taken to ensure that data is interpreted correctly.
 
@@ -590,15 +601,15 @@ The direction of the axes differs from those used for roll, pitch, and yaw in ai
 As a starting point, Clearpath Robotics recommends using the following relationship between wheel velocity and platform velocity:
 
 $$
-v=\cfrac\{v_\{r\}+v_\{l\}\}\{2\}
+v=\cfrac{v_{r}+v_{l}}{2}
 $$
 
 $$
-\omega=\cfrac\{v_\{r\}-v_\{l\}\}\{W\}
+\omega=\cfrac{v_{r}-v_{l}}{W}
 $$
 
 $v$ represents the instantaneous translational speed of the platform and $\omega$ the instantaneous rotational speed. <br />
-$v_\{r\}$ and $v_\{l\}$ are the right and left wheel velocities, respectively. <br />
+$v_{r}$ and $v_{l}$ are the right and left wheel velocities, respectively. <br />
 $W$ is the effective track of the robot, 0.555 m. (TODO)
 
 ---
