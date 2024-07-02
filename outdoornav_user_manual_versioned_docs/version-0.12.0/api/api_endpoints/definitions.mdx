@@ -216,7 +216,7 @@ clearpath_navigation_msgs/NetworkMission[] network_missions
 clearpath_navigation_msgs/NetworkMap[] network_maps
 ```
 
-#### clearpath_mission_scheduler_msgs/msg/NextSchedule.msg
+#### clearpath_mission_scheduler_msgs/msg/NextSchedule.msg {#scheduler-nextschedule}
 
 ```
 # The ID of the next schedule to start
@@ -227,7 +227,7 @@ string uuid
 duration time_to_start
 ```
 
-#### clearpath_mission_scheduler_msgs/msg/Schedule {#scheduler-schedule}
+#### clearpath_mission_scheduler_msgs/msg/Schedule.msg {#scheduler-schedule}
 
 ```
 # Single-execution mode; the schedule starts at the designated time and runs once
@@ -1580,6 +1580,19 @@ string message
 bool enable_path_smoother
 float32 turn_radius         # units: meters
 float32 step_size
+---
+bool success
+string message
+```
+
+#### clearpath_navigation_msgs/srv/SetPathShifter.srv {#srv-set-path-shifter}
+
+```
+# Service definition to enable/disable the path smoothing feature. If enabling, minimum turning radius must be specified in the request.
+
+bool enable_path_shifter
+float32 path_shift_offset
+float32 path_shift_time
 ---
 bool success
 string message

@@ -12,7 +12,7 @@ Proper networking setup is crucial in setting up the ROS 2 middleware and to ens
 The username indicates the username that will be used to run all ROS nodes. If this username needs to be changed then the robot
 services must be reinstalled as directed in the [software installation instructions](../../installation/robot.mdx#robot-services).
 
-## Hosts
+## Hosts  {#hosts}
 
 The **hosts** section serves as a way to match hostnames to IP addresses. By default, Clearpath robots use the serial number as
 the hostname and have a default IP of `192.168.131.1`. This section must define ip addresses for all hostnames that appear in
@@ -90,7 +90,7 @@ Each server can be defined with a number of different parameters:
 
 | Key | Value / Datatype | Description |
 |:---:| :--------------: | ----------- |
-| **hostname** | string            | The hostname of the computer that is hosting the server (must be in the [hosts](#Hosts) list). |
+| **hostname** | string            | The hostname of the computer that is hosting the server (must be in the [hosts](#hosts) list). |
 | **port**     | integer           | The port at which to connect to the server (default is `11811`). |
 | **enabled**  | `True` or `False` | This indicates whether or not the robot should connect to this server and, if the hostname matches the computer's own hostname, whether or not to launch the server (default is `True`). |
 

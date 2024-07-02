@@ -383,12 +383,12 @@ To increase the UGVs maximum velocity, the following parameters should be modifi
 First, the [`mpc_horizon`](../tuning_parameters/navigation_parameters.mdx#default_state_params) parameter
 should be set to: 1.0
 
-The following parameters should then be modified to the desired velocity ($v_{des}$). Ie. if $v_{des}=4.0$ m/s, then you should modify both parameters to be 4.0.
+The following parameters should then be modified to the desired velocity ($v_\{des\}$). Ie. if $v_\{des\}=4.0$ m/s, then you should modify both parameters to be 4.0.
 
 | Parameter | Value |
 |-----------|-------|
-| [`max_fwd_velocity`](../tuning_parameters/navigation_parameters.mdx#default_state_params)  | $v_{des}$ |
-| [`max_lookahead`](../tuning_parameters/navigation_parameters.mdx#default_state_params) | $v_{des}$ |
+| [`max_fwd_velocity`](../tuning_parameters/navigation_parameters.mdx#default_state_params)  | $v_\{des\}$ |
+| [`max_lookahead`](../tuning_parameters/navigation_parameters.mdx#default_state_params) | $v_\{des\}$ |
 
 Finally, if you are increasing the velocity to a value greater than or equal to 4.0 m/s or if you
 are seeing that the velocity is being limited even after changing the above parameters, 

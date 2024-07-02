@@ -73,13 +73,13 @@ including autonomy state and mode.
 
 #### /dock/feedback
 
-&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/DockActionFeedback](definitions.mdx#action-dock)
+&emsp;&emsp;**Message Type:** clearpath_dock_msgs/DockActionFeedback
 
 &emsp;&emsp;**Description:** Feedback topic from the dock action.
 
 #### /dock/result
 
-&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/DockActionResult](definitions.mdx#action-dock)
+&emsp;&emsp;**Message Type:** clearpath_dock_msgs/DockActionResult
 
 &emsp;&emsp;**Description:** Result topic from the dock action.
 
@@ -337,13 +337,13 @@ message for 1 second).
 
 #### /undock/feedback
 
-&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/UndockActionFeedback](definitions.mdx#action-undock)
+&emsp;&emsp;**Message Type:** clearpath_dock_msgs/UndockActionFeedback
 
 &emsp;&emsp;**Description:** Feedback topic from the undock action.
 
 #### /undock/result
 
-&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/UndockActionResult](definitions.mdx#action-undock)
+&emsp;&emsp;**Message Type:** clearpath_dock_msgs/UndockActionResult
 
 &emsp;&emsp;**Description:** Result topic from the undock action.
 
@@ -384,7 +384,7 @@ initialized by a previously sent goal.
 
 #### /dock/goal
 
-&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/msg/DockActionGoal](definitions.mdx#action-dock)
+&emsp;&emsp;**Message Type:** clearpath_dock_msgs/msg/DockActionGoal
 
 &emsp;&emsp;**Description:** This topic is used to send a goal to the docking process.
 The goal consists of the UUID of the dock to dock at as well as wether or not local docking
@@ -399,7 +399,7 @@ initialized by a previously sent goal.
 
 #### /undock/goal
 
-&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/msg/UndockActionGoal](definitions.mdx#action-undock)
+&emsp;&emsp;**Message Type:** clearpath_dock_msgs/msg/UndockActionGoal
 
 &emsp;&emsp;**Description:** This topic is used to send a goal to the undocking process.
 The goal is empty since we always consider undocking to be a local undocking process.
@@ -445,7 +445,7 @@ or the semantic name of the dock.
 
 #### /dock/clear_data
 
-&emsp;&emsp;**Service Type:** [std_srvs/srv/Trigger](definitions.mdx#srv-clear-dock-data)
+&emsp;&emsp;**Service Type:** std_srvs/srv/Trigger
 
 &emsp;&emsp;**Description:** Remove all existing dock data from storage.
 
@@ -536,7 +536,7 @@ This feature takes effect immediately once the service is called.
 
 :::
 
-#### /navigation/set_path shifter
+#### /navigation/set_path_shifter
 
 &emsp;&emsp;**Service Type:** [clearpath_navigation_msgs/srv/SetPathShifter](definitions.mdx#srv-set-path-shifter)
 
@@ -627,7 +627,7 @@ goal tolerances, goal heading, an optional start_waypoint_uuid, and a from_start
 
 #### /undock
 
-&emsp;&emsp;**Action Type:** [clearpath_dock_msgs/action/Dock](definitions.mdx#action-undock)
+&emsp;&emsp;**Action Type:** clearpath_dock_msgs/action/Dock
 
 &emsp;&emsp;**Description:** Undock the robot to the charging dock, if the docking
 package has been included.

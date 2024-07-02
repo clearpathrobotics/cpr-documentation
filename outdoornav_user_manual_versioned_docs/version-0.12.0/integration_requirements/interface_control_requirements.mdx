@@ -83,10 +83,10 @@ z: ___"
 ```
 
 The three trials that we request will vary between platforms depending
-on the its maximum linear $(v_{max})$ and angular velocities
-$(\omega_{max})$, minimum linear $(v_{min})$ and angular velocities
-$(\omega_{min})$, as well as limitations due to the minimum allowable
-turning radius $(r_{min})$. Of these three trials, we would like to see
+on the its maximum linear $(v_\{max\})$ and angular velocities
+$(\omega_\{max\})$, minimum linear $(v_\{min\})$ and angular velocities
+$(\omega_\{min\})$, as well as limitations due to the minimum allowable
+turning radius $(r_\{min\})$. Of these three trials, we would like to see
 data within three linear velocity bands, as seen in the table below,
 resulting in three different turning radii. For the purpose of these
 tests, the following formula can be used when determining the required
@@ -94,11 +94,11 @@ linear and angular velocities to apply: $r = v/\omega$.
 
 | Trial \# | Linear X Bands \[m/s\]                     |  Example Linear X Band \[m/s\] |
 | ---------|--------------------------------------------|-------------------------------------|
-| 1        | $v_{min} \cdot [1.0, 1.5]$                 | $[0.5, 0.75]$ |
-| 2        | $((v_{max} - v_{min})/2) \cdot [0.9, 1.1]$ | $[2.025, 2.475]$ |
-| 3        | $v_{max} \cdot [0.9, 1.0]$                 | $[4.5, 5.0]$ |
+| 1        | $v_\{min\} \cdot [1.0, 1.5]$                 | $[0.5, 0.75]$ |
+| 2        | $((v_\{max\} - v_\{min\})/2) \cdot [0.9, 1.1]$ | $[2.025, 2.475]$ |
+| 3        | $v_\{max\} \cdot [0.9, 1.0]$                 | $[4.5, 5.0]$ |
 
-As an example, a platform with specs $v \in [0.5, 5.0]$, $r_{min} = 3$
+As an example, a platform with specs $v \in [0.5, 5.0]$, $r_\{min\} = 3$
 would have linear x velocity bands as listed in the table above. The
 trials could then be as outlined in the table below.
 
