@@ -15,120 +15,137 @@ import Support from "/components/support.mdx";
 
 <ComponentIntroductionHusky />
 
-## Moving, Unpacking, and Storage
-
-TODO
-
-### Moving Husky
-
-The Husky A300 has a robust structure that allows it to be picked up or reoriented by hand or with
-the use of lifting machinery such as a forklift. When lifting the Husky A300, it is required to lift from
-the bottom of the robot using straps that are positioned as shown in the image below. The lifting
-equipment and straps used must be rated to support the weight of the Husky A300 (see
-[System Specifications](user_manual_husky#system-specifications)) and any included payloads.
-
-TODO: Warning: The Husky A300 exceeds the weight to be lifted by a single individual. If lifting by
-hand, ensure to ask for assistance and use proper lifting techniques.
-
-TODO: image showing lift points
-
-### Storage
-
-Before storing the Husky A300 for an extended period of time (greater than two days), it is best to
-reduce the battery state to approximately 50% State of Charge (approximately 24 V open circuit at 25°C).
-The On/Off Breaker must be set to the "off" position storing Husky A300 for an extended period of time.
-Even with the batteries disconnected from the system, the batteries will discharge over time and must
-be charged to ~50% every 12 months or sooner. (TODO: confirm timeline)
-
-Husky A300 and any spare batteries outside of the vehicle should be stored within the
-temperature range outlined in [System Specifications](user_manual_husky#system-specifications).
-
-If Husky is at a higher State of Charge than mentioned above for storage, the battery will need to
-be discharged prior to storage. To do this, place Husky in a safe location, press an Emergency Stop
-button, ensure that Husky is powered on, wait until the desired State of Charge is reached, and
-then shut down the robot (including the Lock-Out Tag-Out procedure).
-
----
-
 ## Preventative Maintenance
 
-TODO
+:::safety-danger[DANGER]
 
-### Weekly Prevenative Maintenance
-
-### Monthly Preventative Maintenance
-
-### Quarterly Preventative Maintenance
-
-### 36-Month Preventative Maintenance
-
----
-
-## Common Replacement Items {#husky_maintenance_common_replacement_items}
-
-<ComponentBillOfMaterialsNote />
-
-| Description                | CPR Item | Manufacturer            | Manufacturer Item     | Distributor | Distributor Item |
-| :------------------------- | :------- | :---------------------- | :-------------------- | :---------- | :--------------- |
-| Battery                    | 005670   | Clearpath Robotics      | -                     | -           | -                |
-| Battery Charger            | 000597   | Clearpath Robotics      | -                     | -           | -                |
-| Connector, Mini-fit-jr     | 022207   | Molex                   | 39-01-2065            | Digi-Key    | WM23702-ND       |
-| Contact Crimp, Mini-fit-jr | 022207   | Molex                   | 40-13-0852            | Digi-Key    | WM24935-ND       |
-| Fuse, 3 A                  | 020411   | Littelfuse              | 0287003.PXCN          | Digi-Key    | F4193-ND         |
-| Fuse, 5 A                  | 006745   | Littlefuse              | 0287005.PXCN          | Digi-Key    | F4197-ND         |
-| Fuse, 7.5 A                | 025899   | Littelfuse              | 028707.5PXCN          | Digi-Key    | F4198-ND         |
-| Fuse, 20 A                 | 025898   | Littelfuse              | 0287020.PXCN          | Digi-Key    | F4201-ND         |
-| Fuse, 30 A                 | 025896   | Littelfuse              | 0299030.ZXNV          | Digi-Key    | F1036-ND         |
-| MCU circuit board          | 027104   | Clearpath Robotics      | -                     | -           | -                |
-| Motor, standard            | 005063   | Midwest Motion Products | S22-346F-24V GP52-079 | -           | -                |
-| Motor, high torque         | 007449   | Midwest Motion Products | S22-346F-24V GP52-150 | -           | -                |
-| Tire                       | 000269   | Carlisle                | 5100201               | -           | -                |
-| Tire's inner tube          | 000435   | Carlisle                | 323790                | -           | -                |
-
----
-
-## Chassis
-
-Husky is an all-terrain robot, but it is not waterproof.
-Care should be taken that no part of the main chassis is ever submerged in water.
-When the chassis becomes wet or dirty, wipe it down with a damp cloth and dry with a towel.
-
-If water is suspected to have entered the Husky A200 chassis, remove the battery and allow Husky to fully dry
-for a minimum of 24 hours.
-
-:::note
-
-Clearpath Robotics offers a Waterproofing Kit for Husky.
-This includes a top cover for the user bay, sealed drivetrain bearings, and rubber foam tape on all the panel seams.
+Prior to performing any maintenance, always follow the Lock-Out Tag-Out procedure to
+deactivate Husky.
 
 :::
 
----
+### Weekly Prevenative Maintenance
 
-## Checking Drivetrain Health
+Perform the following tasks at least once every week.
 
-Depending on the environment in which the robot is used in and duty cycle,
-the robot drivetrain may require maintenance during its life. Maintenance
-activities can include gearhead replacement, tire tread replacement, motor
-brush replacement, belt replacement, bearing replacement, etc.
+#### Circle Check
 
-It is recommended that the user perform an auditory inspection of the
-robot drivetrain once per month. Take note of any clicking, grinding or
-irregular skipping sounds while the robot is moving. Note that some clicking
-in the gearheads is normal during stops and starts, due to backlash between
-the gears.
+Perform a circle check around Husky daily to ensure no damage has occurred since its last usage.
+During this visual inspection, ensure the robot is turned on and verify that:
 
----
+- The Status Lights are functioning correctly by pressing an Emergency Stop button and checking for the
+  Emergency Stop light pattern.
+- The robot was not damaged during the last operation.
 
-## Wheels
+:::note
 
-Tire pressure may change with temperature and should be checked monthly
-with a pressure gauge. Inspecting tires, releasing pressure, and inflating
-tires are completed through the tire's inflation stem.
+Husky is an all-terrain IP54-rated robot, but it is not waterproof.
+Care should be taken that no part of the main chassis is ever submerged in water.
+When the chassis becomes wet or dirty, wipe it down with a damp cloth and dry with a towel.
+
+If water is suspected to have entered the Husky chassis, power off the robot, open the top plate
+to ensure that any water has drained out through the drain plug, and allow Husky to dry fully
+(for a minimum of 24 hours) prior to putting it back into service.
+
+:::
+
+#### Clean or Replace Air Filter
+
+The air filter is used to prevent dirt and dust from entering the robot at the front air
+intake. It must be cleaned or replaced on a regular basis. High-dust environments will require
+more frequenct maintenance.
+
+:::note
+
+The air filter is foam and can be washed, then reused.
+
+:::
+
+Procedure:
+
+1. Remove the front Livery panel by loosening the quarter-turn latches.
+1. Remove the air filter.
+1. Wash the filter with water and allow it to dry fully. (Alternatively, replace with a new filter.)
+1. Install the clean filter.
+1. Replace the front livery panel and tighten the quarter-turn latches.
+
+#### Battery Cell Balancing (Quick)  {#quick-cell-balance}
+
+Husky is powered by LiFePO<sub>4</sub> batteries. The function and health of these
+battery is monitored by a Battery Management Unit (BMU) which is internal to the battery pack itself.
+
+Over the operating life of Husky, the State of Charge (SoC) of the batteries may start being
+misreported accompanied by a higher voltage difference between the batteries' cells. Typically battery cells
+should be within a range of 50 mV; if not, Husky's batteries may suddenly drop in SoC
+while operating or the Husky may unexpectedly shut off. To resolve this issue, it is required to
+perform regular cell balancing of the battery and BMU.
+
+A "quick" cell balancing should be performed at least once each week.
+
+Procedure:
+
+1. Power off the robot.
+1. Place the robot on a level surface.
+1. Connect the manual charger.
+1. Let the batteries charge for at least four hours.
+
+#### AMP Sensor Cleaning
+
+The AMP variant of Husky is equipped with additional sensors that should be inspected at least weekly
+(more often in high dust/dirt environments) and cleaned as needed.
+
+TODO: finalize details once sensors are selected
+
+##### Lidar Lens Cleaning
+
+1. Inspect LiDAR lens with a flashlight for any dust and/or debris.
+2. Using the Lens Cleaning Wipes (Clearpath p/n 015591), clear the LiDAR of any dust/debris.
+
+:::safety-caution[CAUTION]
+
+Do not use abrasive items or solvents on the LiDAR assembly, as this will damage the LiDAR.
+Used and dirty cleaning cloths or wipes will scratch the window over time. The LiDAR window is
+a wear item but proper care and cleaning can significantly extend its life.
+
+:::
+
+##### Camera Cleaning (clean with microfiber cloth or CPR-approved cleaning wipe if dirty)
+
+The cameras on Husky are protected by a glass lens.
+
+1. Visually inspect the window and confirm there is no dust or debris on the cover.
+1. If necessary, carefully clean the cover with a microfiber cloth or a Clearpath Robotics-approved
+   cleaning wipe.
+
+:::safety-caution[CAUTION]
+
+Do not apply excessive pressure to the glass cover
+
+:::
+
+### Monthly Preventative Maintenance
+
+Perform the following tasks once every month.
+
+#### Battery Cell Balancing (Full)
+
+Refer to the notes above regarding the [weekly "quick" cell balancing](#quick-cell-balance).
+In a addition, a full balance of 24+ hours is recommended at least once per month.
+
+Procedure:
+
+1. Power off the robot.
+1. Place the robot on a level surface.
+1. Connect the manual charger.
+1. Let the batteries charge for at least 24 hours.
+
+#### Tire Inspection
+
+Tire pressure may change with temperature and should be checked monthly with a pressure gauge. Inspecting tires,
+releasing pressure, and inflating tires are completed through the tire's inflation stem.
 Tire pressure should not exceed 137 kPa (20 psi), and lower pressure may be desired based on terrain requirements.
-A monthly visual inspection of the tire treads is also recommended.
-Replacement wheel assemblies can be purchased from Clearpath Robotics and
-can be installed by the user.
+A monthly visual inspection of the tire treads is also recommended. Replacement tires and tubes assemblies can be
+purchased from Clearpath Robotics and can be installed by the user.
 
 :::tip
 
@@ -142,98 +159,107 @@ Odometry is calculated using the average diameter of a tire inflated to 137 kPa 
 
 :::
 
----
+Procedure:
 
-## Replacing Tire or Inner Tube
+1. Power off the robot.
+1. Place the robot on a level surface.
+1. Using a tire pressure gauge, check the pressure on each tire to confirm it is 68.5 - 137 kPa (10 - 20 psi). Add or remove air
+   as needed to ensure each tire is in the proper range. If leaks persist, [change the tire tube](#tire-maintenance).
+1. One wheel at a time, slowly roll Husky through full wheel revolution while inspecting the tire for excessive wear,
+   cuts, or punctures. If any damage is detected, [replace the tire](#tire-maintenance).
 
-<ComponentReplacingTireOrInnerTube />
+#### Drivetrain Inspection
 
----
+It is recommended that an auditory inspection of the robot drivetrain be performed once per month. Take note of any clicking,
+grinding or irregular skipping sounds while the robot is moving. Note that some clicking in the gearheads is normal during
+stops and starts, due to backlash between the gears.
 
-## Lead-Acid Battery Care
+### 36-Month Preventative Maintenance
 
-Husky's default power supply is a sealed 24 V lead-acid battery (VRLA), providing 20 Ah of charge.
-These tips are intended to help keep your Husky Lead-Acid Battery in tip-top shape.
-With proper maintenance, the battery should maintain the majority of its capacity for hundreds of cycles.
+Perform the following tasks once every thirty-six months.
 
-<ComponentLeadAcidBatteryCare />
+#### Battery Health Check
 
-Your robot's battery charger works in 3 stages:
-
-1.  Constant current charging
-2.  Topping charge
-3.  Float charge
-
-The bulk of the capacity (70%) is regained during the first stage.
-
-It is important to let the charger complete all 3 stages whenever possible, to help maintain the life of the battery.
-The initial stage will take 5 - 7 hours, and a complete charge may take up to 14 hours.
-
-<ComponentLeadAcidBatteryCareTips />
-
-<center>
-  <img
-    src="/img/robot_images/husky_images/robot_husky_18.png"
-    width="600"
-  />
-</center>
+Husky's batteries are expected to last for at least 36 months of
+continuous operation. The actual lifetime experienced will vary greatly depending on the usage and
+operating environment. Contact [Support](#support) for an in-depth assessment of the battery's health if you
+have any concerns.
 
 ---
 
-## Lithium Battery Care
+## Hardware Maintenance
 
-If your Husky has an upgrade to lithium batteries, note the required maintenance below.
+### Common Replacement Items {#husky_maintenance_common_replacement_items}
 
-### Balancing Lithium Batteries
+<ComponentBillOfMaterialsNote />
 
-The Husky's batteries must be balanced on a regular basis to ensure accurate
-feedback, consistent performance, and long life. If the batteries are
-allowed to fall out of balance, they will become unevenly loaded. This can
-lead to back-feeding between batteries, reduced charge-holding capacity
-for the system as a whole, and increased stress on both batteries.
-If the imbalance becomes severe enough, one of the system batteries
-will enter a protective state and disconnect itself from the system.
-Once the battery enters this state there is a limited time window to
-recover it. If that window expires the battery will become irreversibly
-damaged with no possibility of recovery.
+TODO: update table
+| Description                | CPR Item | Manufacturer            | Manufacturer Item     | Distributor | Distributor Item |
+| :------------------------- | :------- | :---------------------- | :-------------------- | :---------- | :--------------- |
+| Battery                    | TODO     | Clearpath Robotics      | -                     | -           | -                |
+| Battery Charger            | 000597   | Clearpath Robotics      | -                     | -           | -                |
+| Air filter                 | TODO     | Clearpath Robotics      | -                     | -           | -                |
+| Connector, Mini-fit-jr (TODO)     | 022207   | Molex                   | 39-01-2065            | Digi-Key    | WM23702-ND       |
+| Contact Crimp, Mini-fit-jr (TODO) | 022207   | Molex                   | 40-13-0852            | Digi-Key    | WM24935-ND       |
+| Fuse, 3 A                  | 020411   | Littelfuse              | 0287003.PXCN          | Digi-Key    | F4193-ND         |
+| Fuse, 5 A                  | 006745   | Littlefuse              | 0287005.PXCN          | Digi-Key    | F4197-ND         |
+| Fuse, 7.5 A                | 025899   | Littelfuse              | 028707.5PXCN          | Digi-Key    | F4198-ND         |
+| Fuse, 20 A                 | 025898   | Littelfuse              | 0287020.PXCN          | Digi-Key    | F4201-ND         |
+| Fuse, 30 A                 | 025896   | Littelfuse              | 0299030.ZXNV          | Digi-Key    | F1036-ND         |
+| Main PCBA                  | TODO     | Clearpath Robotics      | -                     | -           | -                |
+| BLDC PCBA                  | TODO     | Clearpath Robotics      | -                     | -           | -                |
+| Common Core PCBA           | TODO     | Clearpath Robotics      | -                     | -           | -                |
+| 12 V DC/DC PCBA            | TODO     | Clearpath Robotics      | -                     | -           | -                |
+| 24 V DC/DC PCBA            | TODO     | Clearpath Robotics      | -                     | -           | -                |
+| Motor                      | TODO     | Clearpath Robotics      | -                     | -           | -                |
+| Tire                       | 000269   | Carlisle                | 5100201               | -           | -                |
+| Tire's inner tube          | 000435   | Carlisle                | 323790                | -           | -                |
 
-Battery balancing is a slow process that will occur automatically when
-the fully-charged batteries are held at their float voltage. Because the
-automatic charger will shut off when it determines that the batteries are
-fully charged, the system cannot be balanced using the autocharge dock.
-The manual charger must be used.
+### Replacing Tire or Inner Tube  {#tire-maintenance}
 
-To perform a "quick" balance, leave the robot plugged into the manual
-charger overnight. A quick balance is recommended at least once per week.
-A full balance of 24+ hours is recommended at least once per month.
+TODO: more details/images
 
-Contact Clearpath Robotics for assistance with recovering a battery that
-has entered a protective state.
+Procedure:
 
-### Checking Lithium Battery Health
+1. Disconnect the motor cables from the chassis by removing the cable gland bracket and then disconnecting the cables.
+1. Remove the suspension beam from the chassis.
+1. Remove the wheel assembly from the suspension beam.
+1. Remove the wheel's inner face.
+1. Remove the tire and tube (if applicable).
+1. Install the new tire and tube (if applicable).
+1. Replace the wheel's inner face. TODO: sealant?
+1. Mount the wheel assembly on the suspension beam.
+1. Mount the suspension beam on the chassis.
+1. Reconnect the cables and mount the cable gland bracket.
 
-A regularly-balanced battery system can be recharged thousands of times
-before degrading. Even with good battery maintenance, the battery will
-lose capacity over time. This results in reduced runtime and driving
-range for your Husky. This translates to reduced run-time and
-range. The robot will need to be recharged more frequently and overall
-system availability will be reduced.
+### Replacing Motors
 
-It is recommended that the system operator review runtime performance
-once per year to determine whether battery replacement is required.
-Runtime measurements should be taken immediately after a full balancing
-operation. Battery replacement is performed by Clearpath Robotics and
-is subject to battery availability. Replacement batteries may be
-purchased in advance and warehoused at Clearpath for future use.
+TODO: more details/images
 
----
+Procedure:
 
-## Replacing Fuses
+1. Disconnect the motor cables from the chassis by removing the cable gland bracket and then disconnecting the cables.
+1. Remove the suspension beam from the chassis.
+1. Remove the wheel assembly from the suspension beam.
+1. Mount the new wheel assembly on the suspension beam.
+1. Mount the suspension beam on the chassis.
+1. Reconnect the cables and mount the cable gland bracket.
+
+:::note
+
+The motor itself is not a field-replaceable part. Rather, the entire wheel assembly
+needs to be replaced in the case of a motor failure.
+
+:::
+
+### Replacing Fuses
+
+TODO: what fuses can customers replace
 
 You Husky's MCU has fuses that can be changed through the rear battery access panel.
 The large battery input fuse is on the other side of the MCU, so you will need to remove Husky's metal panels to access this fuse.
 
-:::caution
+:::info
 
 Refer to the white lettering on the circuit board for what rating of fuse to replace in the fuse holder.
 
@@ -241,44 +267,102 @@ The [Common Replacement Items](#husky_maintenance_common_replacement_items) sect
 
 :::
 
-<details>
-  <summary>Click to expand</summary>
+### Replacing Batteries
 
-  <figure>
-    <center>
-      <img
-        src="/img/robot_images/husky_images/husky_rear_battery_access.jpg"
-        width="600"
-      />
-      <figcaption>Husky's rear battery access</figcaption>
-    </center>
-  </figure>
+:::safety-danger[DANGER]
 
-  <br />
+Battery terminals and connected cables / busbars may be live. Follow proper safety procedures when
+performing any maintenance on the batteries.
 
-  <figure>
-    <center>
-      <img
-        src="/img/robot_images/husky_images/husky_mcu_user_fuses.jpg"
-        width="600"
-      />
-      <figcaption>User power fuses</figcaption>
-    </center>
-  </figure>
+Only trained personnel authorised by Clearpath Robotics shall perform maintenance on the batteries.
 
-  <br />
+Ensure proper personal protective equipment is used when performing battery maintenance.
 
-  <figure>
-    <center>
-      <img
-        src="/img/robot_images/husky_images/husky_mcu_main_fuse.jpg"
-        width="600"
-      />
-      <figcaption>Main battery fuse</figcaption>
-    </center>
-  </figure>
+:::
 
-</details>
+TODO: more info/images
+
+1. Ensure that the On/Off Breaker is in the "OFF" position.
+1. Remove the Top Plate.
+1. Disconnect all cables at the front of the electronics tray.
+1. Tilt the electronics tray up to expose the batteries.
+1. Remove any busbars or cables connected to the affected battery.
+1. Remove the affected battery.
+1. Install the new battery.
+1. Reconnect any busbars or cables to the battery.
+1. Return the electronics tray to its regular position.
+1. Reconnect all cables to the electronics tray.
+1. Install the Top Plate.
+
+### Replacing Circuit Boards
+
+Husky contains several circuit boards (PCBAs). If a failure occurs, there is normally only one
+board that needs to be replaced.
+
+:::safety-caution[CAUTION]
+
+Circuit boards are sensitive components and can be damaged easily through electrostatic discharge (ESD).
+Be sure to follow proper ESD protection measures prior to handling any circuit boards.
+
+:::
+
+Procedure for replacing the DC/DC and BLDC circuit boards:
+
+1. Ensure that the On/Off Breaker is in the "OFF" position.
+1. Remove the Top Plate.
+1. Remove the failing circuit board by gently lifting the board up.
+1. Install the new circuit board.
+1. Install the Top Plate.
+
+Procedure for replacing the Common Core circuit board:
+
+1. Ensure that the On/Off Breaker is in the "OFF" position.
+1. Remove the Top Plate.
+1. Remove the failing circuit board by removing the two retaining screws, pushing out on the retaining
+   clips, and gently pulling the board out horizontally.
+1. Install the new circuit board by gently sliding it into place horizontally, ensure that the
+   retaining clips are secured, and that the two screws have been installed.
+1. Install the Top Plate.
+
+Procedure for replacing the Main circuit board:
+
+1. Ensure that the On/Off Breaker is in the "OFF" position.
+1. Remove the Top Plate.
+1. Disconnect all cables from the Main circuit board.
+1. Remove the failing circuit board by removing the retaining screws.
+1. Place the old and new Main circuit boards on an ESD mat.
+1. Move the DC/DC, BLDC, and Common Core circuit boards from the old to the new Main circuit board
+   by following the procedures above.
+1. Install the new Main circuit board, install the retaining screws, and reconnect all cables.
+1. Install the Top Plate.
+
+### Replacing the Computer
+
+:::safety-caution[CAUTION]
+
+Circuit boards are sensitive components and can be damaged easily through electrostatic discharge (ESD).
+Be sure to follow proper ESD protection measures prior to handling any circuit boards.
+
+:::
+
+<br/>
+
+:::info
+
+If the existing computer is still operational, a backup of any important data should be
+made prior to its replacement.
+
+:::
+
+Procedure:
+
+1. Ensure that the On/Off Breaker is in the "OFF" position.
+1. Remove the Top Plate.
+1. Disconnect all cables from the computer.
+1. Remove the computer by removing the four retaining screws.
+1. Install the new computer, install the four retaining screws, and reconnect all cables.
+1. Install the Top Plate.
+1. As needed, reinstall any custom configuration that has been backed up.
 
 ---
 
@@ -295,22 +379,11 @@ Husky firmware updates are needed.
 
 ### Motor Controller Firmware Update {#maintenance_husky_motor_controller_firmware}
 
-<ComponentUpdatingPumaFirmware />
+Customer updates of Husky firmware are not supported at this time. Contact [Support](#support) if
+Husky firmware updates are needed.
 
 ---
 
 ## Support {#support}
 
 <Support />
-
----
-
-## Future Work
-
-### Components that may require replacement
-
-- Battery
-- MCU
-- PUMA
-- Gearmotor
-- Drive Belt

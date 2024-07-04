@@ -17,90 +17,110 @@ supply, and software integration. This guide aims to equip you with respect to t
 
 ## Mechanical Mounting
 
-When determining mechanical mounting, you have two options, both of which are described below.
+Husky A300 is equipped with a [PACS&trade;](../../../../accessories/pacs) top plate for
+mounting additional sensors and equipment.
 
-- the "Standard" aluminum extrusion interface
-- the "PACS&trade;" mounting system and associated kits
-
-### Mechanical, Standard
-
-A standard Husky is delivered with a 20 X 20 aluminum extrusion frame around the top of the user bay.
-This can be used for mouning sensors, lights, and other small attachments.
-We suggest using the following items to interface with this extrusion:
-
-| Description                                       |    CPR Item     | Manufacturer | Manufacturer Item                                                                                                                                                                                                 |
-| :------------------------------------------------ | :-------------: | :----------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 20 X 20 Aluminum Extrusion                        |                 | Misumi       | [HFSB5-2020](https://us.misumi-ec.com/vona2/detail/110302683830/?HissuCode=HFSB5-2020&PNSearch=HFSB5-2020&searchFlow=results2type&KWSearch=HFSB5-2020)                                                            |
-| 20 X 20 Plasic End Cap                            |     000232      | Misumi       | [HFC5-2020-B](https://us.misumi-ec.com/vona2/detail/110300440510/?HissuCode=HFC5-2020-B&PNSearch=HFC5-2020-B&searchFlow=results2type&KWSearch=HFC5-2020-B)                                                        |
-| Extrusion Corner Bracket, Blind                   |     000228      | Misumi       | [SHBLBS5](https://us.misumi-ec.com/vona2/detail/110300439970/?HissuCode=SHBLBS5&PNSearch=SHBLBS5&searchFlow=results2type&KWSearch=SHBLBS5)                                                                        |
-| Extrusion Stud, M5×0.8                            |     001018      | Misumi       | [HNTLSN5-5-12](https://us.misumi-ec.com/vona2/detail/110302369440/?HissuCode=HNTLSN5-5-12&PNSearch=HNTLSN5-5-12&searchFlow=results2type&KWSearch=HNTLSN5-5-12)                                                    |
-| Extrusion Nut, M5×0.8                             |     026955      | Misumi       | [SHNTAP5-5](https://us.misumi-ec.com/vona2/detail/110302247550/?HissuCode=SHNTAP5-5&PNSearch=SHNTAP5-5&searchFlow=results2type&KWSearch=SHNTAP5-5)                                                                |
-| Anchor, Cable Tie                                 |     010439      | McMaster     | [7582K65](https://www.mcmaster.com/7582K65/)                                                                                                                                                                      |
-| Screw, M5×0.8, Stainless Steel (assorted lengths) | 023314 - 023324 | McMaster     | [Many](https://www.mcmaster.com/screws/rounded-head-screws/hex-drive-rounded-head-screws/system-of-measurement~metric/metric-18-8-stainless-steel-button-head-hex-drive-screws/thread-size~m5/finish~passivated/) |
-| Nut, M5×0.8, Stainless Steel                      |     015175      | McMaster     | [94205A240](https://www.mcmaster.com/94205A240/)                                                                                                                                                                  |
-
-Misumi also offers a range of configurable products for this 20 X 20 extrusion that can help with your integration.
-
-### Mechanical, PACS&trade;
-
-[PACS&trade;](../../../../accessories/pacs) is a Clearpath Robotics standard.
-We add a grid of M5×0.8 holes onto the top plate of the robot.
-This grid of holes has a 80 mm X 80 mm spacing.
-You can create your own brackets to interface with these holes, or can use an existing Clearpath Robotics designed bracket.
+[PACS&trade;](../../../../accessories/pacs) is a Clearpath Robotics standard, providing
+ a grid of M5X0.8 holes onto the top plate of the robot. This grid of holes has a 80 mm X 80 mm spacing.
+You can create your own brackets to interface with these holes, or can use an existing Clearpath
+Robotics bracket.
 
 :::note
 
-Our [Sensors](../../../../accessories/sensors) and [Accessories](../../../../accessories/add-ons) pages indicate the required bracket for the particular attachment.
+Our [Sensors](../../../../accessories/sensors) and [Accessories](../../../../accessories/add-ons) pages
+indicate the required bracket for the particular attachment.
 
 :::
 
 Refer to the following pages for Husky brackets that can simplify your integration.
 
-- [Top Plate](kits/top_plate_husky.mdx)
-- [Weatherproofing Cover](kits/user_bay_cover_husky.mdx)
-- [Riser, Full](kits/riser_full_husky.mdx)
-- [Riser, Partial](kits/riser_partial_husky.mdx)
-- [Riser, Stiffener](kits/riser_stiffener_husky.mdx)
-- [Electronics Rack](kits/electronics_rack_husky.mdx)
-- [OutdoorNav Starter Kit](../../../../accessories/add-ons/outdoornav_starter_kit.mdx)
+- TODO: add links to kits
+
+### Cable Passthrough  {#cable-passthrough}
+
+To maintain Husky's IP54 rating while allowing cables to pass between the external kits and internal
+electronics, Husky's top plate is provisioned with cutouts for cable gland systems. By default,
+these cutouts are covered with mounting brackets, but those can be removed and replaced with
+cable gland systems as needed. There are three cutouts at the front and three at the rear of
+the top plate. (TODO: image)
+
+The supported cable gland system is Icotek. (TODO: more details on part numbers)
+
+TODO: link to Icotek tutorial on how to select appropriate parts and install on cables.
 
 ---
 
 ## Electrical Integration
 
 Except for bus-powered USB cameras, most payloads have separate leads for power and data.
+Some payloads also make use of signalling through the AUX inputs and outputs on the Main
+circuit board or through the Digital I/O pins on the computer.
+
+Refer to [Cable Passthrough](#cable-passthrough) for details on how to pass cables through
+Husky's top plate for external payloads.
 
 ### Data Connections
 
-Data connections (USB and Ethernet) are made to the Husky computer mounted in the user bay.
-In addition, the PCIe Gen3 x16 slot may be used to supply a GPU or other attachements, as necessary.
-Additionally, the user bay may be used for an Ethernet switch, when attaching multiple
-Ethernet payloads, or for a PoE power injector as required.
+Data connections (USB and Ethernet) are made to the Husky computer mounted inside the chassis.
+These may be direct connections to the computer where ports are available or through USB hubs
+and network switches where expansion is required.
 
-### User Bay Power Connections
+### Main Circuit Board Connector Summary
 
-The user bay power connections are capable of supplying:
+The Main circuit board provides a number of connections for power, fans, relays, GPIOs, auxiliary
+inputs and auxiliary outputs. These are summarized in the following table and described in more
+detail in the following sections.
 
-- VBAT (approximately 24-29 V, unregulated) fused at 5 A
-- 12 V fused at 7.5 A
-- 24 V fused at 3 A.
+TODO: complete table
 
-In total, 282 W of power is available from these User Power breakouts.
+| MCU board label  | MCU board connector                                         | Mating connector                                            | Crimp terminals                                              | Crimping tool    |
+| :--------------- | :---------------------------------------------------------- | :---------------------------------------------------------- | :----------------------------------------------------------- | :--------------- |
+| USER 1 - USER 8    | | | | |
+| TBD: user expansion    | | | | |
+| TBD: high power expansion (separate from main PCBA?)   | | | | |
+| AUX1 IN, AUX2 IN, AUX3 IN  | | | | |
+| AUX1 OUT, AUX2 OUT, AUX3 OUT  | | | | |
+| GPIO  | | | | |
+| FAN 5 - FAN 8  | | | | |
+| W ES (Wireless E-Stop)  | | | | |
+| ES 3 - ES 8 (E-Stop)  | | | | |
 
-:::note
+### Power Connections
 
-You can order a upgrade for your Husky, that will add 480 W of power (VBAT fused at 20 A). Each terminal comes equipped with a
-removable connector into which your payload power leads may connect.
+#### User Power Connections
 
-:::
+The Main circuit board provides eight connectors, labelled USER 1 through USER 8, for user power. 
 
-:::note
+Note that the user power is divided into four power rails and the power for each rail is shared
+across each of the 8 connectors. The maximum (aggregate) current available on each power rail is:
 
-Husky UGVs with serial numbers lower than A200-0802 have different user power connections.  
-These older robots have 5 V, 12 V, and 24 V supplies, all fused at 5A.
-Your Husky's serial number is shown on a sticker, attached to the right side of the robot.
+- 12 V Rail A: 5 A
+- 12 V Rail B: 5 A
+- 24 V: 5 A
+- VBAT (24-29 V, unregulated): 5 A
 
-:::
+##### User Power Pin Mapping
+
+TODO: connector image
+TODO: confirm pin mapping
+
+The
+pinout for each of the eight connectors is illustrated below.
+
+| USER connector pin | Function |
+| :----------------- | :------- |
+| 1                  | 12 V (Rail A) |
+| 2                  | 12 V (Rail B) |
+| 3                  | 24 V |
+| 4                  | VBAT (24-29 V, unregulated) |
+| 5                  | GND |
+| 6                  | GND |
+| 7                  | GND |
+| 8                  | GND |
+
+##### Making Cables to Connect to User Power
+
+TODO: 
 
 To connect to user power:
 
@@ -140,15 +160,49 @@ For more technical information on the Molex power connectors, as well as their c
 please visit the
 [Digi-Key WM23702-ND Product Page](https://www.digikey.ca/en/products/detail/molex/0039012065/930272?s=N4IgTCBcDaIOoFkwGYDsAGMBaAcgERAF0BfIA).
 
-### Serial Connection
+##### Software Control of User Power rails
 
-The pinout of the DE-9 connector is shown below.
+TODO: ROS topics
 
-|                                                                           |                            |
-| :-----------------------------------------------------------------------: | :------------------------: |
-| <img src="/img/robot_images/husky_images/robot_husky_9.png" width="200"/> | <ComponentTableHuskyOne /> |
+TODO: ROS topic for control of each rail
 
-### External Motion Stop {#husky_external_stop}
+#### User Power Expansion
+
+TODO
+
+- User power expansion (optional add-on module):
+   - 12 V: 10 A
+   - 24 V: 10 A
+
+#### High Power Expansion
+
+TODO
+
+- High power expansion (optional add-on module):
+   - VBAT: 40 A
+
+### AUX In
+
+TODO
+
+### AUX Out
+
+TODO: note relay as mosfet variants
+
+### GPIO
+
+TODO: In vs Out
+
+### Fan Expansion
+
+TODO: 5-8; connector/pinout; how to control?
+
+
+### Wireless Emergency Stop
+
+TODO
+
+### External Emergency Stop {#husky_external_stop}
 
 <center>
   <figure>
@@ -224,6 +278,7 @@ On older revisions of the Husky MCU PCBA, the labels are different, but the func
 - D4: 5 V, 5 A
 
 :::
+
 
 ---
 
