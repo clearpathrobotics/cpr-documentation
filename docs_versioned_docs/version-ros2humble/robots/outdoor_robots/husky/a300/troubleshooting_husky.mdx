@@ -4,130 +4,152 @@ sidebar_label: Troubleshooting
 sidebar_position: 6
 ---
 
+import ComponentIntroductionHusky from "/components/introduction_husky_a300.mdx";
 import ComponentSupportIntroduction from "/components/support_introduction.mdx";
 import Support from "/components/support.mdx";
 
-<figure>
-  <center>
-    <img
-      src="/img/robot_images/husky_images/robot_husky_32.jpg"
-      width="1000"
-    />
-    <figcaption>Rear of a Husky</figcaption>
-  </center>
-</figure>
+<ComponentIntroductionHusky />
 
-<ComponentSupportIntroduction />
+Robots are complex. Issues can occur.
+Examine the following information for possible methods to recover from an unexpected state of Husky.
+See [Components Overview](#components-overview) for detail on button locations and vehicle state indicators. 
+Contact our support team at \<support@clearpathrobotics.com\> if the issue persists.
 
 ---
 
-## Status lights
+## Power
 
-### `COMM` light on the rear panel is red
+### Husky will not turn on
 
-A red COMM light means the Husky's computer to microcontroller serial connection is not established.
-This serial connection requires:
+1. Check that both On/Off Breaker is in the "ON" position, then press and hold the Power Button for 1 second.
+2. If the step above does not work, connect the manual charger for one hour to ensure that the batteries
+   have sufficient charge and repeat the step above.
+3. If the issue persists, contact [Support](#support).
 
-- The computer to be on
-- The USB-Serial cable to be functioning properly.
-  A functioning cable will appear in Ubuntu as `/dev/ttyUSB` or `/dev/ttyACM`
-- The serial port has been given permissions in Linux.
-- The MCU's microcontroller is on.
+## Status lights and status panel
+
+### Status lights are solid red
+
+:::info
+
+This indicates that the MCU is not in contact with the computer. This condition will be seen briefly on startup
+while robot's computer is booting up. If it persists, or is seen after initialization, refer to the
+debugging steps below.
+
+:::
+
+1. Try power cycling the robot to see if the issue persists.
+1. If the issue persists, the base node on the computer has crashed, the network switch has failed, or a serious
+   MCU error has occurred. The following checks can help isolate the source of the error. Run the check below and
+   then contact [Support](#support) for further assistance.
+   1. From a [wired Ethernet connection](user_manual_husky#ethernet-connection), attempt to ping the robot
+      computer to see if it is accessible:
+      ```
+      ping 192.168.131.1
+      ```
+   1. From a [wired Ethernet connection](user_manual_husky#ethernet-connection), SSH to the robot
+      computer (`ssh administrator@192.168.131.1) and determine if ROS is running:
+      ```
+      sudo systemctl status clearpath-platform
+      ```
+   1. From a [wired Ethernet connection](user_manual_husky#ethernet-connection), attempt to ping the robot
+      MCU to see if it is accessible (TODO: is the MCU even accessible; or does this need to be via robot computer?):
+      ```
+      ping 192.168.131.2
+      ```
+
+### Status lights indicated a battery fault
+
+:::safety-danger[DANGER]
+
+Only original chargers from Clearpath Robotics should be used when charging the Husky A300 to
+avoid any damage to the batteries and to reduce hazards. Use proper personal protective
+equipment (PPE) if attempting to handle the batteries.
+
+:::
+
+1. Disconnect any chargers and power cycle the robot to clear any transient state issues.
+2. If the issue persists, power off the robot, charge the robot batteries fully using the
+   manual charger, disconnect the charger, and power on the robot.
+3. If the issues persists, contact [Support](#support).
+
+### Status lights indicate a motor fault
+
+1. Make note of the motor with the fault condition based on the status light pattern.
+1. Power cycle the robot to see if the issue persists.
+1. If the issue persists, [collect a rosbag](#collecting-rosbag) of the following
+   topics, then contact [Support](#support) with the rosbag.
+   - /TODO_topics
+
+### Robot is stuck in emergency stop state
+
+1. Confirm that all [Emergency Stop buttons](#emergency-stop-buttons) on the robot are disengaged.
+1. Confirm that any remote emergency stop units, if present, have their stop
+   buttons disengaged and restart button pressed (if applicable).
+1. Confirm that all external stop devices are functioning, and that their related switches and
+   relays are closed. You may need to use a multimeter to test voltage between the external stop
+   connector and each of these external stop switches.
+1. Press the [Restart button](#restart-button).
+1. If the above fails, power cycle the robot to see if the issue persists.
+1. If the issues persists, contact [Support](#support).
+
+:::info
+
+You can confirm the emergency stop state in ROS by running: (TODO: is this correct?)
+
+```
+ros2 topic echo /status
+```
+
+:::
+
+### Status lights indicated that motor protection is engaged  {#motor-protection}
+
+1. On the robot, check the following topics to confirm that one or motors are in the protection state:
+   ```
+   ros2 topic echo /TODO
+   ```
+1. Wait 30 minutes for the motors to cool and confirm that the protection state has cleared.
+1. If the issues persists, contact [Support](#support).
+
+### Status panel indicates a communication fault
+
+A communication fault indcates that the Husky's computer to microcontroller Ethernet connection is
+not established. This connection requires:
+
+- The computer to be on.
+- The MCU to be on.
+- The Ethernet cable connection the computer to the MCU to be functioning properly (TODO: is this a direct connection or through the switch?).
 - The MCU has Husky's firmware installed on it.
-- Functioning connections from the USB-Serial cable to the MCU's microcontroller.
-  (soldered connectors, PCBA traces, microcontroller's soldered pins)
 
-If your robot was functioning recently, the most common causes are:
+If your Husky was functioning recently, the most common causes are:
 
-- The robot's computer is not powered, or is still booting.
+- Husky's computer is not powered, or is still booting.
   Wait 60 seconds after startup to see if the computer-to-MCU connection starts after the computer turns on.
   If not, connect to the computer with SSH, or using a computer monitor to see if the computer is running.
-- The USB-Serial cable is not connected.
-  Check that the USB end is seated in the robot's computer.
-  Check that the DE-9 end is seated on it's jack in the Husky user bay.
-- Someone has changed the robot.yaml configuration file. You can review the robot.yaml by running:
+- The Ethernet cable is not connected. Check that the cable is connected securely at both ends.
+- Someone has changed the robot.yaml configuration file. You can review the robot.yaml on the Husky
+  computer by running:
   ```
   nano /etc/clearpath/robot.yaml
   ```
 
-### `COMM` light is yellow
+### Status panel indicates a Wi-Fi fault  {#wifi-fault}
 
-A yellow COMM light indicates that there is a functioning Serial connection between the robot's computer and MCU's microcontroller, but there is a ROS software error on the computer.
-The common causes for this error are:
+1. Confirm that Husky Wi-Fi has been configured correctly in [Client Mode](#wifi-client-setup),
+   including correct SSID and password. Confirm that the settings are correct in the
+   corresponding `/etc/netplan/` file.
+1. From Husky's computer, run `ip a` to review the status of the wireless interface and
+   determine if the connection has been established.
+1. Power cycle the robot and see if the issue persists.
+1. If the issues persists, contact [Support](#support).
 
-- The Husky's motion-stop button has been pressed. Twist the red button on the back of the Husky clockwise to release the motion-stop.
-  You can confirm the motion-stop state in ROS by running:
-  ```
-  rostopic echo /status
-  ```
-- The Husky's lockout keyswitch is in the _Locked_ position.
-  Use the included key to turn the lockout to the _Unlocked_ position.
+### Status panel has a flashing battery indicator
 
-### `COMM` light flickers
+This indicates that the battery voltage is too low for Husky to drive the motors.
+(TODO: is this correct?)
 
-This frequently happens when the MCU is not receiving motion commands fast enough.
-Increase your published motion command in ROS to at least 10 Hz.
-
-```
-rostopic pub -r 10 /cmd_vel ...
-```
-
-:::note
-
-The maximum command frequency that Husky accepts is 50 Hz.
-
-:::
-
-### `ERR` light is on
-
-This light indicates a General Error.
-It is red when the Husky is in a motion-stop state, has insufficient battery voltage, or an if there is unspecified software error.
-
-### `STOP` status light is on
-
-1.  Twist the red stop button at the back of the Husky.
-2.  Confirm that the robot is not locked out.
-3.  Confirm that all external stop devices are functioning, and that their related switches and relays are closed.
-    You may need to use a multimeter to test voltage between the external stop connector and each of these external stop switches.
-    Refer to the [External Stop](integration_husky/integration_husky.mdx#husky_external_stop) section for details.
-
-:::note
-
-You can confirm the motion-stop state in ROS by running:
-
-```
-rostopic echo /status
-```
-
-:::
-
-### Power button's blue light is not on
-
-The power button on the back of Husky has a blue light that turns on when the button is pressed, indicating that the Husky is receiving power.
-This light will turn on if the switch is receiving power, there is no sofware controlling it.
-For the button to turn on:
-
-1.  The Husky needs to have a charged battery installed.
-2.  The main fuse on the Husky's MCU needs to be functioning.
-3.  The ribbon cable between the MCU and switch PCBA needs to be fully seated on both ends.
-4.  The connector on the switch's cable needs to be fully seated on the switch's PCBA.
-
-We have not seen these connections fail, even in applications with lots of vibration.
-The most common fix for this issue is to check that battery is charged, and that it's power cable is seated in the Husky's MCU.
-
-### Battery indicator is flashing
-
-1. Battery voltage is too low for Husky to drive the motors.
-2. Charge the battery and try again.
-
-### Battery indicator only shows 50% charge with a fresh battery
-
-The battery indicator is controlled by the Husky MCU's microcontroller, based on a voltage measurement of the battery.
-The controls program was designed for a lithium battery.
-_24 V lithium batteries_ reach a peak voltage of 29 V.
-Our Standard _24 V lead-acid battery_ does not reach as high of a voltage, so the MCU's microcontroller thinks the battery is not fully charged.
-
-There is no way to change this behaviour on your Husky.
+1. Connect the manual charger to the robot for at least one hour, disconnect the charger, and try again.
 
 ---
 
@@ -135,49 +157,42 @@ There is no way to change this behaviour on your Husky.
 
 ### Husky experiences momentary drops in communication, or Husky's velocity has an inconsistent jumping motion
 
-It's possible the robot has reached the thermal limit, or current limit.
-The maximum current limits are set to 26 A, however, as the motors are only rated for 10.7 A continuous, anything above that will trigger the current limit eventually, the higher above this limit, the more quickly it will trigger.
-If you are unsure whether this is the case, feel free to contact \<support@clearpathrobotics.com\> with a rosbag of your system.
+It's possible the robot has reached the thermal limit, or current limit. Refer to the
+[notes above regarding motor protection](#motor-protection).
 
-:::note
+If you are unsure whether this is the case, [collect a rosbag](#collecting-rosbag) of the following
+topics, then contact [Support](#support) with the rosbag.
+- /TODO_topics
 
-Clearpath Robotics also offers a high torque upgrade if more torque is required for your project.
+### Husky speed is momentarily incorrect when first driving after power up
 
-:::
+When first attempting to drive Husky after power-up, Husky's motors go through a calibration process
+(requires less than a quarter of a wheel revolution). During this time, there may be minor deviations in the
+commanded and actual motor speeds. No user intervention is required.
 
-### Husky rolls on a slope
+### Husky stutters when first stopped on a slope
 
-Husky's wheels are always connected to the motors.
-When you send a motion command with `/cmd_vel`, the Husky's MCU subscribes to that message, and relays a command to the Husky's motor controllers.
-These motor controllers change the voltage across the DC brushed motors, causing a mechanical torque at the wheels.
+To minimize the holding current required when stopped on a slope (to avoid thermal limits over time), Husky
+may undergo a very minor positioning adjustment to reduce forces in the flexible suspension.
 
-When you stop publishing to `/cmd_vel`, ROS starts publishing a default value to `/cmd_vel` of zero velocity.
-At this point, the motor controllers are not attempting to change the Husky's velocity using electrical power.
-When the Husky's velocity is near 0 m/s, the motor controllers will use the motor's copper windings as a resistor.
-This is why your Husky will roll on a slope, since the resistive torque of the copper windings is less than the gravitational force on the robot.
+To reduce the stutter, only enter a hold position on a slope from a straight direction rather than a turn.
 
-:::note
+### Husky rolls on a slope during emergency stop
 
-The `/twist_mux` topic controls to priority of `/cmd_vel` messages.
+As outlined in the [User Manual](#husky-emergency-stop-button), during the emergency stop state, no
+power is supplied to the motors. As such, Husky can roll, either due to user intervention or due to
+gravitational forces on a slope.
 
-:::
+Husky is equipped with a resistive electric brake that limits its speed in the emergency stop state. The maximum
+roll speed in this state depends on both the slope and payload; it is capable of achieving 0 m/s in certain
+scenarios. Refer to additional detail at TODO.
 
-:::tip
+### Husky is making a loud or unusual mechanical noise
 
-If this amount of rolling is unacceptable, you can update the motor controller's firmware to a version that applies holding torque.
-The process to update the firmware is detailed on our [Husky Maintenance page](maintenance_husky.mdx#maintenance_husky_motor_controller_firmware).
-
-:::
-
-Your Husky will roll if:
-
-- The Husky's motion-stop button is pressed.
-- Husky's motor controllers are receiving a zero velocity command, rather than a small value like 0.01 m/s.
-- The MCU is not functioning.
-  This will appear as other issues, such as the status lights not illuminating.
-- The computer is not communicating with the MCU.
-  This will appear as a red COMM light on the rear panel.
-- A motor shaft is broken.
+- If the sound is coming from the sides of the robot, check the wheels to ensure no debris or object
+  is jammed in or near the wheels.
+- If the sound is coming from the top of the robot, check to make sure the
+  payloads are attached securely.
 
 ---
 
@@ -185,17 +200,28 @@ Your Husky will roll if:
 
 ### Not getting Wi-Fi internet connection
 
-Refer to the [Networking page](../../../../ros/networking/overview.mdx).
+See [above](#wifi-fault).
 
 ### Cannot connect to the robot's computer over a network cable
 
-Reter to the [Networking page](../../../../ros/networking/overview.mdx).
+1. Check that  the robot is powered on and that no faults are report on the Status Lights or Status Panel.
+1. Check that the external computer is configured correctly (IP address, netmask).
+1. Check that the Ethernet cable is connected securely between the robot and the external computer. Where
+   possible, check for Ethernet link LEDs being illuminated.
+1. Attempt to `ping 192.168.131.1` from the external computer.
+1. If the `ping` fails, connect a keyboard and monitor to the Debug Ports and log in to the
+   computer directly. This confirms the username and password.
+1. Using the keyboard/monitor, run `ip a` and confirm that an interface with IP address of
+   `192.168.131.1` exists.
+1. Power cycle the robot to see if the issue persists.
+1. For additional assistance, refer to the [Networking page](../../../../ros/networking/overview.mdx) or
+   contact [Support](#support).
 
 ---
 
 ## Computer
 
-### The computer does not automatically start
+### The computer does not start automatically
 
 Refer to the [Mini ITX troubleshooting page](../../../accessories/computers/mini_itx.mdx).
 
@@ -207,19 +233,33 @@ Refer to the [Mini ITX troubleshooting page](../../../accessories/computers/mini
 
 ## ROS
 
-### ROS package is not starting
+### ROS is not starting
 
-Verify the upstart logs, `/var/log/upstart/husky_core.log`, to see if there are any error during upstart.
+TODO
 
 ### Sensors are not turning on
 
 1.  Check that the sensor's User Power connector has the correct voltage.
 2.  If the voltage is correct, then review the [Troubleshooting section for the related sensor](../../../accessories/sensors/sensors.mdx).
 
-### A ROS package isn't starting
+---
 
-1.  Verify the upstart logs, `/var/log/upstart/husky_core.log` to see if there are any error during upstart.
-
-## If the Issue Persists
+## Support  {#support}
 
 <Support />
+
+### Collecting a rosbag  {#collecting-rosbag}
+
+Our Support team may ask you to create a _rosbag_.
+This is a tool that saves ROS data to a file, so we can review it after the robot has been turned off.
+
+For example, we may ask you to record the _/status_ topic so we can review motor temperatures, and other diagnostic data.
+To create this rosbag, you would:
+
+1.  Log into the robot's computer.
+2.  Run the command `ros2 bag record /status`
+3.  Use your robot as you typically would, trying to recreate the issue you have been experiencing.
+4.  Once done, in the terminal, press `ctrl+c` to stop the command.
+5.  Enter `ls`, and find the new file that was created. It will have a file extension of _.bag_
+6.  Copy this file to your development computer, using a command like [`scp`](https://help.ubuntu.com/community/SSH/TransferFiles).
+    Send this _.bag_ file to Clearpath Robotics in your Support email request.
