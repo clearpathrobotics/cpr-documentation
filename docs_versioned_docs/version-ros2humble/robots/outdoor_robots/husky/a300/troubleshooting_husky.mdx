@@ -12,7 +12,7 @@ import Support from "/components/support.mdx";
 
 Robots are complex. Issues can occur.
 Examine the following information for possible methods to recover from an unexpected state of Husky.
-See [Components Overview](#components-overview) for detail on button locations and vehicle state indicators. 
+See [Components Overview](user_manual_husky#components-overview) for detail on button locations and vehicle state indicators. 
 Contact our support team at \<support@clearpathrobotics.com\> if the issue persists.
 
 ---
@@ -83,13 +83,13 @@ equipment (PPE) if attempting to handle the batteries.
 
 ### Robot is stuck in emergency stop state
 
-1. Confirm that all [Emergency Stop buttons](#emergency-stop-buttons) on the robot are disengaged.
+1. Confirm that all [Emergency Stop buttons](user_manual_husky#emergency-stop-buttons) on the robot are disengaged.
 1. Confirm that any remote emergency stop units, if present, have their stop
    buttons disengaged and restart button pressed (if applicable).
 1. Confirm that all external stop devices are functioning, and that their related switches and
    relays are closed. You may need to use a multimeter to test voltage between the external stop
    connector and each of these external stop switches.
-1. Press the [Restart button](#restart-button).
+1. Press the [Restart button](user_manual_husky#restart-button).
 1. If the above fails, power cycle the robot to see if the issue persists.
 1. If the issues persists, contact [Support](#support).
 
@@ -136,7 +136,7 @@ If your Husky was functioning recently, the most common causes are:
 
 ### Status panel indicates a Wi-Fi fault  {#wifi-fault}
 
-1. Confirm that Husky Wi-Fi has been configured correctly in [Client Mode](#wifi-client-setup),
+1. Confirm that Husky Wi-Fi has been configured correctly in [Client Mode](user_manual_husky#wifi-client-setup),
    including correct SSID and password. Confirm that the settings are correct in the
    corresponding `/etc/netplan/` file.
 1. From Husky's computer, run `ip a` to review the status of the wireless interface and
@@ -179,7 +179,7 @@ To reduce the stutter, only enter a hold position on a slope from a straight dir
 
 ### Husky rolls on a slope during emergency stop
 
-As outlined in the [User Manual](#husky-emergency-stop-button), during the emergency stop state, no
+As outlined in the [User Manual](user_manual_husky#husky-emergency-stop-button), during the emergency stop state, no
 power is supplied to the motors. As such, Husky can roll, either due to user intervention or due to
 gravitational forces on a slope.
 
