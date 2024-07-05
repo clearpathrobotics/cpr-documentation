@@ -20,6 +20,8 @@ supply, and software integration. This guide aims to equip you with respect to t
 Husky A300 is equipped with a [PACS&trade;](../../../../accessories/pacs) top plate for
 mounting additional sensors and equipment.
 
+### PACS&trade; Mounting and Kits
+
 [PACS&trade;](../../../../accessories/pacs) is a Clearpath Robotics standard, providing
  a grid of M5X0.8 holes onto the top plate of the robot. This grid of holes has a 80 mm X 80 mm spacing.
 You can create your own brackets to interface with these holes, or can use an existing Clearpath
@@ -110,7 +112,6 @@ damage to Husky or your payload.
 
 ##### User Power Pin Mapping
 
-TODO: connector image
 TODO: confirm pin mapping
 
 The pinout for each of the eight connectors (USER 1 - USER 8) is illustrated below.
@@ -205,7 +206,10 @@ TODO:
 - part number
 - connector details
 - software enable/disable control?
-- installation instructions?
+- installation instructions
+   - cable/connection on Main PCBA
+   - cable routing outside chassis
+   - mechanical mounting (screws at corners?)
 
 #### High Power Expansion Kit
 
@@ -230,24 +234,22 @@ inputs can be driven by one of the following:
 
 - a 12 V input
 - a 24 V input
-- a built-in push button
+- a push button or switch
 
-In turn, the state of the input can be read from the corresponding ROS topic.
+In turn, the state of the input can be read from the ROS topic `/TODO`.
+The AUX inputs are mapped to the ROS message bits as follows:
 
-| AUX Input            | Payload State                                  | ROS Topic        |
+- AUX1 IN: bit 0
+- AUX2 IN: bit 1
+- AUX3 IN: bit 2
+
+| AUX Input            | Payload State                                  | `/TODO` Value  |
 | :------------------- | :--------------------------------------------- | :--------------- |
-| AUX1 IN              | 24 V on OR 12 V on OR button pressed           | /TODO reads as 0 |
-| AUX1 IN              | 24 V off AND 12 V off AND button not pressed   | /TODO reads as 1 |
-| AUX2 IN              | 24 V on OR 12 V on OR button pressed           | /TODO reads as 0 |
-| AUX2 IN              | 24 V off AND 12 V off AND button not pressed   | /TODO reads as 1 |
-| AUX3 IN              | 24 V on OR 12 V on OR button pressed           | /TODO reads as 0 |
-| AUX3 IN              | 24 V off AND 12 V off AND button not pressed   | /TODO reads as 1 |
+| AUX1 IN              | 24 V on OR 12 V on OR button pressed<br/>24 V off AND 12 V off AND button not pressed | bit 0 reads as '0'<br/>/TODO bit 0 as '1' |
+| AUX2 IN              | 24 V on OR 12 V on OR button pressed<br/>24 V off AND 12 V off AND button not pressed | bit 1 reads as '0'<br/>/TODO bit 1 as '1' |
+| AUX3 IN              | 24 V on OR 12 V on OR button pressed<br/>24 V off AND 12 V off AND button not pressed | bit 2 reads as '0'<br/>/TODO bit 2 as '1' |
 
-#### User Power Pin Mapping
-
-TODO:
-- connector image
-- confirm pin mapping
+#### AUX Input Pin Mapping
 
 The pinout for each of the three connectors (AUX1 IN, AUX2 IN, AUX3 IN) is illustrated below.
 
@@ -255,14 +257,14 @@ The pinout for each of the three connectors (AUX1 IN, AUX2 IN, AUX3 IN) is illus
 | :------------------- | :------- |
 | 1                    | 12 V In |
 | 2                    | 24 V In |
-| 3                    | Button/Switch In |
-| 4                    | GND |
+| 3                    | Button/Switch In (3.3 V) |
+| 4                    | 12 V Return |
 | 5                    | 24 V Return |
-| 6                    | 12 V Return |
+| 6                    | GND |
 
-#### AUX Input Example
+#### AUX Input Example #1
 
-For example, consider the AUX2 IN input where a 12 V supply is connected to pins 1 and 6,
+Consider the example where AUX2 IN has a 12 V supply connected to pins 1 and 4,
 with the remaining pins unconnected.
 
 Monitor the input reading in ROS.
@@ -271,106 +273,215 @@ Monitor the input reading in ROS.
 ros2 topic echo /TODO
 ```
 
-- Begin with the 12 V supply off. Confirm that the value in ROS is initially '1'.
-- Turn the 12 V power supply on. Confirm that the value in ROS changes to '0'.
-- Turn the 12 V supply off and confirm that the value changes back to '1'.
+| Action | `/TODO` value | Bit 2 Explanation | Bit 1 Explanation | Bit 0 Explanation |
+| :----- | :------------ | :---------------- | :---------------- | :---------------- |
+| Begin with the 12 V supply turned off | 7 (8b00000111) | '1' since AUX3 IN is not connected | '1' since 12 V supply is off | '1' since AUX1 IN is not connected |
+| Turn the 12 V power supply on         | 5 (8b00000101) | '1' since AUX3 IN is not connected | '0' since 12 V supply is on  | '1' since AUX1 IN is not connected |
+| Turn the 12 V supply off              | 7 (8b00000111) | '1' since AUX3 IN is not connected | '1' since 12 V supply is off | '1' since AUX1 IN is not connected |
 
-TODO: is each AUX input on a separate topic or are they just bits in a single value?
+#### AUX Input Example #2
 
-### AUX Out
+Consider the example where AUX1 IN has a 24 V supply connected to pins 2 and 5,
+AUX2 IN has a 12 V supply connected to pins 1 and 4, and AUX3 IN has a push button
+connected to pin 3.
 
-TODO: note relay as mosfet variants
+| Action | `/TODO` value | Bit 2 Explanation | Bit 1 Explanation | Bit 0 Explanation |
+| :----- | :------------ | :---------------- | :---------------- | :---------------- |
+| Begin with 12 V supply turned off, the 24 V supply off, and the button not pressed | 7 (8b00000111) | '1' since button is not pressed | '1' since 12 V supply is off | '1' since 24 V supply is off |
+| Turn the 24 V power supply on         | 6 (8b00000110) | '1' since button is not pressed | '1' since 12 V supply is off | '0' since 24 V supply is on |
+| Turn the 12 V supply on               | 4 (8b00000100) | '1' since button is not pressed | '0' since 12 V supply is on | '0' 24 V supply is on |
+| Press and hold the button             | 0 (8b00000000) | '0' since button is pressed | '0' since 12 V supply is on | '0' 24 V supply is on |
 
-### GPIO
+### AUX Outputs
 
-TODO: In vs Out
+The Main circuit board includes three user-controlled outputs (AUX1 OUT, AUX2 OUT, AUX3 OUT)
+that can be controlled by publishing to the `TODO` ROS topic. To enable the AUX outputs, simply
+publish a single message with the appropriate bits set to 1 to turn the output on and 0 to turn
+it off. The state does not persist so new commands will need to keep the bit enabled as well.
+The AUX outputs are mapped to the ROS message bits as follows:
+
+- AUX1 OUT: bit 0
+- AUX2 OUT: bit 1
+- AUX3 OUT: bit 2
+
+#### Aux Output Examples
+
+To disable all AUX outputs:
+
+```
+rostopic pub /TODO std_msgs/UInt8 "data: 0"
+```
+
+To enable all AUX outputs:
+
+```
+rostopic pub /TODO std_msgs/UInt8 "data: 7"
+```
+
+To enable just the AUX3 output:
+
+```
+rostopic pub /mcu/aux_output std_msgs/UInt8 "data: 4"
+```
+
+#### Aux Output Pin Mapping
+
+Each of the AUX outputs is an 8-pin connector with pin mapping as outlined below. The output
+value is available in several modes:
+
+- MOSFET outputs (x2)
+- Normally open relay
+- Normally closed relay
+
+| AUX IN connector pin | Function | Output when corresponding `/TODO` bit is '0' | Output when corresponding `/TODO` bit is '1' | 
+| :------------------- | :------- | :------------------------------------------- | :------------------------------------------- |
+| 1 (AUX_24V)          | 24 V output, fused at 3 A, available for use with relay | 24 V | 24 V
+| 2 (GND)              | MOSFET GND | GND | GND |
+| 3 (AUX_RELAY_OUT_NC) | Normally closed relay output | Connected to AUX_RELAY_IN | Floating |
+| 4 (AUX_MOSFET1)      | MOSFET output #1 | GND | 3.3 V |
+| 5 (GND)              | MOSFET GND | GND | GND |
+| 6 (AUX_RELAY_IN)     | Input that gets connected to AUX_RELAY_OUT_NC or AUX_RELAY_OUT_NO | N/A (Input only) | N/A (Input only) |
+| 7 (AUX_RELAY_OUT_NO) | Normally open relay output | Floating | Connected to AUX_RELAY_IN |
+| 8 (AUX_MOSFET2)      | MOSFET output #2 | GND | 3.3 V |
+
+### General Purpose Inputs and Outputs (GPIO)
+
+The Main circuit board includes four general purpose inputs and four general purpose
+outputs, which are all connected to the 16-pin GPIO connector. All GPIOs are at the
+3.3 V logic level. General purpose inputs are readable from the `/TODO` ROS topic.
+Publishing to the `/TODO` topic controls the general purpose outputs.
+
+#### General Purpose Input Pin Mapping
+
+| GPIO connector pin | Function | /TODO value when driven at 0 V | /TODO value when driven at 3.3 V |
+| :----------------- | :------- | :----------------------------- | :------------------------------- |
+| 1 | GP In 1 | Bit 0 is '0' | Bit 0 is '1' |
+| 2 | GP In 2 | Bit 1 is '0' | Bit 1 is '1' |
+| 3 | GP In 3 | Bit 2 is '0' | Bit 2 is '1' |
+| 4 | GP In 4 | Bit 3 is '0' | Bit 3 is '1' |
+| 9 | GND | N/A | N/A |
+| 10 | GND | N/A | N/A |
+| 11 | GND | N/A | N/A |
+| 12 | GND | N/A | N/A |
+
+#### General Purpose Output Pin Mapping
+
+| GPIO connector pin | Function | Corresponding bit in `/TODO` | Output value when set to '0' | Output value when set to '1' |
+| :----------------- | :------- | :--------------------------- | :--------------------------- | :--------------------------- |
+| 5 | GP Out 1 | 0 | 0 V | 3.3 V |
+| 6 | GP Out 2 | 1 | 0 V | 3.3 V |
+| 7 | GP Out 3 | 2 | 0 V | 3.3 V |
+| 8 | GP Out 4 | 3 | 0 V | 3.3 V |
+| 13 | GND | N/A | GND | GND |
+| 14 | GND | N/A | GND | GND |
+| 15 | GND | N/A | GND | GND |
+| 16 | GND | N/A | GND | GND |
 
 ### Fan Expansion
 
-TODO: 5-8; connector/pinout; how to control?
+The Main circuit board has support for four additional 4-wire fans, one fan at each of
+FAN 5, FAN 6, FAN 7, and FAN 8. (FAN 1, FAN 2, FAN 3, and FAN 4 are reserved for
+internal use.)
 
+The pinout for each fan is:
 
-### Wireless Emergency Stop
+| Pin | Function / Value |
+| :-- | :--------------- |
+| 1   | 12 V             |
+| 2   | GND              |
+| 3   | Tachometer (output from fan) |
+| 4   | PWM (input to fan, 3.3 V) |
 
-TODO
+The speed of each fan can be controlled by publishing to the `/TODO` topic in ROS.
+
+The speed of each fan can be monitored by reading the `/TODO` topic in ROS.
+
+TODO: do we Digikey part numbers for a couple known compatible fans?
+
+### Wireless Emergency Stop  {#wireless-stop}
+
+A wireless dual-channel emergency stop can be added to Husky so that the
+emergency stop can be invoked remotely (either through a button press
+or when the remote unit is out of range), in addition to the two built-in
+Emergency Stop Buttons. Refer to the [User Manual](user_manual_husky#wireless-estop-bypass)
+for details on how the Wireless Emergency Stop can be bypassed
+in certain debugging scenarios.
+
+The Wireless Emergency Stop can be connected to Husky on the Main circuit
+board at the "W ES" connector, based on the pinout below.
+
+| W ES Pin | Function / Value |
+| :------- | :--------------- |
+| 1  | 24 V (fused at 3 A)  |
+| 2  | GND |
+| 3  | Channel 1 Out (24 V): normally connected to Channel 1 In; disconnect to trigger an emergency stop |
+| 4  | Channel 2 Out (24 V): normally connected to Channel 2 In; disconnect to trigger an emergency stop |
+| 5  | Channel 1 In |
+| 6  | Channel 2 In |
+| 7  | CAN High: combined with CAN Low, connected to the CAN2 pins on the MCU; see additional notes below |
+| 8  | CAN Low |
+| 9  | Reset In: Set to 3.3 V for at least ?? ms to restart the robot after all emergency stops have been cleared; equivalent to pressing the Restart Button on Husky  |
+| 10 | GND |
+
+TODO: need to update pinout
+
+#### CAN Bus Connection
+
+TODO: how does the CAN bus get used?
+
+#### Receiver Installation
+
+In addition to the electrical integration noted above, the wireless receiver will normally
+require mechanical mounting inside the Husky, along with external mounting of an antenna.
+Refer to [Wireless Stop receivers](../../../../accessories/add-ons/wireless_stop_system.mdx)
+and [Cable Passthrough](#cable-passthrough) for additional details.
 
 ### External Emergency Stop {#husky_external_stop}
 
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/husky_images/husky_external_stop_connector.png"
-      width="600"
-    />
-    <figcaption>E-stop Safety Loop connector inside the Husky user bay</figcaption>
-  </figure>
-</center>
-
-There is a connector labeled _E-STOP SAFETY LOOP_ that is inside the Husky's user bay.
-The connector has 2 contacts that lead to the Husky MCU circuit board.
-The MCU supplies +12 V on one of these leads, and monitors the voltage on the other lead.
-The MCU will place the Husky in a Stop state if the monitored line is below +12 V.
-
-Your robot may have a connector that adds a jumper wire between these 2 leads to complete the circuit;
-or your robot may have more Stop switches in series with this circuit.
-These additional components in series may be:
+In addition to the two built-in Emergency Stop Button and in addition to the
+optional Wireless Emergency Stop, six additional emergency stop inputs are available
+on the Main circuit board (ES3 - ES8). By default, each of these are wired with a bypass
+connector. However, it is possible to remove a bypass connector and replace it with
+a connection to a device such as:
 
 - Emergency Stop buttons
 - [Wireless Stop receivers](../../../../accessories/add-ons/wireless_stop_system.mdx)
 - Relays or similar PLC components
 - Manipulator control cabinets
 
-:::info
+The pinout for ES3 - ES8 is shown below.
 
-- The connector labeled _E-STOP SAFETY LOOP_ is a [Switchcraft EN3P2FX](https://www.switchcraft.com/en3-harsh-environment-panel-mount-2-contact-female/en3p2fx/)
-- The mating connector is a [Switchcraft EN3C2MX](https://www.switchcraft.com/en3-harsh-environment-cable-mount-2-contacts-male/en3c2mx/) ( _Clearpath Robotics item 008075_ )
+| ESx Pin | Function / Value |
+| :------ | :--------------- |
+| 1  | Channel 1 Out (24 V): normally connected to Channel 1 In; disconnect to trigger an emergency stop |
+| 2  | Channel 1 In |
+| 3  | Channel 2 Out (24 V): normally connected to Channel 2 In; disconnect to trigger an emergency stop |
+| 4  | Channel 2 In |
 
-:::
+### Debug LEDs
 
-:::note
+A number of Debug LEDs are available for helping to debug system status. Their function is
+outlined below.
 
-This was an optional upgrade kit on Huskies built before March 2023.
-Clearpath Robotics still offers this upgrade kit to add an external motion stop to an older Husky.
-Contact [Support](#support) for details.
+#### Common Core Debug LEDs
 
-:::
+- **D6: USB 5V**: TODO
+- **D7: 3.3V**: Solid green when the 3.3 V power rail is operational; else off.
+- **D9: DBG/CON**: TODO
+- **D11: HB/ERR**: toggles (red/off) every 500 ms when the main firmware loop is running; solid red on error?
 
-:::caution
+#### DC/DC Debug LEDs
 
-This is a single channel Stop loop, being monitored by a microcontroller.
-When the microcontroller is in a Stop state; it will open relays which supply power to the Husky's motor controllers.
-These relays are not force guided or monitored.
+- **D3: V OUT**: Solid green when the output is operational; else off.
 
-Please contact [Support](#support) if you need more information for your application's risk assessment.
+#### Motor Controller LEDs
 
-:::
-
-### MCU Debug LEDs
-
-The Husky MCU PCBA comes equipped with LEDs for debugging.
-They work as follows:
-
-- **D16: HEARTBEAT**: toggles every 500 ms when the main firmware loop on the MCU is running.
-- **D7: VBAT 20 A**: illuminated if the VBAT, 20 A fuse is good.
-  This LED will be off if the fuse is blown.
-- **D8: VBAT 5 A**: illuminated if the VBAT, 5 A fuse is good.
-  This LED will be off if the fuse is blown.
-- **D12: 12 V 7.5 A**: illuminated if the 12 V, 7.5 A fuse is good.
-  This LED will be off if the fuse is blown.
-- **D10: 24 V 3 A**: illuminated if the 24 V, 3 A fuse is good.
-  This LED will be off if the fuse is blown.
-
-:::note
-
-On older revisions of the Husky MCU PCBA, the labels are different, but the functionality is similar:
-
-- D5: HEARTBEAT
-- D2: VBAT, 5 A
-- D3: 12 V, 5 A
-- D4: 5 V, 5 A
-
-:::
-
+- **5V0**: Solid green when the 5 V power rail is operational; else off.
+- **3V3**: Solid green when the 3.3 V power rail is operational; else off.
+- **MTR_FAULT**: Solid red when a motor fault is detected; else off.
+- **ERROR**: Solid red when TODO
+- **DBG2**: TODO
+- **DBG1**: toggles (green/off) every 500 ms when the firmware loop is running
 
 ---
 

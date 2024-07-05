@@ -442,7 +442,7 @@ The standard Husky exterior is shown below and includes:
 - Status display
 - Status lights
 - Buttons
-- Protected Access Panel (On/Off breaker, battery charge port, HDMI/USB/Ethernet debug ports)
+- Protected Access Panel (On/Off breaker, battery charge port, HDMI/USB/Ethernet debug ports, wireless emergency stop bypass)
 - Airflow intake and exhaust
 
 TODO: images
@@ -602,6 +602,15 @@ The charger also functions as "shore power", providing power to the robot indefi
 
 The robot is equipped with a Gigabit Ethernet port, a USB 3.0 (Type A) port, and an HDMI port. These can be used for debugging
 without needing internal access to the robot. These ports are all connected directly to the robot's computer.
+
+#### Wireless Emergency Stop Bypass  {#wireless-estop-bypass}
+
+As described further in [Integration](integration_husky#wireless-stop), it is possible to add a wireless
+emergency stop device to the system. In some debugging scenarios, it may be desirable to bypass / ignore
+the input from the wireless emergency stop device. This bypass is controlled through a key switch as
+illustrated below.
+
+TODO: image showing active and bypassed positions.
 
 ### Airflow Intake and Exhaust
 
