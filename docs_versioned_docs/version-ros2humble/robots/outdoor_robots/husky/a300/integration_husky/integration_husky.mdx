@@ -87,50 +87,57 @@ TODO: complete table
 
 ### Power Connections
 
-#### User Power Connections
+#### User Power Connections  {#user-power-connections}
 
 The Main circuit board provides eight connectors, labelled USER 1 through USER 8, for user power. 
 
-Note that the user power is divided into four power rails and the power for each rail is shared
+User power is divided into four power rails and the power for each rail is shared
 across each of the 8 connectors. The maximum (aggregate) current available on each power rail is:
 
-- 12 V Rail A: 5 A
-- 12 V Rail B: 5 A
-- 24 V: 5 A
-- VBAT (24-29 V, unregulated): 5 A
+| User Power Rail             | Maximum (Aggregate) Current | Enable/Disable ROS Topic |
+| :-------------------------- | :-------------------------- | :----------------------- |
+| 12 V Rail A                 | 5 A                         | /TODO                    |
+| 12 V Rail B                 | 5 A                         | /TODO                    |
+| 24 V                        | 5 A                         | /TODO                    |
+| VBAT (24-29 V, unregulated) | 5 A                         | /TODO                    |
+
+:::safety-warning[WARNING]
+
+Do not exceed the specified maximum current limit of each power rail; failure to do so may result in
+damage to Husky or your payload.
+
+:::
 
 ##### User Power Pin Mapping
 
 TODO: connector image
 TODO: confirm pin mapping
 
-The
-pinout for each of the eight connectors is illustrated below.
+The pinout for each of the eight connectors (USER 1 - USER 8) is illustrated below.
 
 | USER connector pin | Function |
 | :----------------- | :------- |
-| 1                  | 12 V (Rail A) |
-| 2                  | 12 V (Rail B) |
-| 3                  | 24 V |
-| 4                  | VBAT (24-29 V, unregulated) |
-| 5                  | GND |
-| 6                  | GND |
-| 7                  | GND |
-| 8                  | GND |
+| 1                  | GND |
+| 2                  | GND |
+| 3                  | GND |
+| 4                  | GND |
+| 5                  | 12 V (Rail A) |
+| 6                  | 12 V (Rail B) |
+| 7                  | 24 V |
+| 8                  | VBAT (24-29 V, unregulated) |
 
 ##### Making Cables to Connect to User Power
 
-TODO: 
-
-To connect to user power:
+Connecting to user power requires the use of a Molex connector and compatible crimp terminals.
+To create these cables, follow the steps below.
 
 1.  Expose about 5 mm of bare wire from the payload power leads and twist the exposed wire on both leads.
 2.  Take 2 Molex terminals from the spare parts kit provided and insert the exposed wire and crimp the
     terminals, ensuring the wires are well secured inside the terminal, as shown below.
 3.  Take 1 connector housing from the spare parts kit provided and insert the positive payload power lead
-    (red) into position 4, 5, or 6 of the connector until it locks into place. The positions numbers are
+    (red) into position 5, 6, 7 or 8 of the connector until it locks into place. The positions numbers are
     visible on the back of the plastic housing.
-4.  Insert the negative payload power lead (black) into position 1, 2, or 3 of the connector until it locks
+4.  Insert the negative payload power lead (black) into position 1, 2, 3, or 4 of the connector until it locks
     into place.
 
 <center>
@@ -148,42 +155,127 @@ To connect to user power:
       src="/img/robot_images/husky_images/robot_husky_17.jpg"
       width="300"
     />
-    <figcaption>Inserting the crimped wires into the Molex connector</figcaption>
+    <figcaption>Inserting the crimped wires into the Molex connector (TODO: need 8-pin connector)</figcaption>
   </figure>
 </center>
-
-When connecting payloads, be sure to observe correct polarity as marked on the inside of the user bay.
-Do not exceed the specified maximum current limit of each power rail; failure to do so may result in
-damage to Husky or your payload.
 
 For more technical information on the Molex power connectors, as well as their corresponding mating connectors,
 please visit the
 [Digi-Key WM23702-ND Product Page](https://www.digikey.ca/en/products/detail/molex/0039012065/930272?s=N4IgTCBcDaIOoFkwGYDsAGMBaAcgERAF0BfIA).
+TODO: update link to 8-pin connector.
 
-##### Software Control of User Power rails
+##### Software Control of User Power Rails
 
-TODO: ROS topics
+Each of the four power user power rails can be enabled or disabled through ROS by publishing to the
+corresponding ROS topic, as listed [above](#user-power-connections).
 
-TODO: ROS topic for control of each rail
+For example, to disable the 24 V power rail, run:
 
-#### User Power Expansion
+```
+ros2 topic pub --once /TODO std_msgs/msg/UInt8 '{data: 0}'
+```
 
-TODO
+To enable the 24 V power rail, run:
 
-- User power expansion (optional add-on module):
-   - 12 V: 10 A
-   - 24 V: 10 A
+```
+ros2 topic pub --once /TODO std_msgs/msg/UInt8 '{data: 1}'
+```
 
-#### High Power Expansion
+:::note
 
-TODO
+All user power rails are enabled by default shortly after the robot first powers up,
+regardless of their value when the robot was powered off.
+TODO: confirm
 
-- High power expansion (optional add-on module):
-   - VBAT: 40 A
+:::
 
-### AUX In
+#### User Power Expansion Kit
 
-TODO
+In addition to the [User Power Connections](#user-power-connections), an optional
+expansion module can be add to connector TODO to provide additional user power
+and corresponding connectors:
+
+- 12 V: 10 A
+- 24 V: 10 A
+
+The User Power Expansion Kit can purchased at the time of your original Husky order
+or as a later purchase by contacting [Support](#support).
+
+TODO:
+- part number
+- connector details
+- software enable/disable control?
+- installation instructions?
+
+#### High Power Expansion Kit
+
+Some high power payloads, such as manipulators, require more power than can be provided
+through the user power connectors. The High Power Expansion Kit provides access to
+VBAT at 40 A. It also includes a contact for enabling and disabling power to the payload.
+
+The High Power Expansion Kit can purchased at the time of your original Husky order
+or as a later purchase by contacting [Support](#support).
+
+TODO:
+- part number
+- installation instructions
+- software enable/disable control?
+- disabled by default at power up until enabled by software?
+
+### AUX Inputs
+
+The Main circuit board provides 3 auxilliary inputs (AUX1 IN, AUX2 IN, AUX3 IN) that
+allow external payloads to provide inputs to the robot. Each of the three auxilliary
+inputs can be driven by one of the following:
+
+- a 12 V input
+- a 24 V input
+- a built-in push button
+
+In turn, the state of the input can be read from the corresponding ROS topic.
+
+| AUX Input            | Payload State                                  | ROS Topic        |
+| :------------------- | :--------------------------------------------- | :--------------- |
+| AUX1 IN              | 24 V on OR 12 V on OR button pressed           | /TODO reads as 0 |
+| AUX1 IN              | 24 V off AND 12 V off AND button not pressed   | /TODO reads as 1 |
+| AUX2 IN              | 24 V on OR 12 V on OR button pressed           | /TODO reads as 0 |
+| AUX2 IN              | 24 V off AND 12 V off AND button not pressed   | /TODO reads as 1 |
+| AUX3 IN              | 24 V on OR 12 V on OR button pressed           | /TODO reads as 0 |
+| AUX3 IN              | 24 V off AND 12 V off AND button not pressed   | /TODO reads as 1 |
+
+#### User Power Pin Mapping
+
+TODO:
+- connector image
+- confirm pin mapping
+
+The pinout for each of the three connectors (AUX1 IN, AUX2 IN, AUX3 IN) is illustrated below.
+
+| AUX IN connector pin | Function |
+| :------------------- | :------- |
+| 1                    | 12 V In |
+| 2                    | 24 V In |
+| 3                    | Button/Switch In |
+| 4                    | GND |
+| 5                    | 24 V Return |
+| 6                    | 12 V Return |
+
+#### AUX Input Example
+
+For example, consider the AUX2 IN input where a 12 V supply is connected to pins 1 and 6,
+with the remaining pins unconnected.
+
+Monitor the input reading in ROS.
+
+```
+ros2 topic echo /TODO
+```
+
+- Begin with the 12 V supply off. Confirm that the value in ROS is initially '1'.
+- Turn the 12 V power supply on. Confirm that the value in ROS changes to '0'.
+- Turn the 12 V supply off and confirm that the value changes back to '1'.
+
+TODO: is each AUX input on a separate topic or are they just bits in a single value?
 
 ### AUX Out
 
