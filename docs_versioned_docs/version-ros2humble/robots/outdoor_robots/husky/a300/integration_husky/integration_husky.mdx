@@ -77,7 +77,7 @@ TODO: complete table
 
 | MCU board label  | MCU board connector                                         | Mating connector                                            | Crimp terminals                                              | Crimping tool    |
 | :--------------- | :---------------------------------------------------------- | :---------------------------------------------------------- | :----------------------------------------------------------- | :--------------- |
-| USER 1 - USER 8    | | | | |
+| USER 1 - USER 8  | Molex 0039012080 | Molex 0039012085 | Molex 0039000140 (AWG 22-28) | Molex 2002184900 |
 | TBD: user expansion    | | | | |
 | TBD: high power expansion (separate from main PCBA?)   | | | | |
 | AUX1 IN, AUX2 IN, AUX3 IN  | | | | |
@@ -86,6 +86,8 @@ TODO: complete table
 | FAN 5 - FAN 8  | | | | |
 | W ES (Wireless E-Stop)  | | | | |
 | ES 3 - ES 8 (E-Stop)  | | | | |
+| SYS1 - SYS 2 | Molex ? | Molex 1700010104 | Molex 1720630311 (AWG 14-16) | Molex ? (Megafit) |
+| SYS3 | Molex ? | Molex 1700010106 | Molex 1720630334 (AWG 14-16) | Molex ? (Megafit) |
 
 ### Power Connections
 
@@ -112,20 +114,18 @@ damage to Husky or your payload.
 
 ##### User Power Pin Mapping
 
-TODO: confirm pin mapping
-
 The pinout for each of the eight connectors (USER 1 - USER 8) is illustrated below.
 
 | USER connector pin | Function |
 | :----------------- | :------- |
-| 1                  | GND |
-| 2                  | GND |
-| 3                  | GND |
-| 4                  | GND |
-| 5                  | 12 V (Rail A) |
-| 6                  | 12 V (Rail B) |
-| 7                  | 24 V |
-| 8                  | VBAT (24-29 V, unregulated) |
+| 1                  | 12 V (Rail B) |
+| 2                  | 12 V (Rail A) |
+| 3                  | 24 V |
+| 4                  | VBAT (24-29 V, unregulated) |
+| 5                  | GND |
+| 6                  | GND |
+| 7                  | GND |
+| 8                  | GND |
 
 ##### Making Cables to Connect to User Power
 
@@ -457,6 +457,34 @@ The pinout for ES3 - ES8 is shown below.
 | 2  | Channel 1 In |
 | 3  | Channel 2 Out (24 V): normally connected to Channel 2 In; disconnect to trigger an emergency stop |
 | 4  | Channel 2 In |
+
+
+### Computer Power
+
+Three connectors are provided for powering computers, including GPUs: SYS1, SYS2, and SYS3. Collectively,
+they provide up to 400 W of power at 12 V.
+
+TODO: max current for each pin
+
+#### SYS1 / SYS2 Pinouts
+
+| Pin | Function / Value |
+| :-- | :--------------- |
+| 1   | 12 V             |
+| 2   | 12 V             |
+| 3   | GND              |
+| 4   | GND              |
+
+#### SYS3 Pinouts
+
+| Pin | Function / Value |
+| :-- | :--------------- |
+| 1   | 12 V             |
+| 2   | 12 V             |
+| 3   | 12 V             |
+| 4   | GND              |
+| 5   | GND              |
+| 6   | GND              |
 
 ### Debug LEDs
 
