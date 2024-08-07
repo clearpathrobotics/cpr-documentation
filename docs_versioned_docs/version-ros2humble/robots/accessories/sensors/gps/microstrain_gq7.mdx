@@ -1,0 +1,75 @@
+---
+title: MicroStrain GQ7
+sidebar_position: 3
+---
+
+import Support from "/components/support.mdx";
+import YAML from "/docs_versioned_docs/version-ros2humble/components/yaml/sensors/microstrain_gq7.mdx";
+
+<center>
+  <img
+    src="/img/sensor_images/microstrain_gq7.jpeg"
+    width="400"
+  />
+</center>
+
+## Item Numbers
+
+| Description                 |                         CPR Item                         | Sales Kit | Installation Kit, With Fasteners |
+| :-------------------------- | :------------------------------------------------------: | :-------: | :------------------------------: |
+| MicroStrain GQ7             | N/A                                                      |  N/A      |              N/A                 |
+
+---
+
+## Specifications
+
+| Description                                                                                                | Value                                                   |
+| :--------------------------------------------------------------------------------------------------------- | :------------------------------------------------------ |
+| Mass                                                                                                       | 78 g                                                    |
+| Voltage, Minimum                                                                                           | 4.2 V                                                   |
+| Voltage, Maximum                                                                                           | 16 V                                                    |
+| Voltage, Sensor                                                                                            | 5 V or 12 V                                             |
+| Power, Average                                                                                             | 2.0 W                                                   |
+| Data                                                                                                       | USB or RS-232<br />Default setting is 115200 baud       |
+| View, Vertical                                                                                             | Unknown                                                 |
+| Position Accuracy                                                                                          | 1.25 m horizontal<br />2 m vertical                     |
+| Position Accuracy RTK (requires a [Base Station](../../add-ons/base_station.mdx) or a positioning-service) | 2 cm                                                    |
+| Ingress Protection, Solids                                                                                 | 4                                                       |
+| Ingress Protection, Liquids                                                                                | None                                                    |
+| Operating Temperature, Min                                                                                 | -40 °C                                                  |
+| Operating Temperature, Max                                                                                 | 85 °C                                                   |
+
+---
+
+## Software Bringup
+This sensor is included in the Clearpath Robotics robot package that is installed on all of our robots.
+This allows you to add or remove the sensor from your robot's software description by modifying the [robot configuration yaml](../../../../ros/config/yaml/sensors/overview.mdx).
+
+<YAML/>
+
+#### Transforms
+
+In order to integrate more easily with existing ROS tools such as RViz and Nav2, the `microstrain_inertial_driver` will publish several transforms.
+
+The default behavior of the device when used in a clearpath robot is to publish the global position of the `odom` frame relative to the first valid fix received by the device,
+but it can be configured to publish the global position of a different frame, or no frames at all.
+For more information on the transforms published and how to configure them, see the [transforms](https://wiki.ros.org/microstrain_inertial_driver/transforms)
+page of the `microstrain_inertial_driver` wiki.
+
+
+---
+
+## Troubleshooting
+
+<Support />
+
+For issues directly related to the `microstrain_inertial_driver` or the GQ7, please open an issue on [GitHub](https://github.com/LORD-MicroStrain/microstrain_inertial/issues/new/choose)
+
+---
+
+## Further Reading
+
+1.  [Clearpath Robotics Store](https://store.clearpathrobotics.com/collections/gps)
+2.  [User Manual](/assets/pdf/clearpath_robotics_001893-TDS1.pdf)
+3.  [Swift Navigation Website](https://www.garmin.com/en-CA/p/13195)
+4.  [ROS webpage](https://github.com/ros-drivers/nmea_navsat_driver)
