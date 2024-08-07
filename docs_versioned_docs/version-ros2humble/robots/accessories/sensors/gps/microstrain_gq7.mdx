@@ -47,6 +47,51 @@ This allows you to add or remove the sensor from your robot's software descripti
 
 <YAML/>
 
+#### Antenna Offsets
+
+The GQ7 needs to have it's antenna offsets properly configured in order to get optimal position and orientation estimates. The `microstrain_inertial_driver` makes this easy to do,
+and allows multiple ways to accomplish this.
+
+##### From tf tree
+
+The `microstrain_inertial_driver` can look up the location of the antennas from the transform tree as long as it is configured to look for the correct frames.
+One can configure antenna offsets to be looked up from the transform tree by including the following parameters
+
+```yaml
+gps:
+  - model: microstrain_gq7
+    ...
+    ros_parameters:
+      microstrain_inertial_driver:
+        gnss1_antenna_offset_source : 2
+        gnss1_frame_id              : "right_antenna_link"
+        gnss2_antenna_offset_source : 2
+        gnss2_frame_id              : "left_antenna_link"
+```
+
+A more complete example of configuring the GQ7 to look up the locations of the antennas from the transform tree, and setting up the antennas in the robot.yaml can be found
+[here](https://github.com/clearpathrobotics/clearpath_config/tree/main/clearpath_config/sample/j100/j100_microstrain_gq7.yaml)
+
+##### Manually
+
+This method is not recommended for use with clearpath robots as the `robot.yaml` makes it easy to define GNSS antennas in your robot description, but it is the quickest way to get started.
+One can configure antenna offsets manually by including the following parameters:
+
+**IMPORTANT**: When manually configuring the antenna offsets, the measurements will be in the MicroStrain vehicle frame. See
+[this wiki page](https://wiki.ros.org/microstrain_inertial_driver/use_enu_frame#different_frames) for more information.
+
+```yaml
+gps:
+  - model: microstrain_gq7
+    ...
+    ros_parameters:
+      microstrain_inertial_driver:
+        gnss1_antenna_offset_source : 1
+        gnss1_antenna_offset        : [0.0, -0.7, -1.0]  # x, y, z in meters
+        gnss2_antenna_offset_source : 1
+        gnss2_antenna_offset        : [0.0, -0.7, -1.0]  # x, y, z in meters
+```
+
 #### Transforms
 
 In order to integrate more easily with existing ROS tools such as RViz and Nav2, the `microstrain_inertial_driver` will publish several transforms.
@@ -69,7 +114,8 @@ For issues directly related to the `microstrain_inertial_driver` or the GQ7, ple
 
 ## Further Reading
 
-1.  [Clearpath Robotics Store](https://store.clearpathrobotics.com/collections/gps)
-2.  [User Manual](/assets/pdf/clearpath_robotics_001893-TDS1.pdf)
-3.  [Swift Navigation Website](https://www.garmin.com/en-CA/p/13195)
-4.  [ROS webpage](https://github.com/ros-drivers/nmea_navsat_driver)
+1.  [Clearpath Robotics Store](https://store.clearpathrobotics.com/collections/gnss-ins)
+2.  [GQ7 User Manual](https://files.microstrain.com/GQ7+User+Manual/Home.htm)
+3.  [GQ7 Webpage](https://www.microstrain.com/inertial-sensors/3dm-gq7)
+4.  [microstrain_inertial_driver wiki](https://wiki.ros.org/microstrain_inertial_driver)
+5.  [microstrain_inertial_description wiki](https://wiki.ros.org/microstrain_inertial_description)
