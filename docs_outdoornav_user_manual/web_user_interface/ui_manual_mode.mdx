@@ -18,14 +18,15 @@ methods that can be used to stop the moving UGV.
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/ui_manual_mode_page.png" />
+    <img src="/img/outdoornav_images/ui_manual_mode_page_0_14_0.png" />
     <figcaption>Teleoperation Components</figcaption>
   </figure>
 </center>
 
 1.  **Error/Warning Bar:** A bar along the top of the page reporting
     the error or warning status of the Assisted Teleoperation feature.
-2.  **Joystick:** The joystick will allow the user to move the UGV
+2.  **User Connections:** Shows the number of users connected to Outdoor Nav.
+3.  **Joystick:** The joystick will allow the user to move the UGV
     manually from the UI. Motion can be sent to the UGV in 360°
     directions and the speed can be controlled by the distance of the
     joystick from its neutral position. Four fixed direction buttons are
@@ -33,16 +34,38 @@ methods that can be used to stop the moving UGV.
     clockwise/counter-clockwise. Finally, we overlay an obstacle map
     on top of the joystick, representing obstacle distances from the
     UGV.
-3.  **Speedometer:** An indicator of the UGV's current linear speed.
-4.  **Sensitivity Scale:** A UGV-specific scale that controls the
+4.  **Speedometer:** An indicator of the UGV's current linear speed.
+5.  **Sensitivity Scale:** A UGV-specific scale that controls the
     maximum allowable UGV velocities at each level. The default maximum
     linear velocity is 1.0 meters per second and the maximum angular
     velocity is 0.5 radians per second. These can be changed in the
     [General Settings](./ui_overview.mdx#config-general-settings) page.
     The scale levels are 100%, 80%, 50% and 20%, with the default set
     to 80%.
-5.  **Teleop Assist Toggle:** The "Teleop Assist" toggle can be used to
+6.  **Teleop Assist Toggle:** The "Teleop Assist" toggle can be used to
     enable/disable the Assisted Teleoperation feature.
+7.  **UI Lockout:** The lockout toggle that will prevent the Joystick from 
+    sending commands to the UGV. The purpose of this is to help prevent 
+    interference with the UGV by accidental input from the user.  This feature
+    does not lock out the controller connected to the robot.
+8.  **Controller Connection:** If a controller is connected to the PC the UI 
+    will show this icon. The user can select the icon to disable/enable 
+    controller input.
+
+## Remote Controller Connection
+
+If the user has a PS4 controller they can connect it to the UI directly. This 
+will allow user drive the UGV the same way as the controller thats connected 
+directly to the UGV.  The controller will only function provided the UI window 
+is in focus.  Users can also see if other connections have a controller connected
+by expanding the User Connections icon as seen below.
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/user_connections_expanded.png" />
+    <figcaption>Users connected to the UGV's UI Interface</figcaption>
+  </figure>
+</center>
 
 ## Monitor Wireless Strength
 
