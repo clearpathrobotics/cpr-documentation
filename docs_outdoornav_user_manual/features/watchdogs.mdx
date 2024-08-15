@@ -6,13 +6,13 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-As of version 0.14.0, the OutdoorNav software contains the ability for users to set
-up Points of Interest (POI) on their map. Each UGV will come pre-loaded with a set of
-watchdogs that are required for the overall safety of the system. Users are then able
-to add/remove/modify watchdogs as they require for their specific application and
+As of version 0.14.0, the OutdoorNav software contains the ability for autonomous missions
+to be interrupted if failures are detected by wtchdogs. Each UGV will come pre-loaded with
+a set of watchdogs that are required for the overall safety of the system. Users are then
+able to add/remove/modify watchdogs as they require for their specific application and
 safety requirements. This will have a lot to do with the operational environment
 and their network setup. A history of previous watchdogs that have triggered is also
-to the user for more precise debugging of when issues may have occured.
+available to the user for more precise debugging of when issues may have occured.
 
 ## Watchdog Types
 
@@ -22,12 +22,12 @@ their own watchdogs at the present time.
 | Watchdog Type                    | Description                                            |
 |----------------------------------|----------------------------------------|
 | **Communication Watchdog**       | A watchdog used to monitor device communication with the PC. It will monitor and trigger if there is loss of communication on devices that are connected via the ethernet (ip) or CAN bus (can) communication protocols. |
-| **Heartbeat Watchdog**           | A watchdog used to monitor the heartbeat topic of a device. This differs from the Communication, Node Status and Topic Data watchdogs because there may be devices that are deemed to be alive and communicating by the Node Status and Communication watchdogs and but may not be publishing data on their published topic. FOr example some GNSS units will not publish to their if topic unless they are in a clear open environment, however the heartbeat topic will still be publishing since the node is alive. |
+| **Heartbeat Watchdog**           | A watchdog used to monitor the heartbeat topic of a device. This differs from the Communication, Node Status and Topic Data watchdogs because there may be devices that are deemed to be alive and communicating by the Node Status and Communication watchdogs but may not be publishing data on their published topic. For example some GNSS units will not publish to their topic unless they are in a clear open environment, however the heartbeat topic will still be publishing since the node is alive. |
 | **Inclination Watchdog**         | A watchdog used to monitor the inclination (roll and pitch) of the UGV. It will trigger if the IMU topic reports an inclination in either the roll or the pitch that exceeds the defined limits.|
-| **Node Status Watchdog**         | A watchdog used to monitor the status of a node. It will trigger is the node crashes or does not start up. |
+| **Node Status Watchdog**         | A watchdog used to monitor the status of a node. It will trigger if the node crashes or does not start up. |
 | **Nodelet Status Watchdog**      | A watchdog used to monitor the status of a nodelet manager and any nodelets associated with it. It will trigger if either the nodelet manager or the nodelet defined in the parameters crash or fail to start up. |
-| **Num Points Watchdog**          | A watchdog used to monitor the status of a LiDAR device. It is designed to trigger if there are insufficient number of points in a PointCloud2 topic. The primary example for such a watchdog is if a customer has forgotten to remove a protective covering from the LiDAR. |
-| **Odometry Covariance Watchdog** | A watchdog used to monitor reliability of the odometry data that is computed by our system. It will trigger if the any of the odometry covariance thresholds have been exceeded. |
+| **Num Points Watchdog**          | A watchdog used to monitor the status of a LiDAR device. It is designed to trigger if there is an insufficient number of points in a PointCloud2 topic. The primary example for such a watchdog is if a customer has forgotten to remove a protective covering from the LiDAR. |
+| **Odometry Covariance Watchdog** | A watchdog used to monitor reliability of the odometry data that is computed by our system. It will trigger if any of the odometry covariance thresholds have been exceeded. |
 | **RTK Fix Watchdog**             | A watchdog used to monitor whether or not a GNSS unit has an RTK fix. It will trigger if the device has lost RTK fix for more than the defined timeout. |
 | **Topic Data Watchdog**          | A watchdog used to monitor a ROS topic. It will trigger if no data has been received on the topic for more than the defined timeout. |
 
@@ -55,15 +55,19 @@ entries in the table.
 ### Add Watchdog
 
 To add a watchdog, users can simply click the "Add Watchdog" button on the watchdog page.
-This will open up a pop up. Here, the user can enter the required information related 
-creating a new watchdog. The default parameters that need to be entered are:
+This will open up a pop up where the user can enter the required information for the new watchdog.
+The default parameters that need to be entered are:
 
-- **Watchdog Name**: A semantic name for the watchdog.
-- **Autonomy Action**: The type of action that the autonomy should perform when the watchdog
-is triggered. Options are: "Stop", "Pause", "Warn"
+- **Watchdog Name**: A semantic name for the watchdog. This name will only be used for internal
+identification of the watchdog and must be unique.
+- **Autonomy Action**: The action that the autonomy will perform when the watchdog
+is triggered. Options are: "Stop", "Pause", "Warn". For example, if Pause is selected and the
+watchdog is triggered while a mission is running, the mission will pause and wait for the user to
+resume it manually.
 - **Components**: A list of one or more components of outdoornav that the watchdog will
 be classified under. Examples are: "ros", "navigation", "localization", "obstacle_detection".
-- **Watchdog Type**: Selecting the required watchdog type will then prompt the user
+- **Watchdog Type**: The type of watchdog that is to be created. Selecting the required watchdog
+type will then prompt the user for further properties specific to the type.
 
 <center>
   <figure>
@@ -87,7 +91,7 @@ The user has the ability to modify the watchdog properties through the UI on the
 The watchdog can be enabled/disabled (without explicitly being removed entirely) by clicking
 the checkbox beside the respective watchdog. Furthermore, if the watchdog entry is opened, the
 user will be able to modify any and all of the properties of each watchdog. See below, for an
-example of modfying the properties of the TopicDataWatchdog. To confirm and save the changes to
+example of modifying the properties of the TopicDataWatchdog. To confirm and save the changes to
 a watchdog, the user must click the "Save Changes" button.
 
 <center>
