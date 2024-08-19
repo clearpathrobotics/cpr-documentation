@@ -6,6 +6,30 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
+## 0.14.0
+
+### New Features
+
+- Added in the ability to connect a PS4 controller to the UI directly.
+- Improved the PTZ Controls, allowing users to move via a draggable interface, 
+  box selection or double clicking.
+- [System Watchdogs](./features/watchdogs.mdx) can now be added to the UGV to 
+  allow for safeguards to be put in place depending on the needs of the user.
+
+### API Changes
+
+- Added new message definitions and service calls for watchdogs
+
+### Bug Fixes
+
+- 2532: Wireless Connection adaptor not publishing
+
+### Known Issues 
+
+- 1396: Robot gets temporarily stuck at start of mission when near a Waypoint
+- 1844: [MPC] Maximum acceleration param doesn't appear to have any effect
+- 2525: Path Previewer has issues cleaning up upon completion in mission less states
+
 ## 0.13.0
 
 ### New Features
