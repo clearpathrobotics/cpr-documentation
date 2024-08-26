@@ -3,34 +3,36 @@ import TabItem from "@theme/TabItem";
 
 :::caution
 
-Before flashing firmware, place your robot up on blocks. Firmware loading does not usually result in unintended motion, but it is safest when off the ground.
+Before flashing firmware, place your robot up on blocks or disengage the drivetrain. Firmware loading does not usually result in unintended motion, but it is safest when off the ground.
 
 :::
 
-#### 1. Download the Clearpath Firmware package from the Clearpath package server
-
-On the robot computer, run the following commands:
-
-```
-sudo apt-get update
-sudo apt-get install ros-humble-clearpath-firmware
-```
-
-#### 2. Prepare the Robot
-
-:::note
-
-Platforms with an Ethernet connection to the MCU have the option of flashing over USB or Ethernet.
-If you are updating to ROS 2 Humble for the first time, you must use USB. If you are updating ROS 2 Humble firmware
-to a newer version, using Ethernet is recommended. Skip this step if flashing over Ethernet.
-
-:::
 
 <Tabs groupId="platform">
   <TabItem
     value="J100"
     label="J100"
   >
+
+
+  #### 1. Download the Clearpath Firmware package from the Clearpath package server
+
+  On the robot computer, run the following commands:
+
+  ```
+  sudo apt-get update
+  sudo apt-get install ros-humble-clearpath-firmware
+  ```
+
+  #### 2. Prepare the Robot
+
+  :::note
+
+  Platforms with an Ethernet connection to the MCU have the option of flashing over USB or Ethernet.
+  If you are updating to ROS 2 Humble for the first time, you must use USB. If you are updating ROS 2 Humble firmware
+  to a newer version, using Ethernet is recommended. Skip this step if flashing over Ethernet.
+
+  :::
 
   The J100 MCU is mounted to the rear inside wall of the robot. To access it, open the lid, keeping the computer
   tray secured to the underside of the lid.
@@ -73,6 +75,25 @@ to a newer version, using Ethernet is recommended. Skip this step if flashing ov
     label="W200"
     default
   >
+
+  #### 1. Download the Clearpath Firmware package from the Clearpath package server
+
+  On an external computer, run the following commands:
+
+  ```
+  sudo apt-get update
+  sudo apt-get install ros-humble-clearpath-firmware
+  ```
+
+  #### 2. Prepare the Robot
+
+  :::note
+
+  Platforms with an Ethernet connection to the MCU have the option of flashing over USB or Ethernet.
+  If you are updating to ROS 2 Humble for the first time, you must use USB. If you are updating ROS 2 Humble firmware
+  to a newer version, using Ethernet is recommended. Skip this step if flashing over Ethernet.
+
+  :::
 
   The W200 MCU is located on the underside of the metal frame over the top of the computer.
 
