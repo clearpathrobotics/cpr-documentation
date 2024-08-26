@@ -1,0 +1,266 @@
+---
+title: Web UI Waypoint Mode
+sidebar_label: Web UI Waypoint Mode
+sidebar_position: 3
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+![](/img/outdoornav_images/gps_danger.png)
+
+Ensure that the [Safety](../safety.mdx) document has been
+read and the user is aware of possible hazards when using this product as well as the safety
+methods that can be used to stop the moving UGV.
+
+The Autonomous Mode of OutdoorNav Software is a set of robotic
+navigation modules that enables robotics developers to define and then
+autonomously execute missions on UGVs, getting work done without
+requiring direct operator action. This software is composed of four main
+modules: localization, navigation, safety monitoring and user control
+unit. This a combination of Clearpath's proprietary packages and custom
+configured open-source packages from ROS community. Please see the
+software architecture section for more information.
+
+## Definitions {#definitions}
+
+The list below defines what a "Mission" is as well as its components.
+These components are referred to throughout this manual.
+
+- **Mission** A Mission is a set of one or more Waypoints.
+- **Path** The list of Waypoints that will determine the path
+  for the specific Mission.
+- **Waypoint** A Waypoint is any geographical point referenced by its
+  position relative to the datum in meters.
+- **Task** A Task is an automated activity or wait time implemented as
+  a ROS action at a specific Waypoint. Tasks are called in the order they are
+  added to a Waypoint.
+- **Ghost Waypoint** A transparent waypoint that is not part of the mission. This
+  Waypoint appears between two other waypoints when in edit mode. The user can
+  drag and drop this ghost waypoint to add a new waypoint to the mission between
+  the other two waypoints.
+
+## Mission Creation
+
+To create a new Mission first ensure that the UI is in "Waypoint Edit Mode" (open the map edit modes and select the waypoint icon).
+Then open the drop down menu in the bottom bar and select the "Add Mission" option. This will allow the user to create a new Mission
+which can then be defined with Waypoints. If there are no missions presently in the system a user can start adding waypoints directly.
+This will create a new mission named "Mission - [Current Date]" which can be changed later in the waypoint table.
+
+### Waypoint Mode
+
+To add new Waypoints to a Mission while edit mode is enabled simply click on the map
+where the waypoint needs to be. These will appear as red Waypoints with the exception
+of the first waypoint (green) and the last waypoint (yellow).
+
+:::note
+
+**When running a mission the first Waypoint must be within 3.0 meters of the UGV's current position.**
+
+:::
+
+As Waypoints are placed, a "ghost waypoint" will appear between each pair of real
+Waypoints and can be dragged to a new spot to insert a real Waypoint
+between them. Waypoints can also be dragged and dropped on the map to
+modify their positions.
+
+### Waypoint Panel
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_waypoint_panel_0_13_0.png" />
+    <figcaption>Waypoint Panel</figcaption>
+  </figure>
+</center>
+
+Enable the "Waypoint Panel" toggle to open the list of available Waypoints
+within the selected Mission as shown in the figure above. The user can
+now rearrange the list, rename Waypoints, add Tasks to the Waypoints,
+and modify the final heading and/or tolerance of each Waypoint. The user can
+also rename the mission and apply Tasks to when the Mission starts and stops.
+
+### Rename Mission
+
+To rename the Mission click the Mission name as it appears in the upper left
+hand corner. This should change the text into an input box that can then be
+modified. Press enter/click aside to save the change.
+
+### Mission ID
+
+To help facilitate API usage the user can copy the mission's UUID from this section to then put
+in a script or an API call.
+
+### Mission Tasks
+
+A Mission can have Tasks assigned to when it starts and when it stops. These
+Tasks will run in the order they are listed in and will always run whenever the Mission
+starts or stops.
+
+### Rearrange List of Waypoints
+
+Waypoints can be rearranged in order of operation in the list. To do this,
+enable the "Waypoints Panel" toggle to access the list of Waypoints. Here, the
+user will be able to drag and drop the Waypoints to reorder them.
+
+### Rename Waypoint
+
+By default, once Waypoints are created they are assigned a default name
+which is the word "Waypoint" followed by a numeric value representing the
+the number of Waypoints that have been created plus one. The user has the
+option to rename these Waypoints in order for them to have more descriptive
+meaning.
+
+To rename a Waypoint follow these steps:
+
+1.  Enable the "Waypoint Panel" toggle. See [Waypoint Panel](#waypoint-panel)
+    for further details.
+2.  Click the name of the Waypoint which the user wants to rename.
+3.  Erase the current name and type the new name.
+
+### Add Task to Waypoint {#add-task}
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_waypoint_tasks_0_13_0.png" />
+    <figcaption>Add Task to Waypoint</figcaption>
+  </figure>
+</center>
+
+To add a Task to the end of a Mission:
+
+1.  Click the "+" icon (beside the Gear icon) in the Waypoint Row the Task is
+    to be added to.
+
+2.  Click the "Add Task" Button that has appeared.
+
+3.  Select the Task from the dropdown list. Standard waypoint icons will be
+    replaced accordingly depending on the task selected (waypoint icons will keep the colours
+    assigned to them based on placement). Waypoints in the table will also have a small icon to indicate
+    if tasks are assigned to the Waypoint accordingly.
+
+4.  The check box next to the Task name controls mission behaviour in the event that the Task fails. If the checkbox is
+    checked the Mission will proceed to the next step in it's process, such as the next task or navigating to the next Waypoint.
+    If its not checked, the Mission will become cancelled upon the Task's failure.
+5.  Click the Gear icon next to the selected Task to add the required
+    Settings.
+
+    :::note
+
+    If a waypoint has more than one task assigned to it, the icon will
+    be replaced with <img src="/img/outdoornav_images/multiTask_40px.png" width="30px"/>
+
+    :::
+
+### Advanced Settings
+
+#### Waypoint Heading
+
+When creating a Waypoint, the user has the option of setting a final heading
+for the Waypoint. For example, when creating a Waypoint at an inspection point,
+the user may want the UGV to navigate and stop facing a certain
+direction. In [Waypoint Panel](#waypoint-panel), the list of
+Waypoints can be seen and the advanced settings of each Waypoint can be accessed
+by clicking the "Gear" icon.
+
+To set the Waypoint's final heading, the user will need to check the
+"Final Heading Enabled" checkbox and enter the heading value in
+degrees. The heading indicator on the top bar can be used to help set
+this value. See the figure below showing the advanced settings.
+
+:::note
+
+Waypoints that have a heading or tolerance assigned to them will show a different colour
+on their settings icon.
+
+:::
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_adv_waypoint_settings_0_13_0.png" />
+    <figcaption>Waypoint Advanced Settings</figcaption>
+  </figure>
+</center>
+
+The heading that has been entered will only be applied to the Waypoint
+(ie. the robot will only align itself with the correct heading at the
+Waypoint). If the robot is required to be at specific headings at
+other Waypoints the user will need to enter these in for each specific Waypoint.
+
+#### Waypoint Tolerance
+
+When creating a Mission, the user has the option of setting a specific
+tolerance for each Waypoint. By default, the Waypoint position and orientation
+tolerances are 0.3 meters and 180°, respectively. If a specific Waypoint
+requires that the tolerances be either increased or decreased, these
+values can be modified in the advanced settings. For example, if it's
+required that the position and/or orientation at a Waypoint be very accurate,
+such as 0.1 meters position and 5° orientation, or looser at 1.0 meter
+position, this can be done within these settings.
+
+In [Waypoint Panel](#waypoint-panel), the list of waypoints can be
+seen and the advanced settings of each Waypoint can be accessed by clicking
+the "Gear" icon. To set the Waypoint's tolerance, the user will need to
+check the "Waypoint Tolerance Enabled" checkbox and enter the position and
+orientation values, in meters and degrees, respectively.
+
+### Constrained Replanning {#constrained_path}
+
+If a constrained/drivable path is set the user can visualize this path by using the layers view.
+The purpose of this area is to help ensure that the UGV does not deviate too far from the
+planned route.
+
+<center>
+  <figure>
+    <video
+      autoplay="true"
+      loop="true"
+      src="/video/outdoornav_videos/ui_show_hide_path.mp4"
+      width="700"
+    />
+    <figcaption>Showing/Hiding Constrained Path</figcaption>
+  </figure>
+</center>
+
+:::note
+
+If the UGV is manually driven outside of the constrained replanning area
+while a Mission is running, the Mission will not be able to be resumed until the
+UGV is returned within the navigable area defined by the path contraint.
+
+:::
+
+## Mission Execution
+
+### Start Mission
+
+There are multiple ways to start a Mission. At the bottom of the UI, the user has the ability to start the currently
+selected Mission by clicking the "Play" button <img src="/img/outdoornav_images/ui_start_button_simple.png" width="16px"/>.
+Starting the Mission this will start the Mission from the first Waypoint. The user may also select the drop down next to the button
+to start the Mission from the current UGV position. This is a useful way to start a Mission in the event that the UGV was blocked by
+obstacles that were later moved. Another way that a user can start a Mission is by selecting a waypoint in edit mode and then clicking on
+"Start Mission from Here" option. If the UGV is within 3 metres of that Waypoint the Mission will start from there.
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_start_from_waypoint.png" />
+    <figcaption>Starting from a specific Waypoint</figcaption>
+  </figure>
+</center>
+
+When the Mission has been started the Play button will turn green, regardless of how it has been started.
+
+### Pause Mission
+
+At the bottom of the UI, the user has the ability to pause the currently
+running mission by clicking the "Pause" button <img src="/img/outdoornav_images/ui_pause_button.png" width="16px"/>. When the
+mission has been paused this button will turn yellow. Pausing a mission
+allows the user to take time to look around with the camera or to
+teleoperate the UGV to a nearby location to perform an inspection. For
+ease of operation, the user must PAUSE the active mission if the user
+wants to teleoperate the UGV.
+
+### Cancel Mission/Task
+
+At the bottom of the UI, the user has the ability to stop the currently
+running mission or task by clicking the "Stop" button <img src="/img/outdoornav_images/ui_stop_button.png" width="16px"/>. When the
+mission/task has been cancelled this button will turn red. The name of
+the mission/task will be shown to be cancelled in the feedback bar.

@@ -1,0 +1,510 @@
+---
+title: Mission Manager API
+sidebar_label: Mission Manager API
+sidebar_position: 4
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+The Mission Manager API allows creation, deletion, and modification of OutdoorNav missions. Mission data is stored
+in a databse-like structure on-disk. The web UI is the primary method of managing missions, but this service
+API provides the ability to write your own UI if desired.
+
+### Topics Exported by Mission Manager
+
+#### mission_manager/network_maps_validity
+
+**Message Type:** [clearpath_mission_manager_msgs/msg/NetworkMapValidityState](definitions.mdx#storage-networkmapvaliditystate)
+
+**Description:** Latched topic that publishes the validity state of all network of paths maps defined on the robot.
+
+#### mission_manager/state
+
+**Message Type:** [clearpath_mission_manager_msgs/msg/StorageState](definitions.mdx#storage-storagestate)
+
+**Description:** Latched topic that publishes the current database contents every time a change is made.
+
+### Services Exported by Mission Manager
+
+#### mission_manager/add_network_edge
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/AddNetworkEdge](definitions.mdx#storage-addnetworkedge)
+
+**Description:** Adds an edge between two vertices in a network of paths map. Edges are unidirectional, but symmetrical
+edges can be added by setting `symmetrical` to `true`.
+
+#### mission_manager/add_network_path
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/AddNetworkEdge](definitions.mdx#storage-addnetworkpath)
+
+**Description:** Adds multiple points and edges to an existing network of paths map. Vertices are supplied in-order,
+with edges automatically added between adjacent vertices.
+
+#### mission_manager/add_network_point
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/AddNetworkPoint](definitions.mdx#storage-addnetworkpoint)
+
+**Description:** Adds a single vertex to a network of paths map. The new vertex can optionally be connected to
+existing vertices by specifying the connecting points' UUIDs.
+
+#### mission_manager/add_tag
+
+**Service Type:** [clearpath_mission_manager_msgs/AddRemoveTag](definitions.mdx#storage-addremovetag)
+
+**Description:** Add a tag to the specific object according to its UUID.
+
+#### mission_manager/add_task_to_waypoint
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/AddRemoveById](definitions.mdx#storage-addremovebyid)
+
+**Description:** Add an existing Task to an existing Waypoint. If the `position` parameter is negative the Task
+is added to the end of the Waypoint's `tasks` list.
+
+#### mission_manager/add_waypoint_to_mission
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/AddRemoveById](definitions.mdx#storage-addremovebyid)
+
+**Description:** Add an existing Waypoint to an existing Mission. If the `position` parameter is negative the Waypoint
+is added to the end of the Task's `waypoints` list.
+
+#### mission_manager/clone_mission
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/CloneMission](definitions.mdx#storage-clonemission)
+
+**Description:** Create a deep-copy of a Mission. The new Mission will be given the provided name, or reuse the original
+mission's name wth `-copy` appended to the end if no name is provided. All Waypoints and their associated Tasks are also
+deep-copied. If the `reverse` parameter is set to `true` the order of waypoints is reversed in the new mission.
+
+:::note
+
+In 0.8.0 onward, all missions are required to have unique names. If the specified name is not unique the cloning will
+fail. Cloning a mission multiple times without specifying a unique name will add incrementing numbers to the suffix:
+`-copy` for the first, `-copy1` for the second, `-copy2` for the third, and so on.
+
+:::
+
+:::note
+
+The `reverse` parameter was added in 0.9.0 and is not available in older versions.
+
+:::
+
+#### mission_manager/clone_network_map
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/CloneNetworkMap](definitions.mdx#storage-clonenetworkmap)
+
+**Description:** Create a deep-copy of a network of paths map
+
+#### mission_manager/clone_network_mission
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/CloneNetworkMission](definitions.mdx#storage-clonenetworkmission)
+
+**Description:** Create a deep-copy of a network of paths mission
+
+#### mission_manager/clone_point_of_interest
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/ClonePointOfInterest](definitions.mdx#storage-clonepointofinterest)
+
+**Description:** Create a deep-copy of a point of interest
+
+#### mission_manager/clone_task
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetTask](definitions.mdx#storage-gettask)
+
+**Description:** Create a deep-copy of a Task.
+
+#### mission_manager/clone_waypoint
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetWaypoint](definitions.mdx#storage-getwaypoint)
+
+**Description:** Create a deep-copy of a Waypoint. The new Waypoint will be renamed to have `-copy` at the end. All
+Tasks in the original Waypoint are also duplicated.
+
+#### mission_manager/create_mission
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/CreateMission](definitions.mdx#storage-createmission)
+
+**Description:** Create a new Mission.
+
+:::note
+
+In 0.8.0 onward, all missions are required to have unique names. Creating a mission with a duplicate mission will fail.
+
+:::
+
+#### mission_manager/create_network_map
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/CreateNetworkMap](definitions.mdx#storage-createnetworkmap)
+
+**Description:** Create a new network of paths map
+
+#### mission_manager/create_network_mission
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/CreateNetworkMission](definitions.mdx#storage-createnetworkmission)
+
+**Description:** Create a new network of paths mission
+
+#### mission_manager/create_point_of_interest
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/CreatePointOfInterest](definitions.mdx#storage-createpointofinterest)
+
+**Description:** Create a new point of interest
+
+#### mission_manager/create_task
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/CreateTask](definitions.mdx#storage-createtask)
+
+**Description:** Create a new Task.
+
+#### mission_manager/create_waypoint
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/CreateWaypoint](definitions.mdx#storage-createwaypoint)
+
+**Description:** Create a new Waypoint.
+
+#### mission_manager/delete_all
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteEverything](definitions.mdx#storage-deleteeverything)
+
+**Description:** Delete everything in the database.
+
+:::note
+
+Use with extreme caution; this procedure cannot be undone.
+
+:::
+
+#### mission_manager/delete_mission
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteById](definitions.mdx#storage-deletebyid)
+
+**Description:** Delete the Mission with the given ID. Waypoints that are included in this mission are not
+deleted, as they may be referenced by other Missions.
+
+#### mission_manager/delete_missions
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteMultiple](definitions.mdx#storage-deletemultiple)
+
+**Description:** Delete the missions with the given IDs. Waypoints that are part of these missions are not deleted,
+as they may be referenced by other Missions.
+
+#### mission_manager/delete_network_edge
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/AddRemoveById](definitions.mdx#storage-addremovebyid)
+
+**Description:** Delete an edge from a network of paths map
+
+#### mission_manager/delete_network_edges
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteMultiple](definitions.mdx#storage-deletemultiple)
+
+**Description:** Delete multiple edges from a network of paths map
+
+#### mission_manager/delete_network_map
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteById](definitions.mdx#storage-deletebyid)
+
+**Description:** Delete a network of paths map. All vertices and edges contained within the map are also deleted.
+
+#### mission_manager/delete_network_mission
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteById](definitions.mdx#storage-deletebyid)
+
+**Description:** Delete a network of paths mission
+
+#### mission_manager/delete_network_point
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/AddRemoveById](definitions.mdx#storage-addremovebyid)
+
+**Description:** Delete a vertex from a network of paths map. All edges that connect to this vertex at either end
+are also deleted.
+
+#### mission_manager/delete_network_points
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteMultiple](definitions.mdx#storage-deletemultiple)
+
+**Description:** Delete multiple vertices from a network of paths map. All edges that connect to the deleted vertices
+are also deleted.
+
+#### mission_manager/delete_orphan_objects
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteEverything](definitions.mdx#storage-deleteeverything)
+
+**Description:** Delete all Waypoints that are not referenced by any Missions and all Tasks that are not referenced
+by any Waypoints.
+
+:::note
+
+Use with caution; deleted items cannot be recovered.
+
+:::
+
+#### mission_manager/delete_point_of_interest
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteById](definitions.mdx#storage-deletebyid)
+
+**Description:** Delete the point of interest specified by the UUID.
+
+#### mission_manager/delete_task
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteById](definitions.mdx#storage-deletebyid)
+
+**Description:** Delete the Task with the given ID. Any Waypoints that reference the deleted Task will be modified
+to omit this Task once it is deleted.
+
+#### mission_manager/delete_tasks
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteMultiple](definitions.mdx#storage-deletemultiple)
+
+**Description:** Delete the tasks with the given IDs.
+
+#### mission_manager/delete_waypoint
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteById](definitions.mdx#storage-deletebyid)
+
+**Description:** Delete the Waypoint with the given ID. Tasks that are included in this mission are not
+deleted, as they may be referenced by other Waypoints. Any Missions that reference the deleted Waypoint will be
+modified to omit this Waypoint once it is deleted.
+
+#### mission_manager/delete_waypoints
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/DeleteMultiple](definitions.mdx#storage-deletemultiple)
+
+**Description:** Delete the Waypoints with the given IDs. Tasks that are part of these Waypoints are not deleted,
+as they may be referenced by other Waypoints.
+
+#### mission_manager/export
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/ExportData](definitions.mdx#storage-exportdata)
+
+**Description:** Export the database so its contents can be restored later using the `mission_manager/restore` service
+or merged with other data using the `mission_manager/import` service.
+
+:::note
+
+The data returned in a JSON string representing the underlying storage file's contents.
+
+:::
+
+#### mission_manager/get_all
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetEverything](definitions.mdx#storage-geteverything)
+
+**Description:** Get the entire contents of the database, including all Missions, Tasks, and Waypoints.
+
+:::note
+
+If you need to maintain an up-to-date copy of the database state, rather than calling this service repeatedly you
+should subscribe to the `mission_manager/state` topic.
+
+:::
+
+#### mission_manager/get_all_missions
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetAllMissions](definitions.mdx#storage-getallmissions)
+
+**Description:** Get all Missions defined in the database.
+
+#### mission_manager/get_all_network_maps
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetAllNetworkMaps](definitions.mdx#storage-getallnetworkmaps)
+
+**Description:** Get all network of paths maps defined in the database.
+
+#### mission_manager/get_all_network_missions
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetAllNetworkMissions](definitions.mdx#storage-getallnetworkmissions)
+
+**Description:** Get all network of paths missions defined in the database.
+
+#### mission_manager/get_all_points of interest
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetAllPointsOfInterest](definitions.mdx#storage-getallpointsofinterest)
+
+**Description:** Get all points of interest defined in the database.
+
+#### mission_manager/get_all_tasks
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetAllTasks](definitions.mdx#storage-getalltasks)
+
+**Description:** Get all Tasks defined in the database.
+
+#### mission_manager/get_all_waypoints
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetAllWaypoints](definitions.mdx#storage-getallwaypoints)
+
+**Description:** Get all Waypoints defined in the database.
+
+#### mission_manager/get_mission
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetMission](definitions.mdx#storage-getmission)
+
+**Description:** Get the Mission with the specified ID.
+
+#### mission_manager/get_network_map
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetNetworkMap](definitions.mdx#storage-getnetworkmap)
+
+**Description:** Get the network of paths map with the specified ID.
+
+#### mission_manager/get_network_mission
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetNetworkMission](definitions.mdx#storage-getnetworkmission)
+
+**Description:** Get the network of paths mission with the specified ID.
+
+#### mission_manager/get_point_of_interest
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetPointOfInterest](definitions.mdx#storage-getpointofinterest)
+
+**Description:** Get the point of interest with the specified ID.
+
+#### mission_manager/get_task
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetTask](definitions.mdx#storage-gettask)
+
+**Description:** Get the Task with the specified ID.
+
+#### mission_manager/get_waypoint
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/GetWaypoint](definitions.mdx#storage-getwaypoint)
+
+**Description:** Get the Waypoint with the specified ID.
+
+#### mission_manager/import
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/ImportData](definitions.mdx#storage-importdata)
+
+**Description:** Add existing Missions, Tasks, and Waypoints to the database.
+
+:::note
+
+All imported Missions, Tasks, and Waypoints are added to the existing database. Items whose UUIDs already exist will
+be skipped & the existing copies re-used. This allows you to copy all mission objects from one robot to another.
+
+To delete all data and restore a backup, instead of merging with existing data, use the `/mission_manager/restore`
+service instead.
+
+:::
+
+#### mission_manager/import_mission
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/ImportMission](definitions.mdx#storage-importmission)
+
+**Description:** Add existing Mission to the database. All UUIDs will be regenerated.
+
+#### mission_manager/remove_tag
+
+**Service Type:** [clearpath_mission_manager_msgs/AddRemoveTag](definitions.mdx#storage-addremovetag)
+
+**Description:** Remove a tag to the specific object according to its UUID.
+
+#### mission_manager/remove_task_from_waypoint
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/AddRemoveById](definitions.mdx#storage-addremovebyid)
+
+**Description:** Remove a Task from a Waypoint. All instances of the Task are removed from the given Waypoint.
+
+#### mission_manager/remove_waypoint_from_mission
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/AddRemoveById](definitions.mdx#storage-addremovebyid)
+
+**Description:** Remove a Waypoint from a Mission. All instances of the Waypoint are removed from the given Mission.
+
+#### mission_manager/restore
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/ImportData](definitions.mdx#storage-importdata)
+
+**Description:** Overwite the database contents with data generated by the `mission_manager/export` service. This is
+intended to be used to restore a backup of the missions and roll the database back to an earlier state.
+
+:::note
+
+All existing Missions, Tasks and Waypoints are deleted permanently and the entire database contents are replaced
+with the imported data.
+
+To merge the data with the existing database, without deleting existing data, use the `/mission_manager/import`
+service instead.
+
+:::
+
+#### mission_manager/split_network_edge
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/SplitNetworkEdge](definitions.mdx#storage-splitnetworkedge)
+
+**Description:** Split an edge of network of paths map to create 2 edges connected to a new vertex between them. If
+`symmetrical` is set to `true` the new edges will be bidirectional, otherwise only the edge going in one direction is
+split.
+
+#### mission_manager/update_mission
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/UpdateMission](definitions.mdx#storage-updatemission)
+
+**Description:** Modify a Mission. All attributes of the Mission are replaced with the provided values.
+
+:::note
+
+In 0.8.0 onward, all missions are required to have unique names. Assigning a name that is already in-use will result
+in an error.
+
+:::
+
+#### mission_manager/update_network_edge
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/UpdateNetworkEdge](definitions.mdx#storage-updatenetworkedge)
+
+**Description:** Modify a network of paths edge
+
+#### mission_manager/update_network_edges
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/UpdateNetworkEdges](definitions.mdx#storage-updatenetworkedges)
+
+**Description:** Modify multiple network of paths edges
+
+#### mission_manager/update_network_map
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/UpdateNetworkEdge](definitions.mdx#storage-updatenetworkmap)
+
+**Description:** Modify a network of paths map
+
+#### mission_manager/update_network_mission
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/UpdateNetworkMission](definitions.mdx#storage-updatenetworkmission)
+
+**Description:** Modify a network of paths map
+
+#### mission_manager/update_network_point
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/UpdateNetworkPoint](definitions.mdx#storage-updatenetworkpoint)
+
+**Description:** Modify a network of paths vertex
+
+#### mission_manager/update_network_points
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/UpdateNetworkPoints](definitions.mdx#storage-updatenetworkpoints)
+
+**Description:** Modify multiple network of paths vertices
+
+#### mission_manager/update_point_of_interest
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/UpdatePointOfInterest](definitions.mdx#storage-updatepointofinterest)
+
+**Description:** Modify multiple network of paths vertices
+
+#### mission_manager/update_task
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/UpdateTask](definitions.mdx#storage-updatetask)
+
+**Description:** Modify a Task. All attributes of the Task are replaced with the provided values.
+
+#### mission_manager/update_waypoint
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/UpdateWaypoint](definitions.mdx#storage-updatewaypoint)
+
+**Description:** Modify a Waypoint. All attributes of the Waypoint are replaced with the provided values.
+
+#### mission_manager/validate_network_map
+
+**Service Type:** [clearpath_mission_manager_msgs/srv/ValidateNetworkMap](definitions.mdx#storage-validatenetworkmap)
+
+**Description:** Manually run the network of paths validation on a specific map.
