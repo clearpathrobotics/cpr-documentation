@@ -213,18 +213,60 @@ TODO:
 
 #### High Power Expansion Kit
 
+:::note
+
+The optional High Power Expansion Kit can purchased at the time of your original Husky
+order, referring to CPR Item 032001. Field installation is not supported at present.
+
+:::
+
 Some high power payloads, such as manipulators, require more power than can be provided
-through the user power connectors. The High Power Expansion Kit provides access to
-VBAT at 40 A. It also includes a contact for enabling and disabling power to the payload.
+through the user power connectors. The optional High Power Expansion Kit provides access to
+VBAT at 40 A. It also includes two contactors for enabling and disabling power to the payload.
 
-The High Power Expansion Kit can purchased at the time of your original Husky order
-or as a later purchase by contacting [Support](#support).
+##### Creating a Mating Cable
 
-TODO:
-- part number
-- installation instructions
-- software enable/disable control?
-- disabled by default at power up until enabled by software?
+To use the High Power Expansion Kit, if present, the user can begin by creating a mating
+cable. #10 AWG is recommended for cable routing within the chassis, such as to a manipulator
+control board. #8 AWG is recommended for cable routing outside the chassis, noting that
+#8 AWG is acceptable in an exposed cable for 40 A, per UL 1740. The mating cable will
+connect to the yellow SB50 connector in left-rear of the chassis, under the top plate.
+
+:::note
+
+Always observe local laws and electrical standards valid to your region when building cables.
+
+:::
+
+:::note
+
+When building cables, be sure to consult the manufacturer documentation for full details
+on proper crimping.
+
+:::
+
+| Description  | Vendor Part | CPR Part Number |
+| :----------- | :----------------- | :-------------- |
+| Mating connector | [Anderson 992G5-BK](https://www.digikey.ca/en/products/detail/anderson-power-products-inc/992G5-BK/10650433) | 022554 |
+| Crimps, #8 AWG | [Anderson 5952-BK](https://www.digikey.ca/en/products/detail/anderson-power-products-inc/5952-BK/10650106) | 017281 |
+| Crimps, #10-12 AWG | [Anderson 5953-BK](https://www.digikey.ca/en/products/detail/anderson-power-products-inc/5953-bk/10650410) | 022562 |
+| Crimping tool | [Anderson 1309G4](https://www.digikey.ca/en/products/detail/anderson-power-products,-inc./1309G4/10650073) | N/A |
+
+##### Replacing the Fuse
+
+If you need to replace the fuse, use a [Littlefuse F6792-ND](https://www.digikey.ca/en/products/detail/littelfuse-inc/142-5631-5402/2515916)
+as the replacement.
+
+##### On/Off Control via Software
+
+The High Power Expansion Kit output is controlled through software, via ROS topic '/TODO'.
+
+:::note
+
+The High Power Expansion Kit output is always disabled when the system powers up.
+The user must enable the output, via the ROS topic above, each time after the system powers up.
+
+:::
 
 ### AUX Inputs
 
