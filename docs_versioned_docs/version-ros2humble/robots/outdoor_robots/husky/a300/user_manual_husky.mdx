@@ -16,7 +16,7 @@ import ComponentSafetyWarning from "/components/safety_warning.mdx";
 
 ## Important SAFETY INFORMATION
 
-:::safety-danger[DANGER]
+:::safety-danger
 
 Failure to follow these instructions <u>will</u> result in SERIOUS INJURY, INCLUDING DEATH.
 
@@ -24,7 +24,7 @@ Failure to follow these instructions <u>will</u> result in SERIOUS INJURY, INCLU
 
 <br/>
 
-:::safety-warning[WARNING]
+:::safety-warning
 
 Failure to follow these instructions may result in SERIOUS INJURY, INCLUDING DEATH.
 
@@ -32,7 +32,7 @@ Failure to follow these instructions may result in SERIOUS INJURY, INCLUDING DEA
 
 <br/>
 
-:::safety-caution[CAUTION]
+:::safety-caution
 
 Failure to follow these instructions  may result in INJURY or DAMAGE to the system and or
 property.
@@ -83,7 +83,7 @@ are familiar with the specific risks and hazards associated with automated mobil
 The following checklist identifies basic topics that should be addressed by site-specific worker and visitor
 safety orientation training.
 
-:::safety-caution[CAUTION]
+:::safety-caution
 
 Additional items may need to be addressed based on the site-specific risk assessment.
 
@@ -100,6 +100,8 @@ Additional items may need to be addressed based on the site-specific risk assess
 - Personnel should keep all loose clothing and body parts away from Clearpath Robotics robots, accessories, attachments, and payloads,
   while they are in autonomous operation. Using an Emergency Stop button is the only acceptable manner of interacting with a Clearpath Robotics
   robot or attachment while it is being operated autonomously.
+- Personnel should be aware that Husky A300 may emit noise up to 80 dB.
+
 
 In addition to the preceding basic items for all workers and visitors, the following should be considered for facility personnel, including drivers of other robots:
 
@@ -107,6 +109,8 @@ In addition to the preceding basic items for all workers and visitors, the follo
   overhanging obstacles) should have bollards placed around them so that Clearpath Robotics robots do not drive or stop in those areas.
 - When required to move a product manually, personnel must ensure it is in an Emergency Stop state or shut down completely and should not push manually for prolonged periods.
 - Alert personnel that while operating a Clearpath Robotics robot outside of the Autonomy State, they are solely responsible for obstacle and collision avoidance.
+- Prior to performing maintenance, Husky A300 should be powered off and the On/Off Breaker set to the OFF position.
+- If any fluids are spilled while maintaining Clearpath Robotics robots, they should be cleaned up in accordance with facility guidelines priority to operating the robot.
 - Maintenance not outlined in either this document or the operations and maintenance manual can only be performed by a Clearpath Robotics Authorized Personnel.
 
 ### Operating Environment Awareness
@@ -126,9 +130,7 @@ an attachment or accessory is connected because of the weight of the attachment/
 case of an attachment/accessory-equipped Clearpath Robotics robot, payloads should not exceed the maximum
 payload documented on the Nameplate.
 
-(TODO: image of Nameplate)
-
-:::safety-caution[CAUTION]
+:::safety-caution
 
 Loading a Clearpath Robotics product with more weight than specified by the attachment,
 accessory, or base Clearpath Robotics robot (when no attachment is present) will prevent Clearpath Robotics robots from
@@ -144,7 +146,7 @@ Like most applications using batteries with Lithium technology, special precauti
 handle this type of material. Battery packs should only be handled by trained personnel to ensure proper
 handling. Be aware of the operating environments for Clearpath Robotics robots and, more specifically, the battery pack.
 
-:::safety-warning[WARNING]
+:::safety-warning
 
 Whenever completing inspections or maintenance on or around the areas of a Clearpath Robotics robot
 battery pack, follow the proper Lock-Out Tag-Out Procedure for the applicable robot. Not
@@ -247,7 +249,9 @@ stationary racks follow local regulations and do not result in falling objects i
 Failure to following the guidelines above could present a crush or impact hazard.
 
 :::
+
 <br/>
+
 :::safety-danger[Fire]
 
 The Clearpath Robotics Husky A300 robot contains lithium iron-phosphate chemistry batteries, which can create
@@ -261,31 +265,91 @@ the area immediately.
 
 :::
 
+<br/>
 
-- orange: Pinch/Crush
-- orange: Tripping Over Robot: outline safe parking procedures
-- orange: Tipping: include conditions for use related to allowable hill angles, allowable payload mass, and allowable payload location; interface stability cone
-   - Negative obstacles
-   - Tips sideways on slope
-   - Tips forward or backward on slope
-- orange: unpowered robot rolling down a ramp
-- orange: E-stopped robot rolling down a ramp, steep ramp or heavy payload
-- orange: Health issues due to chemicals in thermal paste or thread locking adhesives: wear nitrile gloves while maintaining the robot
+:::safety-warning[Pinch / Crush]
 
+Objects can be pinched between the Clearpath Robotics Husky A300 and other fixtures in the environment such
+as the Husky A300 Wireless Charger.
+
+Keep hands and other objects clear of these pinch points at all times. Keep clear of all docking
+Clearpath Robotics robots.
+
+:::
+
+<br/>
+
+:::safety-warning[Crushing / Impact]
+
+Clearpath Robotics Husky A300 can tip over (forward, backward, or sideways) if subjected to slopes or
+vertical drops outside the allowable range, which can lead to crushing or impact hazards.
+
+When Clearpath Robotics Husky A300, ensure that you follow all guidance on allowable hill angles, allowable
+payload mass, and allowable payload location. Refer to [Important System Limits](#important-system-limits)
+for additional information on the robot stability cone.
+
+:::
+
+<br/>
+
+:::safety-warning[Crushing / Impact]
+
+When Clearpath Robotics Husky A300 is left unpowered on a slope or ramp, it can roll down the
+slope/ramp, which can lead to crushing or impact hazards.
+
+Always use chock blocks on the wheels when powering off the robot.
+
+:::
+
+<br/>
+
+:::safety-warning[Crushing / Impact]
+
+When Clearpath Robotics Husky A300 is in an Emergency Stop state on a slope or ramp, it can
+roll down the slope/ramp, which can lead to crushing or impact hazards.
+
+Prior to operating Clearpath Robotics Husky A300, ensure that either:
+
+1. there are no hazards in the environment due to Husky A300 rolling down a slope/ramp; OR
+1. the combination of payload mass and slope angle are within the allowable
+   stopping distance as defined in [Important System Limits](#important-system-limits).
+
+:::
+
+<br/>
+
+:::safety-caution[Tripping]
+
+Clearpath Robotics Husky A300 can present a tripping hazard if left in walkways.
+
+Ensure that Clearpath Robotics Husky A300 is always parked in a location away from
+walkways when not in use.
+
+:::
+
+<br/>
+
+:::safety-caution[Personal Protective Equipment]
+
+Internal maintenance on Clearpath Robotics Husky A300 may expose the user to
+chemicals in thermal paste or thread locking adhesives.
+
+Always wear gloves, preferably nitrile gloves, while performing maintenance
+on the robot.
+
+:::
 
 ### Safety System Functionality
 
 Two methods are used to reduce the system risk:
 
 - The robot is equipped with front and rear Emergency Stop buttons within easy reach of robot.
-- The robot is equipped with an electrical braking system that reduces the speed of the robot
-  when engaging the Emergency Stop, especially when on an incline.
+- The robot is equipped with an electrical braking system that reduces and limits the speed of
+  the robot when engaging the Emergency Stop.
 
 The safety of each Clearpath Robotics robot needs to be evaluated in the context of the installation where it is used.
 Environmental and process factors in each installation will ultimately govern the risk of injury resulting from
 the interaction of people or equipment in the operating environment with the robot.
-
-TODO: need more notes and justification here.
 
 ### General Warnings
 
@@ -300,9 +364,9 @@ Operating at such speeds will give you more time to react if things don't go qui
 
 When Husky is operating, keep clear of the wheels.
 
-### Emergency Stop Button {#husky-emergency-stop-button}
+### Emergency Stop Buttons {#husky-emergency-stop-button}
 
-:::safety-warning[WARNING]
+:::safety-warning
 
 Ensure the two Emergency Stop buttons are accessible at all times.
 Avoid mounting payloads that extend over the front or rear of Husky and would occlude the Emergency Stop buttons.
@@ -310,10 +374,11 @@ Avoid mounting payloads that extend over the front or rear of Husky and would oc
 :::
 
 The emergency stop function allows a person in the physical vicinity of the robot to disconnect drivetrain power.
-(TODO: outline situations in which the robot will and will not stop)
 Power supply to Husky's motor drivers is enabled by a normally-open relay, which is closed in series with the emergency stop switch.
 This emergency system is intended for use in emergency situations.
 The emergency stop system should not be used as the means of controlling robot motion during regular operation.
+Refer to [Important System Limits](#important-system-limits) for more details on stopping distances when
+engaging the emergency stop system as a function of the incline and payload.
 
 When in emergency stop mode, the status lights will illuminate red and Husky will not drive.
 The commands received during emergency stop mode are not buffered; Husky will always act on the latest commands received.
@@ -321,8 +386,8 @@ This means that if the commands are stopped before the stop is released, the Hus
 If the commands are continued, Husky will move at the speed commanded once the stop is released and motion is re-enabled.
 
 This Emergency Stop function can be asserted by pressing either of the red stop actuators present at the front and rear of the Husky, as shown in the following figure.
-The Emergency Stop function can be reset by twisting all depressed actuators until they return to their extended positions, then pressing the Restart button.
-The robot may begin moving again immediately after the Restart button has been pressed.
+The Emergency Stop function can be reset by twisting all depressed actuators until they return to their extended positions, then pressing the Safety Restart button.
+The robot may begin moving again immediately after the Safety Restart button has been pressed.
 
 <center>
   <figure>
@@ -330,11 +395,57 @@ The robot may begin moving again immediately after the Restart button has been p
       src="/img/robot_images/husky_images/robot_husky_10.png"
       width="600"
     />
-    <figcaption>TODO: update: Stop button</figcaption>
+    <figcaption>TODO: update: Emergency Stop button</figcaption>
   </figure>
 </center>
 
-TODO: Remote e-stop + lockout
+### Wireless Emergency-Stop (Optional Kit) {#wireless-estop}
+
+In addition to the onboard emergency stop buttons, the system may include an optional wireless emergency stop kit.
+When the kit is included, it allows a person who is physically separated from the robot to halt its motion and
+prevent re-initiation of motion.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/wireless_motion_stop_controller.png"
+      width="200"
+    />
+    <figcaption>Wireless motion-stop controller</figcaption>
+  </figure>
+  <figure>
+    <img
+      src="/img/robot_images/husky_observer_images/wireless_stop_override_keyswitch.png"
+      width="500"
+    />
+    <figcaption>(TODO: A300 image) Wireless motion-stop override</figcaption>
+  </figure>
+</center>
+
+To assert the stop function:
+
+- depress the red push-button actuator on the side of the provided controller.
+
+To reset the stop function:
+
+- twist the depressed actuator until it returns to its extended position;
+- depress and hold for 1 second the black start button on the side of the controller.
+
+The wireless emergency stop is asserted automatically if the robot is not able to communicate wirelessly
+with the controller. This is to ensure that the stop function does not become unexpectedly non-operational as
+a result of robot or operator motion, interference, atmospheric conditions, depleted battery, etc. The
+controller must be powered and within range of the mobile robot to communicate.
+
+The wireless emergency is intended for use in emergency situations and should
+not be used as the means of controlling robot motion during regular operation.
+
+The wireless emergency stop (but not the onboard emergency stop buttons) may be disabled by means of
+a key switch as shown in the figure above. This is to allow the robot to be operated **at higher risk** while,
+for example, the controller battery is dead, out of range, or not accessible.
+
+Operation of the mobile robot while the wireless emergency stop is disabled **is not recommended**.
+The system deployer/operator assumes all responsibility for injury to persons or animals, or damage to property,
+arising from the inability to remotely stop the motion of the robot due to the use of this override.
 
 ### Electrical System
 
@@ -365,22 +476,85 @@ Included in Husky are native software checks and limits to protect the robot.
 However, it is recommended to monitor the system's status during usage with the `/status` and `/diagnostics` topics.
 These topics provide useful information regarding voltages, currents, temperatures and general health of the system.
 
-#### Important System Limits
+#### Important System Limits {#important-system-limits}
 
-- Thermal
-  - TODO: list of A300 temperature sensors and target ranges for each
-  - TODO: detailed notes on A300 thermal throttling of the motors
-  - TODO: The temperature is measured in the motor drivers and at the motor coils.
-    The thermal limit of the system is 50 °C, and the system will shut down if this limit is reached.
-    Monitoring these fields over longer periods of operation will allow you to ensure that you are not putting excessive wear on Husky's motors.
-- Current
-  - TODO: notes on A300 motor limits
-  - TODO: The total current draw does not include the motors drivers; it is the current consumed by the MCU and user power ports.
-    Husky's motors are rated to draw 10.7 A continuous, but they will spike to several times higher than this, particularly when traversing rough terrain and when turning on the spot.
-    To reduce current draw, consider commanding wider-radius turns from your control software.
-- Others?
-   - Hardware failures?
-   - Bandwidth? Loss of networking?
+##### Thermal Limits
+
+Husky A300 is equipped with temperature sensors throughout the robot, which are used to monitor
+temperatures and determine fan speeds for proper cooling. In addition, if the robot is approaching
+its critical thermal limits, system throttling will occur. (TODO: determine exact throttling behavior)
+
+| Sensor  | ROS Topic  | Critical Limit (°C)  |
+| :------ | :--------- | :------------------- |
+| TODO: need to update list once SW is finalized |  |  |
+
+Monitoring these fields over longer periods of operation will allow you to ensure that you are not
+putting excessive wear on Husky's motors and other components.
+
+##### Current Limits
+
+The maximum current draw of the system is limited by the output of the batteries. The maximum
+continuous output for the standard and upgraded battery configurations is 60 A and 120 A, respectively.
+Higher outputs are possible for short periods of time. 
+
+Husky A300's motors are rated to draw (TODO) A continuous, but they will spike to several times higher
+than this, particularly when traversing rough terrain and when turning on the spot.
+To reduce current draw, consider commanding wider-radius turns from your control software.
+
+##### Stability Limits
+
+:::safety-warning
+
+When no payload is present, refer to the [System Specifications](#system-specifications) for
+the safe operating limits.
+
+When adding a payload, the user is responsible for ensuring that the resulting
+centre of mass for the system will not result in tipping hazards in the target environment.
+To ensure safe operation in the target environment, suitable buffers should be applied to the absolute
+limits outlined below.
+
+:::
+
+The images below illustrate the centre of mass and limits at which Husky A300 will tip over when no
+payload is present.
+
+  - TODO: centre of mass and tipping points for front, left, rear, right lift
+  - TODO: is this different for 2-battery and 4-battery?
+
+The images below illustrate the changes to the centre of mass and limits at which Husky A300 will tip over
+when the a maximum payload is added with its centre of mass at 50 cm above the Husky A300 origin point.
+
+  - TODO: centre of mass and tipping points for front, left, rear, right lift
+
+##### Emergency Stop Braking Limits
+
+When Husky A300 has its emergency stop engaged, an electrical (resistive) brake is applied to reduce
+the speed of the robot. Depending on the payload mass and on the incline on which the robot exists,
+the robot may stop completely or reach a terminal speed when the emergency stop is engaged.
+
+:::safety-warning
+
+The performance values outlined below can be affected by various environmental factors such as
+terrain type and should be treated as a reference only. Exact limits should be determined by the
+system integrator in the target operating environment. It is the responsibility of the system
+integrator to ensure that no hazards are present in the the target operating environment.
+
+:::
+
+<br />
+
+| Payload Mass (kg)  | Incline (°)  | Stopping Distance (m), assuming 2 m/s when emergency stop engaged | Terminal Speed (m/s)  | 
+| :----------------- | :----------- | :---------------------------------------------------------------- | :-------------------- |
+| 0                  | 15           | TODO                                                              | 0                     |
+| TODO: max payload at which we stop at max incline                | 15           | TODO                                                              | 0                     |
+| 100                | 0            | TODO                                                              | 0                     |
+| 100                | TODO: max incline at which we stop with max payload         | TODO                                                              | 0                     |
+| 100                | 15           | TODO                                                              | TODO                  |
+
+##### Other Limits
+
+   - TODO: Hardware failures?
+   - TODO: Bandwidth? Loss of networking?
 
 ### Recommended Safe Work Procedures
 
@@ -553,8 +727,8 @@ the TODO topic.
 | Motor Fault                               | Flashing red at the corner with the motor fault; solid red for the other corners. | An error has been detected with the motor or its controller. Please contact support. |
 | Charged                                   | <img src="/img/robot_images/common_images/lighting_images/shore_and_charged.gif" width="100"/> | The robot's batteries are charged fully. Shore power is available for the robot to operate (excluding drive motors). |
 | Charging (wired or wireless)              | <img src="/img/robot_images/common_images/lighting_images/shore_and_charging.gif" width="100"/> | The robot's batteries are being charged, either from the wired/manual charger or the wireless charger. This also provides shore power for the robot to operate (excluding drive motors). |
-| Emergency Stop Engaged                    | <img src="/img/robot_images/common_images/lighting_images/stopped.gif" width="100"/> | Emergency Stop mode is engaged. To disengage, twist both red mushroom buttons on the robot to ensure that they are unlatched and press the Restart button. |
-| Needs Restart (after Emergency Stop)      | <img src="/img/robot_images/common_images/lighting_images/needs_reset.gif" width="100"/> | The Emergency Stop buttons have been disengaged but the Restart button still needs to be pressed to resume driving. |
+| Emergency Stop Engaged                    | <img src="/img/robot_images/common_images/lighting_images/stopped.gif" width="100"/> | Emergency Stop mode is engaged. To disengage, twist both red mushroom buttons on the robot to ensure that they are unlatched and press the Safety Restart button. |
+| Needs Safety Restart (after Emergency Stop) | <img src="/img/robot_images/common_images/lighting_images/needs_reset.gif" width="100"/> | The Emergency Stop buttons have been disengaged but the Safety Restart button still needs to be pressed to resume driving. |
 | Motor Protection Engaged                  | Solid magenta | Motor velocity is being limited due to high currents or high temperatures. |
 | Low Battery                               | <img src="/img/robot_images/common_images/lighting_images/low_battery.gif" width="100"/> | The robot's batteries are in a low charge state. Connect the robot to a charger. |
 | Driving                                   | <img src="/img/robot_images/common_images/lighting_images/driving.png" width="100"/> | The robot is driving (normal operation). |
@@ -566,27 +740,29 @@ the TODO topic.
 
 The Husky is equipped with two Emergency Stop buttons, one at the front and one at the rear. Pressing either of
 these buttons removes power from the drivetrain. To clear the stop condition, all Emergency Stop buttons must
-be disengaged and the Restart Button must be pressed. Refer to [Emergency Stops](#husky-emergency-stop-button) for more details.
+be disengaged and the Safety Restart Button must be pressed. Refer to [Emergency Stops](#husky-emergency-stop-button) for more details.
 
-#### Restart Button  {#restart-button}
+#### Safety Restart Button  {#restart-button}
 
-To clear the stop condition, all Emergency Stop buttons must
-be disengaged and the black Restart Button (TODO: symbol to match robot) must be pressed.
+To clear the stop condition, all Emergency Stop buttons must be disengaged and the Safety Restart Button must be pressed.
 Refer to [Emergency Stops](#husky-emergency-stop-button) for more details.
 
-Pressing the Restart Button will have no effect when not in the stop condition or when one or more Emergency Stop
+Pressing the Safety Restart Button will have no effect when not in the stop condition or when one or more Emergency Stop
 buttons are engaged.
 
 #### Power Button
 
-The black power button (TODO: symbol to match robot) is used to power the robot on and off. From the "OFF" state, pressing
+The Power button is used to power the robot on and off. From the "OFF" state, pressing
 the button will cause the robot to power on. From the "ON" state, pressing the button will cause the robot to power off.
+Note that the Power button has no effect when the On/Off breaker is in the OFF position, unless
+a charger is connected to the robot.
 
 ### Protected Access Panel
 
 The rear of the robot has an access panel, protected by a Lock-Out, that contains the Battery Charge Port, On/Off Breaker,
-and Debug Ports. Opening the access panel cover puts the robot into a stop condition to prevent the robot from driving
-while cables may be connected. To clear the stop condition, close the access panel cover and the Restart Button. 
+Debug Ports, and Wireless Emergency Stop Bypass. Opening the access panel cover puts the robot into a stop condition to
+prevent the robot from driving while cables may be connected. To clear the stop condition, close the access panel cover
+and the Safety Restart Button. 
 
 TODO: image when cover closed and with cover opened
 
@@ -598,6 +774,8 @@ See [Lock-Out Tag-Out](#lockout-tagout) for additional details.
 TODO: image
 
 #### On/Off Breaker
+
+TODO: rename to Battery Disconnect Breaker (or something similar)
 
 When the breaker is in the "OFF" position, the On/Off Breaker (TODO: image) disconnects the internal batteries from the rest of
 the robot's systems. In this position:
@@ -639,10 +817,9 @@ without needing internal access to the robot. These ports are all connected dire
 
 #### Wireless Emergency Stop Bypass  {#wireless-estop-bypass}
 
-As described further in [Integration](integration_husky#wireless-stop), it is possible to add a wireless
-emergency stop device to the system. In some debugging scenarios, it may be desirable to bypass / ignore
-the input from the wireless emergency stop device. This bypass is controlled through a key switch as
-illustrated below.
+In addition to the emergency stop buttons on the robot, if your Husky A300 is equipped with an (option) wireless emergency stop kit,
+it is possible to disable this function with the override key switch. Refer to the [Wireless Emergency-Stop](#wireless-estop),
+[Integration](integration_husky#wireless-stop), and the image below for further details.
 
 TODO: image showing active and bypassed positions.
 
@@ -651,9 +828,27 @@ TODO: image showing active and bypassed positions.
 The robot is equipped with a cooling system with an air intake at the front of the robot and exhaust at the rear
 of the robot. The amount of airflow scales automatically depending on the temperature measured internally.
 
-### AMP Extensions
+### Autonomous Mobile Platform (AMP) Kit
 
-TODO: need to finalize the sensor details, then list here
+Husky A300 can be equipped with an Autonomous Mobile Platform (AMP) Kit, which includes extra sensors
+(as illustrated below) and [OutdoorNav](/docs_outdoornav_user_manual) software. Combined, this allows
+for autonomous navigation of Husky A300 and related system development.
+
+:::safety-danger[Crushing / Impact]
+
+While extensive testing has been performed to validate system robustness, autonomous operation of
+Husky A300 with the AMP kit is not safety rated in accordance with ISO 13849 or similar standards.
+The AMP kit is intended for research and development purposes and is not intended for use in deployments
+where hazards are mitigated exclusively through the use of the AMP kit. The user is responsible for
+ensuring that the Husky A300 with AMP kit does not result in hazards in the target operating
+environment.
+
+Contact [Sales](#sales) for details on how to upgrade to a safety-rated autonomy system for
+Husky A300.
+
+:::
+
+TODO: AMP image
 
 ### Orientation References
 
@@ -683,7 +878,7 @@ $$
 
 $v$ represents the instantaneous translational speed of the platform and $\omega$ the instantaneous rotational speed. <br />
 $v_{r}$ and $v_{l}$ are the right and left wheel velocities, respectively. <br />
-$W$ is the effective track of the robot, 0.555 m. (TODO)
+$W$ is the effective track of the robot, 0.562 m.
 
 ---
 
@@ -727,7 +922,7 @@ Only trained personnel authorised by Clearpath Robotics shall open the Husky A30
 Prior to performing any maintenance, always follow the Lock-Out Tag-Out procedure to deactivate
 a Husky A300.
 
-:::safety-danger[DANGER]
+:::safety-danger
 
 The On/Off Breaker terminal connected to the battery (displayed below) is live even when the
 robot is locked out. This terminal is protected with a rubber cover (TODO: confirm). Do not remove this or any
@@ -742,7 +937,7 @@ these connections. (TODO: confirm)
 
 TODO: image of live connections
 
-:::safety-caution[CAUTION]
+:::safety-caution
 
 Safety boots or shoes with steel toes should be worn at all times while working with a Husky A300.
 
@@ -772,7 +967,7 @@ To power on Husky:
    Once initialized, the front lights should be solid white and the rear lights should be solid red.
    The Status Display should also indicate that there are no errors (TODO: image) and that internal
    communication is working correctly.
-1. TODO: will the user need to press the E-stop Restart button (similar to OTTO 100) each time after power up?
+1. TODO: will the user need to press the Safety Restart button (similar to OTTO 100) each time after power up?
 
 ### Shutting Down  {#shutting-down}
 
@@ -788,10 +983,16 @@ To power off Husky:
 
 ### Charging  {#charging}
 
-:::safety-danger[DANGER]
+:::safety-danger
 
 Only original chargers from Clearpath Robotics should be used when charging the Husky A300 to
 avoid any damage to the batteries.
+
+:::
+
+:::safety-warning
+
+Only charge Clearpath Robotics robots in environments without combustable materials.
 
 :::
 
@@ -802,11 +1003,18 @@ may be charged with the standard manual/wired charger or with the optional wirel
 
 A manual (wired) charger can be used to charge the Husky batteries by following the steps outlined below.
 
+:::safety-caution
+
+The Husky A300 Standard Manual Charger is for indoor use only. Only use this charger when the
+robot is inside and after it has been dried.
+
+:::
+
 TODO: Are there 2 variants here (low-cost indoor universal variant + medium-cost outdoor region-specific)?
 
 :::note
 
-The batteries can be charge when the robot is powered on or powered off, though the charge will progress more quickly when the
+The batteries can be charged when the robot is powered on or powered off, though the charge will progress more quickly when the
 robot is powered off.
 
 :::
@@ -837,33 +1045,33 @@ To shut down Husky and move it manually:
 1. Carefully push or transport Husky to the desired location.
 1. After moving Husky, make sure to position it on level ground to prevent it from rolling.
 
-:::safety-warning[WARNING]
+:::safety-caution
 
 Pushing a Husky using a powered device to push it at higher speeds, such as
-pushing it with a forklift, can damage the internal circuitry. Do not do this under any
-circumstances. If a Husky needs to be moved manually over longer distances, it
-should be lifted and secured to a travelling vehicle or palette for transport.
+pushing it with a forklift, is considered misuse and can damage the internal circuitry.
+Do not do this under any circumstances. If a Husky needs to be moved manually over longer
+distances, it should be lifted and secured to a travelling vehicle or palette for transport.
 
 :::
 
 #### Husky Lift Points
 
 Husky has a robust structure that allows it to be picked up or reoriented by hand, using the bumper bars, or with
-the use of lifting machinery such as a forklift, using lifting straps on the bottom of the robot. When using
+the use of lifting machinery such as a crane, using lifting straps on the bottom of the robot. When using
 lifting straps, they should be positioned as shown in the images below. The lifting equipment and straps used
 shall be rated to minimum weight equal to the weight of Husky, including any mounted payloads.
 See [System Specifications](#system-specifications) for the weight of Husky and its maximum payload.
 
 TODO: lifting image
 
-:::safety-caution[CAUTION]
+:::safety-caution
 
 Caution should be taken around any payloads to ensure that the the lifting straps are not applying a force
 on any structures not suitable for lifting.
 
 :::
 
-:::safety-warning[WARNING]
+:::safety-warning
 
 Husky A300 exceeds the weight to be lifted by a single individual. If lifting by
 hand, ensure to ask for assistance and use proper lifting techniques.
@@ -1048,6 +1256,9 @@ See [Husky A300 Troubleshooting](troubleshooting_husky) for details on Husky tro
 ---
 
 ## Declarations
+
+TODO: User manual to include test results of thermal testing per IEC 61010-1
+TODO: User manual to include test results of EMC emissions testing per IEC 61326-1
 
 ### Supplier's Declaration of Conformity
 

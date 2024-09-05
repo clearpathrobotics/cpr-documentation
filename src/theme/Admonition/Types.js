@@ -3,6 +3,8 @@ import DefaultAdmonitionTypes from '@theme-original/Admonition/Types';
 import styles from './styles.module.css';
 
 function SafetyDangerAdmonition(props) {
+  const titleLabel = props.title ? props.title : 'DANGER';
+
   return (
     <div style={{border: "solid red", padding: 10, borderRadius: 5, borderWidth: 4, backgroundColor: "#ffe6e6"}}>
       <div id={styles.safety}>
@@ -12,7 +14,7 @@ function SafetyDangerAdmonition(props) {
         />
       </div>
       <div  >
-        <h5 style={{fontSize: 24}}>{props.title}</h5>
+        <h5 style={{fontSize: 24}}>{titleLabel}</h5>
         <p>{props.children}</p>
       </div>
     </div>
@@ -20,6 +22,8 @@ function SafetyDangerAdmonition(props) {
 }
 
 function SafetyWarningAdmonition(props) {
+  const titleLabel = props.title ? props.title : 'WARNING';
+
   return (
     <div style={{border: "dashed #ff9900", padding: 10, borderRadius: 5, borderWidth: 4, backgroundColor: "#ffebcc"}}>
       <div id={styles.safety}>
@@ -29,7 +33,7 @@ function SafetyWarningAdmonition(props) {
         />
       </div>
       <div  >
-        <h5 style={{fontSize: 24}}>{props.title}</h5>
+        <h5 style={{fontSize: 24}}>{titleLabel}</h5>
         <p>{props.children}</p>
       </div>
     </div>
@@ -37,16 +41,18 @@ function SafetyWarningAdmonition(props) {
 }
 
 function SafetyCautionAdmonition(props) {
+  const titleLabel = props.title ? props.title : 'CAUTION';
+
   return (
     <div style={{border: "dashed #ffcc00", padding: 10, borderRadius: 5, borderWidth: 4, backgroundColor: "#fffae6"}}>
       <div id={styles.safety}>
         <img
-          src="/img/safety_images/safety-icon-yellow.png"
+          src={'/img/safety_images/safety-icon-yellow.png'}
           width="40"
         />
       </div>
       <div  >
-        <h5 style={{fontSize: 24}}>{props.title}</h5>
+        <h5 style={{fontSize: 24}}>{titleLabel}</h5>
         <p>{props.children}</p>
       </div>
     </div>
