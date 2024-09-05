@@ -56,14 +56,6 @@ above.
 Review the following to learn more about the labels that may be used on Clearpath Robotics products. Hazards
 can also apply to attachments and accessories used in conjunction with a Clearpath Robotics product.
 
-TODO: does this list need to be updated based on the risk assessment?
-TODO: other possible risks per O100:
-
-- grounding electrical hazard
-- harmful battery substance (was Environmental Hazard)
-- Lock-Out Tag-Out
-- personal protective equipment (PPE) requirement
-
 |                                      **Label**                                       | **Label Title**               | **Label Description**                                                                                                                                                                                              |
 | :----------------------------------------------------------------------------------: | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 |  <img src="/img/robot_images/husky_observer_images/automatic_motion_hazard.png" />   | Automatic Motion Hazard       | Clearpath Robotics robots may suddenly begin moving autonomously or when being driven manually. Always be aware of Clearpath Robotics products and their potential for movement.                                   |
@@ -75,11 +67,14 @@ TODO: other possible risks per O100:
 |  <img src="/img/robot_images/husky_observer_images/high_surface_temp_hazard.png" />  | High Surface Temperature Risk | Robot PC heat sinks and robot motors can become extremely hot during operation.                                                                                                                                    |
 |       <img src="/img/robot_images/husky_observer_images/impact_hazard.png" />        | Impact Risk                   | Clearpath Robotics robots travelling through a facility can potentially impact objects and personnel. Keep clear of all docking Clearpath Robotics robots.                                                         |
 |   <img src="/img/robot_images/husky_observer_images/laser_radiation_hazard.png" />   | Laser Radiation Risk          | Clearpath Robotics robots may use Class 1 laser products. These provide no hazard during normal use, however it is not recommended to stare directly into the beam(s).                                             |
-|  <img src="/img/robot_images/husky_observer_images/material_hazard_lithium.png" />   | Material Hazard - Lithium     | Robot batteries contain harmful material. Always use proper handling procedures when handling robot batteries.                                                                                                     |
+|  <img src="/img/robot_images/husky_observer_images/harmful_battery_substance.png" /> | Harmful Battery Substance     | Robot batteries contain harmful material. Always use proper handling procedures when handling robot batteries.                                                                                                     |
 | <img src="/img/robot_images/husky_observer_images/manual_load_lifting_hazard.png" /> | Manual Load Lifting Risk      | Always use ergonomic techniques when manually lifting loads.                                                                                                                                                       |
 |      <img src="/img/robot_images/husky_observer_images/pinching_hazard.png" />       | Pinching Risk                 | Keep hands and other objects clear of pinch points at all times. Keep clear of all docking Clearpath Robotics robots.                                                                                              |
 |   <img src="/img/robot_images/husky_observer_images/radio_frequency_hazard.png" />   | Radio Frequency Risk          | Clearpath Robotics robots and/or accesories may use radio frequency (RF) radiating antennas. These provide no hazard during normal use, however prolonged exposure around the antenna is not recommended.          |
 |      <img src="/img/robot_images/husky_observer_images/tripping_hazard.png" />       | Tripping Hazard               | Clearpath Robotics products may pose a tripping hazard.                                                                                                                                                            |
+|   <img src="/img/robot_images/husky_observer_images/grounding_electrical_hazard.png" /> | Grounding Electrical Hazard   | Improper grounding of Clearpath Robotics chargers can result in potential shock risk.                                                                                                                              |
+|      <img src="/img/robot_images/husky_observer_images/lockout_tagout.png" />        | Lock-Out/Tag-Out              | When performing maintenance on an electrically powered Clearpath Robotics robots, always follow the applicable Lock-Out Tag-Out procedure.                                                                         |
+|      <img src="/img/robot_images/husky_observer_images/ppe.png" />                   | Personal Protective Equipment (PPE) Requirement | Proper PPE must be worn, including safety footwear (ie. steel toe) around Clearpath Robotics robots. Insulated gloves and/or tools are recommended when performing any maintenance on Clearpath Robotics robots. |
 
 ### Safety Awareness
 
@@ -129,7 +124,9 @@ Clearpath Robotics robots, attachments, and accessories are designed to in certa
 Clearpath Robotics products support a specific maximum payload. Clearpath Robotics robot maximum payloads change when
 an attachment or accessory is connected because of the weight of the attachment/accessory itself. In the
 case of an attachment/accessory-equipped Clearpath Robotics robot, payloads should not exceed the maximum
-payload documented on the Attachment Nameplate. (TODO: what is the Attachment Nameplate)
+payload documented on the Nameplate.
+
+(TODO: image of Nameplate)
 
 :::safety-caution[CAUTION]
 
@@ -237,9 +234,44 @@ The Husky A300 presents a number of risks to users even during the course of nor
 All users should familiarize themselves with the potential hazards of the system so they can anticipate and
 avoid them.
 
-The hazards currently identified are as follows:
+The hazards currently identified are outlined below.
 
-TODO: update based on risk assessment
+:::safety-danger[Crushing / Impact]
+
+When the Clearpath Robotics robot is operated manually, the user is responsible for obstacle avoidance and
+collision avoidance. Further, the user is responsible for ensuring that the robot is not operated near other
+people, especially children and infants. The user is also responsible for ensuring that the environment
+does not include ladders or vertical drops. Finally, the user is responsible for ensuring that any
+stationary racks follow local regulations and do not result in falling objects if struck by a robot.
+
+Failure to following the guidelines above could present a crush or impact hazard.
+
+:::
+<br/>
+:::safety-danger[Fire]
+
+The Clearpath Robotics Husky A300 robot contains lithium iron-phosphate chemistry batteries, which can create
+a fire hazard if used improperly.
+
+Never use the Clearpath Robotics Husky A300 robot in an environment outside the specified temperature
+and humidity constraints.
+
+In the event of damage to the battery or a battery fire, call local emergency services and vacate
+the area immediately.
+
+:::
+
+
+- orange: Pinch/Crush
+- orange: Tripping Over Robot: outline safe parking procedures
+- orange: Tipping: include conditions for use related to allowable hill angles, allowable payload mass, and allowable payload location; interface stability cone
+   - Negative obstacles
+   - Tips sideways on slope
+   - Tips forward or backward on slope
+- orange: unpowered robot rolling down a ramp
+- orange: E-stopped robot rolling down a ramp, steep ramp or heavy payload
+- orange: Health issues due to chemicals in thermal paste or thread locking adhesives: wear nitrile gloves while maintaining the robot
+
 
 ### Safety System Functionality
 
