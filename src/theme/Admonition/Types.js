@@ -1,20 +1,20 @@
-import React from 'react';
-import DefaultAdmonitionTypes from '@theme-original/Admonition/Types';
-import styles from './styles.module.css';
+import React from "react";
+import DefaultAdmonitionTypes from "@theme-original/Admonition/Types";
+import styles from "./styles.module.css";
 
 function SafetyDangerAdmonition(props) {
-  const titleLabel = props.title ? props.title : 'DANGER';
+  const titleLabel = props.title ? props.title : "DANGER";
 
   return (
-    <div style={{border: "solid red", padding: 10, borderRadius: 5, borderWidth: 4, backgroundColor: "#ffe6e6"}}>
+    <div style={{ border: "solid red", padding: 10, borderRadius: 5, borderWidth: 4, backgroundColor: "#ffe6e6" }}>
       <div id={styles.safety}>
         <img
           src="/img/safety_images/safety-icon-red.png"
           width="40"
         />
       </div>
-      <div  >
-        <h5 style={{fontSize: 24}}>{titleLabel}</h5>
+      <div>
+        <h5 style={{ fontSize: 24 }}>{titleLabel}</h5>
         <p>{props.children}</p>
       </div>
     </div>
@@ -22,18 +22,18 @@ function SafetyDangerAdmonition(props) {
 }
 
 function SafetyWarningAdmonition(props) {
-  const titleLabel = props.title ? props.title : 'WARNING';
+  const titleLabel = props.title ? props.title : "WARNING";
 
   return (
-    <div style={{border: "dashed #ff9900", padding: 10, borderRadius: 5, borderWidth: 4, backgroundColor: "#ffebcc"}}>
+    <div style={{ border: "dashed #ff9900", padding: 10, borderRadius: 5, borderWidth: 4, backgroundColor: "#ffebcc" }}>
       <div id={styles.safety}>
         <img
           src="/img/safety_images/safety-icon-orange.png"
           width="40"
         />
       </div>
-      <div  >
-        <h5 style={{fontSize: 24}}>{titleLabel}</h5>
+      <div>
+        <h5 style={{ fontSize: 24 }}>{titleLabel}</h5>
         <p>{props.children}</p>
       </div>
     </div>
@@ -41,18 +41,18 @@ function SafetyWarningAdmonition(props) {
 }
 
 function SafetyCautionAdmonition(props) {
-  const titleLabel = props.title ? props.title : 'CAUTION';
+  const titleLabel = props.title ? props.title : "CAUTION";
 
   return (
-    <div style={{border: "dashed #ffcc00", padding: 10, borderRadius: 5, borderWidth: 4, backgroundColor: "#fffae6"}}>
+    <div style={{ border: "dashed #ffcc00", padding: 10, borderRadius: 5, borderWidth: 4, backgroundColor: "#fffae6" }}>
       <div id={styles.safety}>
         <img
-          src={'/img/safety_images/safety-icon-yellow.png'}
+          src={"/img/safety_images/safety-icon-yellow.png"}
           width="40"
         />
       </div>
-      <div  >
-        <h5 style={{fontSize: 24}}>{titleLabel}</h5>
+      <div>
+        <h5 style={{ fontSize: 24 }}>{titleLabel}</h5>
         <p>{props.children}</p>
       </div>
     </div>
@@ -62,9 +62,9 @@ function SafetyCautionAdmonition(props) {
 const AdmonitionTypes = {
   ...DefaultAdmonitionTypes,
 
-  'safety-danger': SafetyDangerAdmonition,
-  'safety-warning': SafetyWarningAdmonition,
-  'safety-caution': SafetyCautionAdmonition,
+  "safety-danger": SafetyDangerAdmonition,
+  "safety-warning": SafetyWarningAdmonition,
+  "safety-caution": SafetyCautionAdmonition,
 };
 
 export default AdmonitionTypes;
