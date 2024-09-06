@@ -109,7 +109,7 @@ In addition to the preceding basic items for all workers and visitors, the follo
   overhanging obstacles) should have bollards placed around them so that Clearpath Robotics robots do not drive or stop in those areas.
 - When required to move a product manually, personnel must ensure it is in an Emergency Stop state or shut down completely and should not push manually for prolonged periods.
 - Alert personnel that while operating a Clearpath Robotics robot outside of the Autonomy State, they are solely responsible for obstacle and collision avoidance.
-- Prior to performing maintenance, Husky A300 should be powered off and the On/Off Breaker set to the OFF position.
+- Prior to performing maintenance, Husky A300 should be powered off and the Battery Breaker set to the OFF position.
 - If any fluids are spilled while maintaining Clearpath Robotics robots, they should be cleaned up in accordance with facility guidelines priority to operating the robot.
 - Maintenance not outlined in either this document or the operations and maintenance manual can only be performed by a Clearpath Robotics Authorized Personnel.
 
@@ -210,6 +210,9 @@ The system is intended to be operated in the as-furnished condition, without add
 Husky A300 is a rugged and easy-to-use unmanned ground robot for research applications,
 rapid prototyping, and deployments.
 It is available both as a standard platform and as an autonomous mobile platform (AMP).
+
+TODO: image (isometric view)
+TODO: image (nameplate)
 
 ---
 
@@ -650,7 +653,7 @@ The standard Husky exterior is shown below and includes:
 - Status display
 - Status lights
 - Buttons
-- Protected Access Panel (On/Off breaker, battery charge port, HDMI/USB/Ethernet debug ports, wireless emergency stop bypass)
+- Protected Access Panel (Battery Breaker, battery charge port, HDMI/USB/Ethernet debug ports, wireless emergency stop bypass)
 - Airflow intake and exhaust
 
 TODO: images
@@ -754,12 +757,12 @@ buttons are engaged.
 
 The Power button is used to power the robot on and off. From the "OFF" state, pressing
 the button will cause the robot to power on. From the "ON" state, pressing the button will cause the robot to power off.
-Note that the Power button has no effect when the On/Off breaker is in the OFF position, unless
+Note that the Power button has no effect when the Battery Breaker is in the OFF position, unless
 a charger is connected to the robot.
 
 ### Protected Access Panel
 
-The rear of the robot has an access panel, protected by a Lock-Out, that contains the Battery Charge Port, On/Off Breaker,
+The rear of the robot has an access panel, protected by a Lock-Out, that contains the Battery Charge Port, Battery Breaker,
 Debug Ports, and Wireless Emergency Stop Bypass. Opening the access panel cover puts the robot into a stop condition to
 prevent the robot from driving while cables may be connected. To clear the stop condition, close the access panel cover
 and the Safety Restart Button. 
@@ -768,16 +771,14 @@ TODO: image when cover closed and with cover opened
 
 #### Lock-Out
 
-When equipped with a lock, the Lock-Out prevents access to the On/Off Breaker, Battery Charge Port, and Debug Ports.
+When equipped with a lock, the Lock-Out prevents access to the Battery Breaker, Battery Charge Port, and Debug Ports.
 See [Lock-Out Tag-Out](#lockout-tagout) for additional details.
 
 TODO: image
 
-#### On/Off Breaker
+#### Battery Breaker
 
-TODO: rename to Battery Disconnect Breaker (or something similar)
-
-When the breaker is in the "OFF" position, the On/Off Breaker (TODO: image) disconnects the internal batteries from the rest of
+When the breaker is in the "OFF" position, the Battery Breaker (TODO: image) disconnects the internal batteries from the rest of
 the robot's systems. In this position:
 
 - the Power Button can be used to turn the robot on/off only if a charger is connected;
@@ -789,7 +790,7 @@ When the breaker is in the "ON" position:
 
 :::note
 
-The robot can be charged (manual and wireless charger options) regardless of the On/Off Breaker position.
+The robot can be charged (manual and wireless charger options) regardless of the Battery Breaker position.
 
 :::
 
@@ -924,16 +925,16 @@ a Husky A300.
 
 :::safety-danger
 
-The On/Off Breaker terminal connected to the battery (displayed below) is live even when the
-robot is locked out. This terminal is protected with a rubber cover (TODO: confirm). Do not remove this or any
-other terminal covers. The main chassis will act as the negative side of the battery (TODO: confirm). If the robot
-is correctly locked out, all live terminals are protected. The robot must be locked out to
-properly protect the remaining connections.
+The Battery Breaker terminal connected to the battery (displayed below) is live even when the
+robot is locked out. This terminals at the breaker and at the battery are protected with rubber covers.
+Do not remove these or any other terminal covers. The main chassis will act as the negative side
+of the battery. If the robot is correctly locked out, all live terminals are protected. The robot
+must be locked out to properly protect the remaining connections.
 
 :::
 
-Normal maintenance will not require the user to open the Husky A300 to expose
-these connections. (TODO: confirm)
+Normal preventative maintenance tasks will not require the user to open the Husky A300 to expose
+these connections.
 
 TODO: image of live connections
 
@@ -949,7 +950,7 @@ Safety boots or shoes with steel toes should be worn at all times while working 
 1. Press and hold the Power Button for one second, then release it.
 1. Wait until all lights on Husky have turned off (up to 10 seconds). This indicates that all electronics have
    powered off.
-1. Open the Access Panel cover, set the On/Off Breaker to the "OFF" position, and close the Access Panel cover.
+1. Open the Access Panel cover, set the Battery Breaker to the "OFF" position, and close the Access Panel cover.
 1. Clamp the Lock-Out Tag-Out lock to prevent the Access Panel cover from being opened.
 
 TODO: image with lock applied
@@ -961,13 +962,13 @@ of the ground. This reduces hazards while becoming familiar with how the various
 
 To power on Husky:
 
-1. Open the Access Panel cover, set the On/Off Breaker to the "ON" position, and close the Access Panel cover.
+1. Open the Access Panel cover, set the Battery Breaker to the "ON" position, and close the Access Panel cover.
 1. Press and hold the Power Button for one second and then release it.
 1. Wait one minute for the robot to initialize fully. During startup, the Status Lights will be solid red.
    Once initialized, the front lights should be solid white and the rear lights should be solid red.
    The Status Display should also indicate that there are no errors (TODO: image) and that internal
    communication is working correctly.
-1. TODO: will the user need to press the Safety Restart button (similar to OTTO 100) each time after power up?
+1. Press and release the Safety Restart button to be able to drive the robot.
 
 ### Shutting Down  {#shutting-down}
 
@@ -1002,6 +1003,10 @@ may be charged with the standard manual/wired charger or with the optional wirel
 #### Manual/Wired Charging
 
 A manual (wired) charger can be used to charge the Husky batteries by following the steps outlined below.
+Two manual chargers are supported with Husky A300:
+
+- Husky A300 Standard Manual Charger (Henryuan Model TODO): 300 W, indoor use only
+- Husky A300 High Power Manual Charger (Delta-Q Model TODO): 1200 W, indoor or outdoor use (IP68?)
 
 :::safety-caution
 
@@ -1010,11 +1015,9 @@ robot is inside and after it has been dried.
 
 :::
 
-TODO: Are there 2 variants here (low-cost indoor universal variant + medium-cost outdoor region-specific)?
-
 :::note
 
-The batteries can be charged when the robot is powered on or powered off, though the charge will progress more quickly when the
+The batteries can be charged when the robot is powered on or powered off, though the charging will progress more quickly when the
 robot is powered off.
 
 :::
@@ -1022,15 +1025,41 @@ robot is powered off.
 1.  Open the Access Panel cover to expose the Battery Charger Port.
 1.  Connect the DC output cable from the charger to the battery terminal connector (red-to-red, black-to-black).
 1.  Plug the charger power cord into the charger (if applicable) and then into a wall receptacle.
-    The LED on the charger will illuminate TODO and Husky's [Status Lights](#status-lights) will pulse yellow/green.
+    The LED on the charger will illuminate TODO and Husky's [Status Lights](#status-lights) will pulse yellow/green
+    (if the robot is powered on).
 1.  When battery is fully charged, the LED on the charger will TODO and Husky's [Status Lights](#status-lights)
-    will pulse blue/green.
+    will pulse blue/green (if the robot is powered on).
 1.  Unplug the charger from the wall and then disconnect it from the Battery Charger Port.
 1.  Close the Access Panel cover.
 
-#### Wireless Charging
+#### Wireless Charging (Optional Kit)
 
-TODO: Need Wiferion details
+The system may include an optional wireless charging kit.
+When the kit is included, it includes two main parts:
+
+- a wireless charging receiver mounted on the right side of the Husky A300;
+- a docking station, separate from the robot, which includes the wireless charging transmitter.
+
+This optional kit allows the Husky A300 to be charged by positioning it such that the
+wireless charging receiver is located near the wireless charging transmitter. For maximum
+charge rates, the receiver should be positioned within 30 mm of the transmitter. This
+positioning can be performed manually by the user or automatically using the
+[OutdoorNav docking function](/docs_outdoornav_user_manual/web_user_interface/ui_overview),
+when the robot is equipped with the optional AMP Kit. Note that wireless
+charging can be performed with the robot in both the powered and unpowered states, as
+long as the Battery Breaker is in the ON position.
+
+When the wireless charging receiver is near the transmitter, charging will begin automatically without
+any user intervention (TODO: LEDs; ONav UI link). When charging is complete, the transmitter
+will stop charging automatically (TODO: LEDs). Note that when the robot is powered
+on, the charging may remain on indefinitely (though at a reduced rated) as the transmitter
+provides the on-going power for the powered-on electronics.
+
+At any time while charging, the robot can be moved away from the transmitter to
+stop charging and begin using the robot. No other user intervention is required to
+stop charging.
+
+TODO: image of transmitter, receiver, dock
 
 ### Moving an Unpowered or Disabled Husky  {#moving-husky}
 
@@ -1080,19 +1109,17 @@ hand, ensure to ask for assistance and use proper lifting techniques.
 
 ### Storage
 
-Before storing Husky for an extended period of time (greater than two days), it is best to
-reduce the battery state to approximately 50% State of Charge (approximately 24 V open circuit at 25°C).
-The On/Off Breaker must be set to the "OFF" position before storing Husky A300 for an extended period of time.
+Before storing Husky for an extended period of time (greater than two days), Husky A300 must be
+charged to at least 50%. Also, the Battery Breaker must be set to the "OFF" position before storing
+Husky A300 for an extended period of time.
+
 Even with the batteries disconnected from the system, the batteries will discharge over time and must
-be charged to ~50% every 12 months or sooner. (TODO: confirm timeline)
+be charged periodically. It is recommended that a Husky A300 in storage be powered on at least
+once every three months, it battery levels checked, and if the reported charge level is below 20% it
+should be charged back up to at least 50% before returning it to extended storage.
 
 Husky and any spare batteries outside of the vehicle should be stored within the
 temperature range outlined in [System Specifications](#system-specifications).
-
-If Husky is at a higher State of Charge than mentioned above for storage, the battery will need to
-be discharged prior to storage. To do this, place Husky in a safe location, press an Emergency Stop
-button, ensure that Husky is powered on, wait until the desired State of Charge is reached, and
-then shut down the robot (including the Lock-Out Tag-Out procedure).
 
 ### Husky Networking
 
@@ -1177,7 +1204,7 @@ To connect to Husky in Access Point mode, follow the setup below.
 
 1. Ensure your Wi-Fi device (eg. laptop computer) has its interface set up with DHCP enabled
 1. Connect to **SSID**: `Husky-A300-<serial_number>`, where `<serial_number>` is the serial number shown
-   on the robot's label. TODO: where is the label
+   on the robot's Nameplate.
    - **Password**: `clearpath`
 1. From your Wi-Fi device (eg. laptop computer), run `ping 10.42.0.1` to confirm access to Husky
 1. From your Wi-Fi device (eg. laptop computer), connect to your robot via SSH. To do so,
@@ -1208,7 +1235,7 @@ To teleoperate Husky, first [clear any stop conditions](#husky-emergency-stop-bu
 to the following images, press an enable button (either slow or fast mode) and use the left
 thumbstick to drive Husky.
 
-TODO: Slow mode at 0.3 m/s and fast mode at 2.0 m/s? Is the 2.0 m/s value configurable?
+In slow mode, the maximum robot speed is 0.3 m/s; in fast modem, the maximum robot speed is 2.0 m/s.
 
 <center>
   <figure>
