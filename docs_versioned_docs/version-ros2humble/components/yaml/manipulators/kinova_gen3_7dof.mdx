@@ -1,0 +1,34 @@
+<table>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("./img/kinova_gen3_7dof.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+manipulators:
+  arms:
+    - model: kinova_gen3_7dof
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ip: 192.168.131.40
+      port: 10000
+      gripper:
+        model: robotiq_2f_85
+```
+</td>
+</tr>
+</table>
+
+#### Package and Setup
+The Kinova Gen3 7Dof uses the `kortex_description` and `kortex_driver` ROS 2 Packages. The driver is open source, maintaned by Kinova Robotics, and hosted on [GitHub](https://github.com/Kinovarobotics/ros2_kortex).
+
+For more specifics on the way Clearpath's configuration system adds the manipulator to the robot description, see the Kinova Gen3 7Dof [description file](https://github.com/clearpathrobotics/clearpath_common/blob/humble/clearpath_manipulators_description/urdf/arm/kinova_gen3_6dof.urdf.xacro) in `clearpath_manipulators_description`.
+
+#### Device IP and Port
+The `ip` and `port` parameters must be set to the corresponding values set on the manipulators configuration page.
