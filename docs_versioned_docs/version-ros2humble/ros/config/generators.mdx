@@ -31,6 +31,10 @@ The description generator will generate a `robot.urdf.xacro` file which will def
 platform the robot is using, as well as which mounts, accessories, and sensors will need to be added on top of the platform. This URDF file will later
 be used with the robot state publisher to publish all of the static transforms that make up the robot.
 
+### Semantic Description
+
+The semantic description generator will generate a `robot.srdf.xacro` and `robot.srdf` files with will define all manipulator groups, manipulator poses, and link collisions. By default, MoveIt! planners will check all links in the description to ensure collision free paths. If there are several links with complicated geometries, this will be a slow process. Therefore, the generator uses the collision matrix updater to disable the collisions of all links out of range of the manipulator groups defined and minimize the planning time.
+
 ### Launch
 
 The launch generator creates ROS 2 [python launch files](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Creating-Launch-Files.html). It will create both the platform and sensor launch files by parsing the robot config. Typically, the generated launch file will include a default launch file, and pass in launch arguments as appropriate. Python classes have been defined for adding other launch files, nodes, and processes to the generated launch file, making it intuitive to use.
@@ -166,6 +170,61 @@ Using the **parameter** and **launch** file generators, a pair of files is creat
       class g_urdf generator
       class g_param generator
       class g_launch generator
+  `}
+/>
+
+### Manipulation Generation
+Using the **semantic_description**, **launch**, and **parameter** file generators, all MoveIt! parameter and launch files are generated with the appropriate namespace. The semantic generator creates a `xacro` file that is then parsed by the collision updater to generate a static file with all unecessary link collision disabled. The parameter generator parses the default parameters and generates a single `moveit.yaml` parameter file that contains all MoveIt! parameters and is namespaced accordingly.
+
+<Mermaid
+  value={`
+    %%{ \
+      init: { \
+        'themeVariables': { \
+          'fontSize': '16px' \
+        }, \
+        'flowchart':  { \
+          'curve': 'stepAfter', \
+          'rankSpacing': 20 , \
+          'nodeSpacing': 50, \
+          'diagramPadding': 0 \
+        } \
+      } \
+    }%%
+  flowchart LR
+    %% Robot YAML
+    yaml(((robot.yaml)))
+    %% Generators
+    g_semantic_description{{<a href='https://github.com/clearpathrobotics/clearpath_common/blob/humble/clearpath_generator_common/clearpath_generator_common/semantic_description/generator.py'><b>Semantic Description Generator</b></a>}}
+    g_launch{{<a href='https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_generator_robot/clearpath_generator_robot/launch/generator.py'><b>Launch Generator</b></a>}}
+    g_param{{<a href='https://github.com/clearpathrobotics/clearpath_common/blob/humble/clearpath_generator_common/clearpath_generator_common/param/generator.py'><b>Parameter Generator</b></a>}}
+    g_collision{{<a href='https://github.com/clearpathrobotics/clearpath_common/blob/humble/clearpath_generator_common/src/moveit_collision_updater.cpp'><b>Collision Updater</b></a>}}
+    %% Default Parameter Files
+    d_cartesian([<a href='https://github.com/clearpathrobotics/clearpath_common/blob/humble/clearpath_manipulators/config/cartesian_limits.yaml'><b>Default Cartesian Limits</b></a>])
+    d_control([<a href='https://github.com/clearpathrobotics/clearpath_common/blob/humble/clearpath_manipulators/config/control.yaml'><b>Default Control</b></a>])
+    d_scene([<a href='https://github.com/clearpathrobotics/clearpath_common/blob/humble/clearpath_manipulators/config/planning_scene.yaml'><b>Default Planning Scene</b></a>])
+    d_trajexec([<a href='https://github.com/clearpathrobotics/clearpath_common/blob/humble/clearpath_manipulators/config/trajectory_execution.yaml'><b>Default Trajectory Execution</b></a>])
+    urdf([<div><b>robot.urdf.xacro</b></div><div>/etc/clearpath/robot.urdf.xacro</div>])
+    yaml-.-g_semantic_description
+    yaml-.-g_launch
+    yaml-.-g_param
+    subgraph Default Files
+      d_cartesian-.-g_param
+      d_control-.-g_param
+      d_scene-.-g_param
+      d_trajexec-.-g_param
+    end
+    urdf-.-g_semantic_description
+    %% Generated Files
+    launch[[<div><b>manipulators-service.launch.py</b></div><div>/etc/clearpath/manipulators/launch/manipulators-service.launch.py</div>]]
+    moveit([<div><b>moveit.yaml</b></div><div>/etc/clearpath/manipulators/config/control.yaml</div>])
+    xacro([<div><b>robot.srdf.xacro</b></div><div>/etc/clearpath/robot.srdf.xacro</div>])
+    srdf([<div><b>robot.srdf</b></div><div>/etc/clearpath/robot.srdf</div>])
+    g_semantic_description-.->xacro
+    xacro-.-g_collision
+    g_collision-.->srdf
+    g_launch-.->launch
+    g_param-.->moveit
   `}
 />
 
