@@ -1,0 +1,58 @@
+---
+title: Execution Logger
+sidebar_label: Execution Logger
+sidebar_position: 7
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+The OutdoorNav system allows users to record mission and general usage execution to be reviewed later. These logs contain UGV location information, autonomy
+events that are called during recording, and any images/videos or audio files associated with the recording. Logs are usually created automatically by starting
+a mission, however a user can manually start a recording session to capture multiple missions in a single log, or capture general use as a discrete block of data.
+In the Hamburger menu select LOGS to open the general UI viewer. From here a user may review the general log details as well as start/stop a recording session.
+
+### Execution Log Page
+
+<center>
+  <figure>
+    <img
+      src="/img/outdoornav_images/ui_execution_log_page.png"
+      width="1000"
+    />
+    <figcaption>Execution Logs Page</figcaption>
+  </figure>
+</center>
+
+1.  **Log Totals:** This section shows some general log total information for the user to refer to.
+2.  **Manual Log Control:** The User can start a manual log from this section.
+3.  **Executed Logs:** Logs that have executed on the UGV. These can be expanded to show high level information related to events that occurred during the recording.
+
+### Execution Log
+
+The execution log contains by default a significant amount of information pertaining to the UGV during recording. Position, events called, error messages, speed,
+and battery life are just a few examples. As such, to help reduce latency only a small amount of information is being presented to the user through the execution log page.
+A user can also create a custom event that holds even more information as outlined in the API section. An example of an execution log can be found below outlining the information
+that is shown.
+
+<center>
+  <figure>
+    <img
+      src="/img/outdoornav_images/ui_execution_log_details.png"
+      width="1000"
+    />
+    <figcaption>Execution Logs Details</figcaption>
+  </figure>
+</center>
+
+1.  **Media Event Tags:** This icon shows any media event totals that were found with the recording.
+2.  **General Information:** This area contains the Log's general information.
+3.  **Media Event Totals:** This area shows the total number of 'Events' associated with the log. These events are then further broken up based on their associated tags.
+4.  **Autonomy Events:** Autonomy events have specific details for each event that are shown here. The colours indicate the state of the event,
+
+- **Green:** Event executed and completed successfully
+- **Red:** Event completed with an error
+- **Blue:** Event has not completed yet
+
+5.  **Download Zip/KMZ:** The Log can be compressed into a zip/kmz file and downloaded. If the file is less than 50 Mb in size it will download immediately, however if it is higher the user will be prompted with the option to download it later.
+6.  **View in File Browser:** This will open the log's folder in a new tab leveraging the [web file browser](../tools/file_browser.mdx).
+7.  **Delete Log:** This allows the user to delete the log including any supplementary information. If they choose to purge, it the log will be completely removed from the total, however if they don't the log can still be viewed by toggling the 'Show Deleted Logs' switch.

@@ -169,7 +169,7 @@ available views.
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/ui_ptz_view-0_8_0.png" />
+    <img src="/img/outdoornav_images/ui_ptz_view_0_14_0.png" />
     <figcaption>PTZ Camera View</figcaption>
   </figure>
 </center>
@@ -182,15 +182,17 @@ available views.
     neutral ("zero") position.
 3.  **Zoom Slider:** The right slider can be used to zoom the camera
     feed. By default, the slider is at its neutral ("zero") position.
-4.  **Save Image:** Depending on the current camera view selected, this
+4.  **Start/Stop Recording:** This button will start/stop video recording for the 
+    camera and store the video file on the UGV.
+5.  **Save Image:** Depending on the current camera view selected, this
     button will save an image to the computer/tablet running the UI.
     Images will be saved to the location in which your browser saves
     files.
-5.  **Camera Positions List:** Display the list of available camera
+6.  **Camera Positions List:** Display the list of available camera
     positions that have been saved. These camera positions can be
     deleted from this list by clicking the "garbage can" icon beside
     the corresponding position.
-6.  **Save Camera Position:** This button will save the camera position
+7.  **Save Camera Position:** This button will save the camera position
     to be used in the "Move PTZ" task. An example use case would be:
     1.  Switch to the PTZ camera view.
     2.  Teleoperate the UGV to a location at which the user can inspect
@@ -202,6 +204,67 @@ available views.
         add the "Move PTZ" task to a Waypoint.
     6.  Click the settings button beside the task and add the camera
         position related to the inspection point.
+
+#### Q62 PTZ Features
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_ptz_q62.png" />
+    <figcaption>Q62 PTZ Camera Controls</figcaption>
+  </figure>
+</center>
+
+1.  **Virtual PTZ Joystick:** This joystick can be dragged away from the center 
+    of the screen and the camera will follow. The further away from the center 
+    the user drags the joystick, the faster the camera moves.
+2.  **Q62 Wiper:** Triggers the Q62 wiper to clear any water/debris on the the camera's 
+    face.
+3.  **Q62 Defogger:** Triggers the Q62 Defogger. When on, a "DEFOGGER ON" message will appear
+    in the upper left corner of the view.
+4.  **Q62 Infrared:** Changes the Q62 view to leverage infrared light for improved vision in 
+    the dark.
+
+The Q62 PTZ Camera has the ability to move the camera in other ways besides the 
+sliders on the screen.  Some of these are shown below in brief video clips.
+
+<center>
+  <figure>
+    <video
+      autoplay="true"
+      loop="true"
+      src="/video/outdoornav_videos/ui_ptz_drag_demo.mp4"
+      width="700"
+    />
+    <figcaption>Moving the Camera via the Virtual Joystick</figcaption>
+  </figure>
+</center>
+
+<center>
+  <figure>
+    <video
+      autoplay="true"
+      loop="true"
+      src="/video/outdoornav_videos/ui_ptz_box_zoom.mp4"
+      width="700"
+    />
+    <figcaption>Moving the Camera via the Box Selection</figcaption>
+  </figure>
+</center>
+
+<center>
+  <figure>
+    <video
+      autoplay="true"
+      loop="true"
+      src="/video/outdoornav_videos/ui_ptz_double_click.mp4"
+      width="700"
+    />
+    <figcaption>Moving the Camera via Double Clicking</figcaption>
+  </figure>
+</center>
+
+A user can also right click the image and zoom out or reset the camera to the 
+home position.
 
 ### Front and Back Views
 
