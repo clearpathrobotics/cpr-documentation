@@ -231,7 +231,11 @@ Using the **semantic_description**, **launch**, and **parameter** file generator
 ### Setup folder structure
 
 Once all files are generated, the resulting setup folder structure under `/etc/clearpath/` will look like this:
-
+- **manipulators**
+  - **launch**
+    - _manipulators-service.launch.py_
+  - **config**
+    - _moveit.yaml_
 - **platform**
   - **launch**
     - _platform-service.launch.py_
@@ -252,6 +256,8 @@ Once all files are generated, the resulting setup folder structure under `/etc/c
     - _camera_0.yaml_
     - _camera_1.yaml_
     - ...
+- _robot.srdf_
+- _robot.srdf.xacro_
 - _robot.urdf.xacro_
 - _robot.yaml_
 - _setup.bash_
