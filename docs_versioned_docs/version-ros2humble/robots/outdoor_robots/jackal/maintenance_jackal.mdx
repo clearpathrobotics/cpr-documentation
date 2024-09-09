@@ -3,10 +3,9 @@ title: Jackal Maintenance
 sidebar_label: Maintenance
 sidebar_position: 4
 ---
-
+import ClearpathFirmware from "../../../components/_clearpath_firmware.mdx";
 import ComponentIntroductionJackal from "/components/introduction_jackal.mdx";
 import GettingNewPackages from "/components/maintenance/getting_new_packages.mdx";
-import JackalFirmware from "../../../components/_jackal_firmware.mdx";
 import Support from "/components/support.mdx";
 
 <ComponentIntroductionJackal />
@@ -19,16 +18,7 @@ import Support from "/components/support.mdx";
 
 ### MCU Firmware Update
 
-When you update packages, there is periodically a new version of Jackal's firmware available. You can check by running:
-
-```
-sudo apt update
-sudo apt search ros-humble-jackal-firmware
-```
-
-If new firmware is available, follow the procedure below to flash it to Jackal's MCU:
-
-<JackalFirmware />
+<ClearpathFirmware/>
 
 ---
 
