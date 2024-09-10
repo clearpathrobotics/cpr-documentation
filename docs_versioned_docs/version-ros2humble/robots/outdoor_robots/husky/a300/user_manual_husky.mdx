@@ -1171,56 +1171,13 @@ the steps below to connect to Husky over an Ethernet connection.
 
 #### Husky Wi-Fi Network Configuration
 
-Husky's Wi-Fi can be configured in one of two modes: Access Point mode and Client mode.
-The default is Access Point mode.
-
-In Access Point mode, Husky operates as a Wi-Fi access point, allowing devices such
-as laptop computers to connect to Husky over Wi-Fi directly without the use of additional
-network equipment such as routers. This mode may be useful for simple test environments
-(or initial setup) when there is no additional network equipment available. See
-[Configuring Husky as a Wi-Fi Access Point](#wifi-access-point) for details.
-
-In Client mode, Husky's Wi-Fi is used to connect to an existing network. This mode
-is used for most field deployments.
-
-###### Switching between Wi-Fi Modes  {#switch-wifi-mode}
-
-To switch between Client mode and Access Point mode:
-
-1. SSH to Husky over an Ethernet connection ([details above](#ethernet-connection)).
-1. Run `sudo clearpath-computer-setup` ([more details here](../../../../ros/networking/computer_setup#custom-networking)).
-1. Navigate to ??? (TODO: need to implement)
-1. Select ???
-
-##### Connecting to Husky in Access Point Mode  {#wifi-access-point}
-
-TODO: Do we want to make this option available?
-
-In Access Point mode, a Wi-Fi enabled device (eg. laptop computer) can connect to Husky
-directly, without any additional networking equipment. If Husky was previously configured
-in Client mode, [switch it to Access Point mode](#switch-wifi-mode).
-
-To connect to Husky in Access Point mode, follow the setup below.
-
-1. Ensure your Wi-Fi device (eg. laptop computer) has its interface set up with DHCP enabled
-1. Connect to **SSID**: `Husky-A300-<serial_number>`, where `<serial_number>` is the serial number shown
-   on the robot's Nameplate.
-   - **Password**: `clearpath`
-1. From your Wi-Fi device (eg. laptop computer), run `ping 10.42.0.1` to confirm access to Husky
-1. From your Wi-Fi device (eg. laptop computer), connect to your robot via SSH. To do so,
-   execute the following in a terminal window:
-   ```
-   ssh administrator@10.42.0.1
-   ```
-   You will be promoted to enter a password. The default password is `clearpath`. 
-
+Husky can be configured to connect to an existing Wi-Fi network.
 
 ##### Connecting Husky to a Network over Wi-Fi  {#wifi-client-setup}
 
 To get Husky connected to your local Wi-Fi network, follow the setup below.
 
 1. Follow the steps for [Connecting to Husky over an Ethernet Connection](#ethernet-connection).
-1. If Husky is currently configured in Access Point mode, [switch it to Client mode](#switch-wifi-mode).
 1. Run `sudo clearpath-computer-setup` and follow the [Custom Networking](../../../../ros/networking/computer_setup#custom-networking)
    instructions for setting up the Wi-Fi connection.
    TODO: need more details in the tutorial for setting up wifi.
