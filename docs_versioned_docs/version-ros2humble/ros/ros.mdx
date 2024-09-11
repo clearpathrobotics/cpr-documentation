@@ -71,3 +71,23 @@ Debian drivers are automatically installed on robots as part of the
 [Clearpath Robot Metapackage](../ros/installation/robot.mdx#clearpath-robot-metapackage).
 
 :::
+
+## Changelog
+
+### [0.3.0] 2024-09-10
+:::warning
+The `StopStatus` message in `clearpath_msgs` has an additional field in the `0.3.0` release. This message type is used by the MicroROS enabled, robot MCU; therefore, the firmware must be updated on all robot platforms, except the A200. See, the [robot installation section](./installation/robot.mdx#firmware-update) for information on updating the firmware.
+:::
+#### New Features
+ - DD100 and DD150 Platform and [Attachments](./config/yaml/platform/attachments/dx1X0.mdx)
+ - R100 Platform and [Attachments](./config/yaml/platform/attachments/r100.mdx)
+ - [Manipulator Generators](./config/generators.mdx#manipulation-generation)
+ - MoveIt! Configuration Generation
+ - [Kinova Gen3 Lite, 6Dof, and 7Dof Arms](./config/yaml/manipulators.mdx#kinova-arms)
+ - [Robotiq 2F 85 and 140 Grippers](./config/yaml/manipulators.mdx#robotiq-grippers)
+
+#### Changed
+ - `StopStatus` message added `needs_reset` parameter for R100 platform.
+
+#### Fixed
+ - Use `StopStatus` message to set lighting state
