@@ -3,7 +3,7 @@ title: Ridgeback Maintenance
 sidebar_label: Maintenance
 sidebar_position: 4
 ---
-
+import ClearpathFirmware from "../../../components/_clearpath_firmware.mdx";
 import ComponentIntroductionRidgeback from "/components/introduction_ridgeback.mdx";
 import GettingNewPackages from "/components/maintenance/getting_new_packages.mdx";
 import Support from "/components/support.mdx";
@@ -43,79 +43,7 @@ Please contact Clearpath Robotics for additional information about Ridgeback's b
 
 ### MCU Firmware Update
 
-When you update packages, there is periodically a new version of Ridgeback's firmware available. You will know this
-is the case in one of two ways:
-
-1. The firmware and Onboard Computer are unable to connect to each other, which will be apparent if the body lights remain solid
-   red after system bootup.
-2. If the firmware version number in the `/status` message does not match the package version output by
-   `dpkg -s ros-noetic-ridgeback-firmware`. In the future there will be an automated check for this which outputs
-   a diagnostics warning when a firmware update is available to be applied.
-
-If new firmware is available, follow the below procedure to flash it to Ridgeback's MCU:
-
-1. Place Ridgeback up on blocks. Firmware loading does not usually result in unintended motion, but it's safest when
-   off the ground.
-2. Ensure that Ridgeback is on and open.
-3. Connect the MCU to the Ridgeback's Onboard Computer using a mini-USB cable connected to the port shown below:
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/ridgeback_images/mcu_usb.png"
-      width="800"
-    />
-    <figcaption>Ridgeback MCU mini-USB port</figcaption>
-  </figure>
-</center>
-
-4. In the middle of the MCU is a two-position switch labelled `PWR MODE`. Move the switch from the default `NORM`
-   position to the `AUX` position.
-5. Press the `M_RST` button. The MCU is now in boot-loader mode, ready to receive new firmware.
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/ridgeback_images/mcu_buttons.png"
-      width="800"
-    />
-    <figcaption>Ridgeback MCU mode switch and reset button</figcaption>
-  </figure>
-</center>
-
-:::note
-
-The Ridgeback's MCU is normally rotated 90 degrees when it is installed in the robot; the `NORM` position is
-typically towards the top of the robot's chassis and the `AUX` position is normally towards the bottom.
-
-:::
-
-Now, from Ridgeback's Onboard Computer (connected via SSH or screen/keyboard), execute:
-
-```
-rosrun ridgeback_firmware upload
-```
-
-You should see about 20 seconds worth of lines output beginning with "Download from image ...".
-
-When the upload is complete, move the `PWR MODE` switch back to the `NORM` position and immediately press the
-`M_RST` button.
-
-:::note
-
-You must press the `M_RST` button immediately after changing the mode back to `NORM`. If you take too long
-the Ridgeback may power off. If this happens, simply ensure the switch is in the `NORM` position and power
-the robot back on normally. Losing power in this situation is inconvenient, but not harmful.
-
-:::
-
-After resetting the MCU back in `NORM` mode, ensure the MCU is using the new version of the firmware by running
-
-```
-rostopic echo /status
-```
-
-and verifying that the MCU firmware version is correct.
+<ClearpathFirmware/>
 
 ---
 

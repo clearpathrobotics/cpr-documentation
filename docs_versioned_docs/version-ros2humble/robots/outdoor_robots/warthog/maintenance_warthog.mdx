@@ -3,7 +3,7 @@ title: Warthog Maintenance
 sidebar_label: Maintenance
 sidebar_position: 5
 ---
-
+import ClearpathFirmware from "../../../components/_clearpath_firmware.mdx";
 import ComponentIntroductionWarthog from "/components/introduction_warthog.mdx";
 import GettingNewPackages from "/components/maintenance/getting_new_packages.mdx";
 import Support from "/components/support.mdx";
@@ -184,104 +184,7 @@ You need to use an external computer to update Warthog's MCU firmware. You canno
 firmware requires power-cycling the MCU. Warthog's MCU controls the power supply to the Onboard Computer. These instructions
 assume the external computer is running some flavour of Linux with access to Clearpath's ROS packages.
 
-Follow the below procedure to flash the firmware to Warthog's MCU:
-
-1. Place Warthog up on blocks or engage the emergency stop by pressing one of the red buttons located on each corner
-   of the robot. Firmware loading does not usually result in unintended motion, but it's safest to ensure the robot
-   cannot move accidentally.
-2. Download the Warthog firmware package onto your computer:
-
-   ```
-   sudo apt-get install ros-noetic-warthog-firmware
-   ```
-
-3. Remove the top panel from the Warthog. We recommend opening the panel to the left, as there are cables that run
-   into the lid which can be strained.
-
-   <center>
-     <figure>
-       <img
-         src="/img/robot_images/warthog_images/warthog_inside_lid.jpg"
-         width="800"
-       />
-       <figcaption>The inside of Warthog's computer box</figcaption>
-     </figure>
-   </center>
-
-4. Warthog's MCU is located on the underside of the metal frame over the top of the computer. To access it you will need to
-   disconnect all cables from the breakout on the sloped portion on the left and then undo 4 screws anchoring the frame:
-
-   <center>
-     <figure>
-       <img
-         src="/img/robot_images/warthog_images/warthog_inside.jpg"
-         width="800"
-       />
-       <figcaption>The inside of Warthog's computer box</figcaption>
-     </figure>
-   </center>
-
-   <center>
-     <figure>
-       <img
-         src="/img/robot_images/warthog_images/screws_left.jpg"
-         width="800"
-       />
-       <figcaption>Screws on the left</figcaption>
-     </figure>
-   </center>
-
-   <center>
-     <figure>
-       <img
-         src="/img/robot_images/warthog_images/screws_right.jpg"
-         width="800"
-       />
-       <figcaption>Screws on the right</figcaption>
-     </figure>
-   </center>
-
-   Once the screws are removed, carefully lift the center panel and turn it over to expose the MCU's micro USB port
-   and buttons.
-
-5. While pressing `BT0` on the MCU, connect the external computer to Warthog's MCU using a USB cable.
-
-   <center>
-     <figure>
-       <img
-         src="/img/robot_images/warthog_images/mcu_buttons.jpg"
-         width="800"
-       />
-       <figcaption>Warthog's MCU buttons</figcaption>
-     </figure>
-   </center>
-
-6. After connecting the computer you should see a device with a name similar to
-   `Bus 001 Device 005: ID 0483:df11 STMicroelectronics STM Device in DFU Mode` in the output of `lsusb`.
-
-   :::note
-
-   If the MCU does not show up as a DFU device in the output of `lsusb` after completing the above procedure, press
-   and hold BT0 on the MCU press the RST button while holding BT0 down. This will reset the MCU and force it into DFU
-   mode.
-
-   :::
-
-   With the MCU in DFU mode, run the following command, replacing `001/005` with the value appropriate to the Bus and
-   Device where Warthog's MCU is connected:
-
-   ```
-   sudo chmod 666 /dev/bus/usb/001/005
-   ```
-
-   Now run the following command to upload the firmware:
-
-   ```
-   dfu-util -v -d 0483:df11 -a 0 -s 0x08000000 -D /opt/ros/noetic/share/warthog_firmware/mcu.bin
-   ```
-
-   You should see about 20 seconds worth of lines output beginning with "Download from image ...". When this is
-   complete you may disconnect the computer from the MCU and power-cycle the robot.
+<ClearpathFirmware/>
 
 ---
 
