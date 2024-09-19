@@ -89,7 +89,7 @@ The PACS&trade; kit for this sensor includes:
 
 ### ROS 2 Configuration
 This manipulator is included in the Clearpath Robotics descriptino and robot package that is installed on all of our robots.
-This allows you to add or remove manipulator from your robot's software configuration by modying the [robot configuration yaml](../../../ros/config/yaml/sensors/overview.mdx).
+This allows you to add or remove manipulator from your robot's software configuration by modying the [robot configuration yaml](../../../ros/config/yaml/manipulators.mdx).
 
 <KinovaGen3Lite/>
 <Kinova2FLite/>
@@ -170,27 +170,6 @@ If you cannot ping the computer or arm, try rebooting and replugging the Kinoca 
     - An upstream connector may not be fully seated.
     - A fuse may be blown.
     - A power supply may have failed.
-
-#### ROS driver won't start
-
-1.  Restart the robot, or run the command `sudo systemctl restart ros`.
-2.  Make sure your _catkin_ws_ is sourced.
-
-    :::note
-
-    You can source your _catkin_ws_ in every terminal shell by adding a line to the file `~/.bashrc`.
-
-    :::
-
-3.  Run the commands mentioned in the [Launch section](#kinova_gen3_lite_launch) of this page.
-
-#### Cannot see the Kinova in RViz
-
-1.  Make sure the Kinova node is running.
-    You can check this with RQT, `rosnode list`, or reviewing the rostopics.
-2.  Start RViz.
-3.  Add in the robot's models.
-4.  Add the arm's rostopics.
 
 ### If the Issue Persists
 
