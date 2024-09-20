@@ -71,18 +71,6 @@ including autonomy state and mode.
 
 &emsp;&emsp;**Description:** Current control mode (NEUTRAL, MANUAL, AUTONOMY).
 
-#### /dock/feedback
-
-&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/DockActionFeedback](definitions.mdx#action-dock)
-
-&emsp;&emsp;**Description:** Feedback topic from the dock action.
-
-#### /dock/result
-
-&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/DockActionResult](definitions.mdx#action-dock)
-
-&emsp;&emsp;**Description:** Result topic from the dock action.
-
 #### /dock/properties
 
 &emsp;&emsp;**Message Type:** [clearpath_dock_msgs/DockProperties](definitions.mdx#msg-dock-properties)
@@ -333,19 +321,7 @@ message for 1 second).
 
 &emsp;&emsp;**Message Type:** [clearpath_dock_msgs/TargetTrackerState](definitions.mdx#msg-target-tracker-state)
 
-&emsp;&emsp;**Description:** The state information for target tracker used as part of docking.
-
-#### /undock/feedback
-
-&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/UndockActionFeedback](definitions.mdx#action-undock)
-
-&emsp;&emsp;**Description:** Feedback topic from the undock action.
-
-#### /undock/result
-
-&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/UndockActionResult](definitions.mdx#action-undock)
-
-&emsp;&emsp;**Description:** Result topic from the undock action.
+&emsp;&emsp;**Description:** The state information for target tracker used as part of docking.  
 
 ---
 
@@ -374,35 +350,6 @@ been sent to the OutdoorNav software.
 &emsp;&emsp;**Description:** This topic is used to send a goal to the OutdoorNav
 software. The goal can consist of a series of Waypoints and must include
 a Goal point.
-
-#### /dock/cancel
-
-&emsp;&emsp;**Message Type:** actionlib_msgs/GoalID
-
-&emsp;&emsp;**Description:** This topic is used to cancel the docking process that has been
-initialized by a previously sent goal.
-
-#### /dock/goal
-
-&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/msg/DockActionGoal](definitions.mdx#action-dock)
-
-&emsp;&emsp;**Description:** This topic is used to send a goal to the docking process.
-The goal consists of the UUID of the dock to dock at as well as wether or not local docking
-should be performed.
-
-#### /undock/cancel
-
-&emsp;&emsp;**Message Type:** actionlib_msgs/GoalID
-
-&emsp;&emsp;**Description:** This topic is used to cancel the undocking process that has been
-initialized by a previously sent goal.
-
-#### /undock/goal
-
-&emsp;&emsp;**Message Type:** [clearpath_dock_msgs/msg/UndockActionGoal](definitions.mdx#action-undock)
-
-&emsp;&emsp;**Description:** This topic is used to send a goal to the undocking process.
-The goal is empty since we always consider undocking to be a local undocking process.
 
 ---
 
@@ -445,7 +392,7 @@ or the semantic name of the dock.
 
 #### /dock/clear_data
 
-&emsp;&emsp;**Service Type:** [std_srvs/srv/Trigger](definitions.mdx#srv-clear-dock-data)
+&emsp;&emsp;**Service Type:** [std_srvs/srv/Trigger]
 
 &emsp;&emsp;**Description:** Remove all existing dock data from storage.
 
@@ -518,36 +465,6 @@ obstacles before generating a path around the obstacle.
 2.  This service needs to be called if you are re-enabling the collision
     avoidance and want the continuous planner to be active. Disabling
     collision avoidance will have disabled the continous planner.
-
-:::
-
-#### /navigation/set_path_smoother
-
-&emsp;&emsp;**Service Type:** [clearpath_navigation_msgs/srv/SetPathSmoother](definitions.mdx#srv-set-path-smoother)
-
-&emsp;&emsp;**Description:** Modify the state of the path smoothing feature. If
-True, path smoothing is ENABLED and curved paths will be generated
-according to the specified turning radius. If False, path smoothing is
-DISABLED and point-to-point paths will be generated.
-
-:::note
-
-This feature takes effect immediately once the service is called.
-
-:::
-
-#### /navigation/set_path shifter
-
-&emsp;&emsp;**Service Type:** [clearpath_navigation_msgs/srv/SetPathShifter](definitions.mdx#srv-set-path-shifter)
-
-&emsp;&emsp;**Description:** Modify the state of the path shifting feature. If True,
-path shifting is ENABLED and the reference path will be automatically
-shifted as it veers off the reference path (to prevent oscillations). If
-False, path shifting is DISABLED and normal behaviour is active.
-
-:::note
-
-This feature takes effect immediately once the service is called.
 
 :::
 
@@ -625,9 +542,9 @@ goal tolerances, goal heading, an optional start_waypoint_uuid, and a from_start
 
 &emsp;&emsp;**Description:** Send the UGV to a location within the network.
 
-#### /undock
+#### /autonomy/undock/local
 
-&emsp;&emsp;**Action Type:** [clearpath_dock_msgs/action/Dock](definitions.mdx#action-undock)
+&emsp;&emsp;**Action Type:** [clearpath_dock_msgs/action/Dock](definitions.mdx#action-local-undock)
 
 &emsp;&emsp;**Description:** Undock the robot to the charging dock, if the docking
 package has been included.
