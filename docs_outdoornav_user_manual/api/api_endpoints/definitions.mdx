@@ -390,7 +390,7 @@ clearpath_navigation_msgs/NetworkMap[] network_maps
 clearpath_navigation_msgs/PointOfInterest[] points_of_interest
 ```
 
-#### clearpath_mission_scheduler_msgs/msg/NextSchedule.msg
+#### clearpath_mission_scheduler_msgs/msg/NextSchedule.msg {#scheduler-nextschedule}
 
 ```
 # The ID of the next schedule to start
@@ -1273,6 +1273,73 @@ string[] waypoint_ids
 clearpath_navigation_msgs/Mission result
 ```
 
+#### clearpath_mission_manager_msgs/srv/CreateNetworkMap.srv {#storage-createnetworkmap}
+
+```
+# Create a new NetworkMap
+
+# The human-readable name for the map
+string name
+
+float32 default_radius
+float32 default_speed_limit
+
+# The UUIDs of the points will be re-generated when creating the map.
+# When calling this service it is acceptable to use e.g. 0, 1, 2, ... to identify each point and re-use these
+# values for the start/stop points in the connections
+clearpath_navigation_msgs/NetworkPoint[] points
+
+# A simplified array of edges; just specify the start and end point IDs from the array above, rather than providing
+# complete point objects
+clearpath_mission_manager_msgs/NetworkEdgeReq[] connections
+
+---
+
+# The resulting NetworkMap with an auto-generated UUID is returned
+clearpath_navigation_msgs/NetworkMap result
+```
+#### clearpath_mission_manager_msgs/srv/CreateNetworkMission.srv {#storage-createnetworkmission}
+
+```
+# The desired name for the new mission
+string name
+
+# The additional configuration options
+# see clearpath_navigation_msgs/msg/Mission for details
+string onav_config
+
+# The ordered list of Waypoint UUIDs to include in this mission
+string[] waypoint_ids
+
+# The ordered list of Task UUIDs to include in the on_start Task Array
+string[] on_start_ids
+
+# The ordered list of Task UUIDs to include in the on_stop Task Array
+string[] on_stop_ids
+
+# Boolean value indicating whether robot should attempt 'return to dock' behavior
+# when battery level drops below return_to_dock_battery_level
+bool return_to_dock_enabled
+
+# Dock UUID that the robot should return to for 'return to dock' behavior
+string return_to_dock_id
+
+# Value from 0 to 1 indicating what charge level the robot will return to dock at
+float32 return_to_dock_battery_level
+
+# Value from 0 to 1 indicating what charge level the robot should resume this mission at
+# after returning to dock for recharging
+float32 resume_mission_battery_level
+
+# Boolean value indicating whether 'network' level replanning should be performed
+# in the event that a network edge is deemed un-traversable (e.g., due to obstacles)
+bool network_replan_enabled
+
+---
+# The resulting Mission, with an auto-generated UUID is returned
+clearpath_navigation_msgs/NetworkMission result
+```
+
 #### clearpath_mission_manager_msgs/srv/CreatePointOfInterest.srv {#storage-createpointofinterest}
 
 ```
@@ -2028,19 +2095,6 @@ bool success
 string message
 ```
 
-#### clearpath_navigation_msgs/srv/SetPathSmoother.srv {#srv-set-path-smoother}
-
-```
-# Service definition to enable/disable the path smoothing feature. If enabling, minimum turning radius must be specified in the request.
-
-bool enable_path_smoother
-float32 turn_radius         # units: meters
-float32 step_size
----
-bool success
-string message
-```
-
 #### clearpath_navigation_msgs/srv/SetStopDistance.srv {#srv-set-stop-distance}
 
 ```
@@ -2084,7 +2138,7 @@ string message
 #### clearpath_dock_msgs/action/LocalDock.action {#action-local-dock}
 
 ```
-# Action definition for undocking a Clearpath UGV from one of its charging docks.
+# Action definition for docking a Clearpath UGV from one of its charging docks.
 
 # goal
 
@@ -2097,8 +2151,7 @@ string message
 # feedback
 string message
 ```
-
-#### clearpath_dock_msgs/action/LocalDock.action {#action-local-undock}
+#### clearpath_dock_msgs/action/LocalUndock.action {#action-local-undock}
 
 ```
 # Action definition for undocking a Clearpath UGV from one of its charging docks.
