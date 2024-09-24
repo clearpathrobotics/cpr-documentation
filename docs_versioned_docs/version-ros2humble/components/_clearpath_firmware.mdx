@@ -26,13 +26,11 @@ Before flashing firmware, place your robot up on blocks or disengage the drivetr
 
   #### 2. Prepare the Robot
 
-  :::note
+:::note
 
-  Platforms with an Ethernet connection to the MCU have the option of flashing over USB or Ethernet.
-  If you are updating to ROS 2 Humble for the first time, you must use USB. If you are updating ROS 2 Humble firmware
-  to a newer version, using Ethernet is recommended. Skip this step if flashing over Ethernet.
+  The J100 MCU does not have an ethernet interface, and therefore cannot be flashed using the eternet bootloader. You must follow the subsequent steps to flash the J100 MCU over mini-USB.
 
-  :::
+:::
 
   The J100 MCU is mounted to the rear inside wall of the robot. To access it, open the lid, keeping the computer
   tray secured to the underside of the lid.
@@ -87,13 +85,13 @@ Before flashing firmware, place your robot up on blocks or disengage the drivetr
 
   #### 2. Prepare the Robot
 
-  :::note
+:::note
 
   Platforms with an Ethernet connection to the MCU have the option of flashing over USB or Ethernet.
   If you are updating to ROS 2 Humble for the first time, you must use USB. If you are updating ROS 2 Humble firmware
   to a newer version, using Ethernet is recommended. Skip this step if flashing over Ethernet.
 
-  :::
+:::
 
   The W200 MCU is located on the underside of the metal frame over the top of the computer.
 
@@ -123,6 +121,159 @@ Before flashing firmware, place your robot up on blocks or disengage the drivetr
   **Place the W200 MCU into bootloader mode**
 
   While pressing <code>BT0</code> on the MCU, connect the external computer to Warthog's MCU using a USB cable.
+
+  </TabItem>
+
+  <TabItem
+    value="R100"
+    label="R100"
+    default
+  >
+
+  #### 1. Download the Clearpath Firmware package from the Clearpath package server
+
+  On the robot computer, run the following commands:
+
+  ```
+  sudo apt-get update
+  sudo apt-get install ros-humble-clearpath-firmware
+  ```
+
+  #### 2. Prepare the Robot
+
+:::note
+
+  Platforms with an Ethernet connection to the MCU have the option of flashing over USB or Ethernet.
+  If you are updating to ROS 2 Humble for the first time, you must use USB. If you are updating ROS 2 Humble firmware
+  to a newer version, using Ethernet is recommended. Skip this step if flashing over Ethernet.
+
+:::
+
+  Place the R100 Ridgeback up on blocks. Firmware loading does not usually result in unintended motion, but it's safest when off the ground.
+
+  Remove the side panels to access the robot computer and MCU.
+
+  Connect the MCU to the R100 Ridgeback's onboard computer using a mini-USB cable connected to the port shown below:
+
+  <center>
+    <figure>
+      <img
+        src="/img/robot_images/ridgeback_images/mcu_usb.png"
+        width="800"
+      />
+      <figcaption>R100 MCU mini-USB port</figcaption>
+    </figure>
+  </center>
+
+  In the middle of the MCU, there is a two-position switch labelled `PWR_MODE`. Move the switch from the default `NORM` position to the `AUX` position.
+
+  Press the `M_RST` to restart the MCU. Now, the MCU is in boot-loader mode, ready to receive new firmware.
+
+  <center>
+    <figure>
+      <img
+        src="/img/robot_images/ridgeback_images/mcu_buttons.png"
+        width="800"
+      />
+      <figcaption>R100 MCU mode switch and reset button</figcaption>
+    </figure>
+  </center>
+
+:::note
+
+The Ridgeback's MCU is normally rotated 90 degrees when it is installed in the robot; the `NORM` position is typically towards the top of the robot's chassis and the `AUX` position is normally towards the bottom.
+
+:::
+
+  </TabItem>
+
+  <TabItem
+    value="DX100"
+    label="DX100"
+    default
+  >
+
+  #### 1. Download the Clearpath Firmware package from the Clearpath package server
+
+  On the robot computer, run the following commands:
+
+  ```
+  sudo apt-get update
+  sudo apt-get install ros-humble-clearpath-firmware
+  ```
+
+  #### 2. Prepare the Robot
+
+:::note
+
+  Platforms with an Ethernet connection to the MCU have the option of flashing over USB or Ethernet.
+  If you are updating to ROS 2 Humble for the first time, you must use USB. If you are updating ROS 2 Humble firmware
+  to a newer version, using Ethernet is recommended. Skip this step if flashing over Ethernet.
+
+:::
+
+  The DX100 MCU is mounted near the HMI panel towards the rear of the robot. To access it, remove the antennas and the center channel panel.
+
+  Connect the MCU to the onboard computer using a mini-USB cable connected to the port as shown below:
+
+  <center>
+    <figure>
+      <img
+        src="/img/robot_images/dingo_images/dingo-d-100-bootloader.jpg"
+        width="800"
+      />
+      <figcaption>DX100 MCU mini-USB port</figcaption>
+    </figure>
+  </center>
+
+  As is shown in the image above, set the `PWR_MODE` switch to the `ALT` position.
+
+  Press the `M_RST` or restart the robot using the HMI panel. Now, the MCU is in boot-loader mode, ready to receive new firmware.
+
+  </TabItem>
+
+  <TabItem
+    value="DX150"
+    label="DX150"
+    default
+  >
+
+  #### 1. Download the Clearpath Firmware package from the Clearpath package server
+
+  On the robot computer, run the following commands:
+
+  ```
+  sudo apt-get update
+  sudo apt-get install ros-humble-clearpath-firmware
+  ```
+
+  #### 2. Prepare the Robot
+
+:::note
+
+  Platforms with an Ethernet connection to the MCU have the option of flashing over USB or Ethernet.
+  If you are updating to ROS 2 Humble for the first time, you must use USB. If you are updating ROS 2 Humble firmware
+  to a newer version, using Ethernet is recommended. Skip this step if flashing over Ethernet.
+
+:::
+
+  The DX150 MCU is mounted near the HMI panel towards the rear of the robot. To access it, remove the antennas and the center channel panel.
+
+  Connect the MCU to the onboard computer using a mini-USB cable connected to the port as shown below:
+
+  <center>
+    <figure>
+      <img
+        src="/img/robot_images/dingo_images/dingo-d-150-bootloader.jpg"
+        width="800"
+      />
+      <figcaption>DX150 MCU mini-USB port</figcaption>
+    </figure>
+  </center>
+
+  As is shown in the image above, set the `PWR_MODE` switch to the `ALT` position.
+
+  Press the `M_RST` or restart the robot using the HMI panel. Now, the MCU is in boot-loader mode, ready to receive new firmware.
 
   </TabItem>
 </Tabs>
@@ -174,4 +325,37 @@ If you flashed over Ethernet, skip this step.
   Press the <code>RST</code> button. The MCU should enter regular operation.
 
   </TabItem>
+
+  <TabItem
+    value="R100"
+    label="R100"
+  >
+
+  Switch the <code>PWR_MODE</code> switch from <code>ALT</code> back to <code>NORM</code>. The robot will turn off.
+  Power it back on with the power button.
+
+  </TabItem>
+
+
+  <TabItem
+    value="DX100"
+    label="DX100"
+  >
+
+  Switch the <code>PWR_MODE</code> switch from <code>ALT</code> back to <code>NORM</code>. The robot will turn off.
+  Power it back on with the power button.
+
+  </TabItem>
+
+
+  <TabItem
+    value="DX150"
+    label="DX150"
+  >
+
+  Switch the <code>PWR_MODE</code> switch from <code>ALT</code> back to <code>NORM</code>. The robot will turn off.
+  Power it back on with the power button.
+
+  </TabItem>
+
 </Tabs>

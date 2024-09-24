@@ -3,6 +3,8 @@ title: Kinova Gen3 Lite
 sidebar_position: 3
 ---
 
+import KinovaGen3Lite from "/docs_versioned_docs/version-ros2humble/components/yaml/manipulators/kinova_gen3_lite.mdx";
+import Kinova2FLite from "/docs_versioned_docs/version-ros2humble/components/yaml/manipulators/kinova_2f_lite.mdx";
 import Support from "/components/support.mdx";
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
@@ -85,71 +87,13 @@ The PACS&trade; kit for this sensor includes:
 
 ## Software Bringup
 
-### Installing packages
+### ROS 2 Configuration
+This manipulator is included in the Clearpath Robotics descriptino and robot package that is installed on all of our robots.
+This allows you to add or remove manipulator from your robot's software configuration by modying the [robot configuration yaml](../../../ros/config/yaml/manipulators.mdx).
 
-<Tabs groupId="robot_platform">
-  <TabItem
-    value="husky"
-    label="Husky"
-    default
-  >
-    <p>1. Download packages:</p>
-    <code>cd ~/catkin_ws/src</code>
-    <br />
-    <code>git clone --single-branch --branch noetic-devel https://github.com/Kinovarobotics/ros_kortex.git</code>
-    <br />
-    <code>git clone --single-branch --branch noetic-devel https://github.com/husky/husky_manipulation.git</code>
-    <br />
-    <code>rosdep install --from-paths . --ignore-src -r -y</code>
-    <br />
-    <br />
-    <p>Rosdep may give warnings about unsatisfied dependencies. This is okay if you are only trying to install a single Kinova Gen3 lite on the robot.</p>
-    <br />
-    <p>2. Install dependencies per Kinova's github instructions:</p>
-    <code>sudo apt install python3 python3-pip</code>
-    <br />
-    <code>sudo python3 -m pip install conan</code>
-    <br />
-    <br />
-    <p>3. Build the workspace</p>
-    <code>cd ~/catkin_ws/</code>
-    <br />
-    <code>catkin_make</code>
-    <br />
-    <code>source devel/setup.bash</code>
-    <br />
-  </TabItem>
-  <TabItem
-    value="dingo"
-    label="Dingo"
-  >
-    <p>1. Download packages:</p>
-    <code>cd ~/catkin_ws/src</code>
-    <br />
-    <code>git clone --single-branch --branch noetic-devel https://github.com/Kinovarobotics/ros_kortex.git</code>
-    <br />
-    <code>git clone https://github.com/dingo-cpr/dingo_manipulation.git --recursive</code>
-    <br />
-    <code>rosdep install --from-paths . --ignore-src -r -y</code>
-    <br />
-    <br />
-    <p>Rosdep may give warnings about unsatisfied dependencies. This is okay if you are only trying to install a single Kinova Gen3 lite on the robot.</p>
-    <br />
-    <p>2. Install dependencies per Kinova's github instructions:</p>
-    <code>sudo apt install python3 python3-pip</code>
-    <br />
-    <code>sudo python3 -m pip install conan</code>
-    <br />
-    <br />
-    <p>3. Build the workspace</p>
-    <code>cd ~/catkin_ws/</code>
-    <br />
-    <code>catkin_make</code>
-    <br />
-    <code>source devel/setup.bash</code>
-    <br />
-  </TabItem>
-</Tabs>
+<KinovaGen3Lite/>
+<Kinova2FLite/>
+
 
 ### Networking, with netplan
 
@@ -210,78 +154,6 @@ If you cannot ping the computer or arm, try rebooting and replugging the Kinoca 
 
 :::
 
-### Launching the ROS Driver {#kinova_gen3_lite_launch}
-
-<Tabs groupId="robot_platform">
-  <TabItem
-    value="husky"
-    label="Husky"
-    default
-  >
-    <code>roslaunch husky_kinova_bringup husky_gen3_lite_bringup.launch</code>
-    <br />
-    <code>roslaunch husky_gen3_lite_moveit_config husky_gen3_lite_moveit_planning_execution.launch</code>
-    <br />
-  </TabItem>
-  <TabItem
-    value="dingo"
-    label="Dingo"
-  >
-    <code>roslaunch dingo_kinova_bringup dingo_gen3_lite_bringup.launch</code>
-    <br />
-    <code> roslaunch dingo_gen3_lite_moveit_config dingo _gen3_lite_moveit_planning_execution.launch</code>
-    <br />
-  </TabItem>
-</Tabs>
-
-### URDF
-
-<Tabs groupId="robot_platform">
-  <TabItem
-    value="husky"
-    label="Husky"
-    default
-  >
-    <p>
-      Refer to Clearpath's GitHub repository for Husky Manipulation, <a href="https://github.com/husky/husky_manipulation">https://github.com/husky/husky_manipulation</a>.
-    </p>
-  </TabItem>
-  <TabItem
-    value="dingo"
-    label="Dingo"
-  >
-    <p>
-      Refer to Clearpath's GitHub repository for Dingo Manipulation, <a href="https://github.com/dingo-cpr/dingo_manipulation">https://github.com/dingo-cpr/dingo_manipulation</a>.
-    </p>
-  </TabItem>
-</Tabs>
-
-### MoveIt!
-
-MoveIt! should be used on the robot whenever possible.
-MoveIt! tracks arm movements with regards to the robot's _base_link_.
-MoveIt! will prevent the arm from colliding with the robot's base, assuming you have a detailed URDF that includes all the surfaces of the robot.
-
-<Tabs groupId="robot_platform">
-  <TabItem
-    value="husky"
-    label="Husky"
-    default
-  >
-    <p>
-      Refer to Clearpath's GitHub repository for Husky Manipulation, <a href="https://github.com/husky/husky_manipulation">https://github.com/husky/husky_manipulation</a>.
-    </p>
-  </TabItem>
-  <TabItem
-    value="dingo"
-    label="Dingo"
-  >
-    <p>
-      Refer to Clearpath's GitHub repository for Dingo Manipulation, <a href="https://github.com/dingo-cpr/dingo_manipulation">https://github.com/dingo-cpr/dingo_manipulation</a>.
-    </p>
-  </TabItem>
-</Tabs>
-
 ---
 
 ## Troubleshooting
@@ -298,27 +170,6 @@ MoveIt! will prevent the arm from colliding with the robot's base, assuming you 
     - An upstream connector may not be fully seated.
     - A fuse may be blown.
     - A power supply may have failed.
-
-#### ROS driver won't start
-
-1.  Restart the robot, or run the command `sudo systemctl restart ros`.
-2.  Make sure your _catkin_ws_ is sourced.
-
-    :::note
-
-    You can source your _catkin_ws_ in every terminal shell by adding a line to the file `~/.bashrc`.
-
-    :::
-
-3.  Run the commands mentioned in the [Launch section](#kinova_gen3_lite_launch) of this page.
-
-#### Cannot see the Kinova in RViz
-
-1.  Make sure the Kinova node is running.
-    You can check this with RQT, `rosnode list`, or reviewing the rostopics.
-2.  Start RViz.
-3.  Add in the robot's models.
-4.  Add the arm's rostopics.
 
 ### If the Issue Persists
 
