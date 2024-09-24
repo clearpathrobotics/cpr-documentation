@@ -136,14 +136,15 @@ detail in the following sections.
 The Main circuit board provides eight connectors, labelled USER 1 through USER 8, for user power. 
 
 User power is divided into four power rails and the power for each rail is shared
-across each of the 8 connectors. The maximum (aggregate) current available on each power rail is:
+across each of the 8 connectors. The maximum (aggregate) current available on each power rail is
+outlined in the table below.
 
-| User Power Rail             | Maximum (Aggregate) Current | Enable/Disable ROS Topic |
-| :-------------------------- | :-------------------------- | :----------------------- |
-| 12 V Rail A                 | 5 A                         | /TODO                    |
-| 12 V Rail B                 | 5 A                         | /TODO                    |
-| 24 V                        | 5 A                         | /TODO                    |
-| VBAT (24-29 V, unregulated) | 5 A                         | /TODO                    |
+| User Power Rail             | Maximum (Aggregate) Current |
+| :-------------------------- | :-------------------------- |
+| 12 V Rail A                 | 5 A                         |
+| 12 V Rail B                 | 5 A                         |
+| 24 V                        | 5 A                         |
+| VBAT (24-29 V, unregulated) | 5 A                         |
 
 :::safety-warning[WARNING]
 
@@ -176,9 +177,9 @@ To create these cables, follow the steps below.
 2.  Take 2 Molex terminals from the spare parts kit provided and insert the exposed wire and crimp the
     terminals, ensuring the wires are well secured inside the terminal, as shown below.
 3.  Take 1 connector housing from the spare parts kit provided and insert the positive payload power lead
-    (red) into position 5, 6, 7 or 8 of the connector until it locks into place. The positions numbers are
+    (red) into position 1, 2, 3 or 4 of the connector until it locks into place. The positions numbers are
     visible on the back of the plastic housing.
-4.  Insert the negative payload power lead (black) into position 1, 2, 3, or 4 of the connector until it locks
+4.  Insert the negative payload power lead (black) into position 5, 6, 7, or 8 of the connector until it locks
     into place.
 
 <center>
@@ -193,30 +194,28 @@ To create these cables, follow the steps below.
 <center>
   <figure>
     <img
-      src="/img/robot_images/husky_images/robot_husky_17.jpg"
-      width="300"
+      src="/img/robot_images/husky_a300_images/husky_a300_user_power_connector.jpg"
+      width="200"
     />
-    <figcaption>Inserting the crimped wires into the Molex connector (TODO: need 8-pin connector)</figcaption>
+    <figcaption>Inserting the crimped wires into the Molex connector</figcaption>
   </figure>
 </center>
 
 For more technical information on the Molex power connectors, as well as their corresponding mating connectors,
 please visit the
-[Digi-Key WM23702-ND Product Page](https://www.digikey.ca/en/products/detail/molex/0039012065/930272?s=N4IgTCBcDaIOoFkwGYDsAGMBaAcgERAF0BfIA).
-TODO: update link to 8-pin connector.
+[Digi-Key WM3703-ND Product Page](https://www.digikey.ca/en/products/detail/molex/0039012080/61382).
 
 ##### Software Control of User Power Rails
 
-Each of the four power user power rails can be enabled or disabled through ROS by publishing to the
-corresponding ROS topic, as listed [above](#user-power-connections).
+User power can be enabled or disabled through ROS by publishing to `/TODO` ROS topic.
 
-For example, to disable the 24 V power rail, run:
+To disable user power, run:
 
 ```
 ros2 topic pub --once /TODO std_msgs/msg/UInt8 '{data: 0}'
 ```
 
-To enable the 24 V power rail, run:
+To enable user power, run:
 
 ```
 ros2 topic pub --once /TODO std_msgs/msg/UInt8 '{data: 1}'
@@ -224,8 +223,8 @@ ros2 topic pub --once /TODO std_msgs/msg/UInt8 '{data: 1}'
 
 :::note
 
-All user power rails are enabled by default shortly after the robot first powers up,
-regardless of their value when the robot was powered off.
+User power is enabled by default shortly after the robot first powers up,
+regardless of its state when the robot was powered off.
 TODO: confirm
 
 :::
@@ -233,8 +232,7 @@ TODO: confirm
 #### User Power Expansion Kit
 
 In addition to the [User Power Connections](#user-power-connections), an optional
-expansion module can be add to connector TODO to provide additional user power
-and corresponding connectors:
+expansion kit can be used to provide additional user power:
 
 - 12 V: 10 A
 - 24 V: 10 A
@@ -242,17 +240,24 @@ and corresponding connectors:
 The User Power Expansion Kit can purchased at the time of your original Husky order
 or as a later purchase by contacting [Support](#support).
 
-TODO:
-- EXP 1, EXP 2: 2-pin VBAT/gnd + EXP CTRL (differential I2C)
-- 1: 5.0V, DSDA_P, DSCL_P, EXP_CTRL, GND, DSDA_N, DSCL_N, GND
-- probably don't describe the protocol; focus on the part numbers for the 3 cables, the additional board, and its breakout connectors
-- part number
-- connector details
-- software enable/disable control?
-- installation instructions
-   - cable/connection on Main PCBA
-   - cable routing outside chassis
-   - mechanical mounting (screws at corners?)
+The kit includes a PCBA with connectors similar to USER 1 - USER 8 along with cables
+that connect the PCBA to the EXP 1, EXP 2, and EXP CTRL connectors on the Main Circuit
+Board. The length of the expansion cables can be adjusted to that the additional user
+power is available in a different location in the system, such as in a custom
+enclosure.
+
+:::note
+
+This kit is still under development. Updates pending for:
+
+- CPR Item Number
+- Software enable/disable control
+- Installation instructions
+   - Cable connections on Main Circuit Board
+   - Cable routing outside chassis
+   - Mechanical mounting
+
+:::
 
 #### High Power Expansion Kit
 
@@ -267,7 +272,7 @@ order, referring to CPR Item 032001. Field installation is not supported at pres
 
 When using the optional High Power Expansion Kit while operating in environments with
 inclines of 5° (or more) AND with a payload of 50 kg (or more), a 4-battery or
-6-battery configuration is recommended; using a 2-battery configuration may provide
+6-battery configuration is recommended. Using a 2-battery configuration may provide
 insufficient power in the worst case. Contact [Support](#support) for additional details.
 
 :::
@@ -506,22 +511,23 @@ board at the "W ES" connector, based on the pinout below.
 
 | W ES Pin | Function / Value |
 | :------- | :--------------- |
-| 1  | 24 V (fused at 3 A)  |
-| 2  | GND |
-| 3  | Channel 1 Out (24 V): normally connected to Channel 1 In; disconnect to trigger an emergency stop |
-| 4  | Channel 2 Out (24 V): normally connected to Channel 2 In; disconnect to trigger an emergency stop |
-| 5  | Channel 1 In |
-| 6  | Channel 2 In |
-| 7  | CAN High: combined with CAN Low, connected to the CAN2 pins on the MCU; see additional notes below |
-| 8  | CAN Low |
-| 9  | Reset In: Set to 3.3 V for at least ?? ms to restart the robot after all emergency stops have been cleared; equivalent to pressing the Restart Button on Husky  |
-| 10 | GND |
-
-TODO: need to update pinout
+| 1        | 24 V (fused at 3 A)  |
+| 2        | CAN High: combined with CAN Low, connected to the CAN2 pins on the MCU; see additional notes below |
+| 3        | Reset In: Pull to GND for at least ?? ms to restart the robot after all emergency stops have been cleared; equivalent to pressing the Restart Button on Husky |
+| 4        | Channel 1 Out (24 V): normally connected to Channel 1 In; disconnect to trigger an emergency stop |
+| 5        | Channel 1 In |
+| 6        | GND |
+| 7        | CAN Low |
+| 8        | GND |
+| 9        | Channel 2 Out (24 V): normally connected to Channel 2 In; disconnect to trigger an emergency stop |
+| 10       | Channel 2 In |
 
 #### CAN Bus Connection
 
-TODO: how does the CAN bus get used?
+The CAN High and CAN Low pins are connected to the CAN2 bus of the system, shared with the battery
+and wireless charger subsystems.
+
+The CAN2 bus is accessible on the computer as a linux socket under `can1` at a bitrate of 250000.
 
 #### Receiver Installation
 
@@ -556,7 +562,7 @@ The pinout for ES3 - ES8 is shown below.
 ### Computer Power
 
 Three connectors are provided for powering computers, including GPUs: SYS1, SYS2, and SYS3. Collectively,
-they provide up to 400 W of power at 12 V. SYS4 is also available to provide up to 36 W of power at 12 V.
+they provide up to 400 W of power at 12 V.
 
 TODO: max current for each pin
 
@@ -580,6 +586,11 @@ TODO: max current for each pin
 | 5   | GND              |
 | 6   | GND              |
 
+### Other System Power
+
+SYS4 is used to power the internal network switch and
+provides up to 36 W of power at 12 V.
+
 #### SYS4 Pinouts
 
 | Pin | Function / Value |
@@ -594,10 +605,10 @@ outlined below.
 
 #### Common Core Debug LEDs
 
-- **D6: USB 5V**: TODO
+- **D6: USB 5V**: Solid green when the 5 V power rail is operational; else off.
 - **D7: 3.3V**: Solid green when the 3.3 V power rail is operational; else off.
-- **D9: DBG/CON**: TODO
-- **D11: HB/ERR**: toggles (red/off) every 500 ms when the main firmware loop is running; solid red on error?
+- **D9: DBG/CON**: For future use
+- **D11: HB/ERR**: Heartbeat that toggles (red/off) every 500 ms when the main firmware loop is running; solid on or off indicates an error
 
 #### DC/DC Debug LEDs
 
@@ -608,9 +619,9 @@ outlined below.
 - **5V0**: Solid green when the 5 V power rail is operational; else off.
 - **3V3**: Solid green when the 3.3 V power rail is operational; else off.
 - **MTR_FAULT**: Solid red when a motor fault is detected; else off.
-- **ERROR**: Solid red when TODO
-- **DBG2**: TODO
-- **DBG1**: toggles (green/off) every 500 ms when the firmware loop is running
+- **ERROR**: Toggles (red/off) every 500 ms when a motor control error is detected; else off.
+- **DBG2**: For future use
+- **DBG1**: Heartbeat that toggles (green/off) every 500 ms when the firmware loop is running; solid on or off indicates an error
 
 ---
 
