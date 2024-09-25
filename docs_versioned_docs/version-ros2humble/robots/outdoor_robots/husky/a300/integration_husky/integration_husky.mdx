@@ -205,27 +205,26 @@ For more technical information on the Molex power connectors, as well as their c
 please visit the
 [Digi-Key WM3703-ND Product Page](https://www.digikey.ca/en/products/detail/molex/0039012080/61382).
 
-##### Software Control of User Power Rails
+##### Software Control of User Power Rails {#user_power_control}
 
-User power can be enabled or disabled through ROS by publishing to `/TODO` ROS topic.
+User power can be enabled or disabled through ROS by publishing to `/a300_####/platform/mcu/cmd_user_power` ROS topic.
 
 To disable user power, run:
 
 ```
-ros2 topic pub --once /TODO std_msgs/msg/UInt8 '{data: 0}'
+ros2 topic pub --once //a300_####/platform/mcu/cmd_user_power std_msgs/msg/Bool '{data: false}'
 ```
 
 To enable user power, run:
 
 ```
-ros2 topic pub --once /TODO std_msgs/msg/UInt8 '{data: 1}'
+ros2 topic pub --once //a300_####/platform/mcu/cmd_user_power std_msgs/msg/Bool '{data: true}'
 ```
 
 :::note
 
 User power is enabled by default shortly after the robot first powers up,
 regardless of its state when the robot was powered off.
-TODO: confirm
 
 :::
 
@@ -316,7 +315,8 @@ as the replacement.
 
 ##### On/Off Control via Software
 
-The High Power Expansion Kit output is controlled through software, via ROS topic '/TODO'.
+The High Power Expansion Kit output is controlled through software by publishing to the ROS topic `/a300_####/platform/mcu/cmd_high_power`,
+similar to [Software Control of User Power Rails](#user_power_control).
 
 :::note
 
@@ -335,18 +335,18 @@ inputs can be driven by one of the following:
 - a 24 V input
 - a push button or switch
 
-In turn, the state of the input can be read from the ROS topic `/TODO`.
-The AUX inputs are mapped to the ROS message bits as follows:
+In turn, the state of the input can be read from the ROS topic `/a300_####/platform/mcu/status/aux_inputs`.
+The AUX inputs are active low and are mapped to the ROS message bits as follows:
 
 - AUX1 IN: bit 0
 - AUX2 IN: bit 1
 - AUX3 IN: bit 2
 
-| AUX Input            | Payload State                                  | `/TODO` Value  |
-| :------------------- | :--------------------------------------------- | :--------------- |
-| AUX1 IN              | 24 V on OR 12 V on OR button pressed<br/>24 V off AND 12 V off AND button not pressed | bit 0 reads as '0'<br/>/TODO bit 0 as '1' |
-| AUX2 IN              | 24 V on OR 12 V on OR button pressed<br/>24 V off AND 12 V off AND button not pressed | bit 1 reads as '0'<br/>/TODO bit 1 as '1' |
-| AUX3 IN              | 24 V on OR 12 V on OR button pressed<br/>24 V off AND 12 V off AND button not pressed | bit 2 reads as '0'<br/>/TODO bit 2 as '1' |
+| AUX Input            | Payload State                                                                         | `/a300_####/platform/mcu/status/aux_inputs` Value  |
+| :------------------- | :------------------------------------------------------------------------------------ | :---------------------------------------- |
+| AUX1 IN              | 24 V on OR 12 V on OR button pressed<br/>24 V off AND 12 V off AND button not pressed | bit 0 reads as '0'<br/>bit 0 reads as '1' |
+| AUX2 IN              | 24 V on OR 12 V on OR button pressed<br/>24 V off AND 12 V off AND button not pressed | bit 1 reads as '0'<br/>bit 1 reads as '1' |
+| AUX3 IN              | 24 V on OR 12 V on OR button pressed<br/>24 V off AND 12 V off AND button not pressed | bit 2 reads as '0'<br/>bit 2 reads as '1' |
 
 #### AUX Input Pin Mapping
 
@@ -369,10 +369,10 @@ with the remaining pins unconnected.
 Monitor the input reading in ROS.
 
 ```
-ros2 topic echo /TODO
+ros2 topic echo /a300_####/platform/mcu/status/aux_inputs
 ```
 
-| Action | `/TODO` value | Bit 2 Explanation | Bit 1 Explanation | Bit 0 Explanation |
+| Action | `/a300_####/platform/mcu/status/aux_inputs` value | Bit 2 Explanation | Bit 1 Explanation | Bit 0 Explanation |
 | :----- | :------------ | :---------------- | :---------------- | :---------------- |
 | Begin with the 12 V supply turned off | 7 (8b00000111) | '1' since AUX3 IN is not connected | '1' since 12 V supply is off | '1' since AUX1 IN is not connected |
 | Turn the 12 V power supply on         | 5 (8b00000101) | '1' since AUX3 IN is not connected | '0' since 12 V supply is on  | '1' since AUX1 IN is not connected |
@@ -384,7 +384,7 @@ Consider the example where AUX1 IN has a 24 V supply connected to pins 2 and 5,
 AUX2 IN has a 12 V supply connected to pins 1 and 4, and AUX3 IN has a push button
 connected to pin 3.
 
-| Action | `/TODO` value | Bit 2 Explanation | Bit 1 Explanation | Bit 0 Explanation |
+| Action | `/a300_####/platform/mcu/status/aux_inputs` value | Bit 2 Explanation | Bit 1 Explanation | Bit 0 Explanation |
 | :----- | :------------ | :---------------- | :---------------- | :---------------- |
 | Begin with 12 V supply turned off, the 24 V supply off, and the button not pressed | 7 (8b00000111) | '1' since button is not pressed | '1' since 12 V supply is off | '1' since 24 V supply is off |
 | Turn the 24 V power supply on         | 6 (8b00000110) | '1' since button is not pressed | '1' since 12 V supply is off | '0' since 24 V supply is on |
@@ -394,7 +394,8 @@ connected to pin 3.
 ### AUX Outputs
 
 The Main circuit board includes three user-controlled outputs (AUX1 OUT, AUX2 OUT, AUX3 OUT)
-that can be controlled by publishing to the `TODO` ROS topic. To enable the AUX outputs, simply
+that can be controlled by publishing to the `/a300_####/platform/mcu/cmd_aux_outputs` ROS topic.
+To enable the AUX outputs, simply
 publish a single message with the appropriate bits set to 1 to turn the output on and 0 to turn
 it off. The state does not persist so new commands will need to keep the bit enabled as well.
 The AUX outputs are mapped to the ROS message bits as follows:
@@ -408,19 +409,19 @@ The AUX outputs are mapped to the ROS message bits as follows:
 To disable all AUX outputs:
 
 ```
-rostopic pub /TODO std_msgs/UInt8 "data: 0"
+rostopic pub /a300_####/platform/mcu/cmd_aux_outputs std_msgs/UInt8 "data: 0"
 ```
 
 To enable all AUX outputs:
 
 ```
-rostopic pub /TODO std_msgs/UInt8 "data: 7"
+rostopic pub /a300_####/platform/mcu/cmd_aux_outputs std_msgs/UInt8 "data: 7"
 ```
 
 To enable just the AUX3 output:
 
 ```
-rostopic pub /mcu/aux_output std_msgs/UInt8 "data: 4"
+rostopic pub /a300_####/platform/mcu/cmd_aux_outputs std_msgs/UInt8 "data: 4"
 ```
 
 #### Aux Output Pin Mapping
@@ -432,7 +433,7 @@ value is available in several modes:
 - Normally open relay
 - Normally closed relay
 
-| AUX IN connector pin | Function | Output when corresponding `/TODO` bit is '0' | Output when corresponding `/TODO` bit is '1' | 
+| AUX IN connector pin | Function | Output when corresponding `cmd_aux_outputs` bit is '0' | Output when corresponding `cmd_aux_outputs` bit is '1' | 
 | :------------------- | :------- | :------------------------------------------- | :------------------------------------------- |
 | 1 (AUX_24V)          | 24 V output, fused at 3 A, available for use with relay | 24 V | 24 V
 | 2 (GND)              | MOSFET GND | GND | GND |
@@ -447,12 +448,13 @@ value is available in several modes:
 
 The Main circuit board includes four general purpose inputs and four general purpose
 outputs, which are all connected to the 16-pin GPIO connector. All GPIOs are at the
-3.3 V logic level. General purpose inputs are readable from the `/TODO` ROS topic.
-Publishing to the `/TODO` topic controls the general purpose outputs.
+3.3 V logic level. General purpose inputs are readable from the
+`/a300_####/platform/mcu/status/gp_inputs` ROS topic.
+Publishing to the ROS `/a300_####/platform/mcu/cmd_gp_outputs` topic controls the general purpose outputs.
 
 #### General Purpose Input Pin Mapping
 
-| GPIO connector pin | Function | /TODO value when driven at 0 V | /TODO value when driven at 3.3 V |
+| GPIO connector pin | Function | `gp_inputs` value when driven at 0 V | `gp_inputs` value when driven at 3.3 V |
 | :----------------- | :------- | :----------------------------- | :------------------------------- |
 | 1 | GP In 1 | Bit 0 is '0' | Bit 0 is '1' |
 | 2 | GP In 2 | Bit 1 is '0' | Bit 1 is '1' |
@@ -465,7 +467,7 @@ Publishing to the `/TODO` topic controls the general purpose outputs.
 
 #### General Purpose Output Pin Mapping
 
-| GPIO connector pin | Function | Corresponding bit in `/TODO` | Output value when set to '0' | Output value when set to '1' |
+| GPIO connector pin | Function | Corresponding bit in `cmd_gp_outputs` | Output value when set to '0' | Output value when set to '1' |
 | :----------------- | :------- | :--------------------------- | :--------------------------- | :--------------------------- |
 | 5 | GP Out 1 | 0 | 0 V | 3.3 V |
 | 6 | GP Out 2 | 1 | 0 V | 3.3 V |
@@ -491,9 +493,11 @@ The pinout for each fan is:
 | 3   | Tachometer (output from fan) |
 | 4   | PWM (input to fan, 3.3 V) |
 
-The speed of each fan can be controlled by publishing to the `/TODO` topic in ROS.
+The speed of each fan can be controlled by publishing to the `/a300_####/platform/mcu/cmd_fans` topic in ROS.
 
-The speed of each fan can be monitored by reading the `/TODO` topic in ROS.
+The speed of each fan can be monitored by reading the `/a300_####/platform/mcu/status/fans` topic in ROS.
+
+In both cases, the fan value is in the range from 0 (not spinning) to 255 (max speed).
 
 TODO: do we Digikey part numbers for a couple known compatible fans?
 
@@ -513,7 +517,7 @@ board at the "W ES" connector, based on the pinout below.
 | :------- | :--------------- |
 | 1        | 24 V (fused at 3 A)  |
 | 2        | CAN High: combined with CAN Low, connected to the CAN2 pins on the MCU; see additional notes below |
-| 3        | Reset In: Pull to GND for at least ?? ms to restart the robot after all emergency stops have been cleared; equivalent to pressing the Restart Button on Husky |
+| 3        | Reset In: Pull to GND for at least 100 ms to restart the robot after all emergency stops have been cleared; equivalent to pressing the Restart Button on Husky |
 | 4        | Channel 1 Out (24 V): normally connected to Channel 1 In; disconnect to trigger an emergency stop |
 | 5        | Channel 1 In |
 | 6        | GND |
@@ -564,8 +568,6 @@ The pinout for ES3 - ES8 is shown below.
 Three connectors are provided for powering computers, including GPUs: SYS1, SYS2, and SYS3. Collectively,
 they provide up to 400 W of power at 12 V.
 
-TODO: max current for each pin
-
 #### SYS1 / SYS2 Pinouts
 
 | Pin | Function / Value |
@@ -605,21 +607,21 @@ outlined below.
 
 #### Common Core Debug LEDs
 
-- **D6: USB 5V**: Solid green when the 5 V power rail is operational; else off.
-- **D7: 3.3V**: Solid green when the 3.3 V power rail is operational; else off.
+- **D6: USB 5V**: Solid green if a USB cable is plugged in and used to power the board
+- **D7: 3.3V**: Solid green when the 3.3 V power rail is operational; else off
 - **D9: DBG/CON**: For future use
 - **D11: HB/ERR**: Heartbeat that toggles (red/off) every 500 ms when the main firmware loop is running; solid on or off indicates an error
 
 #### DC/DC Debug LEDs
 
-- **D3: V OUT**: Solid green when the output is operational; else off.
+- **D3: V OUT**: Solid green when the output is operational; else off
 
 #### Motor Controller LEDs
 
-- **5V0**: Solid green when the 5 V power rail is operational; else off.
-- **3V3**: Solid green when the 3.3 V power rail is operational; else off.
-- **MTR_FAULT**: Solid red when a motor fault is detected; else off.
-- **ERROR**: Toggles (red/off) every 500 ms when a motor control error is detected; else off.
+- **5V0**: Solid green when the 5 V power rail is operational; else off
+- **3V3**: Solid green when the 3.3 V power rail is operational; else off
+- **MTR_FAULT**: Solid red when a motor fault is detected; else off
+- **ERROR**: Toggles (red/off) every 500 ms when a motor control error is detected; else off
 - **DBG2**: For future use
 - **DBG1**: Heartbeat that toggles (green/off) every 500 ms when the firmware loop is running; solid on or off indicates an error
 
