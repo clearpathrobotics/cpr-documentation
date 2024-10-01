@@ -414,14 +414,14 @@ prevent re-initiation of motion.
       src="/img/robot_images/husky_observer_images/wireless_motion_stop_controller.png"
       width="200"
     />
-    <figcaption>Wireless motion-stop controller</figcaption>
+    <figcaption>Wireless emergency stop controller</figcaption>
   </figure>
   <figure>
     <img
       src="/img/robot_images/husky_observer_images/wireless_stop_override_keyswitch.png"
       width="500"
     />
-    <figcaption>(TODO: A300 image) Wireless motion-stop override</figcaption>
+    <figcaption>(TODO: A300 image) Wireless emergency stop override</figcaption>
   </figure>
 </center>
 
@@ -500,7 +500,7 @@ The maximum current draw of the system is limited by the output of the batteries
 continuous output for the standard and upgraded battery configurations is 60 A and 120 A, respectively.
 Higher outputs are possible for short periods of time. 
 
-Husky A300's motors are rated to draw (TODO) A continuous, but they will spike to several times higher
+Husky A300's motors are rated to draw 17 A continuous, but they will spike to several times higher
 than this, particularly when traversing rough terrain and when turning on the spot.
 To reduce current draw, consider commanding wider-radius turns from your control software.
 
@@ -525,7 +525,7 @@ payload is present.
   - TODO: is this different for 2-battery and 4-battery?
 
 The images below illustrate the changes to the centre of mass and limits at which Husky A300 will tip over
-when the a maximum payload is added with its centre of mass at 50 cm above the Husky A300 origin point.
+when the a 100 kg payload is added with its centre of mass at 30 cm above the Husky A300 origin point.
 
   - TODO: centre of mass and tipping points for front, left, rear, right lift
 
@@ -546,18 +546,10 @@ integrator to ensure that no hazards are present in the the target operating env
 
 <br />
 
-| Payload Mass (kg)  | Incline (°)  | Stopping Distance (m), assuming 2 m/s when emergency stop engaged | Terminal Speed (m/s)  | 
-| :----------------- | :----------- | :---------------------------------------------------------------- | :-------------------- |
-| 0                  | 15           | TODO                                                              | 0                     |
-| TODO: max payload at which we stop at max incline                | 15           | TODO                                                              | 0                     |
-| 100                | 0            | TODO                                                              | 0                     |
-| 100                | TODO: max incline at which we stop with max payload         | TODO                                                              | 0                     |
-| 100                | 15           | TODO                                                              | TODO                  |
-
-##### Other Limits
-
-   - TODO: Hardware failures?
-   - TODO: Bandwidth? Loss of networking?
+| Payload Mass | Incline  | Terminal Speed     | 
+| :----------- | :------- | :------------------|
+| 0 kg         | 15°      | 0.25 m/s or less (TODO: confirm) |
+| 100 kg       | 15°      | 0.5 m/s or less  (TODO: confirm) |
 
 ### Recommended Safe Work Procedures
 
@@ -633,10 +625,8 @@ TODO: update image
 ### System Architecture
 
 Husky is built around a computer running Ubuntu (Intel-based computer or Jetson-based computer), paired with a 32-bit microcontroller unit (MCU).
-The MCU handles power supply monitoring and motor control.
+The MCU handles power supply monitoring and motor control. (TODO: update if MCU no longer handles motor control.)
 The communication channel between the MCU and computer is an Ethernet connection.
-
-TODO: image
 
 ---
 
@@ -706,14 +696,14 @@ The display is shown below and includes the following.
 
 TODO: update icons
 
-|                                  Icon                                    | Description                                                                                                                                                                                                                                                                                                                                                                                                                |
-| :----------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <img src="/img/robot_images/husky_images/robot_husky_3.png" width="50"/> | **Battery Status** The four segments provide an approximate indication of the relative lifetime remaining in the battery.                                                                                                                                                                 |
-| <img src="/img/robot_images/dingo_images/icon-comms.png" width="50"/>    | **Comms indictor**: Indicates when communication between the MCU and computer has been established; has an "X" when communication has not been established.                                                                                                                                                                                                                                                                                       |
-| <img src="/img/robot_images/dingo_images/icon-wifi.png" width="50"/>     | **Wi-Fi indicator**: Indicates when Wi-Fi is connected; has an "X" when Wi-Fi has not been connected.                                                                                                                                                                                                                                                                                                                                   |
-| TODO                                                                     | TODO |
-
-TODO: image
+|                                  Icon                                    | Description   |
+| :----------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------- |
+| TODO <img src="/img/robot_images/husky_images/robot_husky_3.png" width="50"/> | **Battery Status** The four segments provide an approximate indication of the relative lifetime remaining in the battery  |
+| <img src="/img/robot_images/dingo_images/icon-comms.png" width="50"/>    | **Comms Indictor**: Indicates when communication between the MCU and computer has been established; has an "X" when communication has not been established |
+| <img src="/img/robot_images/dingo_images/icon-wifi.png" width="50"/>     | **Wi-Fi Indicator**: Indicates when Wi-Fi is connected; has an "X" when Wi-Fi has not been connected    |
+| TODO                                                                     | **Charge Indicator**: Indicates when charging is in progress; has an "X" when there are no chargers connected |
+| TODO                                                                     | **ROS Indicator**: Indicates when ROS software is running; has an "X" when ROS is not running |
+| TODO                                                                     | **Error Indicator**: When displayed, errors have been detect (TODO: where to go to see errors?) |
 
 ### Status Lights  {#status-lights}
 
@@ -773,8 +763,6 @@ TODO: image when cover closed and with cover opened
 
 When equipped with a lock, the Lock-Out prevents access to the Battery Breaker, Battery Charge Port, and Debug Ports.
 See [Lock-Out Tag-Out](#lockout-tagout) for additional details.
-
-TODO: image
 
 #### Battery Breaker
 
@@ -908,7 +896,12 @@ will be included per your specific configuration, plus further documentation as 
 
 ### Unboxing the Husky A300
 
-1. TODO: add steps and images
+Follow the steps below to remove Husky A300 from its crate.
+
+1. Remove the bolts securing the front panel of the crate. (TODO: image of crate with arrows pointing to bolts to be removed)
+1. Position the front panel as a ramp at the bottom of the crate. (TODO: image with front panel in the ramp position)
+1. Loosen and remove the retaining straps.
+1. Gently roll the Husky A300 out of the crate.
 
 ---
 
@@ -1005,8 +998,10 @@ may be charged with the standard manual/wired charger or with the optional wirel
 A manual (wired) charger can be used to charge the Husky batteries by following the steps outlined below.
 Two manual chargers are supported with Husky A300:
 
-- Husky A300 Standard Manual Charger (Henryuan Model TODO): 300 W, indoor use only
-- Husky A300 High Power Manual Charger (Delta-Q Model TODO): 1200 W, indoor or outdoor use (IP68?)
+- Husky A300 Standard Manual Charger (Henryuan Model PSY29210000): 300 W, indoor use only
+- Husky A300 High Power Manual Chargers
+   - Robots with 2 batteries: Delta-Q Model IC650: 650W, indoor or outdoor use (IP66)
+   - Robots with 4 or 6 batteries: Delta-Q Model IC1200: 1200 W, indoor or outdoor use (IP66)
 
 :::safety-caution
 
@@ -1014,6 +1009,8 @@ The Husky A300 Standard Manual Charger is for indoor use only. Only use this cha
 robot is inside and after it has been dried.
 
 :::
+
+<br/>
 
 :::note
 
@@ -1023,13 +1020,13 @@ robot is powered off.
 :::
 
 1.  Open the Access Panel cover to expose the Battery Charger Port.
-1.  Connect the DC output cable from the charger to the battery terminal connector (red-to-red, black-to-black).
-1.  Plug the charger power cord into the charger (if applicable) and then into a wall receptacle.
-    The LED on the charger will illuminate TODO and Husky's [Status Lights](#status-lights) will pulse yellow/green
+1.  Connect the DC output cable from the Standard Charger to the battery terminal connector (red-to-red, black-to-black).
+1.  Plug the Standard Charger power cord into the Standard Charger and then into a wall receptacle.
+    The LED on the Standard Charger will illuminate red and Husky's [Status Lights](#status-lights) will pulse yellow/green
     (if the robot is powered on).
-1.  When battery is fully charged, the LED on the charger will TODO and Husky's [Status Lights](#status-lights)
+1.  When battery is charged fully, the LED on the Standard Charger will illuminate green and Husky's [Status Lights](#status-lights)
     will pulse blue/green (if the robot is powered on).
-1.  Unplug the charger from the wall and then disconnect it from the Battery Charger Port.
+1.  Unplug the Standard Charger from the wall and then disconnect it from the Battery Charger Port.
 1.  Close the Access Panel cover.
 
 #### Wireless Charging (Optional Kit)
@@ -1050,8 +1047,9 @@ charging can be performed with the robot in both the powered and unpowered state
 long as the Battery Breaker is in the ON position.
 
 When the wireless charging receiver is near the transmitter, charging will begin automatically without
-any user intervention (TODO: LEDs; ONav UI link). When charging is complete, the transmitter
-will stop charging automatically (TODO: LEDs). Note that when the robot is powered
+any user intervention and the charging icon (TODO: icon) will be shown on the Status Display.
+When charging is complete, the transmitter will stop charging automatically and the status display
+will be updated accordingly. Note that when the robot is powered
 on, the charging may remain on indefinitely (though at a reduced rated) as the transmitter
 provides the on-going power for the powered-on electronics.
 
@@ -1099,6 +1097,8 @@ Caution should be taken around any payloads to ensure that the the lifting strap
 on any structures not suitable for lifting.
 
 :::
+
+<br/>
 
 :::safety-warning
 
@@ -1241,16 +1241,9 @@ See [Husky A300 Troubleshooting](troubleshooting_husky) for details on Husky tro
 
 ## Declarations
 
-TODO: User manual to include test results of thermal testing per IEC 61010-1
-TODO: User manual to include test results of EMC emissions testing per IEC 61326-1
-
 ### Supplier's Declaration of Conformity
 
 TODO: FCC
-
-<!-- ### EC - Declaration of Conformity
-
--->
 
 ---
 
