@@ -626,7 +626,7 @@ TODO: update image
 ### System Architecture
 
 Husky is built around a computer running Ubuntu (Intel-based computer or Jetson-based computer), paired with a 32-bit microcontroller unit (MCU).
-The MCU handles power supply monitoring and motor control. (TODO: update if MCU no longer handles motor control.)
+The MCU handles low-level hardware functions such as power supply control, light control, screen control, and hardware monitoring.
 The communication channel between the MCU and computer is an Ethernet connection.
 
 ---
@@ -659,16 +659,16 @@ The Husky AMP extends the standard Husky by adding the following as shown below:
 
 TODO: images
 
-### Chassis
+#### Chassis
 
-The chassis contains the robot's batteries, electonics, and cooling systems. It is an IP54-rated enclosure.
+The chassis contains the robot's batteries, electronics, and cooling systems. It is an IP54-rated enclosure.
 
-### Wheels and Motors
+#### Wheels and Motors
 
 Husky is equipped with four wheels, each with its own motor. Power and control cables connect the motors to
 the chassis internals.
 
-### User Payload Area
+#### User Payload Area
 
 Additional payloads such IMUs, lidars, cameras, GPS, manipulators and many more can be integrated with Husky,
 either as part of your Husky purchase or installed after receiving your Husky. You can find a list of supported
@@ -683,13 +683,13 @@ In addition, refer to [Husky Integration](integration_husky) for details on how 
 how to integrate a payload kit from Clearpath Robotics. Each payload kit that ships from Clearpath Robotics
 comes with a custom mounting bracket and cabling for easy attachment to Husky.
 
-### Front and Rear Bumper Bars
+#### Front and Rear Bumper Bars
 
 The front and rear bumper bars not only offer protection for Husky, they can be used for a two person lift
 when moving the robot short distances. Refer to [Moving an Unpowered or Disabled Husky](#moving-husky) for
 details on moving Husky longer distances.
 
-### Status Display
+#### Status Display
 
 Husky is equipped with an electronic paper display that provides details on the robot's status.
 
@@ -706,7 +706,7 @@ TODO: update icons
 | TODO                                                                     | **ROS Indicator**: Indicates when ROS software is running; has an "X" when ROS is not running |
 | TODO                                                                     | **Error Indicator**: When displayed, errors have been detect (TODO: where to go to see errors?) |
 
-### Status Lights  {#status-lights}
+#### Status Lights  {#status-lights}
 
 Husky includes four status lights, one on each corner of the chassis. These lights
 indicate the system status according to the table below. In addition, when in the
@@ -728,15 +728,15 @@ the TODO topic.
 | Driving                                   | <img src="/img/robot_images/common_images/lighting_images/driving.png" width="100"/> | The robot is driving (normal operation). |
 | Idle                                      | <img src="/img/robot_images/common_images/lighting_images/idle.png" width="100"/> | The robot is idle (normal operation). |
 
-### Buttons
+#### Buttons
 
-#### Emergency Stop Buttons  {#emergency-stop-buttons}
+##### Emergency Stop Buttons  {#emergency-stop-buttons}
 
 The Husky is equipped with two Emergency Stop buttons, one at the front and one at the rear. Pressing either of
 these buttons removes power from the drivetrain. To clear the stop condition, all Emergency Stop buttons must
 be disengaged and the Safety Restart Button must be pressed. Refer to [Emergency Stops](#husky-emergency-stop-button) for more details.
 
-#### Safety Restart Button  {#restart-button}
+##### Safety Restart Button  {#restart-button}
 
 To clear the stop condition, all Emergency Stop buttons must be disengaged and the Safety Restart Button must be pressed.
 Refer to [Emergency Stops](#husky-emergency-stop-button) for more details.
@@ -744,14 +744,14 @@ Refer to [Emergency Stops](#husky-emergency-stop-button) for more details.
 Pressing the Safety Restart Button will have no effect when not in the stop condition or when one or more Emergency Stop
 buttons are engaged.
 
-#### Power Button
+##### Power Button
 
 The Power button is used to power the robot on and off. From the "OFF" state, pressing
 the button will cause the robot to power on. From the "ON" state, pressing the button will cause the robot to power off.
 Note that the Power button has no effect when the Battery Breaker is in the OFF position, unless
 a charger is connected to the robot.
 
-### Protected Access Panel
+#### Protected Access Panel
 
 The rear of the robot has an access panel, protected by a Lock-Out, that contains the Battery Charge Port, Battery Breaker,
 Debug Ports, and Wireless Emergency Stop Bypass. Opening the access panel cover puts the robot into a stop condition to
@@ -760,12 +760,12 @@ and the Safety Restart Button.
 
 TODO: image when cover closed and with cover opened
 
-#### Lock-Out
+##### Lock-Out
 
 When equipped with a lock, the Lock-Out prevents access to the Battery Breaker, Battery Charge Port, and Debug Ports.
 See [Lock-Out Tag-Out](#lockout-tagout) for additional details.
 
-#### Battery Breaker
+##### Battery Breaker
 
 When the breaker is in the "OFF" position, the Battery Breaker (TODO: image) disconnects the internal batteries from the rest of
 the robot's systems. In this position:
@@ -789,7 +789,7 @@ Husky ships with the breaker in the "OFF" position to prevent battery drain duri
 
 :::
 
-#### Battery Charge Port
+##### Battery Charge Port
 
 The charger included in your Husky shipment can be used to charge the robot's internal batteries by connecting it
 to the Battery Charge Port. Refer to [Charging](#charging) for additional information on charging the robot's batteries.
@@ -800,12 +800,12 @@ The charger also functions as "shore power", providing power to the robot indefi
 
 :::
 
-#### Debug Ports
+##### Debug Ports
 
 The robot is equipped with a Gigabit Ethernet port, a USB 3.0 (Type A) port, and an HDMI port. These can be used for debugging
 without needing internal access to the robot. These ports are all connected directly to the robot's computer.
 
-#### Wireless Emergency Stop Bypass  {#wireless-estop-bypass}
+##### Wireless Emergency Stop Bypass  {#wireless-estop-bypass}
 
 In addition to the Emergency Stop buttons on the robot, if your Husky A300 is equipped with an (option) wireless Emergency Stop kit,
 it is possible to disable this function with the override key switch. Refer to the [Wireless Emergency Stop](#wireless-estop),
@@ -813,10 +813,54 @@ it is possible to disable this function with the override key switch. Refer to t
 
 TODO: image showing active and bypassed positions.
 
-### Airflow Intake and Exhaust
+#### Airflow Intake and Exhaust
 
 The robot is equipped with a cooling system with an air intake at the front of the robot and exhaust at the rear
-of the robot. The amount of airflow scales automatically depending on the temperature measured internally.
+of the robot. The amount of airflow scales automatically depending on the temperatures reported by various sensors.
+
+### Interior Features
+
+The standard Husky interior is shown below and includes:
+
+- Computer
+- GPU (optional)
+- IMU
+- Power expansion
+- Network switch
+- Batteries
+
+TODO: image of electronics tray
+
+TODO: image of 6-battery configuration
+
+#### Computer
+
+Husky is equipped with an Intel-based computer in a MiniITX form factor. Several SKUs are possible
+depending on the desired performance of the system. 
+
+#### GPU (Optional)
+
+An optional GPU can be added and connected to the computer for additional graphics processing.
+
+#### IMU
+
+A standard 6-axis IMU is included by default. Upgrade options are available.
+
+#### Power Expansion
+
+Husky A300 provides power breakouts to allow the integration of customer payloads.
+Refer to [User Power Connections](integration_husky#user-power-connections) and
+[High Power Expansion Kit](integration_husky#high-power-expansion-kit) for more details.
+
+#### Network Switch
+
+Husky includes a network switch, which allows additional payloads to be integrated with an Ethernet
+connection. See also [Husky Networking](#husky-networking).
+
+#### Batteries
+
+Husky can be equipped with two, four, or six batteries. These batteries are not hot-swappable.
+Refer to [Maintenance](#maintenance_husky) for details on battery maintenance.
 
 ### Autonomous Mobile Platform (AMP) Kit
 
@@ -858,6 +902,8 @@ The direction of the axes differs from those used for roll, pitch, and yaw in ai
 
 As a starting point, Clearpath Robotics recommends using the following relationship between wheel velocity and platform velocity:
 
+TODO: investigate all equation terms shown twice
+
 $$
 v=\cfrac{v_{r}+v_{l}}{2}
 $$
@@ -889,6 +935,8 @@ Your Husky A300 standard platform shipment contains the following:
 - Clearpath Robotics Husky A300 robot
    - Two or more LiFePO<sub>4</sub> batteries (integrated)
    - Computer (integrated)
+   - IMU (integrated)
+   - Network switch (integrated)
 - One battery charger
 - One PS4 controller
 
@@ -920,7 +968,7 @@ a Husky A300.
 :::safety-danger
 
 The Battery Breaker terminal connected to the battery (displayed below) is live even when the
-robot is locked out. This terminals at the breaker and at the battery are protected with rubber covers.
+robot is locked out. These terminals at the breaker and at the battery are protected with rubber covers.
 Do not remove these or any other terminal covers. The main chassis will act as the negative side
 of the battery. If the robot is correctly locked out, all live terminals are protected. The robot
 must be locked out to properly protect the remaining connections.
@@ -984,6 +1032,8 @@ Only original chargers from Clearpath Robotics should be used when charging the 
 avoid any damage to the batteries.
 
 :::
+
+<br/>
 
 :::safety-warning
 
@@ -1116,20 +1166,20 @@ Husky A300 for an extended period of time.
 
 Even with the batteries disconnected from the system, the batteries will discharge over time and must
 be charged periodically. It is recommended that a Husky A300 in storage be powered on at least
-once every three months, it battery levels checked, and if the reported charge level is below 20% it
+once every three months, its battery levels checked, and if the reported charge level is below 20% it
 should be charged back up to at least 50% before returning it to extended storage.
 
 Husky and any spare batteries outside of the vehicle should be stored within the
 temperature range outlined in [System Specifications](#system-specifications).
 
-### Husky Networking
+### Husky Networking  {#husky-networking}
 
 Husky provides both Ethernet and Wi-Fi network connection options. The details below outline
 the configuration for the different options.
 
 #### Connecting to Husky over an Ethernet Connection  {#ethernet-connection}
 
-Regardless of the Wi-Fi mode, Husky can always be access over an Ethernet connection. Follow
+Regardless of the Wi-Fi mode, Husky can always be accessed over an Ethernet connection. Follow
 the steps below to connect to Husky over an Ethernet connection.
 
 1. Open the Access Panel cover on Husky to expose the debug Ethernet port.
