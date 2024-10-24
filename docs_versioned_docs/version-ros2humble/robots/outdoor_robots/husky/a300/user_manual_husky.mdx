@@ -90,13 +90,13 @@ Additional items may need to be addressed based on the site-specific risk assess
 :::
 
 - Proper PPE must be worn, including safety footwear (ie. steel toe).
-- Crossing into the path of a moving Clearpath Robotics robot should be avoided, as well as placing or throwing obstacles into the path of a moving Clearpath Robotics robot.
+- Crossing into the path of a moving Clearpath Robotics robot should be avoided; also avoid placing or throwing obstacles into the path of a moving Clearpath Robotics robot.
 - Be aware that a Clearpath Robotics robot can be anywhere in the operating area at any time, and may pose a tripping hazard even when not in motion.
-- Personnel need to be aware of operation limitations, such as slopes, negative and overhanging obstacles.
+- Personnel need to be aware of operational limitations, such as slopes, negative and overhanging obstacles.
 - Personnel need to be aware of the Clearpath Robotics robot docking and charging areas, where detection fields are reduced.
 - Personnel should be aware of areas where Clearpath Robotics robots travel through narrow aisles/corridors resulting in reduced clearance between
   Clearpath Robotics robots and personnel and aisles/corridors shared between Clearpath Robotics robots, other vehicles, and personnel.
-- Personnel should be aware that Clearpath Robotics robot LiDAR safety scanners use a class 1 laser and high intensity LEDs.
+- Personnel should be aware that Clearpath Robotics robot LiDAR safety scanners (when present) use a class 1 laser and high intensity LEDs.
 - Personnel should keep all loose clothing and body parts away from Clearpath Robotics robots, accessories, attachments, and payloads,
   while they are in autonomous operation. Using an Emergency Stop button is the only acceptable manner of interacting with a Clearpath Robotics
   robot or attachment while it is being operated autonomously.
@@ -110,8 +110,8 @@ In addition to the preceding basic items for all workers and visitors, the follo
 - When required to move a product manually, personnel must ensure it is in an Emergency Stop state or shut down completely and should not push manually for prolonged periods.
 - Alert personnel that while operating a Clearpath Robotics robot outside of the Autonomy State, they are solely responsible for obstacle and collision avoidance.
 - Prior to performing maintenance, Husky A300 should be powered off and the Battery Breaker set to the OFF position.
-- If any fluids are spilled while maintaining Clearpath Robotics robots, they should be cleaned up in accordance with facility guidelines priority to operating the robot.
-- Maintenance not outlined in either this document or the operations and maintenance manual can only be performed by a Clearpath Robotics Authorized Personnel.
+- If any fluids are spilled while maintaining Clearpath Robotics robots, they should be cleaned up in accordance with facility guidelines prior to operating the robot.
+- Maintenance not outlined in either this document or the maintenance manual can only be performed by a Clearpath Robotics Authorized Personnel.
 
 ### Operating Environment Awareness
 
@@ -121,21 +121,22 @@ Clearpath Robotics robots, attachments, and accessories are designed to in certa
   damage to the robot drive systems, attachments, or accessories -- for example, at the top of stairs, at a cliff edge, or at large potholes.
 - Clearpath Robotics robot drive wheels should never be manually bypassed on a ramp condition
   as this may lead to robots navigating erratically and losing control. If stopped on a slope
-  greater than 4° (6.4 % grade), the robot may begin to roll and may present a hazard.
+  (with Emergency Stop engaged), the robot may begin to roll and may present a hazard.
 
 ### Payload Maximums
 
 Clearpath Robotics products support a specific maximum payload. Clearpath Robotics robot maximum payloads change when
-an attachment or accessory is connected because of the weight of the attachment/accessory itself. In the
-case of an attachment/accessory-equipped Clearpath Robotics robot, payloads should not exceed the maximum
-payload documented on the Nameplate.
+attachments or accessories (including additional batteries) are added because of the weight of the
+attachments and accessories. In the case of a Clearpath Robotics robot with attachments or accessories,
+the weight of any additional payloads when combined with the weights of any attachments and
+accessories should not exceed the maximum payload documented on the Nameplate.
 
 :::safety-caution
 
-Loading a Clearpath Robotics product with more weight than specified by the attachment,
-accessory, or base Clearpath Robotics robot (when no attachment is present) will prevent Clearpath Robotics robots from
-correctly determining stopping distances and may also damage the robot, attachment, or
-accessory. Never load a Clearpath Robotics product with more weight than is specified by the
+Loading a Clearpath Robotics product with accessories, attachements, or payloads whose combined weight
+exceeds the maximum payload specified on the Namplate will prevent Clearpath Robotics robots from
+correctly determining stopping distances and may also damage the robot, attachment,
+accessory, or payload. Never load a Clearpath Robotics product with more weight than is specified by the
 current signage on each Clearpath Robotics robot and accompanying attachment or accessory.
 
 :::
@@ -186,15 +187,15 @@ contact [Support](#support).
 
 ## Intended Use
 
-Husky is intended for use in:
+Husky A300 is intended for use in:
 
 - indoor and outdoor research laboratories and light industrial environments for inspection, materials transport, and manipulation;
 - environments free of vertical drops greater than 200 mm;
 - environments free of fast-moving people or vehicles;
 - environments free of glass or transparent plastic floors or walls;
 - temperatures between -20°C and +40°C;
-- environments free of open water or other liquids deeper than 100 mm;
-- environments free of grades greater than 7%.
+- environments free of open water or other liquids deeper than 130 mm;
+- environments free of grades greater than 7%. (TODO: 15 degrees)
 
 The system is intended to be operated by trained personnel familiar with mobile robotic technology.
 It is intended to be monitored constantly by those personnel during operation.
@@ -287,7 +288,7 @@ Clearpath Robotics robots.
 Clearpath Robotics Husky A300 can tip over (forward, backward, or sideways) if subjected to slopes or
 vertical drops outside the allowable range, which can lead to crushing or impact hazards.
 
-When Clearpath Robotics Husky A300, ensure that you follow all guidance on allowable hill angles, allowable
+When using Clearpath Robotics Husky A300, ensure that you follow all guidance on allowable slopes, allowable
 payload mass, and allowable payload location. Refer to [Important System Limits](#important-system-limits)
 for additional information on the robot stability cone.
 
@@ -311,11 +312,9 @@ Always use chock blocks on the wheels when powering off the robot.
 When Clearpath Robotics Husky A300 is in an Emergency Stop state on a slope or ramp, it can
 roll down the slope/ramp, which can lead to crushing or impact hazards.
 
-Prior to operating Clearpath Robotics Husky A300, ensure that either:
-
-1. there are no hazards in the environment due to Husky A300 rolling down a slope/ramp; OR
-1. the combination of payload mass and slope angle are within the allowable
-   stopping distance as defined in [Important System Limits](#important-system-limits).
+Prior to operating Clearpath Robotics Husky A300, ensure that there are no hazards in the environment
+due to Husky A300 rolling down a slope/ramp by considering the slope/range angle, payload mass and
+other [Important System Limits](#important-system-limits).
 
 :::
 
@@ -376,15 +375,15 @@ Avoid mounting payloads that extend over the front or rear of Husky and would oc
 
 :::
 
-The emergency stop function allows a person in the physical vicinity of the robot to disconnect drivetrain power.
-Power supply to Husky's motor drivers is enabled by a normally-open relay, which is closed in series with the emergency stop switch.
-This emergency system is intended for use in emergency situations.
-The emergency stop system should not be used as the means of controlling robot motion during regular operation.
-Refer to [Important System Limits](#important-system-limits) for more details on stopping distances when
-engaging the emergency stop system as a function of the incline and payload.
+The Emergency Stop function allows a person in the physical vicinity of the robot to disconnect drivetrain power.
+Power supply to Husky's motor drivers is enabled by a normally-open relay, which is closed in series with the Emergency Stop switch.
+This Emergency Stop system is intended for use in emergency situations only.
+The Emergency Stop system should not be used as the means of controlling robot motion during regular operation.
+Refer to [Important System Limits](#important-system-limits) for more details on robot behaviour when
+engaging the Emergency Stop system on an incline.
 
-When in emergency stop mode, the status lights will illuminate red and Husky will not drive.
-The commands received during emergency stop mode are not buffered; Husky will always act on the latest commands received.
+When in Emergency Stop mode, the status lights will illuminate red and Husky will not drive.
+The commands received during Emergency Stop mode are not buffered; Husky will always act on the latest commands received.
 This means that if the commands are stopped before the stop is released, the Husky will not move.
 If the commands are continued, Husky will move at the speed commanded once the stop is released and motion is re-enabled.
 
@@ -402,9 +401,9 @@ The robot may begin moving again immediately after the Safety Restart button has
   </figure>
 </center>
 
-### Wireless Emergency-Stop (Optional Kit) {#wireless-estop}
+### Wireless Emergency Stop (Optional Kit) {#wireless-estop}
 
-In addition to the onboard emergency stop buttons, the system may include an optional wireless emergency stop kit.
+In addition to the onboard Emergency Stop buttons, the system may include an optional wireless Emergency Stop kit.
 When the kit is included, it allows a person who is physically separated from the robot to halt its motion and
 prevent re-initiation of motion.
 
@@ -414,14 +413,14 @@ prevent re-initiation of motion.
       src="/img/robot_images/husky_observer_images/wireless_motion_stop_controller.png"
       width="200"
     />
-    <figcaption>Wireless emergency stop controller</figcaption>
+    <figcaption>Wireless Emergency Stop controller</figcaption>
   </figure>
   <figure>
     <img
       src="/img/robot_images/husky_observer_images/wireless_stop_override_keyswitch.png"
       width="500"
     />
-    <figcaption>(TODO: A300 image) Wireless emergency stop override</figcaption>
+    <figcaption>(TODO: A300 image) Wireless Emergency Stop override</figcaption>
   </figure>
 </center>
 
@@ -434,7 +433,7 @@ To reset the stop function:
 - twist the depressed actuator until it returns to its extended position;
 - depress and hold for 1 second the black start button on the side of the controller.
 
-The wireless emergency stop is asserted automatically if the robot is not able to communicate wirelessly
+The wireless Emergency Stop is asserted automatically if the robot is not able to communicate wirelessly
 with the controller. This is to ensure that the stop function does not become unexpectedly non-operational as
 a result of robot or operator motion, interference, atmospheric conditions, depleted battery, etc. The
 controller must be powered and within range of the mobile robot to communicate.
@@ -442,11 +441,11 @@ controller must be powered and within range of the mobile robot to communicate.
 The wireless emergency is intended for use in emergency situations and should
 not be used as the means of controlling robot motion during regular operation.
 
-The wireless emergency stop (but not the onboard emergency stop buttons) may be disabled by means of
+The wireless Emergency Stop (but not the onboard Emergency Stop buttons) may be disabled by means of
 a key switch as shown in the figure above. This is to allow the robot to be operated **at higher risk** while,
 for example, the controller battery is dead, out of range, or not accessible.
 
-Operation of the mobile robot while the wireless emergency stop is disabled **is not recommended**.
+Operation of the mobile robot while the wireless Emergency Stop is disabled **is not recommended**.
 The system deployer/operator assumes all responsibility for injury to persons or animals, or damage to property,
 arising from the inability to remotely stop the motion of the robot due to the use of this override.
 
@@ -466,7 +465,7 @@ Please observe the following precautions:
 
 For the safety of users and to maximize the lifetime of Husky, please observe the following when manually transporting the robot:
 
-- Husky should be lifted by two persons, firmly gripping the front and rear bumper-bars.
+- Husky should be lifted by two persons, firmly gripping the front and rear bumper bars.
 - Ensure that Husky is in Emergency Stop mode when transporting short distances and powered off when transporting longer distances.
 - It is not advised to push Husky at speeds greater than 1 m/s, as this can cause damage to the motors.
 
@@ -497,7 +496,7 @@ putting excessive wear on Husky's motors and other components.
 ##### Current Limits
 
 The maximum current draw of the system is limited by the output of the batteries. The maximum
-continuous output for the standard and upgraded battery configurations is 60 A and 120 A, respectively.
+continuous output for the 2-battery, 4-battery, and 6-battery configurations is 60 A, 120 A, and 180 A, respectively.
 Higher outputs are possible for short periods of time. 
 
 Husky A300's motors are rated to draw 17 A continuous, but they will spike to several times higher
@@ -531,9 +530,9 @@ when the a 100 kg payload is added with its centre of mass at 30 cm above the Hu
 
 ##### Emergency Stop Braking Limits
 
-When Husky A300 has its emergency stop engaged, an electrical (resistive) brake is applied to reduce
-the speed of the robot. Depending on the payload mass and on the incline on which the robot exists,
-the robot may stop completely or reach a terminal speed when the emergency stop is engaged.
+When Husky A300 has its Emergency Stop engaged, an electrical (resistive) brake is applied to reduce
+the speed of the robot. The payload mass and the incline on which the robot is operating
+will affect the terminal speed of the robot when the Emergency Stop is engaged.
 
 :::safety-warning
 
@@ -548,8 +547,10 @@ integrator to ensure that no hazards are present in the the target operating env
 
 | Payload Mass | Incline  | Terminal Speed     | 
 | :----------- | :------- | :------------------|
-| 0 kg         | 15°      | 0.25 m/s or less (TODO: confirm) |
-| 100 kg       | 15°      | 0.5 m/s or less  (TODO: confirm) |
+| 0 kg         | 0°       | 0 m/s |
+| 100 kg       | 0°       | 0 m/s |
+| 0 kg         | 15°      | 0.5 m/s or less (TODO: confirm) |
+| 100 kg       | 15°      | 1.25 m/s or less  (TODO: confirm) |
 
 ### Recommended Safe Work Procedures
 
@@ -599,11 +600,11 @@ In case of a collision:
 | Operating Temperature⁴         | -20 °C to 40 °C                                                          |
 | Storage Temperature            | -20 °C to 60 °C                                                          |
 | Operating Relative Humidity    | 0 to 85% non-condensing                                                  |
-| Operating Time, Average⁵       | 4 hours (standard battery) or 8 hours (upgraded battery) or 12 hours (extended battery) |
-| Operating Time, Standby        | 12 hours (standard battery) or 24 hours (upgraded battery) or 36 hours (extended battery) |
-| Battery                        | 40 Ah @ 25.6 V (standard) or 80 Ah @ 25.6 V (upgraded) or 120 Ah @ 25.6 V (extended), LiFePO<sub>4</sub>   |
+| Operating Time, Average⁵       | 4 hours (2-battery) or 8 hours (4-battery) or 12 hours (6-battery) |
+| Operating Time, Standby        | 12 hours (2-battery) or 24 hours (4-battery) or 36 hours (6-battery) |
+| Battery                        | 40 Ah @ 25.6 V (2-battery) or 80 Ah @ 25.6 V (4-battery) or 120 Ah @ 25.6 V (6-battery), LiFePO<sub>4</sub>   |
 | Standard Battery Charger       | 10 A; short-circuit, over-current, over-voltage and reverse voltage protection |
-| Charge Time⁶                   | 3-4 hours (standard battery) or 7-8 hours (upgraded battery) or 8-10 hours (extended battery)            |
+| Charge Time⁶                   | 3-4 hours (2-battery) or 7-8 hours (4-battery) or 8-10 hours (6-battery)            |
 | User Power                     | 12 V @ 10 A, 24 V @ 5 A, VBAT @ 5 A<br/>Optional expansion #1: 12 V @ 10 A, 24 V @ 10A<br/>Optional expansion #2: VBAT @ 40 A |
 | Environmental                  | IP54                                                                     |
 
@@ -643,7 +644,7 @@ The standard Husky exterior is shown below and includes:
 - Status display
 - Status lights
 - Buttons
-- Protected Access Panel (Battery Breaker, battery charge port, HDMI/USB/Ethernet debug ports, wireless emergency stop bypass)
+- Protected Access Panel (Battery Breaker, battery charge port, HDMI/USB/Ethernet debug ports, wireless Emergency Stop bypass)
 - Airflow intake and exhaust
 
 TODO: images
@@ -806,8 +807,8 @@ without needing internal access to the robot. These ports are all connected dire
 
 #### Wireless Emergency Stop Bypass  {#wireless-estop-bypass}
 
-In addition to the emergency stop buttons on the robot, if your Husky A300 is equipped with an (option) wireless emergency stop kit,
-it is possible to disable this function with the override key switch. Refer to the [Wireless Emergency-Stop](#wireless-estop),
+In addition to the Emergency Stop buttons on the robot, if your Husky A300 is equipped with an (option) wireless Emergency Stop kit,
+it is possible to disable this function with the override key switch. Refer to the [Wireless Emergency Stop](#wireless-estop),
 [Integration](integration_husky#wireless-stop), and the image below for further details.
 
 TODO: image showing active and bypassed positions.
