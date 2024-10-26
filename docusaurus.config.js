@@ -5,8 +5,8 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 const lightCodeTheme = prismThemes.github;
 const darkCodeTheme = prismThemes.dracula;
-const math = require("remark-math");
-const katex = require("rehype-katex");
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -48,8 +48,8 @@ const config = {
         path: "docs",
         routeBasePath: "docs",
         sidebarPath: require.resolve("./sidebars-docs.js"),
-        remarkPlugins: [math],
-        rehypePlugins: [katex],
+        remarkPlugins: [remarkMath],
+        rehypePlugins: [rehypeKatex],
         showLastUpdateTime: true,
         versions: {
           ros2humble: {
@@ -73,8 +73,8 @@ const config = {
         path: "docs_indoornav_user_manual",
         routeBasePath: "docs_indoornav_user_manual",
         sidebarPath: require.resolve("./sidebars.js"),
-        remarkPlugins: [math],
-        rehypePlugins: [katex],
+        remarkPlugins: [remarkMath],
+        rehypePlugins: [rehypeKatex],
         showLastUpdateTime: true,
       },
     ],
@@ -85,8 +85,8 @@ const config = {
         path: "docs_outdoornav_user_manual",
         routeBasePath: "docs_outdoornav_user_manual",
         sidebarPath: require.resolve("./sidebars.js"),
-        remarkPlugins: [math],
-        rehypePlugins: [katex],
+        remarkPlugins: [remarkMath],
+        rehypePlugins: [rehypeKatex],
         showLastUpdateTime: true,
         includeCurrentVersion: true,
       },
