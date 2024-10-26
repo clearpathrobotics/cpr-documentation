@@ -27,12 +27,6 @@ const config = {
       "classic",
       {
         docs: false,
-        //docs: {
-        //  admonitions: {
-        //    keywords: ['safety-danger'],
-        //    extendDefaults: true,
-        //  },
-        //},
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
