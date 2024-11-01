@@ -31,10 +31,10 @@ const FEATURES: FeatureItem[] = [
       id: "homepage_husky",
     }),
     image: {
-      src: "/img/website_images/husky_a300_thumbnail.png",
+      src: "/img/website_images/husky_thumbnail.png",
       width: 250,
       height: 150,
-      hyperlink: "/docs/robots/outdoor_robots/husky/a300/user_manual_husky",
+      hyperlink: "/docs/robots/outdoor_robots/husky/user_manual_husky",
     },
     text: <Translate id="homepage_husky">Medium Outdoor Platform</Translate>,
   },

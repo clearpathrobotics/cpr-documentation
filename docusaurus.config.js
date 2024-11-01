@@ -53,7 +53,7 @@ const config = {
             label: 'ROS 1 Noetic',
           }
         },
-        includeCurrentVersion: false,
+        includeCurrentVersion: true,
         admonitions: {
           keywords: ['safety-danger', 'safety-warning', 'safety-caution'],
           extendDefaults: true,
