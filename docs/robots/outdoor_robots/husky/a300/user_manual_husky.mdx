@@ -195,7 +195,7 @@ Husky A300 is intended for use in:
 - environments free of glass or transparent plastic floors or walls;
 - temperatures between -20°C and +40°C;
 - environments free of open water or other liquids deeper than 130 mm;
-- environments free of grades greater than 7%. (TODO: 15 degrees)
+- environments free of grades greater than 27%.
 
 The system is intended to be operated by trained personnel familiar with mobile robotic technology.
 It is intended to be monitored constantly by those personnel during operation.
@@ -212,17 +212,25 @@ Husky A300 is a rugged and easy-to-use unmanned ground robot for research applic
 rapid prototyping, and deployments.
 It is available both as a standard platform and as an autonomous mobile platform (AMP).
 
-TODO: image (isometric view)
-TODO: image (nameplate)
-
----
-
-## Product Safety  {#product-safety}
-
-### Important Notes
-
 - Read all instructions before using this product.
 - Familiarize yourself with the [System Specifications](#system-specifications).
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_isometric_view.png"
+      width="600"
+    />
+    <figcaption>Husky A300 Isometric View</figcaption>
+  </figure>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_nameplate.png"
+      width="600"
+    />
+    <figcaption>Husky A300 Nameplate</figcaption>
+  </figure>
+</center>
 
 ### Risk Reduction
 
@@ -394,10 +402,10 @@ The robot may begin moving again immediately after the Safety Restart button has
 <center>
   <figure>
     <img
-      src="/img/robot_images/husky_images/robot_husky_10.png"
-      width="600"
+      src="/img/robot_images/husky_a300_images/husky_a300_emergency_stop_buttons.png"
+      width="800"
     />
-    <figcaption>TODO: update: Emergency Stop button</figcaption>
+    <figcaption>Emergency Stop buttons (1 = front, 2 = rear)</figcaption>
   </figure>
 </center>
 
@@ -417,10 +425,10 @@ prevent re-initiation of motion.
   </figure>
   <figure>
     <img
-      src="/img/robot_images/husky_observer_images/wireless_stop_override_keyswitch.png"
+      src="/img/robot_images/husky_a300_images/husky_a300_wireless_emergency_stop_override.png"
       width="500"
     />
-    <figcaption>(TODO: A300 image) Wireless Emergency Stop override</figcaption>
+    <figcaption>Wireless Emergency Stop override</figcaption>
   </figure>
 </center>
 
@@ -549,8 +557,8 @@ integrator to ensure that no hazards are present in the the target operating env
 | :----------- | :------- | :------------------|
 | 0 kg         | 0°       | 0 m/s |
 | 100 kg       | 0°       | 0 m/s |
-| 0 kg         | 15°      | 0.5 m/s or less (TODO: confirm) |
-| 100 kg       | 15°      | 1.25 m/s or less  (TODO: confirm) |
+| 0 kg         | 15°      | 0.5 m/s or less |
+| 100 kg       | 15°      | 1.25 m/s or less |
 
 ### Recommended Safe Work Procedures
 
@@ -615,12 +623,14 @@ _⁴ Robot must be powered on at a minimum temperature of 0 °C._ <br />
 _⁵ Based on 33% driving at 2 m/s with 50 kg payload on level ground and 67% idle._ <br />
 _⁶ Based on standard battery charger; fast chargers are available._ <br />
 
-TODO: update image
 <center>
-  <img
-    src="/img/robot_images/husky_images/robot_husky_19.png"
-    width="600"
-  />
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_dimensions.png"
+      width="800"
+    />
+    <figcaption>Husky A300 Dimensions</figcaption>
+  </figure>
 </center>
 
 ### System Architecture
@@ -637,27 +647,58 @@ The communication channel between the MCU and computer is an Ethernet connection
 
 The standard Husky exterior is shown below and includes:
 
-- Chassis
-- Wheels and motors
-- User payload area, including cable passthrough ports
-- Front and rear bumper bars
-- Status display
-- Status lights
-- Buttons
-- Protected Access Panel (Battery Breaker, battery charge port, HDMI/USB/Ethernet debug ports, wireless Emergency Stop bypass)
-- Airflow intake and exhaust
+- 1: Chassis
+- 2: Wheels and motors
+- 3: User payload area, including cable passthrough ports
+- 4: Front and rear bumper bars
+- 5: Status display
+- 6: Status lights
+- 7.1: Power Button
+- 7.2: Emergency Stop Restart Button
+- 8: Protected Access Panel (Battery Breaker, battery charge port, HDMI/USB/Ethernet debug ports, wireless Emergency Stop bypass)
+- 9: Airflow intake (front) and exhaust (rear)
 
-TODO: images
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_exterior_front.png"
+      width="800"
+    />
+    <figcaption>Husky A300 Exterior Features, Front</figcaption>
+  </figure>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_exterior_rear.png"
+      width="800"
+    />
+    <figcaption>Husky A300 Exterior Features, Rear</figcaption>
+  </figure>
+</center>
 
 The Husky AMP extends the standard Husky by adding the following as shown below:
 
-- Sensor tower
-- GPS antennas
-- Wi-Fi and/or LTE/5G antennas
-- Front and rear driving cameras
-- Obstacle detection sensor(s)
+- 1: Sensor tower
+- 2: GPS antennas
+- 3: Wi-Fi and/or LTE/5G antennas
+- 4: Front and rear driving cameras
+- 5: Obstacle detection sensor(s)
 
-TODO: images
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_amp_exterior_front.png"
+      width="800"
+    />
+    <figcaption>Husky A300 AMP Exterior Features, Front</figcaption>
+  </figure>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_amp_exterior_rear.png"
+      width="800"
+    />
+    <figcaption>Husky A300 AMP Exterior Features, Rear</figcaption>
+  </figure>
+</center>
 
 #### Chassis
 
@@ -693,18 +734,7 @@ details on moving Husky longer distances.
 
 Husky is equipped with an electronic paper display that provides details on the robot's status.
 
-The display is shown below and includes the following.
-
-TODO: update icons
-
-|                                  Icon                                    | Description   |
-| :----------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------- |
-| TODO <img src="/img/robot_images/husky_images/robot_husky_3.png" width="50"/> | **Battery Status** The four segments provide an approximate indication of the relative lifetime remaining in the battery  |
-| <img src="/img/robot_images/dingo_images/icon-comms.png" width="50"/>    | **Comms Indictor**: Indicates when communication between the MCU and computer has been established; has an "X" when communication has not been established |
-| <img src="/img/robot_images/dingo_images/icon-wifi.png" width="50"/>     | **Wi-Fi Indicator**: Indicates when Wi-Fi is connected; has an "X" when Wi-Fi has not been connected    |
-| TODO                                                                     | **Charge Indicator**: Indicates when charging is in progress; has an "X" when there are no chargers connected |
-| TODO                                                                     | **ROS Indicator**: Indicates when ROS software is running; has an "X" when ROS is not running |
-| TODO                                                                     | **Error Indicator**: When displayed, errors have been detect (TODO: where to go to see errors?) |
+At present, it shows the robot's remaining battery capacity. Additional status will be added in a future release.
 
 #### Status Lights  {#status-lights}
 
@@ -712,7 +742,7 @@ Husky includes four status lights, one on each corner of the chassis. These ligh
 indicate the system status according to the table below. In addition, when in the
 "Idle" and "Driving" states, the status lights can be commanded from ROS to display
 indications from autonomy or other higher-level software by publishing to
-the TODO topic.
+the `/a300_0002/platform/cmd_lights` topic.
 
 | System State (lowest to highest priority) | Light Output | Description |
 | :---------------------------------------- | :----------- | :---------- |
@@ -758,7 +788,22 @@ Debug Ports, and Wireless Emergency Stop Bypass. Opening the access panel cover 
 prevent the robot from driving while cables may be connected. To clear the stop condition, close the access panel cover
 and the Safety Restart Button. 
 
-TODO: image when cover closed and with cover opened
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_access_panel_closed.png"
+      width="600"
+    />
+    <figcaption>Husky A300 Protected Access Panel, Closed</figcaption>
+  </figure>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_access_panel_open.png"
+      width="600"
+    />
+    <figcaption>Husky A300 Protected Access Panel, Open</figcaption>
+  </figure>
+</center>
 
 ##### Lock-Out
 
@@ -767,7 +812,17 @@ See [Lock-Out Tag-Out](#lockout-tagout) for additional details.
 
 ##### Battery Breaker
 
-When the breaker is in the "OFF" position, the Battery Breaker (TODO: image) disconnects the internal batteries from the rest of
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_battery_breaker.png"
+      width="600"
+    />
+    <figcaption>Husky A300 Battery Breaker, Off Position</figcaption>
+  </figure>
+</center>
+
+When the breaker is in the "OFF" position, the Battery Breaker disconnects the internal batteries from the rest of
 the robot's systems. In this position:
 
 - the Power Button can be used to turn the robot on/off only if a charger is connected;
@@ -807,11 +862,19 @@ without needing internal access to the robot. These ports are all connected dire
 
 ##### Wireless Emergency Stop Bypass  {#wireless-estop-bypass}
 
-In addition to the Emergency Stop buttons on the robot, if your Husky A300 is equipped with an (option) wireless Emergency Stop kit,
+In addition to the Emergency Stop buttons on the robot, if your Husky A300 is equipped with an optional wireless Emergency Stop kit,
 it is possible to disable this function with the override key switch. Refer to the [Wireless Emergency Stop](#wireless-estop),
 [Integration](integration_husky#wireless-stop), and the image below for further details.
 
-TODO: image showing active and bypassed positions.
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_wireless_bypass.png"
+      width="600"
+    />
+    <figcaption>Husky A300 Wireless Emergency Stop Bypass (1 = active, 2 = bypassed)</figcaption>
+  </figure>
+</center>
 
 #### Airflow Intake and Exhaust
 
@@ -882,18 +945,26 @@ Husky A300.
 
 :::
 
-TODO: AMP image
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_amp.png"
+      width="600"
+    />
+    <figcaption>Husky A300 AMP</figcaption>
+  </figure>
+</center>
 
 ### Orientation References
 
 The reference frame used by all Clearpath Robotics ground robots is based on ISO 8855, and is shown in the figure below.
-Husky's front is shown. (TODO: new image)
+Husky's front is shown.
 When commanded with a positive translational velocity (forward), wheels travel in the positive X-direction.
 The direction of the axes differs from those used for roll, pitch, and yaw in aircraft, and care should be taken to ensure that data is interpreted correctly.
 
 <center>
   <img
-    src="/img/robot_images/husky_images/robot_husky_8.png"
+    src="/img/robot_images/husky_a300_images/husky_a300_equations.png"
     width="600"
   />
 </center>
@@ -945,8 +1016,20 @@ will be included per your specific configuration, plus further documentation as 
 
 Follow the steps below to remove Husky A300 from its crate.
 
-1. Remove the bolts securing the front panel of the crate. (TODO: image of crate with arrows pointing to bolts to be removed)
-1. Position the front panel as a ramp at the bottom of the crate. (TODO: image with front panel in the ramp position)
+1. Remove the bolts securing the front panel of the crate.
+    <center>
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_crate_closed.png"
+        width="400"
+      />
+    </center>
+1. Position the front panel as a ramp at the bottom of the crate.
+    <center>
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_crate_open.png"
+        width="400"
+      />
+    </center>
 1. Loosen and remove the retaining straps.
 1. Gently roll the Husky A300 out of the crate.
 
@@ -1009,7 +1092,15 @@ Safety boots or shoes with steel toes should be worn at all times while working 
 1. Open the Access Panel cover, set the Battery Breaker to the "OFF" position, and close the Access Panel cover.
 1. Clamp the Lock-Out Tag-Out lock to prevent the Access Panel cover from being opened.
 
-TODO: image with lock applied
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_lockout.png"
+      width="600"
+    />
+    <figcaption>Husky A300 Lock-Out</figcaption>
+  </figure>
+</center>
 
 ### Starting Up
 
@@ -1022,8 +1113,6 @@ To power on Husky:
 1. Press and hold the Power Button for one second and then release it.
 1. Wait one minute for the robot to initialize fully. During startup, the Status Lights will be solid red.
    Once initialized, the front lights should be solid white and the rear lights should be solid red.
-   The Status Display should also indicate that there are no errors (TODO: image) and that internal
-   communication is working correctly.
 1. Press and release the Safety Restart button to be able to drive the robot.
 
 ### Shutting Down  {#shutting-down}
@@ -1111,7 +1200,7 @@ charging can be performed with the robot in both the powered and unpowered state
 long as the Battery Breaker is in the ON position.
 
 When the wireless charging receiver is near the transmitter, charging will begin automatically without
-any user intervention and the charging icon (TODO: icon) will be shown on the Status Display.
+any user intervention.
 When charging is complete, the transmitter will stop charging automatically and the status display
 will be updated accordingly. Note that when the robot is powered
 on, the charging may remain on indefinitely (though at a reduced rated) as the transmitter
@@ -1121,7 +1210,22 @@ At any time while charging, the robot can be moved away from the transmitter to
 stop charging and begin using the robot. No other user intervention is required to
 stop charging.
 
-TODO: image of transmitter, receiver, dock
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_wireless_charging_receiver.png"
+      width="600"
+    />
+    <figcaption>Husky A300 Wireless Charging Receiver</figcaption>
+  </figure>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_wireless_charging_transmitter.png"
+      width="600"
+    />
+    <figcaption>Husky A300 Wireless Charging Transmitter and Dock</figcaption>
+  </figure>
+</center>
 
 ### Moving an Unpowered or Disabled Husky  {#moving-husky}
 
@@ -1154,6 +1258,23 @@ shall be rated to minimum weight equal to the weight of Husky, including any mou
 See [System Specifications](#system-specifications) for the weight of Husky and its maximum payload.
 
 TODO: lifting image
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_lifting_straps.png"
+      width="600"
+    />
+    <figcaption>Husky A300 Lifting Straps</figcaption>
+  </figure>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_lifting_straps_bottom.png"
+      width="600"
+    />
+    <figcaption>Husky A300 Lifting Straps, Bottom View</figcaption>
+  </figure>
+</center>
 
 :::safety-caution
 
