@@ -496,12 +496,12 @@ its critical thermal limits, system throttling may occur.
 
 | Sensor  | ROS Topic  | Message Field | Lower Critical Limit (°C) | Upper Critical Limit (°C) | Notes |
 | :------ | :--------- | :------------ | :------------------------ | :------------------------ | :---- |
-| Motor [1-4] Temperature | /platform/motors/status | drivers[0-3].motor_temperature | 0 | 100 | Does not affect fan speed |
+| Motor [1-4] Temperature | /platform/motors/status | drivers[0-3].motor_temperature | -10 | 100 | Does not affect fan speed |
 | Motor Driver [1-4] MCU Temperature | /platform/motors/status | drivers[0-3].mcu_temperature | -20 | 80 | |
 | Motor Driver [1-4] PCB Temperature | /platform/motors/status | drivers[0-3].pcb_temperature | -20 | 80 | |
 | Battery [1-6] Temperature | /bms/battery_state_[1-6] | temperature | -20 | 60 | Charging must occur above 0°C |
 | MCU Temperature | /platform/mcu/status/temperature | temperatures[CC01_MCU] | -20 | 80 | |
-| Fan Intake Temperature | /platform/mcu/status/temperature | temperatures[CC01_FAN[1-4]] | -20 | 50 | |
+| Fan Controller Temperature | /platform/mcu/status/temperature | temperatures[CC01_FAN[1-4]] | -20 | 80 | |
 | 5V Inductor Temperature | /platform/mcu/status/temperature | temperatures[5V_INDUCTOR] | -20 | 80 | |
 | Main Ground Lug Temperature | /platform/mcu/status/temperature | temperatures[MAIN_GND_LUG] | -20 | 80 | |
 | 24V DC/DC Temperature | /platform/mcu/status/temperature | temperatures[24V_DCDC] | -20 | 80 | |
