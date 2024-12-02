@@ -492,11 +492,20 @@ These topics provide useful information regarding voltages, currents, temperatur
 
 Husky A300 is equipped with temperature sensors throughout the robot, which are used to monitor
 temperatures and determine fan speeds for proper cooling. In addition, if the robot is approaching
-its critical thermal limits, system throttling will occur. (TODO: determine exact throttling behavior)
+its critical thermal limits, system throttling may occur.
 
-| Sensor  | ROS Topic  | Critical Limit (°C)  |
-| :------ | :--------- | :------------------- |
-| TODO: need to update list once SW is finalized |  |  |
+| Sensor  | ROS Topic  | Message Field | Lower Critical Limit (°C) | Upper Critical Limit (°C) | Notes |
+| :------ | :--------- | :------------ | :------------------------ | :------------------------ | :---- |
+| Motor [1-4] Temperature | /platform/motors/status | drivers[0-3].motor_temperature | 0 | 100 | Does not affect fan speed |
+| Motor Driver [1-4] MCU Temperature | /platform/motors/status | drivers[0-3].mcu_temperature | -20 | 80 | |
+| Motor Driver [1-4] PCB Temperature | /platform/motors/status | drivers[0-3].pcb_temperature | -20 | 80 | |
+| Battery [1-6] Temperature | /bms/battery_state_[1-6] | temperature | -20 | 60 | Charging must occur above 0°C |
+| MCU Temperature | /platform/mcu/status/temperature | temperatures[CC01_MCU] | -20 | 80 | |
+| Fan Intake Temperature | /platform/mcu/status/temperature | temperatures[CC01_FAN[1-4]] | -20 | 50 | |
+| 5V Inductor Temperature | /platform/mcu/status/temperature | temperatures[5V_INDUCTOR] | -20 | 80 | |
+| Main Ground Lug Temperature | /platform/mcu/status/temperature | temperatures[MAIN_GND_LUG] | -20 | 80 | |
+| 24V DC/DC Temperature | /platform/mcu/status/temperature | temperatures[24V_DCDC] | -20 | 80 | |
+| 12V DC/DC Temperature | /platform/mcu/status/temperature | temperatures[12V_DCDC] | -20 | 80 | |
 
 Monitoring these fields over longer periods of operation will allow you to ensure that you are not
 putting excessive wear on Husky's motors and other components.
@@ -883,18 +892,36 @@ of the robot. The amount of airflow scales automatically depending on the temper
 
 ### Interior Features
 
-The standard Husky interior is shown below and includes:
+Removing the top plate exposes the electronics tray, which contains the following:
 
-- Computer
-- GPU (optional)
-- IMU
-- Power expansion
-- Network switch
-- Batteries
+1. Computer
+2. GPU (optional)
+3. IMU
+4. User power expansion
+5. Network switch
 
-TODO: image of electronics tray
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_electronics_tray.png"
+      width="600"
+    />
+    <figcaption>Husky A300 Electronics Tray</figcaption>
+  </figure>
+</center>
 
-TODO: image of 6-battery configuration
+Removing the electronics tray exposes the batteries. Husky is available in 2-battery, 4-battery,
+and 6-battery configurations.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_batteries.png"
+      width="600"
+    />
+    <figcaption>Husky A300 Batteries (6-battery Configuration)</figcaption>
+  </figure>
+</center>
 
 #### Computer
 
@@ -1075,7 +1102,15 @@ must be locked out to properly protect the remaining connections.
 Normal preventative maintenance tasks will not require the user to open the Husky A300 to expose
 these connections.
 
-TODO: image of live connections
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_electrical_live.png"
+      width="600"
+    />
+    <figcaption>Husky A300 Live Connections</figcaption>
+  </figure>
+</center>
 
 :::safety-caution
 
@@ -1257,8 +1292,6 @@ lifting straps, they should be positioned as shown in the images below. The lift
 shall be rated to minimum weight equal to the weight of Husky, including any mounted payloads.
 See [System Specifications](#system-specifications) for the weight of Husky and its maximum payload.
 
-TODO: lifting image
-
 <center>
   <figure>
     <img
@@ -1365,7 +1398,6 @@ To get Husky connected to your local Wi-Fi network, follow the setup below.
 1. Follow the steps for [Connecting to Husky over an Ethernet Connection](#ethernet-connection).
 1. Run `sudo clearpath-computer-setup` and follow the [Custom Networking](../../../../ros/networking/computer_setup#custom-networking)
    instructions for setting up the Wi-Fi connection.
-   TODO: need more details in the tutorial for setting up wifi.
 
 ### Connecting and Using the Controller {#controller}
 
@@ -1426,9 +1458,82 @@ See [Husky A300 Troubleshooting](troubleshooting_husky) for details on Husky tro
 
 ## Declarations
 
-### Supplier's Declaration of Conformity
+### FCC Supplier's Declaration of Conformity
 
-TODO: FCC
+**47 CFR § 2.1077 Compliance Information**
+
+**Husky A300**
+
+**Responsible Party**
+
+Rockwell Automation, Inc.
+1201 South Second Street
+Milwaukee, Wisconsin
+53204-2410
+
+**Point of Contact**
+
+Tim Davis, Development Test Manager<br/>
+tadavis@ra.rockwell.com<br/>
+(262) 512-8257 x58250
+
+This device complies with Part 15 of the FCC Rules.
+
+Operation is subject to the following two conditions: (1) this device may
+not cause harmful interference, and (2) this device must accept any
+interference received, including interference that may cause undesired operation.
+
+Contains Transmitter Module FCC ID: PD9AX210NG
+
+Changes or modifications not expressly approved by Clearpath Robotics Inc. could void
+the user's authority to operate the equipment.
+
+This equipment has been tested and found to comply with the limits for a Class A
+digital device, pursuant to Part 15 of the FCC Rules. These limits are designed to provide
+reasonable protection against harmful interference when the equipment is operated in a
+commercial environment. This product generates, uses, and can radiate radio frequency
+energy and, if not installed and used in accordance with the manufacturer's instruction
+manual, may cause harmful interference with radio communications. Operation of this
+product in a residential area is likely to cause harmful interference, in which case you will
+be required to correct the interference at your own expense.
+
+These limits are designed to provide reasonable protection against harmful interference in
+a non-residential installation. However, there is no guarantee that interference will not
+occur in a particular installation.
+If this equipment does cause harmful interference to radio or television reception, which can
+be determined by turning the equipment off and on, the user is encouraged to try to correct
+the interference by one or more of the following measures:
+  - Reorient or relocate the receiving antenna.
+  - Increase the separation between the equipment and receiver.
+  - Connect the equipment into an outlet on a circuit different from that which the receiver is connected.
+  - Consult the dealer or an experienced radio/TV technician for help.
+
+FCC Radiation Exposure Statement: This product complies with FCC §2.1091(b) for mobile RF exposure limits,
+set forth for an uncontrolled environment and is safe for the intended operation as described in this manual.
+Per FCC requirements, maintain a distance of more than 8 inches (20 cm) between any person and the host device.
+
+### Innovation, Science and Economic Development Canada (ISED) Compliance Notice
+
+Contains Transmitter Module IC: 1000M-AX210NG
+
+This device contains a license-exempt transmitter/receiver that complies with Innovation,
+Science and Economic Development (ISED) Canada's license-exempt RSS(s). Operation is
+subject to the following 2 conditions: (1) this device may not cause interference, and
+(2) this device must accept any interference, including interference that may cause
+undesired operation of the device.
+
+This Class A digital apparatus complies with Canadian ICES-002 and ICES-003.
+
+Under Industry Canada regulations, this radio transmitter many only operate using an
+antenna of a type and maximum (or lesser) gain approved for the transmitter by Industry
+Canada. To reduce potential radio interference to other users, the antenna type and its
+gain should be so chosen that the equivalent isotropically radiated power (e.i.r.p.) is
+not more than the necessary for successful communication.
+
+ISED Radiation Exposure Statement: This product complies with the Canadian Standard
+RSS-102 for portable RF exposure limits, set forth for an uncontrolled environment
+and is safe for the intended operation as described in this manual. Per ISED requirements,
+maintain a distance of more than 8 inches (20 cm) between any person and the host device.
 
 ---
 
