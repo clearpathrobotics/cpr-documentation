@@ -1,0 +1,167 @@
+---
+title: Camera Data Compression
+sidebar_label: Camera Data Compression
+sidebar_position: 7
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+Using the [`image_transport`](https://github.com/ros-perception/image_common), [`image_transport_plugins`](https://github.com/ros-perception/image_transport_plugins) and [`ffmpeg_image_transport`](https://github.com/ros-misc-utilities/ffmpeg_image_transport) packages, it is possible to compress and stream images/video using ROS messages. This is important in order to enable the transmission of large images or video streams over wireless networks with limited bandwidth. For a walkthrough of a case study see [Video over WiFi](../tutorials/video_over_wifi.mdx). The supported compression methods are outlined below:
+
+| Image Transport Name | Topic Name        | Compression Method     | Purpose            | Comments  |
+| :------------------- | :---------------- | :--------------------- |:------------------ |:--------- |
+| Compressed           | `compressed`      | JPEG (default) or PNG  | RGB or Mono Images | Use JPEG for higher compression, use PNG for lossless |
+| Compressed Depth     | `compressedDepth` | PNG (or RVL in Jazzy+) | Depth Images       | Both PNG and RVL are lossless |
+| FFMPEG               | `ffmpeg`          | H.264 or H.265         | Video              | Requires decoding in order to view the data |
+| Theora               | `theora`          | Theora                 | Video              | Not recommended because the subscriber must receive the very first published message in order to decompress the stream |
+
+For example, for the color image topic from the first camera in `robot.yaml`, the default image transport topics will appear as shown below:
+```bash
+/a200_0000/sensors/camera_0/color/image
+/a200_0000/sensors/camera_0/color/compressed
+/a200_0000/sensors/camera_0/color/ffmpeg
+```
+
+:::note
+The same publisher handles all of these message types. Limit the number of subscribers to minimize the load on the camera driver node.
+:::
+
+
+#### Using Image Transport
+
+Compressed, FFMPEG and Theora types are not standard ROS 2 datatypes, therefore special consideration must be made when interacting with them. Nodes that use `image_transport` have the ability to directly subscribe to or publish to the compressed / encoded topics using the image transport plugins. Many ROS 2 camera drivers offer the compressed topics by default.
+
+However, for any node that does not support these plugins by default, a separate compression (encoding) or decompression (decoding) "republisher" node must be run. Decompressing the images into standard `sensor_msgs/Image` messages allow viewing or processing them using standard tools such as RViz. However, these "republisher" nodes are inefficient because they introduce another subscriber and publisher, and this can cause significant load on the computer networking depending on the size of image and networking configuration. Supporting image transport and image transport plugins directly is much more efficient, avoiding the need for copying and transferring the uncompressed data. This should be done in any situation where the performance of "republisher" nodes is insufficient. Examples on how to directly use image transport can be found in the [Image Transport Tutorials Repo](https://github.com/ros-perception/image_transport_tutorials).
+
+The `clearpath_sensors` package has launch files to start "republisher" nodes to convert to and from these compressed transport types. This allows the usage of compressed topics to optimize networking without requiring custom development. To use these launch files, ensure that the Clearpath sensor package is installed on the computer that will be performing the decompression / decoding:
+
+```bash
+sudo apt install ros-humble-clearpath-sensors
+```
+
+:::note
+These launch files simply wrap the `image_transport` `republish` node and set default parameters. This `republish` node can be run directly as an alternative to installing the full Clearpath sensors package and using the launch files.
+:::
+
+#### Compressed
+
+The `compressed` image transport compresses images using the JPEG format at 80% quality by default. JPEG is a static image compression format that compresses each video frame independently and does not rely on any previous frame.
+
+##### Encoding Node {#encode-compressed}
+
+Use the launch file `image_raw_to_compressed.launch.py` to compress `sensor_msgs/Image` messages into compressed messages. Note that this is only required if the image publisher does not already use image transport plugins.
+
+Assume that the following image topic needs to be compressed:
+```bash
+/a200_0000/sensors/camera_0/color/image
+```
+
+Then, compress this image topic by launching the following:
+```bash
+ros2 launch clearpath_sensors image_raw_to_compressed.launch.py in_raw:=/a200_0000/sensors/camera_0/color/image out_compressed:=/a200_0000/sensors/camera_0/color/compressed
+```
+
+Now, the following topics will be available:
+```bash
+/a200_0000/sensors/camera_0/color/image
+/a200_0000/sensors/camera_0/color/compressed
+```
+
+##### Decoding Node {#decode-compressed}
+
+To reverse this process on the receiving computer, use the `image_compressed_to_raw.launch.py` to decompress back to `sensor_msgs/Image` messages:
+```bash
+ros2 launch clearpath_sensors image_compressed_to_raw.launch.py in_compressed:=/a200_0000/sensors/camera_0/color/compressed out_raw:=/a200_0000/sensors/camera_0/decompressed/image
+```
+
+Now, the following topics will be available:
+```bash
+/a200_0000/sensors/camera_0/color/image
+/a200_0000/sensors/camera_0/color/compressed
+/a200_0000/sensors/camera_0/decompressed/image
+```
+
+#### FFMPEG
+
+The FFMPEG image transport uses H.264 compression by default. In the context of real-time video transmission, this compression technique uses a combination of keyframes which contain the full data from the video frame, and predictive frames which encode only the changes compared to the previous frame. This provides very high levels of compression for video feeds.
+
+##### Encoding Node {#encode-ffmpeg}
+
+Use the launch file `image_raw_to_ffmpeg.launch.py` to compress `sensor_msgs/Image` messages into FFMPEG messages. Note that this is only required if the image publisher does not already use image transport plugins.
+
+Assume that the following image topic needs to be compressed:
+```bash
+/a200_0000/sensors/camera_0/color/image
+```
+
+Then, compress this image topic by launching the following:
+```bash
+ros2 launch clearpath_sensors image_raw_to_ffmpeg.launch.py in_raw:=/a200_0000/sensors/camera_0/color/image out_ffmpeg:=/a200_0000/sensors/camera_0/color/ffmpeg
+```
+
+There are several optional parameters that can be passed in order to adjust the compression:
+
+| Parameter | Default Value |
+|-----------|---------------|
+| `encoding`| `libx264`     |
+| `qmax`    | `40`          |
+| `preset`  | `superfast`   |
+| `tune`    | `zerolatency` |
+| `bit_rate`| `1000000`     |
+| `gop_size`| `15`          |
+
+For documentation on what each of these parameters does see the [ffmpeg_image_transport GitHub repo](https://github.com/ros-misc-utilities/ffmpeg_image_transport).
+
+Now, the following topics will be available:
+```bash
+/a200_0000/sensors/camera_0/color/image
+/a200_0000/sensors/camera_0/color/ffmpeg
+```
+
+##### Decoding Node {#decode-ffmpeg}
+
+To reverse this process on the receiving computer, use the `image_ffmpeg_to_raw.launch.py` to decode back to `sensor_msgs/Image` messages:
+```bash
+ros2 launch clearpath_sensors image_ffmpeg_to_raw.launch.py in_ffmpeg:=/a200_0000/sensors/camera_0/color/ffmpeg out_raw:=/a200_0000/sensors/camera_0/decoded/image
+```
+
+Now, the following topics will be available:
+```bash
+/a200_0000/sensors/camera_0/color/image
+/a200_0000/sensors/camera_0/color/ffmpeg
+/a200_0000/sensors/camera_0/decoded/image
+```
+
+#### Theora
+
+Theora is an older format that also uses keyframes and predictive frames, like the H.264 format, to compress video streams. The Theora image transport encodes images into a video stream with an 800 kbps bitrate by default.
+
+The first message after launching the encoder transmits the header packet. This header packet includes all of the encoding information required to decode the subsequent video packets. Therefore, if that first message is dropped or missed, then decoding the video packets back to images is not possible.
+
+Therefore, it is important to have the decoder node running before launching the encoder node, such that the former will not miss the header packet.
+
+:::warning
+Missing the header packet and being unable to decode the video packets is a known, long-standing issue with the `theora` image transport plugin. See this [issue](https://github.com/ros-perception/image_transport_plugins/issues/4) for more information.
+:::
+
+Assume that the following image topic needs to be compressed:
+```bash
+/a200_0000/sensors/camera_0/color/image
+```
+
+First, launch the decoder:
+```bash
+ros2 launch clearpath_sensors image_theora_to_raw.launch.py in_theora:=/a200_0000/sensors/camera_0/color/theora out_raw:=/a200_0000/sensors/camera_0/decoded/image
+```
+
+Then, launch the encoder:
+```bash
+ros2 launch clearpath_sensors image_raw_to_theora.launch.py in_raw:=/a200_0000/sensors/camera_0/color/image out_theora:=/a200_0000/sensors/camera_0/color/theora
+```
+
+As long as the first header packet is communicated without loss, the decoder will be able to decode and publish the raw image data. The following topics will then be available:
+```bash
+/a200_0000/sensors/camera_0/color/image
+/a200_0000/sensors/camera_0/color/theora
+/a200_0000/sensors/camera_0/decoded/image
+```

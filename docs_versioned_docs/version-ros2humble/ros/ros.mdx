@@ -31,9 +31,9 @@ of ROS 2 topics and services defined by Clearpath which are used by all supporte
 | Jackal    | J100          | Yes (As of 0.1)               | Coming  |
 | Warthog   | W200          | Yes (As of 0.2)               | Coming  |
 | Dingo     | DD100         | Yes (As of 0.3)               | Coming  |
-|           | DO100         | Coming                        | Coming  |
+|           | DO100         | Yes (As of 1.0)               | Coming  |
 |           | DD150         | Yes (As of 0.3)               | Coming  |
-|           | DO150         | Coming                        | Coming  |
+|           | DO150         | Yes (As of 1.0)               | Coming  |
 | Ridgeback | R100          | Yes (As of 0.3)               | Coming  |
 | Boxer     | B250          | No                            | No      |
 
@@ -61,7 +61,11 @@ sensors that have been validated by Clearpath.
 | [Garmin GPS 18x](../robots/accessories/sensors/gps/garmin_gps_18x.mdx)               | GPS          | Debian       | [nmea_navsat_driver](https://github.com/ros-drivers/nmea_navsat_driver/tree/ros2)           |
 | NovAtel SMART6 and SMART7                                                            | GPS          | Debian       | [nmea_navsat_driver](https://github.com/ros-drivers/nmea_navsat_driver/tree/ros2)           |
 | [Swift Navigation Duro](../robots/accessories/sensors/gps/swift_navigation_duro.mdx) | GPS          | Source       | [duro_gps_driver](https://github.com/szenergy/duro_gps_driver/tree/ros2-humble)             |
+| [Axis F1035-E](../robots/accessories/sensors/cameras/axis_f1035_e.mdx)               | Camera       | Debian       | [axis_camera](https://github.com/ros-drivers/axis_camera.git)                               |
+| [Axis M5525-E](../robots/accessories/sensors/cameras/axis_m5525_e.mdx)               | Camera       | Debian       | [axis_camera](https://github.com/ros-drivers/axis_camera.git)                               |
+| [Axis Q6225-LE-E](../robots/accessories/sensors/cameras/axis_q6225_le.mdx)           | Camera       | Debian       | [axis_camera](https://github.com/ros-drivers/axis_camera.git)                               |
 | [Flir Blackfly S](../robots/accessories/sensors/cameras/flir_blackfly_s.mdx)         | Camera       | Debian       | [flir_camera_driver](https://github.com/ros-drivers/flir_camera_driver/tree/humble-devel)   |
+| [Flir Ladybug 5P](../robots/accessories/sensors/cameras/flir_ladybug5p.mdx)          | Camera       | Debian       | [flir_camera_driver](https://github.com/ros-drivers/flir_camera_driver/tree/humble-devel)   |
 | [Intel Realsense D435](../robots/accessories/sensors/cameras/realsense_d435.mdx)     | Depth Camera | Debian       | [realsense-ros](https://github.com/IntelRealSense/realsense-ros/tree/ros2-development)      |
 | [Stereolabs Zed 2](../robots/accessories/sensors/cameras/stereolabs_zed_2.mdx)       | Depth Camera | Source       | [zed-ros2-wrapper](https://github.com/stereolabs/zed-ros2-wrapper.git)                      |
 
@@ -73,6 +77,26 @@ Debian drivers are automatically installed on robots as part of the
 :::
 
 ## Changelog
+
+### [1.0] 2024-11-27
+
+#### New Features
+ - DO100 and DO150 Platform
+ - Added support for Ridgeback and Dingo to `clearpath_nav2_demos`
+ - Added support Axis cameras
+ - Added pointcloud support to OakD
+ - Updated CAN interface for Pumas
+ - Updated `clearpath_platform_msgs`
+ - Added `clearpath_motor_msgs`
+ - Removed `clearpath_platform` and `clearpath_hardware_interfaces` to `clearpath_robot`
+ - Added vcan service
+ - Move `battery_state` to `clearpath_hardware_interfaces`
+ - Add clearpath_motor_drivers, puma_motor_driver
+ - Play simulation automatically
+
+#### Fixed
+ - Jackal driving performance issues at high speeds
+ - Fixed issues with setting Domain ID on MCU robots
 
 ### [0.3.0] 2024-09-10
 :::warning

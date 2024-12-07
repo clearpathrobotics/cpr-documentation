@@ -1,0 +1,111 @@
+---
+title: Video over WiFi
+sidebar_label: Video over WiFi
+sidebar_position: 6
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+Cameras can be challenging to work with as they produce large amounts of data which can overwhelm networks. They must be configured for a particular use case and networking configuration. This tutorial will go over the process of configuring a system with a 6 megapixel camera for use in teleoperating the robot over a WiFi network. However, the same concepts can be applied to any camera and any use case.
+
+## Getting to Know the System
+
+### The Robot
+
+In this example, the robot computer is running the Clearpath ROS 2 packages and is directly connected to a 6.3 MP FLIR Blackfly camera via USB. The camera has been properly configured in the `robot.yaml` as per [YAML Camera Configuration](../config/camera_compression.mdx). The robot networking has been configured as FastDDS Discovery server and is configured in the `robot.yaml` as per [YAML System Configuration](../config/yaml/system.mdx). The robot computer has then been connected to the local area WiFi network.
+
+### The Offboard Computer
+
+The offboard computer, from which the user will be teleoperating the robot, has been set up using the [Offboard Computer Setup Instructions](../installation/offboard_pc.mdx). The offboard computer is also connected to the same WiFi network as the robot.
+
+Full ROS 2 communication has been tested between the offboard computer and the robot computer, and the operator is able to control the robot using [Keyboard Teleoperation](driving.mdx#keyboard-teleoperation).
+
+### The WiFi Network
+
+It is important to understand the capabilities of a given network and to have realistic expectations of what data can be transmitted over the network. A router is advertised with a theoretical maximum bandwidth, however, that is in optimal conditions and may involve summing maximum theoretical bandwidths across multiple frequency bands. This is not representative of how much bandwidth will realistically be available to a single device on a particular frequency channel. Instead, network bandwidth should be tested empirically for a given set of hardware in a given environment. Many variables impact the available bandwidth including interference from other networks, obstacles such as walls or trees, and the WiFi hardware itself. A tool such as [iperf3](https://iperf.fr/) can be used to evaluate the usable bandwidth of a WiFi network.
+
+To directly test the available bandwidth and simulate the robot sending large amounts of data to the offboard computer, the `iperf3` server was run on the offboard computer and the `iperf3` client was run on the robot. This test was run for both TCP and UDP messages to understand the capacity for different types of communication, although by default FastDDS communicates only using UDP. This test was repeated with the robot in different locations all around the operation space, including the furthest and most obscured areas. A system should be designed to be fully functional in all areas of the operational field. If the connection is insufficient in those furthest regions then the network must be improved.
+
+For this example, the operating field was outdoors and the worst point had the following results:
+
+| UDP Speed | TCP Speed |
+|-----------|-----------|
+| 60.6 Mbps | 85 Mbps   |
+
+It must be considered though that this is the full available network given the conditions at the time of the test. If more than one robot will be running, then the bandwidth will need to be split. Similarly, conditions may change for better or for worse based on the weather, the foliage or any number of other factors. There should always be a safety factor to increase reliability. For this example, we intend to have 2 robots running and a safety factor of 2. This means that a robot should operate using less than one fourth of the measured UDP bandwidth, that is less than 15 Mbps.
+
+In this case, the camera feed is only one of the various types of data being sent across, and it is only being used for teleoperation. Therefore, the goal in this case is to make the required bandwidth for the camera as small as is reasonable to increase reliability while keeping the feed functional for teleoperation. In this case, being functional for basic teleoperation means at least 15 frames per second (a reasonably smooth video) and a resolution of at least 1280x720.
+
+## Camera Configuration
+
+### Raw Camera Bandwidth Requirements
+
+The FLIR Blackfly camera that was being used was a 6.3 MP color camera and had a full resolution of 3072x2048. A simple calculation shows that each image will be approximately 18 MB.
+
+3072 pixels x 2048 pixels x 3 bytes for RGB = 18.9 Megabytes (MB)
+
+When discussing bandwidth, throughput is measured in bits per second, so this equation can be rephrased as:
+
+3072 pixels x 2048 pixels x 3 bytes for RGB x 8 bits per byte = 151 Megabits (Mb)
+
+This means that sending 1 frame per second (FPS) would require 151 Megabits per second (Mbps). Achieving the goal of 15 FPS would require 2.3 Gigabits per second (Gbps). This is not realistic even on many wired networks (usually rated for 100 Mbps or 1 Gbps), let alone on a wireless network. Additionally, many computers will not be able to debayer this size of image quickly enough to publish them. Debayering is an image processing step that converts the raw camera output to an RGB image, and this is required with the Blackfly camera.
+
+In conclusion, something must be done if this camera is to be used for teleoperation. The good news is that there are two techniques to reduce the required throughput.
+
+### Binning
+
+One option for reducing the size of the image is to use binning. There are several different mechanisms by which this can be done depending on the camera and driver, but ultimately it increases the size of the pixels and reduces the resolution. Enabling binning with the Blackfly camera reduces the processing required for debayering and ultimately reduces the load on the computer. Setting binning in x and y both to 2 reduces the overall image size to a quarter. The resultant image is 1536x1024 pixels, or 4.7 MB per image, which is more than the resolution requirement of 1280x720. At this reduced resolution, it would take 570 Mbps to transmit at 15 FPS. This is somewhat reasonable to transmit over 1 Gbps ethernet connections but is still too large to transmit over WiFi.
+
+### Compression Method Selection
+
+In order to reduce the bandwidth required for the video stream, a compression method must be chosen. The compression options currently available are the compressed image transport (JPEG or PNG compression), FFMPEG (H.264 or H.265 compression) or Theora. In order to choose the compression method, there are two main considerations:
+
+1. Can it be lossy? In other words, is it okay if image quality is reduced? In this case the answer is yes. The goal of the video is to visually transmit a representation of the environment for teleoperation and it is okay if some details are lost if that helps ensure that the image is received more reliably. Lossy compression allows significantly more compression and therefore can result in a much smaller bandwidth requirement. The level of compression is controlled by one or more settings. JPEG, H.264 and Theora are all lossy compression formats while PNG compression is lossless. It is possible to configure the FFMPEG image transport to be lossless but the compression abilities are significantly hindered.
+
+2. Is the use case images or video (low frequency or high frequency)? Low frequency image data should be transmitted as individual compressed images that are each fully independent. This would be done using the compressed image transport. Video should be transmitted using compression formats that use the difference between frames to encode the data more efficiently. In the context of encoding with zero latency, this is done as a combination of regular keyframes interspersed with predictive frames. Keyframes contain the full compressed image, while the predictive frames only contain the differences between the last frame to the current frame. This enables a much higher frame rate using a much lower bandwidth. However, when frames are dropped, particularly keyframes, this creates artifacts in the video stream. Another side effect of this video encoding is that the bandwidth usage depends on how much the video feed changes between frames. In the context of ROS and the Clearpath packages, there are currently two options for video compression: FFMPEG and Theora. The recommended option is FFMPEG due to some key flaws with the Theora image transport plugin.
+
+For the teleoperation use case, the FFMPEG image transport has been selected as the best option. For more details on the compression options see [Camera Data Compression](../config/camera_compression.mdx).
+
+### Compression Settings and Testing
+
+Choosing compression settings is generally a guess and check process, although it becomes more intuitive with some experience. The best values are unique to each use case based on the desired properties and the network. For this teleoperation application, the following are the most important considerations that are evaluated when testing each setting:
+
+- Latency: For robot control, it is very important for the video feed to be as low latency as possible for safety. Latency accumulates from the encoder, the network delay, and the decoder.
+- Frame Rate: For smooth video, a good minimum is 15 FPS, while 30 FPS is more pleasant to view.
+- Reliability / Robustness: It is very important for the stream to be reliably transmitted even in the areas of the operating field that have the worst connectivity. In the context of FFMPEG compression settings, this comes down to minimizing the required bandwidth and ensuring that there is a significant safety margin.
+- Quality: The video stream needs to be of good enough quality to accurately make decisions for teleoperation including determining traversable terrain. This may vary based on the capabilities of the robot. For example, a Clearpath Warthog is able to traverse very rocky terrain and has large ground clearance. In contrast, a Clearpath Dingo is only designed for smooth indoor terrain and has to avoid even small obstacles given its low ground clearance.
+- Efficiency: It is important that the computers are not overly burdened by processing the video (encoding and sending, or receiving and decoding). Therefore it is important to monitor the changes in CPU load with different compression settings (note that the compression is only active when a subscriber is present). If a GPU is involved, then the GPU usage should be monitored.
+
+#### FFMPEG Settings
+
+For a complete up-to-date description of FFMPEG Settings, see the [FFMPEG website](https://trac.ffmpeg.org/wiki/Encode/H.264), and for a complete description of the functionality supported by the ROS 2 plugin, see the [ffmpeg_image_transport GitHub repo](https://github.com/ros-misc-utilities/ffmpeg_image_transport). At the time this tutorial was published, the main settings that were modified for this example were:
+
+- **tune**: Set to `zerolatency` to reduce latency as much as possible.
+- **preset**: This sets the relationship between encoding speed and compression. Slower presets will provide more compression getting more quality for the bandwidth but requires more computational effort. For the example application which only had a moderately powerful CPU and no GPU on the robot, it was tested with `veryfast`, `superfast` and `ultrafast`. With a GPU or a more powerful CPU, a slower setting would provide better compression and thus better quality with the same bandwidth usage without overburdening the computer.
+- **bit_rate**: The targeted bitrate. In this case, the goal is to target 1 Mbps for the video feed.
+- **qmax**: 0 is highest quality / least compression and 63 is lowest quality / most compression. In future versions of the plugin, similar results can be achieved by modifying the constant rate factor (CRF) setting.
+- **gop_size**: Number of frames between keyframes, left at 15. Recommended to keep this at 1-2 key frames per second, calculated using the intended total FPS. For a 30 FPS video, `gop_size` of 15 will result in 2 keyframes per second.
+- **encoding**: 'libx264' is default but if a Nvidia GPU is available then 'hevc_nvenc' is recommended.
+
+It is important to note that all of these settings interact with one another and will give different results in different combinations.
+
+#### Testing Process
+The FFMPEG settings being tested were configured in the `robot.yaml` on the robot computer as per the [Camera Configuration Examples](../config/yaml/sensors/cameras.mdx#ffmpeg-compression-settings). Since the `ffmpeg_image_transport` is supported by default, a separate encoder node was not required. On the offboard computer, an FFMPEG decoder node was launched as per the [FFMPEG Decoder Launch Instructions](../config/camera_compression.mdx#decode-ffmpeg) and RViz was used to visualize the decoded stream as per the [RViz Instructions](rviz.mdx#visualizing-camera-data)
+
+The testing process involved iteratively testing different setting combinations, but only making one change at a time to build an understanding of how each of the parameters interact. In order to determine the resultant size of the camera feed, it was important to move the camera around quickly to get the maximum change between frames and therefore get the full range of potential bandwidth requirements. This test is dependent on the compression method, and different compression methods may have different types of worst case scenarios. Fast movements were also made in the camera field of view to judge latency and how smooth the image was. Finally, CPU usage, GPU usage, and publishing frequency were all actively monitored.
+
+#### Results
+
+After binning but before compression the video stream was calculated to need 570 Mbps at 15 FPS.
+
+After some iteration of different values, the frame rate was increased to 30 FPS and the following compression settings were selected:
+
+```yaml
+qmax: 40
+preset: superfast
+tune: zerolatency
+bit_rate: 1000000
+gop_size: 15
+```
+
+These values resulted in a video feed that used approximately 1 Mbps in the average scenario and 2.5 Mbps in quickly changing environments (for example very bumpy terrain). The video quality was noted to be quite good for teleoperation, and the video feed only used a fraction of the available bandwidth, ensuring good reliability. These settings can be applied in the `robot.yaml` as per [YAML Camera Configuration](../config/camera_compression.mdx) but also were used as the default values for the Blackfly camera.

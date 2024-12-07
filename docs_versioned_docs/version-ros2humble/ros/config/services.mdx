@@ -24,6 +24,10 @@ in Rviz, and get platform data. This service can be stopped or started without i
 The `clearpath-sensors` service launches the `sensors-service.launch.py` file found under `/etc/clearpath/sensors/launch/`. This will launch any
 sensors defined in the robot YAML. This service can be stopped or started without interrupting the platform service.
 
+### Clearpath Manipulators
+
+The `clearpath-manipulators` service launched the `manipulators-service.launch.py` file generated to `/etc/clearpath/manipulators/launch`. This service will launch a secondary `controller_manager` with the hardware interfaces and controllers required by the manipulators defined in the robot YAML. Additionally, it will launch **MoveIt!** with the default configuration for all manipulators. This service can be stopped or started without interrupting the platform service, allowing for the arms controllers to fail without compromising the ability for the platform to drive.
+
 ### Clearpath Robot
 
 The `clearpath-robot` service is the "parent" service of `clearpath-platform` and `clearpath-sensors`. If it is restarted, then both the platform and sensors services
