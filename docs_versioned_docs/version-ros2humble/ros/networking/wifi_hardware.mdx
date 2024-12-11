@@ -1,0 +1,85 @@
+---
+title: Wi-Fi Hardware
+sidebar_position: 6
+---
+
+Choosing the correct Wi-Fi hardware for a given application is very important to the quality of the network. Primarily this involves the selection of routers, antennas and cables as well as the placement of each of these components. The following sections are also embedded with a variety of tips to get the most out of a Wi-Fi network.
+
+## Routers
+When choosing a router, start by ensuring that the router supports the desired features mentioned in the [Wi-Fi Fundamentals](wifi_fundamentals.mdx) page. This includes:
+
+- Wi-Fi generation (recommended 6 or higher)
+- Desired frequency bands
+- Desired channels and channel widths (specifically DFS channels)
+- Auto channel and channel width selection if desired
+- Desired number of spatial streams (at minimum match the best client)
+- Appropriate certification for the region of operation
+- Sufficient transmit power given the use case and antennas (may involve reducing the transmit power to stay within legal limits or for indoor usage)
+- Consider a router with removable antennas for use cases that may require higher gain or directional antennas
+- Advanced networking features (port forwarding, NAT, SSH, firewall, routing rules and more)
+- The number of ports needed and that supports the correct data throughput
+- Environmental compatibility (temperature, humidity and vibration ratings)
+- Compatible power requirements
+
+## Antennas
+Antenna selection is incredibly important for system performance. Antenna selection is very specific to the needs of a given project including the specific terrain where the system is operating and the relative location / orientation of the antennas. Antennas are generally described using the following properties:
+
+- **Frequency Band**: Antennas are designed to work at particular frequencies. It is possible to get antennas that cover 2.4, 5 and 6 GHz bands in one antenna or individual antennas that are tuned for just a single band.
+- **Gain**: This is the peak gain in the direction of highest gain. It is important to note that this peak gain could be only in one direction, see the radiation patterns to gain a better understanding of the overall gain in the region of interest at the frequency of interest. Higher gain does not mean higher power as a whole. Higher gain antennas focus all of the energy into a particular area, removing it from other areas.
+- **Beam Width**: Beam width defines the angle where most of the antenna's power is directed, the angle where the network signal will be strong and is defined for both the horizontal and vertical planes. The beam width is the angle measured on the main lobe of the radiation pattern between the two points where the power is less than half of the maximum (-3 dB). It is once again important to note, that this beam width may not be radially symmetric even on omni-directional antennas. It is important to look at the radiation pattern from different angles to identify any possible gaps of coverage.
+- **Polarization**: Polarization of antennas indicates the direction of oscillation of the electric field in the waves emitted. It is important to match the polarization of the transmitting and receiving antennas, particularly outdoors where there are less reflective surfaces. Most commonly are linear vertical and linear horizontal polarizations but circular polarizations also exist. It is generally recommended to use vertically polarized antennas for most scenarios if there is enough space to mount them sufficiently far apart.
+- **Impedance**: Standardly this should be 50 Ohms for all Wi-Fi devices, and must match between the antenna, cabling and radio.
+- **VSWR (Voltage Standing Wave Ratio)**: VSWR is essentially a measure of efficiency for the antenna. More correctly it is a measure of how well the antenna impedance is matched and how much power is transmitted vs being reflected. The measure ranges from 1 to infinity with 1 being a perfect system. Realistically, anything less than 2 is good and anything under 2.5 is acceptable for Wi-Fi applications.
+- **Max Input Power**: This is the power rating of the antenna where it will perform as specified. Generally the maximum allowable power for any WiFi channel is 30 dB or 1 Watt, so anything higher is acceptable. This is not generally a concern.
+- **Multi in one**: Some antennas will be marketed as having multiple antennas in one body. These offer benefits of easy installation and not requiring as much space. However, they generally always have worse radiation patterns (with weak spots) and involve orthogonal polarization (discussed further in [Antenna Orientation](#orientation)). If maximizing connectivity is the priority then these are generally best avoided.
+- **Radiation Patterns**: The radiation pattern is a description of how the power transmitted by the antenna is directed into the surrounding space. These can often be referred to in one word descriptions such as omnidirectional (similar gain in all directions), donut (similar gain in all directions on the horizontal plane and low gain up and down) or directional (all energy focused in a single direction). This is only a rough description of what the radiation pattern is. The radiation pattern should always be evaluated using at minimum radiation pattern graphs on the horizontal and vertical planes at each frequency or at best with a full 3d model of the radiation pattern at each frequency. For more information see [Evaluating Radiation Patterns](#evaluating-radiation-patterns)
+
+It is important to choose the correct antenna type for your application:
+- For a stationary antenna servicing a large outdoors operating area, look for an antenna with a donut shape radiation pattern. This will have strong connection in all directions out from the antennas but not waste energy going down into the ground or up into the sky. This antenna should be mounted near the centre of the operating area to maximize range. If the antenna must be mounted at one edge of the region consider a directional antenna although the total area serviced will be less.
+- For a mobile application where the robot may be traversing hills or where there will be a significant height difference, consider a more omnidirectional antenna. This will make the connection more robust to angles and height differences.
+- For a mobile application where the robot will be staying on a level surface and the antenna is a similar height to the network antenna(s) consider a higher gain donut shape pattern. This will help maximize range and bandwidth.
+
+### Placing Antennas
+
+#### Obstructions
+
+Consider Wi-Fi signals, similarly to visible light. The waves are always impacted by objects. There are materials that the waves are blocked by, materials that the waves can pass through but where they become much weaker and materials that they can pass through. Any object or wall will interfere with Wi-Fi signals. Metals tend to be the worst as the signals are largely reflected, but any obstruction affects Wi-Fi signals.
+
+There should not be any obstructions between the transmitting and receiving antennas. For this discussion, consider the application of antennas on an outdoor robot controlled from a base station. At any given time, the base station antennas could be in any direction around the robot within an angle of the horizontal plane that can be calculated based on the terrain. This means that when looking at the robot from any such angle, there should be a clear view of all of the antennas. If an antennas is obstructed (not clearly visible) then the signal to or from that antenna will be poor.
+
+Do note, that while visible light is a good parallel to use to understand Wi-Fi signal obstruction, see-through or perforated surfaces still attenuate Wi-Fi signals and should be considered moderate obstructions.
+
+#### Spacing
+
+Antennas must be placed a minimum of half a wavelength apart. For 2.4 GHz that is 6.5 cm (or 2.6 inches) and for 5 GHz that is 3.0 cm (or 1.2 inches). This minimum distance is to reduce the coupling between the antennas, a phenomenon that degrades performance. However, additional distance between antennas continues to improve performance.
+
+#### Orientation
+
+Antenna orientation matters for two main reasons.
+
+1. The emitted signals have a polarization and if two antennas have perfectly orthogonal polarization they are isolated from each other. That means that if two antennas with the same linear polarization were mounted one vertically and one horizontally, they would have very poor signal strength even at close range. In contrast, the strongest signal is obtained if the two antennas are mounted perfectly parallel to each other. That way no power is lost due to any difference in polarization. Most commonly antennas have linear vertical polarization, but it is important to check the datasheet to confirm, particularly when multiple different types of antennas are being used together in the same wireless network.
+
+It is possible to use orthogonally polarized antenna pairs. In other words, there could be one horizontally polarized and one vertically polarized antenna on each of the robots and on the base station. This is less than ideal because it now means that each antenna on the robot can only communicate with 1 of the antennas on the base station. If the antennas were all aligned such that a mismatched pair is closest and obstructing the matching antennas then the performance would be worse than if all antennas had the same polarization. That being said, orthogonally polarized antenna pairs can still be useful when there is not enough space to mount the antennas at the required spacing. In that case it is important to then match the polarization on the base station, mounting both a horizontal and vertical polarized antenna on the base station as well.
+
+2. The radiation pattern is relative to the orientation of the antenna. For donut-shaped radiation patterns, this means that if the antenna is angled out, then one side of the donut goes down into the ground and the opposite side goes into the air. Neither of these are generally useful for ground robots. If the antenna is pointed up, perpendicular to the overall terrain, then that will maximize the useable range of the Wi-Fi signal.
+
+#### Mounting Height and the Fresnel Zone {#mounting-height}
+
+When trying to establish long distance wireless connectivity (100m+), it is important to understand the concept of a Fresnel zone. The Fresnel zone is an ellipsoidal region enveloping both the transmitting and receiving antennas that must be unobstructed for best signal transmission. This is due to the behavior of how wireless signals reflect off of surfaces, sometimes resulting in destructive interference, essentially cancelling out the original transmission. Keeping the primary Fresnel zone clear significantly decreases interference caused by this phenomenon. It is important to understand that this zone also extends below and behind the antenna as reflections from this region can also cause interference.
+
+The size of the Fresnel zone is calculated based on the signal frequency and communication distance. There are many Fresnel zone calculators available online. The Fresnel zone indicates how high the antennas must be mounted above the highest obstruction. The rule of thumb is that the primary Fresnel zone should ideally be at least 80% unobstructed, but not worse that 60% obstructed. It is possible to run systems at higher levels of obstruction but significant consideration must be made to how poor the connectivity will be and how low the data rate will be.
+
+For example, in a system where the robot is operating up to 300 m away from the base station, the Fresnel zone has a maximum diameter of 2.1 m (7.0 ft) for 5 Ghz communication or 3.0 m (10.0 ft) for 2.4 GHz. Assuming there are no obstructions other than the ground, both the robot and base station antennas would need to be mounted at that height for a fully unobstructed Fresnel zone. If one antenna could not be mounted that high then the Fresnel zone ellipsoid could be angled and the appropriate heights could still be calculated. However, the radiation patterns of the antennas must be considered, to ensure the antennas are appropriate given the terrain.
+
+## Antenna Cables and Connectors {#cables}
+Antenna cables are not all the same. Wi-Fi signals can be attenuated greatly by inferior cables. Irrelevant of cable quality, it is advantageous to make the cables as short as possible, ultimately placing the antennas and router or network interface card as close together as is reasonable.
+
+To evaluate the impact of a given cable, estimate the signal loss from the connectors and the cabling. It is a rule of thumb to assume a loss of 1 dB for every connector pair in the path, essentially for every additional cable used. That being said, the quality and type of connector impacts the actual loss. The data sheet for the cabling should state a loss for the cable for a given frequency and distance. If buying a prebuilt cable assembly, the first data sheet or drawing may only indicate the type of cable and the cable data sheet must be referenced.
+
+Consider connecting a router and antenna with a 3 m (10 ft) cable made of LMR 195 equivalent cabling to communicate at 5 GHz. LMR 195 cable has an attenuation of 98.1 dB/100m (29.9 dB/100ft) and one single cable with a connector at each end is an assumed loss of 1 dB. This would have the following estimated loss calculation:
+```
+estimated loss = 3m * 98.1 dB/100m + 1
+estimated loss = 3.9 dB
+```
+
+This loss is moderate. Recall that a loss of 3 dB is a loss of half power and that in a vacuum, a loss of 6 dB is equivalent to losing half of the range or dropping to only 25% power. If range or bandwidth is the priority, then this application would be recommended to get a higher quality cable. If LMR 240 equivalent cabling were used, it would be an estimated loss of 3dB. Both of these example cables are acceptable cables for use at 5 GHz however there are many cables available that are only suitable for very short distances or low frequencies. Try to keep antenna cables as short as possible, use as few connectors as is reasonable and use the distance to calculate what quality of cable is needed.
