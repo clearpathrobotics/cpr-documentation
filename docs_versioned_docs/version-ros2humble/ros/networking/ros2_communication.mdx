@@ -1,0 +1,23 @@
+---
+title: ROS 2 Communication
+sidebar_position: 4
+---
+
+This page reviews information that is useful to understand for working with ROS 2 DDS based communication.
+
+## ROS 2 Daemon
+The ROS 2 daemon is a service that runs in the background and participates in node discovery. The daemon keeps track of the ROS 2 participants that have been discovered on the network and makes that information available to the ROS 2 introspection tools over the command line interface (CLI). Using the daemon allows for faster and more accurate results from commands such as `ros2 topic list`, `ros2 node list` and `ros2 topic echo`.
+
+This daemon is started automatically when a command is run that uses it. However, the daemon collects discovery information from the network over time so it may take anywhere from a few seconds to a few minutes for the daemon to gain a complete list of all ROS 2 participants, depending on the size of the system. As a result, that first command where the daemon was started may give incomplete results. Whenever the daemon is starting up wait and then run the command again to get a complete response.
+
+When the daemon is started, it adopts the ROS 2 communication settings from the terminal where it was started when it was started. This includes settings like the RMW Implementation, Fast DDS Simple discovery vs Discovery Server, ROS Domain ID, and others. These settings do not update. This means that changing the ROS Domain ID in the terminal does not change the ROS Domain ID of the daemon and therefore does not change the behavior of the ROS 2 CLI commands such as `ros2 topic list`. To have the CLI results update, the daemon must be stopped and restarted (`ros2 daemon stop` then `ros2 daemon start` or a command that auto-starts the daemon). This also means that if there are two different terminals active with different settings, the ROS 2 CLI can only work with one of them at a time and it must be stopped and started in the appropriate terminal before being used. There are `no-daemon` options that can be used however they are less reliable and do not always give complete results since they are only able to report on information captured during the delay between the request of the command and the results being printed.
+
+When working with Fast DDS Discovery Server, the daemon must be started with super client privileges (`ROS_SUPER_CLIENT=True`). Super client means that the client will have access to all of the information from the discovery server(s) not just the information that it needs. This is necessary to support the functionality of the ROS 2 CLI Introspection commands. This is set automatically in the clearpath setup.bash files.
+
+In conclusion the things to remember are:
+
+Important considerations when working with the ROS 2 Daemon:
+1. Each computer has only one daemon with one set of ROS 2 communication settings.
+2. The daemon only adopts the settings from the terminal where it was started and these do not update. To use it with any updated or different settings it must be stopped and then started in a terminal with the new settings.
+3. After the daemon starts it takes seconds to minutes to complete discovery and will not give complete results until discovery is finished. Functionally, this often just means running `ros2 topic list` twice (or more until the full list shows up) whenever starting to use the CLI.
+4. When in doubt restart the daemon.
