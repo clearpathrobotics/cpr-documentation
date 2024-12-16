@@ -663,28 +663,54 @@ To reduce current draw, consider commanding wider-radius turns from your control
 
 ##### Stability Limits
 
-:::safety-warning
+:::warning
+
+When adding a payload, the user is responsible for ensuring that the resulting
+centre of mass for the system will not result in tipping hazards in the target environment.
+To ensure safe operation in the target environment, suitable safety margin should be applied
+to the minimum limits outlined below.
 
 When no payload is present, refer to the [System Specifications](#system-specifications) for
 the safe operating limits.
 
-When adding a payload, the user is responsible for ensuring that the resulting
-centre of mass for the system will not result in tipping hazards in the target environment.
-To ensure safe operation in the target environment, suitable buffers should be applied to the absolute
-limits outlined below.
-
 :::
 
-The images below illustrate the centre of mass and limits at which Husky A300 will tip over when no
-payload is present.
+The image below shows the centre of mass for a robot with two batteries.
 
-  - TODO: centre of mass and tipping points for front, left, rear, right lift
-  - TODO: is this different for 2-battery and 4-battery?
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_centre_of_mass_2battery.png"
+      width="800"
+    />
+    <figcaption>Husky A300 Centre of Mass (2-battery configuration), specifications in mm</figcaption>
+  </figure>
+</center>
 
-The images below illustrate the changes to the centre of mass and limits at which Husky A300 will tip over
-when the a 100 kg payload is added with its centre of mass at 30 cm above the Husky A300 origin point.
+The image below illustrates the stability cone for Husky A300 (2-battery configuration).
+It shows the location in which the centre of mass of a 100 kg payload must occur to
+avoid tipping while being able to operate at inclines of 30 degrees, side slopes
+of up to 30 degrees, and accelerations up to 4 m/s². A safety factor should
+be applied so that the centre of mass is well inside the defined stability cone,
+especially when operating on uneven surfaces on inclines or side slopes
+near the defined limit. 
 
-  - TODO: centre of mass and tipping points for front, left, rear, right lift
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_stability_cone_2battery.png"
+      width="600"
+    />
+    <figcaption>Husky A300 Stability Cone (2-battery configuration), specifications in mm</figcaption>
+  </figure>
+</center>
+
+:::note
+
+The images below show the centre of mass and stabililty cone for a 2-battery configuration.
+Appropriate adjustments should be made for 4-battery and 6-battery configurations.
+
+:::
 
 ##### Emergency Stop Braking Limits
 
