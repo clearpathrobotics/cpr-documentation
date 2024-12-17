@@ -63,16 +63,19 @@ The air filter is foam and can be washed, then reused.
 
 Procedure:
 
-1. Remove the front Livery panel by loosening the quarter-turn latches.
-1. Remove the air filter.
-1. Wash the filter with water and allow it to dry fully. (Alternatively, replace with a new filter.)
+1. Remove the front Livery panel by loosening the quarter-turn latches
+   and lifting the panel up. Be careful not to damage the Emergency Stop
+   Button while removing the panel. (TODO: image)
+1. Remove the air filter. (TODO: image)
+1. Wash the filter with water and allow it to dry fully.
+   (Alternatively, replace with a new filter.)
 1. Install the clean filter.
-1. Replace the front livery panel and tighten the quarter-turn latches.
+1. Replace the front livery panel by aligning the pins and tighten the quarter-turn latches.
 
 #### Battery Cell Balancing (Quick)  {#quick-cell-balance}
 
 Husky is powered by LiFePO<sub>4</sub> batteries. The function and health of these
-battery is monitored by a Battery Management Unit (BMU) which is internal to the battery pack itself.
+batteries is monitored by a Battery Management Unit (BMU) which is internal to the battery pack itself.
 
 Over the operating life of Husky, the State of Charge (SoC) of the batteries may start being
 misreported accompanied by a higher voltage difference between the batteries' cells. Typically battery cells
@@ -94,9 +97,7 @@ Procedure:
 The AMP variant of Husky is equipped with additional sensors that should be inspected at least weekly
 (more often in high dust/dirt environments) and cleaned as needed.
 
-TODO: finalize details once sensors are selected
-
-##### Lidar Lens Cleaning
+##### LiDAR Lens Cleaning
 
 1. Inspect LiDAR lens with a flashlight for any dust and/or debris.
 2. Using the Lens Cleaning Wipes (Clearpath p/n 015591), clear the LiDAR of any dust/debris.
@@ -111,15 +112,13 @@ a wear item but proper care and cleaning can significantly extend its life.
 
 ##### Camera Cleaning (clean with microfiber cloth or CPR-approved cleaning wipe if dirty)
 
-The cameras on Husky are protected by a glass lens.
-
-1. Visually inspect the window and confirm there is no dust or debris on the cover.
-1. If necessary, carefully clean the cover with a microfiber cloth or a Clearpath Robotics-approved
+1. Visually inspect the camera lenses and confirm there is no dust or debris on them.
+1. If necessary, carefully clean the lenses with a microfiber cloth or a Clearpath Robotics-approved
    cleaning wipe.
 
 :::safety-caution
 
-Do not apply excessive pressure to the glass cover
+Do not apply excessive pressure to the camera lenses.
 
 :::
 
@@ -159,7 +158,7 @@ Odometry is calculated using the average diameter of a tire inflated to 137 kPa 
 
 :::
 
-Procedure:
+Tire inspection procedure:
 
 1. Power off the robot.
 1. Place the robot on a level surface.
@@ -193,27 +192,22 @@ have any concerns.
 
 <ComponentBillOfMaterialsNote />
 
-TODO: update table
 | Description                | CPR Item | Manufacturer            | Manufacturer Item     | Distributor | Distributor Item |
 | :------------------------- | :------- | :---------------------- | :-------------------- | :---------- | :--------------- |
-| Battery                    | TODO     | Clearpath Robotics      | -                     | -           | -                |
-| Battery Charger            | 000597   | Clearpath Robotics      | -                     | -           | -                |
-| Air filter                 | TODO     | Clearpath Robotics      | -                     | -           | -                |
-| Connector, Mini-fit-jr (TODO)     | 022207   | Molex                   | 39-01-2065            | Digi-Key    | WM23702-ND       |
-| Contact Crimp, Mini-fit-jr (TODO) | 022207   | Molex                   | 40-13-0852            | Digi-Key    | WM24935-ND       |
-| Fuse, 3 A                  | 020411   | Littelfuse              | 0287003.PXCN          | Digi-Key    | F4193-ND         |
-| Fuse, 5 A                  | 006745   | Littlefuse              | 0287005.PXCN          | Digi-Key    | F4197-ND         |
-| Fuse, 7.5 A                | 025899   | Littelfuse              | 028707.5PXCN          | Digi-Key    | F4198-ND         |
-| Fuse, 20 A                 | 025898   | Littelfuse              | 0287020.PXCN          | Digi-Key    | F4201-ND         |
-| Fuse, 30 A                 | 025896   | Littelfuse              | 0299030.ZXNV          | Digi-Key    | F1036-ND         |
-| Main PCBA                  | TODO     | Clearpath Robotics      | -                     | -           | -                |
-| BLDC PCBA                  | TODO     | Clearpath Robotics      | -                     | -           | -                |
-| Common Core PCBA           | TODO     | Clearpath Robotics      | -                     | -           | -                |
-| 12 V DC/DC PCBA            | TODO     | Clearpath Robotics      | -                     | -           | -                |
-| 24 V DC/DC PCBA            | TODO     | Clearpath Robotics      | -                     | -           | -                |
-| Motor                      | TODO     | Clearpath Robotics      | -                     | -           | -                |
 | Tire                       | 000269   | Carlisle                | 5100201               | -           | -                |
 | Tire's inner tube          | 000435   | Carlisle                | 323790                | -           | -                |
+| Battery                    | 025047   | Clearpath Robotics      | -                     | -           | -                |
+| Battery Charger            | 032729   | Clearpath Robotics      | -                     | -           | -                |
+| Air filter                 | 032403   | Clearpath Robotics      | -                     | -           | -                |
+| Main PCBA                  | 030449   | Clearpath Robotics      | -                     | -           | -                |
+| BLDC PCBA                  | 030377   | Clearpath Robotics      | -                     | -           | -                |
+| Common Core PCBA           | 030446   | Clearpath Robotics      | -                     | -           | -                |
+| 12 V DC/DC PCBA            | 030430   | Clearpath Robotics      | -                     | -           | -                |
+| 24 V DC/DC PCBA            | 030433   | Clearpath Robotics      | -                     | -           | -                |
+| Motor                      | 031514   | Clearpath Robotics      | -                     | -           | -                |
+
+See also the common integration parts for [cable ingress](integration_husky#using-the-icotek-cable-entry-system) and
+[breakout connectors](integration_husky#main-circuit-board-connector-summary).
 
 ### Replacing Tire or Inner Tube  {#tire-maintenance}
 
@@ -221,78 +215,34 @@ TODO: more details/images
 
 Procedure:
 
-1. Disconnect the motor cables from the chassis by removing the cable gland bracket and then disconnecting the cables.
-1. Remove the suspension beam from the chassis.
-1. Remove the wheel assembly from the suspension beam.
-1. Remove the wheel's inner face.
-1. Remove the tire and tube (if applicable).
-1. Install the new tire and tube (if applicable).
-1. Replace the wheel's inner face. TODO: sealant?
-1. Mount the wheel assembly on the suspension beam.
-1. Mount the suspension beam on the chassis.
-1. Reconnect the cables and mount the cable gland bracket.
+1. Follow the [Lock-Out Tag-Out](user_manual_husky#lockout-tagout) procedure.
+1. Remove the six M8 screws holding the wheel to the motor. (TODO: image)
+1. Deflate the tire.
+1. Remove the six M4 screws that hold the split rim together. (TODO: image)
+1. Remove the outer wheel rim. (TODO: image)
+1. Remove the tire and tube from the inner rim. (TODO: image)
+1. Replace the tire and/or tube as needed with new parts. Ensure that the
+   tube is installed in the tire and inflated only far enough that it takes
+   its shape. Inflating further will make reassembly difficult.
+1. Place the tire (with tube) onto to inner rim, aligning the valve stem
+   with the notch in the rim. (TODO: image)
+1. Place the outer rim on top, aligning the value stem with the notch in
+   the rim. (TODO: image)
+1. Reinstall the six M4 screws, tightening them in a star pattern to 2 Nm. (TODO: image)
 
-### Replacing Motors
+   :::note
 
-TODO: more details/images
+   It may be necessary to use three longer M4 screws on a temporary basis
+   to help pull the inner and outer rims together and ensure alignment,
+   allowing the first three standard M4 screws to be installed. Then,
+   the temporary M4 screws can be removed and the standard ones installed.
+   As you tighten the screws, ensure that the valve stem is not being pinched.
 
-Procedure:
+   :::
 
-1. Disconnect the motor cables from the chassis by removing the cable gland bracket and then disconnecting the cables.
-1. Remove the suspension beam from the chassis.
-1. Remove the wheel assembly from the suspension beam.
-1. Mount the new wheel assembly on the suspension beam.
-1. Mount the suspension beam on the chassis.
-1. Reconnect the cables and mount the cable gland bracket.
-
-:::note
-
-The motor itself is not a field-replaceable part. Rather, the entire wheel assembly
-needs to be replaced in the case of a motor failure.
-
-:::
-
-### Replacing Fuses
-
-TODO: what fuses can customers replace
-
-You Husky's MCU has fuses that can be changed through the rear battery access panel.
-The large battery input fuse is on the other side of the MCU, so you will need to remove Husky's metal panels to access this fuse.
-
-:::info
-
-Refer to the white lettering on the circuit board for what rating of fuse to replace in the fuse holder.
-
-The [Common Replacement Items](#husky_maintenance_common_replacement_items) section of this page shows where you can purchase new fuses.
-
-:::
-
-### Replacing Batteries
-
-:::safety-danger
-
-Battery terminals and connected cables / busbars may be live. Follow proper safety procedures when
-performing any maintenance on the batteries.
-
-Only trained personnel authorised by Clearpath Robotics shall perform maintenance on the batteries.
-
-Ensure proper personal protective equipment is used when performing battery maintenance.
-
-:::
-
-TODO: more info/images
-
-1. Ensure that the On/Off Breaker is in the "OFF" position.
-1. Remove the Top Plate.
-1. Disconnect all cables at the front of the electronics tray.
-1. Tilt the electronics tray up to expose the batteries.
-1. Remove any busbars or cables connected to the affected battery.
-1. Remove the affected battery.
-1. Install the new battery.
-1. Reconnect any busbars or cables to the battery.
-1. Return the electronics tray to its regular position.
-1. Reconnect all cables to the electronics tray.
-1. Install the Top Plate.
+1. Inflate the tire to 20 psi.
+1. Place the wheel on the motor and reinstall the six M8 screws, tightening
+   them in a star pattern to 22 Nm. (TODO: image)
 
 ### Replacing Circuit Boards
 
@@ -363,6 +313,53 @@ Procedure:
 1. Install the new computer, install the four retaining screws, and reconnect all cables.
 1. Install the Top Plate.
 1. As needed, reinstall any custom configuration that has been backed up.
+
+### Replacing Motors
+
+TODO: more details/images
+
+Procedure:
+
+1. Disconnect the motor cables from the chassis by removing the cable gland bracket and then disconnecting the cables.
+1. Remove the suspension beam from the chassis.
+1. Remove the wheel assembly from the suspension beam.
+1. Mount the new wheel assembly on the suspension beam.
+1. Mount the suspension beam on the chassis.
+1. Reconnect the cables and mount the cable gland bracket.
+
+:::note
+
+The motor itself is not a field-replaceable part. Rather, the entire wheel assembly
+needs to be replaced in the case of a motor failure.
+
+:::
+
+### Replacing Batteries
+
+:::safety-danger
+
+Battery terminals and connected cables / busbars may be live. Follow proper safety procedures when
+performing any maintenance on the batteries.
+
+Only trained personnel authorised by Clearpath Robotics shall perform maintenance on the batteries.
+
+Ensure proper personal protective equipment is used when performing battery maintenance.
+
+:::
+
+TODO: more info/images
+
+1. Ensure that the On/Off Breaker is in the "OFF" position.
+1. Remove the Top Plate.
+1. Disconnect all cables at the front of the electronics tray.
+1. Tilt the electronics tray up to expose the batteries.
+1. Remove any busbars or cables connected to the affected battery.
+1. Remove the affected battery.
+1. Install the new battery.
+1. Reconnect any busbars or cables to the battery.
+1. Return the electronics tray to its regular position.
+1. Reconnect all cables to the electronics tray.
+1. Install the Top Plate.
 
 ---
 
