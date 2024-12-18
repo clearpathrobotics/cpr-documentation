@@ -34,15 +34,15 @@ combination of Clearpath robots.
 For more detailed information regarding Fast DDS or simple discovery, visit the
 [eProsima Fast DDS documentation](https://fast-dds.docs.eprosima.com/en/latest/fastdds/ros2/ros2.html).
 
-Additional details on how to select simple disocvery in the `robot.yaml` config file are available in the
+Additional details on how to select simple discovery in the `robot.yaml` config file are available in the
 [Middleware section of Robot Configuration](../config/yaml/system.mdx#middleware).
 
 ### Discovery Server
 
 A discovery server is a process running on a computer that serves to record and report ROS discovery information.
 A server can be thought of as a look up table for ROS discovery information. When a participant (node) starts, it
-checks in with the servers to share its discovery information and request what information it is looking for.
-In this way, particpants only get discovery information and establish communication as necessary. A participant
+checks in with the servers to share its discovery information and request what information it needs.
+In this way, participants only get discovery information and establish communication as necessary. A participant
 does not know all of the information that is available, only where to find the fellow participants that it needs.
 
 There can be multiple servers in a given system. These can be used for redundancy or to segregate information.
@@ -219,7 +219,7 @@ middleware:
 Additional details on the available fields for the `robot.yaml` config file are available in the
 [Middleware section of Robot Configuration](../config/yaml/system.mdx#middleware).
 
-## Offboard Computer Setup {#offboard-pc}
+### Offboard Computer Setup for Discovery Server {#offboard-pc}
 
 Use the `robot.yaml` from one of the robots in order to set up the offboard computer. The `servers` list must include all of
 the discovery servers and all of the ones that the offboard computer should be connecting with must not be disabled.
