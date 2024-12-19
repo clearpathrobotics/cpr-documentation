@@ -436,7 +436,7 @@ Husky A300 is intended for use in:
 - environments free of glass or transparent plastic floors or walls;
 - temperatures between -20°C and +40°C;
 - environments free of open water or other liquids deeper than 130 mm;
-- environments free of grades greater than 27%.
+- environments free of grades greater than 15°.
 
 The system is intended to be operated by trained personnel familiar with mobile robotic technology.
 It is intended to be monitored constantly by those personnel during operation.
@@ -557,13 +557,6 @@ prevent re-initiation of motion.
     />
     <figcaption>Wireless Emergency Stop controller</figcaption>
   </figure>
-  <figure>
-    <img
-      src="/img/robot_images/husky_a300_images/husky_a300_wireless_emergency_stop_override.png"
-      width="500"
-    />
-    <figcaption>Wireless Emergency Stop override</figcaption>
-  </figure>
 </center>
 
 To assert the stop function:
@@ -580,11 +573,12 @@ with the controller. This is to ensure that the stop function does not become un
 a result of robot or operator motion, interference, atmospheric conditions, depleted battery, etc. The
 controller must be powered and within range of the mobile robot to communicate.
 
-The wireless emergency is intended for use in emergency situations and should
+The wireless Emergency Stop is intended for use in emergency situations and should
 not be used as the means of controlling robot motion during regular operation.
 
 The wireless Emergency Stop (but not the onboard Emergency Stop buttons) may be disabled by means of
-a key switch as shown in the figure above. This is to allow the robot to be operated **at higher risk** while,
+a key switch described further at [Wireless Emergency Stop Bypass](#wireless-estop-bypass).
+This is to allow the robot to be operated **at higher risk** while,
 for example, the controller battery is dead, out of range, or not accessible.
 
 Operation of the mobile robot while the wireless Emergency Stop is disabled **is not recommended**.
@@ -624,8 +618,8 @@ its critical thermal limits, system throttling may occur. Monitoring these field
 of operation will allow you to ensure that you are not putting excessive wear on Husky's motors and
 other components.
 
-| Sensor  | ROS Topic  | Message Field¹ | Lower Critical Limit (°C) | Upper Critical Limit (°C) | Notes |
-| :------ | :--------- | :------------- | :------------------------ | :------------------------ | :---- |
+| Sensor  | ROS Topic¹ | Message Field | Lower Critical Limit (°C) | Upper Critical Limit (°C) | Notes |
+| :------ | :--------- | :------------ | :------------------------ | :------------------------ | :---- |
 | Motor [1-4] Temperature | /a300_00000/platform/motors/status | drivers[0-3].motor_temperature | -10 | 100 | Does not affect fan speed |
 | Motor Driver [1-4] MCU Temperature | /a300_00000/platform/motors/status | drivers[0-3].mcu_temperature | -20 | 80 | |
 | Motor Driver [1-4] PCB Temperature | /a300_00000/platform/motors/status | drivers[0-3].pcb_temperature | -20 | 80 | |
@@ -651,10 +645,13 @@ To reduce current draw, consider commanding wider-radius turns from your control
 
 ##### Stability Limits
 
-:::warning
+:::safety-warning
 
-When adding a payload, the user is responsible for ensuring that the resulting
-centre of mass for the system will not result in tipping hazards in the target environment.
+**Always ensure that the centre of mass of the system will not result in tipping hazards in the target environment.**
+
+The end user needs to perform calculations to confirm that the combined centre of
+mass of the system (robot + payload) will not result in tipping hazards in the
+target environment (based on slopes, terrains, etc).
 To ensure safe operation in the target environment, suitable safety margin should be applied
 to the minimum limits outlined below.
 
@@ -709,10 +706,12 @@ will affect the terminal speed of the robot when the Emergency Stop is engaged.
 
 :::safety-warning
 
+**Always confirm terminal speeds in the target environment.**
+
 The performance values outlined below can be affected by various environmental factors such as
 terrain type and should be treated as a reference only. Exact limits should be determined by the
-system integrator in the target operating environment. It is the responsibility of the system
-integrator to ensure that no hazards are present in the the target operating environment.
+user in the target operating environment. It is the responsibility of the user
+to ensure that no hazards are present in the the target operating environment.
 
 :::
 
@@ -778,7 +777,7 @@ In case of a collision:
 | Battery                        | 40 Ah @ 25.6 V (2-battery) or 80 Ah @ 25.6 V (4-battery) or 120 Ah @ 25.6 V (6-battery), LiFePO<sub>4</sub>   |
 | Standard Battery Charger       | 10 A; short-circuit, over-current, over-voltage and reverse voltage protection |
 | Charge Time⁶                   | 3-4 hours (2-battery) or 7-8 hours (4-battery) or 8-10 hours (6-battery)            |
-| User Power                     | 12 V @ 10 A, 24 V @ 5 A, VBAT @ 5 A<br/>Optional expansion #1: 12 V @ 10 A, 24 V @ 10A<br/>Optional expansion #2: VBAT @ 40 A |
+| User Power                     | 12 V @ 10 A, 24 V @ 5 A, VBAT @ 5 A<br/>Optional expansion: VBAT @ 40 A |
 | Environmental                  | IP54                                                                     |
 
 _¹ Continuous operation on relatively flat terrain with wide turns._ <br />
@@ -943,7 +942,7 @@ buttons are engaged.
 
 The Power button is used to power the robot on and off. From the "OFF" state, pressing
 the button will cause the robot to power on. From the "ON" state, pressing the button will cause the robot to power off.
-Note that the Power button has no effect when the Battery Breaker is in the OFF position, unless
+Note that the Power button has no effect when the Battery Breaker is in the "OFF" position, unless
 a charger is connected to the robot.
 
 #### Protected Access Panel
@@ -1013,7 +1012,7 @@ to the Battery Charge Port. Refer to [Charging](#charging) for additional inform
 :::note
 
 The charger also functions as "shore power" and may provide power to the robot indefinitely while connected,
-up to the maximum output current of the charger. If total power draw is above the output current of the charger,
+up to the maximum output current of the charger. If total system power draw is above the output current of the charger,
 which may occur with certain custom payloads, the batteries will continue to discharge even when a charger
 is connected.
 
@@ -1027,7 +1026,7 @@ without needing internal access to the robot. These ports are all connected dire
 ##### Wireless Emergency Stop Bypass  {#wireless-estop-bypass}
 
 In addition to the Emergency Stop buttons on the robot, if your Husky A300 is equipped with an optional wireless Emergency Stop kit,
-it is possible to disable this function with the override key switch. Refer to the [Wireless Emergency Stop](#wireless-estop),
+it is possible to disable this function with the override key switch. Refer to [Wireless Emergency Stop](#wireless-estop),
 [Integration](integration_husky#wireless-stop), and the image below for further details.
 
 <center>
@@ -1042,7 +1041,7 @@ it is possible to disable this function with the override key switch. Refer to t
 
 #### Airflow Intake and Exhaust
 
-The robot is equipped with a cooling system with an air intake at the front of the robot and exhaust at the rear
+The robot is equipped with a cooling system with air intake at the front of the robot and exhaust at the rear
 of the robot. The amount of airflow scales automatically depending on the temperatures reported by various sensors.
 
 ### Interior Features
@@ -1080,7 +1079,7 @@ and 6-battery configurations.
 
 #### Computer
 
-Husky is equipped with an Intel-based computer in a MiniITX form factor. Several SKUs are possible
+Husky is equipped with an Intel-based computer in a Mini-ITX form factor. Several SKUs are possible
 depending on the desired performance of the system. 
 
 #### GPU (Optional)
@@ -1114,6 +1113,8 @@ Husky A300 can be equipped with an Autonomous Mobile Platform (AMP) Kit, which i
 for autonomous navigation of Husky A300 and related system development.
 
 :::safety-danger[Crushing / Impact]
+
+**Never rely on the AMP kit as only method to avoid collisions.**
 
 While extensive testing has been performed to validate system robustness, autonomous operation of
 Husky A300 with the AMP kit is not safety rated in accordance with ISO 13849 or similar standards.
@@ -1227,7 +1228,7 @@ refer to [Basic Usage](#basic-usage).
 1. Wait one minute for the robot to initialize fully.
    Once initialized, the front lights should be solid white and the rear lights should be solid red.
 1. Press and release the Safety Restart button.
-1. Pres the "PS" button on the joystick controller to connect it to the robot.
+1. Press the "PS" button on the joystick controller to connect it to the robot.
 1. Press either the L1 or R1 enable button (slow or fast mode, respectively) and use the left
    thumbstick to drive Husky. See further details at [Connecting and Using the Controller](#controller).
 
@@ -1241,10 +1242,9 @@ This section describes the operation of the Husky.
 
 Only trained personnel authorised by Clearpath Robotics shall open the Husky A300.
 
-Prior to performing any maintenance, always follow the Lock-Out Tag-Out procedure to deactivate
-a Husky A300.
-
 :::safety-danger
+
+**Always perform the Lock-Out Tag-Out procedure prior to performing maintenance inside Husky A300.**
 
 The Battery Breaker terminal connected to the battery (displayed below) is live even when the
 robot is locked out. These terminals at the breaker and at the battery are protected with rubber covers.
@@ -1269,7 +1269,9 @@ these connections.
 
 :::safety-caution
 
-Safety boots or shoes with steel toes should be worn at all times while working with a Husky A300.
+**Always wear safety boots or shoes with steel toes while working with a Husky A300.**
+
+The robot may move unexpectedly.
 
 :::
 
@@ -1320,8 +1322,9 @@ To power off Husky:
 
 :::safety-danger
 
-Only original chargers from Clearpath Robotics should be used when charging the Husky A300 to
-avoid any damage to the batteries.
+**Always use original chargers from Clearpath Robotics when charging the Husky A300.**
+
+Using other chargers may cause damage to the batteries.
 
 :::
 
@@ -1329,7 +1332,9 @@ avoid any damage to the batteries.
 
 :::safety-warning
 
-Only charge Clearpath Robotics robots in environments without combustable materials.
+**Never charge Clearpath Robotics robots in environments with combustable materials.**
+
+Sparks may occur and could cause combustable materials to ignite.
 
 :::
 
@@ -1341,15 +1346,18 @@ may be charged with the standard manual/wired charger or with the optional wirel
 A manual (wired) charger can be used to charge the Husky batteries by following the steps outlined below.
 Two manual chargers are supported with Husky A300:
 
-- Husky A300 Standard Manual Charger (Henryuan Model PSY27710000): 300 W, indoor use only
+- Husky A300 Standard Manual Charger (Henryuan Model PSY27710000): 277 W, indoor use only
 - Husky A300 High Power Manual Chargers
    - Robots with 2 batteries: Delta-Q Model IC650: 650W, indoor or outdoor use (IP66)
    - Robots with 4 or 6 batteries: Delta-Q Model IC1200: 1200 W, indoor or outdoor use (IP66)
 
 :::safety-caution
 
-The Husky A300 Standard Manual Charger is for indoor use only. Only use this charger when the
-robot is inside and after it has been dried.
+**Never use the Husky A300 Standard Manual Charger in outdoor environments.**
+
+This charger is for indoor use only. Only use this charger when the
+robot is inside and after it has been dried. Otherwise, electric shock
+may occur.
 
 :::
 
@@ -1368,7 +1376,7 @@ robot is powered off.
     The LED on the Standard Charger will illuminate red and Husky's [Status Lights](#status-lights) will pulse yellow/green
     (if the robot is powered on).
 1.  When battery is charged fully, the LED on the Standard Charger will illuminate green if the the robot is powered off.
-    Alternative, if the robot is powered on the LED on the Standard Charger will remain red and Husky's [Status Lights](#status-lights)
+    Alternatively, if the robot is powered on the LED on the Standard Charger will remain red and Husky's [Status Lights](#status-lights)
     will pulse blue/green.
 1.  Unplug the Standard Charger from the wall and then disconnect it from the Battery Charger Port.
 1.  Close the Access Panel cover.

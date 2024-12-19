@@ -217,18 +217,18 @@ please visit the
 
 ##### Software Control of User Power Rails {#user_power_control}
 
-User power can be enabled or disabled through ROS by publishing to `/a300_####/platform/mcu/cmd_user_power` ROS topic.
+User power can be enabled or disabled through ROS by publishing to `/a300_#####/platform/mcu/cmd_user_power` ROS topic.
 
 To disable user power, run:
 
 ```
-ros2 topic pub --once //a300_####/platform/mcu/cmd_user_power std_msgs/msg/Bool '{data: false}'
+ros2 topic pub --once /a300_#####/platform/mcu/cmd_user_power std_msgs/msg/Bool '{data: false}'
 ```
 
 To enable user power, run:
 
 ```
-ros2 topic pub --once //a300_####/platform/mcu/cmd_user_power std_msgs/msg/Bool '{data: true}'
+ros2 topic pub --once /a300_#####/platform/mcu/cmd_user_power std_msgs/msg/Bool '{data: true}'
 ```
 
 :::note
@@ -238,6 +238,7 @@ regardless of its state when the robot was powered off.
 
 :::
 
+<!--
 #### User Power Expansion Kit
 
 In addition to the [User Power Connections](#user-power-connections), an optional
@@ -267,6 +268,7 @@ This kit is still under development. Updates pending for:
    - Mechanical mounting
 
 :::
+-->
 
 #### High Power Expansion Kit  {#high-power-expansion-kit}
 
@@ -325,7 +327,7 @@ as the replacement.
 
 ##### On/Off Control via Software
 
-The High Power Expansion Kit output is controlled through software by publishing to the ROS topic `/a300_####/platform/mcu/cmd_high_power`,
+The High Power Expansion Kit output is controlled through software by publishing to the ROS topic `/a300_#####/platform/mcu/cmd_high_power`,
 similar to [Software Control of User Power Rails](#user_power_control).
 
 :::note
@@ -345,14 +347,14 @@ inputs can be driven by one of the following:
 - a 24 V input
 - a push button or switch
 
-In turn, the state of the input can be read from the ROS topic `/a300_####/platform/mcu/status/aux_inputs`.
+In turn, the state of the input can be read from the ROS topic `/a300_#####/platform/mcu/status/aux_inputs`.
 The AUX inputs are active low and are mapped to the ROS message bits as follows:
 
 - AUX1 IN: bit 0
 - AUX2 IN: bit 1
 - AUX3 IN: bit 2
 
-| AUX Input            | Payload State                                                                         | `/a300_####/platform/mcu/status/aux_inputs` Value  |
+| AUX Input            | Payload State                                                                         | `/a300_#####/platform/mcu/status/aux_inputs` Value  |
 | :------------------- | :------------------------------------------------------------------------------------ | :---------------------------------------- |
 | AUX1 IN              | 24 V on OR 12 V on OR button pressed<br/>24 V off AND 12 V off AND button not pressed | bit 0 reads as '0'<br/>bit 0 reads as '1' |
 | AUX2 IN              | 24 V on OR 12 V on OR button pressed<br/>24 V off AND 12 V off AND button not pressed | bit 1 reads as '0'<br/>bit 1 reads as '1' |
@@ -379,10 +381,10 @@ with the remaining pins unconnected.
 Monitor the input reading in ROS.
 
 ```
-ros2 topic echo /a300_####/platform/mcu/status/aux_inputs
+ros2 topic echo /a300_#####/platform/mcu/status/aux_inputs
 ```
 
-| Action | `/a300_####/platform/mcu/status/aux_inputs` value | Bit 2 Explanation | Bit 1 Explanation | Bit 0 Explanation |
+| Action | `/a300_#####/platform/mcu/status/aux_inputs` value | Bit 2 Explanation | Bit 1 Explanation | Bit 0 Explanation |
 | :----- | :------------ | :---------------- | :---------------- | :---------------- |
 | Begin with the 12 V supply turned off | 7 (8b00000111) | '1' since AUX3 IN is not connected | '1' since 12 V supply is off | '1' since AUX1 IN is not connected |
 | Turn the 12 V power supply on         | 5 (8b00000101) | '1' since AUX3 IN is not connected | '0' since 12 V supply is on  | '1' since AUX1 IN is not connected |
@@ -394,7 +396,7 @@ Consider the example where AUX1 IN has a 24 V supply connected to pins 2 and 5,
 AUX2 IN has a 12 V supply connected to pins 1 and 4, and AUX3 IN has a push button
 connected to pin 3.
 
-| Action | `/a300_####/platform/mcu/status/aux_inputs` value | Bit 2 Explanation | Bit 1 Explanation | Bit 0 Explanation |
+| Action | `/a300_#####/platform/mcu/status/aux_inputs` value | Bit 2 Explanation | Bit 1 Explanation | Bit 0 Explanation |
 | :----- | :------------ | :---------------- | :---------------- | :---------------- |
 | Begin with 12 V supply turned off, the 24 V supply off, and the button not pressed | 7 (8b00000111) | '1' since button is not pressed | '1' since 12 V supply is off | '1' since 24 V supply is off |
 | Turn the 24 V power supply on         | 6 (8b00000110) | '1' since button is not pressed | '1' since 12 V supply is off | '0' since 24 V supply is on |
@@ -404,7 +406,7 @@ connected to pin 3.
 ### AUX Outputs
 
 The Main circuit board includes three user-controlled outputs (AUX1 OUT, AUX2 OUT, AUX3 OUT)
-that can be controlled by publishing to the `/a300_####/platform/mcu/cmd_aux_outputs` ROS topic.
+that can be controlled by publishing to the `/a300_#####/platform/mcu/cmd_aux_outputs` ROS topic.
 To enable the AUX outputs, simply
 publish a single message with the appropriate bits set to 1 to turn the output on and 0 to turn
 it off. The state does not persist so new commands will need to keep the bit enabled as well.
@@ -419,19 +421,19 @@ The AUX outputs are mapped to the ROS message bits as follows:
 To disable all AUX outputs:
 
 ```
-rostopic pub /a300_####/platform/mcu/cmd_aux_outputs std_msgs/UInt8 "data: 0"
+rostopic pub /a300_#####/platform/mcu/cmd_aux_outputs std_msgs/UInt8 "data: 0"
 ```
 
 To enable all AUX outputs:
 
 ```
-rostopic pub /a300_####/platform/mcu/cmd_aux_outputs std_msgs/UInt8 "data: 7"
+rostopic pub /a300_#####/platform/mcu/cmd_aux_outputs std_msgs/UInt8 "data: 7"
 ```
 
 To enable just the AUX3 output:
 
 ```
-rostopic pub /a300_####/platform/mcu/cmd_aux_outputs std_msgs/UInt8 "data: 4"
+rostopic pub /a300_#####/platform/mcu/cmd_aux_outputs std_msgs/UInt8 "data: 4"
 ```
 
 #### Aux Output Pin Mapping
@@ -459,8 +461,8 @@ value is available in several modes:
 The Main circuit board includes four general purpose inputs and four general purpose
 outputs, which are all connected to the 16-pin GPIO connector. All GPIOs are at the
 3.3 V logic level. General purpose inputs are readable from the
-`/a300_####/platform/mcu/status/gp_inputs` ROS topic.
-Publishing to the ROS `/a300_####/platform/mcu/cmd_gp_outputs` topic controls the general purpose outputs.
+`/a300_#####/platform/mcu/status/gp_inputs` ROS topic.
+Publishing to the ROS `/a300_#####/platform/mcu/cmd_gp_outputs` topic controls the general purpose outputs.
 
 #### General Purpose Input Pin Mapping
 
@@ -506,9 +508,9 @@ The pinout for each fan is:
 | 3   | Tachometer (output from fan) |
 | 4   | PWM (input to fan, 3.3 V) |
 
-The speed of each fan can be controlled by publishing to the `/a300_####/platform/mcu/cmd_fans` topic in ROS.
+The speed of each fan can be controlled by publishing to the `/a300_#####/platform/mcu/cmd_fans` topic in ROS.
 
-The speed of each fan can be monitored by reading the `/a300_####/platform/mcu/status/fans` topic in ROS.
+The speed of each fan can be monitored by reading the `/a300_#####/platform/mcu/status/fans` topic in ROS.
 
 In both cases, the fan value is in the range from 0 (not spinning) to 255 (max speed).
 
