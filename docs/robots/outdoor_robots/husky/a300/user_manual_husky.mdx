@@ -598,18 +598,12 @@ Depending on the system configuration, Husky's batteries are capable of deliveri
 This gives Husky's motors their great performance; however, it is also enough power to cause severe bodily harm.
 Please observe the following precautions:
 
-- Do not tamper with the plug attached to the battery.
-- Do not tamper with the fuse panel, except to check and change the fuses.
 - Charge the battery only with the charger provided by Clearpath Robotics.
 - Please dispose of the batteries properly.
 
 ### Lifting and Transport
 
-For the safety of users and to maximize the lifetime of Husky, please observe the following when manually transporting the robot:
-
-- Husky should be lifted by two persons, firmly gripping the front and rear bumper bars.
-- Ensure that Husky is in Emergency Stop mode when transporting short distances and powered off when transporting longer distances.
-- It is not advised to push Husky at speeds greater than 1 m/s, as this can cause damage to the motors.
+See [Moving an Unpowered or Disabled Husky](#moving-husky) for details.
 
 ### Performance Considerations
 
@@ -626,28 +620,29 @@ These topics provide useful information regarding voltages, currents, temperatur
 
 Husky A300 is equipped with temperature sensors throughout the robot, which are used to monitor
 temperatures and determine fan speeds for proper cooling. In addition, if the robot is approaching
-its critical thermal limits, system throttling may occur.
+its critical thermal limits, system throttling may occur. Monitoring these fields over longer periods
+of operation will allow you to ensure that you are not putting excessive wear on Husky's motors and
+other components.
 
-| Sensor  | ROS Topic  | Message Field | Lower Critical Limit (°C) | Upper Critical Limit (°C) | Notes |
-| :------ | :--------- | :------------ | :------------------------ | :------------------------ | :---- |
-| Motor [1-4] Temperature | /platform/motors/status | drivers[0-3].motor_temperature | -10 | 100 | Does not affect fan speed |
-| Motor Driver [1-4] MCU Temperature | /platform/motors/status | drivers[0-3].mcu_temperature | -20 | 80 | |
-| Motor Driver [1-4] PCB Temperature | /platform/motors/status | drivers[0-3].pcb_temperature | -20 | 80 | |
-| Battery [1-6] Temperature | /bms/battery_state_[1-6] | temperature | -20 | 60 | Charging must occur above 0°C |
-| MCU Temperature | /platform/mcu/status/temperature | temperatures[CC01_MCU] | -20 | 80 | |
-| Fan Controller Temperature | /platform/mcu/status/temperature | temperatures[CC01_FAN[1-4]] | -20 | 80 | |
-| 5V Inductor Temperature | /platform/mcu/status/temperature | temperatures[5V_INDUCTOR] | -20 | 80 | |
-| Main Ground Lug Temperature | /platform/mcu/status/temperature | temperatures[MAIN_GND_LUG] | -20 | 80 | |
-| 24V DC/DC Temperature | /platform/mcu/status/temperature | temperatures[24V_DCDC] | -20 | 80 | |
-| 12V DC/DC Temperature | /platform/mcu/status/temperature | temperatures[12V_DCDC] | -20 | 80 | |
+| Sensor  | ROS Topic  | Message Field¹ | Lower Critical Limit (°C) | Upper Critical Limit (°C) | Notes |
+| :------ | :--------- | :------------- | :------------------------ | :------------------------ | :---- |
+| Motor [1-4] Temperature | /a300_00000/platform/motors/status | drivers[0-3].motor_temperature | -10 | 100 | Does not affect fan speed |
+| Motor Driver [1-4] MCU Temperature | /a300_00000/platform/motors/status | drivers[0-3].mcu_temperature | -20 | 80 | |
+| Motor Driver [1-4] PCB Temperature | /a300_00000/platform/motors/status | drivers[0-3].pcb_temperature | -20 | 80 | |
+| Battery [1-6] Temperature | /a300_00000/bms/battery_state_[1-6] | temperature | -20 | 60 | Charging must occur above 0°C |
+| MCU Temperature | /a300_00000/platform/mcu/status/temperature | temperatures[CC01_MCU] | -20 | 80 | |
+| Fan Controller Temperature | /a300_00000/platform/mcu/status/temperature | temperatures[CC01_FAN[1-4]] | -20 | 80 | |
+| 5V Inductor Temperature | /a300_00000/platform/mcu/status/temperature | temperatures[5V_INDUCTOR] | -20 | 80 | |
+| Main Ground Lug Temperature | /a300_00000/platform/mcu/status/temperature | temperatures[MAIN_GND_LUG] | -20 | 80 | |
+| 24V DC/DC Temperature | /a300_00000/platform/mcu/status/temperature | temperatures[24V_DCDC] | -20 | 80 | |
+| 12V DC/DC Temperature | /a300_00000/platform/mcu/status/temperature | temperatures[12V_DCDC] | -20 | 80 | |
 
-Monitoring these fields over longer periods of operation will allow you to ensure that you are not
-putting excessive wear on Husky's motors and other components.
+¹ Adjust the `/a300_00000` field with the serial number of your robot.
 
 ##### Current Limits
 
 The maximum current draw of the system is limited by the output of the batteries. The maximum
-continuous output for the 2-battery, 4-battery, and 6-battery configurations is 60 A, 120 A, and 180 A, respectively.
+continuous output for the 2-battery, 4-battery, and 6-battery configurations is 60 A, 120 A, and 150 A, respectively.
 Higher outputs are possible for short periods of time. 
 
 Husky A300's motors are rated to draw 17 A continuous, but they will spike to several times higher
@@ -897,8 +892,8 @@ comes with a custom mounting bracket and cabling for easy attachment to Husky.
 #### Front and Rear Bumper Bars
 
 The front and rear bumper bars not only offer protection for Husky, they can be used for a two person lift
-when moving the robot short distances. Refer to [Moving an Unpowered or Disabled Husky](#moving-husky) for
-details on moving Husky longer distances.
+when moving the robot short distances when there is no payload. Refer to [Moving an Unpowered or Disabled Husky](#moving-husky)
+for details on moving Husky longer distances or when there are payloads.
 
 #### Status Display
 
@@ -912,7 +907,7 @@ Husky includes four status lights, one on each corner of the chassis. These ligh
 indicate the system status according to the table below. In addition, when in the
 "Idle" and "Driving" states, the status lights can be commanded from ROS to display
 indications from autonomy or other higher-level software by publishing to
-the `/a300_0002/platform/cmd_lights` topic.
+the `/a300_00000/platform/cmd_lights` topic (adjusting for your Husky's serial number).
 
 | System State (lowest to highest priority) | Light Output | Description |
 | :---------------------------------------- | :----------- | :---------- |
@@ -956,7 +951,7 @@ a charger is connected to the robot.
 The rear of the robot has an access panel, protected by a Lock-Out, that contains the Battery Charge Port, Battery Breaker,
 Debug Ports, and Wireless Emergency Stop Bypass. Opening the access panel cover puts the robot into a stop condition to
 prevent the robot from driving while cables may be connected. To clear the stop condition, close the access panel cover
-and the Safety Restart Button. 
+and press the Safety Restart Button. 
 
 <center>
   <figure>
@@ -996,17 +991,13 @@ When the breaker is in the "OFF" position, the Battery Breaker disconnects the i
 the robot's systems. In this position:
 
 - the Power Button can be used to turn the robot on/off only if a charger is connected;
-- the robot will be off (unpowered) if no charger is connected and any Power Button presses will no effect.
+- the robot will be off (unpowered) if no charger is connected and any Power Button presses will have no effect.
 
 When the breaker is in the "ON" position:
 
-- the Power Button can be used to turn the robot on/off.
-
-:::note
-
-The robot can be charged (manual and wireless charger options) regardless of the Battery Breaker position.
-
-:::
+- the Power Button can be used to turn the robot on/off;
+- the robot can be charged (manual and wireless charger options), regardless of whether the
+  robot is powered on or off.
 
 :::note
 
@@ -1021,7 +1012,10 @@ to the Battery Charge Port. Refer to [Charging](#charging) for additional inform
 
 :::note
 
-The charger also functions as "shore power", providing power to the robot indefinitely while connected.
+The charger also functions as "shore power" and may provide power to the robot indefinitely while connected,
+up to the maximum output current of the charger. If total power draw is above the output current of the charger,
+which may occur with certain custom payloads, the batteries will continue to discharge even when a charger
+is connected.
 
 :::
 
@@ -1042,7 +1036,7 @@ it is possible to disable this function with the override key switch. Refer to t
       src="/img/robot_images/husky_a300_images/husky_a300_wireless_bypass.png"
       width="600"
     />
-    <figcaption>Husky A300 Wireless Emergency Stop Bypass (1 = active, 2 = bypassed)</figcaption>
+    <figcaption>Husky A300 Wireless Emergency Stop Bypass (1 = wireless stop enabled, 2 = wireless stop disabled)</figcaption>
   </figure>
 </center>
 
@@ -1183,7 +1177,7 @@ Approximately 15 minutes.
 
 ### Required tools
 
-- #2 Robinson or #2 Phillips screwdriver
+- 14 mm socket and driver
 
 ### What's Inside
 
@@ -1233,7 +1227,7 @@ refer to [Basic Usage](#basic-usage).
 1. Wait one minute for the robot to initialize fully.
    Once initialized, the front lights should be solid white and the rear lights should be solid red.
 1. Press and release the Safety Restart button.
-1. Pair the joystick controller with the robot (see [Joystick Controller Pairing](../../../../ros/installation/controller)).
+1. Pres the "PS" button on the joystick controller to connect it to the robot.
 1. Press either the L1 or R1 enable button (slow or fast mode, respectively) and use the left
    thumbstick to drive Husky. See further details at [Connecting and Using the Controller](#controller).
 
@@ -1373,8 +1367,9 @@ robot is powered off.
 1.  Plug the Standard Charger power cord into the Standard Charger and then into a wall receptacle.
     The LED on the Standard Charger will illuminate red and Husky's [Status Lights](#status-lights) will pulse yellow/green
     (if the robot is powered on).
-1.  When battery is charged fully, the LED on the Standard Charger will illuminate green and Husky's [Status Lights](#status-lights)
-    will pulse blue/green (if the robot is powered on).
+1.  When battery is charged fully, the LED on the Standard Charger will illuminate green if the the robot is powered off.
+    Alternative, if the robot is powered on the LED on the Standard Charger will remain red and Husky's [Status Lights](#status-lights)
+    will pulse blue/green.
 1.  Unplug the Standard Charger from the wall and then disconnect it from the Battery Charger Port.
 1.  Close the Access Panel cover.
 
@@ -1438,9 +1433,10 @@ To shut down Husky and move it manually:
 
 :::safety-caution
 
-Pushing a Husky using a powered device to push it at higher speeds, such as
-pushing it with a forklift, is considered misuse and can damage the internal circuitry.
-Do not do this under any circumstances. If a Husky needs to be moved manually over longer
+**Never push Husky A300 using a powered device at speed above 2 m/s, such as
+pushing it with a forklift.**
+
+This can damage the internal circuitry. If a Husky needs to be moved manually over longer
 distances, it should be lifted and secured to a travelling vehicle or palette for transport.
 
 :::
@@ -1470,10 +1466,12 @@ See [System Specifications](#system-specifications) for the weight of Husky and 
   </figure>
 </center>
 
-:::safety-caution
+:::safety-warning
 
-Caution should be taken around any payloads to ensure that the the lifting straps are not applying a force
-on any structures not suitable for lifting.
+**Never attempt a 1-person lift of Husky A300.**
+
+Husky A300 exceeds the weight to be lifted by a single individual. If lifting by
+hand, ensure to ask for assistance and use proper lifting techniques.
 
 :::
 
@@ -1481,8 +1479,21 @@ on any structures not suitable for lifting.
 
 :::safety-warning
 
-Husky A300 exceeds the weight to be lifted by a single individual. If lifting by
-hand, ensure to ask for assistance and use proper lifting techniques.
+**Never use the bumper bars to lift Husky A300 with mounted payloads.**
+
+This may exceed the lift rating for the bumper bars. It may also exceed the
+safe limit for a 2-person lift. Use lifting straps instead.
+
+:::
+
+<br/>
+
+:::safety-caution
+
+**Ensure that the the lifting straps are not applying a force
+on any structures not suitable for lifting, especially mounted payloads.**
+
+This may cause damage to the equipment and shifting of the payload during lifting.
 
 :::
 
@@ -1533,7 +1544,7 @@ the steps below to connect to Husky over an Ethernet connection.
    ```
 1. Connect to your robot via SSH. To do so, execute the following in a terminal window:
    ```
-   ssh administrator@192.168.131.1
+   ssh robot@192.168.131.1
    ```
    You will be promoted to enter a password. The default password is `clearpath`.
    :::note
@@ -1570,7 +1581,7 @@ To teleoperate Husky, first [clear any stop conditions](#husky-emergency-stop-bu
 to the following images, press an enable button (either slow or fast mode) and use the left
 thumbstick to drive Husky.
 
-In slow mode, the maximum robot speed is 0.3 m/s; in fast modem, the maximum robot speed is 2.0 m/s.
+In slow mode, the maximum robot speed is 0.3 m/s; in fast mode, the maximum robot speed is 2.0 m/s.
 
 <center>
   <figure>
