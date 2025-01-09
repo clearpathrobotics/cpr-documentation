@@ -48,19 +48,19 @@ debugging steps below.
       ping 192.168.131.1
       ```
    1. From a [wired Ethernet connection](user_manual_husky#ethernet-connection), SSH to the robot
-      computer (`ssh administrator@192.168.131.1) and determine if ROS is running:
+      computer (`ssh robot@192.168.131.1`) and determine if ROS is running:
       ```
       sudo systemctl status clearpath-platform
       ```
    1. From a [wired Ethernet connection](user_manual_husky#ethernet-connection), attempt to ping the robot
-      MCU to see if it is accessible (TODO: is the MCU even accessible; or does this need to be via robot computer?):
+      MCU to see if it is accessible:
       ```
       ping 192.168.131.2
       ```
 
 ### Status lights indicated a battery fault
 
-:::safety-danger[DANGER]
+:::warning
 
 Only original chargers from Clearpath Robotics should be used when charging the Husky A300 to
 avoid any damage to the batteries and to reduce hazards. Use proper personal protective
@@ -79,7 +79,13 @@ equipment (PPE) if attempting to handle the batteries.
 1. Power cycle the robot to see if the issue persists.
 1. If the issue persists, [collect a rosbag](#collecting-rosbag) of the following
    topics, then contact [Support](#support) with the rosbag.
-   - /TODO_topics
+   - /a300_XXXXX/platform/mcu/status
+   - /a300_XXXXX/platform/mcu/status/power
+   - /a300_XXXXX/platform/motors/debug
+   - /a300_XXXXX/platform/motors/feedback
+   - /a300_XXXXX/platform/motors/status
+   - /a300_XXXXX/platform/motors/system_protection
+   - /a300_XXXXX/platform/safety_stop
 
 ### Robot is stuck in emergency stop state
 
@@ -95,31 +101,31 @@ equipment (PPE) if attempting to handle the batteries.
 
 :::info
 
-You can confirm the emergency stop state in ROS by running: (TODO: is this correct?)
+You can confirm the emergency stop state in ROS by running:
 
 ```
-ros2 topic echo /status
+ros2 topic echo /a300_XXXXX/platform/emergency_stop
 ```
 
 :::
 
-### Status lights indicated that motor protection is engaged  {#motor-protection}
+### Status lights indicate that motor protection is engaged  {#motor-protection}
 
 1. On the robot, check the following topics to confirm that one or motors are in the protection state:
    ```
-   ros2 topic echo /TODO
+   ros2 topic echo /a300_XXXX/platform/motors/system_protection
    ```
 1. Wait 30 minutes for the motors to cool and confirm that the protection state has cleared.
 1. If the issues persists, contact [Support](#support).
 
 ### Status panel indicates a communication fault
 
-A communication fault indcates that the Husky's computer to microcontroller Ethernet connection is
+A communication fault indicates that the Husky's computer to microcontroller Ethernet connection is
 not established. This connection requires:
 
 - The computer to be on.
 - The MCU to be on.
-- The Ethernet cable connection the computer to the MCU to be functioning properly (TODO: is this a direct connection or through the switch?).
+- The Ethernet cable connection from the computer to the MCU to be functioning properly.
 - The MCU has Husky's firmware installed on it.
 
 If your Husky was functioning recently, the most common causes are:
@@ -136,20 +142,13 @@ If your Husky was functioning recently, the most common causes are:
 
 ### Status panel indicates a Wi-Fi fault  {#wifi-fault}
 
-1. Confirm that Husky Wi-Fi has been configured correctly in [Client Mode](user_manual_husky#wifi-client-setup),
+1. Confirm that Husky Wi-Fi has been [configured correctly](user_manual_husky#wifi-client-setup),
    including correct SSID and password. Confirm that the settings are correct in the
    corresponding `/etc/netplan/` file.
 1. From Husky's computer, run `ip a` to review the status of the wireless interface and
    determine if the connection has been established.
 1. Power cycle the robot and see if the issue persists.
 1. If the issues persists, contact [Support](#support).
-
-### Status panel has a flashing battery indicator
-
-This indicates that the battery voltage is too low for Husky to drive the motors.
-(TODO: is this correct?)
-
-1. Connect the manual charger to the robot for at least one hour, disconnect the charger, and try again.
 
 ---
 
@@ -162,7 +161,14 @@ It's possible the robot has reached the thermal limit, or current limit. Refer t
 
 If you are unsure whether this is the case, [collect a rosbag](#collecting-rosbag) of the following
 topics, then contact [Support](#support) with the rosbag.
-- /TODO_topics
+
+- /a300_XXXXX/platform/mcu/status
+- /a300_XXXXX/platform/mcu/status/power
+- /a300_XXXXX/platform/motors/debug
+- /a300_XXXXX/platform/motors/feedback
+- /a300_XXXXX/platform/motors/status
+- /a300_XXXXX/platform/motors/system_protection
+- /a300_XXXXX/platform/safety_stop
 
 ### Husky speed is momentarily incorrect when first driving after power up
 
@@ -184,8 +190,7 @@ power is supplied to the motors. As such, Husky can roll, either due to user int
 gravitational forces on a slope.
 
 Husky is equipped with a resistive electric brake that limits its speed in the emergency stop state. The maximum
-roll speed in this state depends on both the slope and payload; it is capable of achieving 0 m/s in certain
-scenarios. Refer to additional detail at TODO.
+roll speed in this state depends on both the slope and payload.
 
 ### Husky is making a loud or unusual mechanical noise
 
@@ -235,7 +240,7 @@ Refer to the [Mini ITX troubleshooting page](../../../accessories/computers/mini
 
 ### ROS is not starting
 
-TODO
+Contact [Support](#support).
 
 ### Sensors are not turning on
 
