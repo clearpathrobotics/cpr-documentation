@@ -1,0 +1,21 @@
+---
+title: ROS 2 Connectivity
+sidebar_position: 3
+---
+
+The first step for troubleshooting ROS 2 connectivity between two computers is to investigate [Network Integrity](network_integrity.mdx). Once network integrity is confirmed, the next step is to troubleshoot being able to publish and subscribe to ROS topics. The following flowchart covers the most common networking errors in Fast DDS. Many of these concepts are transferrable to other DDS implementations. Click on the image below to open in a new tab and explore the troubleshooting steps.
+
+When using the troubleshooting flowchart in combination with the Clearpath software packages, be aware that most environment variables are controlled by the `robot.yaml` and should be updated by modifying the robot.yaml. The networking settings are controlled in the [system section](../../config/yaml/system.mdx#ros-2-environment). When troubleshooting the offboard computer connection, ensure that the `robot.yaml` file on the computer is also updated and that the `setup.bash` is [regenerated](../../installation/offboard_pc.mdx#setup-folder) every time the settings are changed.
+
+<center>
+  <a href={require("../img/ros2-comms-troubleshooting-flowchart.png").default} target="_blank">
+    <figure>
+        <img
+        src={require("../img/ros2-comms-troubleshooting-flowchart.png").default}
+        width="1000"
+        />
+    </figure>
+  </a>
+</center>
+
+If the system is able to communicate and passes all of these tests but is unreliable in operation, see the page about [intermittent connectivity](intermittent_connectivity.mdx).

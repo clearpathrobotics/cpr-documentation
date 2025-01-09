@@ -1,6 +1,6 @@
 ---
-title: ROS 2 Networking
-sidebar_position: 3
+title: ROS 2 Discovery Configuration
+sidebar_position: 4
 ---
 
 ## Overview
@@ -14,7 +14,7 @@ import Ros2NetworkingOverview from "/docs_versioned_docs/version-ros2humble/comp
 ### Simple Discovery
 
 Participants (nodes) send periodic multicast announcement messages over the network with their unicast addresses, and
-then all participants share discovery information (such as topics, and action servers.) with all other participants.
+then all participants share discovery information (such as topics and services) with all other participants.
 This means that all participants get information about all other participants irrelevant of whether or not they need
 that information.
 
@@ -34,15 +34,15 @@ combination of Clearpath robots.
 For more detailed information regarding Fast DDS or simple discovery, visit the
 [eProsima Fast DDS documentation](https://fast-dds.docs.eprosima.com/en/latest/fastdds/ros2/ros2.html).
 
-Additional details on how to select simple disocvery in the `robot.yaml` config file are available in the
+Additional details on how to select simple discovery in the `robot.yaml` config file are available in the
 [Middleware section of Robot Configuration](../config/yaml/system.mdx#middleware).
 
 ### Discovery Server
 
 A discovery server is a process running on a computer that serves to record and report ROS discovery information.
 A server can be thought of as a look up table for ROS discovery information. When a participant (node) starts, it
-checks in with the servers to share its discovery information and request what information it is looking for.
-In this way, particpants only get discovery information and establish communication as necessary. A participant
+checks in with the servers to share its discovery information and request what information it needs.
+In this way, participants only get discovery information and establish communication as necessary. A participant
 does not know all of the information that is available, only where to find the fellow participants that it needs.
 
 There can be multiple servers in a given system. These can be used for redundancy or to segregate information.
@@ -98,7 +98,7 @@ There are multiple different ways to configure discovery server depending on whi
 This section will go over some basic configurations and is generalized for use as an introduction. It does not
 describe all possible configurations. The `ROS_DISCOVERY_SERVER` environment variable, shown in the various diagrams,
 indicates which discovery servers a given robot is connected to. Additionally, communication will be referred to
-in terms of seeing ROS 2 topics although this is representative of all nodes, topics, action servers, and so on. 
+in terms of seeing ROS 2 topics although this is representative of all nodes, topics, action servers, and so on.
 
 :::note
 
@@ -109,7 +109,7 @@ packages.
 
 :::
 
-### 1. Fully Connected {#fully-connected}
+### Fully Connected {#fully-connected}
 
 This configuration is the simplest to set up using the `robot.yaml` config. It allows all robots to operate
 independently but also allows any ROS 2 device in the system to see all of the topics from all of the
@@ -146,7 +146,7 @@ middleware:
 Additional details on the available fields for the `robot.yaml` config file are available in the
 [Middleware section of Robot Configuration](../config/yaml/system.mdx#middleware).
 
-### 2. Command Center {#command-center}
+### Command Center {#command-center}
 
 In this configuration you have many robots that each operate independently and an offboard computer that
 checks in and communicates with each of the robots. Each of the robots will have and refer to their own local
@@ -219,14 +219,14 @@ middleware:
 Additional details on the available fields for the `robot.yaml` config file are available in the
 [Middleware section of Robot Configuration](../config/yaml/system.mdx#middleware).
 
-## Offboard Computer Setup {#offboard-pc}
+### Offboard Computer Setup for Discovery Server {#offboard-pc}
 
 Use the `robot.yaml` from one of the robots in order to set up the offboard computer. The `servers` list must include all of
 the discovery servers and all of the ones that the offboard computer should be connecting with must not be disabled.
 
 1. Regenerate the `setup.bash` every time the `servers` list changes in any way (as per [offboard computer install instructions](../installation/offboard_pc.mdx#setup-folder))
 
-2. If a discovery server is intended to be run on the offboard computer then generate and run the discovery-server-start launch file.
+2. If a discovery server is intended to be run on the offboard computer then generate and run the `discovery-server-start` launch script.
 
 To generate the launch script:
 
@@ -238,5 +238,5 @@ ros2 run clearpath_generator_common generate_discovery_server -s ~/clearpath
 To launch the server
 
 ```
-bash -e ~/clearpath/discovery-server-start 
+bash -e ~/clearpath/discovery-server-start
 ```

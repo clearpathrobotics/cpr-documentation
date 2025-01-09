@@ -1,0 +1,172 @@
+---
+title: Wi-Fi Hardware
+sidebar_position: 6
+---
+
+Choosing the correct Wi-Fi hardware for a given application is very important to the quality of the network. Primarily this involves the selection of routers, antennas and cables, as well as the placement of each of these components. The following sections also contain several tips to get the most out of a Wi-Fi network.
+
+## Routers
+When choosing a router, start by ensuring that the router supports the desired features mentioned in the [Wi-Fi Fundamentals](wifi_fundamentals.mdx) page. This includes:
+
+- Wi-Fi generation (recommended 6 or higher)
+- Desired frequency bands
+- Desired channels and channel widths (specifically DFS channels if desired)
+- Auto channel and channel width selection if desired
+- Desired number of spatial streams (at minimum match the number of streams supported by the clients)
+- Appropriate certification for the region of operation
+- Sufficient transmit power given the use case and antennas (may involve reducing the transmit power to stay within legal limits or for indoor usage)
+- Consider a router with removable antennas for use cases that may require higher gain or directional antennas
+- Advanced networking features (port forwarding, NAT, SSH, firewall, routing rules and more)
+- The number of ethernet ports needed and that supports the desired data throughput
+- Environmental compatibility (temperature, humidity and vibration ratings)
+- Compatible power requirements (voltage and current)
+
+## Antennas
+Antenna selection is incredibly important for system performance. It is very specific to the needs of a given project including the specific terrain where the system is operating, and the relative location and orientation of the antennas. Antennas are generally described using the following properties:
+
+- **Frequency Band**: Antennas are designed to work at particular frequencies. It is possible to get antennas that cover 2.4, 5 and 6 GHz bands in one antenna or individual antennas that are tuned for just a single band.
+- **Gain**: This is the maximum gain value in the direction of highest gain. It is important to note that this peak gain could be only in one direction, see the radiation patterns to gain a better understanding of the overall gain in the region of interest at the frequency of interest. Higher gain does not mean higher power as a whole. Higher gain antennas focus all of the energy into a particular area, removing it from other areas.
+- **Beam Width**: Beam width defines the angle where most of the antenna's power is directed, that is the angle where the network signal will be strongest. It is defined for both the horizontal and vertical planes. The beam width is the angle measured on the main lobe of the radiation pattern between the two points where the power is less than half of the maximum (-3 dBi). It is once again important to note, that this beam width may not be radially symmetric even on omni-directional antennas. It is important to look at the radiation pattern from different angles to identify any possible gaps in coverage.
+- **Polarization**: Polarization of antennas indicates the direction of oscillation of the electric field in the waves emitted. It is important to match the polarization of the transmitting and receiving antennas, particularly outdoors where there are less reflective surfaces. Most common are linear vertical and linear horizontal polarizations but circular polarizations also exist. It is generally recommended to use vertically polarized antennas for most scenarios if there is enough space to mount them sufficiently far apart.
+- **Impedance**: Typically this should be 50 Ohms for all Wi-Fi devices, and must match between the antennas, connectors, cables and radio.
+- **VSWR (Voltage Standing Wave Ratio)**: VSWR is essentially a measure of efficiency for the antenna. More specifically, it is a measure of how well the antenna impedance is matched and how much power is transmitted vs being reflected back to the radio. The measure ranges from 1 to infinity with 1 being a perfect system. Realistically, anything less than 2 is good and anything under 2.5 is acceptable for Wi-Fi applications.
+- **Max Input Power**: This is the power rating of the antenna where it will perform as specified. Generally the maximum allowable power for any WiFi channel is 30 dB or 1 Watt, so anything higher is acceptable. This is not generally a concern.
+- **Multi in One**: Some antennas will be marketed as having multiple antennas in one body. These offer benefits of easy installation and not requiring as much space. However, they generally always have worse radiation patterns (with weak spots) and involve orthogonal polarization (discussed further in [Antenna Orientation](#orientation)). If maximizing connectivity is the priority then these should generally be avoided.
+- **Radiation Patterns**: The radiation pattern is a description of how the power transmitted by the antenna is directed into the surrounding space. These can often be referred to in one word descriptions such as spherical omnidirectional (similar gain in all directions), donut omnidirectional (similar gain in all directions on the horizontal plane and low gain up and down) or directional (all energy focused in a single direction). This is only a rough description of what the radiation pattern is. The radiation pattern should always be evaluated using at minimum radiation pattern diagrams on the horizontal and vertical planes at each frequency, or at best with a full 3D model of the radiation pattern at each frequency. This information is generally provided in the datasheets of good antennas. For more information see [Radiation Patterns](#radiation-patterns).
+
+It is important to choose the correct antenna type for your application:
+- For a stationary base station antenna servicing a large outdoor operating area, look for an omnidirectional antenna with a donut shape radiation pattern. This will have strong connection in all directions out from the antenna but not waste energy going down into the ground or up into the sky. This antenna should be mounted near the centre of the operating area to maximize range. If the antenna must be mounted at one edge of the region, consider a directional antenna although the total area serviced will be less than if the antenna were able to be mounted in the centre of the area.
+- For a mobile application where the robot may be traversing hills or where there will be a significant height difference, consider an omnidirectional antenna with a more spherical shape radiation pattern. This will make the connection more robust to changes in angle and height of the robot.
+- For a mobile application where the robot will be staying on a level surface and the antenna is a similar height to the base station antenna(s) consider a higher gain donut shape pattern. This will help maximize range and bandwidth.
+
+### Terrain and Vertical Beam Width
+
+It is important to match the vertical beam width of the antennas with the terrain, antenna heights and range. Especially at higher gains, the vertical beam width tends to be narrow and the signal strength outside of this beam width drops off more rapidly. The vertical beam width is reported as an angle. Using the [radiation pattern](#radiation-patterns), the location of this beam width relative to the horizontal plane can be determined. Knowing the desired mounting height of the antennas, simple geometry can be used to project the beam and determine which areas are within the beam width. For properly selected antennas, all communicating antennas should fall within or very close to each others' beams at all times.
+
+Consider an application with a central base station and a robot traveling around it. If the base station antenna is mounted high in the air with a narrow vertical beam width and the robot is low to the ground, also with a narrow beam width then it is possible that both antennas can never receive high signal strength from the other. Both beams go out mostly horizontal, passing by each other. In order for the region of highest gain to coincide with the opposite antenna, the robots would have to be very far away. This would be okay if the application were only for the robot to operate while being far away but signal strength would be low at long distance for any antenna mounted low to the ground. Therefore, raising the robot antenna to more closely match the height of the base station antenna would be ideal.
+
+In almost any case where there is a height difference between antennas, there will be a region when the antennas are close to each other, where there will not be good signal strength. An increase in antenna gain (resulting in a narrower vertical beam width) or increase in height disparity will make this region larger. Matching the antenna height addresses this, however this is before considering the impact of terrain that is not flat.
+
+If the terrain is not flat, then a larger vertical beam width on a stationary antenna may be used to add coverage for some lower or higher elevations, however any valleys beyond a hill would have a low signal strength. For a robot antenna, larger vertical beam width accommodates for the robot being on an angle when traversing hills and slopes. It is important to note that for good long distance communication, both this and the [Fresnel zone](#mounting-height) clearance should be satisfied.
+
+### Radiation Patterns
+Radiation patterns are incredibly important and it is not recommended to buy an antenna without analyzing the radiation pattern. Antennas have different gain in different directions and the patterns will never be perfect. Well made antennas will have closer to ideal properties, with consistent gains and smooth shapes. Looking at peak gain or beam widths alone can give a false sense of security. For a peak gain to be accurate, it needs only to exist in one single direction from the antenna. There are omnidirectional antennas that will quote a good peak gain, however the radiation pattern shows that most of the directions have a gain that is -3 dB lower than the peak gain. This is not a good omnidirectional antenna. Similarly, the vertical beam width can be quoted for the best position on the main lobe while the opposite side has a much smaller beam width. This is why it is so important to inspect the radiation pattern directly. A big part of reviewing radiation patterns is to evaluate how balanced and well-formed the shape is, and then how well that shape matches the application.
+
+#### Evaluating Radiation Patterns
+First it is important to understand that radiation patterns are plotted on a logarithmic graph. This means that the axis going out from the center of the circle is measured in decibels (dB). There are several ways that this axis can be labelled but common methods are:
+1. The point of peak gain is 0 dB and all other gains are measured in negative decibels relative to that peak gain
+2. The peak gain is marked as the quoted peak gain of the antenna in dBi and 0 dB is actually 0 dBi gain in reference to the input signal.
+
+Remember that in logarithmic graphs, -3 dB is half power and -6 dB indicates a drop to less than half of the distance to get the same signal strength. A signal may look like it drops off gently in the side view radiation pattern, but in fact it has dropped to -6 dB in only 5 degrees. This means that if the robot position is 5 degrees lower in relation to the base station antenna, then the range of the signal drops significantly. This has different levels of impact depending on the terrain, range and overall gain of the antenna.
+
+There are two 2-dimensional views of the radiation pattern that should be available in the datasheet for any good antenna.
+1. The horizontal plane, or top down view.
+2. The vertical / elevation plane, or side view
+Sometimes two orthogonal vertical views will be shown, and sometimes a 3-dimensional render will be shown. More information is better in this case because it makes it easier to evaluate the antenna. Sometimes the 2-dimensional views may be superimposed on top of each other in the same graph or they may be presented separately, or they may be separate with superimposed lines for different frequencies.
+
+Antenna properties are very sensitive to the frequency being used. As a result, separate radiation patterns should be shown for each section of a frequency band. Generally higher frequencies will result in more narrow lobes. Review all of the following points with the radiation pattern diagrams for each frequency that is being used.
+
+For an antenna with an omnidirectional or donut shaped pattern:
+- Is the peak gain located on or close to the horizon
+  - If the peak gain is in a direction that would not be used in normal operation then it is not a very accurate measure of the effective gain that will be seen in operation. Use the radiation pattern to estimate an average gain for the directions that will be used in operation
+  - Example: Some antennas have the strongest gain slightly above the horizon. This is good for robots that are low to the ground. Some antennas have the strongest gain slightly below the horizon. This is good for base stations that are mounted high to service a large range.
+- How rotationally symmetric is the horizontal plane? (ideal case it would be a perfect circle centered on the antenna)
+  - If a significant portion of the horizontal plane is -3 dB from the peak then that indicates that a significant area will not have the expected gain or signal strength
+  - If there are directions in which the gain drops lower than -3 dB from the peak, then there will be weaker signal in those specific directions. It is important to determine if those are directions that matter. Some discretion needs to be made on how sharply signal drops in these directions and the potential impact.
+- Is the quoted vertical beam width accurate for each direction on each frequency. Sometimes the vertical beam width is only measured on the main lobe in the best direction so it is recommended to estimate the worst case and the average vertical beam width yourself.
+
+For directional antennas the process is very similar but instead of evaluating for circular symmetry on the horizontal plane, the vertical plane considerations are used instead. The horizontal plane is also judged for beam width and lobe shape.
+
+**Example 1**
+
+The datasheet for this antenna quoted an 8 dBi gain, 20 degree vertical beam width and 360 degree horizontal beam width. This information may be true for certain frequencies and certain directions but it does not tell the whole story.
+
+<center>
+  <figure>
+    <img
+      src={require("./img/radiation-pattern-1.png").default}
+      width="400"
+    />
+  </figure>
+</center>
+
+In this case the side view or elevation plane is shown in red, and the top view or horizontal plane is shown in black. The outer ring of the circle is measured as 0 dB and indicates the peak gain of the antenna. The blue dotted line is the -3 dB line, marking the point of half power which is used to measure beam width. Additional lines are marked to indicate every 10 dB with the scale labelled within the circle
+
+Starting with the horizontal plane (black line), the radiation pattern is not very rotationally symmetric. In fact, from -45 degrees clockwise to 150 degrees the gain is less than the dotted blue line and therefore less than half power. As a result, the horizontal beam width is not actually 360 degrees. From roughly 55 degrees to 65 degrees the gain is at -6 dB which will result in half of the range. A similar pattern is visible in the vertical plane (red lines). In one direction, the vertical beam width of 20 degrees is plausible, however in the opposite direction the gain never passes -3 dB. This slice of the radiation pattern is not even at the worst position or else that measurement would have been -6 dB as was seen in the horizontal plane. These patterns suggest that this antenna is not a good omnidirectional antenna and will not provide consistent performance.
+
+**Example 2**
+
+The datasheet for this antenna quoted a 7 dBi gain and did not list the beam widths.
+
+<center>
+  <figure>
+    <img
+      src={require("./img/radiation-pattern-2.png").default}
+      width="1000"
+    />
+  </figure>
+</center>
+
+In this case the horizontal plane is shown on the left and the vertical plane is shown on the right, with all frequencies overlapped on each diagram. The gain is measured in dBi so 0 on the graph is 0 dB gain relative to the input signal and the peak gain should match the peak gain quoted for the antenna. The scale for the rings of each circle is shown on the far left. Each ring is 2.5 dB from its neighbor and the colors alternate. It can be helpful to print these diagrams out to analyze them.
+
+Starting with the horizontal plane, the radiation pattern is relatively rotationally symmetric and centered around the antenna. The shape is slightly elongated with the peak gain at 90 degrees and 270 degrees. The shape is not bad though because the gain only drops by roughly -2.5 dB from the peak and largely affects 60 degrees on each side. The vertical plane also shows a symmetric shape, and relatively consistent patterns over different frequencies. Most of the energy is focused outwards, not up or down. The vertical beam width can be measured as roughly 15 degrees centred on the horizon. This is good for relatively flat terrain.
+
+### Placing Antennas
+
+#### Obstructions
+
+Consider Wi-Fi signals similarly to visible light. The waves are always impacted by objects. There are materials that the waves are blocked by, materials that the waves can pass through but where they become much weaker, and materials that they can pass through more freely. Any object or wall will interfere with Wi-Fi signals. Metals tend to be the worst as the signals are largely reflected, but any obstruction affects Wi-Fi signals.
+
+There should ideally not be any obstructions between the transmitting and receiving antennas. For this discussion, consider the application of antennas on an outdoor robot controlled from a base station. At any given time, the base station antennas could be in any direction around the robot within an angle of the horizontal plane that can be calculated based on the terrain. This means that when looking at the robot from any such angle, there should be a clear view of all of the antennas. If an antennas is obstructed (not clearly visible) then the signal to or from that antenna will be poorer.
+
+Do note that while visible light is a good parallel to use to understand Wi-Fi signal obstruction, see-through or perforated surfaces still attenuate Wi-Fi signals and should be considered moderate obstructions.
+
+#### Spacing
+
+Antennas must be placed a minimum of half a wavelength apart. For 2.4 GHz that is 6.5 cm (or 2.6 inches) and for 5 GHz that is 3.0 cm (or 1.2 inches). This minimum distance is to reduce the coupling between the antennas, a phenomenon that degrades performance. However, additional distance between antennas continues to improve performance.
+
+#### Orientation
+
+Antenna orientation matters for two main reasons:
+
+**Signal Polarization**
+
+The emitted signals have a polarization, and two antennas are isolated from each other if they have perfectly orthogonal polarization. That means that if two antennas with the same linear polarization were mounted one vertically and one horizontally, they would have very poor signal strength even at close range. In contrast, the strongest signal is obtained if the two antennas are mounted perfectly parallel to each other. That way no power is lost due to any difference in polarization. Most commonly antennas have linear vertical polarization, but it is important to check the datasheet to confirm, particularly when multiple different types of antennas are being used together in the same wireless network.
+
+It is possible to use orthogonally polarized antenna pairs. In other words, there could be one horizontally polarized and one vertically polarized antenna on each of the robots and on the base station. This is less than ideal because it now means that each antenna on the robot can only communicate with one of the antennas on the base station. If the antennas were all aligned such that a mismatched pair is closest and obstructing the matching antennas then the performance would be worse than if all antennas had the same polarization. That being said, orthogonally polarized antenna pairs can still be useful when there is not enough space to mount the antennas at the required spacing on the robot. In that case it is important to then match the polarization on the base station, mounting both a horizontal and vertical polarized antenna on the base station as well.
+
+**Radiation Pattern**
+
+The radiation pattern is relative to the orientation of the antenna. For donut shaped radiation patterns, this means that if the antenna is on an angle, then one side of the donut goes down into the ground and the opposite side goes up into the air. Neither of these are generally useful for ground robots. If the antenna is pointed up, perpendicular to the overall terrain, then that will maximize the useable range of the signal.
+
+#### Mounting Height and the Fresnel Zone {#mounting-height}
+
+When trying to establish long distance wireless connectivity (over 100 m), it is important to understand the concept of a Fresnel zone. The Fresnel zone is an ellipsoidal region enveloping both the transmitting and receiving antennas that must be unobstructed for best signal transmission. This is due to the behavior of how wireless signals reflect off of surfaces, sometimes resulting in destructive interference, essentially cancelling out the original transmission. Keeping the primary Fresnel zone clear significantly decreases interference caused by this phenomenon. It is important to understand that this zone also extends below and behind the antenna as reflections from this region can also cause interference.
+
+The size of the Fresnel zone is calculated based on the signal frequency and communication distance. There are many Fresnel zone calculators available online. The Fresnel zone indicates how high the antennas must be mounted above the highest obstruction. The rule of thumb is that the primary Fresnel zone should ideally be at least 80% unobstructed, but not worse that 60% obstructed. It is possible to run systems at higher levels of obstruction but significant consideration must be made to how poor the connectivity will be and how low the data rate will be.
+
+For example, in a system where the robot is operating up to 300 m away from the base station, the Fresnel zone has a maximum diameter of 2.1 m (7.0 ft) for 5 GHz communication or 3.0 m (10.0 ft) for 2.4 GHz. Assuming there are no obstructions other than the ground, both the robot and base station antennas would need to be mounted at that height for a fully unobstructed Fresnel zone. If one antenna could not be mounted that high then the Fresnel zone ellipsoid could be angled and the appropriate heights could still be calculated. However, the radiation patterns of the antennas must be considered, to ensure the antennas are appropriate given the terrain.
+
+## Antenna Cables and Connectors {#cables}
+
+Antenna cables are not all the same. Wi-Fi signals can be attenuated greatly by inferior cables. Irrelevant of cable quality, it is advantageous to make the cables as short as possible, ultimately placing the antennas and router or network interface card as close together as is reasonable.
+
+To evaluate the impact of a given cable, estimate the signal loss from the connectors and the cabling. It is a rule of thumb to assume a loss of 1 dB for every connector pair in the path, essentially for every additional cable used. That being said, the quality and type of connector impacts the actual loss. The datasheet for the cable should state the loss for a given frequency and length. If buying a prebuilt cable assembly, the datasheet or drawing may only indicate the type of cable, and the cable datasheet must then be referenced.
+
+Consider connecting a router and antenna with a 3 m (10 ft) cable made of LMR 195 equivalent cabling to communicate at 5 GHz. LMR 195 cable has an attenuation of 98.1 dB/100 m (29.9 dB/100 ft) and one single cable with a connector at each end is an assumed loss of 1 dB. This would have the following estimated loss calculation:
+```
+estimated loss = 3 m * 98.1 dB/100 m + 1 dB
+estimated loss = 3.9 dB
+```
+
+This loss is moderate. Recall that a loss of 3 dB is a loss of half power and that a loss of 6 dB is equivalent to losing half of the range or dropping to only 25% power. If range or bandwidth is the priority, then this application would be recommended to get a higher quality cable or shorter cable. If LMR 240 equivalent cable was used, it would be an estimated loss of 3 dB. Both of these example cables are acceptable cables for use at 5 GHz, however, there are many cables available that are only suitable for very short distances or low frequencies. Try to keep antenna cables as short as possible, use as few connectors as is reasonable and use the distance to calculate what quality of cable is needed to keep the loss acceptable.
+
+## Key Takeaways
+- When choosing a router, consider all of the desired features.
+- Higher antenna gain means that the signal will get focused more in certain regions: better signal in one region always means worse signal in a different region.
+- Antenna selection is application specific and involves considering the range, direction and terrain.
+- Always evaluate the radiation pattern of an antenna before choosing it.
+- Never obstruct antennas and ensure that they are mounted at least 6.5 cm (or 2.6 inches) apart for 2.4 GHz.
+- Be mindful of antenna orientation and polarization.
+- When transmitting long distances (over 100 m), consider the Fresnel zone when choosing mounting height.
+- Keep antenna cables short with fewest possible connectors, and use high quality cables to reduce loss.

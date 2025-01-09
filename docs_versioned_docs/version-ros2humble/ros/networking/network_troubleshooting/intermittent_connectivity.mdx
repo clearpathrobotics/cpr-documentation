@@ -1,0 +1,175 @@
+---
+title: Intermittent Connectivity
+sidebar_position: 4
+---
+
+Intermittent connectivity, where communication drops in and out or slows down, can be challenging to diagnose. Unlike issues that entirely block communication, inconsistent communication arises from transient or situational factors, which often involve complex interactions between multiple factors. This page reviews several common causes and how to address them.
+
+## Wi-Fi Interference or Low Signal Strength {#weak-wi-fi}
+Wireless networks can be significantly impacted by many factors such as interference or weak signal, resulting in packet loss and fluctuating bandwidth. Within the context of ROS, this can manifest as lost messages, delayed messages or nodes disappearing intermittently as a few examples.
+
+There are two ways to approach this issue. The first is to improve the network capacity so that it can support more data transmission. This should be considered as the first approach to fixing the issue as there can often be some quick fixes that provide measurable improvement. Secondary to that, the amount of data being transmitted should be reduced as is necessary to bring it into alignment with the abilities of the network. This second part is covered under the [Insufficient Bandwidth](#insufficient-bandwidth) section.
+
+To evaluate the network, it is best to start by stopping all ROS 2 systems on the network and then using [iperf3](network_troubleshooting_tools.mdx#iperf3) to verify the network bandwidth. This should be done with the robot in several locations, particularly any location where the instability issues occur. In general, as a rule of thumb, if the bandwidth is less than 40 Mbps then it is a low bandwidth network and it must be very carefully managed to support a ROS 2 system.
+
+If the network bandwidth is consistently lower than expected across the system then consider that there may be a [Hardware Problem](#hardware-problems), or that the networking infrastructure is not appropriate for the terrain or use case. This could mean for example that the wrong Wi-Fi frequency was chosen, antennas are mounted incorrectly, antennas have too high or too low of gain, or that there is too much interference. If the network bandwidth is lower than expected in certain regions then it is more likely that there is a local obstruction or interference issue. Review the [Wi-Fi Fundamentals](../wifi_fundamentals.mdx) and [Wi-Fi Hardware](../wifi_hardware.mdx) pages to understand why this might be and how to address it.
+
+## Insufficient Bandwidth
+
+#### Understanding the problem {#bandwidth-problem}
+
+Bandwidth is a measure of data throughput on a network. The overall available bandwidth on a wired network is generally fairly consistent while the available bandwidth on a wireless network is incredibly variable and is affected by many different factors. Attempting to transmit more data than the available bandwidth can cause a variety of different symptoms including unsuccessful transmissions, devices losing connection and delayed messages.
+
+#### Verification {#bandwidth-verification}
+
+To determine if this problem is effecting a given system, an estimate needs to be made for how much bandwidth is available over the network vs how much bandwidth is being used. This process is easiest if the router is accessible and has a bandwidth monitoring interface. If no such interface is available then a similar measure can be achieved by using [bmon](network_troubleshooting_tools.mdx#bmon) to measure the rate of transmitted data on each device and adding it up. With the full system operating, record how much bandwidth is being used on the network and note this measurement for later.
+
+Next, all of the communications over the network should be stopped and the network bandwidth should be measured again. Any systems running on the same network will effect the results so it is important to consider not only all ROS systems but also other systems that are running on the network. Verify that there is no bandwidth being used on the network. If there still is, identify which devices and processes are still using the network and address them or record the value to add it to the bandwidth measurement results of the next step.
+
+Then use [iperf3](network_troubleshooting_tools.mdx#iperf3) to evaluate the available bandwidth on the network. This test should be repeated as necessary to characterize the network and network environment. In the case of wireless networks, it is important to evaluate the bandwidth in problematic areas or locations where problems have been seen in the past. Repeat the test for all different types of messages that are transmitted (such as TCP, UDP small packets and UDP large packets). These network bandwidth measurements should be recorded for reference later, and attention should be given to the lower readings and the readings that match the type of the majority of the traffic.
+
+If the overall available bandwidth is lower than expected, see the [Wi-Fi Interference or Low Signal Strength](#weak-wi-fi) section.
+
+If the bandwidth used by the full system operating exceeds 80% of the available bandwidth capacity of the network, then this should be addressed in order to provide reliable performance in the regions tested. Ideally, basic operation should not exceed 50% of the full bandwidth of the network, allowing for unexpected interference, routing inefficiencies and general overhead. See the [Video over Wi-Fi](../../tutorials/video_over_wifi.mdx) tutorial for an example on how to evaluate what is realistic for a network.
+
+#### Solutions {#bandwidth-solutions}
+
+The first step is to determine if the ROS 2 system is actually the problem. With the rest of the systems running but the ROS 2 system disabled, check the network bandwidth. If most of the bandwidth is being used by other processes, consider having a dedicated network for the ROS 2 system or address why those other systems are using that much of the bandwidth.
+
+If the ROS 2 system is responsible for most of the bandwidth then it is important to calculate the expected bandwidth usage of the ROS 2 system. Calculate the bandwidth required for each of the main topics that are being transmitted (largest sizes and highest frequency) to establish an estimate of the bandwidth required for the ROS 2 system operation. This can be calculated for each topic using `message size * frequency * number of subscriptions over the network`. For an example of this calculation for two computers, see the [Video over Wi-Fi](../../tutorials/video_over_wifi.mdx) tutorial. Compare this expected value with the measured value of how much bandwidth is being used by the ROS 2 system. If the actual bandwidth usage is double or higher than the expected bandwidth then consider that the system may be having the problem of [Duplicate Messages](#duplicate-messages).
+
+If the required bandwidth for the system exceeds the available bandwidth then changes must be made. The first thing to consider is if the data is being transmitted in the most concise or dense format. Refer to the discussion on the [ROS 2 Communication](../ros2_communication.mdx#optimizing-sensor-data-for-transmission) page. Once the data is being transmitted using the most efficient message types, consider the frequency of the largest messages. Decreasing the frequency of messages directly reduces how much data needs to be processed and how much bandwidth is needed.
+
+## Duplicate Messages in Fast DDS {#duplicate-messages}
+
+Due to the low level mechanisms of how the DDS middleware messaging works, it is possible for messages to be sent in duplicate or multiplicate (3x or more). This section details how it occurs in Fast DDS. It may be possible for this to occur in other RMW Implementations through a similar mechanism.
+
+#### Why Does This Happen? {#duplicate-message-why}
+Consider a robot with a lidar and an offboard computer that is trying to subscribe to the lidar scan from the terminal. The `ros2 topic echo` process on the offboard computer will create a subscription to the topic. This subscription involves the subscriber contacting the publisher to request the data and to tell the publisher where to send the data. The subscriber will self report the list of IP addresses where it is listening for messages along with port information, also known as its "locator list". In Fast DDS, by default, this locator list is initialized with all of the IP addresses that the computer had assigned at the time when the node was started. In the example being discussed, assume that the offboard computer had two IP addresses, one from a wired connection to the robot and one from a Wi-Fi connection to the internet. Since both of those IP addresses were present when the node was started, the locator list would have both IP addresses and the subscription would share both of these addresses with the publisher. Whenever the publisher publishes a new message, it will send the message to both IP addresses and then it is up to the operating system to route those messages through the most appropriate network.
+
+If there is only one network available on the robot across which to send the messages then all messages will be sent across that network irrelevant of whether the IP subnet matches. Within the context of this example, that would mean that two copies of every message would get sent across the wired connection to the offboard computer, one addressed to the offboard computer's wired IP address, and one addressed to the offboard computer's Wi-Fi address. For large messages, this can be very problematic as it consumes the network bandwidth.
+
+If there is more than one network available on the robot, then the messages will be sorted based on the IP subnet and then based on route metric. Within the context of this example, assume that the robot had another separate network with a higher route metric meaning that the second copy of the message would be sent out over that separate network. This would mean that although the robot is sending out two copies of the message, only one is making it back to the offboard computer while the second copy is sent on an incorrect network. In this case the wired connection between the robot and the offboard computer is only carrying one copy of each message and the offboard computer is only receiving one copy of the message. However, the robot computer is constantly switching between interfaces, sending one message on each. For large messages this can cause a bottleneck in the robot computer's onboard networking or CPU usage which could then impact its ability to keep up with the expected rates.
+
+This example was explained within the context of the subscriber reporting 2 IP addresses in the locator list but it can happen with 3 or more IP addresses and therefore could result in many copies being sent of each message. This issue is of highest concern for large messages and where the expected bandwidth usage is over half of the network capacity. However, it can also be a problem when there are excessive numbers of small messages being sent, such as with Simple Discovery with many nodes.
+
+#### Verification {#duplicate-verification}
+The following steps can be used to verify if this issue is present:
+1. Record a [tshark](network_troubleshooting_tools.mdx#tshark) capture on the robot capturing all network interfaces. Ensure that the discovery process and the subscription to the message are both captured.
+2. Either analyze this directly in the terminal or save the capture and open it in [Wireshark](network_troubleshooting_tools.mdx#wireshark) to analyze it. When analyzing it, filter for the topic and verify how many different IP addresses the messages are being sent to, and which ones.
+
+#### Solutions {#duplicate-solutions}
+
+1. The first solution is to ensure that the subscribing computer only ever connects to one network at a time and that it only has one IP address. This works well for initial testing and for situations where the networking configuration needs to change often. However, it must be monitored and managed every time the system is used. While this section refers to "the subscribing computer" this should be applied to every computer in the system that subscribes to any substantially sized data.
+   1. Ensure that the subscribing computer is only connected to one network and therefore has only one IP address. In the example this would be the offboard computer.
+   2. Stop and restart all ROS nodes on the subscribing computer including the [ROS 2 Daemon](../ros2_communication.mdx#ros-2-daemon) and any Discovery Servers on the offboard computer.
+   3. Confirm using the same [verification steps](#duplicate-verification) to ensure that the problem has been resolved.
+
+2. The second solution is more involved initially but can be set and forgotten. This solution works for systems where the networks are well defined and rarely change. As a reminder, the implementation details for this solution are specific to Fast DDS. The modification is to set a Fast DDS profile on the computer that restricts the locator list to a specific network interface using the IP address to identify the interface. This profile must be applied for all nodes as well as for the terminals.
+   1. On the subscribing computer, create a new file called `fastdds_network_profile.xml` with the following contents, replacing the IP address with the IP address for the network interface that should be used for ROS 2 communications:
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<profiles xmlns="http://www.eprosima.com/XMLSchemas/fastRTPS_Profiles">
+    <transport_descriptors>
+        <transport_descriptor>
+            <transport_id>CustomUdpTransport</transport_id>
+            <type>UDPv4</type>
+            <interfaceWhiteList>
+                <address>192.168.131.1</address>
+            </interfaceWhiteList>
+            <maxMessageSize>1400</maxMessageSize>
+        </transport_descriptor>
+    </transport_descriptors>
+
+    <participant profile_name="CustomUdpTransportParticipant" is_default_profile="true">
+        <rtps>
+            <userTransports>
+                <transport_id>CustomUdpTransport</transport_id>
+            </userTransports>
+            <useBuiltinTransports>false</useBuiltinTransports>
+        </rtps>
+    </participant>
+</profiles>
+```
+
+:::note
+
+The Max Message Size is set in this profile example because it is set by default by the Clearpath packages and is recommended to address the fragmentation problems described in [Large Data Fragmentation](#large-data-fragmentation).
+
+:::
+
+   2. Choose the correct option for your setup:
+      1. If setting this on a Clearpath robot computer or a computer that is using the `clearpath_desktop` packages, set the profile parameter [profile](../../config/yaml/system.mdx#middleware) in the `robot.yaml` as the full path to the XML file. On the robot this will automatically update the appropriate files and relaunch the default services. You will still need to source the `/etc/clearpath/setup.bash` file in any open terminals to update them and restart the ROS 2 Daemon. On the offboard computer, follow the [instructions](../../installation/offboard_pc.mdx#setup-folder) for regenerating your `setup.bash` based on the updated `robot.yaml` file, and source this `setup.bash` file again in all of your terminals.
+      2. If not using this in combination with the Clearpath packages, set the `FASTDDS_DEFAULT_PROFILES_FILE` environment variable to contain the full path to the XML file. This must be set in every environment where nodes are launched (including the ROS 2 Daemon and any services). This line can be added to the `.bashrc` file to be applied each time that a new terminal is opened. If the `.bashrc` was modified, ensure that it is sourced again in every open terminal window.
+
+    ```bash
+    export FASTDDS_DEFAULT_PROFILES_FILE=/path/to/file/fastdds_network_profile.xml
+    ```
+
+      3. Stop and restart all ROS nodes on the subscribing computer including the [ROS 2 Daemon](../ros2_communication.mdx#ros-2-daemon) and any Discovery Servers on the offboard computer.
+   3. Confirm using the same [verification steps](#duplicate-verification) to ensure that the problem has been resolved.
+
+
+## Large Data Fragmentation
+
+Large messages are fragmented into small packets in order to be transmitted across a network. This fragmentation can happen on the DDS level or on the operating system level (as part of the IPv4 protocol). For large UDP messages, this can be a problem because if any one fragment is dropped or corrupted then the message cannot be assembled and the entire message must be discarded. This issue has been addressed by default in the Clearpath software packages so they should not be a problem on devices with `clearpath_common` installed.
+
+If the fragmentation is occurring on the operating system (IPv4) level, then these fragments are stored in an IPv4 fragmentation buffer. By default, in Ubuntu Server, this fragmentation buffer is roughly 4 MB in size and has a timeout of 30 seconds. If a 4 MB image is being transferred, it does not take many missed packets for the buffer to be filled and no more fragments can successfully received until the existing fragments time out. One way to address this issue is to increase the buffer size and decrease the timeout such that the buffer is large enough to contain all of the data from the largest topics that would be received within the timeout given their respective frequencies. By default, the Clearpath packages override the default settings with the timeout set to 3 seconds and the buffer size to 128 MB. This would accommodate a 4 MB message being transmitted at 10 Hz.
+
+Another way that the fragmentation can become a problem is that when the messages are routed through certain interfaces or firewalls, the fragments may need to be assembled and refragmented. Some routers or other routing devices such as managed switches may be limited in how quickly these messages can be routed and fail to successfully assemble the messages. To avoid having to modify any buffers on these additional devices, the DDS settings can be modified to reduce the message size on the DDS level to lower than the Maximum Transmission Unit (MTU) so that the messages are not fragmented at the IPv4 level. This does cause a small increase in overhead to manage the fragmentation at the DDS level but this generally not significant.
+
+In Fast DDS this is done by applying the following XML profile. See the [Duplicate Messages](#duplicate-solutions) section for instructions on applying a custom XML profile. This profile is assigned by default when using the Clearpath packages and the `setup.bash` generated by Clearpath software.
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<profiles xmlns="http://www.eprosima.com/XMLSchemas/fastRTPS_Profiles">
+    <transport_descriptors>
+        <transport_descriptor>
+            <transport_id>CustomUdpTransport</transport_id>
+            <type>UDPv4</type>
+            <maxMessageSize>1400</maxMessageSize>
+        </transport_descriptor>
+    </transport_descriptors>
+
+    <participant profile_name="CustomUdpTransportParticipant" is_default_profile="true">
+        <rtps>
+            <userTransports>
+                <transport_id>CustomUdpTransport</transport_id>
+            </userTransports>
+            <useBuiltinTransports>false</useBuiltinTransports>
+        </rtps>
+    </participant>
+</profiles>
+```
+
+## Incorrect ROS 2 Quality of Service Settings {#qos}
+
+Subscriber quality of service settings such as reliability policy of *Reliable* or a large depth value can increase the network traffic and cause message backlogs in low bandwidth networks where some packets are lost. For more details, refer to the discussion on the [ROS 2 Communication](../ros2_communication.mdx#qos) page.
+
+## Insufficient Computing Resources
+
+If the CPU usage on the robot or on the offboard computer are close to maximum, then it can result in low message frequency, increased latency and many other networking issues. This could be because all of the CPU cores are entirely maxed out, or it could be a single node getting slowed down if it is using up a full core with a thread that cannot be divided into multiple cores. To evaluate this, monitor the CPU usage on all of the computers during operation. Additionally, monitor to see if the expected frequencies are able to be achieved on the computer where the data is being published. If the computer cannot handle publishing locally at the full expected frequency then it is not a network issue. To address this, either the processes must be modified to be less computationally heavy, or hardware needs to be upgraded to be able to run the processes. Certain processes are better suited to GPUs, and image/video/data compression processes can be tuned to reduce CPU usage. Some nodes can be optimized by writing them in C++ instead of Python, or by combining nodes into a composable node to take advantage of zero-copy data transfer.
+
+Resource restrictions can also be encountered on network devices such as routers or managed switches. Any routing system has a limit of how many messages can be routed in a certain amount of time. These systems may take longer to route large messages that are fragmented as part of the IPv4 protocol. To avoid this, fragmentation can be shifted to the DDS level as described in the [Large Data Fragmentation](#large-data-fragmentation) section.
+
+## Hardware Problems
+
+Inconsistent connectivity can be caused by unreliable or insufficient networking hardware. For Wi-Fi systems this could include the wrong antenna selection, outdated Wi-Fi technology, or bad antenna cables with excessive loss. Review the [Wi-Fi Fundamentals](../wifi_fundamentals.mdx) and [Wi-Fi Hardware](../wifi_hardware.mdx) pages to understand why this might be and how to address it. For the wired components, ensure that the ethernet cables are at least Cat5e (Cat6 recommended), and that the ethernet ports are rated for 1 Gbps at minimum. If there are any routing hardware on the network, ensure that they are rated for sufficient throughput (1 Gbps minimum recommended). Additionally, all hardware and cable assemblies should have the appropriate vibration, temperature and moisture ratings to ensure operational reliability.
+
+Assuming that the hardware selection and placement is appropriate for the application, the physical quality of the hardware should be verified. All cables and components should be fully intact, connectors and ports secured, and have no visible damage. Where possible, tests should be done to verify bandwidth across isolated sections of the network (for example, from the robot computer to an onboard router). If possible, replace components with known working modules or cables to verify performance.
+
+The following are some advanced networking issues that can occur on the hardware level:
+
+#### Electromagnetic Interference (EMI)
+Electromagnetic interference generally comes from proximity to motors, motor drivers or power supplies without sufficient shielding. This can result in unpredictable behavior, brownouts, corrupted data or damage to components. In the context of networking, the primary concern is interference on the power going to the computer, power going to an onboard router, and data lines connecting to an onboard router, computer or antennas. Several steps can be taken to reduce electromagnetic interference:
+- Route high power lines (to motors and actuators) away from wires going to sensitive electronics (such as computers, routers, sensors or antennas).
+- Shield both data lines and noisy cables separately.
+- Twist noisy power cables to lower EMI emissions.
+- Apply common mode chokes or ferrite cores to the noisy cables (ensure that they are properly rated for the power).
+
+#### Insufficient or Unstable Power Supply
+If too much current is being drawn from a power supply, it can experience transient drops in voltage that are hard to detect but can cause unpredictable behavior and brownouts. This can also be seen if the power supply is damaged. Verify that the power supply is rated for the current draw, including any surge current requirements, and is functioning properly.
+
+#### Damaged Components
+Vibration can cause components such as capacitors and other bulky components on PCBs to fail, particularly if the devices are not vibration rated. Similarly moisture and heat can cause damage to components in a manner that may not be visible. Be aware that the temperature within enclosures without adequate ventilation can be dramatically higher than ambient temperatures outside and should be monitored.
