@@ -57,6 +57,14 @@ ros2:
 The **middleware** section defines the which RMW Implementation to use and any related settings. To choose
 which implementation and discovery method is right for your project see [networking](../../networking/ros2-networking.mdx).
 
+:::note
+
+All platforms can use `rmw_fastrtps_cpp`.
+
+Currently only the Husky A200 can use `rmw_zenoh_cpp`. Attempting to use Zenoh on any other platform will result in an error when processing `robot.yaml`.
+
+:::
+
 | Key | Value / Datatype | Description |
 |:---:| :--------------: | ----------- |
 | **implementation** | `rmw_fastrtps_cpp`   | Declares the RMW Implementation to use. Currently only supports `rmw_fastrtps_cpp` and `rmw_zenoh_cpp`. |
