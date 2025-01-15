@@ -1,0 +1,25 @@
+---
+title: Enable/Disable EKF
+sidebar_label: Enable EKF
+sidebar_position: 5
+toc_min_heading_level: 2
+toc_max_heading_level: 5
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+By default, all Clearpath platforms launch an [EKF node](https://index.ros.org/p/robot_localization)
+as part of its localization stack.  Some applications may want to use their own localization node,
+in which case the default EKF node can be disabled.
+
+| Key | Value / Datatype | Description |
+|:---:| :--------------: | ----------- |
+| enable_ekf  | boolean  | Enables or disables the default EKF node. Default: `true` |
+
+For example, to disable the EKF node:
+
+```yaml
+platform:
+  enable_ekf: false
+```
