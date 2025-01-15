@@ -1,0 +1,71 @@
+---
+title: ROS 2 Communication
+sidebar_position: 3
+---
+
+This page reviews information that is useful to understand for working with ROS 2 DDS based communication.
+
+## RMW Implementations
+ROS 2 uses an abstracted [ROS Middleware](https://docs.ros.org/en/humble/Concepts/Intermediate/About-Different-Middleware-Vendors.html) (RMW) to manage the networking and communication. There are several RMW Implementations to choose from, and each operates somewhat differently. Most RMW Implementations are based on the [DDS](https://docs.ros.org/en/humble/Installation/DDS-Implementations.html) (Data Distribution Service) standard which is built on the RTPS (Real-time Publish Subscribe) protocol. In the DDS standard, the ROS 2 nodes act as participants that can publish and subscribe. In most cases, DDS uses UDP messages for the underlying communication over the network. Each RMW implementation has many ways that it can be configured to achieve different goals such as simplicity, redundancy or robustness. The DDS system is decentralized, meaning that the participants are not managed by any one entity. Instead the system works peer to peer, allowing nodes to find each other. This process is referred to as the discovery process.
+
+The Clearpath robot packages currently support the eProsima Fast DDS as the RMW Implementation. There are still several decisions that have to be made in configuring the Clearpath robot networking. The most significant decision is choosing the discovery method. In Fast DDS, there is the default `Simple Discovery` and the more managed `Discovery Server` option. These two options are discussed in detail in the [ROS 2 Discovery Config](ros2_discovery_config.mdx) page. Instructions on switching the discovery method are available on that page, as well as the specific parameters are documented in the [System section](../config/yaml/system.mdx#middleware) of `robot.yaml`.
+
+## DDS Settings
+There are a variety of settings that are set through the `robot.yaml` that control how the DDS layer operates. For example, the [Domain ID](https://docs.ros.org/en/humble/Concepts/Intermediate/About-Domain-ID.html) is used in the calculation of which ports each node communicates on. In order for the DDS communication to be successful, the network needs to allow unrestricted data flow between the devices on these ports.
+
+If not using the `robot.yaml` or the accompanying generated `setup.bash` file, then these settings must be set using environment variables. See [this page](https://docs.ros.org/en/humble/Tutorials/Beginner-CLI-Tools/Configuring-ROS2-Environment.html) for how to configure the ROS 2 environment, and see [this page](https://fast-dds.docs.eprosima.com/en/2.6.x/fastdds/env_vars/env_vars.html) for additional information about Fast DDS environment variables. There are some nuances to how and when these settings are adopted. Please see the [ROS 2 Daemon](#ros-2-daemon) and [Adapting to Network Changes](#adapting-to-network-changes) sections below for more details.
+
+## ROS 2 Daemon
+The ROS 2 daemon is a service that runs in the background and participates in the discovery process as a node. The daemon keeps track of the ROS 2 participants that have been discovered on the network and makes that information available to the ROS 2 introspection tools over the command line interface (CLI). Using the daemon allows for faster and more accurate results from commands such as `ros2 topic list`, `ros2 node list` and `ros2 topic echo`.
+
+This daemon is started automatically by any command line interface (CLI) command that needs it. However, the daemon collects discovery information from the network over time so it may take anywhere from a few seconds to a few minutes for the daemon to gain a complete list of all ROS 2 participants, depending on the size of the system. Therefore, the results of the command that starts the daemon may be incomplete. If the daemon is stopped and then a command is run that restarts the daemon, wait and then run the command again to get a complete response.
+
+When the daemon starts, it adopts the ROS 2 communication settings at that time from the terminal where it was started. This includes settings like the RMW Implementation, Fast DDS Simple Discovery vs Discovery Server, ROS Domain ID, and others. These settings do not update in the daemon once started. This means that changing the ROS Domain ID in the terminal does not change the ROS Domain ID of the daemon and therefore does not change the behavior of the ROS 2 CLI commands such as `ros2 topic list`. To have the CLI results update, the daemon must be stopped and restarted (`ros2 daemon stop` followed by `ros2 daemon start` or a command that auto-starts the daemon). This also means that if there are two different terminals active with different settings, the ROS 2 CLI can only work with one of them at a time, and the daemon must be stopped and restarted in the appropriate terminal before being used. There are `no-daemon` options that can be used with some CLI commands, however they are less reliable and do not always give complete results since they are only able to report on information captured during the delay between the request of the command and the results being displayed.
+
+When working with Fast DDS Discovery Server, the daemon must be started with super client privileges (`ROS_SUPER_CLIENT=True`). Super client means that the client will have access to all of the information from the discovery server(s), not just the information that it needs. This is necessary to support the functionality of the ROS 2 CLI Introspection commands. This is set automatically in the Clearpath setup.bash files.
+
+### Key Takeaways
+
+Important considerations when working with the ROS 2 Daemon:
+1. Each computer has only one daemon with one set of ROS 2 communication settings.
+2. The daemon automatically starts when certain ROS 2 Command Line Interface (CLI) commands such as `ros2 topic list` or `ros2 node list` are run.
+3. The daemon only adopts the communication settings from the terminal where it was started and these do not update. To use it with any updated or different settings, it must be stopped and then restarted with the new settings.
+4. After the daemon starts, it takes a few seconds or minutes to complete the discovery process, and may give incomplete results until then. This often just means running `ros2 topic list` twice (or more until the full list shows up) whenever starting to use the CLI tools.
+5. When in doubt, restart the daemon.
+
+## Adapting to Network Changes
+
+### Changing Network Settings
+Like with the ROS 2 Daemon, the ROS 2 settings for any given ROS 2 node are adopted at start and do not update while the node is running. If the ROS 2 networking settings (such as Domain ID, Automatic Discovery Range and Discovery Servers) are changed, then the nodes need to be stopped and restarted. For the convenience of users, any such settings that are modified in the Clearpath `robot.yaml` file on the robot will automatically trigger a restart of all of the nodes that are started by the Clearpath services. Any nodes that were manually launched must be manually restarted.
+
+On the offboard computer, the `robot.yaml` must be updated, just like on the robot, however, the `setup.bash` must be manually [regenerated](../installation/offboard_pc.mdx#setup-folder) and sourced again in all terminals, and then all of the nodes must be manually restarted.
+
+### Changing IP Addresses and Node Locator List
+In Fast DDS, the locator list for each node is the list of IP addresses and ports where that node is listening for messages. This list is initialized once when the node starts with the list of IP addresses that the computer had active at the time when the node started and is never updated. This list is used in the discovery process to establish connections. This means that if the computer were to change IP addresses (as can happen with DHCP or when connecting to a new network) then the node would not be available at the new IP address. To prevent this from happening, it is recommended to use static IPs for all devices in the ROS 2 network. The IP addresses should be reserved on the router(s) in the system to avoid conflicts, or at least not be included in the DHCP range.
+
+### Network Wait Online Service
+As a continuation of the previous issue, because the locator list never updates, it means that the nodes are not available over any new IP addresses that become active after the nodes start. For that reason, starting any nodes should wait until the network interfaces are all online. For services on Ubuntu Server, this is done by creating a dependency on `systemd-networkd-wait-online.service`. This is taken care of for the Clearpath services as part of the Clearpath software install process. However, for this process to work properly, the netplan file must be configured correctly. Any network connection that is being used for ROS communication should not be labelled as optional.
+
+This also means that the offboard network infrastructure, such as routers and switches, should be booted up first before turning on the ROS systems so that all networks are ready to connect.
+
+### Key Takeaways
+
+1.  Nodes must be restarted to adopt updated networking settings including new or updated IP addresses.
+2.  Use static IP addresses for all devices and reserve them on the network(s).
+3.  Ensure that all networks are active and connected prior to launching ROS nodes.
+
+## Optimizing Sensor Data for Transmission
+It is important to identify what data is appropriate to be transmitted over a given network. Data being transmitted wirelessly should be in the most concise or information dense message type. However, when working with large data types, this must be considered even for high-bandwidth wired networks.
+
+As a general rule, image data should always be compressed using one of the standard [image transports](../config/camera_compression.mdx). Even on lower resource systems, compression can be used to reduce bandwidth significantly. If working with a camera video stream, using the FFMPEG H.264 compression offers much more significant compression than the standard JPEG compression. For a detailed example of sizing a video stream for a wireless network, see the [Video Over Wi-Fi tutorial](../tutorials/video_over_wifi.mdx).
+
+Similarly, depth data is often transmitted in inefficient formats. Depth data can be stored efficiently as lidar scan packets, or depth images (depending on the sensor used). However, once the data is expanded out into a PointCloud message type, the data is much sparser. It takes a lot more bandwidth to transmit the same data in a PointCloud format, sometimes upwards of 15 times the bandwidth. The scan packets or depth images should only be transformed into the PointCloud format on the computer that needs to consume the PointCloud, and preferably as part of a [composable node](https://docs.ros.org/en/humble/Concepts/Intermediate/About-Composition.html) where the data is also being consumed.
+
+## ROS 2 Quality of Service {#qos}
+ROS 2 Quality of Service (QoS) describes a group of settings, called *Policies*, that dictate how a message is transmitted. Both the publisher and subscriber will have a QoS declared. The QoS of the publisher defines the highest level policy available for each setting. The subscriber QoS defines the policies that will be used for that particular subscription. If the subscriber needs a higher level of policy than the publisher offers then the subscription will fail. There are many policies that can be controlled as part of the QoS. Two of particular interest are reliability and history depth.
+
+The reliability policy can be set to *Reliable* or *Best Effort*. Under *Best Effort*, the publisher will publish the message once and the computer will attempt to deliver it over the network but it will not check to ensure it arrives. With *Reliable*, the publisher will retry sending the message repeatedly if it is not successfully delivered. *Best Effort* should be used whenever it is more important to receive the latest data and it doesn't matter if a historic message is missing. This is typical for sensor data. The reliability setting is very important to consider with larger messages. If the transmission of a large message fails, it is a much greater burden on the network to continue retrying to send the message. Using the ROS 2 CLI to echo a topic by default uses a *Reliable* QoS.
+
+The history and depth policy are important for a similar reason. These two policies together control how many historic messages are stored and would be resent. The history policy should be set to *Keep Last* while depth is the integer that controls the size of this queue. If the reliability is set to *Reliable* then the queue size is the number of historic messages which will continue to be resent until they are successfully received. This queue length should be kept as low as possible while still supporting the needed functionality. For example, for sensor data where the latest message is the only important message, then the subscriber should have depth of 1.
+
+For more details on quality of service, see the [Clearpath Robot API](../api/overview.mdx#qos-profiles) and the [ROS 2 documentation](https://docs.ros.org/en/humble/Concepts/Intermediate/About-Quality-of-Service-Settings.html).

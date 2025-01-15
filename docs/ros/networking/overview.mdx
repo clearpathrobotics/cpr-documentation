@@ -5,11 +5,33 @@ sidebar_position: 1
 
 import Ros2NetworkingOverview from "/docs_versioned_docs/version-ros2humble/components/networking/_ros2_networking_overview.mdx";
 
+This section covers general information about how ROS 2 networking works, how to configure ROS 2 networking, general Wi-Fi information and detailed troubleshooting guides.
+
 ### SSH and SFTP
 
 Clearpath robots ship with an SSH server operating on port 22 for remote login. This server also supports sftp for
 file-transfer to/from the robot if needed. By default you can log in using the default username and password for the
 robot.
+
+### ROS 2 Networking {#ros2-networking}
+
+There are many nuances to working with ROS 2 nodes and ensuring that all components are communicating properly. The most important of these concepts are reviewed in the [ROS 2 Communication](ros2_communication.mdx) page.
+
+:::tip
+
+For the best chance of success, use a high speed, high bandwidth network and monitor the network usage.
+
+:::
+
+#### ROS 2 Discovery Configuration
+
+<Ros2NetworkingOverview/>
+
+Further information on [ROS 2 Discovery Configuration](ros2_discovery_config.mdx).
+
+### Wi-Fi Fundamentals and Hardware
+
+ROS 2 communication can be demanding on networks, particularly wireless networks. At times, difficulties with ROS 2 communication can actually stem from core Wi-Fi stability and reliability issues. The [Wi-Fi Fundamentals](wifi_fundamentals.mdx) and [Wi-Fi Hardware](wifi_hardware.mdx) pages discuss important concepts useful for optimizing Wi-Fi networks for use with ROS 2 mobile robots.
 
 ### Wired LAN IP Addresses {#ip-addresses}
 
@@ -25,19 +47,7 @@ but may not be limited to
 The `192.168.131.0/24` subnet is statically configured; all devices are configured to use a static IP address, and
 there is normally not a DHCP server operating on this subnet.
 
-For a list of standard payload IP addresses, please see [network IP addresses](network_ip_addresses.mdx).
-
-### ROS 2 Networking {#ros2-networking}
-
-<Ros2NetworkingOverview/>
-
-Further information on [ROS 2 Networking](ros2-networking.mdx).
-
-:::tip
-
-For the best chance of success, use a high speed, high bandwidth network and monitor the network usage.
-
-:::
+For a list of standard payload IP addresses, please see [Standard IP Addresses](standard_ip_addresses.mdx).
 
 ### Clock Synchronization
 
@@ -47,8 +57,6 @@ primary computer being the authoritative source for the others.
 
 For details on configuring `chrony`, please see [configuring NTP](ntp.mdx).
 
-:::note
+### Network Troubleshooting
 
-Contact our Support team at \<support@clearpathrobotics.com\> if you have any questions.
-
-:::
+There are many things that can go wrong when setting up ROS 2 networking. To aid in this process, a [troubleshooting section](./network_troubleshooting/troubleshooting_overview.mdx) is available with flowcharts to guide the process of troubleshooting two computers that are not communicating properly as well as discussion of common issues that can cause intermittent or unreliable communication. A list and description of troubleshooting tools is also available to assist in the troubleshooting process.
