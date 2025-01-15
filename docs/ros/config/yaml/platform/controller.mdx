@@ -6,12 +6,14 @@ toc_min_heading_level: 2
 toc_max_heading_level: 5
 ---
 
-We support two types of controllers on all platforms:
-  - **ps4**: standard Playstation4 controller.
-  - **logitech**: Logitech F710
+We support the following types of controllers on all platforms:
+  - **ps4**: standard Playstation4 controller (bluetooth).
+  - **ps5**: standard Playstation5 controller (bluetooth).
+  - **logitech**: Logitech F710 (USB dongle).
+  - **xbox**: Xbox controller (bluetooth).
 
 Switching between each is done by setting the `controller` parameter under the `platform` tag.
 
 ```yaml
-controller: ps4 # or logitech
+controller: ps4 # one of ps4, ps4, logitech, xbox
 ```
