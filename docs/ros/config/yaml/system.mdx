@@ -65,6 +65,7 @@ which implementation and discovery method is right for your project see [network
 | **servers**        | list                 | Provides a list of all discovery servers in the system and whether or not the robot should connect to them. Ignored if `implementation` is not `rmw_fastrtps_cpp`.|
 
 For example:
+
 ```yaml
 middleware:
   implementation: rmw_fastrtps_cpp
@@ -75,7 +76,7 @@ middleware:
 ```
 
 Second example, using Zenoh:
-```yaml
+
 ```yaml
 middleware:
   implementation: rmw_zenoh_cpp

@@ -98,7 +98,7 @@ There are multiple different ways to configure discovery server depending on whi
 This section will go over some basic configurations and is generalized for use as an introduction. It does not
 describe all possible configurations. The `ROS_DISCOVERY_SERVER` environment variable, shown in the various diagrams,
 indicates which discovery servers a given robot is connected to. Additionally, communication will be referred to
-in terms of seeing ROS 2 topics although this is representative of all nodes, topics, action servers, and so on. 
+in terms of seeing ROS 2 topics although this is representative of all nodes, topics, action servers, and so on.
 
 :::note
 
@@ -231,12 +231,35 @@ the discovery servers and all of the ones that the offboard computer should be c
 To generate the launch script:
 
 ```
-source /opt/ros/humble/setup.bash
+source /opt/ros/jazzy/setup.bash
 ros2 run clearpath_generator_common generate_discovery_server -s ~/clearpath
 ```
 
 To launch the server
 
 ```
-bash -e ~/clearpath/discovery-server-start 
+bash -e ~/clearpath/discovery-server-start
+```
+
+
+## Zenoh Router
+
+In early 2025 a new ROS middleware implementation called **Zenoh** was released. For a
+detailed description of Zenoh, please refer to [Zenoh's design document](https://github.com/ros2/rmw_zenoh/blob/rolling/docs/design.md).
+
+Zenoh is only available on ROS 2 Jazzy and later; it cannot be used on ROS 2 Humble.
+
+### Starting the Zenoh Router
+
+To manually launch the Zenoh router run
+
+```bash
+bash -e ~/clearpath/zenoh-router-start
+```
+
+This process can also be daemonized and launched via the `systemctl` command:
+
+```bash
+source /opt/ros/jazzy/setup.bash
+sudo systemctl start clearpath-zenoh-router
 ```
