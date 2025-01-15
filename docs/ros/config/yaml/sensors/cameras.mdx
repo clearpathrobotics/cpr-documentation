@@ -5,6 +5,7 @@ sidebar_position: 2
 toc_min_heading_level: 2
 toc_max_heading_level: 5
 ---
+import AxisCamera from "/docs_versioned_docs/version-ros2humble/components/yaml/sensors/axis_camera.mdx";
 import FlirBlackfly from "/docs_versioned_docs/version-ros2humble/components/yaml/sensors/flir_blackfly.mdx";
 import IntelRealsense from "/docs_versioned_docs/version-ros2humble/components/yaml/sensors/intel_realsense.mdx";
 import StereolabsZed from "/docs_versioned_docs/version-ros2humble/components/yaml/sensors/stereolabs_zed.mdx";
@@ -15,97 +16,23 @@ Cameras are sensors that publish:
 
 This broad definition allows us to label a variety of different cameras under a single banner. Stereo cameras, for example, could publish multiple images, disparity maps, and even pointclouds. Other cameras have in built inertial measurement units that publish `sensor_msgs/Imu`. Ultimately, all imaging devices fall into this category.
 
+For further details on how to work with large camera data, see [Camera Data Compression](../../camera_compression.mdx)
 
-## Compressed and Theora Topics
-Using the `image_transport` package and the [image_transport_plugins](https://github.com/ros-perception/image_transport_plugins), it is possible to send compressed and stream images using ROS 2 messages.
+## Supported Cameras
 
-For example, the color image topic will have multiple versions:
-```bash
-/a200_0000/sensors/camera_0/color/image
-/a200_0000/sensors/camera_0/color/compressed
-/a200_0000/sensors/camera_0/color/theora
-```
+### Axis Camera
+<AxisCamera/>
 
-:::note
+### Intel Realsense
+<IntelRealsense/>
 
-The same publisher handles all three of these message types. Limit the number of subscribers to minimize the load on the camera driver node.
+### Flir BlackflyS
+<FlirBlackfly/>
 
-:::
+### Stereolabs Zed
+<StereolabsZed/>
 
-Compressed and theora types are not standard ROS 2 types, and therefore, it is required to decompress the images into standard `sensor_msgs/Image` messages before attempting to view them using standard tools such as RViz.
-
-The `clearpath_sensors` package has launch files to convert from and to these compressed transport types. Therefore, make sure to have the package installed on the computer that will be doing the decompressing:
-```bash
-sudo apt install ros-humble-clearpath-sensors
-```
-
-### Compressed
-Compressed image types are not serialized. These are images compressed using the JPEG format at 80% quality.
-
-Use the launch file `image_raw_to_compressed.launch.py` to compress `sensor_msgs/Image` messages into compressed messages.
-
-Assume we have the following image topic we would like to compress:
-```bash
-/a200_0000/sensors/camera_0/raw/image
-```
-
-Then, we can compress this image by launching the following:
-```bash
-ros2 launch clearpath_sensors image_raw_to_compressed.launch.py in_raw:=/a200_0000/sensors/camera_0/raw/image out_compressed:=/a200_0000/sensors/camera_0/raw/compressed
-```
-
-Now, we will have the following topics:
-```bash
-/a200_0000/sensors/camera_0/raw/image
-/a200_0000/sensors/camera_0/raw/compressed
-```
-
-To reverse this process, use the `image_compressed_to_raw.launch.py` to decompress back to `sensor_msgs/Image`:
-```bash
-ros2 launch clearpath_sensors image_compressed_to_raw.launch.py in_compressed:=/a200_0000/sensors/camera_0/raw/compressed out_raw:=/a200_0000/sensors/camera_0/decompressed/image
-```
-
-Now, we will have the following topics:
-```bash
-/a200_0000/sensors/camera_0/raw/image
-/a200_0000/sensors/camera_0/raw/compressed
-/a200_0000/sensors/camera_0/decompressed/image
-```
-
-### Theora
-Theora topics encode images into a video stream. By default, these streams have an 800 kb/s rate.
-
-Theora messages are not serialized, however, the first message after launching the encoder transmits the header packet. This header packet includes all of the encoding information required to decode the subsequent video packets. Therefore, if that first message is dropped or missed, then decoding the video packets back to images is not possible.
-
-Therefore, it is important to have the decoder node running before launching the encoder node, such that the former will not miss the header packet.
-
-:::warning
-Missing the header packet and being unable to decode the video packets is a known, long-standing issue with the `theora` image transport plugin. See this [issue](https://github.com/ros-perception/image_transport_plugins/issues/4) for more information.
-:::
-
-Assuming we have the following topic that we would like to stream:
-```bash
-/a200_0000/sensors/camera_0/raw/image
-```
-
-First, launch the decoder:
-```bash
-ros2 launch clearpath_sensors image_theora_to_raw.launch.py in_theora:=/a200_0000/sensors/camera_0/raw/theora out_raw:=/a200_0000/sensors/camera_0/decoded/image
-```
-
-Then, launch the encoder:
-```bash
-ros2 launch clearpath_sensors image_raw_to_theora.launch.py in_raw:=/a200_0000/sensors/camera_0/raw/image out_raw:=/a200_0000/sensors/camera_0/raw/theora
-```
-
-As long as the first header package is communicated without drops, the decoder will be able to decode and publish the raw image data:
-```bash
-/a200_0000/sensors/camera_0/raw/image
-/a200_0000/sensors/camera_0/raw/theora
-/a200_0000/sensors/camera_0/decoded/image
-```
-
-## Republishers
+## Post Processing Republishers {#republishers}
 All cameras publish to the `color/image` topic of type `sensor_msgs/Image`. However, we understand that sometimes this image may require downsampling, rectification, or cropping. To facilitate post processing images, we have included a method to easily add image processing nodes, leveraging composable nodes to maximize efficiency.
 
 :::note
@@ -127,7 +54,7 @@ Configuring a republisher can be done by setting its node parameters using the `
 ### Rectify
 The `rectify` node takes the `camera_info` topic as a source of calibration parameters and applies an interpolation to rectify the raw images.
 
-To add a the rectify republisher add the following entries to the `camera` entry and its corresponding `ros_parameters` section.
+To add a rectify republisher, add the following entries to the `camera` entry and its corresponding `ros_parameters` section.
 ```yaml
 cameras:
   - model: CAMERA_MODEL
@@ -158,7 +85,7 @@ All UPPERCASE entries must be replaced based on the specific camera being used.
 ### Resize
 The `resize` node uses the input image and resizes it.
 
-To add a resize republisher add teh following entreis to the `camera` entry and its corresponding `ros_parameters` section.
+To add a resize republisher, add the following entries to the `camera` entry and its corresponding `ros_parameters` section.
 ```yaml
 cameras:
   - model: CAMERA_MODEL
@@ -195,12 +122,3 @@ The `interpolation` parameters must be one of the following:
 - **2**: Cubic.
 - **3**: Area. Resampling using pixel area relation.
 - **4**: Lanczos4. Lanczos interpolation over 8x8 neighbourhood.
-
-## Intel Realsense
-<IntelRealsense/>
-
-## Flir BlackflyS
-<FlirBlackfly/>
-
-## Stereolabs Zed
-<StereolabsZed/>
