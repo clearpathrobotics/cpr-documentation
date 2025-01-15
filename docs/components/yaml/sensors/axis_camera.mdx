@@ -1,0 +1,112 @@
+<table>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("./img/axis_camera.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+camera:
+  - model: axis_camera
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      axis_camera:
+        device_type: dome_ptz
+
+        hostname: "192.168.0.90"
+        http_port: 80
+        username: "root"
+        password: ""
+        camera_info_url: ""
+        use_encrypted_password : False
+        camera : 1
+
+        width: 640
+        height: 480
+        fps: 20
+        tf_prefix: "axis"
+
+        ptz: True
+        min_pan: -3.141592653589793
+        max_pan: 3.141592653589793
+        min_tilt: 0.0
+        max_tilt: 1.5707963267948966
+        min_zoom: 1
+        max_zoom: 24
+        max_pan_speed: 2.61
+        max_tilt_speed: 2.61
+
+        ptz_teleop: True
+        button_enable_pan_tilt : -1
+        button_enable_zoom     : -1
+        axis_pan      : 3
+        axis_tilt     : 4
+        invert_tilt   : False
+        axis_zoom_in: 5
+        axis_zoom_out: 2
+        zoom_in_offset: -1.0
+        zoom_out_offset: -1.0
+        zoom_in_scale: -0.5
+        zoom_out_scale: 0.5
+        scale_pan     : 2.61
+        scale_tilt    : 2.61
+        scale_zoom    : 100.0
+
+        ir: False
+        defog: False
+        wiper: False
+```
+</td>
+</tr>
+</table>
+
+#### Package and Setup
+The Axis cameras use the `axis_camera` ROS 2 driver. The driver is open source, maintained by the ROS Drivers community, and hosted on [GitHub](https://github.com/ros-drivers/axis_camera).
+
+For specifics on the way Clearpath's configuration system launches the camera, see the Axis Camera [launch file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/launch/axis_camera.launch.py) and the [default parameter file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/config/axis_camera.yaml) in `clearpath_sensors`.
+
+#### Device Type
+The `device_type` parameter must be set accurately to successfully launch the node. Supported `device_type` values are:
+- `q62`: the Axis Q62 camera
+- `dome_ptz`: any Axis PTZ dome camera
+- `dome_fixed`: any fixed-position dome camera
+
+#### Network Connection
+Axis cameras communicate over HTTP. The `hostname` parameter specifies either the resolvable hostname or IP address of the camera. By default Axis cameras use port 80 for their HTTP interface, but if this has been reconfigured on the camera the `http_port` parameter should be used to specify the port.
+
+The `username` and `password` parameters should be set to allow the ROS node to authenticate to the camera. The specified user must have permission to control the camera's PTZ position. Refer to the Axis camera's web setup tool for information on creating and configuring users on the camera.
+
+Some newer Axis cameras require the use of encrypted passwords for authentication. If this is required, set `use_encrypted_password` to `True`. Some older Axis cameras do not support encrypted passwords.
+
+The `camera` parameter is an integer in the range 1-4, used to specify which camera at the given IP address/hostname is being controlled. This is only necessary if a multi-camera controller is being used, such as the [Axis F34](https://www.axis.com/products/axis-f34-surveillance-system/).
+
+#### ROS Image and TF configuration
+The resolution and framerate of the images published by the driver can be specified with the `height`, `width`, and `fps` parameters.
+
+The `tf_prefix` parameter specifies the prefix added to the camera model's frames in the URDF. The camera model's root link is `${tf_prefix}_base_link`, and the optical frame is `${tf_prefix}_camera_link`. If multiple cameras are specified in `robot.yaml` the `tf_prefix` parameter must be unique to each camera.
+
+#### PTZ Configuration
+Pan and tilt limits can be specified in radians by using the `max_pan`, `min_pan`, `max_tilt` and `min_tilt` parameters. Pan and tilt speed are expressed in rad/s.
+
+Zoom range is expressed in zoon factors. For example, a camera with a 24x optical zoom should specify `min_zoom` as `1` and `max_zoom` as `24`.
+
+If the camera is a fixed-lens camera, set `ptz` to `False`. All PTZ and PTZ teleop parameters will be ignored if `ptz` is `False`.
+
+#### PTZ Teleop Configuration
+If `ptz_teleop` is `True` the `axis_camera` driver will subscribe to the robot's `joy` controller input, allowing the camera to be controlled via the game controller. The default parameters are configured for a Playstation 4/Dualshock family controller:
+- Right thumbstick controls pan & tilt (`axis_pan` and `axis_tilt`). The pitch axis may be inverted by setting `invert_tilt` to `True`
+- Left analogue trigger zooms out (`axis_zoom_in`)
+- Right analogue trigger zooms in (`axis_zoom_out`)
+
+For additional details on configuring PTZ teleoperation, please refer to the `axis_camera` package [on github](https://github.com/ros-drivers/axis_camera).
+
+#### Q62-Specfic Features
+The Axis Q62 camera features a wiper, infrared/night-vision mode, and a defogger.  Services to control these features can be enabled by setting the `wiper`, `ir`, and `defog` parameters to `True`.
