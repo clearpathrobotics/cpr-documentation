@@ -27,11 +27,11 @@ camera:
         # image_height: 1080
         # offset_x: 0
         # offset_y: 0
-        # binning_x: 1
-        # binning_y: 1
+        binning_x: 2
+        binning_y: 2
         frame_rate_enable: true
         frame_rate_auto: Off
-        frame_rate: 40.0
+        frame_rate: 30
 ```
 </td>
 </tr>
@@ -61,7 +61,7 @@ The resulting output of the command should appear as:
 ATTR{serial}=="013686A9"
 ```
 
-Then, convert attirbute serial hexadecimal value to decimal representation and set it to the `serial_number` parameter. Convert values from hexadecimal to decimal representation using the following terminal command, where `HEX` needs to be swapped with the hexadecimal value:
+Then, convert attribute serial hexadecimal value to decimal representation and set it to the `serial_number` parameter. Convert values from hexadecimal to decimal representation using the following terminal command, where `HEX` needs to be swapped with the hexadecimal value:
 ```bash
 echo $((16#HEX))
 ```
@@ -71,6 +71,44 @@ For the example above, the hexadecimal serial number `013686A9` would be convert
 #### Resolution
 The `image_height` and `image_width` parameters define the area of the raw image to crop. It does not downsample the image. Use the `offset_x` and `offset_y` parameters to change the origin of the cropped area. These parameters would be best used to define an area of interest.
 
-To reduce the size of the image using downsamlping, use the `binning_x` and `binning_y` parameters. These parameters define the number of pixels that will be binned together in each axis. If both `binning_x` and `binning_y` are set to `2`, then the resolution of the image will be halved.
+To reduce the size of the image using downsampling, use the `binning_x` and `binning_y` parameters. These parameters define the number of pixels that will be binned together in each axis. If both `binning_x` and `binning_y` are set to `2`, then the resolution of the image will be quartered.
 
-Reducing the resolution of the image improves the perfomance of the camera driver and network transit of image packets.
+Reducing the resolution of the image improves the performance of the camera driver and network transit of image packets.
+
+#### Image Compression
+By default, the camera feed is also available in compressed formats including `compressed` (JPEG) and `ffmpeg` (H.264). Each of these topics is made available by an image transport plugin. Which plugins are active can be controlled by adding the following ROS parameters to the Blackfly section of the `robot.yaml`:
+
+```yaml
+    ros_parameters:
+      flir_blackfly:
+        serial_number: ''
+      image_debayer:
+        image_mono:
+          enable_pub_plugins:
+            - image_transport/compressed
+            - image_transport/ffmpeg
+            - image_transport/raw
+        image_color:
+          enable_pub_plugins:
+            - image_transport/compressed
+            - image_transport/ffmpeg
+            - image_transport/raw
+```
+
+#### FFMPEG Compression Settings
+To modify the FFMPEG compression settings, add the following ROS parameters to the Blackfly section of the `robot.yaml`:
+
+```yaml
+    ros_parameters:
+      flir_blackfly:
+        serial_number: ''
+      image_debayer:
+        ffmpeg_image_transport:
+          qmax: 40
+          preset: superfast
+          tune: zerolatency
+          bit_rate: 1000000
+          gop_size: 15
+```
+
+For documentation on these parameters see the [ffmpeg_image_transport GitHub repo](https://github.com/ros-misc-utilities/ffmpeg_image_transport).
