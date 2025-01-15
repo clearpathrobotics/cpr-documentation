@@ -1,0 +1,34 @@
+### WD Blue SA510 SATA SSD Critical Firmware Update {#wd-firmware-update}
+
+:::warning
+
+Some computers shipped with a WD Blue SA510 SATA SSD, for which
+the manufacturer has posted a
+[critical firmware update notice](https://support-en.sandisk.com/app/answers/detailweb/a_id/50208#subject2).
+
+Failure to perform the firmware update could result in permanent failure of the SSD.
+
+:::
+
+#### How to check if your SSD is affected
+
+1. From the command line, run `sudo fdisk -l` to check your SSD model and check the
+   "Disk model" and mount location. If the disk model is in the
+   [list of affected models](https://support-en.sandisk.com/app/answers/detailweb/a_id/50208#subject2),
+   then proceed with the following steps. Otherwise, no further action is required.
+1. Check the firmware version, which may require the installation of `smartmontools`:
+   ```
+   sudo apt install smartmontools
+   sudo smartctl --xall /dev/sda2 | grep -i firmware
+   ```
+   If the firmware version is **v52046100**, no further action is required. Otherwise,
+   proceed with the remaining steps to update the firmware.
+
+#### How to update the firmware on affected SSDs
+
+1. Create an OS image backup of the SSD ([ROS 1 backup details here](/docs/ros1noetic/robots/outdoor_robots/husky/tutorials_husky#performing-a-backup),
+   [ROS 2 backup details here](../../../ros/installation/upgrading#saving-a-hard-drive-image)).
+1. Remove the SSD from the robot. Ensure that you use an ESD grounded wrist strap when handling SSD or PCB components. 
+1. Use a USB SSD dock and a Windows computer to perform the update by [following the vendor's instructions](https://support-en.sandisk.com/app/answers/detailweb/a_id/50208#subject2).
+1. Re-install the SSD into the robot.
+1. Verify all data is still present and that the SSD works as expected.
