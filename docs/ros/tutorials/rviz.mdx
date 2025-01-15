@@ -1,0 +1,159 @@
+---
+title: Visualizing with RViz2
+sidebar_label: Visualizing with RViz2
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+RViz is a very useful tool for visualizing the robot model and the robot sensor data. RViz must be launched on a computer that has a desktop manager and display. This means that it will not run on standard Clearpath robots since they run Ubuntu Server rather than Ubuntu Desktop.
+
+### Installation
+
+Follow the [offboard computer setup instructions](../installation/offboard_pc.mdx) to ensure that the computer has the required packages and files.
+
+### Launch Options
+
+Several launch files are provided to serve different use cases:
+
+#### View Model
+
+This launch file is used to visualize the robot model without needing a robot present or connected. For usage details, see [Live Configuration](../config/live.mdx)
+
+#### View Robot
+
+```bash
+ros2 launch clearpath_viz view_robot.launch.py namespace:=a200_0000
+```
+
+This launch file should be used when visualizing the robot while connected to the robot (wired or wirelessly). This will subscribe to topics from the robot to populate the visualization. Update the `namespace` parameter to match the robot's namespace.
+
+#### View Navigation
+
+```bash
+ros2 launch clearpath_viz view_navigation.launch.py namespace:=a200_0000
+```
+
+This launch file should be used when visualizing the robot with nav2 operating. This will subscribe to both robot and nav2 topics to populate the robot within the context of a map. Update the `namespace` parameter to match the robot's namespace.
+
+#### View Manipulators
+
+This launch file is used to view the robot when there is a manipulator attached, and allows interacting with MoveIt. For usage details, see [Manipulation Demo](manipulation/gazebo.mdx)
+
+### The GUI
+
+Once RViz loads, the model should be shown in the main view as shown below. Note that if the robot has been driven around then it may no longer be visible in the initial view, but panning can be used to navigate to the robot by following the line connecting the origin of the fixed frame to the robot.
+
+<center>
+  <figure>
+    <img
+      src={require("./img/view_robot.png").default}
+      width="900"
+    />
+    <figcaption>RViz View Robot</figcaption>
+  </figure>
+</center>
+
+The fixed frame refers to which frame will remain stationary in the visualization. Selecting `odom` means that the robot will move within the RViz screen when it drives. In contrast, selecting `base_link` will keep the robot fixed and the environment / sensor data will move around the robot in the RViz screen.
+
+The visualization can appear very cluttered with many frame coordinates labelled and visualized. These can be individually disabled using the various checkboxes under `TF`  and `TF` -> `Frames` in the `Displays` panel on the left of the screen.
+
+### Visualizing Sensor Data
+
+To add additional data to be visualized, press the `Add` button in the bottom left.
+
+<center>
+  <figure>
+    <img
+      src={require("./img/rviz_add_button.png").default}
+      width="400"
+    />
+    <figcaption>RViz Add Button</figcaption>
+  </figure>
+</center>
+
+It is recommended to add the visualization `By topic`. This view shows the topics that are available to be displayed. Navigate through the folder structure, select the desired topic and press `Ok`.
+
+<center>
+  <figure>
+    <img
+      src={require("./img/rviz_add_visualization.png").default}
+      width="500"
+    />
+    <figcaption>RViz Add Display Pop Up</figcaption>
+  </figure>
+</center>
+
+:::note
+
+If a topic is available to be echoed but does not show up in this list it generally means that the topic became available after the pop up was opened or that the topic is not in a format that is compatible with RViz.
+
+:::
+
+In the case of this example, a LaserScan topic was selected. LaserScan topics by default are displayed as small red dots around the robot as shown below:
+
+<center>
+  <figure>
+    <img
+      src={require("./img/rviz_laserscan.png").default}
+      width="900"
+    />
+    <figcaption>RViz LaserScan</figcaption>
+  </figure>
+</center>
+
+The `Displays` panel on the left allows several settings to be changed, including enabling / disabling the visualization and modifying how the data is displayed.
+
+#### Visualizing Camera Data
+
+Certain types of data require additional steps for display. RViz currently only supports the visualization of `raw` decoded images. If the images or videos are encoded for transmission (such as the ffmpeg or compressed topics), a decoder node must be launched locally to decode the images for display.
+
+See [Camera Data Compression](../config/camera_compression.mdx) for how to launch a decoder node.
+
+Once the decoded `image` topic is available, select it for display and select the `Image` plugin option.
+
+#### Visualizing IMU Data
+
+Viewing IMU data in RViz requires the [RViz IMU Plugin](https://index.ros.org/p/rviz_imu_plugin/). Install it by running:
+
+```bash
+sudo apt install ros-$ROS_DISTRO-imu-tools
+```
+
+Once the plugin is installed, select the IMU topic for display in RViz just like any other topic.
+
+### Troubleshooting
+
+The following are some common issues faced when using RViz.
+
+#### 1. RViz is blank
+
+RViz opens with no model or silhouette displayed.
+
+<center>
+  <figure>
+    <img
+      src={require("./img/rviz_blank.png").default}
+      width="700"
+    />
+    <figcaption>RViz Display Blank</figcaption>
+  </figure>
+</center>
+
+This is most commonly caused by RViz not having any connection to the robot or the robot topics. Check to make sure that the `/<namespace>/tf` topic (where `<namespace>` is the robot's namespace) is able to be echoed and that RViz was launched with the correct namespace.
+
+#### 2. Robot White Silhouette
+
+The robot model does not show up in RViz, instead showing a white silhouette.
+
+<center>
+  <figure>
+    <img
+      src={require("./img/rviz_no_model.png").default}
+      width="700"
+    />
+    <figcaption>RViz Displaying White Silhouette</figcaption>
+  </figure>
+</center>
+
+This can be caused by the robot TF being present but the reference frame listed under `Fixed Frame` not being present. This most commonly happens when the `view_navigation` launch is used while neither SLAM nor localization are running and therefore the `map` frame either does not exist or is not connected to the rest of the TF tree. Either switch the `Fixed Frame`, use the correct launch file, or address why SLAM or localization are not running.
