@@ -26,7 +26,7 @@ brackets are _optional_, and may be omitted.
 
 Since ROS 2 launched, all ROS 2 terminal commands are of the format `ros2 command [verb] [args...]`
 
-### Seting the `ROS_DOMAIN_ID`
+### Setting the `ROS_DOMAIN_ID`
 
 Because of its distributed nature, ROS 2 uses numbered **domains** to manage communication
 between nodes. Before running any `ros2` commands, make sure your domain is set correctly.
@@ -244,6 +244,18 @@ Supported licenses include:
 | `include/package_name/`    | C++ header files |
 | `src/`                     | C++ source files |
 | `action/`, 'msg/`, 'srv/`  | ROS action, message, and service definitions |
+
+### Releasing packages
+
+```bash
+cd /path/to/colcon_ws/src/repository_name
+catkin_generate_changelog
+# review & edit changelogs as necessary
+git add .
+git commit -m "Changes"
+catkin_prepare_release [--bump major|minor|patch]
+bloom-release -t $ROS_DISTRO -r $ROS_DISTRO repository_name
+```
 
 ## `package.xml`
 
