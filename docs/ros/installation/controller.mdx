@@ -20,6 +20,24 @@ If your robot comes with a PS4 controller, it will be paired already. Simply tur
 
 To re-pair the PS4 controller or pair a new PS4 controller:
 
+1. Install the python3-ds4drv package if it is not installed already. In terminal, run:
+
+```
+sudo apt-get install python3-ds4drv
+```
+
+2. Put the controller in pairing mode. Press and hold the PS and Share buttons on your controller until
+   the LED begins rapidly flashing white.
+3. Run the `ds4drv-pair` script to pair the controller to the computer. In terminal, run:
+
+```
+sudo ds4drv-pair
+```
+
+This script will scan for nearby Bluetooth devices, and pair automatically to the controller.
+
+Alternatively, if ds4drv-pair fails to detect the controller, you can pair the controller using `bluetoothctl`:
+
 1. Install the `bluez` package if it is not installed already. In terminal, run:
 
 ```
