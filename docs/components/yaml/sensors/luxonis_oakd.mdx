@@ -1,0 +1,75 @@
+<table>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("./img/luxonis_oakd.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+camera:
+- model: luxonis_oakd
+  urdf_enabled: true
+  launch_enabled: true
+  parent: top_plate_front_mount
+  xyz: [0.0, 0.0, 0.0]
+  rpy: [0.0, 0.0, 0.0]
+  ros_parameters:
+    oakd:
+      device_type: pro
+      camera:
+        i_enable_imu: false
+        i_enable_ir: false
+        i_floodlight_brightness: 0
+        i_ip: ''
+        i_laser_dot_brightness: 100
+        i_mx_id: ''
+        i_nn_type: none
+        i_pipeline_type: RGB
+        i_usb_speed: SUPER_PLUS
+        i_usb_port_id: ''
+      rgb:
+        i_board_socket_id: 0
+        i_fps: 30.0
+        i_height: 720
+        i_interleaved: false
+        i_max_q_size: 10
+        i_preview_size: 250
+        i_enable_preview: true
+        i_low_bandwidth: true
+        i_keep_preview_aspect_ratio: true
+        i_publish_topic: false
+        i_resolution: '1080P'
+        i_width: 1280
+```
+</td>
+</tr>
+</table>
+
+#### Package and Setup
+Luxonis OAK-D cameras use the `depthai_ros_driver` ROS 2 driver. The driver is open-source,
+maintained by Luxonis, and hosted on [GitHub](https://github.com/luxonis/depthai-ros.git). This
+package and its dependencies are installed alongside the `clearpath_sensors` package.
+
+For specifics on the way Clearpath's configuration system launches the camera, see the Luxonis OAK-D
+[launch file](https://github.com/clearpathrobotics/clearpath_robot/blob/jazzy/clearpath_sensors/launch/luxonis_oakd.launch.py)
+and the [default parameter file](https://github.com/clearpathrobotics/clearpath_robot/blob/jazzy/clearpath_sensors/config/luxonis_oakd.yaml)
+in `clearpath_sensors`.
+
+#### Device Type
+
+The `device_type` parameter specified what specific model of OAK-D camera is used. Supported types are:
+- `pro`: the [OAK-D Pro](https://shop.luxonis.com/products/oak-d-pro) (default);
+- `lite`: the [OAK-D Lite](https://shop.luxonis.com/products/oak-d-lite-1); and
+- `pro_w_poe`: the [OAK-D Pro W PoE](https://shop.luxonis.com/products/oak-d-pro-w-poe)
+
+#### Multiple Cameras
+
+If you have multiple OAK-D cameras configured, you must specify either the `camera.i_mx_id`
+(for USB cameras) or the `camera.i_ip` parameter (for ethernet/PoE cameras).
+
+See [Luxonis' documentation](https://docs.luxonis.com/software/depthai/examples/device_information)
+for instructions on how to determine your camera's IP address or MxId.
