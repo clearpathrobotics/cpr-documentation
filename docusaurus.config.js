@@ -122,11 +122,6 @@ const config = {
         },
         items: [
           {
-            //type: "docsVersion",
-            //to: "/docs/robots/",
-            //label: "Robots",
-            //position: "left",
-            //docsPluginId: "docs",
             type: "doc",
             docId: "robots",
             label: "Robots",

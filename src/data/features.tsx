@@ -47,7 +47,7 @@ const FEATURES: FeatureItem[] = [
       src: "/img/website_images/husky_observer_thumbnail.png",
       width: 114,
       height: 150,
-      hyperlink: "/docs/ros1noetic/robots/solutions/husky_observer/user_manual_husky_observer",
+      hyperlink: "/docs_robots/legacy/ros1_robots/solutions/husky_observer/user_manual_husky_observer",
     },
     text: <Translate id="homepage_husky_observer">Medium Outdoor Solution</Translate>,
   },
