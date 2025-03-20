@@ -1,0 +1,48 @@
+---
+title: Robot Operating System 2 (ROS 2) Overview
+sidebar_label: ROS 2 Overview
+sidebar_position: 1
+---
+
+import SupportedPlatforms from "/components/supported_platforms.mdx";
+import SupportedSensors from "/components/supported_sensors.mdx";
+
+:::info
+
+The information on these pages is for the ROS 2 Jazzy distribution. Use the dropdown box at the top
+of this page to select information for other ROS distributions.
+
+:::
+
+For [ROS 2 Jazzy](https://docs.ros.org/en/jazzy/index.html), rather than having individual sets of packages for each
+robot, we have opted to create common `clearpath` packages which are used by all supported platforms.
+Additionally, we no long use environment variables to customize the robot, and instead using a YAML configuration file to describe the
+robot. We have also defined a [ROS 2 API](api/overview.mdx) common to all of our supported platforms. As a result,
+our platforms are now more customizable, more modular, and more unified.
+
+## Terminology {#terminology}
+
+**_Clearpath Platform_**: The _platform_ refers to the vehicle that makes up the base of the robot. The platform
+may be referred to by the platform code to indicate the revision.
+
+**_Clearpath Robot_**: The _robot_ refers to the entire robotic system, including the platform, sensors, and additional accessories.
+
+**_Clearpath Config_**: The _config_ refers to the `robot.yaml` configuration file that defines the Clearpath robot.
+
+**_Clearpath API_**: The _API_ refers to the [ROS 2 application programming interface](api/overview.mdx). This is a set
+of ROS 2 topics and services defined by Clearpath which are used by all supported Clearpath platforms.
+
+<SupportedPlatforms />
+
+<SupportedSensors />
+
+## Changelog
+
+### [2.0] 2025-02-28
+
+#### New Features
+ - First Jazzy release
+
+#### Fixed
+ - First Jazzy release
+

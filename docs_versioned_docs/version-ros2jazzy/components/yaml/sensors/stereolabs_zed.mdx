@@ -1,0 +1,55 @@
+<table>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("./img/stereolabs_zed.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+camera:
+  - model: stereolabs_zed
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      stereolabs_zed:
+        general.grab_frame_rate: 30
+        general.serial_number: 0
+        general.camera_model: 'zed2'
+        general.grab_resolution: 'AUTO'
+```
+</td>
+</tr>
+</table>
+
+#### Package and Setup
+The Stereolabs Zed cameras use the `zed-ros2-wrapper` ROS 2 driver. The driver is open source, maintained by Stereolabs, and hosted on [GitHub](https://github.com/stereolabs/zed-ros2-wrapper). The `zed_wrapper` nodes depend on the the [ZED SDK](https://www.stereolabs.com/developers/release). The `zed-ros2-wrapper` ROS packages and the ZED SDK **are not installed by ROS dependencies** because the SDK and the wrapper depend on CUDA and need to be built against the specific version installed on your computer. Therefore, **you will have to install these manually by following the instructions in the [`zed-ros2-wrapper`](https://github.com/stereolabs/zed-ros2-wrapper/blob/master/README.md) repository.
+
+For specifics on the way Clearpath's configuration system launches the camera, see the Stereolabs Zed [launch file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/launch/stereolabs_zed.launch.py) and the [default parameter file](https://github.com/clearpathrobotics/clearpath_robot/blob/main/clearpath_sensors/config/stereolabs_zed.yaml) in `clearpath_sensors`.
+
+#### Camera Model
+The `general.camera_model` parameter must be modified to the match the type of Zed camera being used. See the list below for all models:
+- `zed`
+- `zedm`
+- `zed2`
+- `zed2i`
+- `zedx`
+- `zedxm`
+- `virtual`
+
+#### Serial Number
+The `general.serial_number` parameter can be left at `0` if only one camera is connected to that computer. If multiple cameras are connected, make sure to define a serial number for each.
+
+#### Resolution
+The `general.grab_resolution` parameter can be modified to change the resolution preset of the camera. Not all cameras support all presets. See the list below for all presets:
+- `AUTO`
+- `HD2K`
+- `HD1080`
+- `HD720`
+- `VGA`

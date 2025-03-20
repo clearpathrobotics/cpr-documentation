@@ -1,0 +1,102 @@
+---
+title: Wi-Fi Fundamentals
+sidebar_position: 5
+---
+
+Reliable wireless communication is crucial for operating mobile robots. This page covers essential Wi-Fi concepts including frequency bands, obstructions, interference and regulations. Understanding these concepts builds the foundation for making educated decisions about networking hardware and network design. Note that the recommendations discussed in this section are for optimizing the performance of a few robots on a dedicated Wi-Fi network, and may run counter to recommendations for configuring enterprise networks.
+
+## Wi-Fi Technology {#wifi-tech}
+
+### Wi-Fi Standards {#wifi-standards}
+Wi-Fi standards are defined in IEEE 802.11 to ensure that all Wi-Fi devices are interoperable and offer a standard set of features. The Wi-Fi generations are often referred to by numbers or by the section of the standard, such as:
+
+| Wi-Fi Generation | Wi-Fi Standard | Frequency Bands Involved |
+|------------------|----------------|--------------------------|
+| Wi-Fi 4          | 802.11n        | 2.4 GHz, 5 GHz           |
+| Wi-Fi 5          | 802.11ac       | 5 GHz                    |
+| Wi-Fi 6          | 802.11ax       | 2.4 GHz, 5 GHz           |
+| Wi-Fi 6E         | 802.11ax       | 2.4 GHz, 5 GHz, 6 GHz    |
+| Wi-Fi 7          | 802.11be       | 2.4 GHz, 5 GHz, 6 GHz    |
+
+Using a newer Wi-Fi generation allows the system to take advantage of newer features, however both the router and the client must support this same newer generation and the antenna must support the frequency used.
+
+### Wireless Frequency and Wi-Fi Bands
+The frequency of wireless communication impacts range, speed, and susceptibility to interference. Most commonly, ROS 2 robots are operated on the Wi-Fi bands of 2.4, 5 or 6 GHz. However, it is also possible to use other frequencies such as 900 MHz (802.11ah) depending on regional regulations and specific application requirements. It is important to make sure that the antennas used are suitable for the frequency bands used. Some routers have dedicated antennas for each band while others use multi-band antennas.
+
+It can be beneficial to get a system that allows for 2.4 GHz to be used as a backup to 5 GHz when 5 GHz signal strength is too low, and thus taking advantage of both frequencies.
+
+#### 2.4 GHz Band
+This band has slightly longer range than 5 or 6 GHz for the same transmit power and antenna gain. However, this increase in range generally does not give better performance with clear line of sight because it starts off with much lower max data rates and is susceptible to interference from common devices such as Bluetooth, microwaves and other wireless systems. However, 2.4 GHz tends to operate better through obstructions. Wi-Fi 6 (802.11ax) offers benefits in data throughput over older Wi-Fi technology in this band.
+
+If choosing to use 2.4 GHz, efforts will generally need to be made to keep the system running on low bandwidth such as using Fast DDS Discovery Server and being strategic with which information is transmitted and in which format.
+
+#### 5 GHz Band
+This band has a slightly shorter range compared to 2.4 GHz due to being a higher frequency. However, it provides significantly higher data throughput and thus by using a slightly higher gain antenna, it can perform much better than 2.4 GHz for the same range with clear line of sight. The higher frequency is more easily blocked or reflected by obstructions. The 5 GHz band tends to be less crowded because there are less devices operating on this band and there are more channel options. This is generally the best option for applications requiring high bandwidth such as video streaming, applications with clear line of sight at a distance and/or environments with multiple Wi-Fi networks.
+
+Within the context of ROS 2 and data heavy systems, it is possible to have a system that requires the throughput available only in 5 GHz or higher frequencies. When choosing which frequency band, it is important to consider how much bandwidth is required. Similarly it is important to try and limit how much data has to be transmitted wirelessly.
+
+#### 6 GHz Band
+This is a newer band, only supported by Wi-Fi 6E and newer devices. Due to how new it is, it is sparsely populated. It has the least interference and highest speed.
+
+### Wi-Fi Channels, Channel Width and Interference {#channels}
+Each Wi-Fi band has a series of channels. Each channel is centred at a designated frequency and each network will communicate over a particular channel or group of channels. Using a wider channel width means that the system is using several adjacent channels. Wider channel widths offer higher throughput but also greater chance of interference. Interference is based on how much other wireless traffic is also sharing the same or overlapping channels, and results in lower bandwidth, dropped connections and increased latency.
+
+It is important to understand that on the 2.4 GHz band, adjacent channels are overlapping. If operating with a 20 MHz channel width, then there are 3 possible channels that do not overlap (1, 6 and 11), while operating with a 40 MHz channel width means that there are only 2 options and they will always overlap and interfere with each other. At 5 GHz, only channels that do not overlap at 20 MHz are considered. There are 25+ channels available that do not overlap at 20 MHz channel width (depending on regional regulations). When using higher channel widths, communication will still span over many channels and increase the likelihood of interference between networks. That being said, there are 5+ non-overlapping channels available at 80 MHz channel width (depending on on regional regulations). This gives a lot more options than on the 2.4 GHz network. 6 GHz has even more channels available with more opportunities for channel widths as high as 320 MHz.
+
+The choice of channels and channel widths depends very much on the type of network being designed. The recommendations discussed in this section are for specific robot configurations and may run counter to recommendations for configuring enterprise networks. This is because the goals, restrictions and priorities of these systems are different. Do note that if the router is using the same Wi-Fi radio to broadcast a network and to connect to another Wi-Fi network as a client (for Wi-Fi as WAN), then both  networks must use the same channel and channel width.
+
+In an outdoor system where there is one access point servicing a small number of robots (less than 10) and relatively little interference, the focus is on throughput. To maximize this throughput the channel should be chosen for the lowest interference and the channel width should be wide (80 MHz on 5 GHz and 40 MHz on 2.4 GHz). Functionally, it is often best to allow the router to automatically choose the channel and channel width. It will evaluate the best options based on evaluating interference in the immediate area. If the router does not support dynamic channel selection, then interference can be evaluated using a Wi-Fi analyzer phone app and an available channel with the least interference can be selected. This method will not catch non-Wi-Fi devices that share the same frequencies, however it is a good guide, particularly at 5 GHz. It is valuable to note that some devices have to decrease the transmit power to support larger channel widths. Whether this is a problem is something that should be evaluated by testing empirically with the devices in the operating area.
+
+In a system where there needs to be multiple access points to service many robots in the same area, it is important to select channels and channel widths so that the different access points are not causing interference for each other. In this case, automatic channel selection and channel width selection would be undesirable.
+
+In an indoor system where there is a lot of interference, it is important to work with the IT team that maintains the building Wi-Fi infrastructure. Likely this would result in using 20 MHz channel widths and setting the system to a particular channel to prevent interference with the building infrastructure.
+
+#### Additional Sources of Interference
+It is important to note that interference comes not only from competing Wi-Fi networks but also other wireless devices that may share the same frequencies (such as Bluetooth) as well as electromagnetic noise from motors and similar devices. This electromagnetic noise is of a greater concern when communicating at lower frequencies such as 900 MHz, where the magnitude of the noise harmonics are greater.
+
+### Multi-Input Multi-Output (MIMO) {#mimo}
+With modern Wi-Fi technology, it is possible to establish more than one simultaneous stream of data to increase throughput. A given router or Wi-Fi card supports a set number of spatial streams, also referred to as chains. Each chain generally requires its own antenna. For this to be most effective, the router should have the same number or more spatial streams as the robot. The theoretical maximum bandwidth between two robots will be limited by the device with the least spatial streams, although additional transmitting antennas can improve signal quality. In a multi-robot configuration, the router can use additional spatial streams to communicate with additional robots. In Wi-Fi 6E and later, this communication works in both directions, but with older Wi-Fi technology this benefit is only when transmitting data from the router to the robot and not both ways.
+
+### Data Rate vs Bandwidth
+It is common for routers to quote very high data rates however it is important to understand the difference between these theoretical maximum data rates and actual possible bandwidth. The maximum possible rate is often used as a sales tactic and there are several large caveats to the advertised rates. First off, if a router can simultaneously communicate on multiple frequency bands, the maximum theoretical data rate at each of these bands is often summed together to calculate the advertised rate. Assuming that a system is exclusively on one frequency band, the maximum possible data rate is already much lower. For example, a router may be capable of 600 Mbps across 2 spatial streams at 2.4 GHz, 2400 Mbps across 2 spatial streams at 5 GHz and 2400 Mbps across 2 spatial streams at 6 GHz. This would get quoted as a 5400 Mbps router. However, if one device with two spatial streams were connected at 5 GHz the theoretical max speed would be 2400 Mbps or if it had only one spatial stream the theoretical max speed would be 1200 Mbps.
+
+The theoretical max data rate determined for a specific frequency band is still a theoretical maximum and does not reflect a reasonable bandwidth. This theoretical speed would be true assuming no interference, no obstructions, essentially no overhead to the protocols and essentially a no loss environment. In reality, there are many factors that contribute to lower speeds. A good rule of thumb is to expect no more than half of the theoretical maximum. If the interference is bad or the signal is weak (such as at long distances from the router) the actual bandwidth will be much lower.
+
+Additionally, the maximum data rate is not the only limiting factor. The bandwidth available to a particular device on a network may be much lower if there are an excessive number of clients or if the packets being sent are incredibly small. In these cases the overhead of routing packets and switching clients become the limiting factors and actual data rates are nowhere near the theoretical maximums. In these cases, the system needs more access points, not higher bandwidth access points.
+
+### Signal Strength
+The strength of a Wi-Fi connection is referred to as RSSI (Received Signal Strength Indicator). There is an RSSI value for how well the client can receive from the router and one for how well the router can receive from the client. This value is measured as a negative dBm value and a higher number (closer to 0) is better. How this number is evaluated varies between devices but generally anything over -67 dBm is a good signal while anything under -75 dBm is not good. The required signal strength in order for a given system to work will depend on how much data throughput the system needs and how robust it is to dropped packets.
+
+Having physical objects near the antennas, between the receiving and transmitting antennas, or even too close to the direct path between the two antennas will result in lower signal strength. Obstacles that the signal would have to travel through significantly impede Wi-Fi signal, particularly at higher frequency bands. Different materials do impact signals differently, such as metal generally reflects Wi-Fi signals while materials such as glass and wood allow more penetration although the signal is still significantly attenuated. For indoor applications, walls that are brick or concrete will be much more detrimental to signal strength in comparison to drywall. If obstacle penetration is a concern then it may be beneficial to use a 2.4 GHz network. Antenna placement is discussed more in [Wi-Fi Hardware](wifi_hardware.mdx#placing-antennas).
+
+## Wi-Fi Regulations {#wifi-regulations}
+
+Wireless communication is regulated by government bodies, such as:
+
+- **ISED (Innovation, Science and Economic Development):** Canada
+- **FCC (Federal Communications Commission):** United States
+
+It is important to understand the various types and significance of regulations that exist for wireless devices. Certain Wi-Fi channels are reserved for specific usage and are not available for everyone to use. Similarly, there are differences in power limits for different Wi-Fi channels. These regulations vary greatly between regions. The information below are examples of the types of regulations that may be in place and are not a reference for what is legal in any given region. It is your responsibility to check that your system complies with your local regulations.
+
+To assist in making your system compliant, ensure that the router(s) in the system have the correct regulatory approvals for the country where the system is operating. Some routers have different hardware versions for different countries, while others need the region set in the software.
+
+### DFS Channels
+DFS (Dynamic Frequency Selection) channels are a section of channels that are used by weather and radar systems. To use these channels, a router must check that no radar systems are using these channels within range. During operation, if a radar message is detected then the router must switch channels. DFS channels are not commonly used and thus can be very useful for avoiding interference. However, if choosing to use DFS channels then the system must be equipped to handle a temporary break in communication if the system were to need to switch channels unexpectedly. Not all routers support DFS channels.
+
+### Transmit Power and EIRP
+The conducted transmit power is the strength at which a Wi-Fi device transmits its signal, not including the gain from the antenna. At its core, a higher transmit power increases the range of the signal. This relates directly to the range in which the network is usable but also the range in which the network will cause interference. Due to the potential for interference, transmit power is limited on all channels, although not all channels have the same limits. Routers generally quote the transmit power for all chains combined, although it is important to verify this in the datasheet. When comparing routers with different numbers of chains, note that the transmit power is divided per chain. So for 2 routers that each have a total transmit power of 26 dBm, one with 2 chains and one with 3 chains, the 3 chain router will have higher throughput at close range due to the additional spatial stream but the router with 2 chains will have a further range due to the higher effective transmit power per chain.
+
+The effective transmit power across the complete transmission system is referred to as the EIRP (Equivalent or Effective Isotropically Radiated Power). It is calculated by taking the conducted transmit power (in dBm) and adding it to the gain from the antenna (in dBi) minus the loss from the antenna connectors and cables. Many regions have separate limits on conducted transmit power and EIRP on different bands. To ensure compliance with regulations it is important to look up the particular channels that are being used and to determine the maximum allowable transmit power and EIRP.
+
+While transmit power is critical to long distance and outdoor applications, it is important to understand that double the power does not result in double the range. The power density at a particular distance is proportional to the inverse square of the distance. In theory this means that a 6 dBm increase in power should double the range of the network however due to other factors such as interference and obstacles, this is rarely the case. Do note that unnecessarily high transmit power indoors can result in excessive reflections and excessive interference. To provide coverage for a large region indoors (with many surfaces to reflect signals), it is best to set up multiple access points as a mesh network, and utilize a lower transmit power.
+
+## Key Takeaways
+- Newer Wi-Fi technology offers increased speeds and better connectivity (recommended to use Wi-Fi 6 or newer).
+- Lower frequencies penetrate objects better, higher frequencies give much more bandwidth with clear line of sight.
+- Choose channels with the least interference.
+- Multi Input Multi Output (MIMO) generally increases throughput.
+- Actual bandwidth is much lower than theoretical data rate.
+- Antennas should be mounted away from any other object or surface (nothing beside them or behind them etc.).
+- Ensure that your system complies with local regulations, especially in regards to allowable channels, conducted transmit power and EIRP.
+
+To continue building on this knowledge, read through the [Wi-Fi Hardware](wifi_hardware.mdx) page.

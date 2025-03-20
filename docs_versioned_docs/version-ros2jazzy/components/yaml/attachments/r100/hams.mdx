@@ -1,0 +1,32 @@
+<table>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("./img/hams.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+platform:
+  attachments:
+    - name: hams
+      type: r100.hams
+      table_height: 0.6
+      mount_height: 0.3
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      enabled: true
+```
+</td>
+</tr>
+</table>
+
+The height of the table can be adjusted using the `table_height` parameter. The height parameter corresponds to the length of the table legs. Therefore, the distance from the `parent` link to the top surface of the table will be the `table_height` plus the thickness of the top plate.
+
+The height of the recessed arm mount can be adjusted using the `mount_height` parameter. The `mount_height` parameter corresponds to the distance from the `parent` link to the top surface of the mounting plate.
+
+Payloads can be added to the table using the links `hams_default_mount` (at the center of the table) and `hams_arm_mount` (center of the recessed plate). The name of these links corresponds to the `name` parameter set in the `robot.yaml`.

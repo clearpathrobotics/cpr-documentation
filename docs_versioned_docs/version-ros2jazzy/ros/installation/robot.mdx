@@ -1,0 +1,318 @@
+---
+title: Robot Installation
+sidebar_label: Robot
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+import ClearpathFirmware from "../../components/_clearpath_firmware.mdx";
+import StandardClearpathBridgeSetup from "../../components/networking/_standard_clearpath_bridge_setup.mdx";
+import ComputerNetworkingSetupInstall from "../../components/networking/_computer_networking_setup_install.mdx";
+
+## Operating System (OS) {#operating-system}
+
+ROS 2 Jazzy uses Ubuntu 24.04 as its Tier 1 operating system.
+Though other operating systems are supported, it is highly recommended to use Ubuntu 24.04. 
+The preferred method is using the Clearpath Robotics ISO image, which is covered in this section.
+
+:::note
+
+The Clearpath Robotics ISO image only targets x86 computers (`amd64` architecture).
+
+:::
+
+Clearpath provides a lightly customized installation image of Ubuntu 24.04 that has the needed script to setup the robot.
+To install the software on a physical robot through the Clearpath Robotics ISO image, you will first need a USB drive of at least 4 GB
+to create the installation media, an ethernet cable, a monitor, and a keyboard.
+
+1.  Download the [ROS 2 Jazzy ISO image](https://packages.clearpathrobotics.com/stable/images/2.0.0/).
+
+2.  Copy the image to a USB drive using `unetbootin`, `rufus`, `balena etcher`, or a similar program. For example:
+
+    ```
+    sudo unetbootin isofile="clearpath-noble-jazzy-autoinstall.iso"
+    ```
+
+3.  Connect your robot computer to internet access (via wired Ethernet), a keyboard, and a monitor.
+    Make sure that the robot is connected to shore power (where applicable) or that the robot's battery is fully charged.
+
+    :::caution
+
+    The next step wipes your robot's hard drive, so make sure you have that important data backed up.
+
+    :::
+
+4.  Boot your robot computer from the USB drive and let the installer work its magic.
+
+    :::note
+
+    You may need to configure the computer's BIOS to prioritize booting from the USB drive.
+    On most common motherboards, pressing `Delete` during the initial startup will open the BIOS for configuration.
+
+    :::
+
+5.  The setup process will be automated and may take a long time depending on the speed of your internet connection.
+6.  Once the setup process is complete, the computer will turn off.
+    Please unplug the USB drive and turn the computer back on.
+7.  On first boot, the username will be `robot` and the password will be `clearpath`.
+    You should use the `passwd` utility to change the `robot` account password.
+8.  Log on to the computer and run `bash -e clearpath_computer_installer.sh` to install the needed software.
+    This will take a while to complete and has a prompts that must be answered.
+
+
+## Internet Connection
+
+### Wi-Fi
+
+To configure Wi-Fi, first log in to the robot's computer. This can be done by connecting the computer
+to a monitor using an HDMI or DisplayPort cable, and connecting a USB keyboard. Power the robot on and
+wait for the Ubuntu login prompt to show up.
+
+Once logged in, find the name of your Wi-Fi interface by calling `ip a`. Wi-Fi interface names begin with `wl`.
+
+<center>
+  <figure>
+    <img
+      src={require("./img/wifi_interface.jpg").default}
+      width="900"
+    />
+  </figure>
+</center>
+
+Next, create the file `/etc/netplan/60-wireless.yaml`, and paste the following contents:
+
+```
+network:
+  wifis:
+    # Replace WIRELESS_INTERFACE with the name of the wireless network device, e.g. wlan0 or wlp3s0
+    # Fill in the SSID and PASSWORD fields as appropriate.  The password may be included as plain-text
+    # or as a password hash.  To generate the hashed password, run
+    #   echo -n 'WIFI_PASSWORD' | iconv -t UTF-16LE | openssl md4 -binary | xxd -p
+    # If you have multiple wireless cards you may include a block for each device.
+    # For more options, see https://netplan.io/reference/
+    WIRELESS_INTERFACE:
+      optional: true
+      access-points:
+        SSID_GOES_HERE:
+          password: PASSWORD_GOES_HERE
+      dhcp4: true
+      dhcp4-overrides:
+        send-hostname: true
+```
+
+Replace `WIRELESS_INTERFACE` with the name of your Wi-Fi interface, `SSID_GOES_HERE` with your Wi-Fi
+SSID, and `PASSWORD_GOES_HERE` with your Wi-Fi password.
+
+Save the file and call `sudo netplan apply` to apply the changes. Check `ip a` again to make sure that
+an IP address has been assigned to your Wi-Fi interface.
+
+You should now be able to SSH into the robot by calling `ssh robot@<robot_ip>` from an offboard computer.
+
+:::note
+
+If the Wi-Fi interface indicates down (disabled), enable it using `sudo ip link set dev <interface> up`.
+Replace `<interface>` with the name of your disabled Wi-Fi interface.
+
+:::
+
+### Ethernet
+
+The robot's computer can also be connected to a DHCP network over Ethernet. Connect an Ethernet cable
+to the built-in Ethernet port on the robot's computer and check that an IP has been assigned with `ip a`.
+
+You should now be able to SSH into the robot by calling `ssh robot@<robot_ip>` from an offboard computer.
+
+## Firmware Update  {#firmware-update}
+
+All platforms with the exception of the A200 will require a firmware update to run ROS 2 Jazzy.
+
+<ClearpathFirmware />
+
+## Package Install
+
+### Option 1: Install Script
+
+#### Package Sourcing, and Install
+
+```
+wget -c https://raw.githubusercontent.com/clearpathrobotics/clearpath_computer_installer/main/clearpath_computer_installer.sh && bash -e clearpath_computer_installer.sh
+```
+
+#### Network Configuration
+
+<StandardClearpathBridgeSetup />
+
+For details on setting up custom network interface settings see [Clearpath Computer Setup](../networking/computer_setup.mdx).
+
+#### Robot YAML
+
+The `robot.yaml` file defines the configuration of the robot including the robot model, all
+supported accessories and any extra URDF elements or ROS parameters. Information about the Robot YAML
+is found in the [Robot Configuration](../config/yaml/overview.mdx) section. This YAML is used to generate the launch,
+URDF and ROS parameter files during runtime.
+
+Create your `robot.yaml` file and then copy it into `/etc/clearpath/` and replace the existing file.
+
+#### Start Service
+
+This script used [robot_upstart](https://github.com/clearpathrobotics/robot_upstart/tree/foxy-devel) to install the `systemd` services
+that will launch platform and sensor launch files as background processes.
+
+To start the services, call
+
+```
+sudo systemctl daemon-reload && sudo systemctl start clearpath-robot.service
+```
+
+### Option 2: Manual Source Install
+
+<details>
+  <summary>Click to expand the manual source install instructions. Only use this option if you
+           know what you are doing.</summary>
+  <p>
+
+  #### ROS 2 Jazzy
+
+  Follow the [official instructions](https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html)
+  for installing ROS 2 Jazzy from debian packages.
+
+  #### Clearpath Package Server
+
+  The Clearpath package server needs to be added to the robot computer to access robot packages.
+
+  Configure Ubuntu's APT package manager to add the package server:
+
+  **1. Install the authentication key for the packages.clearpathrobotics.com repository**
+
+  ```
+  wget https://packages.clearpathrobotics.com/public.key -O - | sudo apt-key add -
+  ```
+
+  **2. Add the debian sources for the repository**
+
+  ```
+  sudo sh -c 'echo "deb https://packages.clearpathrobotics.com/stable/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/clearpath-latest.list'
+  ```
+
+  **3. Update your computer’s package cache**
+
+  ```
+  sudo apt-get update
+  ```
+
+  #### Network Configuration
+
+  <ComputerNetworkingSetupInstall />
+
+  ##### Standard Clearpath Bridge
+
+  <StandardClearpathBridgeSetup />
+
+  For details on setting up custom network interface settings see [Clearpath Computer Setup](../networking/computer_setup.mdx).
+
+  #### Clearpath Robot metapackage
+
+  Once the Clearpath package server has been added, the [Clearpath Robot](https://github.com/clearpathrobotics/clearpath_robot)
+  metapackage can be installed.
+
+  ```
+  sudo apt install ros-jazzy-clearpath-robot
+  ```
+
+  Installing this package will also install all dependencies required to run any Clearpath robot and supported sensors,
+  other than Clearpath firmware packages.
+
+  #### Source install
+
+  **1. Create a workspace on the robot's computer for the clearpath packages**
+
+  ```
+  mkdir ~/clearpath_ws/src -p
+  ```
+
+  **2. Import dependencies**
+
+  ```
+  source /opt/ros/jazzy/setup.bash
+  sudo apt install python3-vcstool
+  cd ~/clearpath_ws
+  wget https://raw.githubusercontent.com/clearpathrobotics/clearpath_robot/jazzy/dependencies.repos
+  vcs import src < dependencies.repos
+  cd ~/clearpath_ws/src
+  git clone https://github.com/clearpathrobotics/clearpath_robot.git
+  cd ~/clearpath_ws
+  rosdep install -r --from-paths src -i -y
+  ```
+
+  **3. Build packages**
+
+  ```
+  colcon build --symlink-install
+  ```
+
+  **4. Link the workspace**
+
+  Add the following line to your `~/clearpath_ws/src/clearpath_robot/clearpath_robot/scripts/generate` file,
+  right under where ROS is sourced:
+
+  ```
+  source /home/robot/clearpath_ws/install/setup.bash
+  ```
+
+
+  :::note
+
+  This workspace will also need to be sourced in your [robot.yaml](#robot-yaml) file as described
+  in the [ROS2 Environment](../config/yaml/system.mdx#ros-2-environment) section.
+
+  :::
+
+  #### Setup folder
+
+  Create the setup folder where the [robot.yaml](../config/yaml/overview.mdx) file will be stored, and where files will be generated:
+
+  ```
+  sudo mkdir /etc/clearpath/ -p && sudo chmod 777 /etc/clearpath/
+  ```
+  #### Robot YAML
+
+  The `robot.yaml` file defines the configuration of the robot including the robot model, all
+  supported accessories and any extra URDF elements or ROS parameters. Information about the Robot YAML
+  is found in the [Robot Configuration](../config/yaml/overview.mdx) section. This YAML is used to generate the launch,
+  URDF and ROS parameter files during runtime.
+
+  Create your `robot.yaml` file and then copy it into `/etc/clearpath/`.
+
+  #### Robot services
+
+  Clearpath robot services can now be installed with the following command:
+
+  ```
+  source /opt/ros/jazzy/setup.bash
+  ros2 run clearpath_robot install
+  sudo systemctl enable clearpath-robot
+  ```
+
+  This script uses [robot_upstart](https://github.com/clearpathrobotics/robot_upstart/tree/foxy-devel) to install the `systemd` services
+  that will launch platform and sensor launch files as background processes.
+
+  To start the services, call
+
+  ```
+  sudo systemctl daemon-reload && sudo systemctl start clearpath-robot.service
+  ```
+
+  Add the following line to your `~/.bashrc` file to automatically source the generated `setup.bash` file in new terminals:
+
+  ```
+  source /etc/clearpath/setup.bash
+  ```
+
+  #### Additional settings
+
+  Certain sensors may require additional setup, please review the [Accessories](/docs_robots/accessories) pages
+  for any additional instructions for the sensors that you are using. For example, the Blackfly camera has additional instructions
+  listed under [software bringup](/docs_robots/accessories/sensors/cameras/flir_blackfly_s#software-bringup).
+  </p>
+</details>

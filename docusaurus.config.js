@@ -49,6 +49,9 @@ const config = {
         rehypePlugins: [rehypeKatex],
         showLastUpdateTime: true,
         versions: {
+          ros2jazzy: {
+            label: 'ROS 2 Jazzy',
+          },
           ros2humble: {
             label: 'ROS 2 Humble',
           },
@@ -56,7 +59,7 @@ const config = {
             label: 'ROS 1 Noetic',
           }
         },
-        includeCurrentVersion: true,
+        includeCurrentVersion: false,
         admonitions: {
           keywords: ['safety-danger', 'safety-warning', 'safety-caution'],
           extendDefaults: true,
