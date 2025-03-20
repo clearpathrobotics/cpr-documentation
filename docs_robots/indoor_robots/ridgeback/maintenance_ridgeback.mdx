@@ -1,0 +1,59 @@
+---
+title: Ridgeback Maintenance
+sidebar_label: Maintenance
+sidebar_position: 4
+---
+import ComponentIntroductionRidgeback from "/components/introduction_ridgeback.mdx";
+import GettingNewPackages from "/components/maintenance/getting_new_packages.mdx";
+import Support from "/components/support.mdx";
+import ComponentsWdSsdCriticalUpdate from "/components/maintenance/_wd_ssd_critical_update.mdx";
+
+<ComponentIntroductionRidgeback />
+
+## Battery Replacement
+
+If Ridgeback's batteries need replacement, they are accessible by removing the top-plate and the insulator
+cover. Before performing any service or maintenance to the robot, the battery pack must be fully disconnected.
+The batteries weigh approximately 33 kg (73 lbs) each, so use care and caution when lifting the
+batteries out of the chassis. Please contact Clearpath Robotics regarding replacement batteries.
+
+It may also be necessary to remove the antenna cables carefully prior to removing the batteries.
+
+## Long-term storage
+
+When storing Ridgeback for long periods of time, its important to properly maintain the batteries to fully
+maximize their life. Consider one of the following two procedures when placing Ridgeback in long-term storage:
+
+- Fully charge Ridgeback, turn it off and put it into storage. Once a week, connect power to the charger
+  and allow the charger to top up the battery for an hour or so.
+- Fully charge Ridgeback, turn it off and put it into storage, but leave the charger connected and powered
+  the entire time Ridgeback is in storage via a wall timer that turns off for one hour every 24-hour cycle.
+  The charger will monitor the battery and will automatically charge it up as needed. Note that the wall
+  timer is needed since the charger times out and turns off otherwise.
+
+Please contact Clearpath Robotics for additional information about Ridgeback's batteries.
+
+---
+
+## Software Maintenance {#software_maintenance}
+
+### Getting New Packages
+
+<GettingNewPackages />
+
+### MCU Firmware Update
+
+Refer to [firmware update instructions](/docs/ros/installation/robot#firmware-update).
+Be sure to select the ROS 2 distribution that matches the ROS 2 distribution installed on your robot.
+
+### WD Blue SA510 SATA SSD Critical Firmware Update {#wd-firmware-update}
+
+<ComponentsWdSsdCriticalUpdate />
+
+---
+
+## Support {#support}
+
+<Support />
+
+---

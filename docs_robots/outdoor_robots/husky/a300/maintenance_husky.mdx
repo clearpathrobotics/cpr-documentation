@@ -1,0 +1,761 @@
+---
+title: Husky A300 Maintenance
+sidebar_label: Maintenance
+sidebar_position: 5
+---
+
+import ComponentIntroductionHusky from "/components/introduction_husky_a300.mdx";
+import ComponentReplacingTireOrInnerTube from "/components/maintenance_husky/maintenance_husky_tire_and_inner_tube.mdx";
+import ComponentUpdatingPumaFirmware from "/components/maintenance/firmware_update_puma.mdx";
+import ComponentLeadAcidBatteryCare from "/components/maintenance/lead_acid_battery_care.mdx";
+import ComponentLeadAcidBatteryCareTips from "/components/maintenance/lead_acid_battery_care_tips.mdx";
+import ComponentBillOfMaterialsNote from "/components/maintenance/bill_of_materials_note.mdx";
+import GettingNewPackages from "/components/maintenance/getting_new_packages.mdx";
+import Support from "/components/support.mdx";
+
+<ComponentIntroductionHusky />
+
+## Preventative Maintenance
+
+:::safety-danger
+
+**Always follow the proper Lock-Out Tag-Out Procedure for Husky A300 when completing inspections or maintenance.**
+
+Access to live voltage inside Husky A300 may occur if the proper Lock-Out Tag-Out procedure is not followed.
+This may result in electric shock.
+
+:::
+
+<br/>
+
+:::safety-caution
+
+**Always follow safe handling procedures when performing maintenance.**
+
+Sharp edges may exist inside the robot.
+
+:::
+
+<br/>
+
+:::safety-caution
+
+**Always follow facility guidelines to clean up fluid spills.**
+
+These may present a slip hazard.
+
+:::
+
+### Weekly Prevenative Maintenance
+
+Perform the following tasks at least once every week.
+
+#### Circle Check
+
+Perform a circle check around Husky daily to ensure no damage has occurred since its last usage.
+During this visual inspection, ensure the robot is turned on and verify that:
+
+- The Status Lights are functioning correctly by pressing an Emergency Stop button and checking for the
+  Emergency Stop light pattern.
+- The robot was not damaged during the last operation.
+
+:::note
+
+Husky is an all-terrain IP54-rated robot, but it is not waterproof.
+Care should be taken that no part of the main chassis is ever submerged in water.
+When the chassis becomes wet or dirty, wipe it down with a damp cloth and dry with a towel.
+
+If water is suspected to have entered the Husky chassis, power off the robot, open the top plate
+to ensure that any water has drained out through the drain plug, and allow Husky to dry fully
+(for a minimum of 24 hours) prior to putting it back into service.
+
+:::
+
+#### Clean or Replace Air Filter
+
+The air filter is used to prevent dirt and dust from entering the robot at the front air
+intake. It must be cleaned or replaced on a regular basis. High-dust environments will require
+more frequenct maintenance.
+
+:::note
+
+The air filter is foam and can be washed, then reused.
+
+:::
+
+Procedure:
+
+1. Remove the front Livery panel by loosening the quarter-turn latches
+   and lifting the panel up. Be careful not to damage the Emergency Stop
+   Button while removing the panel.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_airfilter_1.jpg"
+       width="600"
+     />
+   </center>
+1. Remove the air filter.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_airfilter_2.jpg"
+       width="600"
+     />
+   </center>
+1. Wash the filter with water and allow it to dry fully.
+   (Alternatively, replace with a new filter.)
+1. Install the clean filter.
+1. Replace the front livery panel by aligning the pins and tighten the quarter-turn latches.
+
+#### Battery Cell Balancing (Quick)  {#quick-cell-balance}
+
+Husky is powered by LiFePO<sub>4</sub> batteries. The function and health of these
+batteries is monitored by a Battery Management Unit (BMU) which is internal to the battery pack itself.
+
+Over the operating life of Husky, the State of Charge (SoC) of the batteries may start being
+misreported accompanied by a higher voltage difference between the batteries' cells. Typically battery cells
+should be within a range of 50 mV; if not, Husky's batteries may suddenly drop in SoC
+while operating or the Husky may unexpectedly shut off. To resolve this issue, it is required to
+perform regular cell balancing of the battery and BMU.
+
+A "quick" cell balancing should be performed at least once each week.
+
+Procedure:
+
+1. Power off the robot.
+1. Place the robot on a level surface.
+1. Connect the manual charger.
+1. Let the batteries charge for at least four hours.
+
+#### AMP Sensor Cleaning
+
+The AMP variant of Husky is equipped with additional sensors that should be inspected at least weekly
+(more often in high dust/dirt environments) and cleaned as needed.
+
+##### LiDAR Lens Cleaning
+
+1. Inspect LiDAR lens with a flashlight for any dust and/or debris.
+2. Using the Lens Cleaning Wipes (Clearpath p/n 015591), clear the LiDAR of any dust/debris.
+
+:::safety-caution
+
+Do not use abrasive items or solvents on the LiDAR assembly, as this will damage the LiDAR.
+Used and dirty cleaning cloths or wipes will scratch the window over time. The LiDAR window is
+a wear item but proper care and cleaning can significantly extend its life.
+
+:::
+
+##### Camera Cleaning (clean with microfiber cloth or CPR-approved cleaning wipe if dirty)
+
+1. Visually inspect the camera lenses and confirm there is no dust or debris on them.
+1. If necessary, carefully clean the lenses with a microfiber cloth or a Clearpath Robotics-approved
+   cleaning wipe.
+
+:::safety-caution
+
+Do not apply excessive pressure to the camera lenses.
+
+:::
+
+### Monthly Preventative Maintenance
+
+Perform the following tasks once every month.
+
+#### Battery Cell Balancing (Full)
+
+Refer to the notes above regarding the [weekly "quick" cell balancing](#quick-cell-balance).
+In a addition, a full balance of 24+ hours is recommended at least once per month.
+
+Procedure:
+
+1. Power off the robot.
+1. Place the robot on a level surface.
+1. Connect the manual charger.
+1. Let the batteries charge for at least 24 hours.
+
+#### Tire Inspection
+
+Tire pressure may change with temperature and should be checked monthly with a pressure gauge. Inspecting tires,
+releasing pressure, and inflating tires are completed through the tire's inflation stem.
+Tire pressure should not exceed 137 kPa (20 psi), and lower pressure may be desired based on terrain requirements.
+A monthly visual inspection of the tire treads is also recommended. Replacement tires and tubes assemblies can be
+purchased from Clearpath Robotics and can be installed by the user.
+
+:::tip
+
+Husky's wheels can handle a range of different terrains, but work best when inflated to the proper pressure.
+Lower tire pressures, for example 68.5 kPa (10 psi), ensure better traction in rough and varied terrain, where rocks
+or other obstacles may be encountered. This has the adverse effect of lowering drivetrain efficiency and decreasing
+battery charge, so high pressures up to a maximum of 137 kPa (20 psi) should be used when driving on flat surfaces.
+
+Lower tire pressuses also reduce the effective diameter of the wheel, and will impact your odometry readings.
+Odometry is calculated using the average diameter of a tire inflated to 137 kPa (20 psi).
+
+:::
+
+Tire inspection procedure:
+
+1. Power off the robot.
+1. Place the robot on a level surface.
+1. Using a tire pressure gauge, check the pressure on each tire to confirm it is 68.5 - 137 kPa (10 - 20 psi). Add or remove air
+   as needed to ensure each tire is in the proper range. If leaks persist, [change the tire tube](#tire-maintenance).
+1. One wheel at a time, slowly roll Husky through full wheel revolution while inspecting the tire for excessive wear,
+   cuts, or punctures. If any damage is detected, [replace the tire](#tire-maintenance).
+
+#### Drivetrain Inspection
+
+It is recommended that an auditory inspection of the robot drivetrain be performed once per month. Take note of any clicking,
+grinding or irregular skipping sounds while the robot is moving. Note that some clicking in the gearheads is normal during
+stops and starts, due to backlash between the gears.
+
+### 36-Month Preventative Maintenance
+
+Perform the following tasks once every thirty-six months.
+
+#### Battery Health Check
+
+Husky's batteries are expected to last for at least 36 months of
+continuous operation. The actual lifetime experienced will vary greatly depending on the usage and
+operating environment. Contact [Support](#support) for an in-depth assessment of the battery's health if you
+have any concerns.
+
+---
+
+## Hardware Maintenance
+
+### Common Replacement Items {#husky_maintenance_common_replacement_items}
+
+<ComponentBillOfMaterialsNote />
+
+| Description                | CPR Item | Manufacturer            | Manufacturer Item     | Distributor | Distributor Item |
+| :------------------------- | :------- | :---------------------- | :-------------------- | :---------- | :--------------- |
+| Tire                       | 000269   | Carlisle                | 5100201               | -           | -                |
+| Tire's inner tube          | 000435   | Carlisle                | 323790                | -           | -                |
+| Battery                    | 025047   | Clearpath Robotics      | -                     | -           | -                |
+| Battery Charger            | 032729   | Clearpath Robotics      | -                     | -           | -                |
+| Air filter                 | 032403   | Clearpath Robotics      | -                     | -           | -                |
+| Main PCBA                  | 030449   | Clearpath Robotics      | -                     | -           | -                |
+| BLDC PCBA                  | 030377   | Clearpath Robotics      | -                     | -           | -                |
+| Common Core PCBA           | 030446   | Clearpath Robotics      | -                     | -           | -                |
+| 12 V DC/DC PCBA            | 030430   | Clearpath Robotics      | -                     | -           | -                |
+| 24 V DC/DC PCBA            | 030433   | Clearpath Robotics      | -                     | -           | -                |
+| Motor                      | 031514   | Clearpath Robotics      | -                     | -           | -                |
+
+See also the common integration parts for [cable ingress](integration_husky#using-the-icotek-cable-entry-system) and
+[breakout connectors](integration_husky#main-circuit-board-connector-summary).
+
+### Replacing Tire or Inner Tube  {#tire-maintenance}
+
+:::safety-warning
+
+**Place the robot up on blocks prior to replacing the tire or inner tube.**
+
+Failure to support the robot prior to removing the wheel could cause the
+robot to tip over.
+
+:::
+
+Procedure:
+
+1. Follow the [Lock-Out Tag-Out](user_manual_husky#lockout-tagout) procedure.
+1. Remove the six M8 screws holding the wheel to the motor.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_tire_1.jpg"
+       width="600"
+     />
+   </center>
+1. Deflate the tire.
+1. Remove the six M4 screws that hold the split rim together.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_tire_2.jpg"
+       width="400"
+     />
+   </center>
+1. Remove the outer wheel rim.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_tire_3.jpg"
+       width="400"
+     />
+   </center>
+1. Remove the tire and tube from the inner rim.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_tire_4.jpg"
+       width="400"
+     />
+   </center>
+1. Replace the tire and/or tube as needed with new parts. Ensure that the
+   tube is installed in the tire and inflated only far enough that it takes
+   its shape. Inflating further will make reassembly difficult.
+1. Place the tire (with tube) onto to inner rim, aligning the valve stem
+   with the notch in the rim.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_tire_5.jpg"
+       width="400"
+     />
+   </center>
+1. Place the outer rim on top, aligning the value stem with the notch in
+   the rim.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_tire_6.jpg"
+       width="400"
+     />
+   </center>
+1. Reinstall the six M4 screws, tightening them in a star pattern to 2 Nm.
+
+   :::note
+
+   It may be necessary to use three longer M4 screws on a temporary basis
+   to help pull the inner and outer rims together and ensure alignment,
+   allowing the first three standard M4 screws to be installed. Then,
+   the temporary M4 screws can be removed and the standard ones installed.
+   As you tighten the screws, ensure that the valve stem is not being pinched.
+
+   :::
+
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_tire_7.jpg"
+       width="400"
+     />
+   </center>
+
+1. Inflate the tire to 20 psi.
+1. Place the wheel on the motor and reinstall the six M8 screws, tightening
+   them in a star pattern to 22 Nm.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_tire_1.jpg"
+       width="400"
+     />
+   </center>
+
+### Replacing Circuit Boards
+
+Husky contains several circuit boards (PCBAs). If a failure occurs, there is normally only one
+board that needs to be replaced.
+
+:::safety-caution
+
+Circuit boards are sensitive components and can be damaged easily through electrostatic discharge (ESD).
+Be sure to follow proper ESD protection measures prior to handling any circuit boards.
+
+:::
+
+#### Procedure for replacing the DC/DC and BLDC circuit boards:
+
+1. Follow the [Lock-Out Tag-Out](user_manual_husky#lockout-tagout) procedure.
+1. Remove the seven screws that fasten the Top Plate to the chassis and remove the Top Plate.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_1.jpg"
+       width="600"
+     />
+   </center>
+1. Remove the cable brush holder.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_2.jpg"
+       width="600"
+     />
+   </center>
+1. Remove the heat shield covering the DC/DC and/or BLDC circuit boards.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_3.jpg"
+       width="600"
+     />
+   </center>
+1. Remove the failing circuit board by gently lifting the board up.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_4.jpg"
+       width="600"
+     />
+   </center>
+1. Install the new circuit board by aligning the connector and gently sliding it into place.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_5.jpg"
+       width="600"
+     />
+   </center>
+1. Reinstall the heat shields.
+1. Reinstall the cable brush holder.
+1. Put the Top Plate back in place and finger tighten the seven screws that were removed in Step 2.
+   Note that the screw with the sealing washer goes in the inner location and the remaining
+   six screws are installed at the perimeter. Tighten all seven screws to 3 Nm.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_6.jpg"
+       width="600"
+     />
+   </center>
+
+#### Procedure for replacing the Common Core circuit board:
+
+1. Follow the [Lock-Out Tag-Out](user_manual_husky#lockout-tagout) procedure.
+1. Remove the seven screws that fasten the Top Plate to the chassis and remove the Top Plate.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_1.jpg"
+       width="600"
+     />
+   </center>
+1. Remove the failing circuit board by removing the two retaining screws, pushing out on the retaining
+   clips, and gently pulling the board out horizontally.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_7.jpg"
+       width="600"
+     />
+   </center>
+1. Install the new circuit board by gently sliding it into place horizontally, ensure that the
+   retaining clips are secured, and that the two screws have been installed.
+1. Put the Top Plate back in place and finger tighten the seven screws that were removed in Step 2.
+   Note that the screw with the sealing washer goes in the inner location and the remaining
+   six screws are installed at the perimeter. Tighten all seven screws to 3 Nm.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_6.jpg"
+       width="600"
+     />
+   </center>
+
+#### Procedure for replacing the Main circuit board:
+
+1. Follow the [Lock-Out Tag-Out](user_manual_husky#lockout-tagout) procedure.
+1. Remove the seven screws that fasten the Top Plate to the chassis and remove the Top Plate.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_1.jpg"
+       width="600"
+     />
+   </center>
+1. Disconnect all cables from the Main circuit board.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_8.jpg"
+       width="400"
+     />
+   </center>
+1. Remove the failing circuit board by removing the retaining screws and then lifting out the board.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_9.jpg"
+       width="400"
+     />
+   </center>
+1. Place the old and new Main circuit boards on an ESD mat.
+1. Move the DC/DC, BLDC, and Common Core circuit boards from the old to the new Main circuit board
+   by following the procedures above.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_10.jpg"
+       width="400"
+     />
+   </center>
+1. Install the new Main circuit board tighten the retaining screws to 1 Nm.
+1. Reconnect all cables, noting that the labels on the cables should match those on the board.
+1. Put the Top Plate back in place and finger tighten the seven screws that were removed in Step 2.
+   Note that the screw with the sealing washer goes in the inner location and the remaining
+   six screws are installed at the perimeter. Tighten all seven screws to 3 Nm.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_6.jpg"
+       width="600"
+     />
+   </center>
+
+### Replacing the Computer
+
+:::safety-caution
+
+Circuit boards are sensitive components and can be damaged easily through electrostatic discharge (ESD).
+Be sure to follow proper ESD protection measures prior to handling any circuit boards.
+
+:::
+
+<br/>
+
+:::info
+
+If the existing computer is still operational, a backup of any important data should be
+made prior to its replacement.
+
+:::
+
+Procedure:
+
+1. Follow the [Lock-Out Tag-Out](user_manual_husky#lockout-tagout) procedure.
+1. Remove the seven screws that fasten the Top Plate to the chassis and remove the Top Plate.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_1.jpg"
+       width="600"
+     />
+   </center>
+1. Disconnect all cables from the computer.
+1. Remove the computer by removing the four retaining screws and lifting it
+   out of the robot.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_computer_1.jpg"
+       width="400"
+     />
+   </center>
+1. Install the new computer and tighten the four retaining screws to 1 Nm.
+1. Reconnect all cables.
+1. Put the Top Plate back in place and finger tighten the seven screws that were removed in Step 2.
+   Note that the screw with the sealing washer goes in the inner location and the remaining
+   six screws are installed at the perimeter. Tighten all seven screws to 3 Nm.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_6.jpg"
+       width="600"
+     />
+   </center>
+1. As needed, reinstall any custom configuration that has been backed up.
+
+### Replacing Motors
+
+Procedure:
+
+1. Follow the [Lock-Out Tag-Out](user_manual_husky#lockout-tagout) procedure.
+1. Remove the cable gland bracket on the side of the robot with the motor being
+   replaced by removing five screws.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_motor_1.jpg"
+       width="600"
+     />
+   </center>
+1. Disconnect the both sets of motor power and cables from the chassis on the
+   side of the robot with the motor being replaced.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_motor_2.jpg"
+       width="600"
+     />
+   </center>
+1. Remove the suspension beam from the chassis by removing the four nuts
+   and washers.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_motor_1.jpg"
+       width="600"
+     />
+   </center>
+1. Remove the wheel from the motor ([see above](#tire-maintenance)).
+1. Remove the failing motor from the suspension beam by removing the four
+   M8 screws.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_motor_4.jpg"
+       width="400"
+     />
+   </center>
+1. Mount the new motor on the suspension beam and tighten the four screws
+   to 20 Nm.
+1. Re-install the wheel onto the motor ([see above](#tire-maintenance)).
+1. Mount the suspension beam on the chassis, install the four washers,
+   and tighten the four nuts to 30 Nm. (Do not overtighten!)
+1. Reconnect both sets of motor power and cables.
+1. Install the cable gland bracket and tighten the five screws to 1 Nm.
+
+### Replacing Batteries
+
+:::safety-danger
+
+Battery terminals and connected cables / busbars may be live. Follow proper safety procedures when
+performing any maintenance on the batteries.
+
+Only trained personnel authorised by Clearpath Robotics shall perform maintenance on the batteries.
+
+Ensure proper personal protective equipment is used when performing battery maintenance.
+
+:::
+
+1. Follow the [Lock-Out Tag-Out](user_manual_husky#lockout-tagout) procedure.
+1. Remove the cable gland brackets on both sides of the robot by removing five screws on each.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_motor_1.jpg"
+       width="600"
+     />
+   </center>
+1. Disconnect all motor power and encoder cables from the chassis.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_motor_2.jpg"
+       width="600"
+     />
+   </center>
+1. Remove the seven screws that fasten the Top Plate to the chassis and remove the Top Plate.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_1.jpg"
+       width="600"
+     />
+   </center>
+1. Locate the V+ connector and pull the handle to disconnect it.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_battery_1.jpg"
+       width="600"
+     />
+   </center>
+1. Disconnect all cables at the front of the electronics tray.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_battery_2-red.jpg"
+       width="600"
+     />
+   </center>
+1. Remove two screws at the front of the electronics tray used to fasten the
+   tray to the side of the robot.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_battery_3.jpg"
+       width="600"
+     />
+   </center>
+1. Tilt the electronics tray up to expose the batteries.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_battery_4.jpg"
+       width="600"
+     />
+   </center>
+1. Disconnect and remove the positive battery busbar by removing the
+   two fuse covers, disconnecting the terminals, and lifting up the busbar.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_battery_5.jpg"
+       width="400"
+     />
+   </center>
+1. Disconnect and remove the negative battery busbar by removing the
+   two screws. This also disconnects the battery ground cable.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_battery_6.jpg"
+       width="400"
+     />
+   </center>
+1. Disconnect any CAN bus cables (RJ45 connectors) at the batteries.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_battery_7.jpg"
+       width="400"
+     />
+   </center>
+1. Remove the battery to be replaced and the battery to which its
+   terminals were facing. Note that batteries are installed in pairs.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_battery_8.jpg"
+       width="600"
+     />
+   </center>
+1. Move the terminal connectors from the old battery to the new battery.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_battery_9.jpg"
+       width="600"
+     />
+   </center>
+1. Align the pair of batteries so that their terminals are facing and
+   slide the pair of batteries into the robot. A temporary locking strap
+   to hold the two batteries together may make this step easier.
+1. Reconnect the CAN bus cables (RJ45 connectors).
+1. Re-install the negative battery busbar and ground cable. Tighten
+   the two screws to 5 Nm.
+1. Re-install the positive battery busbar by placing it across the
+   two fuses and tightening the two nuts to 3 Nm.
+1. Replace the two fuse covers.
+1. Tilt the electronics tray back into position and tighten the
+   two screws used to fasten the tray to the side of the robot to 3 Nm.
+1. Reconnect all cables at the front of the electronics tray.
+1. Locate the V+ connector handle and re-install the connector.
+1. Put the Top Plate back in place and finger tighten the seven screws that were removed in Step 2.
+   Note that the screw with the sealing washer goes in the inner location and the remaining
+   six screws are installed at the perimeter. Tighten all seven screws to 3 Nm.
+   <center>
+     <img
+       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_6.jpg"
+       width="600"
+     />
+   </center>
+1. Reconnect all motor power and encoder cables on the chassis.
+1. Re-install the cable gland brackets on both siders of the robot,
+   tightening the five screws on each to 1 Nm.
+
+---
+
+## Software Maintenance {#software_maintenance}
+
+### Getting New Packages
+
+<GettingNewPackages />
+
+### MCU Firmware Update  {#mcu_firmware_update}
+
+Refer to [firmware update instructions](/docs/ros/installation/robot#firmware-update).
+Be sure to select the ROS 2 distribution that matches the ROS 2 distribution installed on your robot.
+
+### Motor Controller Firmware Update {#maintenance_husky_motor_controller_firmware}
+
+Use the following command to update the firmware on the motor controllers, using the serial number
+of your robot rather than `xxxxx`.
+
+:::caution
+
+Do NOT power off the robot while this command is running.
+
+:::
+
+```
+ros2 action send_goal /a300_xxxxx/platform/motors/update clearpath_motor_msgs/action/LynxUpdate {} -f
+```
+
+Once all four motor controllers have been updated, power cycle the robot.
+
+### Motor Controller Calibration  {#maintenance_husky_motor_calibration}
+
+The motor controllers are configured in the factory and do not normally to be reconfigured in the field.
+If you have been instructed by Clearpath Support to recalibrate, use the command below, using the serial number
+of your robot rather than `xxxxx`.
+
+:::caution
+
+Do NOT power off the robot while this command is running.
+
+:::
+
+:::info
+
+Ensure that the robot does not have its Emergency Stop engage while running this command.
+
+:::
+
+:::info
+
+Ensure that the robot is on a level surface with at least 1 metre of clearance in all directions
+before running this command.
+
+:::
+
+```
+ros2 action send_goal /a300_xxxxx/platform/motors/calibrate clearpath_motor_msgs/action/LynxCalibrate {} -f
+```
+
+---
+
+## Support {#support}
+
+<Support />

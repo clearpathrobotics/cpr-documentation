@@ -66,6 +66,22 @@ const config = {
     [
       "@docusaurus/plugin-content-docs",
       {
+        id: "docs_robots",
+        path: "docs_robots",
+        routeBasePath: "docs_robots",
+        sidebarPath: require.resolve("./sidebars.js"),
+        remarkPlugins: [remarkMath],
+        rehypePlugins: [rehypeKatex],
+        showLastUpdateTime: true,
+        admonitions: {
+          keywords: ['safety-danger', 'safety-warning', 'safety-caution'],
+          extendDefaults: true,
+        },
+      },
+    ],
+    [
+      "@docusaurus/plugin-content-docs",
+      {
         id: "indoornav_user_manual",
         path: "docs_indoornav_user_manual",
         routeBasePath: "docs_indoornav_user_manual",
@@ -106,11 +122,16 @@ const config = {
         },
         items: [
           {
-            type: "docsVersion",
-            to: "/docs/robots/",
+            //type: "docsVersion",
+            //to: "/docs/robots/",
+            //label: "Robots",
+            //position: "left",
+            //docsPluginId: "docs",
+            type: "doc",
+            docId: "robots",
             label: "Robots",
             position: "left",
-            docsPluginId: "docs",
+            docsPluginId: "docs_robots",
           },
           {
             type: "docsVersion",
