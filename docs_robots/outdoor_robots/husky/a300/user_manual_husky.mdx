@@ -755,7 +755,7 @@ will affect the terminal speed of the robot when the Emergency Stop is engaged.
 The performance values outlined below can be affected by various environmental factors such as
 terrain type and should be treated as a reference only. Exact limits should be determined by the
 user in the target operating environment. It is the responsibility of the user
-to ensure that no hazards are present in the the target operating environment.
+to ensure that no hazards are present in the target operating environment.
 
 :::
 
@@ -767,6 +767,37 @@ to ensure that no hazards are present in the the target operating environment.
 | 100 kg       | 0°       | 0 m/s |
 | 0 kg         | 15°      | 0.5 m/s or less |
 | 100 kg       | 15°      | 1.25 m/s or less |
+
+##### Stopping Distances
+
+:::safety-warning
+
+**Always confirm stopping distances in the target environment.**
+
+The performance values outlined below can be affected by various environmental factors
+(terrain type, wet/icy surfaces, etc) and should be treated as a reference only.
+Exact limits should be determined by the user in the target operating environment.
+It is the responsibility of the user to ensure that no hazards are present in the
+target operating environment.
+
+:::
+
+<br/>
+
+:::note
+
+The report stopping distances are based on the default deceleration settings.
+This setting is configurable (see [ROS Parameters](/docs/next/ros/config/yaml/platform/extras)
+for details).
+
+:::
+
+| Payload Mass | Incline  | Surface Type  | Stopping Distance     | 
+| :----------- | :------- | :------------ | :------------------|
+| 0 kg         | 0°       | High friction | 0.5 m |
+| 100 kg       | 0°       | High friction | 0.7 m |
+| 0 kg         | 15°      | High friction | 0.5 m |
+| 100 kg       | 15°      | High friction | 1.0 m |
 
 ### Recommended Safe Work Procedures
 
