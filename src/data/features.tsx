@@ -34,7 +34,7 @@ const FEATURES: FeatureItem[] = [
       src: "/img/website_images/husky_a300_thumbnail.png",
       width: 250,
       height: 150,
-      hyperlink: "/docs_robots/outdoor_robots/husky/a300/user_manual_husky",
+      hyperlink: "/docs_robots/outdoor_robots/husky/a300",
     },
     text: <Translate id="homepage_husky">Medium Outdoor Platform</Translate>,
   },
