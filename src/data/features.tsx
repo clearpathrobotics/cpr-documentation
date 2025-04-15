@@ -40,7 +40,7 @@ const FEATURES: FeatureItem[] = [
   },
   {
     title: translate({
-      message: "HUSKY OBSERVER",
+      message: "HUSKY A200 OBSERVER",
       id: "homepage_husky_observer",
     }),
     image: {

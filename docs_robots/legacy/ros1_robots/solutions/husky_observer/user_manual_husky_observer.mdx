@@ -1,5 +1,5 @@
 ---
-title: Husky Observer User Manual
+title: Husky A200 Observer User Manual
 sidebar_label: User Manual
 sidebar_position: 1
 toc_min_heading_level: 2
@@ -21,18 +21,18 @@ import ComponentInstallingRemoteComputerSoftware from "/docs_versioned_docs/vers
 
 ## Introduction
 
-Husky Observer is a fully integrated system that enables robotics developers to accelerate inspection solutions.
+Husky A200 Observer is a fully integrated system that enables robotics developers to accelerate inspection solutions.
 Built on top of the versatile [Husky A200](../../../ros1_robots/outdoor_robots/husky/user_manual_husky.mdx) base platform,
-Husky Observer enables robotics developers to fast-track their system development. With it, you can get your test
+Husky A200 Observer enables robotics developers to fast-track their system development. With it, you can get your test
 application running faster without worrying about autonomous navigation and sensor integration.
 
 <ComponentSafetyWarning />
 
 ### Shipment Contents
 
-Your Husky Observer shipment contains the following:
+Your Husky A200 Observer shipment contains the following:
 
-- Husky Observer robot
+- Husky A200 Observer robot
 - Lockout keys (2X)
 - Wireless charging transmitter and dock
 - Wired charging adapter
@@ -40,20 +40,20 @@ Your Husky Observer shipment contains the following:
 - Tablet (optional)
 - Base Station (optional) + power supply
 
-If you purchased standard payload modules or custom integration services with Husky Observer, then additional equipment will
+If you purchased standard payload modules or custom integration services with Husky A200 Observer, then additional equipment will
 be included per your specific configuration, plus further documentation as required.
 
 ### Hardware Overview
 
 #### System Architecture
 
-Husky Observer is built around a computer running Ubuntu, paired with a 32-bit microcontroller MCU.
+Husky A200 Observer is built around a computer running Ubuntu, paired with a 32-bit microcontroller MCU.
 The MCU handles power supply monitoring and motor control, with all remaining processing handled by the computer.
 The communication channel between the MCU and computer is a serial connection.
 
 #### Exterior Features {#exterior-features}
 
-The Husky Observer exterior is shown below and includes:
+The Husky A200 Observer exterior is shown below and includes:
 
 - Pan-tilt-zoom (PTZ) camera
 - Thermal camera (optional)
@@ -80,7 +80,7 @@ The Husky Observer exterior is shown below and includes:
       src="/img/robot_images/husky_observer_images/front_wireframe_with_labels.png"
       width="800"
     />
-    <figcaption>Husky Observer exterior, front view</figcaption>
+    <figcaption>Husky A200 Observer exterior, front view</figcaption>
   </figure>
 </center>
 
@@ -90,7 +90,7 @@ The Husky Observer exterior is shown below and includes:
       src="/img/robot_images/husky_observer_images/rear_wireframe_with_labels.png"
       width="800"
     />
-    <figcaption>Husky Observer exterior, rear view</figcaption>
+    <figcaption>Husky A200 Observer exterior, rear view</figcaption>
   </figure>
 </center>
 
@@ -139,15 +139,15 @@ See also additional status as reported in the [Status Panel](#status-panel).
 #### Status Panel {#status-panel}
 
 The status panel, which complements the [Stack Lights](#stack-lights), is a display of LED indicators located on the rear of
-the chassis that provides information about the current status of Husky Observer. The indicators are described in the table below.
+the chassis that provides information about the current status of Husky A200 Observer. The indicators are described in the table below.
 
-|                                   Icon                                   | Description                                                                                                                                                                                                                                                                                                  |
-| :----------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <img src="/img/robot_images/husky_images/robot_husky_3.png" width="50"/> | **Battery Status** This is not used on Husky Observer. Refer to the battery state indicator in the OutdoorNav UI or on the stack light instead.                                                                                                                                                              |
-| <img src="/img/robot_images/husky_images/robot_husky_4.png" width="50"/> | **Communication Status** When green, Husky Observer is receiving a stream of correctly-formatted motion commands, and is ready to drive. When yellow, Husky Observer is receiving commands, but will not drive due to motion stop or another error. When red, serial communications are currently timed-out. |
-| <img src="/img/robot_images/husky_images/robot_husky_5.png" width="50"/> | **General Error Status** Illuminates red when Husky Observer will not drive due to an error state. Such states include motion stop, insufficient battery power, or an unspecified software error.                                                                                                            |
-| <img src="/img/robot_images/husky_images/robot_husky_6.png" width="50"/> | **Motion Stop Status** Illuminates red when Husky Observer will not drive due to the motion stop being activated, either onboard or wireless (if available).                                                                                                                                                 |
-| <img src="/img/robot_images/husky_images/robot_husky_7.png" width="50"/> | **Charge Indicator** Illuminates red when Husky user power is being supplied externally.                                                                                                                                                                                                                     |
+|                                   Icon                                   | Description                                                                                                                                                                                                                                                                                                            |
+| :----------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <img src="/img/robot_images/husky_images/robot_husky_3.png" width="50"/> | **Battery Status** This is not used on Husky A200 Observer. Refer to the battery state indicator in the OutdoorNav UI or on the stack light instead.                                                                                                                                                                   |
+| <img src="/img/robot_images/husky_images/robot_husky_4.png" width="50"/> | **Communication Status** When green, Husky A200 Observer is receiving a stream of correctly-formatted motion commands, and is ready to drive. When yellow, Husky A200 Observer is receiving commands, but will not drive due to motion stop or another error. When red, serial communications are currently timed-out. |
+| <img src="/img/robot_images/husky_images/robot_husky_5.png" width="50"/> | **General Error Status** Illuminates red when Husky A200 Observer will not drive due to an error state. Such states include motion stop, insufficient battery power, or an unspecified software error.                                                                                                                 |
+| <img src="/img/robot_images/husky_images/robot_husky_6.png" width="50"/> | **Motion Stop Status** Illuminates red when Husky A200 Observer will not drive due to the motion stop being activated, either onboard or wireless (if available).                                                                                                                                                      |
+| <img src="/img/robot_images/husky_images/robot_husky_7.png" width="50"/> | **Charge Indicator** Illuminates red when Husky user power is being supplied externally.                                                                                                                                                                                                                               |
 
 #### Switches and Buttons
 
@@ -161,7 +161,7 @@ On the rear of the robot, the main power switch can be used to turn the entire s
       src="/img/robot_images/husky_observer_images/main_power_switch.png"
       width="500"
     />
-    <figcaption>Husky Observer ON/OFF switch</figcaption>
+    <figcaption>Husky A200 Observer ON/OFF switch</figcaption>
   </figure>
 </center>
 
@@ -173,19 +173,19 @@ to the [Safety](#safety) section for further details.
 
 ##### Motion-stop Override Key Switch
 
-In addition to the motion-stop buttons on the robot, if your Husky Observer is equipped with a wireless motion-stop function,
+In addition to the motion-stop buttons on the robot, if your Husky A200 Observer is equipped with a wireless motion-stop function,
 it is possible to disable this function with the override key switch. Refer to the [Safety](#safety) section for further details.
 
 #### Payloads
 
-Additional payloads can be integrated with Husky Observer, either as part of your purchase or installed after receiving your Husky Observer.
-Refer to [Husky Observer Integration](integration_husky_observer.mdx) for details on how to integrate your own payload or how to integrate a payload kit from Clearpath Robotics.
-Each payload kit that ships from Clearpath Robotics comes with a custom mounting bracket and cabling for easy attachment to Husky Observer.
+Additional payloads can be integrated with Husky A200 Observer, either as part of your purchase or installed after receiving your Husky A200 Observer.
+Refer to [Husky A200 Observer Integration](integration_husky_observer.mdx) for details on how to integrate your own payload or how to integrate a payload kit from Clearpath Robotics.
+Each payload kit that ships from Clearpath Robotics comes with a custom mounting bracket and cabling for easy attachment to Husky A200 Observer.
 
 #### Orientation References
 
 The reference frame used by all Clearpath Robotics ground robots is based on ISO 8855, and is shown in the figure below.
-Husky Observer's front is shown.
+Husky A200 Observer's front is shown.
 When commanded with a positive translational velocity (forward), wheels travel in the positive X-direction.
 The direction of the axes differs from those used for roll, pitch, and yaw in aircraft, and care should be taken to ensure that data is interpreted correctly.
 
@@ -195,7 +195,7 @@ The direction of the axes differs from those used for roll, pitch, and yaw in ai
       src="/img/robot_images/husky_observer_images/robot_coordinate_system.png"
       width="500"
     />
-    <figcaption>Husky Observer orientation references</figcaption>
+    <figcaption>Husky A200 Observer orientation references</figcaption>
   </figure>
 </center>
 
@@ -354,7 +354,7 @@ contact [Support](#support).
 
 <ComponentCommonSafeWorkProcedures />
 
-### Husky Observer Safety Notices
+### Husky A200 Observer Safety Notices
 
 <center>
   <img
@@ -386,16 +386,16 @@ robot's path. Never operate the robot in environments other than those for which
 
 #### Electrical Subsystem
 
-Husky Observer is powered by two 12 V Lithium-Iron-Phosphate (LiFePO<sub>4</sub>) batteries in series to make a 24 V pack.
+Husky A200 Observer is powered by two 12 V Lithium-Iron-Phosphate (LiFePO<sub>4</sub>) batteries in series to make a 24 V pack.
 These batteries are similar to the type found in electric wheelchairs, golf carts, fork trucks, and other devices.
-Husky Observer's battery pack is capable of delivering 5565 W, three times the power of a standard wall outlet.
-This gives Husky Observer's motors their great performance, however, it is also enough power to cause severe bodily harm.
+Husky A200 Observer's battery pack is capable of delivering 5565 W, three times the power of a standard wall outlet.
+This gives Husky A200 Observer's motors their great performance, however, it is also enough power to cause severe bodily harm.
 
-Note that the Husky Observer PDU has a 50 A fuse that limits the continuous power output to 1325 W.
+Note that the Husky A200 Observer PDU has a 50 A fuse that limits the continuous power output to 1325 W.
 
 Please observe the following precautions:
 
-- Turn the Main Power Switch to "OFF" when working on Husky Observer's hardware.
+- Turn the Main Power Switch to "OFF" when working on Husky A200 Observer's hardware.
 - The Main Power Switch isolates the energy from the switch to the rest of the robot.
   This potential energy is still present at the battery terminals, and the cable connecting the switch to the batteries.
 - Do not tamper with the battery packs.
@@ -404,21 +404,21 @@ Please observe the following precautions:
 
 #### Lifting and Transport
 
-For the safety of users and to maximize the lifetime of Husky Observer, please observe the following when manually transporting the robot:
+For the safety of users and to maximize the lifetime of Husky A200 Observer, please observe the following when manually transporting the robot:
 
-- Husky Observer should be lifted by two persons, firmly gripping the front and rear bumper-bars.
-- Ensure that Husky Observer is in Motion-Stop mode when transporting short distances and powered off when transporting longer distances.
-- It is not advised to push Husky Observer, as this can cause damage to the motors.
+- Husky A200 Observer should be lifted by two persons, firmly gripping the front and rear bumper-bars.
+- Ensure that Husky A200 Observer is in Motion-Stop mode when transporting short distances and powered off when transporting longer distances.
+- It is not advised to push Husky A200 Observer, as this can cause damage to the motors.
 
 #### Performance Considerations
 
-Included in Husky Observer are native software checks and limits to protect the robot.
+Included in Husky A200 Observer are native software checks and limits to protect the robot.
 However, it is recommended to monitor the system's status during usage with the `/status` and `/diagnostics` topics
 or through the OutdoorNav UI as described in [Monitoring System Status](#monitoring-system-status).
 These topics provide useful information regarding voltages, currents, temperatures and general health of the system.
 
 The total current draw does not include the motors drivers; it is the current consumed by the MCU and user power ports.
-Husky Observer's motors are rated to draw 10.7 A continuous, but they will spike to several times higher than this,
+Husky A200 Observer's motors are rated to draw 10.7 A continuous, but they will spike to several times higher than this,
 particularly when traversing rough terrain and when turning on the spot.
 To reduce current draw, consider commanding wider-radius turns from your control software.
 
@@ -427,9 +427,9 @@ Therefore, it is important to note that the temperature measured on the motor ca
 Be aware of the delay in heat propagation on the motors during heavy use.
 The thermal limit of the system is 50 °C, and components of the system will begin to throttle or shut down if internal temperatures exceed this limit.
 Monitoring these fields over longer periods of operation will allow you to ensure that you are not putting excessive wear on
-Husky Observer's motors.
+Husky A200 Observer's motors.
 
-### Husky Observer Safety Features
+### Husky A200 Observer Safety Features
 
 #### Onboard Motion-Stop Function
 
@@ -443,7 +443,7 @@ four red stop actuators present around the periphery of the mobile robot as show
       src="/img/robot_images/husky_observer_images/motion_stop_button_locations.png"
       width="400"
     />
-    <figcaption>Husky Observer motion-stop buttons</figcaption>
+    <figcaption>Husky A200 Observer motion-stop buttons</figcaption>
   </figure>
 </center>
 
@@ -503,7 +503,7 @@ arising from the inability to remotely stop the motion of the vehicle due to the
 
 #### Motion Buzzer
 
-When Husky Observer is in motion in any direction, both in manual and autonomous modes, a buzzer will sound
+When Husky A200 Observer is in motion in any direction, both in manual and autonomous modes, a buzzer will sound
 to provide an audible warning to personnel in the nearby area. No configuration or operator action
 is required to enable this feature.
 
@@ -678,7 +678,7 @@ complete the installation of the wireless transmitter:
 
 ##### Wireless Receiver
 
-The WiBotic wireless receiver ships pre-installed on the Husky Observer robot
+The WiBotic wireless receiver ships pre-installed on the Husky A200 Observer robot
 and does not require any customer assembly.
 
 #### Robot Setup
@@ -724,14 +724,14 @@ does not shift during this process.
 
 An LTE SIM card can optionally be installed into the robot to provide network
 access when out of range of WiFi networks. A SIM card is not required if
-Husky Observer is always being operated within range of WiFi networks.
+Husky A200 Observer is always being operated within range of WiFi networks.
 Note that the SIM card (and corresponding data plan) is provided by the end user,
 not by Clearpath Robotics.
 
-1. Open the lid on Husky Observer.
-1. Locate the "Microhard" component, near the rear-left corner.
-1. Insert the SIM card into the Microhard port labelled "SIM 1".
-1. Refer to [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for details on the software setup.
+1. Open the lid on Husky A200 Observer.
+2. Locate the "Microhard" component, near the rear-left corner.
+3. Insert the SIM card into the Microhard port labelled "SIM 1".
+4. Refer to [Enabling LTE (Cellular) Networking on Robot](#lte-setup) for details on the software setup.
 
 #### Robot Startup
 
@@ -802,14 +802,14 @@ See [Maintenance](maintenance_husky_observer.mdx#charging) for details on chargi
 As outlined in [Exterior Features](#exterior-features), the robot comes equipped with
 additional ports (power, USB, Ethernet) that can be used for both
 system expansion (eg. extra sensors) or for system debugging. All data connectivity is
-to the main computer. See [Husky Observer Integration](integration_husky_observer.mdx)
+to the main computer. See [Husky A200 Observer Integration](integration_husky_observer.mdx)
 for further details.
 
 ### Base Husky Software Setup
 
 #### Wired Network Connection {#wired-network-connection}
 
-During setup or debugging, it may be desirable to connect to Husky Observer through a wired Ethernet connection.
+During setup or debugging, it may be desirable to connect to Husky A200 Observer through a wired Ethernet connection.
 After connecting an Ethernet cable from your laptop to the debug/expansion port as shown in the
 [Exterior Features](#exterior-features),
 follow the steps below to establish a network connection to the main computer. It is also possible
@@ -842,13 +842,13 @@ and [Appendix A](#networking-configuration) for networking details.
 
 #### Connecting and Using the Controller {#controller}
 
-To use your controller, it must be paired with your Husky Observer and powered on.
-Note that your controller is already paired with your Husky Observer when it ships.
+To use your controller, it must be paired with your Husky A200 Observer and powered on.
+Note that your controller is already paired with your Husky A200 Observer when it ships.
 If your controller has become unpaired or if you wish to pair a new controller, following the instructions in the
 [Husky Tutorials](../../outdoor_robots/husky/tutorials_husky.mdx#pairing-the-controller).
 
-To teleoperate Husky Observer, first release the motion stop. Then, referring to the following image, press the
-enable button (either slow or turbo mode) and use the left thumbstick to drive Husky Observer.
+To teleoperate Husky A200 Observer, first release the motion stop. Then, referring to the following image, press the
+enable button (either slow or turbo mode) and use the left thumbstick to drive Husky A200 Observer.
 
 <center>
   <figure>
@@ -873,10 +873,10 @@ lights and the bottom button controlling the rear driving lights.
 
 #### Network Requirements
 
-To monitor and control Husky Observer, it must be integrated into a communication network. The main
+To monitor and control Husky A200 Observer, it must be integrated into a communication network. The main
 requirements are:
 
-1. The user control device (tablet or laptop) must have network connectivity to the Husky Observer,
+1. The user control device (tablet or laptop) must have network connectivity to the Husky A200 Observer,
    either over a local Wi-Fi network or over the internet (eg. cellular connection to the robot).
 1. The user control device (tablet or laptop) must have access to the internet to be able to download
    map tiles. (In advanced modes, it is possible to create your own map to avoid this requirement.)
@@ -884,7 +884,7 @@ requirements are:
 #### Network Modes {#network-modes}
 
 While there are many ways to meet the Network Requirements listed above, there are three common network
-modes for deploying Husky Observer, which are outlined below.
+modes for deploying Husky A200 Observer, which are outlined below.
 
 | Network Mode          | Description                                                                                                      | Base Station Setup        | Robot Setup                                                                                                                                                 | Tablet Setup                                                                                                                                                                                  | OutdoorNav URL via Local WiFi | OutdoorNav URL via Internet/Cellular      |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------- | ----------------------------------------- |
@@ -1080,11 +1080,11 @@ for details on switching between WiFi and cellular modes.
 
 :::note
 
-This step is optional. It is only for users attempting to access Husky Observer over the internet.
+This step is optional. It is only for users attempting to access Husky A200 Observer over the internet.
 
 :::
 
-When attempting to access Husky Observer over the internet, it can sometimes be difficult to determine the
+When attempting to access Husky A200 Observer over the internet, it can sometimes be difficult to determine the
 IP address of the robot and to expose the necessary ports for access. Various services are available to simplify
 this remote access task. Once such service, [ngrok](https://ngrok.com/), is described in detail below.
 
@@ -1092,8 +1092,8 @@ this remote access task. Once such service, [ngrok](https://ngrok.com/), is desc
 
 [ngrok](https://ngrok.com/) is an application that enables developers to expose a local development server to
 the internet with minimal effort. It can be leveraged to make the OutdoorNav User Interface (hosted on the
-Husky Observer robot) appear to be hosted on a subdomain of ngrok.com, meaning that no public IP or domain
-name on Husky Observer is needed. While the ngrok tools are pre-installed on Husky Observer, a small amount
+Husky A200 Observer robot) appear to be hosted on a subdomain of ngrok.com, meaning that no public IP or domain
+name on Husky A200 Observer is needed. While the ngrok tools are pre-installed on Husky A200 Observer, a small amount
 of configuration is required to use them.
 
 1. [Sign up for ngrok](https://dashboard.ngrok.com/signup) if you don't yet have an account. The "Pro" tier is recommended.
@@ -1110,7 +1110,7 @@ of configuration is required to use them.
    - Terminal 2: `ngrok http 8000`
    - The ngrok terminal will display a remote address that you can enter, which should display the python3 HTTP server.
 1. Select a subdomain name that will be used to access the OutdoorNav UI at https://your_subdomain.ngrok.io.
-1. Run `ngrok config edit` to set up a tunnel for your subdomain to port 80 on Husky Observer, where the
+1. Run `ngrok config edit` to set up a tunnel for your subdomain to port 80 on Husky A200 Observer, where the
    OutdoorNav UI is running. These updates will be saved to: `~/.config/ngrok/ngrok.yaml`. Note that the example below
    includes a basic username/password authentication. Different authorization mechanisms are available. Refer to
    ngrok documentation for details.
@@ -1140,7 +1140,7 @@ additional tunnels to the example above.
 
 #### Tablet Startup
 
-The Husky Observer optionally ships with a Getac ruggedized tablet as shown in below.
+The Husky A200 Observer optionally ships with a Getac ruggedized tablet as shown in below.
 
 <center>
   <figure>
@@ -1160,7 +1160,7 @@ If prompted for a password, enter: **`clearpath`**.
 ##### Connecting to OutdoorNav Web User Interface
 
 In order to connect to the OutdoorNav User Interface, ensure that the tablet
-has network connectivity to the Husky Observer as described in
+has network connectivity to the Husky A200 Observer as described in
 [Networking Setup](#networking-setup) and note the URL for accessing the OutdoorNav UI.
 
 1. Open the Chrome browser.
@@ -1187,7 +1187,7 @@ This step is optional, but highly recommended.
 :::
 
 RTK corrections are used to minimize errors related to GPS-based localization and
-are strongly recommended when attempting to operate Husky Observer autonomously.
+are strongly recommended when attempting to operate Husky A200 Observer autonomously.
 If a Base Station is present, RTK corrections will be acquired from the Base Station,
 once it has been surveyed. Alternatively, RTK corrections can be acquired over
 the internet using the NTRIP protocol from various service providers, such as
@@ -1205,7 +1205,7 @@ for details on how to survey the Base Station.
 
 If a Base Station is not present, RTK corrections can be acquired over
 the internet using the NTRIP protocol. While various services are available for providing RTK corrections,
-Husky Observer has been validated with the [SwiftNav Skylark](https://www.swiftnav.com/skylark)
+Husky A200 Observer has been validated with the [SwiftNav Skylark](https://www.swiftnav.com/skylark)
 service. Follow the steps below to set up the Skylark service.
 
 1. [Sign up for a Skylark account](https://account.swiftnav.com/sign-up) if you do not have one. (Note that Clearpath does not provide a Skylark account.)
@@ -1430,7 +1430,7 @@ Otherwise, a warning or error message is provided.
 
 #### Using Pan-Tilt-Zoom Camera in Autonomous Missions
 
-The Husky Observer is equipped with a pan-tilt-zoom (PTZ) camera that is capable of
+The Husky A200 Observer is equipped with a pan-tilt-zoom (PTZ) camera that is capable of
 high zoom levels. During autonomous missions, pre-configured pan-tilt-zoom settings can be
 used to capture images and videos. These pan-tilt-zoom settings are configured through
 the [Move PTZ Task](https://docs.clearpathrobotics.com/docs_outdoornav_user_manual/web_user_interface/ui_autonomous_mode#add-task).
@@ -1468,14 +1468,14 @@ will be assigned.
 ### Accessing the Main Computer from the WAN
 
 All images and videos that are collected during missions are stored on the Main Computer
-inside Husky Observer until downloaded and deleted by the operator. When the download/delete function is performed
+inside Husky A200 Observer until downloaded and deleted by the operator. When the download/delete function is performed
 by a computer within the Base Station network, the Main Computer can be accessed
 as described in the following section by connecting to TCP port 22 on the Main Computer.
 When the download/delete function is performed by a computer on the WAN network (connected
 to the Base Station WAN port), the operator can access the Main Computer by accessing
 TCP port 2222 on the Base Station, which gets mapped to TCP port 22 on the Main Computer.
 
-### Husky Observer Network Components
+### Husky A200 Observer Network Components
 
 | Component                                              | IP Address                       | Default Credentials                                 |
 | ------------------------------------------------------ | -------------------------------- | --------------------------------------------------- |
@@ -1498,7 +1498,7 @@ TCP port 2222 on the Base Station, which gets mapped to TCP port 22 on the Main 
 
 ## Appendix B: Advanced Configuration
 
-Each of the sensors on Husky Observer has a variety of settings, which have
+Each of the sensors on Husky A200 Observer has a variety of settings, which have
 been selected to work in a broad range of use cases. Certain specialized
 use cases may require the operator to create a custom configuration. The
 information below outlines the key settings for each sensor and where
@@ -1513,7 +1513,7 @@ Proceed with caution! Contact [Support](#support) if you have any questions.
 
 ### Axis PTZ Camera Configuration
 
-The Husky Observer is equipped with an [Axis Q62](https://www.axis.com/products/axis-q62-series) series PTZ camera, with
+The Husky A200 Observer is equipped with an [Axis Q62](https://www.axis.com/products/axis-q62-series) series PTZ camera, with
 colour and low-light capabilities, defogger, and lens wiper.
 
 #### Key Settings
