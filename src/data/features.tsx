@@ -41,15 +41,15 @@ const FEATURES: FeatureItem[] = [
   {
     title: translate({
       message: "HUSKY A200 OBSERVER",
-      id: "homepage_husky_observer",
+      id: "homepage_husky_a200_observer",
     }),
     image: {
-      src: "/img/website_images/husky_observer_thumbnail.png",
+      src: "/img/website_images/husky_a200_observer_thumbnail.png",
       width: 114,
       height: 150,
-      hyperlink: "/docs_robots/legacy/ros1_robots/solutions/husky_observer/user_manual_husky_observer",
+      hyperlink: "/docs_robots/legacy/ros1_robots/solutions/husky_a200_observer/user_manual_husky_a200_observer",
     },
-    text: <Translate id="homepage_husky_observer">Medium Outdoor Solution</Translate>,
+    text: <Translate id="homepage_husky_a200_observer">Medium Outdoor Solution</Translate>,
   },
   {
     title: translate({
