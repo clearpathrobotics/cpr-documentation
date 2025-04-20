@@ -251,6 +251,23 @@ This helps Users know where they downloaded the file from later, as the asset is
 
     In an `img/` folder next to the markdown files where it will be used.
 
+6.  Files larger than 100 MB
+    
+    Files added to GitHub must be smaller than 100 MB—_(at time of writing in 2025-04)_.
+    You will be able to commit a large file locally, but the push to GitHub will fail.
+    We are storing large files in an Amazon S3 Bucket, rather than the cpr-documentation repository's `/static/assets` directory.
+    Note that this means large files will need to be added by Clearpath Robotics staff, as we do not provide public access to this S3 Bucket.
+
+    To add a file:
+
+    * Sign into https://us-east-2.console.aws.amazon.com/s3/ .
+    * Navigate to the S3 Bucket `cpr-documentation-large-files `.
+    * Select the `Upload` button, and choose your local file.
+    * After the file has been uploaded, click on the new object, and copy its `Object URL`.
+      This is the public URL to access the file you uploaded.
+      Note that this S3 Bucket is configured so all files' permissions are automatically set to public access.
+    
+
 ## How to merge branches into the Production branch?
 
 The website is built and deployed using AWS Amplify.
