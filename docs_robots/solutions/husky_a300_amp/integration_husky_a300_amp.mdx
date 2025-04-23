@@ -130,11 +130,18 @@ Refer to Husky A300's [Electrical Integration](../../outdoor_robots/husky/a300/i
   </figure>
 </center>
 
-[//]: <> (TODO, create image of the bulkhead with number balloons)
-
 To make a Husky AMP, we take a Husky A300, remove the Top Plate, and then install an enclosure on top of the base robot.
 We added a connector bulkhead between the base robot and the enclosure to keep cable routings tidy, and make the maintenence process quick.
 The connectors on this bulkhead are extension cables from existing [Husky A300 interfaces](../../outdoor_robots/husky/a300/integration_husky/#system-interface-circuit-board-connector-summary), which are listed below.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_amp_bulkhead_numbered.png"
+      width="400"
+    />
+  </figure>
+</center>
 
 | Row | Interface                               | Purpose for AMP                                                                                                                                                                                               | Connector on the bulkhead | Mating connector  |
 | :-: | :-------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------------------------ | :---------------- |
@@ -142,7 +149,7 @@ The connectors on this bulkhead are extension cables from existing [Husky A300 i
 |  2  | Network Switch Power                    | Powering the AMP's network switch, and access point                                                                                                                                                           | Molex 0039012026          | Molex 0039012025  |
 |  3  | Emergency Stop Buttons                  | 2 additional Emergency Stop Buttons are included with AMP, compared to the base Husky A300.                                                                                                                   | TE 794615-4               | TE 794617-4       |
 |  4  | User Power Connections                  | The bulkhead includes 8 cutouts for the 8 User Power Connectors from the base Husky A300 System Interface Assembly. These may be populated with an extension cable, if required for your AMP's configuration. | Molex 0039012086          | Molex 0039012080  |
-|  5  | High Power Expansion Kit _(Large VBAT)_ | This is not required for a standard Husky AMP. We provide extend this interface if the High Power Expansion Kit is included in the base Husky A300.                                                           | Anderson 992G5-BK         | Anderson 992G5-BK |
+|  5  | High Power Expansion Kit _(Large VBAT)_ | This is not required for a standard Husky AMP. We provide this interface if the High Power Expansion Kit is included in the base Husky A300.                                                                  | Anderson 992G5-BK         | Anderson 992G5-BK |
 |  6  | RJ45 Ethernet                           | This connects the base Husky A300's network switch to the AMP enclosure's network switch.                                                                                                                     | RJ45 Port                 | RJ45 Jack         |
 
 :::info
@@ -155,7 +162,7 @@ This keeps the antennas electrically isolated from the robot's chassis.
 :::tip
 
 You can add custom cables on top of the bulkhead using tie wraps.
-you should include an inline connector at this interface for your custom cables, so the enclosure can easily be removed from the base Husky A300 for maintenance.
+You should include an inline connector at this interface for your custom cables, so the enclosure can easily be removed from the base Husky A300 for maintenance.
 
 :::
 
