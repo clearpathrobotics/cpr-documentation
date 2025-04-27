@@ -1538,48 +1538,50 @@ robot is powered off.
 1.  Unplug the Standard Charger from the wall and then disconnect it from the Battery Charger Port.
 1.  Close the Access Panel cover.
 
-#### Wireless Charging (Optional Kit)
+#### Wireless Charging _(Add-on Kit)_
 
-The system may include an optional wireless charging kit.
-When the kit is included, it includes two main parts:
+When this kit is installed, it includes two main parts:
 
-- a wireless charging receiver mounted on the right side of the Husky A300;
-- a docking station, separate from the robot, which includes the wireless charging transmitter.
+- A _Mobile Coil_ mounted on the right side of the Husky A300.
+- A _Docking Station_, separate from the robot, which includes the Stationary Electronics and Stationary Coil. 
 
-This optional kit allows the Husky A300 to be charged by positioning it such that the
-wireless charging receiver is located near the wireless charging transmitter. For maximum
-charge rates, the receiver should be positioned within 30 mm of the transmitter. This
-positioning can be performed manually by the user or automatically using the
-[OutdoorNav docking function](/docs_outdoornav_user_manual/web_user_interface/ui_overview),
-when the robot is equipped with the optional AMP Kit. Note that wireless
-charging can be performed with the robot in both the powered and unpowered states, as
-long as the Battery Breaker is in the "ON" position.
+These components charge the Husky A300's battery when it parked near the Dock's Stationary Coil.
+You should park the robot's Mobile Coil within 30 mm of the Stationary Coil to get the maximum charge rate.
+Charging will begin automatically when the robot is parked near the Dock's Stationary Coil.
+The Dock's fans will become louder as charging starts.
+If the Husky is on, the robot's [Status Lights](/docs/ros/api/lighting) will show that the robot is charging.
 
-When the wireless charging receiver is near the transmitter, charging will begin automatically without
-any user intervention.
-When charging is complete, the transmitter will stop charging automatically and the status display
-will be updated accordingly. Note that when the robot is powered
-on, the charging may remain on indefinitely (though at a reduced rated) as the transmitter
-provides the on-going power for the powered-on electronics.
+:::note
 
-At any time while charging, the robot can be moved away from the transmitter to
-stop charging and begin using the robot. No other user intervention is required to
-stop charging.
+The Husky A300 can be charged even when the robot is off.
+The Husky's Battery Breaker must be in the "ON" position to charge.
+
+:::
+
+The Dock will terminate charging when it detects the robot's batteries are charged.
+The Dock will continuously top up the batteries, so you can leave the robot near the Dock indefinately.
+
+When you want to send the robot on a mission, just drive it away from the Dock—no need to tell the wireless charger to stop charging.
+
+:::info
+
+Robots that include our [OutdoorNav](/docs_outdoornav_user_manual/web_user_interface/ui_overview) autonomy can be configured with a Autonomous Wireless Charger.
+This functions the same as the Wireless Chargin kit, but we also add sensors that allow the robot to see the Dock.
+The Autonomous Wireless Charger is included with our [Husky A300 Observer](../../../solutions/husky_a300_observer/user_manual_husky_a300_observer).
+
+:::
 
 <center>
   <figure>
     <img
-      src="/img/robot_images/husky_a300_images/husky_a300_wireless_charging_receiver.png"
-      width="600"
+      src="/img/robot_images/husky_a300_images/husky_a300_wireless_charging_1.png"
+      width="400"
     />
-    <figcaption>Husky A300 Wireless Charging Receiver</figcaption>
-  </figure>
-  <figure>
     <img
-      src="/img/robot_images/husky_a300_images/husky_a300_wireless_charging_transmitter.png"
-      width="600"
+      src="/img/robot_images/husky_a300_images/husky_a300_wireless_charging_2.png"
+      width="300"
     />
-    <figcaption>Husky A300 Wireless Charging Transmitter and Dock</figcaption>
+    <figcaption>Husky A300 Wireless Charging</figcaption>
   </figure>
 </center>
 
