@@ -8,7 +8,7 @@ toc_max_heading_level: 4
 
 To run all ROS 2 nodes in the background and from boot, we use [robot_upstart](https://github.com/clearpathrobotics/robot_upstart/tree/foxy-devel) to install
 the launch files as [systemd](https://manpages.ubuntu.com/manpages/jammy/en/man5/systemd.service.5.html) services. In ROS 1 there was a single `ros` service that
-ran everything. For ROS 2 Humble, we have split this into three separate services:
+ran everything. For ROS 2 Jazzy, we have split this into three separate services:
 [Platform](https://github.com/clearpathrobotics/clearpath_robot/blob/jazzy/clearpath_robot/services/clearpath-platform.service),
 [Platform Extras](https://github.com/clearpathrobotics/clearpath_robot/blob/jazzy/clearpath_robot/services/clearpath-platform-extras.service),
 [Sensors](https://github.com/clearpathrobotics/clearpath_robot/blob/jazzy/clearpath_robot/services/clearpath-sensors.service), and
