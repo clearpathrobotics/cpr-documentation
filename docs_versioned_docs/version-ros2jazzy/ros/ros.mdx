@@ -13,6 +13,8 @@ started with your new (or newly-updated) robot.
 If you have problems, or have further questions, please feel free to
 [reach out to our support team](https://support.clearpathrobotics.com/hc/en-us/requests/new).
 
+To jump to a specific topic please use the navigation menu to the right &#8594;
+
 ## How do I power my robot on?
 
 All Clearpath robots have a power switch located on the back of the robot. The exact form-factor
@@ -161,4 +163,134 @@ robot@cpr-a300-0000:~$
 ```
 
 Once you have logged-in you can type any valid `bash` commands followed by the ENTER key to
-execute them. See
+execute them. See [the official ROS docs](https://docs.ros.org/) and our [ROS 2 cheat sheet](tutorials/cheat_sheet.mdx)
+for information on ROS specific commands.
+
+## How do I control the robot?
+
+The easiest way to control the robot is to teleoperate it using [the included game controller](tutorials/driving.mdx).
+The following table shows the controls for all robots:
+
+| Robot Drive Type      | Platforms                              | Button/Axis   | Action                                                                                       |
+|:----------------------|:---------------------------------------|:--------------|:---------------------------------------------------------------------------------------------|
+| Differential drive    | Husky, Jackal, Dingo-D, Warthog, Boxer | L1            | Hold to enable slow speed                                                                    |
+|                       |                                        | L2            | Hold to enable fast speed                                                                    |
+|                       |                                        | J1 vertical   | Control robot's forward/reverse velocity (up = forwards, down = backwards)                   |
+|                       |                                        | J1 horizontal | Control the robot's angular velocity (left = rotate anticlockwise, right = rotate clockwise) |
+| Omnidirectional drive | Dingo-O, Ridgeback                     | L1            | Hold to enable slow speed                                                                    |
+|                       |                                        | L2            | Hold to enable fast speed                                                                    |
+|                       |                                        | J1 vertical   | Control robot's forward/reverse velocity (up = forwards, down = backwards)                   |
+|                       |                                        | J1 horizontal | Control the robot's left/right velocity (left = strafe left, right - strafe right)           |
+|                       |                                        | J2 horizontal | Control the robot's angular velocity (left = rotate anticlockwise, right = rotate clockwise) |
+
+### Controlling the robot programmatically
+
+All Clearpath robots use a [ROS 2 API](api/overview.mdx) for control. The following examples show
+some basic control operations using ROS command-line tools.
+
+:::note
+
+Instead of publishing to a topic using the `ros2 topic pub` command you can also
+[create a ROS node](https://docs.ros.org/en/jazzy/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html)
+that will publish to the same topic to control the robot.
+
+:::
+
+### 1. Driving the robot
+
+The robot's `cmd_vel` topic is the input the the velocity controller. Publishing to this topic
+will command the robot to drive.
+
+| Intended drive direction | Twist message value  |
+|:-------------------------|:---------------------|
+| Forwards                 | `linear.x` positive  |
+| Backwards                | `linear.x` negative  |
+| Strafe Left              | `linear.y` positive  |
+| Strafe Right             | `linear.y` negative  |
+| Rotate left              | `angular.y` positive |
+| Rotate Right             | `angular.y` negative |
+
+:::warning
+
+Publishing to `cmd_vel` will force the robot to drive forwards with no feedback from any sensors.
+The robot may pull on any connected cables, drive into obstacles or walls, or drive off the edge
+of a staircase.
+
+Before running this command, ensure it is safe to drive the robot. We recommend having a scond person
+nearby to monitor the robot and engage the emergency stop if necessary.
+
+:::
+
+To command the robot to drive open a terminal and run the following command, replacing `a300_0000` with your robot's
+serial number (using an underscore `_` instead of a hyphen `-`):
+```bash
+ros2 topic pub /a300_0000/cmd_vel geometry_msgs/TwistStamped '{"twist":{"linear":{"x": 0.2}}}' -r 10
+```
+This will command the robot to drive forwards at 0.2m/s (0.72 km/h or 0.45mph). To stop the robot press `ctrl + c`.
+
+To rotate the robot you can specify an `angular` velocity in rad/s:
+```bash
+ros2 topic pub /a300_0000/cmd_vel geometry_msgs/TwistStamped '{"twist":{"angular":{"z": 0.35}}}' -r 10
+```
+This will command the robot to rotate anticlockwise at 0.35rad/s (approximately 20 deg/s). To stop the robot press `ctrl + c`.
+
+If your robot has an omni-directional drive (e.g Ridgeback, Dingo-O) you can also command it to
+drive sideways by specifying the `linear.y` velocity:
+```bash
+ros2 topic pub /a300_0000/cmd_vel geometry_msgs/TwistStamped '{"twist":{"linear":{"y": -0.2}}}' -r 10
+```
+This will command the robot to drive to the right at 0.2m/s (0.72 km/h or 0.45mph). To stop the robot press `ctrl + c`.
+
+
+### 2. Controlling the robot's lights
+
+If your robot has controllable corner lights (e.g. Husky A300, Ridgeback, Dingo-O or Dingo-D) you can
+control the the colour of these lights by publishing to the `platform/cmd_lights` topic.
+
+To turn all the lights off, run the following command:
+```bash
+ros2 topic pub /a300_0000/platform/cmd_lights clearpath_platform_msgs/Lights '{"lights":[
+  {"red": 0, "green": 0, "blue": 0},
+  {"red": 0, "green": 0, "blue": 0},
+  {"red": 0, "green": 0, "blue": 0},
+  {"red": 0, "green": 0, "blue": 0},
+]}' -r 10
+```
+
+You can experiment with sending different RGB values to each light, for example to set one light to
+yellow and keep all others off:
+```bash
+ros2 topic pub /a300_0000/platform/cmd_lights clearpath_platform_msgs/Lights '{"lights":[
+  {"red": 0, "green": 0, "blue": 0},
+  {"red": 255, "green": 255, "blue": 0},
+  {"red": 0, "green": 0, "blue": 0},
+  {"red": 0, "green": 0, "blue": 0},
+]}' -r 10
+```
+
+Dingo-O and Husky have 4 lights while Ridgeback has 8. See [`Lights.msg`](https://github.com/clearpathrobotics/clearpath_msgs/blob/jazzy/clearpath_platform_msgs/msg/Lights.msg)
+for details on the order of each light within the `lights` array.
+
+:::note
+
+Certain conditions, such as being e-stopped, charging, or having a low battery will override the user-controlled lights.
+
+Generally, as long as the robot's front lights are white and rear lights are red the robot is in a "normal" state
+and the lights can be controlled.
+
+:::
+
+## How do I set up my remote workstation to work with the robot?
+
+We recommend setting up a dedicated computer with Ubuntu 24.04 installed on it. To set up your
+offboard computer, please follow [these instructions](installation/offboard_pc.mdx).
+
+ROS 2 requires time synchronization between the offboard computer and the robot. You may need to
+[configure NTP synchronization](networking/ntp.mdx) on your workstation and/or robot.
+
+## How do I run the simulator?
+
+First, [set up your computer](installation/offboard_pc.mdx) to install ROS 2 Jazzy. Then
+[install the simulation](tutorials/simulator/install.mdx).
+
+Once the simulator is installed, you can [start simulating](simulator/simulate.mdx).
