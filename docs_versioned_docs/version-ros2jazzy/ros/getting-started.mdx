@@ -1,7 +1,161 @@
 ---
 title: Getting Started
-sidebar_label: Getting Stated
-sidebar_position: 0
+sidebar_label: Getting Started
+sidebar_position: 1
 ---
 
 ## Welcome
+
+Thank-you for buying a robot from Clearpath Robotics! We understand working with any new
+technology can be complicated, and robots are no exception.  This page will help you get
+started with your new (or newly-updated) robot.
+
+If you have problems, or have further questions, please feel free to
+[reach out to our support team](https://support.clearpathrobotics.com/hc/en-us/requests/new).
+
+## How do I power my robot on?
+
+All Clearpath robots have a power switch located on the back of the robot. The exact form-factor
+of this switch varies from platform-to-platform, as described below. Please refer to your robot's
+user manual for detailed information about the robot's power system.
+
+The robot's internal computer powers-on with the rest of the robot. The computer may take a few
+minutes to fully boot, depending on how the software on the robot has been configured.
+
+### Jackal, Dingo
+
+Jackal and Dingo use the same Human-Machine Interface (HMI) panel, located on the rear of the robot.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/dingo_images/hmi.png"
+      width="300"
+    />
+    <figcaption>HMI Panel</figcaption>
+  </figure>
+</center>
+
+To turn the robot on, press the <img src="/img/robot_images/dingo_images/icon-power.png" width="24"/>
+button. Once the robot's computer has fully booted the light under the comms indicator
+(<img src="/img/robot_images/dingo_images/icon-comms.png" width="24"/>) will turn green.
+
+### Husky A300 & A200, Ridgeback, Boxer
+
+Husky, Ridgback, and Boxer all have a metallic button located on the back of the robot
+with the <img src="/img/robot_images/dingo_images/icon-power.png" width="24"/> (power) symbol.
+Press this button to turn the robot on.
+
+### Warthog
+
+Warthog has a red power switch located on the rear of the robot.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/warthog_images/power_switch.jpg"
+      width="300"
+    />
+    <figcaption>Warthog power switch</figcaption>
+  </figure>
+</center>
+
+To power the robot on, rotate the switch clockwise so the white line points to the `ON` position.
+
+
+## How do I log into the robot?
+
+When you turn on your robot for the first time it will be offline.
+
+### Logging in via monitor & keyboard
+
+The easiest way to log into the robot is by connecting a monitor to the robot's computer's HDMI
+port and connecting a keyboard to a USB port. This will give you access to the robot's
+command-line. You should see white text on a black background like this:
+```
+Ubuntu 24.04.2 LTS cpr-a300-0000 tty1
+
+cpr-a300-0000 login: _
+```
+
+Type the username `robot` and press ENTER. You will be prompted for the password:
+```
+Ubuntu 24.04.2 LTS cpr-a300-0000 tty1
+
+cpr-a300-0000 login: robot
+Password: _
+```
+
+Enter the password (`clearpath` by default, though if you changed the password, enter the new one)
+and press ENTER. When typing the password you will not see any feedback (e.g. you will not see
+each character replaced with `*`). This is normal.
+
+### Logging in via SSH
+
+If you do not have easy access to the robot's HDMI & USB ports, you can instead use the robot's
+static wired network to log in via SSH. You will need:
+- a laptop or desktop computer with an SSH client installed on it
+  - most Linux distributions come with a built-in SSH client
+  - Windows users can either use the [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install)
+    to install a Linux SSH client, or use a dedicated Windows application like [PuTTY](https://www.putty.org/)
+- an ethernet cable to connect your laptop/desktop to the robot
+
+Connect one end of the ethernet cable directly to your computer, and connect the other end to
+the robot's ethernet port. Configure your computer's ethernet interface to assign it a static
+IP address on the `192.168.131.0/24` subnet. See [Network IP Addresses](networking/network_ip_addresses)
+for reserved addresses. Generally anything in the `192.168.131.100` to `192.168.131.254` range
+will be safe to use.
+
+Once connected, make sure you can ping the robot by running the command
+```bash
+ping 192.168.131.1
+```
+If you can successfully ping the robot, SSH into it with the command
+```bash
+ssh robot@192.168.131.1
+```
+You will be prompted to enter the password (`clearpath` by default). While typing the password
+you will not see any feedback. Press ENTER when you are done typing the password.
+
+### After you've logged in
+
+After logging in, either physically or via SSH, you will see the robot's greeter page:
+```
+Welcome to Ubuntu 24.04.2 LTS (GNU/Linux 6.8.0-58-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Thu May  1 02:57:51 PM EDT 2025
+
+  System load:  0.98               Temperature:             32.9 C
+  Usage of /:   53.8% of 97.87GB   Processes:               259
+  Memory usage: 15%                Users logged in:         1
+  Swap usage:   0%                 IPv4 address for wlp2s0: 10.27.205.109
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+12 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+2 additional security updates can be applied with ESM Apps.
+Learn more about enabling ESM Apps service at https://ubuntu.com/esm
+
+
+    __________
+   /    __    \
+  / __ /  \ __ \
+ / /  \\__//  \ \
+/  \__/    \__/  \  ###  #    ####     #     ###   ###    #   ##### #   #
+\  /  \ __ /  \  / #     #    #       # #    #  #  #  #  # #    #   #   #
+ \ \__//  \\__/ /  #     #    ###    #####   ###   ###  #####   #   #####
+  \    \__/    /   #     #    #     #     #  #  #  #   #     #  #   #   #
+   \__________/     ###  #### #### #       # #   # #  #       # #   #   #
+                R O B O T I C S
+
+
+Last login: Thu May  1 14:55:58 2025 from 10.30.15.89
+robot@cpr-a300-0000:~$
+```
