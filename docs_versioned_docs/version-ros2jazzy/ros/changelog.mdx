@@ -1,0 +1,94 @@
+---
+title: Robot Clearpath Platform Software Changelog
+sidebar_label: Changelog
+sidebar_position: 8
+---
+
+### [2.4] 2025-04-30
+
+#### New Features
+ - Added pinout messages
+ - Moved clearpath_tests into clearpath_robot
+ - Added a software based low voltage cut-off for the A300
+ - Added pinout control node for the A300
+ - Update Nav2 configuration files for Jazzy
+ - Added motor voltage monitoring for A300
+ - Added config bits and revision bits to status message for A300
+ - Detect if there is low voltage on power rails which have a fuse for A300
+ - Added shutdown service to micro-ros for A300
+ - Bootloader improvements
+ - Added user power for A300
+ - Added errors for power good signals and user power contactors for A300
+ - Added Fan Speed Monitoring for A300
+ - Added Error Reporting API for A300
+
+
+#### Fixed
+ - Fixed the Husky A300 serial sample to match the real serial
+ - Updated Ridgeback R100 raiser height to 0.07m from 0.055m
+ - Removed duplicate and incorrect current / voltage labels
+ - Fixed debian post-install permissions
+ - Fixed event flag wait timeout in power task shutdown handling for A300
+
+
+### [2.3] 2025-04-11
+
+#### New Features
+ - Added temperature indices for all platforms
+ - Remove temperature fields from status message
+ - Added display status message for A300 display
+ - Added a single Hokuyo laser to default R100 sample
+ - Maintain default can adapters but allow overwriting if matching names
+ - Added Wiferion Charger
+ - Added CAN adapters
+ - Rename camera IMU topics from imu to imu/data_raw
+ - Added delay to manipulator controller
+ - Added Manipulator URDF Parameters
+ - Added MoveIt Parameters and Enable
+ - Added Manipulator Samples and Poses
+ - Removed J100 from unsupported platforms
+ - Changed all sensor samples to the Husky A300
+ - Added support for INS sensors + Fixposition XVN
+ - Removed Dingo and Ridgeback from unsupported exception
+ - Move extras launch into a new service
+ - Added remapping for upstream mecanum controller
+ - Updated mecanum controller types
+ - Add exception handling to the generators to print a nicer error message in the case of self-generated Unsupported* exceptions
+ - Added Graceful shutdown for A300 FW
+ - Increased TCPIP and NETBUF Mbox sizes to allow for larger bursts of UDP packets
+ - UDP CAN bridge improvements
+ - Ethernet Bootloader for A300
+ - Added Dingo, Ridgeback and Jackal Jazzy firmware
+ - Increase status text size for A300 FW
+ - Create Error Screen Drawing Function for A300 FW
+ - Made fan commands a hidden topic for A300 FW
+ - Switch aux output pins to default to high on boot for A300 FW
+ - Added inventus diagnostics
+ - Automatically rerun install script on package update
+ - Move symlinks into `clearpath-robot.service.wants` instead of `multi-user.target.wants`
+ - Add `clearpath_tests` as dependency for metapackage
+ - Reduced Puma feedback frequency to 20hz
+ - Added lynx firmware update process diagnostics
+ - Added user fan control and hysteresis when leaving a warning/error state
+ - Added diagnostic categories
+ - Add UR socat tool communication script
+
+#### Fixed
+ - Updated the A300's default IMU location
+ - Handle empty namespace
+ - Stop clearpath platform service before flashing over ethernet
+ - Updated diagnostic for changes to MCU status message
+ - Fixed estop diagnostics
+ - Added python3-apt as exec dep
+ - Change path to imu_filter to platform config
+ - Increased power and timer task stack sizes to fix crashing on A300 MCU
+
+
+### [2.0] 2025-02-28
+
+#### New Features
+ - First Jazzy release
+
+#### Fixed
+ - First Jazzy release
+
