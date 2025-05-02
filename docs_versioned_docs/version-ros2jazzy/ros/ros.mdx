@@ -69,7 +69,7 @@ To power the robot on, rotate the switch clockwise so the white line points to t
 
 When you turn on your robot for the first time it will be offline.
 
-### Logging in via monitor & keyboard
+### Logging in via monitor & keyboard {#keyboard-login}
 
 The easiest way to log into the robot is by connecting a monitor to the robot's computer's HDMI
 port and connecting a keyboard to a USB port. This will give you access to the robot's
@@ -92,7 +92,7 @@ Enter the password (`clearpath` by default, though if you changed the password, 
 and press ENTER. When typing the password you will not see any feedback (e.g. you will not see
 each character replaced with `*`). This is normal.
 
-### Logging in via SSH
+### Logging in via SSH {#ssh-login}
 
 If you do not have easy access to the robot's HDMI & USB ports, you can instead use the robot's
 static wired network to log in via SSH. You will need:
@@ -165,6 +165,65 @@ robot@cpr-a300-0000:~$
 Once you have logged-in you can type any valid `bash` commands followed by the ENTER key to
 execute them. See [the official ROS docs](https://docs.ros.org/) and our [ROS 2 cheat sheet](tutorials/cheat_sheet.mdx)
 for information on ROS specific commands.
+
+## How do I connect the robot to my wireless network?
+
+First you must log into the robot [using a monitor and keyboard](#keyboard-login) or
+[via SSH](#ssh-login). Then you will need to edit `/etc/netplan/60-wifi.yaml`. See
+[conencting to an existing wifi network](networking/computer_setup#connecting-to-an-existing-wi-fi-network)
+for more information.
+
+## How can I copy files on to/off of the robot?
+
+The easiest way to transfer files to/from the robot is to use [SFTP](https://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol).
+SFTP operates the much the same as [SSH](#ssh-login), but instead of allowing you to run programs
+with the command-line it allows you to browse and copy files.
+
+To open an SFTP connection you will need an SFTP client:
+- Ubuntu's desktop file browser (`nautilus`) includes SFTP support by default
+- on Windows there are many third-party SFTP clients, including [Filezilla](https://filezilla-project.org/) or [WinSCP](https://winscp.net)
+If you are using Ubuntu, you can simply open the file browser and press `ctrl + L` to open the location bar. Type
+```
+ssh://robot@192.168.131.1
+```
+and press ENTER to connect to the robot.  (If you are connecting over wifi instead of the robot's ethernet
+port you will need to change the IP address from `192.168.131.1` to the robot's IP address on your
+wireless LAN.) You will be promted to enter the password to log into the robot. Once you have done so
+you will be able to browse the files on the robot directly in your file browser and copy files to/from
+the robot.
+
+<center>
+  <figure>
+    <img
+      src="/img/software_images/ros2/tutorials/sftp/nautilus_sftp.png"
+      width="600"
+    />
+    <figcaption>SFTP in Nautilus</figcaption>
+  </figure>
+</center>
+
+If you are using Filezilla you should enter the following in the configuration area at the top of
+the screen:
+- Host: `192.168.131.1` if connecting over direct ethernet connection, otherwise the robot's IP
+  address on your LAN
+- Username: `robot`
+- Password: `clearpath` by default
+- Port: `22`
+Then press the Quickconnect button.
+
+<center>
+  <figure>
+    <img
+      src="/img/software_images/ros2/tutorials/sftp/filezilla_config.png"
+      width="600"
+    />
+    <figcaption>SFTP in Filezilla</figcaption>
+  </figure>
+</center>
+
+Filezilla will show the robot's filesystem on the right side of the window and your local
+filesystem on the left. You can copy files between the two by simply dragging files from one
+side to the other.
 
 ## How do I control the robot?
 
