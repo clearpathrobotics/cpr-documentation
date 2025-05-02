@@ -167,7 +167,7 @@ topics, then contact [Support](#support) with the rosbag.
 - /a300_XXXXX/platform/motors/feedback
 - /a300_XXXXX/platform/motors/status
 - /a300_XXXXX/platform/motors/system_protection
-- /a300_XXXXX/platform/safety_stop
+- /a300_XXXXX/platform/emergency_stop
 
 ### Husky speed is momentarily incorrect when first driving after power up
 
@@ -295,11 +295,11 @@ For example, we may ask you to record these topics:
 - `/a300_XXXXX/platform/motors/feedback`
 - `/a300_XXXXX/platform/motors/status`
 - `/a300_XXXXX/platform/motors/system_protection`
-- `/a300_XXXXX/platform/safety_stop`
+- `/a300_XXXXX/platform/emergency_stop`
 so we can review motor temperatures, and other diagnostic data. To create this rosbag, you would:
 
 1.  Log into the robot's computer.
-2.  Run the command `ros2 bag record /a300_XXXXX/platform/mcu/status /a300_XXXXX/platform/mcu/status/power /a300_XXXXX/platform/motors/debug /a300_XXXXX/platform/motors/feedback /a300_XXXXX/platform/motors/status /a300_XXXXX/platform/motors/system_protection /a300_XXXXX/platform/safety_stop`
+2.  Run the command `ros2 bag record /a300_XXXXX/platform/mcu/status /a300_XXXXX/platform/mcu/status/power /a300_XXXXX/platform/motors/debug /a300_XXXXX/platform/motors/feedback /a300_XXXXX/platform/motors/status /a300_XXXXX/platform/motors/system_protection /a300_XXXXX/platform/emergency_stop`
 3.  Use your robot as you typically would, trying to recreate the issue you have been experiencing.
 4.  Once done, in the terminal, press `ctrl+c` to stop the command.
 5.  Enter `ls`, and find the new folder named `ros2bag_YYYY_MM_DD-hh_mm_ss` that was created. It will contain two files: `metadata.yaml` and a file with an extension of `.mcap`
