@@ -288,13 +288,20 @@ Contact [Support](#support).
 Our Support team may ask you to create a _rosbag_.
 This is a tool that saves ROS data to a file, so we can review it after the robot has been turned off.
 
-For example, we may ask you to record the _/status_ topic so we can review motor temperatures, and other diagnostic data.
-To create this rosbag, you would:
+For example, we may ask you to record these topics:
+- `/a300_XXXXX/platform/mcu/status`
+- `/a300_XXXXX/platform/mcu/status/power`
+- `/a300_XXXXX/platform/motors/debug`
+- `/a300_XXXXX/platform/motors/feedback`
+- `/a300_XXXXX/platform/motors/status`
+- `/a300_XXXXX/platform/motors/system_protection`
+- `/a300_XXXXX/platform/safety_stop`
+so we can review motor temperatures, and other diagnostic data. To create this rosbag, you would:
 
 1.  Log into the robot's computer.
-2.  Run the command `ros2 bag record /status`
+2.  Run the command `ros2 bag record /a300_XXXXX/platform/mcu/status /a300_XXXXX/platform/mcu/status/power /a300_XXXXX/platform/motors/debug /a300_XXXXX/platform/motors/feedback /a300_XXXXX/platform/motors/status /a300_XXXXX/platform/motors/system_protection /a300_XXXXX/platform/safety_stop`
 3.  Use your robot as you typically would, trying to recreate the issue you have been experiencing.
 4.  Once done, in the terminal, press `ctrl+c` to stop the command.
-5.  Enter `ls`, and find the new file that was created. It will have a file extension of _.bag_
-6.  Copy this file to your development computer, using a command like [`scp`](https://help.ubuntu.com/community/SSH/TransferFiles).
-    Send this _.bag_ file to Clearpath Robotics in your Support email request.
+5.  Enter `ls`, and find the new folder named `ros2bag_YYYY_MM_DD-hh_mm_ss` that was created. It will contain two files: `metadata.yaml` and a file with an extension of `.mcap`
+6.  Copy this directory to your development computer, using a command like [`scp`](https://help.ubuntu.com/community/SSH/TransferFiles).
+    Send the files to Clearpath Robotics in your Support email request.
