@@ -17,6 +17,32 @@ Contact our support team at \<support@clearpathrobotics.com\> if the issue persi
 
 ---
 
+## Checking Husky serial number
+
+The robot's serial number is on a label behind the front panel.
+
+<center>
+   <figure>
+      <img
+         src="/img/robot_images/husky_a300_images/husky_a300_serial_number.jpg"
+         width="600"
+      />
+      <figcaption>Accessing the A300 serial number label</figcaption>
+   </figure>
+</center>
+
+To open the front panel, turn the two small thumb screws at the bottom of the front panel inwards.
+They will rotate approximately 90 degrees. Once the screws are rotated, the front panel is retained
+by two pins held in rubber bushings at the top of the panel (position marked with green arrows in
+the image above). Gently lift the front panel up and out to free it.
+
+The serial number is on the white label indicated. It will be of the form `A300-#####`.
+
+To reinstal the front panel, reinsert the metal rods into the rubber bushings and press the panel
+into place. Then rotate the two thumscrews outward to log it into position.
+
+---
+
 ## Power
 
 ### Husky will not turn on
@@ -163,7 +189,6 @@ topics, then contact [Support](#support) with the rosbag.
 
 - /a300_XXXXX/platform/mcu/status
 - /a300_XXXXX/platform/mcu/status/power
-- /a300_XXXXX/platform/motors/debug
 - /a300_XXXXX/platform/motors/feedback
 - /a300_XXXXX/platform/motors/status
 - /a300_XXXXX/platform/motors/system_protection
@@ -291,7 +316,6 @@ This is a tool that saves ROS data to a file, so we can review it after the robo
 For example, we may ask you to record these topics:
 - `/a300_XXXXX/platform/mcu/status`
 - `/a300_XXXXX/platform/mcu/status/power`
-- `/a300_XXXXX/platform/motors/debug`
 - `/a300_XXXXX/platform/motors/feedback`
 - `/a300_XXXXX/platform/motors/status`
 - `/a300_XXXXX/platform/motors/system_protection`
@@ -299,7 +323,7 @@ For example, we may ask you to record these topics:
 so we can review motor temperatures, and other diagnostic data. To create this rosbag, you would:
 
 1.  Log into the robot's computer.
-2.  Run the command `ros2 bag record /a300_XXXXX/platform/mcu/status /a300_XXXXX/platform/mcu/status/power /a300_XXXXX/platform/motors/debug /a300_XXXXX/platform/motors/feedback /a300_XXXXX/platform/motors/status /a300_XXXXX/platform/motors/system_protection /a300_XXXXX/platform/emergency_stop`
+2.  Run the command `ros2 bag record /a300_XXXXX/platform/mcu/status /a300_XXXXX/platform/mcu/status/power /a300_XXXXX/platform/motors/feedback /a300_XXXXX/platform/motors/status /a300_XXXXX/platform/motors/system_protection /a300_XXXXX/platform/emergency_stop`
 3.  Use your robot as you typically would, trying to recreate the issue you have been experiencing.
 4.  Once done, in the terminal, press `ctrl+c` to stop the command.
 5.  Enter `ls`, and find the new folder named `ros2bag_YYYY_MM_DD-hh_mm_ss` that was created. It will contain two files: `metadata.yaml` and a file with an extension of `.mcap`
