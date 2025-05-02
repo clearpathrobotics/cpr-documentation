@@ -294,3 +294,27 @@ First, [set up your computer](installation/offboard_pc.mdx) to install ROS 2 Jaz
 [install the simulation](tutorials/simulator/install.mdx).
 
 Once the simulator is installed, you can [start simulating](simulator/simulate.mdx).
+
+## How can I visualize the robot?
+
+The `clearpath_viz` ROS package contains launch files for visualizing the robot's model and
+sensor data. See [Visualizing with RViz2](tutorials/rviz.mdx) for more information.
+
+## How do I (re)configure the robot?
+
+All Clearpath robots use a single configuration file,
+[`/etc/clearpath/robot.yaml`](config/yaml/overview.mdx). This file
+contains the platform information, as well as the type and location of all of the robot's
+sensors and manipulators. To add/remove/relocate sensors, change the robot's maximum speed
+or acceleration, change the [ROS Middleware](networking/ros2-networking.mdx), etc... edit
+this file:
+```bash
+nano /etc/clearpath/robot.yaml
+```
+
+The `robot.yaml` file is processed by [generator services](config/generators.mdx). These
+generators parse the YAML file and create the robot's
+[physical description](https://docs.ros.org/en/jazzy/Tutorials/Intermediate/URDF/URDF-Main.html),
+[semantic description](https://moveit.picknik.ai/humble/doc/examples/urdf_srdf/urdf_srdf_tutorial.html),
+[launch files](https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Launch/Launch-Main.html) for
+the platform and sensor drivers, and other configuration files.
