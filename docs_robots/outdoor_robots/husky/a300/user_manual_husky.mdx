@@ -410,10 +410,21 @@ Additional items may need to be addressed based on the site-specific operating e
 :::safety-caution
 
 **Never attempt to have Husky A300 climb curbs higher than 150 mm, operate near overhanging obstacles,
-or drive across gaps or depressions in the ground more than 200 mm deep, such as the top of stairs,
+or drive across gaps or depressions in the ground more than 130 mm deep, such as the top of stairs,
 at a cliff edge, or at large potholes.**
 
 This may result in damage to the robot drive systems, attachments, or accessories.
+
+:::
+
+<br/>
+
+:::safety-caution
+
+**Always approach curbs or depressions in the ground at reduced speeds.**
+
+Husky A300 does not have a suspension system and full-speed impacts may result in damage to the robot
+drive systems, attachments, or accessories.
 
 :::
 
@@ -472,7 +483,7 @@ contact [Support](#support).
 Husky A300 is intended for use in:
 
 - indoor and outdoor research laboratories and light industrial environments for inspection, materials transport, and manipulation;
-- environments free of vertical drops greater than 200 mm;
+- environments free of vertical drops greater than 130 mm;
 - environments free of fast-moving people or vehicles;
 - environments free of glass or transparent plastic floors or walls;
 - temperatures between -20°C and +40°C;
@@ -820,6 +831,34 @@ for details).
 | 0 kg         | 15°      | High friction | 0.5 m |
 | 100 kg       | 15°      | High friction | 1.0 m |
 
+##### Suspension and Performance Limits  {#suspension-limits}
+
+:::note
+
+While A300 is a rugged robot, it does not have a suspension system. To avoid damaging the
+robot or its payloads, the robot speed must be reduced, as outlined below, when approaching
+obstacles such as curbs.
+
+If your application requires higher speed operation on off-road terrain, consider using the
+[Warthog](../../warthog/user_manual_warthog).
+
+Also, reducing the tire pressure can reduce shock values and may increase the limits noted.
+
+:::
+
+- When in off-road conditions, maximum speeds must be reduced as follows:
+   - maximum speed of 1.5 m/s with no payload;
+   - maximum speed of 1.0 m/s with up to 50 kg payload;
+   - payloads above 50 kg are not supported.
+- The maximum curb height over which A300 can drive without needing to reduce maximum
+  speed or payload is 13 mm. Approaching the curb at an angle will allow for higher limits.
+- When approaching the maximum curb height of 150 mm, the maximum approach speed is 0.1 m/s.
+  Approaching the curb at an angle will allow for higher limits.
+- When operating in environments with depressions in the ground (eg. potholes), ensure
+  that the maximum depression does not exceed the robot's ground clearance. Further,
+  when approaching depressions in the ground, reduce robot speed equivalent to that
+  outlined above for curbs.
+
 ### Recommended Safe Work Procedures
 
 <ComponentCommonSafeWorkProcedures />
@@ -880,9 +919,9 @@ In case of a collision:
 | User Power                     | 12 V @ 10 A, 24 V @ 5 A, VBAT @ 5 A<br/>Optional expansion: VBAT @ 40 A |
 | Environmental                  | IP54                                                                     |
 
-_¹ Continuous operation on relatively flat terrain with wide turns._ <br />
-_² Robot climbing 30° grade with high-mounted payload, or turning in place in high-friction conditions such as asphalt, concrete, and carpet._ <br />
-_³ Maximum speed should be limited to 1 m/s in off-road conditions when the payload exceeds 50 kg._ <br />
+_¹ Continuous operation on relatively flat terrain with wide turns. See also [Important System Limits](#important-system-limits)_ <br />
+_² Robot climbing 30° grade with high-mounted payload, or turning in place in high-friction conditions such as asphalt, concrete, and carpet. See also [Important System Limits](#important-system-limits)._ <br />
+_³ Maximum speed should be reduced in off-road conditions. See also [Important System Limits](#important-system-limits)._ <br />
 _⁴ See also [Important System Limits](#important-system-limits) for additional considerations related to slopes._ <br />
 _⁵ Robot must be powered on at a minimum temperature of 0 °C._ <br />
 _⁶ Based on 33% driving at 2 m/s with 50 kg payload on level ground and 67% idle._ <br />
