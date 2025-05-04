@@ -698,7 +698,7 @@ other components.
 
 ¹ Adjust the `/a300_00000` field with the serial number of your robot.
 
-##### Current Limits
+##### Current Output Limits
 
 The maximum current draw of the system is limited by the output of the batteries. The maximum
 continuous output for the 2-battery, 4-battery, and 6-battery configurations is 60 A, 120 A, and 150 A, respectively.
@@ -707,6 +707,32 @@ Higher outputs are possible for short periods of time.
 Husky A300's motors are rated to draw 17 A continuous, but they will spike to several times higher
 than this, particularly when traversing rough terrain and when turning on the spot.
 To reduce current draw, consider commanding wider-radius turns from your control software.
+
+##### Regenerative Current Limits
+
+:::safety-caution
+
+**Avoid operating on steep hills when the batteries are a very high or low temperatures.**
+
+When stopping Husky A300, especially while driving down a hill or incline, high regenerative currents will
+be fed back into the batteries. In certain operating conditions, especially when the batteries
+are at very high or low temperatures, these regenerative currents may exceed the battery limits.
+
+:::
+
+Follow the current guidelines when operating Husky A300 on hills or inclines.
+
+- Operating guidelines for two-battery (40 Ah) configuration:
+   - Monitor the battery temperatures (via ROS topics) and avoid operating on hills/inclines when
+     the battery temperatures are below 10 °C or above 45 °C.
+   - Monitor the battery state of charge (via ROS topics) and avoid operating on hills/inclines when
+     the state of charge is above 90%.
+- Operating guidelines for four-battery (80 Ah) and six-battery (120) Ah battery configurations:
+   - Monitor the battery temperatures (via ROS topics) and avoid operating on hills/inclines when
+     the battery temperatures are below 10 °C.
+   - Monitor the battery state of charge (via ROS topics) and avoid operating on hills/inclines when
+     the state of charge is above 90%, except when the reported battery temperature is in the
+     20 to 45 °C range.
 
 ##### Stability Limits
 

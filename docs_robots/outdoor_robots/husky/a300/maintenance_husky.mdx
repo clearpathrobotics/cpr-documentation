@@ -106,25 +106,18 @@ Procedure:
 1. Install the clean filter.
 1. Replace the front livery panel by aligning the pins and tighten the quarter-turn latches.
 
-#### Battery Cell Balancing (Quick)  {#quick-cell-balance}
+#### Full Battery Charge
 
 Husky is powered by LiFePO<sub>4</sub> batteries. The function and health of these
 batteries is monitored by a Battery Management Unit (BMU) which is internal to the battery pack itself.
-
-Over the operating life of Husky, the State of Charge (SoC) of the batteries may start being
-misreported accompanied by a higher voltage difference between the batteries' cells. Typically battery cells
-should be within a range of 50 mV; if not, Husky's batteries may suddenly drop in SoC
-while operating or the Husky may unexpectedly shut off. To resolve this issue, it is required to
-perform regular cell balancing of the battery and BMU.
-
-A "quick" cell balancing should be performed at least once each week.
+It is recommended that the batteries be charged to 100% at least once per week.
 
 Procedure:
 
 1. Power off the robot.
 1. Place the robot on a level surface.
 1. Connect the manual charger.
-1. Let the batteries charge for at least four hours.
+1. Let the batteries charge until they reach a full charge, as indicated on the charger.
 
 #### AMP Sensor Cleaning
 
@@ -159,18 +152,6 @@ Do not apply excessive pressure to the camera lenses.
 ### Monthly Preventative Maintenance
 
 Perform the following tasks once every month.
-
-#### Battery Cell Balancing (Full)
-
-Refer to the notes above regarding the [weekly "quick" cell balancing](#quick-cell-balance).
-In a addition, a full balance of 24+ hours is recommended at least once per month.
-
-Procedure:
-
-1. Power off the robot.
-1. Place the robot on a level surface.
-1. Connect the manual charger.
-1. Let the batteries charge for at least 24 hours.
 
 #### Tire Inspection
 
@@ -445,8 +426,8 @@ Be sure to follow proper ESD protection measures prior to handling any circuit b
        width="600"
      />
    </center>
-1. Install the new circuit board by gently sliding it into place horizontally, ensure that the
-   retaining clips are secured, and that the two screws have been installed.
+1. Install the new circuit board by sliding it in at a 45 degree angle, rotating it down to
+   horizontal until the retaining clips click to engage, and installing the two screws.
 1. Put the Top Plate back in place and finger tighten the seven screws that were removed in Step 2.
    Note that the screw with the sealing washer goes in the inner location and the remaining
    six screws are installed at the perimeter. Tighten all seven screws to 3 Nm.
@@ -475,6 +456,8 @@ Be sure to follow proper ESD protection measures prior to handling any circuit b
      />
    </center>
 1. Remove the failing circuit board by removing the retaining screws and then lifting out the board.
+   Note that some cables may need to be moved out of the way temporarily to make it easier to
+   remove the Main circuit board.
    <center>
      <img
        src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_9.jpg"
@@ -482,15 +465,17 @@ Be sure to follow proper ESD protection measures prior to handling any circuit b
      />
    </center>
 1. Place the old and new Main circuit boards on an ESD mat.
-1. Move the DC/DC, BLDC, and Common Core circuit boards from the old to the new Main circuit board
-   by following the procedures above.
+1. Remove the DC/DC, BLDC, and Common Core circuit boards from the old Main circuit board
+   (including heat shields) and install them (including heat shields) on the new Main circuit
+   board by following the procedures above.
    <center>
      <img
        src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_10.jpg"
        width="400"
      />
    </center>
-1. Install the new Main circuit board tighten the retaining screws to 1 Nm.
+1. Install the new Main circuit board (including DC/DC, BLDC, and Common Core circuit boards)
+   and tighten the retaining screws to 1 Nm.
 1. Reconnect all cables, noting that the labels on the cables should match those on the board.
 1. Put the Top Plate back in place and finger tighten the seven screws that were removed in Step 2.
    Note that the screw with the sealing washer goes in the inner location and the remaining
@@ -640,22 +625,23 @@ Ensure proper personal protective equipment is used when performing battery main
        width="600"
      />
    </center>
-1. Disconnect all cables at the front of the electronics tray.
+1. Disconnect all cables at the front of the electronics tray, at a minimum
+   the red Ethernet cable highlighted in the image.
    <center>
      <img
-       src="/img/robot_images/husky_a300_images/husky_a300_battery_2-red.jpg"
+       src="/img/robot_images/husky_a300_images/husky_a300_battery_2.jpg"
        width="600"
      />
    </center>
-1. Remove two screws at the front of the electronics tray used to fasten the
-   tray to the side of the robot.
+1. Disconnect all cables at the rear of the electronics tray.
+1. Remove the four screws used to fasten the electronics tray to the side of the robot.
    <center>
      <img
        src="/img/robot_images/husky_a300_images/husky_a300_battery_3.jpg"
        width="600"
      />
    </center>
-1. Tilt the electronics tray up to expose the batteries.
+1. Remove the electronics tray to expose the batteries. 
    <center>
      <img
        src="/img/robot_images/husky_a300_images/husky_a300_battery_4.jpg"
@@ -709,9 +695,9 @@ Ensure proper personal protective equipment is used when performing battery main
 1. Re-install the positive battery busbar by placing it across the
    two fuses and tightening the two nuts to 3 Nm.
 1. Replace the two fuse covers.
-1. Tilt the electronics tray back into position and tighten the
-   two screws used to fasten the tray to the side of the robot to 3 Nm.
-1. Reconnect all cables at the front of the electronics tray.
+1. Put the electronics tray back into position and tighten the
+   four screws used to fasten the tray to the side of the robot to 3 Nm.
+1. Reconnect all cables at the front and rear of the electronics tray.
 1. Locate the V+ connector handle and re-install the connector.
 1. Put the Top Plate back in place and finger tighten the seven screws that were removed in Step 2.
    Note that the screw with the sealing washer goes in the inner location and the remaining
@@ -725,6 +711,17 @@ Ensure proper personal protective equipment is used when performing battery main
 1. Reconnect all motor power and encoder cables on the chassis.
 1. Re-install the cable gland brackets on both siders of the robot,
    tightening the five screws on each to 1 Nm.
+
+### Replacing Fuses
+
+In the unlikely event that a fuse fails, refer to the table below for the required replacement fuse.
+
+| Circuit Board Designator | Fuse Type and Rating  | Part Number |
+| :----------------------- | :-------------------- | :---------- |
+| F1, F2, F3, F4, F5, F8   | 125 V, 3 A, fast-blow | [Littlefuse 0453003.MR](https://www.digikey.ca/en/products/detail/littelfuse-inc/0453003-MR/552259) |
+| F6, F10                  | 125 V, 5 A, slow-blow | [Littlefuse 0454005.MR](https://www.digikey.ca/en/products/detail/littelfuse-inc/0454005-MR/552287) |
+| F7, F9                   | 125 V, 8 A, fast-blow | [Littlefuse 0453008.MR](https://www.digikey.ca/en/products/detail/littelfuse-inc/0453008-MR/552263) |
+| F52, F53, F54, F55, F56, F57, F58 | 32 V, 10 A, MINI Blade | [Littlefuse 0297010.WXT](https://www.digikey.ca/en/products/detail/littelfuse-inc/0297010-wxt/5233693) | 
 
 ---
 
