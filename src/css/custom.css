@@ -76,3 +76,41 @@ safety-icon {
   font-weight: bold;
   color: var(--toc-active-link-color);
 }
+
+.homepage-robot-header {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+body {
+  counter-reset: h2_section h3_section h4_section h5_section h6_section;
+}
+
+h2::before {
+  content: counter(h2_section) ". ";
+  counter-increment: h2_section;
+  counter-set: h3_section 0;
+}
+
+h3::before {
+  content: counter(h2_section) "." counter(h3_section) " ";
+  counter-increment: h3_section;
+  counter-set: h4_section 0;
+}
+
+h4::before {
+  content: counter(h2_section) "." counter(h3_section) "." counter(h4_section) " ";
+  counter-increment: h4_section;
+  counter-set: h5_section 0;
+}
+
+h5::before {
+  content: counter(h2_section) "." counter(h3_section) "." counter(h4_section) "." counter(h5_section) " ";
+  counter-increment: h5_section;
+  counter-set: h6_section 0;
+}
+
+h6::before {
+  content: counter(h2_section) "." counter(h3_section) "." counter(h4_section) "." counter(h5_section) "." counter(h6_section) " ";
+  counter-increment: h6_section;
+}
