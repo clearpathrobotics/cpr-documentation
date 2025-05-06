@@ -14,7 +14,7 @@ function SafetyDangerAdmonition(props) {
         />
       </div>
       <div>
-        <h5 style={{ fontSize: 24, color: 'black' }}>{titleLabel}</h5>
+        <p style={{ fontSize: 24, color: 'black' }}><b>{titleLabel}</b></p>
         <p style={{ color: 'black' }}>{props.children}</p>
       </div>
     </div>
@@ -33,7 +33,7 @@ function SafetyWarningAdmonition(props) {
         />
       </div>
       <div>
-        <h5 style={{ fontSize: 24, color: 'black' }}>{titleLabel}</h5>
+        <p style={{ fontSize: 24, color: 'black' }}><b>{titleLabel}</b></p>
         <p style={{ color: 'black' }}>{props.children}</p>
       </div>
     </div>
@@ -52,7 +52,7 @@ function SafetyCautionAdmonition(props) {
         />
       </div>
       <div>
-        <h5 style={{ fontSize: 24, color: 'black' }}>{titleLabel}</h5>
+        <p style={{ fontSize: 24, color: 'black' }}><b>{titleLabel}</b></p>
         <p style={{ color: 'black' }}>{props.children}</p>
       </div>
     </div>
