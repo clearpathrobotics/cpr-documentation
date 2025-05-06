@@ -103,7 +103,7 @@ more information on how to log in via SSH.
 
 First you must log into the robot [using a monitor and keyboard](#keyboard-login) or
 [via SSH](#ssh-login). Then you will need to edit `/etc/netplan/60-wifi.yaml`. See
-[conencting to an existing wifi network](networking/computer_setup#connecting-to-an-existing-wi-fi-network)
+[conencting to an existing wifi network](networking/computer_setup#netplan-wifi)
 for more information.
 
 ## How can I copy files on to/off of the robot?
@@ -254,7 +254,7 @@ All Clearpath robots use a single configuration file,
 [`/etc/clearpath/robot.yaml`](config/yaml). This file
 contains the platform information, as well as the type and location of all of the robot's
 sensors and manipulators. To add/remove/relocate sensors, change the robot's maximum speed
-or acceleration, change the [ROS Middleware](networking/ros2-networking.mdx), etc... edit
+or acceleration, change the [ROS Middleware](networking/ros2_networking), etc... edit
 this file:
 ```bash
 nano /etc/clearpath/robot.yaml

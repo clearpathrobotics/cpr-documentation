@@ -38,7 +38,7 @@ The first step is to determine if the ROS 2 system is actually the problem. With
 
 If the ROS 2 system is responsible for most of the bandwidth then it is important to calculate the expected bandwidth usage of the ROS 2 system. Calculate the bandwidth required for each of the main topics that are being transmitted (largest sizes and highest frequency) to establish an estimate of the bandwidth required for the ROS 2 system operation. This can be calculated for each topic using `message size * frequency * number of subscriptions over the network`. For an example of this calculation for two computers, see the [Video over Wi-Fi](../../tutorials/video_over_wifi.mdx) tutorial. Compare this expected value with the measured value of how much bandwidth is being used by the ROS 2 system. If the actual bandwidth usage is double or higher than the expected bandwidth then consider that the system may be having the problem of [Duplicate Messages](#duplicate-messages).
 
-If the required bandwidth for the system exceeds the available bandwidth then changes must be made. The first thing to consider is if the data is being transmitted in the most concise or dense format. Refer to the discussion on the [ROS 2 Communication](../ros2_communication.mdx#optimizing-sensor-data-for-transmission) page. Once the data is being transmitted using the most efficient message types, consider the frequency of the largest messages. Decreasing the frequency of messages directly reduces how much data needs to be processed and how much bandwidth is needed.
+If the required bandwidth for the system exceeds the available bandwidth then changes must be made. The first thing to consider is if the data is being transmitted in the most concise or dense format. Refer to the discussion on the [ROS 2 Communication](../ros2_networking/ros2_communication.mdx#optimizing-sensor-data-for-transmission) page. Once the data is being transmitted using the most efficient message types, consider the frequency of the largest messages. Decreasing the frequency of messages directly reduces how much data needs to be processed and how much bandwidth is needed.
 
 ## Duplicate Messages in Fast DDS {#duplicate-messages}
 
@@ -62,7 +62,7 @@ The following steps can be used to verify if this issue is present:
 
 1. The first solution is to ensure that the subscribing computer only ever connects to one network at a time and that it only has one IP address. This works well for initial testing and for situations where the networking configuration needs to change often. However, it must be monitored and managed every time the system is used. While this section refers to "the subscribing computer" this should be applied to every computer in the system that subscribes to any substantially sized data.
    1. Ensure that the subscribing computer is only connected to one network and therefore has only one IP address. In the example this would be the offboard computer.
-   2. Stop and restart all ROS nodes on the subscribing computer including the [ROS 2 Daemon](../ros2_communication.mdx#ros-2-daemon) and any Discovery Servers on the offboard computer.
+   2. Stop and restart all ROS nodes on the subscribing computer including the [ROS 2 Daemon](../ros2_networking/ros2_communication.mdx#ros-2-daemon) and any Discovery Servers on the offboard computer.
    3. Confirm using the same [verification steps](#duplicate-verification) to ensure that the problem has been resolved.
 
 2. The second solution is more involved initially but can be set and forgotten. This solution works for systems where the networks are well defined and rarely change. As a reminder, the implementation details for this solution are specific to Fast DDS. The modification is to set a Fast DDS profile on the computer that restricts the locator list to a specific network interface using the IP address to identify the interface. This profile must be applied for all nodes as well as for the terminals.
@@ -107,7 +107,7 @@ The Max Message Size is set in this profile example because it is set by default
     export FASTDDS_DEFAULT_PROFILES_FILE=/path/to/file/fastdds_network_profile.xml
     ```
 
-      3. Stop and restart all ROS nodes on the subscribing computer including the [ROS 2 Daemon](../ros2_communication.mdx#ros-2-daemon) and any Discovery Servers on the offboard computer.
+      3. Stop and restart all ROS nodes on the subscribing computer including the [ROS 2 Daemon](../ros2_networking/ros2_communication.mdx#ros-2-daemon) and any Discovery Servers on the offboard computer.
    3. Confirm using the same [verification steps](#duplicate-verification) to ensure that the problem has been resolved.
 
 
@@ -145,7 +145,7 @@ In Fast DDS this is done by applying the following XML profile. See the [Duplica
 
 ## Incorrect ROS 2 Quality of Service Settings {#qos}
 
-Subscriber quality of service settings such as reliability policy of *Reliable* or a large depth value can increase the network traffic and cause message backlogs in low bandwidth networks where some packets are lost. For more details, refer to the discussion on the [ROS 2 Communication](../ros2_communication.mdx#qos) page.
+Subscriber quality of service settings such as reliability policy of *Reliable* or a large depth value can increase the network traffic and cause message backlogs in low bandwidth networks where some packets are lost. For more details, refer to the discussion on the [ROS 2 Communication](../ros2_networking/ros2_communication.mdx#qos) page.
 
 ## Insufficient Computing Resources
 
