@@ -64,8 +64,8 @@ function Feature({ feature, className }: { feature: FeatureItem; className?: str
           loading="lazy"
         />
       </a>
-      <h3 className={clsx(styles.featureHeading)}>{feature.title}</h3>
-      <p className="padding-horiz--md">{feature.text}</p>
+      <p className="homepage-robot-header">{feature.title}</p>
+      <p>{feature.text}</p>
     </div>
   );
 }

@@ -77,6 +77,11 @@ safety-icon {
   color: var(--toc-active-link-color);
 }
 
+.homepage-robot-header {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
 body {
   counter-reset: h2_section h3_section h4_section h5_section h6_section;
 }
