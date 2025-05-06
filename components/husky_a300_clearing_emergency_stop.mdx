@@ -1,0 +1,35 @@
+### Clearing An Emergency Stop  {#clearing-an-emergency-stop}
+
+The Husky's status lights show these light patterns for different Emergency Stop states:
+
+<div class="centred-table">
+  | Lighting State                       | Lighting Pattern                                                                         |
+  | :----------------------------------- | :--------------------------------------------------------------------------------------: |
+  | Emergency Stop                       | <img src="/img/robot_images/common_images/lighting_images/stopped.gif" width="100"/>     |
+  | Needs Reset _(after Emergency Stop)_ | <img src="/img/robot_images/common_images/lighting_images/needs_reset.gif" width="100"/> |
+</div>
+
+#### The Emergency Stop State Happens When:
+
+1.  Any of the Husky's _Emergency Stop Buttons_ are depressed.
+2.  The Husky's _Rear Charge Port Door_ is open.
+    This door has a limit switch, which is connected to the robot's Emergency Stop loop.
+3.  The optional Wireless Emergency Stop's button is depressed.
+4.  And custom integration's Emergency Stop devices are exerting a stop.
+    This is not included with a standard Husky A300, AMP, or Observer, but may be included if you have custom devices added to your robot like a manipulator or PLC.
+
+#### To Clear The Emergency Stop State:
+
+1.  Twist all the _Emergency Stop Buttons_.
+2.  Close the Husky's _Rear Charge Port Door_.
+3.  If included; conncet the _Wireless Emergency Stop_ to the Husky.
+4.  If included; clear the Emergency Stop State on your custom devices.
+
+After clearing the Emergency Stop, the Husky's status lights should change to the _Needs Reset_ state's pattern.
+This state is common for machinery safety; as it waits for the machine operator to confirm that the machine should continue normal operations.
+
+#### To Clear The Needs Reset State:
+
+1.  Press the _Emergency Stop Restart Button_ on at the back of the Husky.
+2.  Or, if included, connect your Wireless Emergency Stop remote.
+3.  Or, publish to the ROS Topic `TODO`.

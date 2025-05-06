@@ -1,0 +1,45 @@
+### Connecting And Using The Wireless Joystick {#controller}
+
+Your robot included a PS4 wireless joystick.
+Clearpath's robot builders paired this wireless joystick with your robot computer's Bluetooth.
+This means the joystick should always connect to that robot, even if there are other robots nearby.
+
+To connect the joystick to your robot:
+
+1.  Turn on the robot, and wait till the status lights show that ROS is running.
+2.  Have the controller within 5 metres of the robot.
+3.  Press the _PS_ button in the centre of the joystick.
+4.  The joystick's top LED should start pulsing white or blue.
+    This means the joystick is attempting to connect.
+5.  The joysick's top LED should eventually become solid blue, indicating that it has connected to the robot's computer.
+
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/common_images/wireless_joystick_ps4.png"
+      width="400"
+    />
+    <figcaption>PS4 Wireless Joystick</figcaption>
+  </figure>
+</center>
+
+:::danger Failing To Connect
+
+The _Wireless Joystick_ is not connected if its LED does not become solid blue.
+Follow the instructions in the [Joystick Controller Pairing](/docs/ros/installation/controller) section to pair the joystick to your robot's primary computer.
+
+:::
+
+:::info Driving The Robot
+
+1.  Make sure your worksite is ready to drive the robot, and that the robot will not create hazards for people, animals, or your infrastrure.
+2.  Make sure the robot's status lights show that it is ready to drive.
+3.  Make sure the _Wireless Joystick is connected to the robot_images_.
+4.  Hold the joystick's _L1 button_ for slow driving.
+    _(You can use the R1 button for fast driving once you are comfortable with the robot's dynamics.)_
+5.  Use the left joystick to drive the robot.
+    Pushing the joystick forward and backward will command the robot ±X.
+    Angling the joystick left and right will command the robot to rotate ±Z.
+
+:::
