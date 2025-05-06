@@ -1,11 +1,11 @@
 ---
-title: ROS 2 Discovery Configuration
-sidebar_position: 10
+title: ROS 2 Networking
+sidebar_position: 8
 ---
 
 ## Overview
 
-import Ros2NetworkingOverview from "../../components/networking/_ros2_networking_overview.mdx";
+import Ros2NetworkingOverview from "/docs_versioned_docs/version-ros2jazzy/components/networking/_ros2_networking_overview.mdx";
 
 <Ros2NetworkingOverview/>
 
@@ -14,7 +14,7 @@ import Ros2NetworkingOverview from "../../components/networking/_ros2_networking
 ### Simple Discovery
 
 Participants (nodes) send periodic multicast announcement messages over the network with their unicast addresses, and
-then all participants share discovery information (such as topics and services) with all other participants.
+then all participants share discovery information (such as topics, and action servers.) with all other participants.
 This means that all participants get information about all other participants irrelevant of whether or not they need
 that information.
 
@@ -25,7 +25,7 @@ combination of Clearpath robots.
 <center>
   <figure>
     <img
-      src={require("./img/ros2-fastdds-simple-discovery-diagram.png").default}
+      src={require("../img/ros2-fastdds-simple-discovery-diagram.png").default}
       width="1000"
     />
   </figure>
@@ -34,15 +34,15 @@ combination of Clearpath robots.
 For more detailed information regarding Fast DDS or simple discovery, visit the
 [eProsima Fast DDS documentation](https://fast-dds.docs.eprosima.com/en/latest/fastdds/ros2/ros2.html).
 
-Additional details on how to select simple discovery in the `robot.yaml` config file are available in the
+Additional details on how to select simple disocvery in the `robot.yaml` config file are available in the
 [Middleware section of Robot Configuration](../config/yaml/system.mdx#middleware).
 
 ### Discovery Server
 
 A discovery server is a process running on a computer that serves to record and report ROS discovery information.
 A server can be thought of as a look up table for ROS discovery information. When a participant (node) starts, it
-checks in with the servers to share its discovery information and request what information it needs.
-In this way, participants only get discovery information and establish communication as necessary. A participant
+checks in with the servers to share its discovery information and request what information it is looking for.
+In this way, particpants only get discovery information and establish communication as necessary. A participant
 does not know all of the information that is available, only where to find the fellow participants that it needs.
 
 There can be multiple servers in a given system. These can be used for redundancy or to segregate information.
@@ -55,7 +55,7 @@ combination of Clearpath robots.
 <center>
   <figure>
     <img
-      src={require("./img/ros2-fastdds-discovery-server-diagram.png").default}
+      src={require("../img/ros2-fastdds-discovery-server-diagram.png").default}
       width="1000"
     />
   </figure>
@@ -109,7 +109,7 @@ packages.
 
 :::
 
-### Fully Connected {#fully-connected}
+### 1. Fully Connected {#fully-connected}
 
 This configuration is the simplest to set up using the `robot.yaml` config. It allows all robots to operate
 independently but also allows any ROS 2 device in the system to see all of the topics from all of the
@@ -119,7 +119,7 @@ in the system at all of the discovery servers in the system.
 <center>
   <figure>
     <img
-      src={require("./img/ros2-fastdds-fully-connected-diagram.png").default}
+      src={require("../img/ros2-fastdds-fully-connected-diagram.png").default}
       width="500"
     />
   </figure>
@@ -146,7 +146,7 @@ middleware:
 Additional details on the available fields for the `robot.yaml` config file are available in the
 [Middleware section of Robot Configuration](../config/yaml/system.mdx#middleware).
 
-### Command Center {#command-center}
+### 2. Command Center {#command-center}
 
 In this configuration you have many robots that each operate independently and an offboard computer that
 checks in and communicates with each of the robots. Each of the robots will have and refer to their own local
@@ -163,7 +163,7 @@ robots.
 <center>
   <figure>
     <img
-      src={require("./img/ros2-fastdds-command-center-diagram.png").default}
+      src={require("../img/ros2-fastdds-command-center-diagram.png").default}
       width="600"
     />
   </figure>
@@ -219,14 +219,14 @@ middleware:
 Additional details on the available fields for the `robot.yaml` config file are available in the
 [Middleware section of Robot Configuration](../config/yaml/system.mdx#middleware).
 
-### Offboard Computer Setup for Discovery Server {#offboard-pc}
+## Offboard Computer Setup {#offboard-pc}
 
 Use the `robot.yaml` from one of the robots in order to set up the offboard computer. The `servers` list must include all of
 the discovery servers and all of the ones that the offboard computer should be connecting with must not be disabled.
 
 1. Regenerate the `setup.bash` every time the `servers` list changes in any way (as per [offboard computer install instructions](../installation/offboard_pc.mdx#setup-folder))
 
-2. If a discovery server is intended to be run on the offboard computer then generate and run the `discovery-server-start` launch script.
+2. If a discovery server is intended to be run on the offboard computer then generate and run the discovery-server-start launch file.
 
 To generate the launch script:
 
@@ -239,4 +239,27 @@ To launch the server
 
 ```
 bash -e ~/clearpath/discovery-server-start
+```
+
+
+## Zenoh Router
+
+In early 2025 a new ROS middleware implementation called **Zenoh** was released. For a
+detailed description of Zenoh, please refer to [Zenoh's design document](https://github.com/ros2/rmw_zenoh/blob/rolling/docs/design.md).
+
+Zenoh is only available on ROS 2 Jazzy and later; it cannot be used on ROS 2 Humble.
+
+### Starting the Zenoh Router
+
+To manually launch the Zenoh router run
+
+```bash
+bash -e ~/clearpath/zenoh-router-start
+```
+
+This process can also be daemonized and launched via the `systemctl` command:
+
+```bash
+source /opt/ros/jazzy/setup.bash
+sudo systemctl start clearpath-zenoh-router
 ```

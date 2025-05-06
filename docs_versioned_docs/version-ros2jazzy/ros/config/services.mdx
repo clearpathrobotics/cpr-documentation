@@ -14,28 +14,28 @@ ran everything. For ROS 2 Jazzy, we have split this into three separate services
 [Sensors](https://github.com/clearpathrobotics/clearpath_robot/blob/jazzy/clearpath_robot/services/clearpath-sensors.service), and
 [Robot](https://github.com/clearpathrobotics/clearpath_robot/blob/jazzy/clearpath_robot/services/clearpath-robot.service).
 
-### Clearpath Platform
+## Clearpath Platform
 
 The `clearpath-platform` service launches the `platform-service.launch.py` file found under `/etc/clearpath/platform/launch/`. This will launch the nodes
 required to operate the base platform, such as control, teleop, localization, and more. Running this service alone is enough to drive the robot, visualise it
 in Rviz, and get platform data. This service can be stopped or started without interrupting the sensor service.
 
-### Clearpath Platform Extras
+## Clearpath Platform Extras
 
 The `clearpath-platform-extras` service launches the (optional) additional launch file specified in `platform.extras.launch` portion of `robot.yaml`.
 
 This service is only for additional user-defined nodes and will be inactive by default if no user-defined launch file is specified.
 
-### Clearpath Sensors
+## Clearpath Sensors
 
 The `clearpath-sensors` service launches the `sensors-service.launch.py` file found under `/etc/clearpath/sensors/launch/`. This will launch any
 sensors defined in the robot YAML. This service can be stopped or started without interrupting the platform service.
 
-### Clearpath Manipulators
+## Clearpath Manipulators
 
 The `clearpath-manipulators` service launched the `manipulators-service.launch.py` file generated to `/etc/clearpath/manipulators/launch`. This service will launch a secondary `controller_manager` with the hardware interfaces and controllers required by the manipulators defined in the robot YAML. Additionally, it will launch **MoveIt!** with the default configuration for all manipulators. This service can be stopped or started without interrupting the platform service, allowing for the arms controllers to fail without compromising the ability for the platform to drive.
 
-### Clearpath Robot
+## Clearpath Robot
 
 The `clearpath-robot` service is the "parent" service of `clearpath-platform` and `clearpath-sensors`. If it is restarted, then both the platform and sensors services
 will restart. This service will run all of the [generators](generators.mdx) in the `PreExec` step, before allowing the two dependent services to start. While
