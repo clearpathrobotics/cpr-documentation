@@ -95,76 +95,9 @@ each character replaced with `*`). This is normal.
 ### Logging in via SSH {#ssh-login}
 
 If you do not have easy access to the robot's HDMI & USB ports, you can instead use the robot's
-static wired network to log in via SSH. You will need:
-- a laptop or desktop computer with an SSH client installed on it
-  - most Linux distributions come with a built-in SSH client
-  - Windows users can either use the [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install)
-    to install a Linux SSH client, or use a dedicated Windows application like [PuTTY](https://www.putty.org/)
-- an ethernet cable to connect your laptop/desktop to the robot
+static wired network to log in via SSH. See [Networking](networking/ssh_sftp#ssh) for
+more information on how to log in via SSH.
 
-Connect one end of the ethernet cable directly to your computer, and connect the other end to
-the robot's ethernet port. Configure your computer's ethernet interface to assign it a static
-IP address on the `192.168.131.0/24` subnet. See [Network IP Addresses](networking/network_ip_addresses)
-for reserved addresses. Generally anything in the `192.168.131.100` to `192.168.131.254` range
-will be safe to use.
-
-Once connected, make sure you can ping the robot by running the command
-```bash
-ping 192.168.131.1
-```
-If you can successfully ping the robot, SSH into it with the command
-```bash
-ssh robot@192.168.131.1
-```
-You will be prompted to enter the password (`clearpath` by default). While typing the password
-you will not see any feedback. Press ENTER when you are done typing the password.
-
-### After you've logged in
-
-After logging in, either physically or via SSH, you will see the robot's greeter page:
-```
-Welcome to Ubuntu 24.04.2 LTS (GNU/Linux 6.8.0-58-generic x86_64)
-
- * Documentation:  https://help.ubuntu.com
- * Management:     https://landscape.canonical.com
- * Support:        https://ubuntu.com/pro
-
- System information as of Thu May  1 02:57:51 PM EDT 2025
-
-  System load:  0.98               Temperature:             32.9 C
-  Usage of /:   53.8% of 97.87GB   Processes:               259
-  Memory usage: 15%                Users logged in:         1
-  Swap usage:   0%                 IPv4 address for wlp2s0: 10.27.205.109
-
-
-Expanded Security Maintenance for Applications is not enabled.
-
-12 updates can be applied immediately.
-To see these additional updates run: apt list --upgradable
-
-2 additional security updates can be applied with ESM Apps.
-Learn more about enabling ESM Apps service at https://ubuntu.com/esm
-
-
-    __________
-   /    __    \
-  / __ /  \ __ \
- / /  \\__//  \ \
-/  \__/    \__/  \  ###  #    ####     #     ###   ###    #   ##### #   #
-\  /  \ __ /  \  / #     #    #       # #    #  #  #  #  # #    #   #   #
- \ \__//  \\__/ /  #     #    ###    #####   ###   ###  #####   #   #####
-  \    \__/    /   #     #    #     #     #  #  #  #   #     #  #   #   #
-   \__________/     ###  #### #### #       # #   # #  #       # #   #   #
-                R O B O T I C S
-
-
-Last login: Thu May  1 14:55:58 2025 from 10.30.15.89
-robot@cpr-a300-0000:~$
-```
-
-Once you have logged-in you can type any valid `bash` commands followed by the ENTER key to
-execute them. See [the official ROS docs](https://docs.ros.org/) and our [ROS 2 cheat sheet](tutorials/cheat_sheet.mdx)
-for information on ROS specific commands.
 
 ## How do I connect the robot to my wireless network?
 
@@ -179,51 +112,7 @@ The easiest way to transfer files to/from the robot is to use [SFTP](https://en.
 SFTP operates the much the same as [SSH](#ssh-login), but instead of allowing you to run programs
 with the command-line it allows you to browse and copy files.
 
-To open an SFTP connection you will need an SFTP client:
-- Ubuntu's desktop file browser (`nautilus`) includes SFTP support by default
-- on Windows there are many third-party SFTP clients, including [Filezilla](https://filezilla-project.org/) or [WinSCP](https://winscp.net)
-If you are using Ubuntu, you can simply open the file browser and press `ctrl + L` to open the location bar. Type
-```
-ssh://robot@192.168.131.1
-```
-and press ENTER to connect to the robot.  (If you are connecting over wifi instead of the robot's ethernet
-port you will need to change the IP address from `192.168.131.1` to the robot's IP address on your
-wireless LAN.) You will be promted to enter the password to log into the robot. Once you have done so
-you will be able to browse the files on the robot directly in your file browser and copy files to/from
-the robot.
-
-<center>
-  <figure>
-    <img
-      src="/img/software_images/ros2/tutorials/sftp/nautilus_sftp.png"
-      width="600"
-    />
-    <figcaption>SFTP in Nautilus</figcaption>
-  </figure>
-</center>
-
-If you are using Filezilla you should enter the following in the configuration area at the top of
-the screen:
-- Host: `192.168.131.1` if connecting over direct ethernet connection, otherwise the robot's IP
-  address on your LAN
-- Username: `robot`
-- Password: `clearpath` by default
-- Port: `22`
-Then press the Quickconnect button.
-
-<center>
-  <figure>
-    <img
-      src="/img/software_images/ros2/tutorials/sftp/filezilla_config.png"
-      width="600"
-    />
-    <figcaption>SFTP in Filezilla</figcaption>
-  </figure>
-</center>
-
-Filezilla will show the robot's filesystem on the right side of the window and your local
-filesystem on the left. You can copy files between the two by simply dragging files from one
-side to the other.
+See [Networking](networking/ssh_sftp#sftp) for more information on file transfers via SFTP.
 
 ## How do I control the robot?
 
