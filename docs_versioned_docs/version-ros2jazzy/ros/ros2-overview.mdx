@@ -14,7 +14,7 @@ of this page to select information for other ROS distributions.
 For [ROS 2 Jazzy](https://docs.ros.org/en/jazzy/index.html), rather than having individual sets of packages for each
 robot, we have opted to create common `clearpath` packages which are used by all supported platforms.
 Additionally, we no long use environment variables to customize the robot, and instead using a YAML configuration file to describe the
-robot. We have also defined a [ROS 2 API](api/overview.mdx) common to all of our supported platforms. As a result,
+robot. We have also defined a [ROS 2 API](api) common to all of our supported platforms. As a result,
 our platforms are now more customizable, more modular, and more unified.
 
 ## Terminology {#terminology}
@@ -26,7 +26,7 @@ may be referred to by the platform code to indicate the revision (e.g. "Jackal" 
 
 **_Clearpath Config_**: The _config_ refers to the `robot.yaml` configuration file that defines the Clearpath robot.
 
-**_Clearpath API_**: The _API_ refers to the [ROS 2 application programming interface](api/overview.mdx). This is a set
+**_Clearpath API_**: The _API_ refers to the [ROS 2 application programming interface](api). This is a set
 of ROS 2 topics, actions, and services defined by Clearpath which are used by all supported Clearpath platforms.
 
 ## Further Reading
