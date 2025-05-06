@@ -5,12 +5,13 @@ sidebar_position: 6
 toc_min_heading_level: 2
 toc_max_heading_level: 5
 ---
+
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
 On some Clearpath robot platforms, a CAN bus is used to communicate and control motors, battery systems, safety rated controllers, e-stop receivers, and more. Using the Clearpath configuration file, it is possible to define of a CAN-to-UDP, CAN-to-Serial, or CAN-to-USB adapter. At run time, these adapters are brought up and configured with the defined parameters.
 
-# Baud Rates
+## Baud Rates
 In the parameters, the baud rates should be set as speeds in `slcand`:
 | Speed | Baud Rate |
 | :-: | :-: |
@@ -24,7 +25,7 @@ In the parameters, the baud rates should be set as speeds in `slcand`:
 | **s7** | 800 Kbit/s |
 | **s8** | 1000 Kbit/s |
 
-# Virtual CAN Adapters
+## Virtual CAN Adapters
 By default, the A300 Husky, DD100-D0150 Dingo series, and R100 Ridgeback use CAN to communicate with the motor drivers. However, the physical CAN bus is connected to the MCU and bridged over UDP to the robot computer.
 
 To establish this bridge from the computer side, a `socat` command needs to be issued to create a virtual serial device. Using the virtual serial device, the `slcand` command is used to create a virtual CAN device. Then, the virtual CAN device can be configured using `ip link` and brought up.
@@ -91,7 +92,7 @@ platform:
   </TabItem>
 </Tabs>
 
-# Serial CAN Adapters
+## Serial CAN Adapters
 In the event that it is required to integrate a CAN device on the robot, it is possible to use a USB CAN-to-Serial adapter. These adapters are easy to acquire and trivial to setup. However, these devices still require the `slcand` command to create the virtual CAN device with the appropriate baud rate. The virtual CAN device will also need to be configured using `ip link` and brought up.
 
 Fields required for a serial CAN adapter:
@@ -112,7 +113,7 @@ platform:
 ```
 
 
-# Physical USB CAN Adapters
+## Physical USB CAN Adapters
 Just as the serial CAN adapters, USB physical CAN adapters are trivial to setup, but are generally harder to obtain. Out of the three options, these adapters are the easiest to setup as they only need the `ip link` command to bring up.
 
 Fields required for a physical CAN adapter:
