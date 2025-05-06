@@ -8,6 +8,28 @@ import Ros2NetworkingOverview from "/docs_versioned_docs/version-ros2jazzy/compo
 This section covers general information about how ROS 2 networking works, how to configure ROS 2 networking, general
 Wi-Fi information and detailed troubleshooting guides.
 
+## Connecting to a Wi-Fi Network
+
+Clearpath uses `netplan` to manage the robot's network interfaces, including wireless network connections.
+See [Connecting to an Existing Wi-Fi Network](computer_setup#netplan-wifi) for details on how to
+connect your robot to an existing wireless network.
+
+## Connecting via Ethernet
+
+Most Clearpath robots will have at least one accessible ethernet port that can be used to connect directly
+to the robots computer. Connect an ethernet cable directly between the robot's ethernet port and your
+laptop. Then configure your computer's ethernet connection to have a static IP address in the
+`192.168.131.100` to `192.168.131.254` range (netmask: `255.255.255.0`). The robot's computer will
+be accessible at `192.168.131.1`.
+
+:::note
+
+Some robots with custom integrations may have all of their physical ethernet ports used to connect
+sensors and other network-based equipment. Please refer to your _robosmiths memo_ for details on
+your robot's exact configuration.
+
+:::
+
 ## SSH and SFTP
 
 Clearpath robots ship with an [SSH server](https://en.wikipedia.org/wiki/Secure_Shell) operating on port 22 for remote login.
