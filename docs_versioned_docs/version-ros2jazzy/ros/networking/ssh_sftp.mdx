@@ -5,4 +5,20 @@ sidebar_position: 4
 
 ## Logging in via SSH
 
+To log into your robot via SSH you must first
+1. Install an SSH client on your computer. On Ubuntu the `ssh` command is available by default.
+   On Windows, you may need to install a third-party program such as [PuTTY](https://putty.org)
+1. Connect your robot and laptop to the [same wireless network](computer_setup#netplan-wifi) or
+   [directly connect your laptop and robot via etheret](overview#connecting-via-ethernet).
+1. [Determine the robot's IP address](computer_setup#determine-ip-address)
+
+
+
+
+
+You will need to determine your robot's IP address. If using a direct ethernet connection,
+the robot's IP address is `192.168.131.1`. If using a Wi-Fi network, you may need to log into
+your router to look up the robot's DHCP allocation, or log intp the robot via a direct ethernet
+connection and run the `ip a` command to look up the robot's wireless IP address
+
 ## File transfer via SFTP
