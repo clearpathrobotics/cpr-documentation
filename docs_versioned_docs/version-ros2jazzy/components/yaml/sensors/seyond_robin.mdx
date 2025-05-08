@@ -1,0 +1,31 @@
+<table>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("./img/seyond_robinw.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+<div style={{overflow:"auto", width:"350"}}>
+
+```yaml
+lidar3d:
+  - model: seyond_lidar
+    urdf_enabled: true
+    launch_enabled: false
+    parent: default_mount
+    xyz: [0.2, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+```
+
+</div>
+</td>
+</tr>
+</table>
+
+#### Mesh-Only Support
+The Seyond Robin W is only supported as a mesh in `robot.yaml`; it is intended to be managed by Clearpath's
+OutdoorNav software, which uses its own set of drivers and launch files that do not directly integrate with
+the robot configuration yaml.
