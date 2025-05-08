@@ -149,7 +149,7 @@ For details on setting up custom network interface settings see [Robot Network C
 
 The `robot.yaml` file defines the configuration of the robot including the robot model, all
 supported accessories and any extra URDF elements or ROS parameters. Information about the Robot YAML
-is found in the [Robot Configuration](../config/yaml) section. This YAML is used to generate the launch,
+is found in the [Robot Configuration](../config/yaml/overview) section. This YAML is used to generate the launch,
 URDF and ROS parameter files during runtime.
 
 Create your `robot.yaml` file and then copy it into `/etc/clearpath/` and replace the existing file.
@@ -270,7 +270,7 @@ sudo systemctl daemon-reload && sudo systemctl start clearpath-robot.service
 
   #### Setup folder
 
-  Create the setup folder where the [robot.yaml](../config/yaml) file will be stored, and where files will be generated:
+  Create the setup folder where the [robot.yaml](../config/yaml/overview) file will be stored, and where files will be generated:
 
   ```
   sudo mkdir /etc/clearpath/ -p && sudo chmod 777 /etc/clearpath/
@@ -279,7 +279,7 @@ sudo systemctl daemon-reload && sudo systemctl start clearpath-robot.service
 
   The `robot.yaml` file defines the configuration of the robot including the robot model, all
   supported accessories and any extra URDF elements or ROS parameters. Information about the Robot YAML
-  is found in the [Robot Configuration](../config/yaml) section. This YAML is used to generate the launch,
+  is found in the [Robot Configuration](../config/yaml/overview) section. This YAML is used to generate the launch,
   URDF and ROS parameter files during runtime.
 
   Create your `robot.yaml` file and then copy it into `/etc/clearpath/`.
