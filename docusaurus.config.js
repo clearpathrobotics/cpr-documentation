@@ -108,6 +108,19 @@ const config = {
       },
     ],
     [
+      "@docusaurus/plugin-content-docs",
+      {
+        id: "components",
+        path: "components",
+        remarkPlugins: [remarkMath],
+        rehypePlugins: [rehypeKatex],
+        admonitions: {
+          keywords: ['safety-danger', 'safety-warning', 'safety-caution'],
+          extendDefaults: true,
+        },
+      },
+    ],
+    [
       "@docusaurus/theme-mermaid",
       {}
     ],
