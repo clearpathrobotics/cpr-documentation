@@ -34,11 +34,11 @@ is not compatible and will result in no data being received on the subscriber. T
 ros2 topic info /topic_name -v
 ```
 
-### Common QoS profiles {#common-qos-profiles}
+## Common QoS profiles {#common-qos-profiles}
 
 The following are some common QoS profiles used by Clearpath platforms.
 
-#### System Default
+### System Default
 
 - **History**: _Keep Last_
 - **Depth**: _10_
@@ -51,7 +51,7 @@ The following are some common QoS profiles used by Clearpath platforms.
 
 The _System Default_ QoS profile is the most common profile used by most topics.
 
-#### Sensor Data
+### Sensor Data
 
 - **History**: _Keep Last_
 - **Depth**: _5_
@@ -72,7 +72,7 @@ Not all sensor drivers use this QoS profile. Always check the QoS profile before
 
 :::
 
-#### Transient Local
+### Transient Local
 
 - **History**: _Keep Last_
 - **Depth**: _10_

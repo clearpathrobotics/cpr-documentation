@@ -16,11 +16,11 @@ If the network bandwidth is consistently lower than expected across the system t
 
 ## Insufficient Bandwidth
 
-#### Understanding the problem {#bandwidth-problem}
+### Understanding the problem {#bandwidth-problem}
 
 Bandwidth is a measure of data throughput on a network. The overall available bandwidth on a wired network is generally fairly consistent while the available bandwidth on a wireless network is incredibly variable and is affected by many different factors. Attempting to transmit more data than the available bandwidth can cause a variety of different symptoms including unsuccessful transmissions, devices losing connection and delayed messages.
 
-#### Verification {#bandwidth-verification}
+### Verification {#bandwidth-verification}
 
 To determine if this problem is effecting a given system, an estimate needs to be made for how much bandwidth is available over the network vs how much bandwidth is being used. This process is easiest if the router is accessible and has a bandwidth monitoring interface. If no such interface is available then a similar measure can be achieved by using [bmon](network_troubleshooting_tools.mdx#bmon) to measure the rate of transmitted data on each device and adding it up. With the full system operating, record how much bandwidth is being used on the network and note this measurement for later.
 
@@ -32,7 +32,7 @@ If the overall available bandwidth is lower than expected, see the [Wi-Fi Interf
 
 If the bandwidth used by the full system operating exceeds 80% of the available bandwidth capacity of the network, then this should be addressed in order to provide reliable performance in the regions tested. Ideally, basic operation should not exceed 50% of the full bandwidth of the network, allowing for unexpected interference, routing inefficiencies and general overhead. See the [Video over Wi-Fi](../../tutorials/video_over_wifi.mdx) tutorial for an example on how to evaluate what is realistic for a network.
 
-#### Solutions {#bandwidth-solutions}
+### Solutions {#bandwidth-solutions}
 
 The first step is to determine if the ROS 2 system is actually the problem. With the rest of the systems running but the ROS 2 system disabled, check the network bandwidth. If most of the bandwidth is being used by other processes, consider having a dedicated network for the ROS 2 system or address why those other systems are using that much of the bandwidth.
 
@@ -44,7 +44,7 @@ If the required bandwidth for the system exceeds the available bandwidth then ch
 
 Due to the low level mechanisms of how the DDS middleware messaging works, it is possible for messages to be sent in duplicate or multiplicate (3x or more). This section details how it occurs in Fast DDS. It may be possible for this to occur in other RMW Implementations through a similar mechanism.
 
-#### Why Does This Happen? {#duplicate-message-why}
+### Why Does This Happen? {#duplicate-message-why}
 Consider a robot with a lidar and an offboard computer that is trying to subscribe to the lidar scan from the terminal. The `ros2 topic echo` process on the offboard computer will create a subscription to the topic. This subscription involves the subscriber contacting the publisher to request the data and to tell the publisher where to send the data. The subscriber will self report the list of IP addresses where it is listening for messages along with port information, also known as its "locator list". In Fast DDS, by default, this locator list is initialized with all of the IP addresses that the computer had assigned at the time when the node was started. In the example being discussed, assume that the offboard computer had two IP addresses, one from a wired connection to the robot and one from a Wi-Fi connection to the internet. Since both of those IP addresses were present when the node was started, the locator list would have both IP addresses and the subscription would share both of these addresses with the publisher. Whenever the publisher publishes a new message, it will send the message to both IP addresses and then it is up to the operating system to route those messages through the most appropriate network.
 
 If there is only one network available on the robot across which to send the messages then all messages will be sent across that network irrelevant of whether the IP subnet matches. Within the context of this example, that would mean that two copies of every message would get sent across the wired connection to the offboard computer, one addressed to the offboard computer's wired IP address, and one addressed to the offboard computer's Wi-Fi address. For large messages, this can be very problematic as it consumes the network bandwidth.
@@ -53,12 +53,12 @@ If there is more than one network available on the robot, then the messages will
 
 This example was explained within the context of the subscriber reporting 2 IP addresses in the locator list but it can happen with 3 or more IP addresses and therefore could result in many copies being sent of each message. This issue is of highest concern for large messages and where the expected bandwidth usage is over half of the network capacity. However, it can also be a problem when there are excessive numbers of small messages being sent, such as with Simple Discovery with many nodes.
 
-#### Verification {#duplicate-verification}
+### Verification {#duplicate-verification}
 The following steps can be used to verify if this issue is present:
 1. Record a [tshark](network_troubleshooting_tools.mdx#tshark) capture on the robot capturing all network interfaces. Ensure that the discovery process and the subscription to the message are both captured.
 2. Either analyze this directly in the terminal or save the capture and open it in [Wireshark](network_troubleshooting_tools.mdx#wireshark) to analyze it. When analyzing it, filter for the topic and verify how many different IP addresses the messages are being sent to, and which ones.
 
-#### Solutions {#duplicate-solutions}
+### Solutions {#duplicate-solutions}
 
 1. The first solution is to ensure that the subscribing computer only ever connects to one network at a time and that it only has one IP address. This works well for initial testing and for situations where the networking configuration needs to change often. However, it must be monitored and managed every time the system is used. While this section refers to "the subscribing computer" this should be applied to every computer in the system that subscribes to any substantially sized data.
    1. Ensure that the subscribing computer is only connected to one network and therefore has only one IP address. In the example this would be the offboard computer.
@@ -161,15 +161,15 @@ Assuming that the hardware selection and placement is appropriate for the applic
 
 The following are some advanced networking issues that can occur on the hardware level:
 
-#### Electromagnetic Interference (EMI)
+### Electromagnetic Interference (EMI)
 Electromagnetic interference generally comes from proximity to motors, motor drivers or power supplies without sufficient shielding. This can result in unpredictable behavior, brownouts, corrupted data or damage to components. In the context of networking, the primary concern is interference on the power going to the computer, power going to an onboard router, and data lines connecting to an onboard router, computer or antennas. Several steps can be taken to reduce electromagnetic interference:
 - Route high power lines (to motors and actuators) away from wires going to sensitive electronics (such as computers, routers, sensors or antennas).
 - Shield both data lines and noisy cables separately.
 - Twist noisy power cables to lower EMI emissions.
 - Apply common mode chokes or ferrite cores to the noisy cables (ensure that they are properly rated for the power).
 
-#### Insufficient or Unstable Power Supply
+### Insufficient or Unstable Power Supply
 If too much current is being drawn from a power supply, it can experience transient drops in voltage that are hard to detect but can cause unpredictable behavior and brownouts. This can also be seen if the power supply is damaged. Verify that the power supply is rated for the current draw, including any surge current requirements, and is functioning properly.
 
-#### Damaged Components
+### Damaged Components
 Vibration can cause components such as capacitors and other bulky components on PCBs to fail, particularly if the devices are not vibration rated. Similarly moisture and heat can cause damage to components in a manner that may not be visible. Be aware that the temperature within enclosures without adequate ventilation can be dramatically higher than ambient temperatures outside and should be monitored.

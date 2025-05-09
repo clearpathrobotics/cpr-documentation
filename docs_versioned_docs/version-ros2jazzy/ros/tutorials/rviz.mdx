@@ -8,19 +8,19 @@ toc_max_heading_level: 4
 
 RViz is a very useful tool for visualizing the robot model and the robot sensor data. RViz must be launched on a computer that has a desktop manager and display. This means that it will not run on standard Clearpath robots since they run Ubuntu Server rather than Ubuntu Desktop.
 
-### Installation
+## Installation
 
 Follow the [offboard computer setup instructions](../installation/offboard_pc.mdx) to ensure that the computer has the required packages and files.
 
-### Launch Options
+## Launch Options
 
 Several launch files are provided to serve different use cases:
 
-#### View Model
+### View Model
 
 This launch file is used to visualize the robot model without needing a robot present or connected. For usage details, see [Live Configuration](../config/live.mdx)
 
-#### View Robot
+### View Robot
 
 ```bash
 ros2 launch clearpath_viz view_robot.launch.py namespace:=a200_0000
@@ -28,7 +28,7 @@ ros2 launch clearpath_viz view_robot.launch.py namespace:=a200_0000
 
 This launch file should be used when visualizing the robot while connected to the robot (wired or wirelessly). This will subscribe to topics from the robot to populate the visualization. Update the `namespace` parameter to match the robot's namespace.
 
-#### View Navigation
+### View Navigation
 
 ```bash
 ros2 launch clearpath_viz view_navigation.launch.py namespace:=a200_0000
@@ -36,11 +36,11 @@ ros2 launch clearpath_viz view_navigation.launch.py namespace:=a200_0000
 
 This launch file should be used when visualizing the robot with nav2 operating. This will subscribe to both robot and nav2 topics to populate the robot within the context of a map. Update the `namespace` parameter to match the robot's namespace.
 
-#### View Manipulators
+### View Manipulators
 
 This launch file is used to view the robot when there is a manipulator attached, and allows interacting with MoveIt. For usage details, see [Manipulation Demo](manipulation/gazebo.mdx)
 
-### The GUI
+## The GUI
 
 Once RViz loads, the model should be shown in the main view as shown below. Note that if the robot has been driven around then it may no longer be visible in the initial view, but panning can be used to navigate to the robot by following the line connecting the origin of the fixed frame to the robot.
 
@@ -58,7 +58,7 @@ The fixed frame refers to which frame will remain stationary in the visualizatio
 
 The visualization can appear very cluttered with many frame coordinates labelled and visualized. These can be individually disabled using the various checkboxes under `TF`  and `TF` -> `Frames` in the `Displays` panel on the left of the screen.
 
-### Visualizing Sensor Data
+## Visualizing Sensor Data
 
 To add additional data to be visualized, press the `Add` button in the bottom left.
 
@@ -104,7 +104,7 @@ In the case of this example, a LaserScan topic was selected. LaserScan topics by
 
 The `Displays` panel on the left allows several settings to be changed, including enabling / disabling the visualization and modifying how the data is displayed.
 
-#### Visualizing Camera Data
+### Visualizing Camera Data
 
 Certain types of data require additional steps for display. RViz currently only supports the visualization of `raw` decoded images. If the images or videos are encoded for transmission (such as the ffmpeg or compressed topics), a decoder node must be launched locally to decode the images for display.
 
@@ -112,7 +112,7 @@ See [Camera Data Compression](../config/camera_compression.mdx) for how to launc
 
 Once the decoded `image` topic is available, select it for display and select the `Image` plugin option.
 
-#### Visualizing IMU Data
+### Visualizing IMU Data
 
 Viewing IMU data in RViz requires the [RViz IMU Plugin](https://index.ros.org/p/rviz_imu_plugin/). Install it by running:
 
@@ -122,11 +122,11 @@ sudo apt install ros-$ROS_DISTRO-imu-tools
 
 Once the plugin is installed, select the IMU topic for display in RViz just like any other topic.
 
-### Troubleshooting
+## Troubleshooting
 
 The following are some common issues faced when using RViz.
 
-#### 1. RViz is blank
+### RViz is blank
 
 RViz opens with no model or silhouette displayed.
 
@@ -142,7 +142,7 @@ RViz opens with no model or silhouette displayed.
 
 This is most commonly caused by RViz not having any connection to the robot or the robot topics. Check to make sure that the `/<namespace>/tf` topic (where `<namespace>` is the robot's namespace) is able to be echoed and that RViz was launched with the correct namespace.
 
-#### 2. Robot White Silhouette
+### Robot White Silhouette
 
 The robot model does not show up in RViz, instead showing a white silhouette.
 

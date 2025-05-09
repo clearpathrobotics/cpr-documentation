@@ -31,13 +31,13 @@ It is not advised to use iPerf3 over metered networks (such as cellular or satel
 
 :::
 
-#### Installation {#iperf3-installation}
+### Installation {#iperf3-installation}
 ```bash
 sudo apt update
 sudo apt install iperf3
 ```
 
-#### Usage {#iperf3-usage}
+### Usage {#iperf3-usage}
 1. Before beginning the test, identify the network that is being tested and ensure that the two computers are connected on that network and only on that network. Take note of any other traffic happening on the network that may impact the results.
 
 2. Start the server on one computer
@@ -74,14 +74,14 @@ iperf3 -s
 
 bmon or Bandwidth Monitor is a command-line tool for monitoring current bandwidth usage. While iPerf3 tests the maximum possible bandwidth, bmon is used to monitor an active system to analyze traffic generated through operation.
 
-#### Installation {#bmon-installation}
+### Installation {#bmon-installation}
 
 ```bash
 sudo apt update
 sudo apt install bmon
 ```
 
-#### Usage {#bmon-usage}
+### Usage {#bmon-usage}
 
 To start bmon run
 
@@ -95,7 +95,7 @@ The `Interfaces` section lists all of the network interfaces and the traffic bei
 
 [Wireshark](https://wiki.wireshark.org/) is a powerful network protocol analyzer that captures and inspects packets on a network in real-time. It can be used to analyze ROS 2 communication to identify problems and optimize data flow. This can involve identifying the ports in use, analyzing the number of packets or bandwidth being used for different types of messages or investigating individual messages that are not successfully transmitted.
 
-#### Installation {#wireshark-installation}
+### Installation {#wireshark-installation}
 
 ```bash
 sudo apt update
@@ -104,7 +104,7 @@ sudo apt install wireshark
 
 During installation, it may prompt you to allow non-root users to capture packets. You can accept this option for convenience. You may need to log out and log back in for the change to apply.
 
-#### Usage {#wireshark-usage}
+### Usage {#wireshark-usage}
 
 1. Open Wireshark and select the network interface(s) connected to the ROS 2 system. If you did not give permissions to non-root users then you will need to launch with sudo.
 2. Start traffic capture by clicking the `Start` button. All of the traffic will be displayed in real-time.
@@ -112,9 +112,9 @@ During installation, it may prompt you to allow non-root users to capture packet
 
 To maximize utility, make sure to capture the ROS 2 discovery process. This allows Wireshark to interpret DDS (RTPS) messages and makes more information such as topics names available for use in filters and for analysis. In Simple Discovery the discovery process will be captured in the background. For Discovery Server, ensure that the ROS 2 daemon is restarted at the beginning of the capture on the computer where the capture is being taken, to record the discovery process.
 
-#### Features
+### Features
 
-##### Display Filters
+#### Display Filters
 Filters can be used to isolate specific types of traffic.
 
 Filtering for ROS DDS messages only (assumes no other RTPS systems on the network):
@@ -145,7 +145,7 @@ Do note that this will not accurately filter and reflect messages that were frag
 
 These types of filters can be combined into complex and specific filters to effectively isolate messages of interest.
 
-##### Statistics
+#### Statistics
 
 One very useful view for analyzing traffic over time or for optimizing systems is the `I/O Graphs` view. This is found under the `Statistics` dropdown menu. The `I/O Graphs` view allows lines to be added to the graph using different display filters.
 
@@ -168,7 +168,7 @@ Additional statistics views that can be useful include `Source and Destination A
 
 [tshark](https://www.wireshark.org/docs/man-pages/tshark.html) is the command line version of Wireshark. This is useful for Ubuntu server based systems, to be able to enable the use of Wireshark functionality without requiring a display for capture.
 
-#### Installation {#tshark-installation}
+### Installation {#tshark-installation}
 
 ```bash
 sudo apt update
@@ -177,7 +177,7 @@ sudo apt install tshark
 
 During installation, it may prompt you to allow non-root users to capture packets. You can accept this option for convenience. You may need to log out and log back in for the change to apply.
 
-#### Usage {#tshark-usage}
+### Usage {#tshark-usage}
 
 To capture packets on a specific network interface, use:
 
@@ -203,14 +203,14 @@ Capture filters can be used to reduce the log sizes if necessary or when analyzi
 
 Nmap (Network Mapper) is a command line tool for network exploration and management. It can be used to identify connected devices and open ports among other uses.
 
-#### Installation {#nmap-installation}
+### Installation {#nmap-installation}
 
 ```bash
 sudo apt update
 sudo apt install nmap
 ```
 
-#### Usage {#nmap-usage}
+### Usage {#nmap-usage}
 
 A small selection of functionality is discussed here, for full documentation see the [Nmap manual](https://nmap.org/book/man.html).
 
