@@ -24,9 +24,10 @@ of this page to select information for other ROS distributions.
 
 ## ROS 2 Overview
 
-For [ROS 2 Jazzy](https://docs.ros.org/en/jazzy/index.html), rather than having individual sets of packages for each
+In [ROS 2](https://docs.ros.org/en/jazzy/index.html), rather than having individual sets of packages for each
 robot, we have opted to create common `clearpath` packages which are used by all supported platforms.
-Additionally, we no long use environment variables to customize the robot, and instead using a YAML configuration file to describe the
+Additionally, we no longer use environment variables to customize the robot, and instead use a
+[YAML configuration file](config/yaml/overview.mdx) to describe the
 robot. We have also defined a [ROS 2 API](api/overview) common to all of our supported platforms. As a result,
 our platforms are now more customizable, more modular, and more unified.
 
