@@ -303,6 +303,17 @@ generators parse the YAML file and create the robot's
 [launch files](https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Launch/Launch-Main.html) for
 the platform and sensor drivers, and other configuration files.
 
+:::note
+
+The generator services include a live reconfiguration tool that will automatically restart ROS
+nodes and services when `robot.yaml` is edited. This automatically applies any changes you make
+to the configuration without the need to manually restart anything.
+
+If you accidentally make invalid changes to `robot.yaml` the generator services will automatically
+fall-back to a copy of the last working version of `robot.yaml`.
+
+:::
+
 ## How to I create a workspace for development?
 
 See [Creating a Workspace](config/workspaces) for instructions on how to create a workspace.
