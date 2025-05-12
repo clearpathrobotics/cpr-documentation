@@ -14,6 +14,14 @@ Clearpath uses `netplan` to manage the robot's network interfaces, including wir
 See [Connecting to an Existing Wi-Fi Network](computer_setup#netplan-wifi) for details on how to
 connect your robot to an existing wireless network.
 
+### Wi-Fi Fundamentals and Hardware
+
+ROS 2 communication can be demanding on networks, particularly wireless networks. At times, difficulties with ROS 2
+communication can actually stem from core Wi-Fi stability and reliability issues. The [Wi-Fi Fundamentals](wifi_fundamentals.mdx)
+and [Wi-Fi Hardware](wifi_hardware.mdx) pages discuss important concepts useful for optimizing Wi-Fi networks for use
+with ROS 2 mobile robots.
+
+
 ## Connecting via Ethernet {#connecting-via-ethernet}
 
 Most Clearpath robots will have at least one accessible ethernet port that can be used to connect directly
@@ -30,21 +38,7 @@ your robot's exact configuration.
 
 :::
 
-## SSH and SFTP
-
-Clearpath robots ship with an [SSH server](https://en.wikipedia.org/wiki/Secure_Shell) operating on port 22 for remote login.
-This server also supports [sftp](https://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol) for file-transfer to/from the robot if needed.
-
-You can log into the robot using the default username `robot` and password `clearpath`.
-
-## Wi-Fi Fundamentals and Hardware
-
-ROS 2 communication can be demanding on networks, particularly wireless networks. At times, difficulties with ROS 2
-communication can actually stem from core Wi-Fi stability and reliability issues. The [Wi-Fi Fundamentals](wifi_fundamentals.mdx)
-and [Wi-Fi Hardware](wifi_hardware.mdx) pages discuss important concepts useful for optimizing Wi-Fi networks for use
-with ROS 2 mobile robots.
-
-## Wired LAN IP Addresses {#ip-addresses}
+### Wired LAN IP Addresses {#ip-addresses}
 
 All Clearpath robots use the `192.168.131.0/24` subnet for any permanently-installed network hardware. This includes,
 but may not be limited to
@@ -59,6 +53,13 @@ The `192.168.131.0/24` subnet is statically configured; all devices are configur
 there is normally not a DHCP server operating on this subnet.
 
 For a list of standard payload IP addresses, please see [Reserved IP Addresses](network_ip_addresses.mdx).
+
+## SSH and SFTP
+
+Clearpath robots ship with an [SSH server](https://en.wikipedia.org/wiki/Secure_Shell) operating on port 22 for remote login.
+This server also supports [sftp](https://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol) for file-transfer to/from the robot if needed.
+
+You can log into the robot using the default username `robot` and password `clearpath`.
 
 ## Clock Synchronization
 
