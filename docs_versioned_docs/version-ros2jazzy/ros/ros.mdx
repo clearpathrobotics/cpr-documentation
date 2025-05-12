@@ -287,9 +287,11 @@ sensor data. See [Visualizing with RViz2](tutorials/rviz.mdx) for more informati
 All Clearpath robots use a single configuration file,
 [`/etc/clearpath/robot.yaml`](config/yaml/overview). This file
 contains the platform information, as well as the type and location of all of the robot's
-sensors and manipulators. To add/remove/relocate sensors, change the robot's maximum speed
-or acceleration, change the [ROS Middleware](networking/ros2_networking/overview), etc... edit
-this file:
+sensors and manipulators.
+
+To add/remove/relocate sensors, change the robot's speed & acceleration parameters, change
+the [ROS Middleware](networking/ros2_networking/overview), or add custom launch files and nodes
+to the startup services, edit this file:
 ```bash
 nano /etc/clearpath/robot.yaml
 ```
