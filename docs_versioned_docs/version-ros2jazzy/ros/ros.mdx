@@ -192,7 +192,7 @@ that will publish to the same topic to control the robot.
 
 :::
 
-### 1. Driving the robot
+### Driving the robot
 
 The robot's `cmd_vel` topic is the input the the velocity controller. Publishing to this topic
 will command the robot to drive.
@@ -238,7 +238,7 @@ ros2 topic pub /a300_0000/cmd_vel geometry_msgs/TwistStamped '{"twist":{"linear"
 This will command the robot to drive to the right at 0.2m/s (0.72 km/h or 0.45mph). To stop the robot press `ctrl + c`.
 
 
-### 2. Controlling the robot's lights
+### Controlling the robot's lights
 
 If your robot has controllable corner lights (e.g. Husky A300, Ridgeback, Dingo-O or Dingo-D) you can
 control the the colour of these lights by publishing to the `platform/cmd_lights` topic.
