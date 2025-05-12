@@ -4,6 +4,9 @@ sidebar_label: Getting Started
 sidebar_position: 0
 ---
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
 ## Welcome
 
 Thank-you for buying a robot from Clearpath Robotics! We understand working with any new
@@ -59,46 +62,45 @@ user manual for detailed information about the robot's power system.
 The robot's internal computer powers-on with the rest of the robot. The computer may take a few
 minutes to fully boot, depending on how the software on the robot has been configured.
 
-### Jackal, Dingo
+<Tabs>
+  <TabItem value="A300, A200, R100" default>
+    Husky, Ridgback, and Boxer all have a metallic button located on the back of the robot
+    with the <img src="/img/robot_images/dingo_images/icon-power.png" width="24"/> (power) symbol.
+    Press this button to turn the robot on.
+  </TabItem>
+  <TabItem value="J100, DX150, DX100">
+    Jackal and Dingo use the same Human-Machine Interface (HMI) panel, located on the rear of the robot.
 
-Jackal and Dingo use the same Human-Machine Interface (HMI) panel, located on the rear of the robot.
+    <center>
+      <figure>
+        <img
+          src="/img/robot_images/dingo_images/hmi.png"
+          width="300"
+        />
+        <figcaption>HMI Panel</figcaption>
+      </figure>
+    </center>
 
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/dingo_images/hmi.png"
-      width="300"
-    />
-    <figcaption>HMI Panel</figcaption>
-  </figure>
-</center>
+    To turn the robot on, press the <img src="/img/robot_images/dingo_images/icon-power.png" width="24"/>
+    button. Once the robot's computer has fully booted the light under the comms indicator
+    (<img src="/img/robot_images/dingo_images/icon-comms.png" width="24"/>) will turn green.
+  </TabItem>
+  <TabItem value="W200">
+    Warthog has a red power switch located on the rear of the robot.
 
-To turn the robot on, press the <img src="/img/robot_images/dingo_images/icon-power.png" width="24"/>
-button. Once the robot's computer has fully booted the light under the comms indicator
-(<img src="/img/robot_images/dingo_images/icon-comms.png" width="24"/>) will turn green.
+    <center>
+      <figure>
+        <img
+          src="/img/robot_images/warthog_images/power_switch.jpg"
+          width="300"
+        />
+        <figcaption>Warthog power switch</figcaption>
+      </figure>
+    </center>
 
-### Husky A300 & A200, Ridgeback, Boxer
-
-Husky, Ridgback, and Boxer all have a metallic button located on the back of the robot
-with the <img src="/img/robot_images/dingo_images/icon-power.png" width="24"/> (power) symbol.
-Press this button to turn the robot on.
-
-### Warthog
-
-Warthog has a red power switch located on the rear of the robot.
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/warthog_images/power_switch.jpg"
-      width="300"
-    />
-    <figcaption>Warthog power switch</figcaption>
-  </figure>
-</center>
-
-To power the robot on, rotate the switch clockwise so the white line points to the `ON` position.
-
+    To power the robot on, rotate the switch clockwise so the white line points to the `ON` position.
+  </TabItem>
+</Tabs>
 
 ## How do I log into the robot?
 
@@ -130,8 +132,8 @@ each character replaced with `*`). This is normal.
 ### Logging in via SSH {#ssh-login}
 
 If you do not have easy access to the robot's HDMI & USB ports, you can instead use the robot's
-static wired network to log in via SSH. See [Networking](networking/ssh_sftp#ssh) for
-more information on how to log in via SSH.
+[static wired network](networking/overview.mdx#connecting-via-ethernet) to log in via SSH. See
+[Networking](networking/ssh_sftp#ssh) for more information on how to log in via SSH.
 
 
 ## How do I connect the robot to my wireless network?
