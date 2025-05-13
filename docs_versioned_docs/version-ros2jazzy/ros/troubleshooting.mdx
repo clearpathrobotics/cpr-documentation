@@ -1,0 +1,84 @@
+---
+title: Troubleshooting & FAQ
+sidebar_label: Troubleshooting
+sidebar_position: 8
+---
+
+The following are common problems our [support team](https://support.clearpathrobotics.com/hc/en-us)
+have received. Before [submitting a request](https://support.clearpathrobotics.com/hc/en-us/requests/new)
+please review the items below to see if they resolve your problem.
+
+Our [getting started](/docs/ros) section may also help answer some questions.
+
+## I've recently upgraded from ROS 1 to ROS 2 and now I can't drive my robot after powering it on
+
+This is normal; Clearpath robots using ROS 2 Humble or Jazzy have their MCUs boot to a reset state.
+To establish communication between the robot's primary computer you must press a button on the
+robot:
+- on Ridgeback or Husky A300 press the e-stop reset button located on the rear of the robot
+- on Jackal or Dingo, press the MCU disconnect (<img src="/img/robot_images/dingo_images/icon-motor.png" width="24"/>) button
+
+## I've recently upgraded from ROS 1 to ROS 2, but now my robot's COMM light is off
+
+Most Clearpath robots have an MCU that must also be updated. Ensure you have installed the correct
+MCU firmware for your ROS distribution.  Refer to your robot's [user manual](/docs_robots/robots)
+for instructions on updating the MCU firmware.
+
+USB or serial-based MCUs require [`udev` rules](https://github.com/clearpathrobotics/clearpath_robot/blob/jazzy/clearpath_robot/debian/udev)
+to be installed on the robot.
+
+If you have installed the ROS 2 packages as `.deb` packages (using the `apt` or `apt-get` command)
+these udev rules will be installed automatically. Verify that `/usr/lib/udev/rules.d/60-ros-jazzy-clearpath-robot.rules`
+exists in your system. If it does not, try reinstalling the `clearpath_robot` ROS package:
+```bash
+sudo apt-get update
+sudo apt-get install --reinstall ros-jazzy-clearpath-robot
+```
+
+If you have installed the packages from source (i.e. they are built in a `colcon` workspace), make
+sure you have installed the udev rules by running these commands:
+```
+sudo cp /path/to/colcon_ws/src/clearpath_robot/clearpath_robot/debian/udev /etc/udev/rules.d/60-clearpath-robot.rules
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+```
+
+## How do I tell if my MCU firmware has been successfully installed?
+
+
+## Errors during OS Installation
+Errors during OS upgrade (generally resolved by ensuring the customer has a internet connection)
+
+## I've upgraded from ROS 2 Humble to ROS 2 Jazzy, but now my `robot.yaml` isn't working
+Robot.yaml> ROS2 upgrade - sensor or manipulator not working / help with configuration issues
+
+## How can I add custom URDFs to my robot using `robot.yaml`?
+Robot yaml creation - Customer with complex integrations translating URDF to Yaml and using meshes
+
+## I purchased my robot with an Nvidia
+Nvidia platform ROS2 support questions - when will it happen!?
+
+## Can I have ROS 1 and ROS 2 installed on the same system?
+
+No. Currently-supported ROS distributions are ROS 2 "Jazzy Jalisco" (which runs on Ubuntu 24.04
+"Noble Numbat") and ROS 2 "Humble Hawksbill" (which runs on Ubuntu 22.04 "Jammy Jellyfish").
+
+ROS 1 went end-of-life in May 2025, with its final release "Noetic Ninjemys" running on Ubuntu
+20.04. There are currently no supported ROS 1 distributions that will run on Ubuntu 22.04 nor 24.04.
+Nor are there any supported ROS 2 distributions that will run on Ubuntu 20.04.
+
+## Are other ROS middleware implementations besides `Fast DDS` supported?
+
+See [supported middleware](supported-components#supported-middleware) for the full list of
+middleware supported on each Clearpath platform.
+
+## When should I change my ROS Domain ID?
+
+If you have more than one ROS 2 system (one or more robots, simulations, and external computers to
+monitor and/or control them) operating on the same network that do not need to communicate with
+each other it is advisable to assign each system a unique domain ID. This will minimize network
+traffic, saving bandwidth and preventing nodes from accidentally communicating if they have topic
+names in common.
+
+See [ROS 2 communication](networking/ros2_networking/ros2_communication) for more information about
+configuring domain IDs.
