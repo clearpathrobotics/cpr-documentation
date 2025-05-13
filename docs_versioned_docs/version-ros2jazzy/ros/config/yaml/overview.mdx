@@ -1,23 +1,32 @@
 ---
-title: Robot YAML Overview
-sidebar_label: Overview
+title: Robot YAML
+sidebar_label: Robot YAML
 sidebar_position: 1
 toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-Our robots provide users with a wide range of customization options: sensors, sensor mounting structures, and custom-made parts. Matching the flexibility of our hardware, Clearpath's ROS 2 system is designed to keep all these customization decisions in a single configuration file.
+:::note
 
-The **Clearpath Robot Configuration YAML**, or `robot.yaml` for short, contains all pertinent information to the entire robot system, allowing robot builders and users to quickly and easily modify any ROS 2 component.
+By default `robot.yaml` is located at `/etc/clearpath/robot.yaml`.
+
+:::
+
+Our robots provide users with a wide range of customization options: sensors, sensor mounting structures,
+and custom-made parts. Matching the flexibility of our hardware, Clearpath's ROS 2 system is designed
+to keep all these customization decisions in a single configuration file.
+
+The **Clearpath Robot Configuration YAML**, or `robot.yaml` for short, contains all pertinent information
+to the entire robot system, allowing robot builders and users to quickly and easily modify any ROS 2 component.
 
 ## Outline
 
 The `robot.yaml` is composed of five major sections:
 1. [**system**](./system.mdx) level information such as the robot's hostname, IP, and ROS middleware implementation.
-2. [**platform**](./platform/overview.mdx) level configurations such as robot specific mounting structures and parameters.
+2. [**platform**](./platform/overview) level configurations such as robot specific mounting structures and parameters.
 3. [**links**](./links.mdx) of standard URDF primitives such as boxes, cylinders, and meshes.
 4. [**mounts**](./mounts.mdx) are predefined, generic, sensor mounting structures.
-5. [**sensors**](./sensors/overview.mdx) are selected from an inventory of Clearpath supported sensors.
+5. [**sensors**](./sensors/overview) are selected from an inventory of Clearpath supported sensors.
 
 Additionally, there are two other, required parameters:
 
@@ -44,10 +53,10 @@ You can also skip to each section to get an explanation of each part of the samp
 
 1. [**Serial Number Sample**](./serial.mdx#sample)
 2. [**System Sample**](./system.mdx#sample)
-3. [**Platform Sample**](./platform/overview.mdx#sample)
+3. [**Platform Sample**](./platform/overview#sample)
 4. [**Links Sample**](./links.mdx#sample)
 5. [**Mounts Sample**](./mounts.mdx#sample)
-6. [**Sensors Sample**](./sensors/overview.mdx#sample)
+6. [**Sensors Sample**](./sensors/overview#sample)
 
 <details>
   <summary>Sample A200 YAML</summary>

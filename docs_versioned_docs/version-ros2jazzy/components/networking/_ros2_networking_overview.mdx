@@ -1,4 +1,6 @@
-The Clearpath robot packages currently support eProsima Fast DDS as the ROS Middleware (RMW) Implementation. This middleware has two supported options for ROS 2 node discovery, Simple Discovery and Discovery Server. Each of these discovery mechanisms has their own use case:
+The Clearpath robot packages currently support eProsima Fast DDS as the ROS Middleware (RMW) Implementation.
+This middleware has two supported options for ROS 2 node discovery, Simple Discovery and Discovery Server.
+Each of these discovery mechanisms has their own use case:
 
 **Simple Discovery**
 - Default, does not require manual setup
@@ -7,6 +9,6 @@ The Clearpath robot packages currently support eProsima Fast DDS as the ROS Midd
 - Good for simple systems (small number of nodes on a dedicated local network)
 
 **Discovery Server**
-- Requires manual configuration in the `robot.yaml`
+- Requires [manual configuration](/docs/ros/networking/ros2_networking/ros2_discovery_config#discovery-server-configurations) in `robot.yaml`
 - Generally operates on the basis that ROS 2 networks should be controlled and should only discover other nodes as needed
 - Does not require multicasting (more likely to work on school or corporate networks)

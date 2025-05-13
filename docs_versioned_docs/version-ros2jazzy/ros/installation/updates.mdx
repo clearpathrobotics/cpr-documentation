@@ -1,0 +1,134 @@
+---
+title: Installing Updates
+sidebar_label: Installing Updates
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+:::note
+
+This page explains how to install updates on a robot that is already running ROS 2 Jazzy
+on Ubuntu 24.04.
+
+If your robot is running an older version of ROS, please refer to our
+[upgrade page](upgrading).
+
+:::
+
+## Updating Debian Packages
+
+Most software on your robot is installed as **debian packages** managed by Ubuntu. To update
+these packages, connect your robot to the internet (either with a
+[wired](../networking/computer_setup#standard-clearpath-bridge) or
+[wireless](../networking/computer_setup#connecting-to-an-existing-wi-fi-network)
+connection) and run the following commands:
+
+:::note
+
+The `apt` command is recommended by Ubuntu, though the older `apt-get` command is still supported.
+Both will have the same result of updating packages on the system, so pick whichever command you
+prefer.
+
+:::
+
+<Tabs>
+    <TabItem default value="apt">
+        ```bash
+        sudo apt update
+        sudo apt full-upgrade
+        ```
+    </TabItem>
+    <TabItem default value="apt-get">
+        ```bash
+        sudo apt-get update
+        sudo apt-get dist-upgrade
+        ```
+    </TabItem>
+</Tabs>
+
+## Updating Source Packages
+
+If you have ROS packages installed [from source](../tutorials/cheat_sheet#workspaces) you must
+update them manually. Most source packages will be downloaded using `git`, though some software
+may use different version control software including `svn` or `cvs`.
+
+To update your source packages, run the following commands:
+
+<Tabs>
+    <TabItem default value="git">
+        ```bash
+        cd /path/to/colcon_ws/src/my_package
+        git pull
+        ```
+    </TabItem>
+    <TabItem default value="svn">
+        ```bash
+        cd /path/to/colcon_ws/src/my_package
+        svn update
+        ```
+    </TabItem>
+    <TabItem default value="cvs">
+        ```bash
+        cd /path/to/colcon_ws/src/my_package
+        cvs update
+        ```
+    </TabItem>
+</Tabs>
+
+You must update each source package indivudually. If your workspace uses `vcstool` you can
+update all of the packages at once by running
+
+```bash
+cd /path/to/colcon_ws/src
+vcs pull
+```
+
+Once you have updated the source packages in your workspace, rebuild it:
+```bash
+cd /path/to/colcon_ws
+colcon build
+```
+
+
+## Updating Firmware
+
+After updating packages, your robot may need to have MCU and motor controller firmware updated.
+Check your robot's diagnostics to see if a firmware update is available. If so, follow the
+firmware update process for your Clearpath platform:
+
+<Tabs>
+    <TabItem value="Husky A300" default>
+        Husky A300 updates:
+        1. [MCU firmware update](robot#firmware-update)
+        2. [Motor controller firmware update](/docs_robots/outdoor_robots/husky/a300/maintenance_husky#maintenance_husky_motor_controller_firmware)
+    </TabItem>
+    <TabItem value="Husky A200">
+        :::note
+        The Husky A200 does not require firmware updates
+        :::
+    </TabItem>
+    <TabItem value="Jackal">
+        Jackal J100 updates:
+        1. [MCU firmware update](robot#firmware-update)
+    </TabItem>
+    <TabItem value="Dingo DX150">
+        Dingo DO150 and DD150 updates:
+        1. [MCU firmware update](robot#firmware-update)
+    </TabItem>
+    <TabItem value="Dingo DX100">
+        Dingo DO100 and DD100 updates:
+        1. [MCU firmware update](robot#firmware-update)
+    </TabItem>
+    <TabItem value="Ridgeback">
+        Ridgeback R100 updates:
+        1. [MCU firmware update](robot#firmware-update)
+    </TabItem>
+    <TabItem value="Warthog">
+        Warthog W200 updates:
+        1. [MCU firmware update](robot#firmware-update)
+    </TabItem>
+</Tabs>

@@ -1,0 +1,138 @@
+---
+title: SSH and SFTP
+sidebar_position: 4
+---
+
+## Logging in via SSH {#ssh}
+
+To log into your robot via SSH you must first
+1. Install an SSH client on your computer. On Ubuntu the `ssh` command is available by default.
+   On Windows, you may need to install a third-party program such as [PuTTY](https://putty.org)
+1. Connect your robot and laptop to the [same wireless network](computer_setup#netplan-wifi) or
+   [directly connect your laptop and robot via ethernet](/docs/ros/networking/overview#connecting-via-ethernet).
+1. [Determine the robot's IP address](computer_setup#determine-ip-address)
+
+To log into the robot, open a terminal and run the command
+```bash
+ssh robot@192.168.131.1
+```
+replacing `192.168.131.1` with the robot's wired or wireless address if necessary. You will be
+asked to enter the password, which is `clearpath` by default. Note that you may not see any
+feedback when typing the password (e.g. you will not see any `*` characters as you type). This
+is normal. Simply type the password and press the ENTER key.
+
+### After you've logged in
+
+After logging in you will see the robot's greeter page:
+```
+Welcome to Ubuntu 24.04.2 LTS (GNU/Linux 6.8.0-58-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Thu May  1 02:57:51 PM EDT 2025
+
+  System load:  0.98               Temperature:             32.9 C
+  Usage of /:   53.8% of 97.87GB   Processes:               259
+  Memory usage: 15%                Users logged in:         1
+  Swap usage:   0%                 IPv4 address for wlp2s0: 10.27.205.109
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+12 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+2 additional security updates can be applied with ESM Apps.
+Learn more about enabling ESM Apps service at https://ubuntu.com/esm
+
+
+    __________
+   /    __    \
+  / __ /  \ __ \
+ / /  \\__//  \ \
+/  \__/    \__/  \  ###  #    ####     #     ###   ###    #   ##### #   #
+\  /  \ __ /  \  / #     #    #       # #    #  #  #  #  # #    #   #   #
+ \ \__//  \\__/ /  #     #    ###    #####   ###   ###  #####   #   #####
+  \    \__/    /   #     #    #     #     #  #  #  #   #     #  #   #   #
+   \__________/     ###  #### #### #       # #   # #  #       # #   #   #
+                R O B O T I C S
+
+
+Last login: Thu May  1 14:55:58 2025 from 10.30.15.89
+robot@cpr-a300-0000:~$
+```
+
+Once you have logged-in you can type any valid `bash` commands followed by the ENTER key to
+execute them. See [the official ROS docs](https://docs.ros.org/) and our [ROS 2 cheat sheet](../tutorials/cheat_sheet.mdx)
+for information on ROS specific commands.
+
+## File transfer via SFTP {#sftp}
+
+To transfer files to/from the robot, you must first
+1. Install an SFTP client on your computer. On Ubuntu the default file browser (`nautilus`) supports
+   SFTP. On Windows or Linux you can install a third-party program like [Filezilla](https://filezilla-project.org/).
+1. Connect your robot and laptop to the [same wireless network](computer_setup#netplan-wifi) or
+   [directly connect your laptop and robot via etheret](/docs/ros/networking/overview#connecting-via-ethernet).
+1. [Determine the robot's IP address](computer_setup#determine-ip-address)
+
+### SFTP on Ubuntu using Nautilus
+
+If you are using Ubuntu, you can simply open the file browser and press `ctrl + L` to open the location bar. Type
+```
+ssh://robot@192.168.131.1
+```
+and press ENTER to connect to the robot.  (If you are connecting over wifi instead of the robot's ethernet
+port you will need to change the IP address from `192.168.131.1` to the robot's IP address on your
+wireless LAN.) You will be prompted to enter the password to log into the robot. Once you have done so
+you will be able to browse the files on the robot directly in your file browser and copy files to/from
+the robot.
+
+<center>
+  <figure>
+    <img
+      src="/img/software_images/ros2/tutorials/sftp/nautilus_sftp.png"
+      width="600"
+    />
+    <figcaption>SFTP in Nautilus</figcaption>
+  </figure>
+</center>
+
+### SFTP on Ubuntu or Windows using Filezilla
+
+If you are using Filezilla you should enter the following in the configuration area at the top of
+the screen:
+- Host: `192.168.131.1` if connecting over direct ethernet connection, otherwise the robot's IP
+  address on your LAN
+- Username: `robot`
+- Password: `clearpath` by default
+- Port: `22`
+Then press the Quickconnect button.
+
+<center>
+  <figure>
+    <img
+      src="/img/software_images/ros2/tutorials/sftp/filezilla_config.png"
+      width="600"
+    />
+    <figcaption>SFTP in Filezilla</figcaption>
+  </figure>
+</center>
+
+Filezilla will show the robot's filesystem on the right side of the window and your local
+filesystem on the left. You can copy files between the two by simply dragging files from one
+side to the other.
+
+## Changing the password {#passwd}
+
+Once you have logged in, you can change the `robot` user's password by running the command
+```bash
+passwd
+```
+You will be asked to enter the previous password, followed by the new password twice. While typing
+the password you may not see any feedback (e.g. no `*` characters as you type). This is normal.
+
+Make sure to record your new password; Clearpath Robotics is not responsible for lost passwords
+and has no way to recover your password. If you change the password and can no longer log in you
+may need to [reinstall the operating system](../installation/robot) to restore your robot.

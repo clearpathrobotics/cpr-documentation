@@ -1,18 +1,28 @@
 ---
-title: Network IP Addresses
-sidebar_position: 4
+title: Reserved IP Addresses
+sidebar_label: IP Addresses
+sidebar_position: 3
 ---
 
-These are the standard addresses that Clearpath uses for custom robot configurations.
+:::note
+
+All Clearpath robots use the `192.168.131.0/24` subnet for internal networking. This includes
+communication between the computer(s), MCU, sensors, manipulators, and other network-based components.
+
+:::
+
+The following table defines the standard IP addresses Clearpath uses for custom robot configurations.
 The details of your specific integration should have been included with your robot as a _robosmiths memo_
 stating the device, serial number, and IP address.
 
-This chart is for reference, to help you decide what address to assign sensors or computers that you are adding to a robot.
+If you are integrating your own sensors, manipulators, or additional computers, we recommend
+following the table below. Make sure you do not use the same IP address for multiple components,
+as this will cause errors.
 
 | Device Family    | Device Description      | Static IP Address/Range | Comments                               |
 | :--------------- | :---------------------- | :---------------------- | :------------------------------------- |
-| Computers & MCUs | Primary Computer        | 192.168.131.1           | The `roscore` process always runs here |
-|                  | MCU                     | 192.168.131.2           | Used on Dingo, Ridgeback, Warthog      |
+| Computers & MCUs | Primary Computer        | 192.168.131.1           | `robot.yaml` is on this computer. Generators run on this computer |
+|                  | MCU                     | 192.168.131.2           | Used on Dingo, Ridgeback, Warthog, Husky A300 |
 |                  |                         | 192.168.131.3           |                                        |
 |                  |                         | 192.168.131.4           |                                        |
 |                  | Secondary Computer      | 192.168.131.5           |                                        |
@@ -64,5 +74,5 @@ This chart is for reference, to help you decide what address to assign sensors o
 |                  | Radio (internal)        | 192.168.131.51          |                                        |
 | Networking HW    | Additional radios       | 192.168.131.52 - 69     |                                        |
 | Unassigned       |                         | 192.168.131.70 - 99     | Available as overflow for other ranges |
-| DHCP             |                         | 192.168.131.100 - 254   | DHCP client addresses                  |
+| DHCP             |                         | 192.168.131.100 - 254   | DHCP/static client addresses           |
 | Broadcast        |                         | 192.168.131.255         |                                        |

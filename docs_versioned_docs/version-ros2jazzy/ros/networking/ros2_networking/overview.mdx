@@ -1,11 +1,11 @@
 ---
 title: ROS 2 Networking
-sidebar_position: 3
+sidebar_position: 1
 ---
 
 ## Overview
 
-import Ros2NetworkingOverview from "/docs_versioned_docs/version-ros2jazzy/components/networking/_ros2_networking_overview.mdx";
+import Ros2NetworkingOverview from "../../../components/networking/_ros2_networking_overview.mdx";
 
 <Ros2NetworkingOverview/>
 
@@ -25,7 +25,7 @@ combination of Clearpath robots.
 <center>
   <figure>
     <img
-      src={require("./img/ros2-fastdds-simple-discovery-diagram.png").default}
+      src={require("../img/ros2-fastdds-simple-discovery-diagram.png").default}
       width="1000"
     />
   </figure>
@@ -35,7 +35,7 @@ For more detailed information regarding Fast DDS or simple discovery, visit the
 [eProsima Fast DDS documentation](https://fast-dds.docs.eprosima.com/en/latest/fastdds/ros2/ros2.html).
 
 Additional details on how to select simple disocvery in the `robot.yaml` config file are available in the
-[Middleware section of Robot Configuration](../config/yaml/system.mdx#middleware).
+[Middleware section of Robot Configuration](../../config/yaml/system.mdx#middleware).
 
 ### Discovery Server
 
@@ -55,7 +55,7 @@ combination of Clearpath robots.
 <center>
   <figure>
     <img
-      src={require("./img/ros2-fastdds-discovery-server-diagram.png").default}
+      src={require("../img/ros2-fastdds-discovery-server-diagram.png").default}
       width="1000"
     />
   </figure>
@@ -119,14 +119,14 @@ in the system at all of the discovery servers in the system.
 <center>
   <figure>
     <img
-      src={require("./img/ros2-fastdds-fully-connected-diagram.png").default}
+      src={require("../img/ros2-fastdds-fully-connected-diagram.png").default}
       width="500"
     />
   </figure>
 </center>
 
 This configuration is achieved by listing all of the computers' hostnames in the
-[`servers` section](../config/yaml/system.mdx#servers) on all of the robots. Including the offboard computer allows
+[`servers` section](../../config/yaml/system.mdx#servers) on all of the robots. Including the offboard computer allows
 the offboard computer to also have a discovery server running and thus operate independently from the robots as
 well as communicating with all of the robots. However, the discovery server must also be set up separately on the
 offboard computer (only required to allow the offboard computer to run ROS 2 nodes independently from the robots).
@@ -144,7 +144,7 @@ middleware:
 ```
 
 Additional details on the available fields for the `robot.yaml` config file are available in the
-[Middleware section of Robot Configuration](../config/yaml/system.mdx#middleware).
+[Middleware section of Robot Configuration](../../config/yaml/system.mdx#middleware).
 
 ### 2. Command Center {#command-center}
 
@@ -163,14 +163,14 @@ robots.
 <center>
   <figure>
     <img
-      src={require("./img/ros2-fastdds-command-center-diagram.png").default}
+      src={require("../img/ros2-fastdds-command-center-diagram.png").default}
       width="600"
     />
   </figure>
 </center>
 
 This configuration is achieved by listing all of the computers' hostnames in the
-[`servers` section](../config/yaml/system.mdx#servers) on all of the robots but setting `enabled` to `False` for
+[`servers` section](../../config/yaml/system.mdx#servers) on all of the robots but setting `enabled` to `False` for
 every server entry except for that specific robot. This tells the robot to only use its own discovery server.
 The offboard computer should have all of the servers enabled, telling it to connect to all discovery servers in the system.
 This servers list must include the offboard computer if a discovery server is being run on the offboard computer. However, the discovery
@@ -217,14 +217,14 @@ middleware:
 ```
 
 Additional details on the available fields for the `robot.yaml` config file are available in the
-[Middleware section of Robot Configuration](../config/yaml/system.mdx#middleware).
+[Middleware section of Robot Configuration](../../config/yaml/system.mdx#middleware).
 
 ## Offboard Computer Setup {#offboard-pc}
 
 Use the `robot.yaml` from one of the robots in order to set up the offboard computer. The `servers` list must include all of
 the discovery servers and all of the ones that the offboard computer should be connecting with must not be disabled.
 
-1. Regenerate the `setup.bash` every time the `servers` list changes in any way (as per [offboard computer install instructions](../installation/offboard_pc.mdx#setup-folder))
+1. Regenerate the `setup.bash` every time the `servers` list changes in any way (as per [offboard computer install instructions](../../installation/offboard_pc.mdx#setup-folder))
 
 2. If a discovery server is intended to be run on the offboard computer then generate and run the discovery-server-start launch file.
 

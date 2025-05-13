@@ -1,7 +1,7 @@
 ---
 title: Upgrading to Jazzy
 sidebar_label: Upgrading to Jazzy
-sidebar_position: 1
+sidebar_position: 2
 toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
@@ -11,13 +11,23 @@ import TabItem from "@theme/TabItem";
 
 :::note
 
+This page explains how to upgrade a robot running an older version of ROS (e.g. Noetic or Humble)
+to ROS 2 Jazzy.
+
+If your robot is already running ROS 2 Jazzy on Ubuntu 24.04, please refer to our
+[updates page](updates) for instructions on how to install the latest updates for Jazzy.
+
+:::
+
+:::note
+
 Users who are installing ROS 2 Jazzy onto a new robot computer can skip to [Robot Installation](robot.mdx).
 
 :::
 
 :::note
 
-Check the [list of supported platforms](../../ros/ros.mdx#supported-platforms) to make sure that your robot is currently
+Check the [list of supported platforms](/docs/ros/supported-components) to make sure that your robot is currently
 supported on ROS 2 Jazzy.
 
 :::
@@ -130,14 +140,15 @@ back these up yourself; `backup.sh` will not do this for you.
 ## Converting Environment Variables to Clearpath Config
 
 The environment variables used to define your robot in ROS 1 and ROS 2 Foxy can be converted to the `robot.yaml`
-format to maintain the same robot description when you upgrade to ROS 2 Jazzy. 
+format to maintain the same robot description when you upgrade to ROS 2 Jazzy.
+
 Below are some common examples. Visit the [robot.yaml documentation](../config/yaml/overview.mdx) for more details.
 If upgrading from ROS 2 Humble, keep a copy of your `robot.yaml` for use with ROS 2 Jazzy.
 
 ### Attachments
 
 Each platform has platform-specific attachments (formerly decorations) such as bumpers and top plates. These
-now reside under the [platform](../config/yaml/platform/attachments/overview.mdx) section of the `robot.yaml` file.
+now reside under the [platform](../config/yaml/platform/attachments/overview) section of the `robot.yaml` file.
 
 <Tabs groupId="platform_codes">
   <TabItem
@@ -237,7 +248,7 @@ platform:
 
 ### Sensors
 
-Sensors can be added under the [sensors](../config/yaml/sensors/overview.mdx) key in the `robot.yaml` file. There is no longer
+Sensors can be added under the [sensors](../config/yaml/sensors/overview) key in the `robot.yaml` file. There is no longer
 a concept of primary, secondary, etc. sensors. Rather, sensors are enumerated in the order that they are added to the config.
 Sensor topics will be automatically set to match the [Clearpath API](../api/sensors_api.mdx#2d-lidar-topics).
 

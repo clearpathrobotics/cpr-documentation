@@ -36,7 +36,7 @@ project/
 
 A secondary goal of the customization package is to serve as a repository that contains the entire configuration of a robot. Therefore, it is recommended to keep the `robot.yaml` configuration file in the top directory and to symbolically link this versioned file to the `/etc/clearpath/robot.yaml` on the robot.
 
-### Create the Package
+## Create the Package
 Create the package within the `colcon_ws`. See the [**workspace creation**](./workspaces.mdx) documentation for more information on setting it up.
 
 Start by creating the main directory. Its name should match the name of the project repository. For the following examples, the project name will simply be a placeholder, `project`.
@@ -78,10 +78,10 @@ install(DIRECTORY config launch
 
 Now, all added files to the `meshes`, `urdf`, `config`, and `launch` directories will be installed to the `colcon_ws/install` directory, such that all other nodes will have access to these. Therefore, create
 
-### Include Package Description and Bringup in Configuration
+## Include Package Description and Bringup in Configuration
 Once the packages have been setup and all customization files have been created and installed, it is possible to include these into the configuration file. By including these descriptions and bringups, the Clearpath configuration system will generate holistic, amalgamated files that will at launched at start-up.
 
-#### Directly Add Mesh to Configuration
+### Directly Add Mesh to Configuration
 Meshes can be included directly or indirectly into the robot configuration. The direct approach is to add a `link` of type `mesh` in the configuration file and then specify the package name and path to the mesh. For example, in the directory structure exemplified above, there is a `mesh.stl` under the `meshes` directory in the `project_description` package. To directly add this `mesh.stl` to the configuration file, the following entry is included in `robot.yaml`.
 ```yaml
 links:
@@ -97,7 +97,7 @@ links:
 The location and orientation of the mesh can be set using the `parent`, `xyz`,
 and `rpy` parameters. The `name` of the link must be unique.
 
-#### Indirectly Add Mesh to Configuration through URDF
+### Indirectly Add Mesh to Configuration through URDF
 Alternatively, meshes can be added indirectly through the URDF. In the description package, create a URDF that will include the mesh as a link, and then add that URDF to the `robot.yaml`. In the example directory above, there is a `project_description.urdf.xacro`. In this URDF, add the link and join it to the robot using a joint.
 ```xml
 <!-- Add Mesh Link -->
@@ -134,7 +134,7 @@ platform:
       path: urdf/project_description.urdf.xacro
 ```
 
-#### Adding Launch File to Configuration
+### Adding Launch File to Configuration
 A launch file can be added to the configuration in the same way that a URDF was in the previous section.
 ```yaml
 platform:

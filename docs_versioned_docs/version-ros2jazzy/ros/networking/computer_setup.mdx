@@ -1,5 +1,5 @@
 ---
-title: Robot Network Configuration
+title: Linux Network Configuration
 sidebar_position: 2
 ---
 import ComputerNetworkingSetupInstall from "../../components/networking/_computer_networking_setup_install.mdx";
@@ -7,11 +7,7 @@ import StandardClearpathBridgeSetup from "../../components/networking/_standard_
 
 <ComputerNetworkingSetupInstall />
 
-### Standard Clearpath Bridge
-
-<StandardClearpathBridgeSetup />
-
-### Connecting to an Existing Wi-Fi Network
+## Connecting to an Existing Wi-Fi Network {#netplan-wifi}
 
 Use `netplan` to connect your robot to an existing wireless network.
 
@@ -129,3 +125,78 @@ Once all files have been processed the result is amalgamated to create the syste
 confguration.
 
 :::
+
+## Standard Clearpath Bridge
+
+<StandardClearpathBridgeSetup />
+
+## Determining the robot's IP address {#determine-ip-address}
+
+The robot's main computer can have several IP addresses for different connections. The robot will
+always have a static address on its [internal network](network_ip_addresses) of `192.168.131.1`
+with a netmask of `255.255.255.0` (24 bits).
+
+:::note
+
+If your robot has a wireless base-station or long-range wireless radio integrated into it, these
+are considered part of the robot's internal network. When connected to the base-station you can
+log into the robot via its `192.168.131.1` IP address.
+
+:::
+
+The robot's wired interface may also be connected to an external DHCP source to provide wired
+internet access, and the robot can be connected over Wi-Fi. To determine the robot's DHCP
+address, you must either
+1. Log into your router and look up the current DCHP assignments. This process will vary from
+   vendor-to-vendor, so refer to your router's manual for instructions on how to do this.
+2. Log into the robot via its static `192.168.131.1` address and run the command `ip a`
+
+### Interpreting `ip a` output
+
+The `ip a` command produces a lot of output, and can be difficult to understand if you aren't
+familiar with it.
+
+**Sample Output**
+```
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute
+       valid_lft forever preferred_lft forever
+2: enp3s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP group default qlen 1000
+    link/ether 12:23:34:45:56:67 brd ff:ff:ff:ff:ff:ff
+3: enp4s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq master br0 state UP group default qlen 1000
+    link/ether 12:34:56:78:90:ab brd ff:ff:ff:ff:ff:ff
+4: br0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 00:11:22:33:44:55 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.131.1/24 brd 192.168.131.255 scope global br0
+       valid_lft forever preferred_lft forever
+    inet 10.0.100.42/16 metric 100 brd 10.0.255.255 scope global dynamic br0
+       valid_lft 79814sec preferred_lft 79814sec
+    inet6 1234::1234:5678:90ab:cdef/64 scope link
+       valid_lft forever preferred_lft forever
+5: wlp2s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 70:1a:b8:2b:0b:b0 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.200.101/16 brd 10.0.255.255 scope global wlp2s0
+       valid_lft forever preferred_lft forever
+    inet6 1234::1122:3344:5566:7788/64 scope link
+       valid_lft forever preferred_lft forever
+6: vcan0: <NOARP,UP,LOWER_UP> mtu 16 qdisc pfifo_fast state UP group default qlen 100
+    link/can
+7: vcan1: <NOARP,UP,LOWER_UP> mtu 16 qdisc pfifo_fast state UP group default qlen 1000
+    link/can
+```
+*Note: MAC addresses have been redacted in the sample above*
+
+Each numbered item (`1` to `7` in the example above) corresponds to a network interface. Each
+interface that has an active connection will have an entry of the form `inet aaa.bbb.ccc.ddd/ee`
+indicating its IP address. Some interfaces, such as the bridge interface described above, may
+have more than one address.
+
+The items of note are:
+- `br0`: The [Clearpath bridge interface](#standard-clearpath-bridge). It will always have the
+  `inet 192.168.131.1/24` address, denoting its static address on the internal network. In this
+  example it is also connected to a wireless DHCP source, giving it the address `10.0.100.42/16`.
+- `wlp2s0`: the robot's wireless interface (the wireless interface will always start with `w`). In
+  in this example the robot is connected to a wireless network with the address `10.0.200.101/16`.

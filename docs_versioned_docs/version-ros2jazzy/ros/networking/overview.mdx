@@ -1,37 +1,42 @@
 ---
-title: Overview
+title: Networking
 sidebar_position: 1
 ---
 
-import Ros2NetworkingOverview from "/docs_versioned_docs/version-ros2jazzy/components/networking/_ros2_networking_overview.mdx";
+import Ros2NetworkingOverview from "../../components/networking/_ros2_networking_overview.mdx";
 
-This section covers general information about how ROS 2 networking works, how to configure ROS 2 networking, general Wi-Fi information and detailed troubleshooting guides.
+This section covers general information about how ROS 2 networking works, how to configure ROS 2 networking, general
+Wi-Fi information and detailed troubleshooting guides.
 
-### SSH and SFTP
+## Connecting to a Wi-Fi Network
 
-Clearpath robots ship with an SSH server operating on port 22 for remote login. This server also supports sftp for
-file-transfer to/from the robot if needed. By default you can log in using the default username and password for the
-robot.
-
-### ROS 2 Networking {#ros2-networking}
-
-There are many nuances to working with ROS 2 nodes and ensuring that all components are communicating properly. The most important of these concepts are reviewed in the [ROS 2 Communication](ros2_communication.mdx) page.
-
-:::tip
-
-For the best chance of success, use a high speed, high bandwidth network and monitor the network usage.
-
-:::
-
-#### ROS 2 Discovery Configuration
-
-<Ros2NetworkingOverview/>
-
-Further information on [ROS 2 Discovery Configuration](ros2_discovery_config.mdx).
+Clearpath uses `netplan` to manage the robot's network interfaces, including wireless network connections.
+See [Connecting to an Existing Wi-Fi Network](computer_setup#netplan-wifi) for details on how to
+connect your robot to an existing wireless network.
 
 ### Wi-Fi Fundamentals and Hardware
 
-ROS 2 communication can be demanding on networks, particularly wireless networks. At times, difficulties with ROS 2 communication can actually stem from core Wi-Fi stability and reliability issues. The [Wi-Fi Fundamentals](wifi_fundamentals.mdx) and [Wi-Fi Hardware](wifi_hardware.mdx) pages discuss important concepts useful for optimizing Wi-Fi networks for use with ROS 2 mobile robots.
+ROS 2 communication can be demanding on networks, particularly wireless networks. At times, difficulties with ROS 2
+communication can actually stem from core Wi-Fi stability and reliability issues. The [Wi-Fi Fundamentals](wifi_fundamentals.mdx)
+and [Wi-Fi Hardware](wifi_hardware.mdx) pages discuss important concepts useful for optimizing Wi-Fi networks for use
+with ROS 2 mobile robots.
+
+
+## Connecting via Ethernet {#connecting-via-ethernet}
+
+Most Clearpath robots will have at least one accessible ethernet port that can be used to connect directly
+to the robots computer. Connect an ethernet cable directly between the robot's ethernet port and your
+laptop. Then configure your computer's ethernet connection to have a static IP address in the
+`192.168.131.100` to `192.168.131.254` range (netmask: `255.255.255.0`). The robot's computer will
+be accessible at `192.168.131.1`.
+
+:::note
+
+Some robots with custom integrations may have all of their physical ethernet ports used to connect
+sensors and other network-based equipment. Please refer to your _robosmiths memo_ for details on
+your robot's exact configuration.
+
+:::
 
 ### Wired LAN IP Addresses {#ip-addresses}
 
@@ -47,9 +52,16 @@ but may not be limited to
 The `192.168.131.0/24` subnet is statically configured; all devices are configured to use a static IP address, and
 there is normally not a DHCP server operating on this subnet.
 
-For a list of standard payload IP addresses, please see [Standard IP Addresses](standard_ip_addresses.mdx).
+For a list of standard payload IP addresses, please see [Reserved IP Addresses](network_ip_addresses.mdx).
 
-### Clock Synchronization
+## SSH and SFTP
+
+Clearpath robots ship with an [SSH server](https://en.wikipedia.org/wiki/Secure_Shell) operating on port 22 for remote login.
+This server also supports [sftp](https://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol) for file-transfer to/from the robot if needed.
+
+You can log into the robot using the default username `robot` and password `clearpath`.
+
+## Clock Synchronization
 
 If your robot contains multiple computers, their clocks must remain synchronized to allow proper communication between
 ROS nodes running on each one. Clearpath configures the computers to use `chrony` to synchronize the clocks, with the
@@ -57,6 +69,27 @@ primary computer being the authoritative source for the others.
 
 For details on configuring `chrony`, please see [configuring NTP](ntp.mdx).
 
-### Network Troubleshooting
+## ROS 2 Networking {#ros2-networking}
 
-There are many things that can go wrong when setting up ROS 2 networking. To aid in this process, a [troubleshooting section](./network_troubleshooting/troubleshooting_overview.mdx) is available with flowcharts to guide the process of troubleshooting two computers that are not communicating properly as well as discussion of common issues that can cause intermittent or unreliable communication. A list and description of troubleshooting tools is also available to assist in the troubleshooting process.
+There are many nuances to working with ROS 2 nodes and ensuring that all components are communicating properly. The most
+important of these concepts are reviewed in the [ROS 2 Communication](ros2_networking/ros2_communication.mdx) page.
+
+:::tip
+
+For the best chance of success, use a high speed, high bandwidth network and monitor the network usage.
+
+:::
+
+### ROS 2 Discovery Configuration
+
+<Ros2NetworkingOverview/>
+
+Further information on [ROS 2 Discovery Configuration](ros2_networking/ros2_discovery_config.mdx).
+
+## Network Troubleshooting
+
+There are many things that can go wrong when setting up ROS 2 networking. To aid in this process, a
+[troubleshooting section](network_troubleshooting/overview.mdx) is available with flowcharts to guide
+the process of troubleshooting two computers that are not communicating properly as well as discussion of common issues
+that can cause intermittent or unreliable communication. A list and description of troubleshooting tools is also available
+to assist in the troubleshooting process.
