@@ -75,23 +75,309 @@ All operators of the machine should familiarize themselves with the Risk Assessm
 These are the hazards Clearpath Robotics is aware of for the Husky A300.
 Your commissioning team may find more hazards due to the Husky operating in your unique application.
 
+[//]: <> (Comment, lines in the Clearpath Risk Assessment that require Information-For-Use be added to the user manual)
+<>
+  [//]: <> (
+     1 done
+     2 done
+     4 done
+     5 done
+     6 done
+     7 done
+     8 done
+     9 done
+    10 done
+    11 done
+    12 done
+    13 done
+    14 done
+    18 done
+    19 done
+    20 done
+    21 done
+    22 done
+    23 done
+    24 done
+    25 done
+    26 done
+    27 done
+    28 done
+    29 done
+    30 done
+    31 done
+    34 done
+    35 done
+    36 done
+    37 done
+    38 TODO, need report for IEC 61010-1
+    39 TODO, need report for IEC 61010-1
+    41 TODO, need report for acoustics. The admonition exists below, but needs to be updated.
+    42 TODO, need report for acoustics. The admonition exists below, but needs to be updated.
+    43 done
+    45 done
+    46 done
+    47 done
+    48 done
+    49 done
+    50 done
+    51 done
+    52 done
+    53 done
+    54 done
+    55 done
+    56 done
+    57 done
+    58 done
+    59 done
+    60 done
+    61 done
+    62 done
+    63 done
+    64 done
+    65 done
+    66 done
+    67 done
+    69 done
+  )
+</>
+
+
 <details>
   <summary>Click To Expand, To Show All The Hazards</summary>
 
-  [//]: <> (Fire And Explosion Hazards)
-  <div>
+  [//]: <> (Risk Assessment 030611_4, lines 1 and 2)
+  <>
+    :::safety-caution
 
-    :::safety-danger[Fire]
+    Always follow the safe lifting procedure for Husky A300 as detailed in this manual.
+    The robot may be lifted by 2 people at the 2 bumpers, or with lifting slings under the robot.
 
-    Never use the Husky A300 robot in an environment outside the specified temperature and humidity constraints.
+    Do not lift the Husky A300 with a fork truck's forks under the robot's chassis.
 
-    The Husky A300 robot contains LiFePO<sub>4</sub> chemistry batteries.
-    These batteries can catch fire if used improperly.
+    Only lift the robot to table height.
 
     :::
 
     <br/>
+  </>
 
+  [//]: <> (Risk Assessment 030611_4, line 4)
+  <>
+    :::safety-caution
+
+    Follow safe fork truck lifting procedures when lifting the Husky A300's crate.
+    The crate includes wood blocks to retain the crate on the forks.
+
+    :::
+
+    <br/>
+  </>
+
+  [//]: <> (Risk Assessment 030611_4, lines 5, 6, 7, and 8)
+  <>
+    :::safety-warning
+
+    Husky A300 with payload can have a total kinetic energy of 360 joules of energy _(180 kg at 2 m/s)_.
+    This is a significant amount of energy that can cause severe injury of death.
+
+    Husky A300, Husky AMP, and Husky Observer have been designed to ensure the robot will not impact a person's torso or head.
+
+    Your commissioning team must ensure custom payloads to not create impact points near a person's torso or head.
+    
+    Your commissioning team must review the worksite procedures, to reduce the risk of the robot colliding with a person.
+
+    :::
+
+    <br/>
+  </>
+
+  [//]: <> (Risk Assessment 030611_4, lines 9, 10, 11, and 12)
+  <>
+    :::safety-danger
+
+    Custom attachmentes such as towed trailers and manipulators were not been considered in Clearpath Robotics's risk assessment process.
+    These custom attachments can crush or strike people, causing severe injuries or death.
+
+    Your commisioning team must consider this hazard and add add design features and safeguards to reduce this risk—such as adding physical guards, or PLC interlocks with the Emergency Stop system.
+
+    :::
+
+    <br/>
+  </>
+
+  [//]: <> (Risk Assessment 030611_4, line 13)
+  <>
+    :::safety-caution
+    
+    Husky can become unstable or fall if driven over ledges greater than 150 mm.
+    Husky can become unstable if driven at high speed over ledges between 20 mm - 150 mm.
+ 
+    :::
+    <br/>
+  </>
+
+  [//]: <> (Risk Assessment 030611_4, line 14)
+  <>
+
+    :::safety-danger
+    
+    Husky A300 does not include any safeguards to prevent it from driving over a cliff.
+    Husky does not include any safeguards to warn people that it is falling from a cliff.
+
+    Husky is at least 80 kg, and likely to cause serious injury or death when landing on a person.
+
+    Your commisioning team must consider this hazard and add add design features and safeguards to reduce this risk—such as by constraining the Husky within a worksite without cliffs.
+
+    :::
+
+    <br/>
+  </>
+
+  [//]: <> (Risk Assessment 030611_4, lines 18 and 31)
+  <>
+    :::safety-caution
+
+    The Husk's external an internal edges have been rounded to reduce the risk of cuts.
+    Edges may become burred to do damage through use.
+    Attempt to grasp parts during maintenance, without sliding hands along edges.
+    This reduces the risk of pinches or cuts.
+
+    :::
+
+    <br/>
+  </>
+
+  [//]: <> (Risk Assessment 030611_4, lines 19, 20, and 21)
+  <>
+    :::safety-caution
+    
+    Do not use the provided Standard Charger outside.
+    Dry the robot before using the battery's Standard Charger.
+
+    The Standard Charger includes a power cable and regulatory marks for the destination country of the your purchase order.
+    Confirm these are acceptable for your worksite before use.
+
+    <Admonition type="note">
+      The optional Upgraded Charger for Husky A300 may be used outdoors.
+      The AC power cable for this charger must be kept with a awning or cable-cover.
+    </Admonition>
+
+    :::
+
+    <br/>
+  </>
+
+  [//]: <> (Risk Assessment 030611_4, line 22)
+  <>
+    :::safety-caution
+
+    Dry the Husky A300's Rear Charge Port Door before opening it.
+    Do not open the during heavy rain—_(more than 1 mm per hour)_—or when wind is angling the rainfall.
+
+    The robot's manual charge connector is visible behind the Rear Charge Port Door.
+    This connector has live battery voltage when the circuit breaker is in the On position.
+
+    The voltage at this connector is less than 30 VDC, so it should not cause shocks in damp conditions.
+
+    :::
+
+    <br/>
+  </>
+
+  [//]: <> (Risk Assessment 030611_4, line 23)
+  <>
+    :::safety-caution
+
+    Husky A300 can present a tripping hazard.
+    
+    Husky A300 can be anywhere in the operating area at any time and may pose a tripping hazard even when not in motion.
+
+    Ensure the Husky A300 is parked in a location away from walkways when the robot is not operating.
+    
+    :::
+
+    <br/>
+  </>
+
+  [//]: <> (Risk Assessment 030611_4, line 24)
+  <>
+    :::safety-warning
+
+    Do not ride on a moving Husky A300.
+    This includes standing, sitting, or any other method of mobing a person using a Husky A300.
+
+    The robot may become unstable or move unpredictably.
+    
+    :::
+
+    <br/>
+  </>
+
+  [//]: <> (Risk Assessment 030611_4, line 25)
+  <>
+    :::safety-caution
+    
+    This manual includes Interface Control Drawings and STEP models for helping you design custom payloads for Husky A300.
+    Follow the payload allowances, stability limits, and suggested operating conditions to maintain stability of the robot and payload.
+    Payloads should be securely fastened to Husky to maintain stability, and prevent objects being thrown from the robot.
+
+    :::
+
+    <br/>
+  </>
+
+  [//]: <> (Risk Assessment 030611_4, line 26)
+  <>
+    :::safety-danger[Crushing / Impact]
+
+    Do not operate Husky A300 near ladders.
+    The robot could hit ladders, and cause these to become unstable, resulting in a person falling from a height.
+
+    :::
+
+    <br/>
+  </>
+
+  [//]: <> (Risk Assessment 030611_4, line 27)
+  <>
+    :::safety-danger[Crushing / Impact]
+
+    The Husky A300 may operate near racking.
+    Racking must be securely fastened, and be loaded to prevent falling items.
+    
+    It is the commissioning and operating teams's responibility to ensure that the Husky A300 colliding with racking will not cause items to fall on a person.
+    It is the commissioning team's responsibility to ensure local regulations are followed.
+
+    :::
+
+    <br/>
+  </>
+
+  [//]: <> (Risk Assessment 030611_4, line 28)
+  <>
+    :::safety-caution
+
+    The Husky A300 may collide with carts or other objects on casters.
+    This may cause carts to move or become unstable.
+
+    Operating teams should park carts outside the Husky A300's operating area.
+
+    :::
+  </>
+
+  [//]: <> (Risk Assessment 030611_4, line 29)
+  <>
+    :::safety-danger[Crushing / Impact]
+
+    Do not operate the robot near vulnerable people such as infants and children.
+
+    :::
+
+    <br/>
+  </>
+  
+  [//]: <> (Risk Assessment 030611_4, line 30)
+  <>
     :::safety-danger[Explosion]
 
     Do not operate Husky A300 in explosive atmospheres.
@@ -101,62 +387,90 @@ Your commissioning team may find more hazards due to the Husky operating in your
     :::
     
     <br/>
-  </div>
+  </>
 
-  [//]: <> (Crushing And Impact Hazards)
-  <div>
+  [//]: <> (Risk Assessment 030611_4, lines 34 and 35)
+  <>
+    :::safety-caution[]
 
-    :::safety-danger[Crushing / Impact]
-
-    Do not operate Husky A300 near ladders, vertical drops or stationary racks.
-    The robot could hit ladders or racking, and cause these to become unstable, resulting in a person falling from a height.
-
-    :::
-
-    <br/>
-
-    :::safety-danger[Crushing / Impact]
-
-    Do not operate the robot near vulnerable people such as infants, children, or elderly.
-    The base Husky A300 robot is not equipped with personnel detection or obstacle avoidance systems.
-
-    :::
-
-    <br/>
+    The Husky A300 has a battery that does not exceed 30 VDC.
+    It is unlikely to shock you due to this low voltage.
     
-    :::safety-danger[Crushing / Impact]
+    Shut off the circuit breaker, and dry the robot before performing maintence.
 
-    Never rely on the Husky AMP or Husky Observer as the only method to avoid collisions.
+    Husky AMP and Husky Observer include PoE devices.
+    PoE can provide up to 60 VDC.
+    
+    These devices include waterproof cables, to reduce the risk of shock.
 
-    While extensive testing has been performed to validate system robustness, autonomous operation of Husky AMP and Husky Observer, they are not safety rated in accordance with ISO 13849 or similar standards.
-    The Husky AMP and Husky Observer are intended for research and development purposes.
-    The Husky AMP and Husky Observer are not intended for use in deployments where risks are mitigated exclusively through the use of the robot.
-    The user is responsible for performing their own Risk Assessment, to ensure the Husky AMP and Husky Observer can be operated safely in the user's operating environment.
+    :::
+    
+    <br/>
+  </>
 
-    Contact [Support](#support) for details on how to upgrade to a safety rated autonomy system for Husky A300, Husky AMP, and Husky Observer.
+  [//]: <> (Risk Assessment 030611_4, line 36)
+  <>
+    :::safety-caution[]
+
+    The Husky A300 may build up a static charge as it does not have a static dissipation strap.
+    This static charge may shock you when you touch the robot.
+
+    Refer to Husky's test report—[clearpath_robotics_032721-RPT1_3.pdf](/assets/pdf/clearpath_robotics_032721-RPT1_3.pdf)—per IEC 61326-1.
+
+    :::
+    
+    <br/>
+  </>
+
+  [//]: <> (Risk Assessment 030611_4, line 37)
+  <>
+    :::safety-warning[]
+
+    The Husky A300 may cause issues with pacemakers or other medical devices due to EMI or EMC. 
+
+    Refer to Husky's test report—[clearpath_robotics_032721-RPT1_3.pdf](/assets/pdf/clearpath_robotics_032721-RPT1_3.pdf)—per IEC 61326-1.
+
+    :::
+    
+    <br/>
+  </>
+
+  [//]: <> (Risk Assessment 030611_4, line 43)
+  <>
+    
+    :::safety-caution
+
+    A standard Husky A300 does not include lidar or other devices with Class 1 lasers per IEC 60825-1.
+
+    The Husky AMP and Husky Observer inlude lidar with a Class 1 notice.
+    Class 1 lasers are safe in normal use, without causing damage to eyes or skin.
+
+    Review your local regulations for workplace requirements with Class 1 lasers.
+
+    :::
+
+  </>
+
+  [//]: <> (Risk Assessment 030611_4 , lines 45 and 64)
+  <>
+    :::safety-caution[]
+
+    Pushing or pulling an unpowered Husky can cause back strain, and increases the risk of slips and falls.
+    
+    Consider your posture when moving an unpowered robot.
+    Consider updating your worksite procedures to reduce how often unpowered robots need to be moved.
+    Only move the Husky while you are weaing high traction footwear, on dry surfaces.
+    Make sure the Husky is powered off before pushing or pulling the robot.
+
+    Follow your worksite's guidelines for cleaning flooring.
 
     :::
 
     <br/>
+  </>
 
-    :::safety-warning[Pinch / Crush]
-
-    Keep hands, feet, and other objects clear of the Husky A300 while driving.
-    Objects can be pinched between the Husky A300 and other fixtures in the environment, or between the Husky A300's wheels and the Husky A300's frame or payloads.
-
-    :::
-
-    <br/>
-
-    :::safety-warning[Crushing / Impact]
-
-    Ensure that you follow all guidance for Husky A300 regarding allowable slopes, allowable payload mass, and allowable payload location.
-    Husky A300 can tip over if subjected to slopes or vertical drops outside the allowable range.
-
-    :::
-
-    <br/>
-
+  [//]: <> (Risk Assessment 030611_4, line 46)
+  <>
     :::safety-warning[Crushing / Impact]
 
     Always use chock blocks on the wheels when powering off the robot.
@@ -165,7 +479,10 @@ Your commissioning team may find more hazards due to the Husky operating in your
     :::
 
     <br/>
+  </>
 
+  [//]: <> (Risk Assessment 030611_4, lines 47 and 48)
+  <>
     :::safety-warning[Crushing / Impact]
 
     Ensure that there are no objects in the operating environment that will could move due to an impact with a free-rolling robot.
@@ -176,214 +493,87 @@ Your commissioning team may find more hazards due to the Husky operating in your
     :::
 
     <br/>
-  </div>
+  </>
 
+ [//]: <> (Risk Assessment 030611_4 , lines 49 and 50)
+  <>
+    :::safety-warning[]
 
-
-  <div>
-
-    :::safety-caution
-
-    Never cross into the path of Husky A300 or place obstacles on its path.
-    These obstacles may not be detected in time and could result in an impact.
+    Always power off Husky A300 and set the Battery Circuit Breaker to the Off position before performing maintenance.
+    Electrical shock or fire may occur when accessing the interior of the Husky A300, or from live voltage cables on the outside of the robot.
 
     :::
 
     <br/>
+  </>
 
-    :::safety-caution
+  [//]: <> (Risk Assessment 030611_4, lines 51 and 52)
+  <>
+    :::safety-warning[Crushing / Impact]
 
-    Always keep away from Husky A300 in the docking and charging areas.
-    Obstacle detection may be reduced in these areas and could result in an impact.
-    Obstable detection does not meet any functionally safety standards.
-
-    :::
-
-    <br/>
-
-    :::safety-caution
-
-    Always keep away from Husky A300 in narrow aisles and corridors.
-    Reduced clearance in these areas and could result in an impact.
+    Ensure that you follow all guidance for Husky A300 regarding allowable slopes, allowable payload mass, and allowable payload location.
+    Husky A300 can tip over if subjected to slopes or vertical drops outside the allowable range.
+    Husky A300 can tip over while driving on acceptable terrain if payloads are not within the robot's allowable centre-of-gravity stability cone. 
 
     :::
 
     <br/>
-
+  </>
+  
+  [//]: <> (Risk Assessment 030611_4, line 53)
+  <>
     :::safety-caution
 
-    Keep loose clothing away from Husky A300 along with its accessories, attachments, and payloads.
-    This reduces the risk of entanglement.
-
-    Using an Emergency Stop button is the only acceptable manner of interacting with Husky A300 while it operating. 
+    Always tie up long hair, and remove loose jewellery, and wear clothing without snag points when working aroung Husky A300.
+    This reduces the risk of entanglement with the moving robot.
 
     :::
 
     <br/>
+  </>
 
-    :::safety-caution
-
-    Always tie up long hair and remove loose jewellery when working aroung Husky A300.
-    This reduces the risk of entanglement.
-
-    :::
-
-    <br/>
-  </div>
-
-
-
-  [//]: <> (Tripping Hazards)
-  <div>
-
-    :::safety-caution
-
-    Ensure the Husky A300 is parked in a location away from walkways when the robot is not operating.
-    Husky A300 can present a tripping hazard if left in walkways.
-
-    :::
-
-    <br/>
-
-    :::safety-caution
-
-    Remain alert if present in the Husky A300 operating area.
-    Husky A300 can be anywhere in the operating area at any time and may pose a tripping hazard even when not in motion.
-
-    :::
-
-    <br/>
-  </div>
-
-
-
-  [//]: <> (Personal Protective Equipment, PPE)
-  <div>
-
-    :::safety-caution
-
-    Always wear gloves, preferably nitrile gloves, while performing maintenance on the robot.
-    Internal maintenance on Husky A300 may expose the user to chemicals in thermal paste and thread locking adhesives.
-
-    :::
-
-    <br/>
-
-    :::safety-caution
-
-    Always wear safety footwear when you are near the Husky A300.
-    Husky A300 may move unexpectedly.
-
-    :::
-
-    <br/>
-
-    [//]: <> (TODO, is this an actual risk from the risk assessment?)
-    
-    :::safety-caution
-
-    Always wear hearing protection while near Husky A300.
-    Husky A300 may emit noise up to 80 dBA at a distance of 10 cm from the robot.
-
-    :::
-
-    <br/>
-  </div>
-
-
-
-  [//]: <> (Maintenance)
-  <div>
-
+  [//]: <> (Risk Assessment 030611_4, lines 54, 56, and 57)
+  <>
     :::safety-warning
 
     Follow the proper Lockout procedure for Husky A300 when completing inspections or maintenance.
     A related Tagout procedure should be developed and followed at your worksite.
 
-    Access to live voltage inside Husky A300 may occur if the Lockout procedure is not followed.
-    This may result in electric shock or fire.
+    Access to live voltage inside Husky A300 may occur if the Lockout procedure is not followed, which may result in electric shock or a fire.
+    Lockout prevents unintended motion of the machinery, since the motors will not receive power.
+    Lockout prevents cuts and crushing from moving fans and motors.
 
     :::
 
     <br/>
+  </>
 
-    :::safety-caution[]
+  [//]: <> (Risk Assessment 030611_4, line 55)
+  <>
+    :::safety-warning[]
 
-    Check for misalignment or binding of moving parts, breakage of parts and any other condition that may affect Husky A300's operation.
-    If damaged, have Husky A300 repaired before use.
-    A poorly maintained Husky A300 may result in a risk of shock, fire, and/or serious injury.
-
-    :::
-
-    <br/>
-
-    :::safety-caution[]
-    
-    Technician must have experience performing maintenance of elecromechanical machinery, using the related tools and procedures.
-    Only perform maintenance tasks detailed in this manual, or through direct conversations with Clearpath Robotics's Support Team.
+    Only operate Husky on the intended operating terrain, within the allowable payload and velocity limits.
+    Low friction surfaces like ice can cause eratic or unstable motion of the robot.
 
     :::
 
     <br/>
+  </>
 
-    :::safety-caution[]
+  [//]: <> (Risk Assessment 030611_4, lines 58, 59, 60, 61, 62, and 67)
+  <>
+    :::safety-caution
 
-    Only use replacement parts specified in this manual, or from direct conversations with Clearpath Robotics's Support Team.
-    This will ensure that the safety of Husky A300 is maintained.
-
-    :::
-
-    <br/>
-
-    :::safety-caution[]
-
-    Never service damaged battery packs.**
-
-    Service of battery packs should only be performed by the manufacturer or authorized service providers.
+    Always wear gloves, preferably nitrile gloves, while performing maintenance on the robot.
+    Internal maintenance on Husky A300 may expose the user to harmful chemicals in dust, fluids, thermal paste, thread locking adhesives, electric grease, batteries, and material coatings.
 
     :::
 
     <br/>
-
-    :::safety-caution[]
-
-    Never use cleaning agents that could damage plastic parts.
-    Certain cleaning agents and solvents damage plastic parts.
-    Some of these are: gasoline, carbon tetrachloride, chlorinated cleaning solvents, ammonia and household detergents that contain ammonia.
-
-    Note that most of Husky's metal parts include a plastic powder coating on the surface.
-
-    :::
-
-    <br/>
-
-    :::safety-caution[]
-
-    Always ensure Husky A300 is in an Emergency Stop state or shut down completely before moving it manually.
-    Husky A300 may move unexpectedly while running.
-
-    :::
-
-    <br/>
-
-    :::safety-caution[]
-
-    Never push Husky A300 at speeds above 2 m/s when moving it manually.
-    This may cause damage to the motors.
-
-    :::
-
-    <br/>
-
-    :::safety-caution[]
-
-    Always power off Husky A300 and set the Battery Circuit Breaker to the Off position before performing maintenance.
-    Electrical shock may occur when accessing the interior of the Husky A300.
-
-    :::
-
-    <br/>
-
+  </>
+  
+  [//]: <> (Risk Assessment 030611_4 , line 63)
+  <>
     :::safety-caution[]
 
     Always place Husky A300 at a suitable height when working in or around Husky A300.
@@ -392,76 +582,137 @@ Your commissioning team may find more hazards due to the Husky operating in your
     :::
 
     <br/>
+  </>
 
+  [//]: <> (Risk Assessment 030611_4 , line 65)
+  <>
     :::safety-caution[]
+      
+    The robot may become unstable as you remove items for maintenance.
 
-    Always have Safety Data Sheets on hand.
-    These may be required if unexpected damage occurs to an internal component such as a battery.
-    Refer to the [battery Safety Data Sheet](/assets/pdf/clearpath_robotics_025047-SDS1.pdf).
+    Place the entire bottom sufrace of the Husky's chassis on a table when removing wheels to maintain the robot's stability.
+
+    :::
+
+    <br />
+  </>
+
+  [//]: <> (Risk Assessment 030611_4, line 66)
+  <>
+    :::safety-warning[Pinch / Crush]
+
+    Keep hands, feet, and other objects clear of the Husky A300 while driving.
+    Objects can be pinched between the Husky A300 and other fixtures in the environment, or between the Husky A300's wheels and the Husky A300's frame or payloads.
+
+    Design your custom payloads so they prevent pinching, crushing, and entanglement.
 
     :::
 
     <br/>
+  </>
 
+  [//]: <> (Risk Assessment 030611_4, line 69)
+  <>
     :::safety-caution[]
 
-    Always test all safety functions following any maintenance activity.
-    Improper maintenance may result in the loss of safety functions.
+    The Husky A300 should not cause health issues due to high power radio waves.
+    Review Husky's test report—[clearpath_robotics_032188-COC1_3.pdf](/assets/pdf/clearpath_robotics_032188-COC1_3.pdf)—to confirm that the results per FCC part 15 subpart B / ICES-003 are acceptable for your worksite.
 
     :::
-
+    
     <br/>
-  </div>
+  </>
 
 
-
-  [//]: <> (Operating Conditions And Environment)
+  [//]: <> (TODO, consider deleting)
   <div>
+    <>
+      :::safety-danger[Crushing / Impact]
 
-    :::safety-caution[]
+      Never rely on the Husky AMP or Husky Observer as the only method to avoid collisions.
 
-    Use Husky A300 in accordance with these instructions, considering the working conditions and the work to be performed.
-    Use of Husky A300 for operations different from those intended could result in a hazardous situation.
+      While extensive testing has been performed to validate system robustness, autonomous operation of Husky AMP and Husky Observer, they are not safety rated in accordance with ISO 13849 or similar standards.
+      The Husky AMP and Husky Observer are intended for research and development purposes.
+      The Husky AMP and Husky Observer are not intended for use in deployments where risks are mitigated exclusively through the use of the robot.
+      The user is responsible for performing their own Risk Assessment, to ensure the Husky AMP and Husky Observer can be operated safely in the user's operating environment.
 
-    :::
+      Contact [Support](#support) for details on how to upgrade to a safety rated autonomy system for Husky A300, Husky AMP, and Husky Observer.
 
-    <br/>
+      :::
 
-    :::safety-caution
+      <br/>
+    </>
 
-    Perform a worksite specific Risk Assessment.
-    New risks may be identified for your application.
-    Your assessment may require new design features and safeguards to reduce risks.
+    <>
+      :::safety-caution
 
-    :::
+      Never cross into the path of Husky A300 or place obstacles on its path.
+      These obstacles may not be detected in time and could result in an impact.
 
-    <br/>
+      :::
 
-    :::safety-caution
+      <br/>
+    </>
 
-    Never attempt to have Husky A300 climb curbs higher than 150 mm, operate near overhanging obstacles,
-      or drive across gaps or depressions in the ground more than 200 mm deep, such as the top of stairs, at a cliff edge, or at large potholes.
-    This may cause the robot to become unstable.
+    <>
+      :::safety-caution
 
-    :::
+      Always keep away from Husky A300 in the docking and charging areas.
+      Obstacle detection may be reduced in these areas and could result in an impact.
+      Obstable detection does not meet any functionally safety standards.
 
-    <br/>
+      :::
+
+      <br/>
+    </>
+
+    <>
+      :::safety-danger[Fire]
+
+      Never use the Husky A300 robot in an environment outside the specified temperature and humidity constraints.
+
+      The Husky A300 robot contains LiFePO<sub>4</sub> chemistry batteries.
+      These batteries can catch fire if used improperly.
+
+      :::
+
+      <br/>
+    </>
+
+    <>
+      :::safety-caution[]
+
+      Use Husky A300 in accordance with these instructions, considering the working conditions and the work to be performed.
+      Use of Husky A300 for operations different from those intended could result in a hazardous situation.
+
+      :::
+
+      <br/>
+    </>
+
+    <>
+      :::safety-caution
+
+      Perform a worksite specific Risk Assessment.
+      New risks may be identified for your application.
+      Your assessment may require new design features and safeguards to reduce risks.
+
+      :::
+
+      <br/>
+    </>
+
+    <>
+      :::safety-caution
+
+      Never attempt to have Husky A300 climb curbs higher than 150 mm, operate near overhanging obstacles,
+        or drive across gaps or depressions in the ground more than 200 mm deep, such as the top of stairs, at a cliff edge, or at large potholes.
+      This may cause the robot to become unstable.
+
+      :::
+
+      <br/>
+    </>
   </div>
 
-
-
-  [//]: <> (Payload Maximums)
-  <div>
-
-    :::safety-caution
-
-    Never load Husky A300 with more weight than is specified by the robot's nameplate.
-    Exceeding the allowable payload will increase the robot's stopping distance, and may make the robot unstable.
-
-    Note that Clearpath supplied upgrades and integrations—like an upgraded battery-should be considered as payload. 
-
-    :::
-
-    <br/>
-  </div>
 </details>
