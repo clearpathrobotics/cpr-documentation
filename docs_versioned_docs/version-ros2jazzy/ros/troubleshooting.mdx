@@ -111,14 +111,44 @@ This command will print the `clearpath_firmware` package's meta-data:
 The `version` tag near the top should match the `firmware_version` field of the MCU status message.
 In this case, both are `2.4.1`, indicating the latest firmware is installed.
 
-## Errors during OS Installation
-Errors during OS upgrade (generally resolved by ensuring the customer has a internet connection)
+## I get a red error screen when installing Ubuntu using Clearpath's ISO. What should I do?
+
+Clearpath provides a [modified Ubuntu Server image](https://packages.clearpathrobotics.com/stable/images/2.0.0/)
+for installing Ubuntu 24.04 "Noble Numbat" on our robots. This ISO requires a wired internet connection
+to download and install packages. Most errors encountered when using the ISO are the result of not
+properly configuring the internet connection.
+
+The installer always uses the first-enumerated ethernet port on the computer, typically
+identified as `eno1` to connect to the internet. This port usually corresponds to the port
+physically labelled "Ethernet 1" or similar on the motherboard. If your computer's ethernet ports
+are unlabelled, you may need to try connecting via one, and switch to the other if the first doesn't work.
+
+:::note
+
+Ensure that the ethernet cable you connect to the computer goes to a router with DHCP enabled
+and is connected to the internet. Ubuntu's installer will request a DHCP lease from the router
+before it downloads any packages from the internet.
+
+:::
+
+The second common source of errors is due to unsupported hardware combinations. For robots
+purchased from Clearpath Robotics and our affiliates, this is not a problem. But if you have
+purchased your own hardware to upgrade the robot after purchase, it may happen. The most common
+problem is an unsupported combination of motherboard and SSD format. Small form-factor SSDs are
+typically either `mSATA` or `M.2 NVMe`. These two formats are often physically interchangeable,
+but not all motherboards support both. Always make sure that your motherboard supports your
+SSD format.
 
 ## I've upgraded from ROS 2 Humble to ROS 2 Jazzy, but now my `robot.yaml` isn't working
-Robot.yaml> ROS2 upgrade - sensor or manipulator not working / help with configuration issues
+
+Ensure your `robot.yaml` file corresponds to the [current format](config/yaml/overview). Some
+features get added/removed/modified across major ROS versions. The output from the Clearpath
+generators should indicate what the specific problem is.
 
 ## How can I add custom URDFs to my robot using `robot.yaml`?
-Robot yaml creation - Customer with complex integrations translating URDF to Yaml and using meshes
+
+`robot.yaml` provides a [`platform.extras.urdf`](config/yaml/platform/extras#urdf-extras)
+that can be used for adding user-created URDF files to the `robot_description`.
 
 ## My robot has an Nvidia Jetson computer. Can I update to ROS 2 Jazzy?
 
@@ -130,7 +160,7 @@ installer is 22.04. Nvidia has not yet announced a release date for Ubuntu 24.04
 If you absolutely require ROS 2 Jazzy on your Nvidia computer, you may be able to run the necessary
 software inside [docker containers](https://www.docker.com/).
 
-## Can I have ROS 1 and ROS 2 installed on the same system?
+## Can I have ROS 1 and 2 installed on the same system?
 
 No. Currently-supported ROS distributions are ROS 2 "Jazzy Jalisco" (which runs on Ubuntu 24.04
 "Noble Numbat") and ROS 2 "Humble Hawksbill" (which runs on Ubuntu 22.04 "Jammy Jellyfish").
