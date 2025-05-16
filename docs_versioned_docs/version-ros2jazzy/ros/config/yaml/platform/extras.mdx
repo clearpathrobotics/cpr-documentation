@@ -34,11 +34,36 @@ extras:
 Remember, absolute paths start with `/` and relative paths do not.
 :::
 
+:::note
+
+If your extras file is in a ROS package built from source in a workspace, make sure to
+[add the workspace to `robot.yaml`](config/yaml/system#ros-2-environment) by adding it
+to `system.ros2.workspaces`.
+
+:::
+
 ## URDF Extras
 
 If an `extras.urdf` is specified, it is included as part of the `robot_description`. The specified
 URDF file can either be an absolute path on the robot's filesystem or a relative path within a ROS
 package:
+
+**Absolute path**
+```yaml
+platform:
+  extras:
+    urdf:
+      path: /home/robot/my_urdf_extras.urdf.xacro
+```
+
+**Relative path within a ROS package**
+```yaml
+platform:
+  extras:
+    urdf:
+      package: my_robot_extras
+      path: urdf/my_urdf_extras.urdf.xacro
+```
 
 ### URDF Extras Example
 
