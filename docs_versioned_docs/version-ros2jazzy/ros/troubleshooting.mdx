@@ -120,8 +120,15 @@ Robot.yaml> ROS2 upgrade - sensor or manipulator not working / help with configu
 ## How can I add custom URDFs to my robot using `robot.yaml`?
 Robot yaml creation - Customer with complex integrations translating URDF to Yaml and using meshes
 
-## I purchased my robot with an Nvidia
-Nvidia platform ROS2 support questions - when will it happen!?
+## My robot has an Nvidia Jetson computer. Can I update to ROS 2 Jazzy?
+
+Not yet. Nvidia's release cycle for Ubuntu support is consistently behind ROS. In order to
+natively install ROS 2 Jazzy, the Nvidia computer must support Ubuntu 24.04. At the time of writing
+the latest OS Nvidia supports installing through their [JetPack](https://developer.nvidia.com/embedded/jetpack)
+installer is 22.04. Nvidia has not yet announced a release date for Ubuntu 24.04 support.
+
+If you absolutely require ROS 2 Jazzy on your Nvidia computer, you may be able to run the necessary
+software inside [docker containers](https://www.docker.com/).
 
 ## Can I have ROS 1 and ROS 2 installed on the same system?
 
