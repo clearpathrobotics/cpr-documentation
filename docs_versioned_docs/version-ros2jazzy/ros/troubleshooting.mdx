@@ -45,6 +45,71 @@ sudo udevadm trigger
 
 ## How do I tell if my MCU firmware has been successfully installed?
 
+The command to install the firmware will exit normally if the firmware is successfully installed.
+If you do not see any error messages then the program finished normally. To double-check,
+_immediately after_ running the firmware installation command you can run
+```bash
+echo $?
+```
+to print the exit code of the previous command. If this prints `0` then the previous command
+finished normally.
+
+To verify that the version of the MCU firmware running on your robot, run
+```bash
+ros2 topic echo /a300_00000/platform/mcu/status --once
+```
+(replacing `a300_00000` with your robot's root namespace). The result will look something like this:
+```yaml
+header:
+  stamp:
+    sec: 1747405186
+    nanosec: 816000000
+  frame_id: base_link
+hardware_id: A300-000-00
+firmware_version: 2.4.1
+mcu_uptime:
+  sec: 60622
+  nanosec: 426000000
+connection_uptime:
+  sec: 610
+  nanosec: 338000000
+---
+```
+The `firmware_version` field shows the MCU firmware version currently running. Ensure that this
+matches the version you just installed:
+```
+ros2 pkg xml clearpath_firmware
+```
+This command will print the `clearpath_firmware` package's meta-data:
+```xml
+<package format="3">
+  <name>clearpath_firmware</name>
+  <version>2.4.1</version>
+  <description>Clearpath Robot Firmware</description>
+
+  <maintainer email="rkreinin@clearpathrobotics.com">Roni Kreinin</maintainer>
+  <maintainer email="lcamero@clearpathrobotics.com">Luis Camero</maintainer>
+  <maintainer email="tbaltovski@clearpathrobotics.com">Tony Baltovski</maintainer>
+
+  <license>BSD</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_python</buildtool_depend>
+
+  <exec_depend>dfu-util</exec_depend>
+  <exec_depend>python3-tftpy</exec_depend>
+  <exec_depend>python3-simple-term-menu</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
+```
+The `version` tag near the top should match the `firmware_version` field of the MCU status message.
+In this case, both are `2.4.1`, indicating the latest firmware is installed.
 
 ## Errors during OS Installation
 Errors during OS upgrade (generally resolved by ensuring the customer has a internet connection)
