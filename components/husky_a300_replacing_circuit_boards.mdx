@@ -1,0 +1,183 @@
+import Admonition from "@theme/Admonition";
+
+### Replacing Circuit Boards
+
+[//]: <> (TODO, remove the white background from all the images, to improve visibility in dark mode)
+[//]: <> (TODO, change image highlight colours to align with the image requirements listed in this repo's README)
+
+<center>
+  <img
+    src="/img/robot_images/husky_a300_images/husky_a300_system_interface_board_1.png"
+    width="600"
+  />
+  <figcaption>Husky's _System Interface Assembly_, including DC-DCs, BLDC controllers, Common Core, and fuses</figcaption>
+</center>
+
+<br/>
+
+Husky has several circuit boards—_(PCBAs)_.
+It is uncommon for a PCBA to fail during operation, but could occur from physical damage during a maintenance task.
+If a failure occurs, usually only one board needs to be replaced, rather than the full _System Interface Assembly_.
+
+<Admonition type="danger" title="ESD Protection">
+  PCBAs are sensitive components and can be damaged easily through electrostatic discharge—_(ESD)_.
+  Be sure to follow proper ESD protection measures prior to handling any circuit boards.
+</Admonition>
+
+:::safety-warning
+
+Confirm that Husky's Emergency Stop System is functioning after changing any of the circuit boards.
+
+:::
+
+<br/>
+
+<details>
+  <summary>Procedure for replacing the DC-DC and BLDC circuit boards</summary>
+
+  1.  Turn off the robot's circuit breaker.
+  
+  2.  Remove the 7 screws that fasten the _Top Plate_ to the chassis and remove the _Top Plate_.
+      <center>
+        <img
+          src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_1.jpg"
+          width="600"
+        />
+      </center>
+
+  3.  Remove the cable brush holder.
+      <center>
+        <img
+          src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_2.jpg"
+          width="600"
+        />
+      </center>
+
+  4.  Remove the heat shield covering the DC-DC or BLDC circuit boards.
+      <center>
+        <img
+          src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_3.jpg"
+          width="600"
+        />
+      </center>
+
+  5.  Remove the failing circuit board by gently lifting the board up.
+      These circuit boards have many pins, so a large amount of force is requred. 
+      <center>
+        <img
+          src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_4.jpg"
+          width="600"
+        />
+      </center>
+
+  6.  Install the new circuit board by aligning the connector and gently sliding it into place.
+      <center>
+        <img
+          src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_5.jpg"
+          width="600"
+        />
+      </center>
+
+  7.  Reinstall the heat shields.
+
+  8.  Reinstall the cable brush holder.
+
+  9.  Put the _Top Plate_ back in place and finger tighten the 7 screws.
+      Note that the screw with the sealing washer goes in the inner location, and the remaining 6 screws are installed around the perimeter.
+      Tighten all screws to 3 N·m.
+      <center>
+        <img
+          src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_6.jpg"
+          width="600"
+        />
+      </center>
+</details>
+
+<details>
+  <summary>Procedure for replacing the Common Core circuit board</summary>
+
+  1.  Turn off the robot's circuit breaker.
+
+  2.  Remove the 7 screws that fasten the _Top Plate_ to the chassis and remove the _Top Plate_.
+      <center>
+        <img
+          src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_1.jpg"
+          width="600"
+        />
+      </center>
+
+  3.  Remove the Common Core by removing the 2 retaining screws, pushing out on the retaining clips, and then gently pulling the board out horizontally.
+      <center>
+        <img
+          src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_7.jpg"
+          width="600"
+        />
+      </center>
+
+  4.  Install the new circuit board by gently sliding it into place horizontally,
+        ensure that the retaining clips are secured, and that the two screws have been installed.
+  
+  5.  Put the _Top Plate_ back in place and finger tighten the 7 screws.
+      Note that the screw with the sealing washer goes in the inner location, and the remaining 6 screws are installed around the perimeter.
+      Tighten all screws to 3 N·m.
+      <center>
+        <img
+          src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_6.jpg"
+          width="600"
+        />
+      </center>
+</details>
+
+<details>
+  <summary>Procedure for replacing the Main circuit board</summary>
+
+  1.  Turn off the robot's circuit breaker.
+
+  2.  Remove the 7 screws that fasten the _Top Plate_ to the chassis and remove the _Top Plate_.
+      <center>
+        <img
+          src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_1.jpg"
+          width="600"
+        />
+      </center>
+
+  3. Disconnect all cables from the Main circuit board.
+    <center>
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_8.jpg"
+        width="400"
+      />
+    </center>
+
+  4.  Remove the Main circuit board by removing the screws and then lifting out the board.
+      <center>
+        <img
+          src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_9.jpg"
+          width="400"
+        />
+      </center>
+
+  5.  Place the old and new Main circuit boards on an ESD mat.
+
+  6.  Move the funcational DC-DC, BLDC, and Common Core circuit boards from the old Main circuit board to the new Main circuit board by following the procedures above.
+      <center>
+        <img
+          src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_10.jpg"
+          width="400"
+        />
+      </center>
+  
+  7.  Install the new Main circuit board tighten the retaining screws to 1 N·m.
+
+  8.  Reconnect all cables, noting that the labels on the cables should match those on the board.
+  
+  9.  Put the _Top Plate_ back in place and finger tighten the 7 screws.
+      Note that the screw with the sealing washer goes in the inner location, and the remaining 6 screws are installed around the perimeter.
+      Tighten all screws to 3 N·m.
+      <center>
+        <img
+          src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_6.jpg"
+          width="600"
+        />
+      </center>
+</details>

@@ -14,6 +14,7 @@ import ComponentCommonReplacementItems from "/components/husky_a300_common_repla
 import GettingNewPackages from "/components/maintenance/getting_new_packages.mdx";
 import ComponentMotors from "/components/husky_a300_motors.mdx";
 import ComponentTireAndTube from "/components/husky_a300_tire.mdx";
+import ComponentReplacingCircuitBoards from "/components/husky_a300_replacing_circuit_boards.mdx";
 import Support from "/components/support.mdx";
 
 <ComponentIntroductionHusky />
@@ -238,147 +239,7 @@ have any concerns.
 ## Hardware Maintenance
   <ComponentCommonReplacementItems />
   <ComponentTireAndTube />
-
-### Replacing Circuit Boards
-
-Husky contains several circuit boards (PCBAs). If a failure occurs, there is normally only one
-board that needs to be replaced.
-
-:::safety-caution
-
-Circuit boards are sensitive components and can be damaged easily through electrostatic discharge (ESD).
-Be sure to follow proper ESD protection measures prior to handling any circuit boards.
-
-:::
-
-#### Procedure for replacing the DC/DC and BLDC circuit boards:
-
-1. Follow the [Lock-Out Tag-Out](user_manual_husky#lockout-tagout) procedure.
-1. Remove the seven screws that fasten the Top Plate to the chassis and remove the Top Plate.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_1.jpg"
-       width="600"
-     />
-   </center>
-1. Remove the cable brush holder.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_2.jpg"
-       width="600"
-     />
-   </center>
-1. Remove the heat shield covering the DC/DC and/or BLDC circuit boards.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_3.jpg"
-       width="600"
-     />
-   </center>
-1. Remove the failing circuit board by gently lifting the board up.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_4.jpg"
-       width="600"
-     />
-   </center>
-1. Install the new circuit board by aligning the connector and gently sliding it into place.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_5.jpg"
-       width="600"
-     />
-   </center>
-1. Reinstall the heat shields.
-1. Reinstall the cable brush holder.
-1. Put the Top Plate back in place and finger tighten the seven screws that were removed in Step 2.
-   Note that the screw with the sealing washer goes in the inner location and the remaining
-   six screws are installed at the perimeter. Tighten all seven screws to 3 Nm.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_6.jpg"
-       width="600"
-     />
-   </center>
-
-#### Procedure for replacing the Common Core circuit board:
-
-1. Follow the [Lock-Out Tag-Out](user_manual_husky#lockout-tagout) procedure.
-1. Remove the seven screws that fasten the Top Plate to the chassis and remove the Top Plate.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_1.jpg"
-       width="600"
-     />
-   </center>
-1. Remove the failing circuit board by removing the two retaining screws, pushing out on the retaining
-   clips, and gently pulling the board out horizontally.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_7.jpg"
-       width="600"
-     />
-   </center>
-1. Install the new circuit board by sliding it in at a 45 degree angle, rotating it down to
-   horizontal until the retaining clips click to engage, and installing the two screws.
-1. Put the Top Plate back in place and finger tighten the seven screws that were removed in Step 2.
-   Note that the screw with the sealing washer goes in the inner location and the remaining
-   six screws are installed at the perimeter. Tighten all seven screws to 3 Nm.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_6.jpg"
-       width="600"
-     />
-   </center>
-
-#### Procedure for replacing the Main circuit board:
-
-1. Follow the [Lock-Out Tag-Out](user_manual_husky#lockout-tagout) procedure.
-1. Remove the seven screws that fasten the Top Plate to the chassis and remove the Top Plate.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_1.jpg"
-       width="600"
-     />
-   </center>
-1. Disconnect all cables from the Main circuit board.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_8.jpg"
-       width="400"
-     />
-   </center>
-1. Remove the failing circuit board by removing the retaining screws and then lifting out the board.
-   Note that some cables may need to be moved out of the way temporarily to make it easier to
-   remove the Main circuit board.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_9.jpg"
-       width="400"
-     />
-   </center>
-1. Place the old and new Main circuit boards on an ESD mat.
-1. Remove the DC/DC, BLDC, and Common Core circuit boards from the old Main circuit board
-   (including heat shields) and install them (including heat shields) on the new Main circuit
-   board by following the procedures above.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_10.jpg"
-       width="400"
-     />
-   </center>
-1. Install the new Main circuit board (including DC/DC, BLDC, and Common Core circuit boards)
-   and tighten the retaining screws to 1 Nm.
-1. Reconnect all cables, noting that the labels on the cables should match those on the board.
-1. Put the Top Plate back in place and finger tighten the seven screws that were removed in Step 2.
-   Note that the screw with the sealing washer goes in the inner location and the remaining
-   six screws are installed at the perimeter. Tighten all seven screws to 3 Nm.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_6.jpg"
-       width="600"
-     />
-   </center>
+  <ComponentReplacingCircuitBoards />
 
 ### Replacing the Computer
 
