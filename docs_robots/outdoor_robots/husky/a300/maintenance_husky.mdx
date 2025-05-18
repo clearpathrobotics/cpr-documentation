@@ -12,6 +12,8 @@ import ComponentLeadAcidBatteryCareTips from "/components/maintenance/lead_acid_
 import ComponentBillOfMaterialsNote from "/components/maintenance/bill_of_materials_note.mdx";
 import ComponentCommonReplacementItems from "/components/husky_a300_common_replacement_items.mdx";
 import GettingNewPackages from "/components/maintenance/getting_new_packages.mdx";
+import ComponentMotors from "/components/husky_a300_motors.mdx";
+import ComponentTireAndTube from "/components/husky_a300_tire.mdx";
 import Support from "/components/support.mdx";
 
 <ComponentIntroductionHusky />
@@ -234,99 +236,8 @@ have any concerns.
 ---
 
 ## Hardware Maintenance
-
-<ComponentCommonReplacementItems />
-
-### Replacing Tire or Inner Tube  {#tire-maintenance}
-
-:::safety-warning
-
-**Place the robot up on blocks prior to replacing the tire or inner tube.**
-
-Failure to support the robot prior to removing the wheel could cause the
-robot to tip over.
-
-:::
-
-Procedure:
-
-1. Follow the [Lock-Out Tag-Out](user_manual_husky#lockout-tagout) procedure.
-1. Remove the six M8 screws holding the wheel to the motor.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_tire_1.jpg"
-       width="600"
-     />
-   </center>
-1. Deflate the tire.
-1. Remove the six M4 screws that hold the split rim together.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_tire_2.jpg"
-       width="400"
-     />
-   </center>
-1. Remove the outer wheel rim.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_tire_3.jpg"
-       width="400"
-     />
-   </center>
-1. Remove the tire and tube from the inner rim.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_tire_4.jpg"
-       width="400"
-     />
-   </center>
-1. Replace the tire and/or tube as needed with new parts. Ensure that the
-   tube is installed in the tire and inflated only far enough that it takes
-   its shape. Inflating further will make reassembly difficult.
-1. Place the tire (with tube) onto to inner rim, aligning the valve stem
-   with the notch in the rim.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_tire_5.jpg"
-       width="400"
-     />
-   </center>
-1. Place the outer rim on top, aligning the value stem with the notch in
-   the rim.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_tire_6.jpg"
-       width="400"
-     />
-   </center>
-1. Reinstall the six M4 screws, tightening them in a star pattern to 2 Nm.
-
-   :::note
-
-   It may be necessary to use three longer M4 screws on a temporary basis
-   to help pull the inner and outer rims together and ensure alignment,
-   allowing the first three standard M4 screws to be installed. Then,
-   the temporary M4 screws can be removed and the standard ones installed.
-   As you tighten the screws, ensure that the valve stem is not being pinched.
-
-   :::
-
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_tire_7.jpg"
-       width="400"
-     />
-   </center>
-
-1. Inflate the tire to 20 psi.
-1. Place the wheel on the motor and reinstall the six M8 screws, tightening
-   them in a star pattern to 22 Nm.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_tire_1.jpg"
-       width="400"
-     />
-   </center>
+  <ComponentCommonReplacementItems />
+  <ComponentTireAndTube />
 
 ### Replacing Circuit Boards
 
@@ -519,51 +430,7 @@ Procedure:
    </center>
 1. As needed, reinstall any custom configuration that has been backed up.
 
-### Replacing Motors
-
-Procedure:
-
-1. Follow the [Lock-Out Tag-Out](user_manual_husky#lockout-tagout) procedure.
-1. Remove the cable gland bracket on the side of the robot with the motor being
-   replaced by removing five screws.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_motor_1.jpg"
-       width="600"
-     />
-   </center>
-1. Disconnect the both sets of motor power and cables from the chassis on the
-   side of the robot with the motor being replaced.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_motor_2.jpg"
-       width="600"
-     />
-   </center>
-1. Remove the suspension beam from the chassis by removing the four nuts
-   and washers.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_motor_1.jpg"
-       width="600"
-     />
-   </center>
-1. Remove the wheel from the motor ([see above](#tire-maintenance)).
-1. Remove the failing motor from the suspension beam by removing the four
-   M8 screws.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_motor_4.jpg"
-       width="400"
-     />
-   </center>
-1. Mount the new motor on the suspension beam and tighten the four screws
-   to 20 Nm.
-1. Re-install the wheel onto the motor ([see above](#tire-maintenance)).
-1. Mount the suspension beam on the chassis, install the four washers,
-   and tighten the four nuts to 30 Nm. (Do not overtighten!)
-1. Reconnect both sets of motor power and cables.
-1. Install the cable gland bracket and tighten the five screws to 1 Nm.
+<ComponentMotors />
 
 ### Replacing Batteries
 
