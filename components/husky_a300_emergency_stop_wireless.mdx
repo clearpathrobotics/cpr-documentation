@@ -1,3 +1,5 @@
+import ComponentLightingStates from "./common_lighting_states_estop_reset_operational.mdx"
+
 ### Wireless Emergency Stop
 
 :::note
@@ -37,13 +39,7 @@ To use the Wireless Emergency Stop:
 
 The Husky's _Status Lights_ should now be in an operational state.
 
-<div class="centred-table">
-  | Lighting State                       | Lighting Pattern                                                                         |
-  | :----------------------------------- | :--------------------------------------------------------------------------------------: |
-  | Emergency Stop                       | <img src="/img/robot_images/common_images/lighting_images/stopped.gif" width="100"/>     |
-  | Needs Reset _(after Emergency Stop)_ | <img src="/img/robot_images/common_images/lighting_images/needs_reset.gif" width="100"/> |
-  | Operational _(Driving or Idle)_      | <img src="/img/robot_images/common_images/lighting_images/driving.png" width="100"/>     |
-</div>
+<ComponentLightingStates />
 
 :::info
 
