@@ -16,14 +16,13 @@ mode.
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/ui_main_components_0_13_0.png" />
-    <figcaption>UI Main Components (TODO: new image)</figcaption>
+    <img src="/img/outdoornav_images/ui_main_components-2_0_0.png" />
+    <figcaption>UI Main Components</figcaption>
   </figure>
 </center>
 
 1.  **Menu:** A dropdown menu allowing the user to access the Dashboard
-    (ie. Home), Settings, Status, Scheduler, Help, and File pages. The User
-    can also run the UI Virtual Tour from this menu.
+    (ie. Home), File, Settings, Autonomy, Tools, and Help.
 
 2.  **Feedback Bar:** The feedback bar will display information
     regarding the execution state of the navigation and of any Tasks
@@ -44,8 +43,9 @@ mode.
     pertaining to the current state as well as past messages.
 
 7.  **GPS Status Indicator:** The GPS status indicators will display GPS
-    signal accuracy for position (POS indicator) and heading (DIR
-    indicator). Green indicators represent RTK accuracy and are
+    signal accuracy for position (POS indicator), heading (DIR
+    indicator), and sensor fusion (FUS indicator).
+    Green indicators represent RTK accuracy and are
     currently required for accurate autonomous navigation. Yellow and orange
     indicators represent SBAS and SPP accuracy respectively and noticeable
     oscillations may occur in such cases. Red indicators mean no GPS signal
@@ -61,30 +61,13 @@ mode.
 
     :::
 
-9.  **Wireless Connection Indicator:** The wireless connection indicator
-    represents the signal strength between the wifi access point
-    (typically the Base Station) and the UGV. If the system can support
-    cellular connections a cellular indicator will appear next to the
-    wifi icon with the currently active connection being highlighted in green.
-
-10. **Stack Light:** If a Stack Light is configured for the UGV its current status
-    will show here.
-
-11. **Views List:** A dropdown list of available views, detailed later
+9.  **Views List:** A dropdown list of available views, detailed later
     in this section. Some of the available views are Map, and Camera views etc.
 
-12. **Local Docking/Undocking:** The local docking/undocking buttons used
-    to dock/undock the UGV. The UGV must have it's charging adaptor facing the dock
-    when performing the local dock action.
+10. **Lights Control:** If the UGV is equipped with software controllable lights they can be
+    controlled here.
 
-13. **Lights Control:** If the UGV is equipped with software controllable lights they can be
-    controlled through a simple drop down button as well as relevant hotkeys,
-    depending on the configuration.
-
-14. **Record Audio:** If the UGV is equipped with a microphone the user
-    can start/stop recording manually by clicking this icon.
-
-15. **Mission Execution Buttons:** These buttons allow users to Start, Pause and Stop an
+11. **Mission Execution Buttons:** These buttons allow users to Start, Pause and Stop an
     autonomous mission.
 
 By opening the dropdown list "Views", on the right side of the UI, the
@@ -98,58 +81,34 @@ Operator can access the following views:
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/ui_map_view_0_13_0.png" />
-    <figcaption>Map View (TODO: new image)</figcaption>
+    <img src="/img/outdoornav_images/ui_map_view-2_0_0.png" />
+    <figcaption>Map View</figcaption>
   </figure>
 </center>
 
-1.  **Zoom Buttons:** These buttons allow the user to zoom in/out of the
-    map levels.
+1.  **Zoom-to-Robot Button:** This button will zoom the map to where the UGV
+    is presently located.
 2.  **Zoom-to-Fit Button:** This button will zoom the map to where there
     is activity (ie. where the datum is set or where features have been
     set on the map.)
-3.  **Zoom-to-Robot Button:** This button will zoom the map to where the UGV
-    is presently located.
+3.  **Table Button:** This button opens the Map/Mission table. When in Waypoint Mode it will open the table directly, while in
+    Map mode it will allow users to select the table to open or open a table based on which mode is being editted.
 4.  **Edit Mode Buttons:** This button will allow the user to set the current map edit mode.  
     By clicking the button, a panel opens on the right with the available modes to edit with.
     <center>
       <figure>
-        <video
-          autoplay="true"
-          loop="true"
-        >
-          <source src="/video/outdoornav_videos/editModes.mp4" />
-        </video>
-        <figcaption>Changing Edit Modes (TODO: new image)</figcaption>
+        <img width="150px" src="/img/outdoornav_images/ui_edit_buttons-2_0_0.png" />
+        <figcaption>Edit Modes</figcaption>
       </figure>
     </center>
-5.  **Layers Menu:** This button opens the Layers menu which allows users to show and hide elements on the map.
-    Points of interest in particular can be hidden by tags specifically as well as generally hiding them.
-    <center>
-      <figure>
-        <video
-          autoplay="true"
-          loop="true"
-          width="800"
-        >
-          <source src="/video/outdoornav_videos/ui_layers_show_hide.mp4" />
-        </video>
-        <figcaption>Hiding and Showing Layers (TODO: new image)</figcaption>
-      </figure>
-    </center>{" "}
-6.  **Table Button:** This button opens the Map/Mission table. When in Waypoint Mode it will open the table directly, while in
-    Map mode it will allow users to select the table to open or open a table based on which mode is being editted.
-7.  **Dock:** If a dock is configured for the UGV it will appear on the map in
-    this format. When in Waypoint mode the Docks pre-dock radius will appear as
-    a circle around the dock when in Edit Mission mode.
-8.  **UGV:** The blue arrow represents the UGV. Its location is its
-    position in the world frame and its orientation is the heading in
+5.  **UGV + Dock:** The robot represents the UGV position, with the red arrow pointing forward.
+    Its location is its position in the world frame and its orientation is the heading in
     the world frame.
-9.  **Base Station:** The yellow antenna icon is the last known location of
+6.  **Base Station (not shown):** The yellow antenna icon is the last known location of
     the base station based on the last survey performed. By clicking it the
     user will be presented with the base station's coordinates, when it was
     surveyed, and how many samples were taken during the survey.
-10. **Datum:** The blue Waypoint marker on the map view represents the
+7.  **Datum (not shown):** The blue Waypoint marker on the map view represents the
     location of the reference point (ie. (x,y)=(0,0)) of the world
     coordinate system. The world (ie. map) coordinate system is in the
     ENU convention.
@@ -270,80 +229,51 @@ home position.
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/ui_front_camera-0_8_0.png" />
-    <figcaption>Front View (TODO: new image)</figcaption>
+    <img src="/img/outdoornav_images/ui_front_camera_view_2_0_0.png" />
+    <figcaption>Front View</figcaption>
   </figure>
 </center>
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/ui_rear_camera-0_8_0.png" />
-    <figcaption>Back View (TODO: new image)</figcaption>
+    <img src="/img/outdoornav_images/ui_rear_camera_view_2_0_0.png" />
+    <figcaption>Back View</figcaption>
   </figure>
 </center>
 
-## System Configuration
+## Settings {#config-general-settings}
 
-### General Settings {#config-general-settings}
-
-The General settings section can be found accessing the **Menu** &srarr; **Settings** &srarr; **General** and allows the user to modify
-some general settings, both for the UI and the UGV.
+The settings section can be found accessing **Menu** &srarr; **SETTINGS** and allows the user to modify
+some settings, both for the UI and the UGV.
 
 <center>
   <figure>
-    <img src="/img/outdoornav_images/ui_general_settings_0_13_0.png" />
-    <figcaption>General Settings Page (TODO: new image)</figcaption>
+    <img src="/img/outdoornav_images/ui_settings_2_0_0.png" />
+    <figcaption>Settings Page</figcaption>
   </figure>
 </center>
 
-#### Coordinates
+### Teleop Settings
+
+#### Maximum Linear Speed
+
+The maximum linear speed (forwards/backwards) at which the robot will
+be allowed to operate.
+
+#### Maximum Angular Speed
+
+The maximum speed at which the robot will be allowed to turn.
+
+### Map Settings
+
+#### Coordinate Display Format
 
 The Operator can change the coordinate space from X/Y relative to the Datum to Latitude/Longitude.
 
-#### Save Image Location
+#### Map Tile Source
 
-The Operator can choose to store images saved manually to the robot directly or to download them onto their computer. This
-feature only affects the manual save image option found on each relevant camera view.
-
-#### Robot Internet Connection Type
-
-If the UGV is equipped with SIM card and can switch between Cellular and WiFi connections, the Operator can manually trigger this
-change through the general settings page. This switchover will take approximately 30 seconds and will require a refresh on the UI.
-
-#### Low Power Mode
-
-If the UGV is equipped with a Low Power Module this toggle allows the user to switch the UGV into a low power state that will drastically
-limit functionality but help conserve power. This mode is best used to help better facilitate charging while the UGV is not in use.
-
-#### Joystick Max Speeds
-
-The Operator can choose to set the Maximum Linear Speed and the Maximum Angular Speed that the teleoperation will use. These are limited to the
-maximum speeds of the UGV itself.
-
-### Aerial Overlay Settings
-
-<center>
-  <figure>
-    <img src="/img/outdoornav_images/ui_map_settings.png" />
-    <figcaption>Aerial Overlay settings (TODO: new image)</figcaption>
-  </figure>
-</center>
-
-To access the Aerial Overlay Settings: **Menu** → **Settings** → **Aerial Overlay**:
-
-1.  **Offset:** The map tiles used in this software are not
-    perfectly aligned with the real world. Therefore, the user may need
-    to apply an offset to the map so that the UGV's position in the
-    real world matches its position on the map.
-2.  **Change Datum:** The datum is represented by a blue marker on the
-    map and should be set to a location within 10km of the test site.
-    The user can change this value in the Map Settings page. Enter the
-    new values and click the "Set Datum" button.
-3.  **Survey Base Station:** This button starts the survey process, which takes about 5
-    minutes to complete. Updated RTK corrections are sent to the position GNSS unit once
-    the surveying has completed.
-
-#### Map Source Configuration
+Select between [OpenStreetMap](https://www.openstreetmap.org/),
+[MapBox](https://www.mapbox.com/), and Custom map tiles.
 
 The Web UI ships with access to free
 [OpenStreetMap](https://www.openstreetmap.org/) maps. Aerial view
@@ -356,44 +286,21 @@ almost all cases.
 
 ##### Using OpenStreetMap Maps
 
-As no key is required to use
-[OpenStreetMap](https://www.openstreetmap.org/) maps, the process to
-select these maps in the Web UI is simple.
-
-1.  In the Web UI, from the menu, select **Settings→Map** to bring up
-    the **Map Settings** page.
-2.  Select **OpenStreetMap**
-3.  Click **Ok**.
-
-<center>
-  <figure>
-    <img src="/img/outdoornav_images/map_settings_osm_0_13_0.png" />
-    <figcaption>Using Map Settings to select OpenStreetMap</figcaption>
-  </figure>
-</center>
+No key is required to use
+[OpenStreetMap](https://www.openstreetmap.org/) maps.
 
 ##### Using MapBox Maps
 
 Using [MapBox](https://www.mapbox.com/) maps requires a key, which can
-then be used by the Web UI. The steps to set up MapBox are outlined
-below.
+then be used by the Web UI.
 
 1.  Acquire a MapBox key from the [MapBox
     website](https://account.mapbox.com/auth/signup/). Review the
     license terms and select the appropriate plan. In most cases, the
     free tier will be sufficient.
-2.  Back in the Web UI, from the menu, select **Settings→Map** to bring
-    up the **Map Settings** page.
-3.  Select **MapBox**.
-4.  Copy the MapBox key from Step 1 into the **Map Key** field.
-5.  Click **Ok**.
-
-<center>
-  <figure>
-    <img src="/img/outdoornav_images/map_settings_mapbox_0_13_0.png" />
-    <figcaption>Using Map Settings to select MapBox</figcaption>
-  </figure>
-</center>
+2.  Back in the Web UI, select **MapBox**.
+4.  Copy the MapBox key from Step 1 into the input box.
+5.  Click **Save All Settings**.
 
 ##### Using Custom Maps {#using_custom_maps}
 
@@ -408,23 +315,14 @@ by using the steps below.
 2.  Ensure that the directory structure for the individual tiles is well
     defined. See the section below for details on
     [Preparing Custom Map Tiles from Drone Aerial Images](#preparing_custom_map_tiles).
-3.  In the Web UI, from the menu, select **Settings→Map** to bring up
-    the **Map Settings** page.
-4.  Select **Custom**.
+3.  In the Web UI, select **Custom**.
 5.  Enter the network path for the maps into the **Custom URL** field.
     If hosting the maps on your local computer, this will be similar to
     http://localhost:8000/{z}/{x}/{-y}.png. Note how the
     URL is parameterized with `{z}`, `{x}`, and `{-y}` values. This will
     need to be adapted to match the directory structure of your map tile
     images.
-6.  Click **Ok**.
-
-<center>
-  <figure>
-    <img src="/img/outdoornav_images/map_settings_custom_0_13_0.png" />
-    <figcaption>Using Map Settings to select Custom maps</figcaption>
-  </figure>
-</center>
+6.  Click **Save All Settings**.
 
 ##### Preparing Custom Map Tiles from Drone Aerial Images {#preparing_custom_map_tiles}
 
@@ -474,6 +372,17 @@ below.
 Once your map tiles are available on the network, you can follow the
 steps in [Using Custom Maps](#using_custom_maps) to have the
 Web UI use your custom tiles.
+
+#### Datum Latitude, Datum Longitude
+
+The datum is represented by a blue marker on the
+map and should be set to a location within 10km of the test site.
+The user can change this value. Enter the
+new values and click the "Set Datum Position" button.
+
+### Advanced Settings
+
+Only adjust these settings if advised to by [Support](../support).
 
 ## Autonomy Features
 
