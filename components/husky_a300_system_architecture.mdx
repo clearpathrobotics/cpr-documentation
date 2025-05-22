@@ -1,22 +1,181 @@
+import Mermaid from '@theme/Mermaid';
+
 ### System Architecture
 
-Husky is built around a computer running Ubuntu—_(Intel-based computer)_—paired with a 32-bit microcontroller unit, _(MCU)_.
+:::info Architecture's Diagram
 
-[//]: <> (TODO, add diagram)
+<center>
+  <Mermaid
+    value={`
+      %%{
+        init: {
+          'theme': 'base',
+          'themeVariables': {
+            'primaryColor': '#CC7070',
+            'primaryTextColor': '#fff',
+            'primaryBorderColor': '#BB0000',
+            'lineColor': '#808080',
+            'secondaryColor': '#808080',
+            'secondaryTextColor': '#000000',
+            'tertiaryColor': '#fff'
+          }
+        }
+      }%%
 
-The MCU handles low level hardware functions such as power supply control, light control, fan control, screen control, and hardware monitoring.
-The computer and MCU communicate with Ethernet.
+      flowchart LR
+        A(["Computer"]) <-- Ethernet --> B(["MCU"])
+        B <-- I2C --> C(["Lights"]) 
+        B <-- I2C --> D(["Fans"])
+        B <-- SPI --> E(["Display"])
+        B <-- ADC --> F(["Hardware Monitoring"])
+        B <-- CAN a --> G1(["BLDC 1"]) --- G2(["BLDC 2"]) --- G3(["BLDC 3"]) --- G4(["BLDC 4"])
+        B <-- CAN b --> H1(["Battery 1"]) --- Hn(["Battery n"])
+        I(["IMU"]) <-- USB --> A
+        J(["Lidar or Camera"]) <-- Ethernet --> A
+    `}
+  />
+</center>
 
-[//]: <> (TODO, add diagram)
+:::
 
-The motor controllers and batteries connect to the MCU through indiviual CANbuses.
-The MCU's firmware then passes this through to the computer over Ethernet.
-The computer is configured with SocketCAN to interface with these networks.
+<br/>
 
-[//]: <> (TODO, add diagram)
+<details>
+  <summary>Click to see the detailed explanation:</summary>
 
-The computer then connects to other devices through Ethernet and USB.
-Most Huskies include an IMU connected to the primary computer with USB.
-Husky AMP connects lidar and camera through these interfaces.
+  Husky is built around a computer running Ubuntu—_(Intel-based computer)_—paired with a 32-bit microcontroller unit, _(MCU)_.
 
-[//]: <> (TODO, add diagram)
+  <center>
+    <Mermaid
+      value={`
+        %%{
+          init: {
+            'theme': 'base',
+            'themeVariables': {
+              'primaryColor': '#CC7070',
+              'primaryTextColor': '#fff',
+              'primaryBorderColor': '#BB0000',
+              'lineColor': '#808080',
+              'secondaryColor': '#808080',
+              'secondaryTextColor': '#000000',
+              'tertiaryColor': '#fff'
+            }
+          }
+        }%%
+
+        flowchart LR
+          A(["Computer"]) <--> B(["MCU"])
+      `}
+    />
+  </center>
+
+  <br/>
+  <br/>
+
+  The MCU handles low level hardware functions such as power supply control, light control, fan control, display control, and hardware monitoring.
+  The computer and MCU communicate with Ethernet.
+
+  <center>
+    <Mermaid
+      value={`
+        %%{
+          init: {
+            'theme': 'base',
+            'themeVariables': {
+              'primaryColor': '#CC7070',
+              'primaryTextColor': '#fff',
+              'primaryBorderColor': '#BB0000',
+              'lineColor': '#808080',
+              'secondaryColor': '#808080',
+              'secondaryTextColor': '#000000',
+              'tertiaryColor': '#fff'
+            }
+          }
+        }%%
+
+        flowchart LR
+          A(["Computer"]) <--> B(["MCU"])
+          B <--> C(["Lights"])
+          B <--> D(["Fans"])
+          B <--> E(["Display"])
+          B <--> F(["Hardware Monitoring"])
+      `}
+    />
+  </center>
+  
+  <br/>
+  <br/>
+
+  The motor controllers and batteries connect to the MCU through indiviual CANbuses.
+  The MCU's firmware then passes this to the computer over Ethernet.
+  The computer is configured with SocketCAN to interface with these networks.
+
+  <center>
+    <Mermaid
+      value={`
+        %%{
+          init: {
+            'theme': 'base',
+            'themeVariables': {
+              'primaryColor': '#CC7070',
+              'primaryTextColor': '#fff',
+              'primaryBorderColor': '#BB0000',
+              'lineColor': '#808080',
+              'secondaryColor': '#808080',
+              'secondaryTextColor': '#000000',
+              'tertiaryColor': '#fff'
+            }
+          }
+        }%%
+
+        flowchart LR
+          A(["Computer"]) <--> B(["MCU"])
+          B <--> C(["Lights"])
+          B <--> D(["Fans"])
+          B <--> E(["Display"])
+          B <--> F(["Hardware Monitoring"])
+          B <--> G1(["BLDC 1"]) --- G2(["BLDC 2"]) --- G3(["BLDC 3"]) --- G4(["BLDC 4"])
+          B <--> H1(["Battery 1"]) --- Hn(["Battery n"])
+      `}
+    />
+  </center>
+
+  <br/>
+  <br/>
+
+  The computer then connects to other devices through Ethernet and USB.
+  Most Huskies include an IMU connected to the primary computer with USB.
+  Husky AMP connects lidar and camera through these interfaces.
+
+  <center>
+    <Mermaid
+      value={`
+        %%{
+          init: {
+            'theme': 'base',
+            'themeVariables': {
+              'primaryColor': '#CC7070',
+              'primaryTextColor': '#fff',
+              'primaryBorderColor': '#BB0000',
+              'lineColor': '#808080',
+              'secondaryColor': '#808080',
+              'secondaryTextColor': '#000000',
+              'tertiaryColor': '#fff'
+            }
+          }
+        }%%
+
+        flowchart LR
+        A(["Computer"]) <--> B(["MCU"])
+        B <--> C(["Lights"])
+        B <--> D(["Fans"])
+        B <--> E(["Display"])
+        B <--> F(["Hardware Monitoring"])
+        B <--> G1(["BLDC 1"]) --- G2(["BLDC 2"]) --- G3(["BLDC 3"]) --- G4(["BLDC 4"])
+        B <--> H1(["Battery 1"]) --- Hn(["Battery n"])
+        I(["IMU"]) <--> A
+        J(["Lidar or Camera"]) <--> A
+      `}
+    />
+  </center>
+</details>
