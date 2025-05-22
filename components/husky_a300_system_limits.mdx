@@ -1,49 +1,75 @@
 ### Important System Limits
 
 #### Thermal Limits
+
 Husky A300 is equipped with temperature sensors throughout the robot, which are used to monitor temperatures and determine fan speeds for proper cooling.
 System throttling may occur if the robot is approaching its critical thermal limits.
 Monitoring these fields over longer periods of operation will allow you to ensure that you are not putting excessive wear on Husky's motors and other components.
 
-| Sensor                             | ROS Topic<sup>1</sup>                         | Message Field                    | Lower Critical Limit, _(°C)_ | Upper Critical Limit, _(°C)_ | Notes                         |
-| :--------------------------------- | :-------------------------------------------- | :------------------------------- | :--------------------------- | :--------------------------- | :---------------------------- |
-| Motor [1-4] Temperature            | `/a300_00000/platform/motors/status`          | `drivers[0-3].motor_temperature` | -10                          | 100                          | Does not affect fan speed     |
-| Motor Driver [1-4] MCU Temperature | `/a300_00000/platform/motors/status`          | `drivers[0-3].mcu_temperature`   | -20                          | 80                           |                               |
-| Motor Driver [1-4] PCB Temperature | `/a300_00000/platform/motors/status`          | `drivers[0-3].pcb_temperature`   | -20                          | 80                           |                               |
-| Battery [1-6] Temperature          | `/a300_00000/bms/battery_state_[1-6]`         | `temperature`                    | -20                          | 60                           | Charging must occur above 0°C |
-| MCU Temperature                    | `/a300_00000/platform/mcu/status/temperature` | `temperatures[CC01_MCU]`         | -20                          | 80                           |                               |
-| Fan Controller Temperature         | `/a300_00000/platform/mcu/status/temperature` | `temperatures[CC01_FAN[1-4]]`    | -20                          | 80                           |                               |
-| 5V Inductor Temperature            | `/a300_00000/platform/mcu/status/temperature` | `temperatures[5V_INDUCTOR]`      | -20                          | 80                           |                               |
-| Main Ground Lug Temperature        | `/a300_00000/platform/mcu/status/temperature` | `temperatures[MAIN_GND_LUG]`     | -20                          | 80                           |                               |
-| 24V DC/DC Temperature              | `/a300_00000/platform/mcu/status/temperature` | `temperatures[24V_DCDC]`         | -20                          | 80                           |                               |
-| 12V DC/DC Temperature              | `/a300_00000/platform/mcu/status/temperature` | `temperatures[12V_DCDC]`         | -20                          | 80                           |                               |
+<div class="centred-table">
+  | Sensor                             | ROS Topic<sup>1</sup>                         | Message Field                    | Lower Critical Limit, _(°C)_ | Upper Critical Limit, _(°C)_ | Notes                         |
+  | :--------------------------------- | :-------------------------------------------- | :------------------------------- | :--------------------------- | :--------------------------- | :---------------------------- |
+  | Motor [1-4] Temperature            | `/a300_00000/platform/motors/status`          | `drivers[0-3].motor_temperature` | -10                          | 100                          | Does not affect fan speed     |
+  | Motor Driver [1-4] MCU Temperature | `/a300_00000/platform/motors/status`          | `drivers[0-3].mcu_temperature`   | -20                          | 80                           |                               |
+  | Motor Driver [1-4] PCB Temperature | `/a300_00000/platform/motors/status`          | `drivers[0-3].pcb_temperature`   | -20                          | 80                           |                               |
+  | Battery [1-6] Temperature          | `/a300_00000/bms/battery_state_[1-6]`         | `temperature`                    | -20                          | 60                           | Charging must occur above 0°C |
+  | MCU Temperature                    | `/a300_00000/platform/mcu/status/temperature` | `temperatures[CC01_MCU]`         | -20                          | 80                           |                               |
+  | Fan Controller Temperature         | `/a300_00000/platform/mcu/status/temperature` | `temperatures[CC01_FAN[1-4]]`    | -20                          | 80                           |                               |
+  | 5V Inductor Temperature            | `/a300_00000/platform/mcu/status/temperature` | `temperatures[5V_INDUCTOR]`      | -20                          | 80                           |                               |
+  | Main Ground Lug Temperature        | `/a300_00000/platform/mcu/status/temperature` | `temperatures[MAIN_GND_LUG]`     | -20                          | 80                           |                               |
+  | 24V DC/DC Temperature              | `/a300_00000/platform/mcu/status/temperature` | `temperatures[24V_DCDC]`         | -20                          | 80                           |                               |
+  | 12V DC/DC Temperature              | `/a300_00000/platform/mcu/status/temperature` | `temperatures[12V_DCDC]`         | -20                          | 80                           |                               |
+</div>
 
 :::note Thermal Limits Footnotes
 
 <sup>1</sup> Adjust the `/a300_00000` field with the serial number of your robot.
+You can find the serial number under the _Front Panel_, on the _Nameplate_.
 
 :::
 
 
-##### Current Limits
+#### Current Limits
 
-The maximum current draw of the system is limited by the output of the batteries.
-The maximum continuous output for the 40 Ah, 80 Ah, and 120 Ah battery configurations is 60 A, 120 A, and 150 A, respectively.
-Husky's main circuit breaker is set for 100 A.
-Higher outputs are possible for short periods of time.
+<table class="centred-table">
+  <tr>
+    <td>&nbsp;</td>
+    <td><b>Husky AMP,<br/>40 Ah</b></td>
+    <td><b>Husky AMP,<br/>80 Ah</b></td>
+    <td><b>Husky AMP,<br/>120 Ah</b></td>
+  </tr>
+  <tr>
+    <td>Battery Continuous Current Output</td>
+    <td><center>60 A</center></td>
+    <td><center>120 A</center></td>
+    <td><center>150 A</center></td>
+  </tr>
+  <tr>
+    <td>Circuit Breaker Value</td>
+    <td colspan="3"><center>100 A</center></td>
+  </tr>
+  <tr>
+    <td>Motor Continuous Output<sup>1</sup></td>
+    <td colspan="3"><center>17 A <em>(Per Motor)</em></center></td>
+  </tr>
+</table>
 
-Husky A300's motors are rated to draw 17 A continuous, but they will spike to several times higher than this, particularly when traversing rough terrain and when turning on the spot.
+:::note Current Limits Footnotes
+
+<sup>1</sup> &ensp; Husky A300's motors are rated to draw 17 A continuous, but they will spike to several times higher than this, particularly when traversing rough terrain and when turning on the spot.
 To reduce current draw, consider commanding wider-radius turns from your control software.
 
+:::
 
-##### Stability Limits
+
+#### Stability Limits
 
 :::safety-warning
 
-Always ensure that the centre of mass of the system will not result in tipping hazards in the target environment.
+Ensure that the robot's centre of mass will not result in tipping hazards due to driving on hills.
 
-The end user needs to perform calculations to confirm that the combined centre of mass of the system—_(robot + payload)_—will not result in tipping hazards in the target environment—_(based on slopes, terrains, payload shifting)_.
-To ensure safe operation in the target environment, suitable safety margin should be applied to the minimum limits outlined below.
+Your commissioning team needs to perform calculations to confirm the robot's centre of mass will remain within the robot's footprint across its operating terrain.
+You calculations should include a safety margin.
 
 Refer to the [System Specifications](#system-specifications) for the safe operating limits when there is no payload on the Husky.
 
@@ -54,13 +80,11 @@ Refer to the [System Specifications](#system-specifications) for the safe operat
 :::safety-warning
 
 Always account for variations in the target environment when determining safe operating conditions.
-Rain, snow, or ice in the operating environment may changes to the safe operating limits.
+Rain, snow, or ice in the operating environment may change the safe operating limits.
 
 :::
 
 <br/>
-
-The image below shows the centre of mass for a robot with two batteries.
 
 <center>
   <figure>
@@ -68,13 +92,13 @@ The image below shows the centre of mass for a robot with two batteries.
       src="/img/robot_images/husky_a300_images/husky_a300_centre_of_mass_2battery.png"
       width="800"
     />
-    <figcaption>Husky A300 Centre of Mass In mm For A 40 Ah Battery Husky</figcaption>
+    <figcaption>Husky A300 Centre of Mass For A 40 Ah Battery Husky,<br/>_(Dimensions in mm)_</figcaption>
   </figure>
 </center>
 
 The image below provides an example stability cone for Husky A300.
-It shows the location in which the centre of mass of a 100 kg payload must reside to avoid tipping while being able to operate at inclines up to 30 degrees, side slopes up to 30 degrees, and accelerations/decelerations up to 4 m/s².
-A safety factor should be applied so that the centre of mass is well inside the defined stability cone, especially when operating: on uneven surfaces, on large inclines or side slopes, in varying friction environments (ice, sand, etc), with low tire pressure and high tire deflection, and worn treads.
+It shows the location in which the centre of mass of a 100 kg payload must reside to avoid tipping while being able to operate at inclines up to ±30°, side slopes up to ±30°, and accelerationsup to ±4 m/s².
+A safety factor should be applied so that the centre of mass is well inside the defined stability cone, especially when operating on uneven surfaces, on large inclines or side slopes, in varying friction environments , with low tire pressure, and worn treads.
 
 <center>
   <figure>
@@ -82,18 +106,20 @@ A safety factor should be applied so that the centre of mass is well inside the 
       src="/img/robot_images/husky_a300_images/husky_a300_stability_cone_2battery.png"
       width="600"
     />
-    <figcaption>Example Husky A300 Stability Cone (2-battery configuration), specifications in mm</figcaption>
+    <figcaption>Example Stability Cone For Where 100 kg Of Payload Should Be Mounted On A 40 Ah Husky A300,<br/>_(Dimensions in mm)_</figcaption>
   </figure>
 </center>
 
 :::note
 
-The images below show the centre of mass and stabililty cone for a 40 Ah battery configuration.
 Appropriate adjustments should be made for 80 Ah and 120 Ah configurations.
 
 :::
 
-##### Emergency Stop Braking Limits
+[//]: <> (TODO, provide the CofG locations for all the Ah configurations, so people can perform their calculations)
+
+
+#### Emergency Stop Braking Limits
 
 When Husky A300 has its Emergency Stop engaged, an electrical—_(resistive)_—brake is applied to reduce the speed of the robot.
 The payload mass and the incline on which the robot is operating will affect the terminal speed of the robot when the Emergency Stop is engaged.
@@ -110,22 +136,37 @@ It is the responsibility of the user to ensure that no hazards are present in th
 
 <br />
 
-| Payload Mass | Incline  | Terminal Speed     |
-| :----------- | :------- | :------------------|
-| 0 kg         | 0°       | 0 m/s              |
-| 100 kg       | 0°       | 0 m/s              |
-| 0 kg         | 15°      | 0.5 m/s or less    |
-| 100 kg       | 15°      | 1.25 m/s or less   |
+<div class="centred-table">
+  | Payload Mass | Incline  | Terminal Speed<sup>1</sup> |
+  | :----------- | :------- | :------------------------- |
+  | 0 kg         | 0°       | 0 m/s                      |
+  | 100 kg       | 0°       | 0 m/s                      |
+  | 0 kg         | 15°      | 0.5 m/s or less            |
+  | 100 kg       | 15°      | 1.25 m/s or less           |
+</div>
 
-##### Stopping Distances
+:::note Emergency Stop Braking Limits Footnotes
+
+The expected steady state rolling speed after pressing an Emergency Stop button.
+The resistive shunt brake increates in braking force linearly with the motor's speed.
+
+:::
+
+:::info
+
+Appropriate adjustments should be made for 80 Ah and 120 Ah configurations.
+
+:::
+
+
+#### Stopping Distances
 
 :::safety-warning
 
-Always confirm stopping distances in the target environment.
+Always confirm stopping distances in your operating environment.
 
-The performance values outlined below can be affected by various environmental factors—_(terrain type, wet/icy surfaces, gravel or other loose material)_—and should be treated as a reference only.
-Exact limits should be determined by the user in the target operating environment.
-It is the responsibility of the user to ensure that no hazards are present in the target operating environment.
+The performance values outlined below can be affected by various environmental factors—_(terrain type, wet or icy surfaces, gravel or other loose material)_—and should be treated as a reference only.
+Your commissioning team should test to determine the limits in your operating environment.
 
 :::
 
@@ -133,14 +174,16 @@ It is the responsibility of the user to ensure that no hazards are present in th
 
 :::note
 
-The report stopping distances are based on the default deceleration settings.
+The reported stopping distances are based on the default deceleration settings.
 This setting is configurable—_(see [ROS Parameters](/docs/ros/config/yaml/platform/extras)for details)_.
 
 :::
 
-| Payload Mass | Incline  | Surface Type  | Stopping Distance  | 
-| :----------- | :------- | :------------ | :------------------|
-| 0 kg         | 0°       | High friction | 0.5 m              |
-| 100 kg       | 0°       | High friction | 0.7 m              |
-| 0 kg         | 15°      | High friction | 0.5 m              |
-| 100 kg       | 15°      | High friction | 1.0 m              |
+<div class="centred-table">
+  | Payload Mass | Incline  | Surface Type  | Stopping Distance  | 
+  | :----------- | :------- | :------------ | :------------------|
+  | 0 kg         | 0°       | High friction | 0.5 m              |
+  | 100 kg       | 0°       | High friction | 0.7 m              |
+  | 0 kg         | 15°      | High friction | 0.5 m              |
+  | 100 kg       | 15°      | High friction | 1.0 m              |
+</div>
