@@ -1,0 +1,22 @@
+### System Architecture
+
+Husky is built around a computer running Ubuntu—_(Intel-based computer)_—paired with a 32-bit microcontroller unit, _(MCU)_.
+
+[//]: <> (TODO, add diagram)
+
+The MCU handles low level hardware functions such as power supply control, light control, fan control, screen control, and hardware monitoring.
+The computer and MCU communicate with Ethernet.
+
+[//]: <> (TODO, add diagram)
+
+The motor controllers and batteries connect to the MCU through indiviual CANbuses.
+The MCU's firmware then passes this through to the computer over Ethernet.
+The computer is configured with SocketCAN to interface with these networks.
+
+[//]: <> (TODO, add diagram)
+
+The computer then connects to other devices through Ethernet and USB.
+Most Huskies include an IMU connected to the primary computer with USB.
+Husky AMP connects lidar and camera through these interfaces.
+
+[//]: <> (TODO, add diagram)
