@@ -15,7 +15,7 @@ function HomepageHeader() {
           src="/img/website_images/logo_rockwell_pipe_clearpath_white.png"
           width={500}
         ></img>
-        <p className={styles.titleText}>Documentation and Tutorials for Robotics Development</p>
+        <p className={styles.titleText}>Mikes Awesome Edit!</p>
       </div>
     </header>
   );
