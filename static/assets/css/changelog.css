@@ -1,3 +1,16 @@
+/**
+ * CSS Overrides to disable automatic header numbering
+ *
+ * Include in .mdx page and wrap section to be un-numbered in
+ *   <div class="changelog">
+ *   ## 1.2.3
+ *   ...
+ *   ### New Features
+ *   ...
+ *   ### Fixes
+ *   ...
+ *   </div>
+ **/
 .changelog h2::before {
   content: none;
   counter-increment: none;
