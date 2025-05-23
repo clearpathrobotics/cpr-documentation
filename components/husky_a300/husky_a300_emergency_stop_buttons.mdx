@@ -1,0 +1,51 @@
+import Admonition from "@theme/Admonition";
+
+### Emergency Stop Buttons
+
+[//]: <> (TODO, image of the Husky's front and rear Emergency Stop Buttons)
+
+:::safety-warning
+
+Ensure the 2 Emergency Stop buttons are accessible at all times.
+Do not mount custom payloads that extend over the front or rear of Husky, that occlude the Emergency Stop buttons.
+
+:::
+
+<br/>
+
+The Emergency Stop buttons remove battery power from Husky's motors.
+Power is removed through 2 normally-open relay-contactors.
+Both relay-contactors open when an Emergency Stop button is pressed.
+The 2 relays are connected in series, so if one welds closed due to a failure, there is a backup relay to disconnect the motors.
+The relays's physical states are monitored with Husky's Common Core microcontroller, and should flag a maintenance issue if either relay is damaged. 
+
+<Admonition type="danger" title=" ">
+  Husky's microcontroller is does not meet any performance level per ISO 13849-1.
+  Husky's microcontroller can be replaced with a PLC to achieve a known performance level for fault monitoring.
+  [Contact our Support Team](#support) if you have questions about this.
+</Admonition>
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_emergency_stop_circuit.png"
+      width="500"
+    />
+    <figcaption>Simplified Circuit, Showing 2 Relays Disconnecting Power From Husky's 4 Motors</figcaption>
+  </figure>
+</center>
+
+When in the Emergency Stop state, the status lights will flash red, and Husky will not drive.
+The commands received during Emergency Stop mode are not buffered; Husky will always act on the latest commands received.
+This means that if the commands are stopped before the stop is released, the Husky will not move.
+If the commands are continued, Husky will move at the speed commanded once the stop is released and motion is re-enabled.
+
+This Emergency Stop function can be asserted by pressing any of the Husky's red stop buttons.
+
+:::note
+
+This Emergency Stop system is intended for use in emergency situations only.
+The Emergency Stop system should not be used as the means of controlling robot motion during regular operation.
+Frequent use increases the probability of damaging a component of the Husky's safety system.
+
+:::

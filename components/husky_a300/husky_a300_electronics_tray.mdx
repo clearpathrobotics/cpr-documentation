@@ -1,0 +1,169 @@
+### Electronics Tray
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_electronics_tray_1.png"
+      width="600"
+    />
+    <figcaption>Top Plate Removed, With The Husky's Front Surface On The Right Side Of The Image</figcaption>
+  </figure>
+</center>
+
+Once you have opened Husky's top, the first thing you see is the _Electronics Tray_.
+This tray includes the:
+
+* Husky's _System Interface Assembly_ circuit board
+* Primary computer
+* IMU
+* Optional secondary computer or graphics card, _(not shown in the image)_
+* Optional USB hub, _(not shown in the image)_
+
+You may want to access remove the _Electonics Tray_ to access the integration bay under the tray,
+  or to maintain Husky's _Batteries_ and _Power Distribution_ components. 
+
+#### Hinging The Electronics Tray
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_electronics_tray_2.png"
+      width="600"
+    />
+    <figcaption>Tray Hinged, And Then Held With A Prop Rod</figcaption>
+  </figure>
+</center>
+
+<details>
+  <summary>To hinge the tray:</summary>
+
+  1.  Shut off the _Circuit Breaker_
+  2.  Remove the _Top Plate_ or _Enclosure_ from the Husky
+  3.  Disconnect the motor cables, _(2 per motor, so 8 cables total)_
+  4.  Disconnect the computer's Ethernet cable from the network switch 
+  5.  Disconnect the large orange connector near the rear-right of the robot.
+      This connector provides main power, and mobility power to the _Electronics Tray_.
+  6.  Remove the tray's 2 front screws
+  7.  Loosen the tray's 2 rear screws, _(these will become the tray's hinge pin)_
+  8.  Lift the front of the tray
+
+  :::note
+
+  When reinstalling the tray:
+
+  * Torque the tray's 4 screws to 3 N·m.
+
+  :::
+
+</details>
+
+:::danger Exposed +V Batteries
+
+Lifting the tray will expose Husky's batteries.
+The batteries's exposed +V terminals are always live, even when Husky's circuit breaker is in the Off position.
+The batteries are fused, but can still produce an electric arc if shorted to ground.
+
+Wear protective equipment to guard your skin and eyes.
+
+Keep the workspace clean, without any combustable materials nearby.
+
+Review your workplace's safety procedures related to fires of LiFePO<sub>4</sub> batteries.
+
+:::
+
+#### Removing The Electronics Tray
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_electronics_tray_3.png"
+      width="600"
+    />
+    <figcaption>Tray Removed, But Still Tethered By The USB And HDMI Cables</figcaption>
+  </figure>
+</center>
+
+<details>
+  <summary>To remove the tray:</summary>
+
+  1.  Return the tray to the level position, _(not hinged)_
+  2.  Take pictures of all the cables and connections to the _System Interface Assembly_.
+      The cables have labels with names that match the PCBA's silkscreen, but pictures will help you reinstall these cables later.
+  3.  <details>
+        <summary>Disconnect all the cables, _(listed from the left side of the robot, towards the right)_:</summary>
+        1.  _(Any cables from your custom integration)_
+        2.  Front Ethernet cable to the newtwork switch, _(which should have been removed in the previous step)_
+        3.  2X Wi-Fi, _(plastic bracket's W1 and W2)_
+        4.  Current Sensor, _(BATTERY I)_
+        5.  HMI Display, _(USER INTERFACE)_
+        6.  Battery CANbus, _(CAN_BAT)_
+        7.  2X Status Lights, _(STATUS 1, STATUS 2)_
+        8.  2X Large VBAT Contactors, _(UP CTCR1, UP CTCR2)_
+        9.  2X Shunt Brake Contactors, _(AUX/SB CTCR1, AUX/SB CTCR2)_
+        10. 2X Mobility Contactors, _(M CTCR1, M CTCR2)_
+        11. 4X Fans, _(FAN 1, FAN 2, FAN 3, FAN 4)_
+        12. Optional, Wireless Emergency Stop Cable, _(W ES)_
+        13. Wireless Emergency Stop Disable Keyswitch, _(W ES BYP)_
+        14. 2X Emergency Stop Buttons, _(ES1, ES2)_
+        15. Limit Switch, _(CHRG INTL)_
+        16. Network Switch Power, _(SYS4)_
+        17. Main Ground, _(GND)_
+        18. Low Battery Shutdown, _(CB KILL)_
+        19. Main Contactor, _(MAIN CTCR)_
+        20. System Standby Power, _(VSTBY)_
+        21. Tray Bond, _(Tray's threaded stud, without identification)_
+        22. Leave the USB cable connected
+        23. Leave the HDMI cable connected
+        24. Large orange connector _(V MOT and V SYS, which should have been removed in the previous step)_
+      </details>
+
+  4.  Remove the tray's 2 rear screws
+  5.  Lift the tray out of the Husky.
+      Note that the tray is still tethered to the Husky with a USB cable and a HDMI cable.
+      Rotate the tray, and set it behind the Husky.
+  6.  Disconnect the USB and HDMI cables from the Husky's Debug HMI area.
+
+  <center>
+    <figure>
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_electronics_tray_4.jpg"
+        width="600"
+      />
+      <figcaption>USB And HDMI Cables Connected Near The Red Manual Charge Connector</figcaption>
+    </figure>
+  </center>
+
+  <br/>
+
+  <center>
+    <figure>
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_electronics_tray_5.png"
+        width="600"
+      />
+    </figure>
+  </center>
+
+  <br/>
+
+  <center>
+    <figure>
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_electronics_tray_6.png"
+        width="600"
+      />
+      <figcaption>Tray Removed</figcaption>
+    </figure>
+  </center>
+
+  :::note
+
+  When reinstalling the tray:
+
+  * Torque the tray's 4 screws to 3 N·m.
+  * Torque the Main Ground cable's screw to 2.2 N·m.
+  * Torque the Tray Bond cable's nut to 3 N·m.
+
+  :::
+
+</details>
