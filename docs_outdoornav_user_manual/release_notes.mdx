@@ -29,7 +29,7 @@ toc_max_heading_level: 4
 - Added in the ability to connect a PS4 controller to the UI directly.
 - Improved the PTZ Controls, allowing users to move via a draggable interface, 
   box selection or double clicking.
-- [System Watchdogs](./features/watchdogs.mdx) can now be added to the UGV to 
+- System Watchdogs can now be added to the UGV to 
   allow for safeguards to be put in place depending on the needs of the user.
 
 ### API Changes
@@ -50,10 +50,10 @@ toc_max_heading_level: 4
 
 ### New Features
 
-- [Points of Interest](./features/points_of_interest.mdx) can now be added either
+- Points of Interest can now be added either
   through the UI or through the API to specify locations/objects of interest that
   are persistent.
-- [Execution logs](./features/execution_logger.mdx) are now recorded and stored on the UGV.
+- Execution Logs are now recorded and stored on the UGV.
   These logs record all mission data, images, video/audio recordings as well as telemetry
   and GPS data. Details of the logs can be viewed through the UI or you can access the file browser.
 - Reformatted the UI menu.
@@ -157,13 +157,13 @@ toc_max_heading_level: 4
 
 ### API Changes
 
-- Action definition changes (see [API Endpoints](./api/api_endpoints/autonomy_api.mdx))
+- Action definition changes
   - Mission.action added from_start and _start_waypoint_uuid_ fields
   - ExecuteMissionByUuid.action: added from_start and _start_waypoint_uuid_ fields
 - Message Definition changes
   - Mission.msg: added an array of on_start and and array of on_stop tasks fields
   - Task.msg: added a boolean allow_failure field
-- Updated /safety/safety_stop message type (see [Definitions](./api/api_endpoints/definitions.mdx#msg-safety))
+- Updated /safety/safety_stop message type
 - Added import/export services for /dock, /mission_manager/ and /mission_scheduler features
 
 ### Bug Fixes
@@ -180,12 +180,12 @@ toc_max_heading_level: 4
 
 ### New Features
 
-- Operators can now Schedule Missions to run at specific times (see [Mission Scheduler](./features/mission_scheduler.mdx))
+- Operators can now Schedule Missions to run at specific times
 - Added in support for BulletCat12 Microhard WiFi and Cellular connections
 - Allow Audio recording as both tasks and manual operations if UGV has Microphones
-- Create custom tasks that can be run during missions (see [Custom Tasks](./features/custom_tasks.mdx))
+- Create custom tasks that can be run during missions
 - If installed with PDU, UGV can be set to Low Power mode to better conserve power
-- New navigation topics added to ROS Autonomy API (see [API Endpoints](./api/api_endpoints/autonomy_api.mdx)):
+- New navigation topics added to ROS Autonomy API:
   - /navigation/progress
   - /navigation/motion_state
   - /navigation/metrics
@@ -193,8 +193,7 @@ toc_max_heading_level: 4
 - Improved autonomy feedback when something goes wrong in the mission to increase the diagnosability of the error
 - Updated Navigation features available to the customer:
   - Continuous Replanning renamed to Continuous Planning and is always enabled.
-  - Constrained Planning is always enabled. Environment Variable to update the path constraint has been modified
-    (see [Navigation](./features/navigation.mdx))
+  - Constrained Planning is always enabled. Environment Variable to update the path constraint has been modified.
   - Removed Obstacle Avoidance Mode. The UGV will always attempt to avoid obstacles.
   - Removed Path Smoothing. This is always enabled.
   - Docking feature added for customers who have purchased a dock.
@@ -218,8 +217,8 @@ toc_max_heading_level: 4
 ### New Features
 
 - Inertial Measurement Units (IMUs) integrated into localization.
-- Added localization status topic (see [API Endpoints](./api/api_endpoints/autonomy_api.mdx#localizationstatus)).
-- Added re-localization service (see [API Endpoints](./api/api_endpoints/definitions.mdx#srv-reset-localization)).
+- Added localization status topic.
+- Added re-localization service.
 - Additional diagnostic information in the status view.
 - Docking improvements including: multiple docks, visual representation of docks on map,
   local docking/undocking through teleop view. Docking only functional with 2D LiDARs.
@@ -248,8 +247,7 @@ toc_max_heading_level: 4
 
 ### New Features
 
-- Goal terminology has been removed from the mission generation nomenclature (see
-  [Definitions](./web_user_interface/ui_waypoint_mode.mdx#definitions))
+- Goal terminology has been removed from the mission generation nomenclature.
   Users can now add tasks, apply final headings, and set navigation tolerances
   to any Waypoint in a Mission.
 - Drag and Drop of Waypoints now available in Edit Mode.
