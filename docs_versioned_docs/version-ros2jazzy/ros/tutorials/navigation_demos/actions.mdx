@@ -1,6 +1,6 @@
 ---
 title: Nav2 ROS Actions
-sidebar_label: ROS Actions
+sidebar_label: Nav2 ROS Actions
 sidebar_position: 6
 toc_min_heading_level: 2
 toc_max_heading_level: 5
@@ -46,9 +46,10 @@ int16 number_of_recoveries
 float32 distance_remaining
 ```
 
-The message is divided into 3 parts: the goal (what we send to the action server to command the robot),
-the result (what the robot sends back to us when the action completes), and feedback (what the robot
-sends to us while the action is still in-progress).
+The message is divided into 3 parts:
+* the goal (what we send to the action server to command the robot),
+* the result (what the robot sends back to us when the action completes), and
+* feedback (what the robot sends to us while the action is still in-progress).
 
 ## Determine the goal location {#goal-position}
 
