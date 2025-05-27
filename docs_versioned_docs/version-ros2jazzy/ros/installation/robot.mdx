@@ -10,6 +10,10 @@ import ClearpathFirmware from "../../components/_clearpath_firmware.mdx";
 import StandardClearpathBridgeSetup from "../../components/networking/_standard_clearpath_bridge_setup.mdx";
 import ComputerNetworkingSetupInstall from "../../components/networking/_computer_networking_setup_install.mdx";
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+
 ## Operating System (OS) {#operating-system}
 
 ROS 2 Jazzy uses Ubuntu 24.04 as its Tier 1 operating system.
@@ -22,6 +26,25 @@ The Clearpath Robotics ISO image only targets x86 computers (`amd64` architectur
 
 :::
 
+:::caution
+
+Clearpath Robotics' [ROS 2 Jazzy ISO image](https://packages.clearpathrobotics.com/stable/images/2.0.0/)
+**will wipe the robot's drive** when used.
+
+:::
+
+:::note
+
+If your robot has multiple internal drives, or if you need more control over partitioning the drive (e.g.
+you want to keep `/` and `/home` on different partitions of the same drive) you should use the normal
+[Ubuntu Server 24.04 ISO](https://ubuntu.com/download/server/thank-you?version=24.04.2&architecture=amd64&lts=true)
+and then use [Clearpath's robot installation script](https://github.com/clearpathrobotics/clearpath_computer_installer)
+to configure the computer after Ubuntu is installed.
+
+:::
+
+<Tabs>
+  <TabItem value="Clearpath ISO" default>
 Clearpath provides a lightly customized installation image of Ubuntu 24.04 that has the needed script to setup the robot.
 To install the software on a physical robot through the Clearpath Robotics ISO image, you will first need a USB drive of at least 4 GB
 to create the installation media, an ethernet cable, a monitor, and a keyboard.
@@ -59,7 +82,57 @@ to create the installation media, an ethernet cable, a monitor, and a keyboard.
     You should use the `passwd` utility to change the `robot` account password.
 8.  Log on to the computer and run `bash -e clearpath_computer_installer.sh` to install the needed software.
     This will take a while to complete and has a prompts that must be answered.
+  </TabItem>
+  <TabItem value="Ubuntu Server ISO">
+If your setup requires being able to manually edit your robot's partition table, or if your robot's computer
+has multiple drives, you can use the official Ubuntu Server ISO from Canonical. This ISO has more options
+available than the Clearpath ISO.
 
+To install the software you will need a USB drive of at least 4 GB to create the installation media, an ethernet
+cable, a monitor, and a keyboard.
+
+1.  Download the [Ubuntu Server ISO image](https://ubuntu.com/download/server/thank-you?version=24.04.2&architecture=amd64&lts=true).
+
+2.  Copy the image to a USB drive using `unetbootin`, `rufus`, `balena etcher`, or a similar program. For example:
+
+    ```
+    sudo unetbootin isofile="ubuntu-24.04.2-live-server-amd64.iso"
+    ```
+
+3.  Connect your robot computer to internet access (via wired Ethernet), a keyboard, and a monitor.
+    Make sure that the robot is connected to shore power (where applicable) or that the robot's battery is fully charged.
+
+    :::caution
+
+    The next step will involve reformatting some or all of the partitions on your robots hard drive. Make sure all
+    important data is backed-up before proceeding.
+
+    :::
+
+4.  Boot your robot computer from the USB drive and follow the on-screen instructions to install Ubuntu Server 24.04.
+
+    :::note
+
+    You may need to configure the computer's BIOS to prioritize booting from the USB drive.
+    On most common motherboards, pressing `Delete` during the initial startup will open the BIOS for configuration.
+
+    :::
+
+5.  Allow the setup process to complete. Depending on your internet connection's speed this may take some time.
+
+6.  When prompted, remove the USB drive from the computer and press the `ENTER` key to reboot.
+
+7.  On first boot, log into the robot using the username and password you configured during step `4`. To finish
+    configuring the computer for use with a Clearpath robot, run the following commands:
+
+    ```bash
+    sudo apt-get update
+    sudo apt-get install wget
+    wget https://raw.githubusercontent.com/clearpathrobotics/clearpath_computer_installer/refs/heads/main/clearpath_computer_installer.sh
+    bash -e clearpath_computer_installer.sh
+    ```
+  </TabItem>
+</Tabs>
 
 ## Internet Connection
 
