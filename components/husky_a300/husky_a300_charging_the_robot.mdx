@@ -1,3 +1,5 @@
+import Admonition from "@theme/Admonition";
+
 ### Charging The Robot
 
 The robot can be on or off while charging.
@@ -50,12 +52,11 @@ Refer to the [Lighting page](/docs/ros/api/lighting) for details of all the robo
 
 :::
 
-:::danger Waterproofing
-
-The standard _Manual Charger_ must be used in a dry environment.
-We sell a _Fast Charger_ upgrade, which is waterproof.
-This _Fast Charger_ can be used outdoors, as long as water is not entering the robot's _Rear Charge Port_ area.
-
-The optional _Wireless Charger_ can also be used in a wet environment, aligning with Husky's IP54 ingress protection rating.
-
-:::
+<Admonition type="danger" title="Waterproofing">
+  The standard <em>Manual Charger</em> must be used in a dry environment.
+  We sell a <em>Fast Charger</em> upgrade, which is waterproof.
+  This <em>Fast Charger</em> can be used outdoors, as long as water is not entering the robot's <em>Rear Charge Port</em> area.
+  
+  {((props.robotModel == "A300") || (props.robotModel == "AMP")) && <>The optional <em>Wireless Charger</em> can also be used in a wet environment, aligning with Husky's IP54 ingress protection rating.</>}
+  {(props.robotModel == "Observer") && <>The included <em>Wireless Charger</em> can also be used in a wet environment, aligning with Husky's IP54 ingress protection rating.</>}
+</Admonition>
