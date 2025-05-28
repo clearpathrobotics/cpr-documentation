@@ -6,6 +6,7 @@ toc_min_heading_level: 2
 toc_max_heading_level: 2 
 ---
 
+export const robotModel="AMP"
 import TOCInline from '@theme/TOCInline';
 import Support from "/components/support.mdx";
 import ComponentUnboxingTheHuskyA300 from "/components/husky_a300/husky_a300_unboxing.mdx";
@@ -96,7 +97,7 @@ import ComponentWhatsIncluded from "/components/husky_a300/husky_a300_whats_incl
   <ComponentOtherDocumentationToReview />
   <ComponentSafety />
   <ComponentIntendedUse />
-  <ComponentWhatsIncluded />
+  <ComponentWhatsIncluded robotModel={robotModel}/>
 
 ## System Overview
   <ComponentRobotComponents />
