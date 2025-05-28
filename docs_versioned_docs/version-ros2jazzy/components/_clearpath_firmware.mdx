@@ -33,7 +33,8 @@ sudo apt-get install ros-jazzy-clearpath-firmware
   >
     :::note
 
-    The J100 MCU does not have an ethernet interface, and therefore cannot be flashed using the ethernet bootloader. You must follow the subsequent steps to flash the J100 MCU over mini-USB.
+    The J100 MCU does not have an Ethernet interface, and therefore cannot be flashed using the Ethernet bootloader.
+    You must follow the subsequent steps to flash the J100 MCU over mini-USB.
 
     :::
 
@@ -55,7 +56,7 @@ sudo apt-get install ros-jazzy-clearpath-firmware
       <figcaption><b>J100 MCU labels</b></figcaption>
       <ol>
         <li>
-        The <code>M_RST</code> button, used to reset the MCU.
+          The <code>M_RST</code> button, used to reset the MCU.
         </li>
         <li>
           The <code>PWR_MODE</code> switch. Left is <code>NORM</code> or normal mode, right is <code>ALT</code> or bootloader mode. This is used for flashing the firmware.
@@ -139,7 +140,7 @@ sudo apt-get install ros-jazzy-clearpath-firmware
 
     In the middle of the MCU, there is a two-position switch labelled `PWR_MODE`. Move the switch from the default `NORM` position to the `AUX` position.
 
-    Press the `M_RST` to restart the MCU. Now, the MCU is in boot-loader mode, ready to receive new firmware.
+    Press the `M_RST` to restart the MCU. Now, the MCU is in bootloader mode, ready to receive new firmware.
 
     <center>
       <figure>
@@ -184,7 +185,7 @@ sudo apt-get install ros-jazzy-clearpath-firmware
 
     As is shown in the image above, set the `PWR_MODE` switch to the `ALT` position.
 
-    Press the `M_RST` or restart the robot using the HMI panel. Now, the MCU is in boot-loader mode, ready to receive new firmware.
+    Press the `M_RST` or restart the robot using the HMI panel. Now, the MCU is in bootloader mode, ready to receive new firmware.
   </TabItem>
     <TabItem
     value="DX150"
@@ -213,7 +214,7 @@ sudo apt-get install ros-jazzy-clearpath-firmware
 
     As is shown in the image above, set the `PWR_MODE` switch to the `ALT` position.
 
-    Press the `M_RST` or restart the robot using the HMI panel. Now, the MCU is in boot-loader mode, ready to receive new firmware.
+    Press the `M_RST` or restart the robot using the HMI panel. Now, the MCU is in bootloader mode, ready to receive new firmware.
   </TabItem>
 </Tabs>
 
