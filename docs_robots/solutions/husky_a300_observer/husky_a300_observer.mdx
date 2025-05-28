@@ -8,7 +8,7 @@ toc_max_heading_level: 2
 
 export const robotModel="Observer"
 import TOCInline from '@theme/TOCInline';
-import ComponentRobotComponents from "/components/husky_a300/husky_a300_components_observer.mdx";
+import ComponentRobotComponents from "/components/husky_a300/husky_a300_components.mdx";
 import ComponentTechnicalSpecifications from "/components/husky_a300/husky_a300_technical_specifications.mdx";
 import ComponentRiskAssessmentForIntegrations from "/components/common_risk_assessment_for_integrations.mdx";
 import ComponentStepModel from "/components/husky_a300/husky_a300_step_model_observer.mdx";
@@ -50,7 +50,7 @@ import ComponentIssuesAfterGettingStarted from "/components/husky_a300/husky_a30
   <ComponentWhatsIncluded robotModel={robotModel}/>
 
 ## System Overview
-  <ComponentRobotComponents />
+  <ComponentRobotComponents robotModel={robotModel}/>
   [//]: <> (TODO, component, Wiring Diagram of Base Husky A300)
   [//]: <> (TODO, component, Wiring Diagram of Observer)
   <ComponentTechnicalSpecifications robotModel={robotModel}/>
