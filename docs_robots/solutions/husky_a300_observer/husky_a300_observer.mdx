@@ -13,6 +13,9 @@ import ComponentRiskAssessmentForIntegrations from "/components/common_risk_asse
 import ComponentStepModel from "/components/husky_a300/husky_a300_step_model_observer.mdx";
 import ComponentSafety from "/components/husky_a300/husky_a300_safety_alternate.mdx";
 import Support from "/components/support.mdx";
+import ComponentOtherDocumentationToReview from "/components/husky_a300/husky_a300_amp_other_documentation_to_review.mdx";
+import ComponentIntendedUse from "/components/husky_a300/husky_a300_intended_use.mdx";
+import ComponentWhatsIncluded from "/components/husky_a300/husky_a300_whats_included.mdx";
 
 [//]: <> (TODO: add a hero-picture of the Husky Observer)
 
@@ -22,42 +25,15 @@ import Support from "/components/support.mdx";
 </details>
 
 ## Introduction
+  ### About
+  The Husky Observer uses a Husky A300 AMP as its base.
+  The AMP includes the Husky A300 base robot, sensors, autonomy navigation software, and a web user interface for commanding the robot.
+  Husky Observer then adds Autonomous Wireless Charging, and a Pan Tilt Zoom Camera.
+  This manual will explain how to use your Husky Observer, how to add new hardware and software, and how to maintain the robot.
 
-### About
-
-The Husky Observer uses a Husky A300 AMP as its base.
-The AMP includes the Husky A300 base robot, sensors, autonomy navigation software, and a web user interface for commanding the robot.
-Husky Observer then adds Autonomous Wireless Charging, and a Pan Tilt Zoom Camera.
-This manual will explain how to use your Husky Observer, how to add new hardware and software, and how to maintain the robot.
-
-### Other Documentation To Review
-
-* Refer to our [documentation for the base Husky A300](/docs_robots/outdoor_robots/husky/a300) for understanding the capabilities, safety risks, and use of the base robot.
-* Refer to our [OutdoorNav software's documentation](/docs_outdoornav_user_manual), as this comes included with your Husky Observer.
-  OutdoorNav allows you to send your Husky Observer on autonomous missions using the included ROS API, or by using OutdoorNav's web user interface.
-  OutdoorNav can accomplish these autonomous missions using the Husky AMP's sensors, without making infrasture updates to your worksite. 
-* Also refer to our [documentation for the Husky AMP](/docs_robots/solutions/husky_a300_amp).
-
-<ComponentSafety />
-
-## What's Included?
-
-* Robot, which is a Husky A300 base robot, 
-  with the AMP enclosure and sensors on top,
-  and Observer's pan-tilt-zoom camera and wireless charger.
-* Observer's wireless charging dock
-* Wireless joystick
-* Battery's manual charger
-* Spare parts
-* Crate, with straps to retain the robot
-
-:::info
-
-Clearpath Robotics also provides integration services.
-Your order may include addional sensors, auxiliary hardware, or software packages.
-This additional work will come preinstalled on your robot.
-
-:::
+  <ComponentOtherDocumentationToReview />
+  <ComponentSafety />
+  <ComponentIntendedUse />
 
 ## System Overview
   <ComponentRobotComponents />
