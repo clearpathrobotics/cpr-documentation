@@ -1,5 +1,14 @@
 ### Important System Limits {#important-system-limits}
 
+
+#### Diagnostics Monitoring
+
+The Husky has protection software and hardware to reduce the chance of damaging components.
+For example, the motor controllers's firmware will reduce the allowable mobility power if the motors are near their thermal limit.
+
+You may want to monitor the Husky's `/status` and `/diagnostics` topics.
+These topics provide useful information regarding voltages, currents, temperatures, and general health of the Husky.
+
 #### Thermal Limits
 
 Husky A300 is equipped with temperature sensors throughout the robot, which are used to monitor temperatures and determine fan speeds for proper cooling.
