@@ -13,6 +13,7 @@ import ComponentStepModel from "/components/husky_a300/husky_a300_step_model.mdx
 import ComponentPacs from "/components/husky_a300/husky_a300_pacs.mdx";
 import ComponentCablePassthrough from "/components/husky_a300/husky_a300_cable_passthrough.mdx";
 import ComponentInternalIntegrations from "/components/husky_a300/husky_a300_internal_integrations.mdx";
+import ComponentDataConnections from "/components/husky_a300/husky_a300_data_connections.mdx";
 import Support from "/components/support.mdx";
 
 <ComponentIntroductionHusky />
@@ -42,18 +43,10 @@ supply, and software integration. This guide aims to equip you with respect to t
 ---
 
 ## Electrical Integration {#electrical-integration}
+  Refer to [Cable Passthrough](#cable-passthrough) for details on how to pass cables through
+  Husky's top plate for external payloads.                                                                        |
 
-Refer to [Cable Passthrough](#cable-passthrough) for details on how to pass cables through
-Husky's top plate for external payloads.
-
-### Data Connections
-
-| Data Bus                      | Clearpath's suggestion for connecting devices to the Husky's computer:                                                                |
-| :---------------------------- | :------------------------------------------------------------------------------------------------------------------------------------ |
-| USB                           | Direct connection to the robot's computer, or add a USB hub.                                                                          |
-| Ethernet                      | Connect to the robot's 2.5 Gbit/s Ethernet Switch, which is inside the chassis.                                                       |
-| Serial RS-232, RS-422, RS-485 | Add a USB converter, such as a FTDI cable. Most computers have Serial ports, but these take more time to configure than a FTDI cable. |
-| CAN                           | Add a USB converter, such as a PEAK System PCAN-USB.                                                                                  |
+  <ComponentDataConnections />
 
 ### System Interface Connector Summary {#system-interface-circuit-board-connector-summary}
 
