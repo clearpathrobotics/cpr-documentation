@@ -4,37 +4,37 @@ import Admonition from "@theme/Admonition";
 ### System Architecture
 
 <Admonition type="info" title=" " icon=" ">
-<center>
-  <Mermaid
-    value={`
-      %%{
-        init: {
-          'theme': 'base',
-          'themeVariables': {
-            'primaryColor': '#CC7070',
-            'primaryTextColor': '#fff',
-            'primaryBorderColor': '#BB0000',
-            'lineColor': '#808080',
-            'secondaryColor': '#808080',
-            'secondaryTextColor': '#000000',
-            'tertiaryColor': '#fff'
+  <center>
+    <Mermaid
+      value={`
+        %%{
+          init: {
+            'theme': 'base',
+            'themeVariables': {
+              'primaryColor': '#CC7070',
+              'primaryTextColor': '#fff',
+              'primaryBorderColor': '#BB0000',
+              'lineColor': '#808080',
+              'secondaryColor': '#808080',
+              'secondaryTextColor': '#000000',
+              'tertiaryColor': '#fff'
+            }
           }
-        }
-      }%%
+        }%%
 
-      flowchart LR
-        A(["Computer"]) <-- Ethernet --> B(["MCU"])
-        B <-- I2C --> C(["Lights"]) 
-        B <-- I2C --> D(["Fans"])
-        B <-- SPI --> E(["Display"])
-        B <-- ADC --> F(["Hardware Monitoring"])
-        B <-- CAN a --> G1(["BLDC 1"]) --- G2(["BLDC 2"]) --- G3(["BLDC 3"]) --- G4(["BLDC 4"])
-        B <-- CAN b --> H1(["Battery 1"]) --- Hn(["Battery n"])
-        I(["IMU"]) <-- USB --> A
-        J(["Lidar or Camera"]) <-- Ethernet --> A
-    `}
-  />
-</center>
+        flowchart LR
+          A(["Computer"]) <-- Ethernet --> B(["MCU"])
+          B <-- I2C --> C(["Lights"]) 
+          B <-- I2C --> D(["Fans"])
+          B <-- SPI --> E(["Display"])
+          B <-- ADC --> F(["Hardware Monitoring"])
+          B <-- CAN a --> G1(["BLDC 1"]) --- G2(["BLDC 2"]) --- G3(["BLDC 3"]) --- G4(["BLDC 4"])
+          B <-- CAN b --> H1(["Battery 1"]) --- Hn(["Battery n"])
+          I(["IMU"]) <-- USB --> A
+          J(["Lidar or Camera"]) <-- Ethernet --> A
+      `}
+    />
+  </center>
 </Admonition>
 
 <br/>
