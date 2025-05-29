@@ -5,10 +5,11 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
+export const robotModel = "A300"
 import ComponentIntroductionHusky from "/components/introduction_husky_a300.mdx";
 import ComponentCommonSoftwareIntegration from "/components/common_software_integration.mdx";
 import ComponentTableHuskyOne from "/components/table_husky_1.mdx";
-import ComponentButtonStepDownload from "/components/button_step_download.tsx"
+import ComponentStepModel from "/components/husky_a300/husky_a300_step_model.mdx";
 import Support from "/components/support.mdx";
 
 <ComponentIntroductionHusky />
@@ -29,30 +30,8 @@ supply, and software integration. This guide aims to equip you with respect to t
 
 ---
 
-## Mechanical Mounting {#husky-a300-step-model}
-
-<ComponentButtonStepDownload filePath={"https://cpr-documentation-large-files.s3.us-east-2.amazonaws.com/034163-GEO_1.STEP"}/>
-
-
-This simplified 3D model of the Husky A300 includes details like the Top Plate mounting surface, internal Battery Integration Volume, 
-  and the System Interface circuit board where you can connect to the robot's electrical provisions.
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/husky_a300_images/husky_a300_simplified_step_2.png"
-      width="400"
-    />
-    <img
-      src="/img/robot_images/husky_a300_images/husky_a300_simplified_step_3.png"
-      width="400"
-    />
-    <figcaption>
-      40 Ah battery configuration is shown.
-      Other configurations are available.
-    </figcaption>
-  </figure>
-</center>
+## Mechanical Mounting 
+  <ComponentStepModel robotModel={robotModel}/>
 
 
 ### PACS&trade; Mounting and Kits
@@ -163,7 +142,7 @@ The drawing also shows mounting provisions on the robot's Electronics Tray, for 
 * Add-on secondary computer or graphics card
 * Add-on USB hub
 
-Refer to the [STEP model](#husky-a300-step-model) for more measurements of the Husky's interface areas.
+Refer to the [STEP model](#step-model) for more measurements of the Husky's interface areas.
 
 ---
 
