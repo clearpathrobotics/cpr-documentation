@@ -10,6 +10,7 @@ import ComponentIntroductionHusky from "/components/introduction_husky_a300.mdx"
 import ComponentCommonSoftwareIntegration from "/components/common_software_integration.mdx";
 import ComponentTableHuskyOne from "/components/table_husky_1.mdx";
 import ComponentStepModel from "/components/husky_a300/husky_a300_step_model.mdx";
+import ComponentPacs from "/components/husky_a300/husky_a300_pacs.mdx";
 import Support from "/components/support.mdx";
 
 <ComponentIntroductionHusky />
@@ -32,21 +33,7 @@ supply, and software integration. This guide aims to equip you with respect to t
 
 ## Mechanical Mounting 
   <ComponentStepModel robotModel={robotModel}/>
-
-
-### PACS&trade; Mounting and Kits
-
-Husky A300 is equipped with a [PACS&trade;](../../../../accessories/pacs) Top Plate for mounting sensors and equipment.
-[PACS&trade;](../../../../accessories/pacs) is a Clearpath Robotics standard, providing a grid of M5×0.8 holes onto the Top Plate of the robot.
-This grid of holes has a 80 mm X 80 mm spacing.
-You can create your own brackets to interface with these holes, or can use an existing Clearpath Robotics bracket.
-
-:::note
-
-Our [Sensors](../../../../accessories/sensors) and [Add-ons](../../../../accessories/add-ons) pages
-indicate the required bracket for the particular attachment.
-
-:::
+  <ComponentPacs />
 
 ### Cable Passthrough  {#cable-passthrough}
 
