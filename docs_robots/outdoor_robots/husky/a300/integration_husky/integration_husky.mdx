@@ -18,6 +18,7 @@ import ComponentBaseLink from "/components/husky_a300/husky_a300_base_link.mdx";
 import ComponentSystemInterfaceConnectorSummary from "/components/husky_a300/husky_a300_system_interface_connector_summary.mdx";
 import ComponentPowerConnections from "/components/husky_a300/husky_a300_power_connections.mdx";
 import ComponentFanExpansion from "/components/husky_a300/husky_a300_fan_expansion.mdx";
+import ComponentWirelessEmergencyStop from "/component/husky_a300/husky_a300_wireless_emergency_stop.mdx";
 import Support from "/components/support.mdx";
 
 <ComponentIntroductionHusky />
@@ -55,31 +56,7 @@ supply, and software integration. This guide aims to equip you with respect to t
   <ComponentSystemInterfaceConnectorSummary />
   <ComponentPowerConnections />
   <ComponentFanExpansion />
-
-### Wireless Emergency Stop  {#wireless-stop}
-
-A wireless dual-channel emergency stop can be added to Husky so that the
-emergency stop can be invoked remotely (either through a button press
-or when the remote unit is out of range), in addition to the two built-in
-Emergency Stop Buttons. Refer to the [User Manual](../user_manual_husky#wireless-estop-bypass)
-for details on how the Wireless Emergency Stop can be bypassed
-in certain debugging scenarios.
-
-The Wireless Emergency Stop can be connected to Husky on the Main circuit
-board at the "W ES" connector, based on the pinout below.
-
-| W ES Pin | Function / Value |
-| :------- | :--------------- |
-| 1        | 24 V (fused at 3 A)  |
-| 2        | CAN High: combined with CAN Low, connected to the CAN2 pins on the MCU; see additional notes below |
-| 3        | Reset In: Pull to GND for at least 100 ms to restart the robot after all emergency stops have been cleared; equivalent to pressing the Restart Button on Husky |
-| 4        | Channel 1 Out (24 V): normally connected to Channel 1 In; disconnect to trigger an emergency stop |
-| 5        | Channel 1 In |
-| 6        | GND |
-| 7        | CAN Low |
-| 8        | GND |
-| 9        | Channel 2 Out (24 V): normally connected to Channel 2 In; disconnect to trigger an emergency stop |
-| 10       | Channel 2 In |
+  <ComponentWirelessEmergencyStop />
 
 #### CAN Bus Connection
 
