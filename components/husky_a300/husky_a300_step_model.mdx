@@ -2,24 +2,68 @@ import ComponentButtonStepDownload from "/components/button_step_download.tsx"
 
 ### STEP Model {#step-model}
 
-<ComponentButtonStepDownload filePath={"https://cpr-documentation-large-files.s3.us-east-2.amazonaws.com/034163-GEO_1.STEP"}/>
+{(props.robotModel == "A300") && <div>
+  <ComponentButtonStepDownload filePath={"https://cpr-documentation-large-files.s3.us-east-2.amazonaws.com/034163-GEO_1.STEP"}/>
 
-This simplified 3D model of the Husky A300 includes details like the Top Plate mounting surface, internal Battery Integration Volume, 
-  and the System Interface circuit board where you can connect to the robot's electrical provisions.
+  This simplified 3D model of the Husky A300 includes details like the Top Plate mounting surface, internal Battery Integration Volume, 
+    and the System Interface circuit board where you can connect to the robot's electrical provisions.
 
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/husky_a300_images/husky_a300_simplified_step_2.png"
-      width="400"
-    />
-    <img
-      src="/img/robot_images/husky_a300_images/husky_a300_simplified_step_3.png"
-      width="400"
-    />
-    <figcaption>
-      40 Ah battery configuration is shown.
-      Other configurations are available.
-    </figcaption>
-  </figure>
-</center>
+  <center>
+    <figure>
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_simplified_step_2.png"
+        width="400"
+      />
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_simplified_step_3.png"
+        width="400"
+      />
+      <figcaption>
+        40 Ah battery configuration is shown.
+        Other configurations are available.
+      </figcaption>
+    </figure>
+  </center>
+</div>}
+
+
+{(props.robotModel == "AMP") && <div>
+  <ComponentButtonStepDownload filePath={"https://cpr-documentation-large-files.s3.us-east-2.amazonaws.com/034190-GEO_1.STEP"}/>
+
+  This simplified 3D model of the Husky A300 AMP includes details like the enclosure's mounting extrusions, electronic modules and 3U Eurorack, and arch superstructure.
+  This model also includes the features from the base Husky A300, such as the System Interface Assembly circuit board where you can connect to the robot's electrical provisions.
+
+  <center>
+    <figure>
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_amp_simplified_step_1.png"
+        width="400"
+      />
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_amp_simplified_step_2.png"
+        width="400"
+      />
+    </figure>
+  </center>
+</div>}
+
+
+{(props.robotModel == "Observer") && <div>
+  <ComponentButtonStepDownload filePath={"https://cpr-documentation-large-files.s3.us-east-2.amazonaws.com/034290-GEO_1.STEP"}/>
+
+  This simplified 3D model of the Husky A300 Observer includes the PTZ camera, and the wireless charger.
+  This model also includes all the features that exist in the Husky A300 and Husky AMP models. 
+
+  <center>
+    <figure>
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_observer_simplified_step_1.png"
+        width="400"
+      />
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_observer_simplified_step_2.png"
+        width="400"
+      />
+    </figure>
+  </center>
+</div>}
