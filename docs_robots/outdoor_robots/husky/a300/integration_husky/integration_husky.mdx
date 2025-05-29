@@ -19,6 +19,7 @@ import ComponentSystemInterfaceConnectorSummary from "/components/husky_a300/hus
 import ComponentPowerConnections from "/components/husky_a300/husky_a300_power_connections.mdx";
 import ComponentFanExpansion from "/components/husky_a300/husky_a300_fan_expansion.mdx";
 import ComponentWirelessEmergencyStop from "/components/husky_a300/husky_a300_wireless_emergency_stop.mdx";
+import ComponentCanbus from "/components/husky_a300/husky_a300_canbus.mdx";
 import Support from "/components/support.mdx";
 
 <ComponentIntroductionHusky />
@@ -57,13 +58,7 @@ supply, and software integration. This guide aims to equip you with respect to t
   <ComponentPowerConnections />
   <ComponentFanExpansion />
   [//]: <> (<ComponentWirelessEmergencyStop />)
-
-#### CAN Bus Connection
-
-The CAN High and CAN Low pins are connected to the CAN2 bus of the system, shared with the battery
-and wireless charger subsystems.
-
-The CAN2 bus is accessible on the computer as a linux socket under `can1` at a bitrate of 250000.
+  <ComponentCanbus />
 
 #### Receiver Installation
 
