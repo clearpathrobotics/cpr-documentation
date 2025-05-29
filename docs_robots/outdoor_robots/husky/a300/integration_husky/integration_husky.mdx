@@ -20,6 +20,7 @@ import ComponentPowerConnections from "/components/husky_a300/husky_a300_power_c
 import ComponentFanExpansion from "/components/husky_a300/husky_a300_fan_expansion.mdx";
 import ComponentWirelessEmergencyStop from "/components/husky_a300/husky_a300_wireless_emergency_stop.mdx";
 import ComponentCanbus from "/components/husky_a300/husky_a300_canbus.mdx";
+import ComponentAdditionalEmergencyStopDevices from "/components/husky_a300/husky_a300_additional_emergency_stop_devices.mdx";
 import Support from "/components/support.mdx";
 
 <ComponentIntroductionHusky />
@@ -59,28 +60,7 @@ supply, and software integration. This guide aims to equip you with respect to t
   <ComponentFanExpansion />
   [//]: <> (<ComponentWirelessEmergencyStop />)
   <ComponentCanbus />
-
-### External Emergency Stop {#husky_external_stop}
-
-In addition to the two built-in Emergency Stop Buttons, and in addition to the
-optional Wireless Emergency Stop, six additional emergency stop inputs are available
-on the System Interface circuit board (ES3 - ES8). By default, each of these are wired with a bypass
-connector. However, it is possible to remove a bypass connector and replace it with
-a connection to a device such as:
-
-- Emergency Stop buttons
-- [Wireless Stop receivers](../../../../accessories/add-ons/wireless_stop_system.mdx)
-- Relays or similar PLC components
-- Manipulator control cabinets
-
-The pinout for ES3 - ES8 is shown below.
-
-| ESx Pin | Function / Value |
-| :------ | :--------------- |
-| 1  | Channel 1 Out (24 V): normally connected to Channel 1 In; disconnect to trigger an emergency stop |
-| 2  | Channel 1 In |
-| 3  | Channel 2 Out (24 V): normally connected to Channel 2 In; disconnect to trigger an emergency stop |
-| 4  | Channel 2 In |
+  <ComponentAdditionalEmergencyStopDevices robotModel={robotModel}/>
 
 
 ### System Power 

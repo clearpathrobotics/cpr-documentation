@@ -1,0 +1,36 @@
+import Admonition from "@theme/Admonition";
+
+### Additional Emergency Stop Devices {#husky_external_stop}
+
+[//]: <> (TODO, add image of the 8 ES positions on the System Interface circuit board)
+
+The base Husky A300 includes 2 Emergency Stop Buttons, which are connected to the System Interface circuit board.
+The System Interface circuit board also includes connector breakouts for 6 more Emergency Stop devices, labelled ES3 through ES8.
+The standard Husky A300 has a bypass jumper inserted into each of these unused Emergency Stop breakouts.
+
+[//]: <> (TODO, add image of a bypass jumper)
+
+You can use these Emergency Stop breakouts to add more Emergency Stop devices, such as:
+
+- Emergency Stop buttons
+- Safety lidar
+- Tape switches
+- Limit switches
+- Relays or similar PLC components
+- Manipulator control cabinets
+
+{((props.robotModel == "AMP") || (props.robotModel == "Observer")) && <Admonition type="info">
+  The Husky AMP and Husky Observer use 2 of these additional breakouts to connect more Emergency Stop buttons.
+  We discard 2 of the bypass jumpers, and then connect the new Emergency Stop buttons to the System Interface circuit board.
+</Admonition>}
+
+<Admonition type="note" icon= " " title="Pinout for ES3 - ES8">
+
+  | ES Pin | Function / Value                                                                                     |
+  | :----- | :--------------------------------------------------------------------------------------------------- |
+  | 1      | Channel 1 Out, _(24 V)_: normally connected to Channel 1 In; disconnect to trigger an emergency stop |
+  | 2      | Channel 1 In                                                                                         |
+  | 3      | Channel 2 Out _(24 V)_: normally connected to Channel 2 In; disconnect to trigger an emergency stop  |
+  | 4      | Channel 2 In                                                                                         |
+
+</Admonition>
