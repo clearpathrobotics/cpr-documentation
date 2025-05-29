@@ -1,0 +1,35 @@
+### Fan Expansion {#fan-expansion}
+
+The System Interface circuit board has support for 4 additional 12 V brushless 4-wire PWM fans.
+Ports FAN 1, FAN 2, FAN 3, and FAN 4 are already used by the base Husky A300.
+Ports FAN 5, FAN 6, FAN 7, and FAN 8 are available for your fan expansions.
+
+:::info Examples Of Supported fans
+
+* [CFM-8025BG-170-517-22](https://www.digikey.ca/en/products/detail/cui-devices/CFM-8025BG-170-517-22/16581761)
+* [9GA0812P4J001](https://www.digikey.ca/en/products/detail/sanyo-denki-america-inc/9GA0812P4J001/6192305).
+
+:::
+
+The pinout for each fan is:
+
+| Pin | Function                       |
+| :-- | :----------------------------- |
+| 1   | 12 V                           |
+| 2   | GND                            |
+| 3   | Tachometer _(output from fan)_ |
+| 4   | PWM _(input to fan, 3.3 V)_    |
+
+The speed of each fan can be controlled by publishing to the `/a300_#####/platform/mcu/cmd_fans` ROS topic.
+
+The speed of each fan can be monitored by reading the `/a300_#####/platform/mcu/status/fans` ROS topic.
+
+In both cases, the fan value is in the range from 0 _(not spinning)_, to 255 _(max speed)_.
+
+:::info
+
+Fans require spool up time on startup.
+Setting a fan to a very low value may result in the fan not rotating.
+You should experiment to find minimum PWM value that causes your fan to spin.
+
+:::

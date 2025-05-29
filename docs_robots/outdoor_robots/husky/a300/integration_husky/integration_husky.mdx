@@ -17,6 +17,7 @@ import ComponentDataConnections from "/components/husky_a300/husky_a300_data_con
 import ComponentBaseLink from "/components/husky_a300/husky_a300_base_link.mdx";
 import ComponentSystemInterfaceConnectorSummary from "/components/husky_a300/husky_a300_system_interface_connector_summary.mdx";
 import ComponentPowerConnections from "/components/husky_a300/husky_a300_power_connections.mdx";
+import ComponentFanExpansion from "/components/husky_a300/husky_a300_fan_expansion.mdx";
 import Support from "/components/support.mdx";
 
 <ComponentIntroductionHusky />
@@ -53,38 +54,7 @@ supply, and software integration. This guide aims to equip you with respect to t
   <ComponentDataConnections />
   <ComponentSystemInterfaceConnectorSummary />
   <ComponentPowerConnections />
-
-### Fan Expansion {#fan-expansion}
-
-The Main circuit board has support for four additional 12 V brushless 4-wire PWM fans,
-one fan at each of FAN 5, FAN 6, FAN 7, and FAN 8. (FAN 1, FAN 2, FAN 3, and FAN 4 are
-reserved for internal use.) Examples of supported fans include
-[CFM-8025BG-170-517-22](https://www.digikey.ca/en/products/detail/cui-devices/CFM-8025BG-170-517-22/16581761)
-and
-[9GA0812P4J001](https://www.digikey.ca/en/products/detail/sanyo-denki-america-inc/9GA0812P4J001/6192305).
-
-The pinout for each fan is:
-
-| Pin | Function / Value |
-| :-- | :--------------- |
-| 1   | 12 V             |
-| 2   | GND              |
-| 3   | Tachometer (output from fan) |
-| 4   | PWM (input to fan, 3.3 V) |
-
-The speed of each fan can be controlled by publishing to the `/a300_#####/platform/mcu/cmd_fans` topic in ROS.
-
-The speed of each fan can be monitored by reading the `/a300_#####/platform/mcu/status/fans` topic in ROS.
-
-In both cases, the fan value is in the range from 0 (not spinning) to 255 (max speed).
-
-:::info
-
-Fans require spool up time on startup. Setting a fan to a very low value may result in the fan not rotating.
-The user must experiment with the values to find the corresponding minimum speed at which the fan can be started
-and operated.
-
-:::
+  <ComponentFanExpansion />
 
 ### Wireless Emergency Stop  {#wireless-stop}
 
