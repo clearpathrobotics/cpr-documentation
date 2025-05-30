@@ -29,6 +29,13 @@ import ComponentEmergencyStopWireless from "/components/husky_a300/husky_a300_em
 import ComponentConnectingWirelessJoystick from "/components/common_wireless_joystick_ps4.mdx";
 import ComponentInCaseOfCollision from "/components/common_in_case_of_collision.mdx";
 import ComponentIssuesAfterGettingStarted from "/components/husky_a300/husky_a300_issues_after_getting_started.mdx";
+import ComponentPreOperationInspection from "/components/husky_a300/husky_a300_pre_operation_inspection.mdx";
+import ComponentMobilityControlOptions from "/components/husky_a300/husky_a300_mobility_control_options.mdx";
+import ComponentOrientationReferences from  "/components/husky_a300/husky_a300_orientation_references.mdx";
+import ComponentChargingTheRobot from "/components/husky_a300/husky_a300_charging_the_robot.mdx";
+import ComponentChargingTheWirelessJoystick from "/components/common_wireless_joystick_ps4_charging.mdx";
+import ComponentChargingTheWirelessEmergencyStopTransmitter from "/components/common_wireless_emergency_stop_charging.mdx";
+import ComponentSystemLimits from  "/components/husky_a300/husky_a300_system_limits.mdx";
 
 [//]: <> (TODO: add a hero-picture of the Husky Observer)
 
@@ -68,6 +75,16 @@ import ComponentIssuesAfterGettingStarted from "/components/husky_a300/husky_a30
   <ComponentConnectingWirelessJoystick />
   <ComponentInCaseOfCollision />
   <ComponentIssuesAfterGettingStarted />
+
+## Operating The Robot {#operating-the-robot}
+  <ComponentPreOperationInspection />
+  <ComponentMobilityControlOptions />
+  <ComponentOrientationReferences />
+  <ComponentChargingTheRobot robotModel={robotModel}/>
+  <ComponentChargingTheWirelessJoystick />
+  <ComponentChargingTheWirelessEmergencyStopTransmitter />
+  <ComponentSystemLimits />
+  [//]: <> (TODO, component for Status Lights, from original manual)
 
 ## Custom Integrations
   <ComponentRiskAssessmentForIntegrations />
