@@ -29,42 +29,27 @@ The same publisher handles all of these message types. Limit the number of subsc
 
 ## Using Image Transport
 
-Compressed, FFMPEG and Theora types are not standard ROS 2 datatypes, therefore special consideration must be made when
-interacting with them. Nodes that use `image_transport` have the ability to directly subscribe to or publish to the
-compressed / encoded topics using the image transport plugins. Many ROS 2 camera drivers offer the compressed topics by default.
+Compressed, FFMPEG and Theora types are not standard ROS 2 datatypes, therefore special consideration must be made when interacting with them. Nodes that use `image_transport` have the ability to directly subscribe to or publish to the compressed / encoded topics using the image transport plugins. Many ROS 2 camera drivers offer the compressed topics by default.
 
-However, for any node that does not support these plugins by default, a separate compression (encoding) or decompression
-(decoding) "republisher" node must be run. Decompressing the images into standard `sensor_msgs/Image` messages allow
-viewing or processing them using standard tools such as RViz. However, these "republisher" nodes are inefficient because
-they introduce another subscriber and publisher, and this can cause significant load on the computer networking depending
-on the size of image and networking configuration. Supporting image transport and image transport plugins directly is
-much more efficient, avoiding the need for copying and transferring the uncompressed data. This should be done in any
-situation where the performance of "republisher" nodes is insufficient. Examples on how to directly use image transport
-can be found in the [Image Transport Tutorials Repo](https://github.com/ros-perception/image_transport_tutorials).
+However, for any node that does not support these plugins by default, a separate compression (encoding) or decompression (decoding) "republisher" node must be run. Decompressing the images into standard `sensor_msgs/Image` messages allow viewing or processing them using standard tools such as RViz. However, these "republisher" nodes are inefficient because they introduce another subscriber and publisher, and this can cause significant load on the computer networking depending on the size of image and networking configuration. Supporting image transport and image transport plugins directly is much more efficient, avoiding the need for copying and transferring the uncompressed data. This should be done in any situation where the performance of "republisher" nodes is insufficient. Examples on how to directly use image transport can be found in the [Image Transport Tutorials Repo](https://github.com/ros-perception/image_transport_tutorials).
 
-The `clearpath_offboard_sensors` package has launch files to start "republisher" nodes to convert to and from these
-compressed transport types. This allows the usage of compressed topics to optimize networking without requiring custom
-development. To use these launch files, ensure that the Clearpath sensor package is installed on the computer that will
-be performing the decompression / decoding:
+The `clearpath_offboard_sensors` package has launch files to start "republisher" nodes to convert to and from these compressed transport types. This allows the usage of compressed topics to optimize networking without requiring custom development. To use these launch files, ensure that the Clearpath sensor package is installed on the computer that will be performing the decompression / decoding:
 
 ```bash
 sudo apt install ros-jazzy-clearpath-offboard-sensors
 ```
 
 :::note
-These launch files simply wrap the `image_transport` `republish` node and set default parameters. This `republish` node
-can be run directly as an alternative to installing the full Clearpath sensors package and using the launch files.
+These launch files simply wrap the `image_transport` `republish` node and set default parameters. This `republish` node can be run directly as an alternative to installing the full Clearpath sensors package and using the launch files.
 :::
 
 ## Compressed
 
-The `compressed` image transport compresses images using the JPEG format at 80% quality by default. JPEG is a static
-image compression format that compresses each video frame independently and does not rely on any previous frame.
+The `compressed` image transport compresses images using the JPEG format at 80% quality by default. JPEG is a static image compression format that compresses each video frame independently and does not rely on any previous frame.
 
 ### Encoding Node {#encode-compressed}
 
-Use the launch file `image_raw_to_compressed.launch.py` to compress `sensor_msgs/Image` messages into compressed messages.
-Note that this is only required if the image publisher does not already use image transport plugins.
+Use the launch file `image_raw_to_compressed.launch.py` to compress `sensor_msgs/Image` messages into compressed messages. Note that this is only required if the image publisher does not already use image transport plugins.
 
 Assume that the following image topic needs to be compressed:
 ```bash
