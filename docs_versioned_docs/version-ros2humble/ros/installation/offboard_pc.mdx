@@ -27,9 +27,30 @@ with an IP address that won't interfere with other devices on the network, such 
 Follow the [official instructions](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html) for
 installing ROS 2 Humble from debian packages.
 
+### Clearpath Packages
+
+Clearpath hosts open-source and closed-source ROS packages compiled as debian packages on our own servers. To add
+these packages to your system you must add Clearpath's servers to your `apt` sources by opening a terminal and
+running the following commands:
+```bash
+wget https://packages.clearpathrobotics.com/public.key -O - | sudo apt-key add -
+sudo sh -c 'echo \
+    "deb https://packages.clearpathrobotics.com/stable/ubuntu $(lsb_release -cs) main" > \
+    /etc/apt/sources.list.d/clearpath-latest.list'
+sudo apt-get update
+```
+
+To update `rosdep` dependencies with the package built & hosted on Clearpath's servers, run
+```bash
+sudo wget \
+    https://raw.githubusercontent.com/clearpathrobotics/public-rosdistro/master/rosdep/50-clearpath.list \
+    -O /etc/ros/rosdep/sources.list.d/50-clearpath.list
+rosdep update
+```
+
 ### Clearpath Desktop metapackage
 
-Once the ROS 2 Humble has been installed, the [Clearpath Desktop](https://github.com/clearpathrobotics/clearpath_desktop)
+Once ROS 2 Humble has been installed, the [Clearpath Desktop](https://github.com/clearpathrobotics/clearpath_desktop)
 metapackage can be installed.
 
 ```
