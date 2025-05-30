@@ -15,19 +15,21 @@ Husky A300 is equipped with temperature sensors throughout the robot, which are 
 System throttling may occur if the robot is approaching its critical thermal limits.
 Monitoring these fields over longer periods of operation will allow you to ensure that you are not putting excessive wear on Husky's motors and other components.
 
-<div class="centred-table">
-  | Sensor                             | ROS Topic<sup>1</sup>                         | Message Field                    | Lower Critical Limit, _(°C)_ | Upper Critical Limit, _(°C)_ | Notes                         |
-  | :--------------------------------- | :-------------------------------------------- | :------------------------------- | :--------------------------- | :--------------------------- | :---------------------------- |
-  | Motor [1-4] Temperature            | `/a300_00000/platform/motors/status`          | `drivers[0-3].motor_temperature` | -10                          | 100                          | Does not affect fan speed     |
-  | Motor Driver [1-4] MCU Temperature | `/a300_00000/platform/motors/status`          | `drivers[0-3].mcu_temperature`   | -20                          | 80                           |                               |
-  | Motor Driver [1-4] PCB Temperature | `/a300_00000/platform/motors/status`          | `drivers[0-3].pcb_temperature`   | -20                          | 80                           |                               |
-  | Battery [1-6] Temperature          | `/a300_00000/bms/battery_state_[1-6]`         | `temperature`                    | -20                          | 60                           | Charging must occur above 0°C |
-  | MCU Temperature                    | `/a300_00000/platform/mcu/status/temperature` | `temperatures[CC01_MCU]`         | -20                          | 80                           |                               |
-  | Fan Controller Temperature         | `/a300_00000/platform/mcu/status/temperature` | `temperatures[CC01_FAN[1-4]]`    | -20                          | 80                           |                               |
-  | 5V Inductor Temperature            | `/a300_00000/platform/mcu/status/temperature` | `temperatures[5V_INDUCTOR]`      | -20                          | 80                           |                               |
-  | Main Ground Lug Temperature        | `/a300_00000/platform/mcu/status/temperature` | `temperatures[MAIN_GND_LUG]`     | -20                          | 80                           |                               |
-  | 24V DC/DC Temperature              | `/a300_00000/platform/mcu/status/temperature` | `temperatures[24V_DCDC]`         | -20                          | 80                           |                               |
-  | 12V DC/DC Temperature              | `/a300_00000/platform/mcu/status/temperature` | `temperatures[12V_DCDC]`         | -20                          | 80                           |                               |
+<div class="table-container-for-centering">
+  <div class="centred-table">
+    | Sensor                             | ROS Topic<sup>1</sup>                         | Message Field                    | Lower Critical Limit, _(°C)_ | Upper Critical Limit, _(°C)_ | Notes                         |
+    | :--------------------------------- | :-------------------------------------------- | :------------------------------- | :--------------------------- | :--------------------------- | :---------------------------- |
+    | Motor [1-4] Temperature            | `/a300_00000/platform/motors/status`          | `drivers[0-3].motor_temperature` | -10                          | 100                          | Does not affect fan speed     |
+    | Motor Driver [1-4] MCU Temperature | `/a300_00000/platform/motors/status`          | `drivers[0-3].mcu_temperature`   | -20                          | 80                           |                               |
+    | Motor Driver [1-4] PCB Temperature | `/a300_00000/platform/motors/status`          | `drivers[0-3].pcb_temperature`   | -20                          | 80                           |                               |
+    | Battery [1-6] Temperature          | `/a300_00000/bms/battery_state_[1-6]`         | `temperature`                    | -20                          | 60                           | Charging must occur above 0°C |
+    | MCU Temperature                    | `/a300_00000/platform/mcu/status/temperature` | `temperatures[CC01_MCU]`         | -20                          | 80                           |                               |
+    | Fan Controller Temperature         | `/a300_00000/platform/mcu/status/temperature` | `temperatures[CC01_FAN[1-4]]`    | -20                          | 80                           |                               |
+    | 5V Inductor Temperature            | `/a300_00000/platform/mcu/status/temperature` | `temperatures[5V_INDUCTOR]`      | -20                          | 80                           |                               |
+    | Main Ground Lug Temperature        | `/a300_00000/platform/mcu/status/temperature` | `temperatures[MAIN_GND_LUG]`     | -20                          | 80                           |                               |
+    | 24V DC/DC Temperature              | `/a300_00000/platform/mcu/status/temperature` | `temperatures[24V_DCDC]`         | -20                          | 80                           |                               |
+    | 12V DC/DC Temperature              | `/a300_00000/platform/mcu/status/temperature` | `temperatures[12V_DCDC]`         | -20                          | 80                           |                               |
+  </div>
 </div>
 
 :::note Thermal Limits Footnotes
@@ -40,28 +42,30 @@ You can find the serial number under the _Front Panel_, on the _Nameplate_.
 
 #### Current Limits
 
-<table class="centred-table">
-  <tr>
-    <td>&nbsp;</td>
-    <td><b>Husky AMP,<br/>40 Ah</b></td>
-    <td><b>Husky AMP,<br/>80 Ah</b></td>
-    <td><b>Husky AMP,<br/>120 Ah</b></td>
-  </tr>
-  <tr>
-    <td>Battery Continuous Current Output</td>
-    <td><center>60 A</center></td>
-    <td><center>120 A</center></td>
-    <td><center>150 A</center></td>
-  </tr>
-  <tr>
-    <td>Circuit Breaker Value</td>
-    <td colspan="3"><center>100 A</center></td>
-  </tr>
-  <tr>
-    <td>Motor Continuous Output<sup>1</sup></td>
-    <td colspan="3"><center>17 A <em>(Per Motor)</em></center></td>
-  </tr>
-</table>
+<div class="table-container-for-centering">
+  <table class="centred-table">
+    <tr>
+      <td>&nbsp;</td>
+      <td><b>Husky AMP,<br/>40 Ah</b></td>
+      <td><b>Husky AMP,<br/>80 Ah</b></td>
+      <td><b>Husky AMP,<br/>120 Ah</b></td>
+    </tr>
+    <tr>
+      <td>Battery Continuous Current Output</td>
+      <td><center>60 A</center></td>
+      <td><center>120 A</center></td>
+      <td><center>150 A</center></td>
+    </tr>
+    <tr>
+      <td>Circuit Breaker Value</td>
+      <td colspan="3"><center>100 A</center></td>
+    </tr>
+    <tr>
+      <td>Motor Continuous Output<sup>1</sup></td>
+      <td colspan="3"><center>17 A <em>(Per Motor)</em></center></td>
+    </tr>
+  </table>
+</div>
 
 :::note Current Limits Footnotes
 
@@ -152,13 +156,15 @@ It is the responsibility of the user to ensure that no hazards are present in th
 
 <br />
 
-<div class="centred-table">
-  | Payload Mass | Incline  | Terminal Speed<sup>1</sup> |
-  | :----------- | :------- | :------------------------- |
-  | 0 kg         | 0°       | 0 m/s                      |
-  | 100 kg       | 0°       | 0 m/s                      |
-  | 0 kg         | 15°      | 0.5 m/s or less            |
-  | 100 kg       | 15°      | 1.25 m/s or less           |
+<div class="table-container-for-centering">
+  <div class="centred-table">
+    | Payload Mass | Incline  | Terminal Speed<sup>1</sup> |
+    | :----------- | :------- | :------------------------- |
+    | 0 kg         | 0°       | 0 m/s                      |
+    | 100 kg       | 0°       | 0 m/s                      |
+    | 0 kg         | 15°      | 0.5 m/s or less            |
+    | 100 kg       | 15°      | 1.25 m/s or less           |
+  </div>
 </div>
 
 :::note Emergency Stop Braking Limits Footnotes
@@ -195,11 +201,13 @@ This setting is configurable—_(see [ROS Parameters](/docs/ros/config/yaml/plat
 
 :::
 
-<div class="centred-table">
-  | Payload Mass | Incline  | Surface Type  | Stopping Distance  | 
-  | :----------- | :------- | :------------ | :------------------|
-  | 0 kg         | 0°       | High friction | 0.5 m              |
-  | 100 kg       | 0°       | High friction | 0.7 m              |
-  | 0 kg         | 15°      | High friction | 0.5 m              |
-  | 100 kg       | 15°      | High friction | 1.0 m              |
+<div class="table-container-for-centering">
+  <div class="centred-table">
+    | Payload Mass | Incline  | Surface Type  | Stopping Distance  | 
+    | :----------- | :------- | :------------ | :------------------|
+    | 0 kg         | 0°       | High friction | 0.5 m              |
+    | 100 kg       | 0°       | High friction | 0.7 m              |
+    | 0 kg         | 15°      | High friction | 0.5 m              |
+    | 100 kg       | 15°      | High friction | 1.0 m              |
+  </div>
 </div>

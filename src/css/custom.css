@@ -82,6 +82,16 @@ safety-icon {
   font-weight: bold;
 }
 
+.table-container-for-centering {
+  text-align: center;
+  margin-left:auto; 
+  margin-right:auto;
+}
+
+.centred-table {
+  display: inline-block;
+}
+
 body {
   counter-reset: h2_section h3_section h4_section h5_section h6_section;
 }
