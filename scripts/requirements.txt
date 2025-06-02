@@ -1,0 +1,14 @@
+cachetools==5.5.2
+certifi==2025.4.26
+charset-normalizer==3.4.2
+google-auth==2.40.2
+google-auth-oauthlib==1.2.2
+gspread==6.2.1
+idna==3.10
+oauthlib==3.2.2
+pyasn1==0.6.1
+pyasn1_modules==0.4.2
+requests==2.32.3
+requests-oauthlib==2.0.0
+rsa==4.9.1
+urllib3==2.4.0

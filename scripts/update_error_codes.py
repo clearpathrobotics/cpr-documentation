@@ -1,0 +1,128 @@
+#!/usr/bin/env python3
+
+# This script pulls error codes from a Google Sheet and updates the local mdx files in components/error_codes.
+# It requires the gspread library to interact with Google Sheets.
+# It is setup to use a service account for authentication.
+# Make sure to set the GOOGLE_SHEET_CREDENTIALS environment variable to the path of your service account JSON file.
+# It may be easier to to trigger the script from the github actions workflow.
+
+import os
+
+import gspread
+
+
+def add_section_description(file_path):
+    """Add heading description to the top-level mdx file."""
+    with open(file_path, 'a', encoding='utf-8') as f:
+        section_description = """
+<style>
+    {`
+    h2::before {
+    content: "" !important;
+    }
+    h3::before {
+    content: "" !important;
+    }
+    h4::before {
+    content: "" !important;
+    }
+    `}
+</style>
+
+# Error Codes
+
+This document contains error codes and troubleshooting notes for each error code.
+
+"""
+        f.write(section_description)
+
+
+def add_import_top_level_file(file_path, file_name, category_description):
+    """Update the top-level mdx file with import statements for each category."""
+    with open(file_path, 'a', encoding='utf-8') as f:
+        module_name = category_description.title().replace(' ', '')
+        f.write(f'import {module_name} from "./{file_name}";\n')
+
+
+def add_impl_top_level_file(file_path, category_description):
+    """Update the top-level mdx file to include the implementation of each category."""
+    with open(file_path, 'a', encoding='utf-8') as f:
+        module_name = category_description.title().replace(' ', '')
+        f.write(f'<{module_name} />\n\n')
+
+
+def create_error_code_file(file_path, category_number, category_description):
+    """Write the preamble for the mdx file."""
+    with open(file_path, 'w', encoding='utf-8') as f:
+        f.write(
+            f'---\n## E{category_number}00 {category_description} {{#{category_description.lower().replace(" ", "-")}}}\n\n'
+        )
+
+
+def update_error_code_file(file_path, error_number, error_title, error_message):
+    """Update the mdx file with the error code and message."""
+    with open(file_path, 'a', encoding='utf-8') as f:
+        f.write(f'### E{error_number} - {error_title} {{#e{error_number}}} \n{error_message}\n')
+
+
+if __name__ == '__main__':
+    gc = gspread.service_account(
+        filename=os.environ.get('GOOGLE_SHEET_CREDENTIALS', './service_account.json')
+    )
+    sh = gc.open_by_key('1GcQOTUiUgADPrYiLwWsgM9B8dvKHKgTAl_bsJcpXKm0')
+    print('Opened Google Sheet:', sh.title)
+    categories = sh.get_worksheet(0).get_all_records()
+
+    top_level_file_path = '../components/error_codes/error_codes.mdx'
+
+    used_categories = []
+    for category in categories:
+        print('Processing category:', category['Error Category Description'])
+        file_name = (
+            # str(category['Error Category Number'])
+            '_' + str(category['Error Category Description']).lower().replace(' ', '_')
+        )
+        file_path = f'../components/error_codes/{file_name}.mdx'
+        records = sh.get_worksheet(int(category['Error Category Number']) + 1).get_all_records()
+
+        # tuple to hold error codes and messages
+        errors = []
+        for record in records:
+            error_number = record['Error Number']
+            error_title = record['Error Title']
+            error_message = record['Troubleshooting Notes']
+            if not error_title:
+                continue
+            errors.append((
+                str(category['Error Category Number']) + str(error_number),
+                error_title,
+                error_message,
+            ))
+
+        if len(errors) == 0:
+            print(
+                f'No errors found for category {category["Error Category Description"]}. Skipping.'
+            )
+            continue
+
+        used_categories.append(category)
+
+        create_error_code_file(
+            file_path, category['Error Category Number'], category['Error Category Description']
+        )
+        for error in errors:
+            error_number, error_title, error_message = error
+            update_error_code_file(file_path, error_number, error_title, error_message)
+        print(f'Updated {file_path}')
+
+    with open(top_level_file_path, 'w') as file:
+        pass
+    for category in used_categories:
+        add_import_top_level_file(
+            top_level_file_path,
+            f'_{category["Error Category Description"].lower().replace(" ", "_")}.mdx',
+            category['Error Category Description'],
+        )
+    add_section_description(top_level_file_path)
+    for category in used_categories:
+        add_impl_top_level_file(top_level_file_path, category['Error Category Description'])
