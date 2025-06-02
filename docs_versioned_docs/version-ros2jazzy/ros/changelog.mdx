@@ -27,7 +27,15 @@ import Style from '/assets/css/changelog.css';
 - Fixed symlink rule to rely on DS4DRV instead
 - Renamed to low soc cutoff from low voltage cutoff and fixed service client name
 - Added parameter files for Dingo (all variants), Ridgeback
-- Fixed the slam launch file to use the new lifecycle node 
+- Fixed the slam launch file to use the new lifecycle node
+- Use osEventFlags to signal when i2c reads and writes are complete for A300
+- Ping updates to all platforms
+- Increased max ARP age on all platforms
+- Wait till the power supplies are on to report fuse errors for A300
+- Check for valid return code on systemctl stop process for A300 bootloader
+- Adc task to 20Hz for A300
+- Make sure "Abort" is called asap when I2C transaction times out for A300
+
 
 ## [2.4] 2025-04-30
 
