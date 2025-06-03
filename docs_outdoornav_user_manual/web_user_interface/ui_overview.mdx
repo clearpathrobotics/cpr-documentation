@@ -104,11 +104,7 @@ Operator can access the following views:
 5.  **UGV + Dock:** The robot represents the UGV position, with the red arrow pointing forward.
     Its location is its position in the world frame and its orientation is the heading in
     the world frame.
-6.  **Base Station (not shown):** The yellow antenna icon is the last known location of
-    the base station based on the last survey performed. By clicking it the
-    user will be presented with the base station's coordinates, when it was
-    surveyed, and how many samples were taken during the survey.
-7.  **Datum (not shown):** The blue Waypoint marker on the map view represents the
+6.  **Datum (not shown):** The blue Waypoint marker on the map view represents the
     location of the reference point (ie. (x,y)=(0,0)) of the world
     coordinate system. The world (ie. map) coordinate system is in the
     ENU convention.
@@ -129,7 +125,7 @@ available views.
 <center>
   <figure>
     <img src="/img/outdoornav_images/ui_ptz_view_0_14_0.png" />
-    <figcaption>PTZ Camera View (TODO: new image)</figcaption>
+    <figcaption>PTZ Camera View</figcaption>
   </figure>
 </center>
 
@@ -147,41 +143,24 @@ available views.
     button will save an image to the computer/tablet running the UI.
     Images will be saved to the location in which your browser saves
     files.
-6.  **Camera Positions List:** Display the list of available camera
-    positions that have been saved. These camera positions can be
-    deleted from this list by clicking the "garbage can" icon beside
-    the corresponding position.
-7.  **Save Camera Position:** This button will save the camera position
-    to be used in the "Move PTZ" task. An example use case would be:
-    1.  Switch to the PTZ camera view.
-    2.  Teleoperate the UGV to a location at which the user can inspect
-        something.
-    3.  Move the camera sliders to orient the camera such that it is
-        looking at the inspection point.
-    4.  Click the "Save Camera Position".
-    5.  When creating an autonomous mission to this inspection point,
-        add the "Move PTZ" task to a Waypoint.
-    6.  Click the settings button beside the task and add the camera
-        position related to the inspection point.
+6.  **Camera Positions List:** Deprecated feature.
+7.  **Save Camera Position:** Deprecated feature.
 
 #### Q62 PTZ Features
 
 <center>
   <figure>
     <img src="/img/outdoornav_images/ui_ptz_q62.png" />
-    <figcaption>Q62 PTZ Camera Controls (TODO: new image)</figcaption>
+    <figcaption>Q62 PTZ Camera Controls</figcaption>
   </figure>
 </center>
 
 1.  **Virtual PTZ Joystick:** This joystick can be dragged away from the center 
     of the screen and the camera will follow. The further away from the center 
     the user drags the joystick, the faster the camera moves.
-2.  **Q62 Wiper:** Triggers the Q62 wiper to clear any water/debris on the the camera's 
-    face.
-3.  **Q62 Defogger:** Triggers the Q62 Defogger. When on, a "DEFOGGER ON" message will appear
-    in the upper left corner of the view.
-4.  **Q62 Infrared:** Changes the Q62 view to leverage infrared light for improved vision in 
-    the dark.
+2.  **Q62 Wiper:** Future feature.
+3.  **Q62 Defogger:** Future feature.
+4.  **Q62 Infrared:** Future feature.
 
 The Q62 PTZ Camera has the ability to move the camera in other ways besides the 
 sliders on the screen.  Some of these are shown below in brief video clips.
@@ -194,36 +173,9 @@ sliders on the screen.  Some of these are shown below in brief video clips.
       src="/video/outdoornav_videos/ui_ptz_drag_demo.mp4"
       width="700"
     />
-    <figcaption>Moving the Camera via the Virtual Joystick (TODO: new image)</figcaption>
+    <figcaption>Moving the Camera via the Virtual Joystick</figcaption>
   </figure>
 </center>
-
-<center>
-  <figure>
-    <video
-      autoplay="true"
-      loop="true"
-      src="/video/outdoornav_videos/ui_ptz_box_zoom.mp4"
-      width="700"
-    />
-    <figcaption>Moving the Camera via the Box Selection (TODO: new image)</figcaption>
-  </figure>
-</center>
-
-<center>
-  <figure>
-    <video
-      autoplay="true"
-      loop="true"
-      src="/video/outdoornav_videos/ui_ptz_double_click.mp4"
-      width="700"
-    />
-    <figcaption>Moving the Camera via Double Clicking (TODO: new image)</figcaption>
-  </figure>
-</center>
-
-A user can also right click the image and zoom out or reset the camera to the 
-home position.
 
 ### Front and Back Views
 
@@ -556,52 +508,3 @@ exact location of the POI and will also use the heading that has been defined by
     <figcaption>Creating a Goal from a POI</figcaption>
   </figure>
 </center>
-
-### Autonomous Docking
-
-<center>
-  <figure>
-    <img src="/img/outdoornav_images/ui_map_with_dock.png" />
-    <figcaption>Dock Icon</figcaption>
-  </figure>
-</center>
-
-#### Docking The UGV
-
-To dock the UGV autonomously the user can use the following methods:
-
-##### Dock (Local)
-
-If there is a valid dock within its driveable range the UGV will attempt to dock.
-This docking method can be done by selecting the Dock button in the bottom bar or by adding a
-"Dock Robot (Local)" task to either an event or a mission point.
-
-##### Dock (Network)
-
-If the UGV and the dock are within a map's driveable area the UGV will first navigate to a
-predock location based on the map paths available. A user can dock manually using this method as follows:
-
-- Enable the "Edit Map" toggle.
-- Maneuver the UGV so that is within the driveable range of the map.
-- Ensure the dock is within the driveable range of the map.
-- Right click the dock that the UGV will be docking at and select "Dock Robot Here".
-
-This docking method can also be accomplished by adding a "Dock Robot (Network)" task to either an
-event or a mission point. A dock will need to be provided for the task to function which can be done
-through the task settings modal.
-
-#### Undocking The UGV
-
-To undock the UGV autonomously, the user can apply a "Undock Robot" task to a mission event or
-point. The user can also click the Undock button in the bottom bar's left hand corner.
-
-#### Recover from Failed Docking or Undocking
-
-If for any reason, the docking or undocking tasks fail, the user can:
-
-- Manually drive the UGV towards the dock target, aligning the
-  charging unit with the receiver on the UGV.
-- Manually drive the UGV in reverse away from the dock target. It is
-  suggested that the user reverse roughly 2-3 meters away from the target,
-  then wait 1-2 minutes before starting any autonomous navigation
-  missions.
