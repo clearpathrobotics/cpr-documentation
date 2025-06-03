@@ -82,7 +82,8 @@ if __name__ == '__main__':
     print('Opened Google Sheet:', sh.title)
     categories = sh.get_worksheet(0).get_all_records()
 
-    top_level_file_path = '../../components/error_codes/error_codes.mdx'
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    top_level_file_path = os.path.join(script_dir, '../../components/error_codes/error_codes.mdx')
 
     used_categories = []
     for category in categories:
@@ -91,7 +92,7 @@ if __name__ == '__main__':
             # str(category['Error Category Number'])
             '_' + str(category['Error Category Description']).lower().replace(' ', '_')
         )
-        file_path = f'../../components/error_codes/{file_name}.mdx'
+        file_path = os.path.join(script_dir, f'../../components/error_codes/{file_name}.mdx')
         records = sh.get_worksheet(int(category['Error Category Number']) + 1).get_all_records()
 
         # tuple to hold error codes and messages
