@@ -549,7 +549,7 @@ Husky A300 is equipped with three safety functions to reduce the system risk:
 1. When the rear debug panel door is opened, it triggers an emergency stop (PLc per ISO 13849); this
    prevents the robot from moving while connected to a charger.
 1. The robot is equipped with an electrical braking system that reduces the speed of
-   the robot when the Emergency Stop is engaged (PLb per ISO 13849).
+   the robot when the Emergency Stop is engaged (PLa per ISO 13849).
 
 The safety of each Clearpath Robotics robot needs to be evaluated in the context of the installation where it is used.
 Environmental and process factors in each installation will ultimately govern the risk of injury resulting from
@@ -703,15 +703,39 @@ other components.
 
 ¹ Adjust the `/a300_00000` field with the serial number of your robot.
 
-##### Current Output Limits
+##### Current Limits
 
-The maximum current draw of the system is limited by the output of the batteries. The maximum
-continuous output for the 2-battery, 4-battery, and 6-battery configurations is 60 A, 120 A, and 150 A, respectively.
-Higher outputs are possible for short periods of time.
+<div class="table-container-for-centering">
+  <table class="centred-table">
+    <tr>
+      <td>&nbsp;</td>
+      <td><b>Husky A300,<br/>40 Ah</b></td>
+      <td><b>Husky A300,<br/>80 Ah</b></td>
+      <td><b>Husky A300,<br/>120 Ah</b></td>
+    </tr>
+    <tr>
+      <td>Battery Continuous Current Output</td>
+      <td><center>60 A</center></td>
+      <td><center>120 A</center></td>
+      <td><center>150 A</center></td>
+    </tr>
+    <tr>
+      <td>Circuit Breaker Value</td>
+      <td colspan="3"><center>100 A</center></td>
+    </tr>
+    <tr>
+      <td>Motor Continuous Output<sup>1</sup></td>
+      <td colspan="3"><center>17 A <em>(Per Motor)</em></center></td>
+    </tr>
+  </table>
+</div>
 
-Husky A300's motors are rated to draw 17 A continuous, but they will spike to several times higher
-than this, particularly when traversing rough terrain and when turning on the spot.
+:::note Current Limits Footnotes
+
+<sup>1</sup> &ensp; Husky A300's motors are rated to draw 17 A continuous, but they will spike to several times higher than this, particularly when traversing rough terrain and when turning on the spot.
 To reduce current draw, consider commanding wider-radius turns from your control software.
+
+:::
 
 ##### Regenerative Current Limits
 
@@ -945,8 +969,10 @@ In case of a collision:
 | Operating Time, Average⁶       | 4 hours (2-battery) or 8 hours (4-battery) or 12 hours (6-battery) |
 | Operating Time, Standby        | 12 hours (2-battery) or 24 hours (4-battery) or 36 hours (6-battery) |
 | Battery                        | 40 Ah @ 25.6 V (2-battery) or 80 Ah @ 25.6 V (4-battery) or 120 Ah @ 25.6 V (6-battery), LiFePO<sub>4</sub>   |
-| Standard Battery Charger       | 10 A; short-circuit, over-current, over-voltage and reverse voltage protection |
-| Charge Time⁷                   | 3-4 hours (2-battery) or 7-8 hours (4-battery) or 8-10 hours (6-battery)            |
+| Charge Time, Standard Charger _(North America)_ | 4 hours (2-battery) or 8 hours (4-battery) or 12 hours (6-battery)            |
+| Charge Time, Standard Charger _(Europe)_ | 5 hours (2-battery) or 10 hours (4-battery) or 15 hours (6-battery)            |
+| Charge Time, Upgraded 650 W Charger | 1.75 hours (2-battery) or 3.5 hours (4-battery) or 5.25 hours (6-battery)            |
+| Charge Time, Upgraded 650 W Charger | 2 hours (4-battery) or 3 hours (6-battery)            |
 | User Power                     | 12 V @ 10 A, 24 V @ 5 A, VBAT @ 5 A<br/>Optional expansion: VBAT @ 40 A |
 | Environmental                  | IP54                                                                     |
 
@@ -956,7 +982,6 @@ _³ Maximum speed should be reduced in off-road conditions. See also [Important 
 _⁴ See also [Important System Limits](#important-system-limits) for additional considerations related to slopes._ <br />
 _⁵ Robot must be powered on at a minimum temperature of 0 °C._ <br />
 _⁶ Based on 33% driving at 2 m/s with 50 kg payload on level ground and 67% idle._ <br />
-_⁷ Based on standard battery charger; fast chargers are available._ <br />
 
 <center>
   <figure>
@@ -1464,20 +1489,32 @@ may be charged with the standard manual/wired charger or with the optional wirel
 #### Manual/Wired Charging
 
 A manual (wired) charger can be used to charge the Husky batteries by following the steps outlined below.
-Two manual chargers are supported with Husky A300:
+The following manual chargers are supported with Husky A300:
 
-- Husky A300 Standard Manual Charger (Henryuan Model PSY27710000): 277 W, indoor use only
-- Husky A300 High Power Manual Chargers
+- Standard Manual Charger, North America (Henryuan Model PSY27710000): 277 W, indoor use only
+- Standard Manual Charger, Europe (Mean Well Model NPB-240-24TB): 222 W, indoor use only
+- High Power Manual Chargers
    - Robots with 2 batteries: Delta-Q Model IC650: 650W, indoor or outdoor use (IP66)
    - Robots with 4 or 6 batteries: Delta-Q Model IC1200: 1200 W, indoor or outdoor use (IP66)
 
 :::safety-caution
 
-**Never use the Husky A300 Standard Manual Charger in outdoor environments.**
+**Never use the Husky A300 Standard Manual Chargers in outdoor environments.**
 
 This charger is for indoor use only. Only use this charger when the
 robot is inside and after it has been dried. Otherwise, electric shock
 may occur.
+
+:::
+
+<br/>
+
+:::note
+
+Only the following Manual Chargers have been validated against the IEC 61010-1 standard
+for use with Husky A300:
+
+- Mean Well NPB-240-24TB
 
 :::
 
