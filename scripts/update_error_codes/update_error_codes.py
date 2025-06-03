@@ -40,7 +40,7 @@ def add_section_description(file_path):
 
 # Error Codes
 
-This document contains error codes and troubleshooting notes for each error code.
+This section includes a full list of the possible error codes along with troubleshooting guidance for each one.
 
 """
         f.write(section_description)
@@ -64,14 +64,14 @@ def preamble_error_code_file(file_path, category_number, category_description):
     """Write the preamble for the mdx file."""
     with open(file_path, 'a', encoding='utf-8') as f:
         f.write(
-            f'---\n## E{category_number}00 {category_description} {{#{category_description.lower().replace(" ", "-")}}}\n\n'
+            f'---\n## E{category_number}00 - {category_description} {{#{category_description.lower().replace(" ", "-")}}}\n\n'
         )
 
 
 def update_error_code_file(file_path, error_number, error_title, error_message):
     """Update the mdx file with the error code and message."""
     with open(file_path, 'a', encoding='utf-8') as f:
-        f.write(f'### E{error_number} - {error_title} {{#e{error_number}}} \n{error_message}\n')
+        f.write(f'### E{error_number} - {error_title} {{#e{error_number}}} \n{error_message}\n\n')
 
 
 if __name__ == '__main__':
@@ -104,7 +104,7 @@ if __name__ == '__main__':
             if not error_title:
                 continue
             errors.append((
-                str(category['Error Category Number']) + str(error_number),
+                str(category['Error Category Number']) + f'{error_number:0<2}',
                 error_title,
                 error_message,
             ))
