@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 # This script pulls error codes from a Google Sheet and updates the local mdx files in components/error_codes.
+# The sheet can be found at:
+# https://docs.google.com/spreadsheets/d/1GcQOTUiUgADPrYiLwWsgM9B8dvKHKgTAl_bsJcpXKm0/edit#gid=0
 # It requires the gspread library to interact with Google Sheets.
 # It is setup to use a service account for authentication.
 # Make sure to set the GOOGLE_SHEET_CREDENTIALS environment variable to the path of your service account JSON file.
