@@ -143,37 +143,11 @@ ros2 topic echo /a300_XXXXX/platform/emergency_stop
 1. Wait 30 minutes for the motors to cool and confirm that the protection state has cleared.
 1. If the issues persists, contact [Support](#support).
 
-### Status panel indicates a communication fault
+### Status panel indicates a fault
 
-A communication fault indicates that the Husky's computer to microcontroller Ethernet connection is
-not established. This connection requires:
-
-- The computer to be on.
-- The MCU to be on.
-- The Ethernet cable connection from the computer to the MCU to be functioning properly.
-- The MCU has Husky's firmware installed on it.
-
-If your Husky was functioning recently, the most common causes are:
-
-- Husky's computer is not powered, or is still booting.
-  Wait 60 seconds after startup to see if the computer-to-MCU connection starts after the computer turns on.
-  If not, connect to the computer with SSH, or using a computer monitor to see if the computer is running.
-- The Ethernet cable is not connected. Check that the cable is connected securely at both ends.
-- Someone has changed the robot.yaml configuration file. You can review the robot.yaml on the Husky
-  computer by running:
-  ```
-  nano /etc/clearpath/robot.yaml
-  ```
-
-### Status panel indicates a Wi-Fi fault  {#wifi-fault}
-
-1. Confirm that Husky Wi-Fi has been [configured correctly](user_manual_husky#wifi-client-setup),
-   including correct SSID and password. Confirm that the settings are correct in the
-   corresponding `/etc/netplan/` file.
-1. From Husky's computer, run `ip a` to review the status of the wireless interface and
-   determine if the connection has been established.
-1. Power cycle the robot and see if the issue persists.
-1. If the issues persists, contact [Support](#support).
+:::info
+For troubleshooting error codes, refer to the [Error Codes](error_codes_husky) page.
+:::
 
 ---
 
