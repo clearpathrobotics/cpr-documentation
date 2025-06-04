@@ -1,0 +1,52 @@
+name: Update Error Codes
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '0 2 * * *' # Runs daily at 2:00 AM UTC
+
+jobs:
+  update-error-codes:
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.11
+    env:
+      GOOGLE_SHEET_CREDENTIALS: scripts/update_error_codes/service_account.json
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r scripts/update_error_codes/requirements.txt
+
+      - name: Write service account credentials
+        run: |
+          mkdir -p scripts/update_error_codes
+          echo "$GOOGLE_SHEET_CREDENTIALS_JSON" > scripts/update_error_codes/service_account.json
+        shell: bash
+        env:
+          GOOGLE_SHEET_CREDENTIALS_JSON: ${{ secrets.GOOGLE_SHEET_CREDENTIALS_JSON }}
+
+      - name: Run update_error_codes.py
+        run: |
+          python scripts/update_error_codes/update_error_codes.py
+
+      - name: Configure git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: 'chore: update error codes from Google Sheet'
+          title: 'chore: update error codes from Google Sheet'
+          body: 'Automated update of error codes from Google Sheet.'
+          branch: update/error-codes-auto
+          delete-branch: true
+          add-paths: |
+            components/error_codes/*.mdx
