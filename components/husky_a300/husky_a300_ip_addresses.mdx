@@ -1,0 +1,58 @@
+### IP Addresses
+
+<div class="table-container-for-centering">
+  <table class="centred-table">
+    <tr>
+      <td><b>IP Address</b></td>
+      <td><b>Device</b></td>
+    </tr>
+    <tr>
+      <td>192.168.131.1</td>
+      <td>Computer, Primary</td>
+    </tr>
+    <tr>
+      <td>192.168.131.2</td>
+      <td>Common Core MCU</td>
+    </tr>
+    <tr>
+      <td>192.168.131.5</td>
+      <td>Computer, Secondary, <em>(Optional)</em></td>
+    </tr>
+    {(props.robotModel == "Observer") && <tr>
+      <td>192.168.131.10</td>
+      <td>Axis Q62 Pan-Tilt-Zoom Camera</td>
+    </tr>}
+    {((props.robotModel == "AMP") || (props.robotModel == "Observer")) && <tr>
+      <td>192.168.131.15</td>
+      <td>Front OAK-D Camera</td>
+    </tr>}
+    {((props.robotModel == "AMP") || (props.robotModel == "Observer")) && <tr>
+      <td>192.168.131.16</td>
+      <td>Rear OAK-D Camera</td>
+    </tr>}
+    <tr>
+      <td>192.168.131.20</td>
+      {(props.robotModel == "AMP") && <td>Side Hokuyo Lidar <em>(Optional, Autonomous Wireless Charging)</em></td> }
+      {(props.robotModel == "Observer") && <td>Side Hokuyo Lidar</td> }
+    </tr>
+    {((props.robotModel == "AMP") || (props.robotModel == "Observer")) && <tr>
+      <td>192.168.131.25</td>
+      <td>Seyond Robin W Lidar</td>
+    </tr>}
+    {((props.robotModel == "AMP") || (props.robotModel == "Observer")) && <tr>
+      <td>192.168.131.35</td>
+      <td>Fixposition Vision RTK 2 Positioning</td>
+    </tr>}
+    {((props.robotModel == "AMP") || (props.robotModel == "Observer")) && <tr>
+      <td>192.168.131.51</td>
+      <td>Peplink Access Point</td>
+    </tr>}
+</table>
+</div>
+
+:::info Custom Additions
+
+Our [Network IP Addresses page](/docs/ros/networking/network_ip_addresses) lists the common ranges we use per sensor type.
+Clearpath will provide a supplementary manual that includes the IP addressess of custom configuration sensors.
+
+:::

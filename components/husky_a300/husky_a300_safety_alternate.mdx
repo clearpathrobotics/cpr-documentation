@@ -1,0 +1,798 @@
+import Admonition from "@theme/Admonition";
+import AdmonitionTypes from "/src/theme/Admonition/Types";
+
+### Safety
+
+Clearpath Robotics's top priority is the safety of people interacting with our products.
+Clearpath Robotics produces high power and fast-moving pieces of machinery that could cause serious injury—including death—if the machinery is used or maintained improperly.
+This documentation includes safety messages corresponding to either a DANGER, WARNING, or CAUTION level to inform your commissioning team of risks related to Clearpath products.
+
+These messages are to assist your commissioning team as they create a Risk Assessment for your application.
+The Husky A300 may present risks to users even during normal operation.
+Your commissioning team's Risk Assessment process may add additional design features or safeguards to reduce risks.
+All operators of the machine should familiarize themselves with the Risk Assessment and this user manual, to be informed of hazards, and to reduce the risk of harm.
+
+<Admonition   
+  type="note"
+  icon=" "
+  title=" ">
+>
+    :::safety-danger
+
+    DANGER indicates a hazardous situation which, if not avoided, will result in death or serious injury.
+
+    :::
+
+    <br/>
+
+    :::safety-warning
+
+    WARNING indicates a hazardous situation which, if not avoided, could result in death or serious injury.
+
+    :::
+
+    <br/>
+
+    :::safety-caution
+
+    CAUTION indcates a hazardous situation which, if not avoided, could result in minor or moderate injury.
+
+    :::
+
+    <br/>
+</Admonition>
+
+[//]: <> (Disclaimer)
+<Admonition   
+  type="danger"
+  icon=" "
+  title="Disclaimer">
+>
+
+  The information found within this documentation is subject to change without notice.
+  This document may be periodically reviewed and revised in the future.
+  Clearpath Robotics assumes no responsibility for any errors or omissions that may appear in this document.
+  In no event shall Clearpath Robotics be liable for any costs or damages arising from the use of this document or the hardware and software described within.
+  The reference documents listed in this manual shall be applicable at the latest revision in effect.
+
+  While Clearpath Robotics does its best to inform its users of potential risks, it is impossible to provide an exhaustive list of all possible hazards in your environment.
+
+  It is the responsibility of the user to be familiar with all applicable safety standards and ensure that the hardware,
+    software, and/or services delivered by Clearpath Robotics _(collectively referred to as the "Product")_
+    are maintained and operated in a safe manner, in a suitable environment, 
+    and in accordance with the recommended maintenance requirements prescribed by Clearpath Robotics.
+
+  Without limiting the foregoing, it is the user's responsibility to ensure that personnel operating the Product are adequately trained and comply with all laws,
+    regulations, codes, and safe practices, including health and safety and workers's compensation laws, applicable to the user's activities and its ownership,
+    possession, and use of the Product.
+  Modification, removal or addition of components, or changes to the functionality or operation of the Product in any way,
+    except as expressly authorized by Clearpath Robotics, may jeopardize the safety of the Product.
+  
+  If at any time you have any questions or concerns regarding the safe operation of your Clearpath Robotics product, contact [Support](#support).
+
+  <br/>
+</Admonition>
+
+These are the hazards Clearpath Robotics is aware of for the Husky A300.
+Your commissioning team may find more hazards due to the Husky operating in your unique application.
+
+[//]: <> (Comment, lines in the Clearpath Risk Assessment that require Information-For-Use be added to the user manual)
+<>
+  [//]: <> (
+     1 done
+     2 done
+     4 done
+     5 done
+     6 done
+     7 done
+     8 done
+     9 done
+    10 done
+    11 done
+    12 done
+    13 done
+    14 done
+    18 done
+    19 done
+    20 done
+    21 done
+    22 done
+    23 done
+    24 done
+    25 done
+    26 done
+    27 done
+    28 done
+    29 done
+    30 done
+    31 done
+    34 done
+    35 done
+    36 done
+    37 done
+    38 TODO, need report for IEC 61010-1
+    39 TODO, need report for IEC 61010-1
+    41 TODO, need report for acoustics. The admonition exists below, but needs to be updated.
+    42 TODO, need report for acoustics. The admonition exists below, but needs to be updated.
+    43 done
+    45 done
+    46 done
+    47 done
+    48 done
+    49 done
+    50 done
+    51 done
+    52 done
+    53 done
+    54 done
+    55 done
+    56 done
+    57 done
+    58 done
+    59 done
+    60 done
+    61 done
+    62 done
+    63 done
+    64 done
+    65 done
+    66 done
+    67 done
+    69 done
+  )
+</>
+
+[//]: <> (Risk Assessment lines, arranged in order of risk severity.)
+<details>
+  <summary>Click To Expand, To Show All The Hazards</summary>
+  <!-- DANGER-->
+  <ComponentRiskAssessmentLine_29 />
+  <ComponentRiskAssessmentLine_14 />
+  <ComponentRiskAssessmentLine_26 />
+  <ComponentRiskAssessmentLine_27 />
+  <ComponentRiskAssessmentLine_30 />
+  <ComponentRiskAssessmentLine_9_10_11_12 />
+
+  <!-- WARNING-->
+  <ComponentRiskAssessmentLine_5_6_7_8 />
+  <ComponentRiskAssessmentLine_24 />
+  <ComponentRiskAssessmentLine_37 />
+  <ComponentRiskAssessmentLine_46 />
+  <ComponentRiskAssessmentLine_49_50 />
+  <ComponentRiskAssessmentLine_51_52 />
+  <ComponentRiskAssessmentLine_55 />
+  <ComponentRiskAssessmentLine_66 />
+
+  <!-- CAUTION-->
+  <ComponentRiskAssessmentLine_1_2 />
+  <ComponentRiskAssessmentLine_4 />
+  <ComponentRiskAssessmentLine_13 />
+  <ComponentRiskAssessmentLine_18_31 />
+  <ComponentRiskAssessmentLine_19_20_21 />
+  <ComponentRiskAssessmentLine_22 />
+  <ComponentRiskAssessmentLine_23 />
+  <ComponentRiskAssessmentLine_25 />
+  <ComponentRiskAssessmentLine_28 />
+  <ComponentRiskAssessmentLine_34_35 />
+  <ComponentRiskAssessmentLine_36 />
+  <ComponentRiskAssessmentLine_43 />
+  <ComponentRiskAssessmentLine_45_64 />
+  <ComponentRiskAssessmentLine_47_48 />
+  <ComponentRiskAssessmentLine_53 />
+  <ComponentRiskAssessmentLine_54_56_57 />
+  <ComponentRiskAssessmentLine_58_59_60_61_62_67 />
+  <ComponentRiskAssessmentLine_63 />
+  <ComponentRiskAssessmentLine_65 />
+  <ComponentRiskAssessmentLine_69 />
+</details>
+
+
+[//]: <> (Functions are named per lines of CPR's risk assessment, 030611_4)
+
+export function ComponentRiskAssessmentLine_1_2() {
+  const SafetyAdmonition = AdmonitionTypes["safety-caution"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Always follow the safe lifting procedure for Husky A300 as detailed in this manual.
+          The robot may be lifted by 2 people at the 2 bumpers, or with lifting slings under the robot.
+          <br/>
+          <br/>
+          Do not lift the Husky A300 with a fork truck's forks under the robot's chassis.
+          <br/>
+          <br/>
+          Only lift the robot to table height.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_4() {
+  const SafetyAdmonition = AdmonitionTypes["safety-caution"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Follow safe fork truck lifting procedures when lifting the Husky A300's crate.
+          The crate includes wood blocks to retain the crate on the forks.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_5_6_7_8() {
+  const SafetyAdmonition = AdmonitionTypes["safety-warning"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Husky A300 with payload can have a total kinetic energy of 360 joules of energy <em>(180 kg at 2 m/s)</em>.
+          This is a significant amount of energy that can cause severe injury of death.
+          <br/>
+          <br/>
+          Husky A300, Husky AMP, and Husky Observer have been designed to ensure the robot will not impact a person's torso or head.
+          <br/>
+          <br/>
+          Your commissioning team must ensure custom payloads to not create impact points near a person's torso or head.
+          <br/>
+          <br/>
+          Your commissioning team must review the worksite procedures, to reduce the risk of the robot colliding with a person.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_9_10_11_12() {
+  const SafetyAdmonition = AdmonitionTypes["safety-danger"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Custom attachments such as towed trailers and manipulators were not been considered in Clearpath Robotics's risk assessment process.
+          These custom attachments can crush or strike people, causing severe injuries or death.
+          <br/>
+          <br/>
+          Your commisioning team must consider this hazard and add add design features and safeguards to reduce this risk—such as adding physical guards, or PLC interlocks with the Emergency Stop system.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_13() {
+  const SafetyAdmonition = AdmonitionTypes["safety-caution"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Husky can become unstable or fall if driven over ledges greater than 150 mm.
+          Husky can become unstable if driven at high speed over ledges between 20 mm - 150 mm.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_14() {
+  const SafetyAdmonition = AdmonitionTypes["safety-danger"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Husky A300 does not include any safeguards to prevent it from driving over a cliff.
+          <br/>
+          <br/>
+          Husky is at least 80 kg, and likely to cause serious injury or death when landing on a person.
+          <br/>
+          <br/>
+          Your commisioning team must consider this hazard and add add design features and safeguards to reduce this risk—such as by constraining the Husky within a worksite without cliffs.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_18_31() {
+  const SafetyAdmonition = AdmonitionTypes["safety-caution"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          The Husky's external and internal edges have been rounded to reduce the risk of cuts.
+          Edges may become burred due to damage through use.
+          Attempt to grasp parts during maintenance, without sliding hands along edges.
+          This reduces the risk of pinches or cuts.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_19_20_21() {
+  const SafetyAdmonition = AdmonitionTypes["safety-caution"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Do not use the provided Standard Charger outside.
+          Dry the robot before using the battery's Standard Charger.
+          <br/>
+          <br/>
+          The Standard Charger includes a power cable and regulatory marks for the destination country of the your purchase order.
+          Confirm these are acceptable for your worksite before use.
+          <br/>
+          <br/>
+          <Admonition type="note">
+            The optional Upgraded Charger for Husky A300 may be used outdoors.
+            The AC power cable for this charger must be kept with an awning or cable-cover.
+          </Admonition>
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_22() {
+  const SafetyAdmonition = AdmonitionTypes["safety-caution"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Dry the Husky A300's Rear Charge Port Door before opening it.
+          Do not open the during heavy rain—<em>(more than 1 mm per hour)</em>—or when wind is angling the rainfall.
+          <br/>
+          <br/>
+          The robot's manual charge connector is visible behind the Rear Charge Port Door.
+          This connector has live battery voltage when the circuit breaker is in the On position.
+          <br/>
+          <br/>
+          The voltage at this connector is less than 30 VDC, so it should not cause shocks in damp conditions.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_23() {
+  const SafetyAdmonition = AdmonitionTypes["safety-caution"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Husky A300 can present a tripping hazard.
+          <br/>
+          <br/>
+          Husky A300 can be anywhere in the operating area at any time and may pose a tripping hazard even when not in motion.
+          <br/>
+          <br/>
+          Ensure the Husky A300 is parked in a location away from walkways when the robot is not operating.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_24() {
+  const SafetyAdmonition = AdmonitionTypes["safety-warning"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Do not ride on a moving Husky A300.
+          This includes standing, sitting, or any other method of mobing a person using a Husky A300.
+          <br/>
+          <br/>
+          The robot may become unstable or move unpredictably.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_25() {
+  const SafetyAdmonition = AdmonitionTypes["safety-caution"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          This manual includes Interface Control Drawings and STEP models for helping you design custom payloads for Husky A300.
+          Follow the payload allowances, stability limits, and suggested operating conditions to maintain stability of the robot and payload.
+          Payloads should be securely fastened to Husky to maintain stability, and prevent objects being thrown from the robot.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_26() {
+  const SafetyAdmonition = AdmonitionTypes["safety-danger"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Do not operate Husky A300 near ladders.
+          The robot could hit ladders, and cause these to become unstable, resulting in a person falling from a height.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_27() {
+  const SafetyAdmonition = AdmonitionTypes["safety-danger"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          The Husky A300 may operate near racking.
+          Racking must be securely fastened, and be loaded to prevent falling items.
+          <br/>
+          <br/>
+          It is the commissioning and operating teams's responibility to ensure that the Husky A300 colliding with racking will not cause items to fall on a person.
+          It is the commissioning team's responsibility to ensure local regulations are followed.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_28() {
+  const SafetyAdmonition = AdmonitionTypes["safety-caution"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          The Husky A300 may collide with carts or other objects on casters.
+          This may cause carts to move or become unstable.
+          <br/>
+          <br/>
+          Operating teams should park carts outside the Husky A300's operating area.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_29() {
+  const SafetyAdmonition = AdmonitionTypes["safety-danger"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Do not operate the robot near vulnerable people such as infants and children.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_30() {
+  const SafetyAdmonition = AdmonitionTypes["safety-danger"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Do not operate Husky A300 in explosive atmospheres.
+          Do not use the Husky near flammable liquids, gases, or dust.
+          Husky A300 can create sparks which may ignite the dust or fumes.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_34_35() {
+  const SafetyAdmonition = AdmonitionTypes["safety-caution"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          The Husky A300 has a battery that does not exceed 30 VDC.
+          It is unlikely to shock you due to this low voltage.
+          <br/>
+          <br/>
+          Shut off the circuit breaker, and dry the robot before performing maintence.
+          <br/>
+          <br/>
+          Husky AMP and Husky Observer include PoE devices.
+          PoE can provide up to 60 VDC.
+          <br/>
+          <br/>
+          These devices include waterproof cables, to reduce the risk of shock.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_36() {
+  const SafetyAdmonition = AdmonitionTypes["safety-caution"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          The Husky A300 may build up a static charge as it does not have a static dissipation strap.
+          This static charge may shock you when you touch the robot.
+          <br/>
+          <br/>
+          Refer to Husky's test report—<a href="/assets/pdf/clearpath_robotics_032721-RPT1_3.pdf">clearpath_robotics_032721-RPT1_3.pdf</a>—per IEC 61326-1.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_37() {
+  const SafetyAdmonition = AdmonitionTypes["safety-warning"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          The Husky A300 may cause issues with pacemakers or other medical devices due to EMI or EMC. 
+          <br/>
+          <br/>
+          Refer to Husky's test report—<a href="/assets/pdf/clearpath_robotics_032721-RPT1_3.pdf">clearpath_robotics_032721-RPT1_3.pdf</a>—per IEC 61326-1.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_43() {
+  const SafetyAdmonition = AdmonitionTypes["safety-caution"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          A standard Husky A300 does not include lidar or other devices with Class 1 lasers per IEC 60825-1.
+          <br/>
+          <br/>
+          The Husky AMP and Husky Observer include lidar with a Class 1 notice.
+          Class 1 lasers are safe in normal use, without causing damage to eyes or skin.
+          <br/>
+          <br/>
+          Review your local regulations for workplace requirements with Class 1 lasers.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_45_64() {
+  const SafetyAdmonition = AdmonitionTypes["safety-caution"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Pushing or pulling an unpowered Husky can cause back strain, and increases the risk of slips and falls.
+          <br/>
+          <br/>
+          Consider your posture when moving an unpowered robot.
+          Consider updating your worksite procedures to reduce how often unpowered robots need to be moved.
+          Only move the Husky while you are wearing high traction footwear, on dry surfaces.
+          Make sure the Husky is powered off before pushing or pulling the robot.
+          <br/>
+          <br/>
+          Follow your worksite's guidelines for cleaning flooring.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_46() {
+  const SafetyAdmonition = AdmonitionTypes["safety-warning"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Always use chock blocks on the wheels when powering off the robot.
+          Husky A300 can roll on slopes when the robot is unpowered.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_47_48() {
+  const SafetyAdmonition = AdmonitionTypes["safety-caution"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Ensure that there are no objects in the operating environment that will could move due to an impact with a free-rolling robot.
+          The Husky A300 can roll when it is in an Emergency Stop state.
+          The Emergency Stop state removes power from the drive motors, but does not engage a friction brake.
+          Consider how your operating environment's slopes, the payload mass on the robot, and the velocity of the robot affect this risk.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_49_50() {
+  const SafetyAdmonition = AdmonitionTypes["safety-warning"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Always power off Husky A300 and set the Battery Circuit Breaker to the Off position before performing maintenance.
+          Electrical shock or fire may occur when accessing the interior of the Husky A300, or from live voltage cables on the outside of the robot.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_51_52() {
+  const SafetyAdmonition = AdmonitionTypes["safety-warning"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Ensure that you follow all guidance for Husky A300 regarding allowable slopes, allowable payload mass, and allowable payload location.
+          Husky A300 can tip over if subjected to slopes or vertical drops outside the allowable range.
+          Husky A300 can tip over while driving on acceptable terrain if payloads are not within the robot's allowable centre-of-gravity stability cone.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_53() {
+  const SafetyAdmonition = AdmonitionTypes["safety-caution"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Always tie up long hair, and remove loose jewellery, and wear clothing without snag points when working aroung Husky A300.
+          This reduces the risk of entanglement with the moving robot.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_54_56_57() {
+  const SafetyAdmonition = AdmonitionTypes["safety-caution"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Follow the proper Lockout procedure for Husky A300 when completing inspections or maintenance.
+          A related Tagout procedure should be developed and followed at your worksite.
+          <br/>
+          <br/>
+          Access to live voltage inside Husky A300 may occur if the Lockout procedure is not followed, which may result in electric shock or a fire.
+          Lockout prevents unintended motion of the machinery, since the motors will not receive power.
+          Lockout prevents cuts and crushing from moving fans and motors.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_55() {
+  const SafetyAdmonition = AdmonitionTypes["safety-warning"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Only operate Husky on the intended operating terrain, within the allowable payload and velocity limits.
+          Low friction surfaces like ice can cause erratic or unstable motion of the robot.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+} 
+
+export function ComponentRiskAssessmentLine_58_59_60_61_62_67() {
+  const SafetyAdmonition = AdmonitionTypes["safety-caution"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Always wear gloves, preferably nitrile gloves, while performing maintenance on the robot.
+          Internal maintenance on Husky A300 may expose the technician to harmful chemicals in dust, fluids, thermal paste, thread locking adhesives, electric grease, batteries, and material coatings.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_63() {
+  const SafetyAdmonition = AdmonitionTypes["safety-caution"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Always place Husky A300 at a suitable height when working in or around Husky A300.
+          Bend at the knees when working on the robot at ground level to avoid fatigue and injury.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_65() {
+  const SafetyAdmonition = AdmonitionTypes["safety-caution"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          The robot may become unstable as you remove items for maintenance.
+          Place the entire bottom surface of the Husky's chassis on a table when removing wheels to maintain the robot's stability.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_66() {
+  const SafetyAdmonition = AdmonitionTypes["safety-warning"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          Keep hands, feet, and other objects clear of the Husky A300 while driving.
+          Objects can be pinched between the Husky A300 and other fixtures in the environment, or between the Husky A300's wheels and the Husky A300's frame or payloads.
+          <br/>
+          <br/>
+          Design your custom payloads so they prevent pinching, crushing, and entanglement.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}
+
+export function ComponentRiskAssessmentLine_69() {
+  const SafetyAdmonition = AdmonitionTypes["safety-caution"];
+  return (
+    <div>
+      <SafetyAdmonition>
+        <>
+          The Husky A300 should not cause health issues due to high power radio waves.
+          Review Husky's test report—<a href="/assets/pdf/clearpath_robotics_032188-COC1_3.pdf">clearpath_robotics_032188-COC1_3.pdf</a>—to confirm that the results per FCC part 15 subpart B / ICES-003 are acceptable for your worksite.
+        </>
+      </SafetyAdmonition>
+      <br/>
+    </div>
+  );
+}

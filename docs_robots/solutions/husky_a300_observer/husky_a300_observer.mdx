@@ -1,0 +1,210 @@
+---
+title: Husky A300 Observer User Manual
+sidebar_label: Husky Observer
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 2
+---
+
+export const robotModel="Observer"
+import TOCInline from '@theme/TOCInline';
+import ComponentRobotComponents from "/components/husky_a300/husky_a300_components.mdx";
+import ComponentTechnicalSpecifications from "/components/husky_a300/husky_a300_technical_specifications.mdx";
+import ComponentRiskAssessmentForIntegrations from "/components/common_risk_assessment_for_integrations.mdx";
+import ComponentStepModel from "/components/husky_a300/husky_a300_step_model.mdx";
+import ComponentSafety from "/components/husky_a300/husky_a300_safety_alternate.mdx";
+import Support from "/components/support.mdx";
+import ComponentOtherDocumentationToReview from "/components/husky_a300/husky_a300_amp_other_documentation_to_review.mdx";
+import ComponentIntendedUse from "/components/husky_a300/husky_a300_intended_use.mdx";
+import ComponentWhatsIncluded from "/components/husky_a300/husky_a300_whats_included.mdx";
+import ComponentSystemArchitecture from "/components/husky_a300/husky_a300_system_architecture.mdx";
+import ComponentIpAddresses from  "/components/husky_a300/husky_a300_ip_addresses.mdx";
+import ComponentSafetySystemFunctionality from "/components/husky_a300/husky_a300_safety_system_functionality.mdx";
+import ComponentUnboxingTheHuskyA300 from "/components/husky_a300/husky_a300_unboxing.mdx";
+import ComponentTurningTheCircuitBreakerOn from "/components/husky_a300/husky_a300_turning_the_circuit_breaker_on.mdx";
+import ComponentTurningTheRobotOn from "/components/husky_a300/husky_a300_turning_the_robot_on.mdx";
+import ComponentEmergencyStopButtons from "/components/husky_a300/husky_a300_emergency_stop_buttons.mdx";
+import ComponentEmergencyStopClearing from "/components/husky_a300/husky_a300_emergency_stop_clearing.mdx";
+import ComponentEmergencyStopWireless from "/components/husky_a300/husky_a300_emergency_stop_wireless.mdx";
+import ComponentConnectingWirelessJoystick from "/components/common_wireless_joystick_ps4.mdx";
+import ComponentInCaseOfCollision from "/components/common_in_case_of_collision.mdx";
+import ComponentIssuesAfterGettingStarted from "/components/husky_a300/husky_a300_issues_after_getting_started.mdx";
+import ComponentPreOperationInspection from "/components/husky_a300/husky_a300_pre_operation_inspection.mdx";
+import ComponentMobilityControlOptions from "/components/husky_a300/husky_a300_mobility_control_options.mdx";
+import ComponentOrientationReferences from  "/components/husky_a300/husky_a300_orientation_references.mdx";
+import ComponentChargingTheRobot from "/components/husky_a300/husky_a300_charging_the_robot.mdx";
+import ComponentChargingTheWirelessJoystick from "/components/common_wireless_joystick_ps4_charging.mdx";
+import ComponentChargingTheWirelessEmergencyStopTransmitter from "/components/common_wireless_emergency_stop_charging.mdx";
+import ComponentSystemLimits from  "/components/husky_a300/husky_a300_system_limits.mdx";
+import ComponentWhoCanMaintainTheRobot from "/components/common_who_can_maintain_the_robot.mdx";
+import ComponentLockoutTagout from "/components/husky_a300/husky_a300_lockout_tagout.mdx";
+import ComponentTirePressure from "/components/husky_a300/husky_a300_tire_pressure.mdx";
+import ComponentFrontCover from "/components/husky_a300/husky_a300_front_cover.mdx";
+import ComponentAirFilter from "/components/husky_a300/husky_a300_air_filter.mdx";
+import ComponentBatteryCellBalancing from "/components/husky_a300/husky_a300_battery_balancing.mdx";
+import ComponentEmergencyStopBrakingInspection from "/components/husky_a300/husky_a300_emergency_stop_distance.mdx";
+import ComponentCommonReplacementItems from "/components/husky_a300/husky_a300_common_replacement_items.mdx";
+import ComponentTireAndTube from "/components/husky_a300/husky_a300_tire.mdx";
+import ComponentMotors from "/components/husky_a300/husky_a300_motors.mdx";
+import ComponentNameplate from "/components/husky_a300/husky_a300_nameplate.mdx";
+import ComponentRemovingTheTopPlate from "/components/husky_a300/husky_a300_top_plate.mdx";
+import ComponentElectronicsTray from "/components/husky_a300/husky_a300_electronics_tray.mdx";
+import ComponentBatteryIntegrationTray from "/components/husky_a300/husky_a300_battery_integration_tray.mdx";
+import ComponentBatteries from "/components/husky_a300/husky_a300_batteries.mdx";
+import ComponentRearCover from "/components/husky_a300/husky_a300_rear_cover.mdx";
+import ComponentBumpers from "/components/husky_a300/husky_a300_bumpers.mdx";
+import ComponentAirGrilles from "/components/husky_a300/husky_a300_air_grilles.mdx";
+import ComponentFans from "/components/husky_a300/husky_a300_fans.mdx";
+import ComponentPowerDistribution from "/components/husky_a300/husky_a300_power_distribution.mdx";
+import ComponentStatusLights from "/components/husky_a300/husky_a300_status_lights.mdx";
+import ComponentNetworkSwitch from "/components/husky_a300/husky_a300_network_switch.mdx";
+import ComponentComputer from "/components/husky_a300/husky_a300_computer.mdx";
+import ComponentSystemInterfaceDebugLed from "/components/husky_a300/husky_a300_system_interface_debug_led.mdx";
+import ComponentReplacingCircuitBoards from "/components/husky_a300/husky_a300_replacing_circuit_boards.mdx";
+import ComponentLiftingByHand from "/components/husky_a300/husky_a300_lifting_by_hand.mdx";
+import ComponentLiftingSling from "/components/husky_a300/husky_a300_lifting_sling.mdx";
+import ComponentRemovingTheSidePanels from "/components/husky_a300/husky_a300_amp_side_panels.mdx";
+import ComponentConnectorBulkhead from "/components/husky_a300/husky_a300_amp_connector_bulkhead.mdx"
+import ComponentRemovingTheEnclosure from "/components/husky_a300/husky_a300_amp_enclosure.mdx";
+import ComponentArchCables from "/components/husky_a300/husky_a300_amp_arch_cables.mdx";
+import ComponentAmpCableRoutings from "/components/husky_a300/husky_a300_amp_cable_routings.mdx";
+import ComponentBaseLink from  "/components/husky_a300/husky_a300_base_link.mdx";
+import ComponentPacs from "/components/husky_a300/husky_a300_pacs.mdx";
+import ComponentCablePassthrough from "/components/husky_a300/husky_a300_cable_passthrough.mdx";
+import ComponentInternalIntegrations from "/components/husky_a300/husky_a300_internal_integrations.mdx";
+import ComponentDataConnections from "/components/husky_a300/husky_a300_data_connections.mdx";
+import ComponentSystemInterfaceConnectorSummary from "/components/husky_a300/husky_a300_system_interface_connector_summary.mdx";
+import ComponentPowerConnections from "/components/husky_a300/husky_a300_power_connections.mdx";
+import ComponentFanExpansion from "/components/husky_a300/husky_a300_fan_expansion.mdx";
+import ComponentWirelessEmergencyStop from "/components/husky_a300/husky_a300_wireless_emergency_stop.mdx";
+import ComponentCanbus from "/components/husky_a300/husky_a300_canbus.mdx";
+import ComponentAdditionalEmergencyStopDevices from "/components/husky_a300/husky_a300_additional_emergency_stop_devices.mdx";
+import ComponentSystemPower from "/components/husky_a300/husky_a300_system_power.mdx";
+import ComponentInterfaceControlDrawing from "/components/husky_a300/husky_a300_interface_control_drawing_amp.mdx";
+import ComponentAluminumExtrusions from "/components/husky_a300/husky_a300_amp_aluminum_extrusions.mdx";
+import ComponentLargeIntegration from "/components/husky_a300/husky_a300_large_integration.mdx";
+import ComponentCommonSoftwareIntegration from "/components/common_software_integration.mdx";
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_observer_hero_front.jpg"
+      width="700"
+    />
+    <figcaption>Husky Observer, With Add-on Components _(Microphone, Thermal Camera, And 360° Lidar)_</figcaption>
+  </figure>
+</center>
+
+<details>
+  <summary>Click to view this page's table of contents</summary>
+  <TOCInline toc={toc} />
+</details>
+
+## Introduction
+  ### About
+  The Husky Observer uses a Husky A300 AMP as its base.
+  The AMP includes the Husky A300 base robot, sensors, autonomy navigation software, and a web user interface for commanding the robot.
+  Husky Observer then adds Autonomous Wireless Charging, and a Pan Tilt Zoom Camera.
+  This manual will explain how to use your Husky Observer, how to add new hardware and software, and how to maintain the robot.
+
+  <ComponentOtherDocumentationToReview />
+  <ComponentSafety />
+  <ComponentIntendedUse />
+  <ComponentWhatsIncluded robotModel={robotModel}/>
+
+## System Overview
+  <ComponentRobotComponents robotModel={robotModel}/>
+  [//]: <> (TODO, component, Wiring Diagram of Base Husky A300)
+  [//]: <> (TODO, component, Wiring Diagram of Observer)
+  <ComponentTechnicalSpecifications robotModel={robotModel}/>
+  <ComponentSystemArchitecture />
+  <ComponentIpAddresses robotModel={robotModel}/>
+  <ComponentSafetySystemFunctionality />
+
+## Getting Started {#getting-started}
+  <ComponentUnboxingTheHuskyA300 />
+  <ComponentTurningTheCircuitBreakerOn />
+  <ComponentTurningTheRobotOn />
+  <ComponentEmergencyStopButtons />
+  <ComponentEmergencyStopClearing />
+  <ComponentEmergencyStopWireless />
+  <ComponentConnectingWirelessJoystick />
+  <ComponentInCaseOfCollision />
+  <ComponentIssuesAfterGettingStarted />
+
+## Operating The Robot {#operating-the-robot}
+  <ComponentPreOperationInspection />
+  <ComponentMobilityControlOptions />
+  <ComponentOrientationReferences />
+  <ComponentChargingTheRobot robotModel={robotModel}/>
+  <ComponentChargingTheWirelessJoystick />
+  <ComponentChargingTheWirelessEmergencyStopTransmitter />
+  <ComponentSystemLimits />
+  [//]: <> (TODO, component for Status Lights, from original manual)
+
+## Maintenance, Preventative
+  <ComponentWhoCanMaintainTheRobot />
+  <ComponentLockoutTagout />
+  <ComponentTirePressure />
+  <ComponentFrontCover />
+  <ComponentAirFilter />
+  <ComponentBatteryCellBalancing />
+  <ComponentEmergencyStopBrakingInspection />
+
+## Maintenance, Base Husky A300
+  <ComponentWhoCanMaintainTheRobot />
+  <ComponentCommonReplacementItems />
+  <ComponentTireAndTube />
+  <ComponentMotors />
+  <ComponentNameplate />
+  [//]: <> (<ComponentRemovingTheTopPlate />)
+  <ComponentElectronicsTray />
+  <ComponentBatteryIntegrationTray />
+  <ComponentBatteries />
+  <ComponentRearCover />
+  <ComponentBumpers />
+  <ComponentAirGrilles />
+  <ComponentFans />
+  <ComponentPowerDistribution />
+  <ComponentStatusLights />
+  <ComponentNetworkSwitch />
+  <ComponentComputer />
+  <ComponentSystemInterfaceDebugLed />
+  <ComponentReplacingCircuitBoards />
+  <ComponentLiftingByHand />
+  <ComponentLiftingSling />
+
+## Maintenance, Husky AMP
+  <ComponentWhoCanMaintainTheRobot />
+  <ComponentRemovingTheSidePanels />
+  <ComponentConnectorBulkhead />
+  <ComponentRemovingTheEnclosure />
+  <ComponentArchCables />
+  <ComponentAmpCableRoutings />
+
+## Custom Integrations
+  <ComponentRiskAssessmentForIntegrations />
+  <ComponentStepModel robotModel={robotModel}/>
+  <ComponentBaseLink />
+  [//]: <> (<ComponentPacs />)
+  [//]: <> (<ComponentCablePassthrough />)
+  <ComponentInternalIntegrations />
+  <ComponentDataConnections />
+  <ComponentSystemInterfaceConnectorSummary />
+  <ComponentPowerConnections robotModel={robotModel}/>
+  <ComponentFanExpansion />
+  [//]: <> (<ComponentWirelessEmergencyStop />)
+  <ComponentCanbus />
+  <ComponentAdditionalEmergencyStopDevices robotModel={robotModel}/>
+  <ComponentSystemPower robotModel={robotModel}/>
+  <ComponentInterfaceControlDrawing />
+  <ComponentAluminumExtrusions />
+  <ComponentLargeIntegration />
+  <ComponentCommonSoftwareIntegration headingSize={3}/>
+
+[//]: <> (TODO, add Tutorials section)
+
+[//]: <> (TODO, add Troubleshooting section)
+
+## Support {#support}
+  <Support />

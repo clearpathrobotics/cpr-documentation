@@ -1,0 +1,64 @@
+name: Amplify Branch Management
+description: 'Adds(or removes) branch to Amplify with preview enabled'
+
+on:
+  create:
+  delete:
+
+jobs:
+  deploy-to-amplify:
+    if: github.event_name == 'create' && startsWith(github.event.ref, 'rc/')
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - name: configure AWS credentials
+        id: creds
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-2
+          role-to-assume: ${{ secrets.AWS_GITHUB_ACTIONS_ROLE }}
+          output-credentials: true
+      - name: Enable Amplify Branch With Preview
+        uses: clearpathrobotics/amplify-preview-actions@sed-replace-all
+        with:
+          branch_name: ${{ github.event.ref }}
+          amplify_command: deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ steps.creds.outputs.aws-access-key-id }}
+          AWS_SECRET_ACCESS_KEY: ${{ steps.creds.outputs.aws-secret-access-key }}
+          AmplifyAppId: ${{ secrets.AMPLIFY_APP_ID }}
+          EnablePreview: true
+          AWS_REGION: 'us-east-2'
+
+  remove-from-amplify:
+    if: github.event_name == 'delete' && (startsWith(github.event.ref, 'rc/') || startsWith(github.head_ref, 'rc/'))
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - name: Get ref for pull_request
+        run: |
+          echo "BRANCH_NAME=${{ github.head_ref }}" >> $GITHUB_ENV
+        if: github.event_name == 'pull_request_target'
+      - name: Get ref for delete
+        run: |
+          echo "BRANCH_NAME=${{ github.event.ref }}" >> $GITHUB_ENV
+        if: github.event_name == 'delete'
+      - name: configure AWS credentials
+        id: creds
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: us-east-2
+          role-to-assume: ${{ secrets.AWS_GITHUB_ACTIONS_ROLE }}
+          output-credentials: true
+      - name: Remove Branch From Amplify
+        uses: clearpathrobotics/amplify-preview-actions@sed-replace-all
+        with:
+          branch_name: ${{ env.BRANCH_NAME }}
+          amplify_command: delete
+        env:
+          AWS_ACCESS_KEY_ID: ${{ steps.creds.outputs.aws-access-key-id }}
+          AWS_SECRET_ACCESS_KEY: ${{ steps.creds.outputs.aws-secret-access-key }}
+          AmplifyAppId: ${{ secrets.AMPLIFY_APP_ID }}
+          AWS_REGION: 'us-east-2'

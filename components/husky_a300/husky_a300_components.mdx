@@ -1,0 +1,125 @@
+import Admonition from "@theme/Admonition";
+
+### Components {#components-overview}
+
+<center>
+    <figure>
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_isometric_1.png"
+        width="400"
+      />
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_isometric_2.png"
+        width="400"
+      />
+    </figure>
+  </center>
+
+<ol>
+  <li>Chassis</li>
+  <li>Mobility, including wheels and gearmotors</li>
+  <li>User payload area, including cable passthrough ports</li>
+  <li>Bumpers</li>
+  <li>Status display</li>
+  <li>Status lights</li>
+  <li>Power button</li>
+  <li>Emergency Stop restart button</li>
+  <li>Rear Charge Port Area, <em>(Battery's circuit breaker, battery's manual charge port, HDMI / USB / Ethernet debug ports, wireless Emergency Stop bypass keyswitch)</em></li>
+  <li>Air grilles</li>
+  <li>Wi-Fi antennas</li>
+</ol>
+
+
+{((props.robotModel == "AMP") || (props.robotModel == "Observer")) && <div>
+  <br/>
+  <h4>Additional Components Related To Husky AMP</h4>
+
+  <center>
+    <figure>
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_amp_isometric_1.png"
+        width="400"
+      />
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_amp_isometric_2.png"
+        width="400"
+      />
+    </figure>
+  </center>
+ 
+  <ol>
+    <li>GNSS antennas and Positioning Unit, <em>(Fixposition Vision RTK 2)</em></li>
+    <li>Wi-Fi and Bluetooth antennas, <em>(relocated)</em></li>
+    <li>Cellular antennas, all-in-one unit</li>
+    <li>Teleoperation cameras, <em>(Luxonis Oak-D Pro W PoE)</em></li>
+    <li>Directional 3D lidar, <em>(Seyond Robin W)</em></li>
+    <li>Additional Emergency Stop Buttons</li>
+    <li>Lights</li>
+    <li>Sounder, <em>(hidden behind panels)</em></li>
+  </ol>
+
+  <br/>
+</div>}
+
+{(props.robotModel == "AMP") && <Admonition type="info">
+  The Husky AMP comes with a manual charger.
+  We sell a faster manual charger.
+  We also sell a wireless charger, where the robot docks automously to charge at 1 kW.
+
+  <center>
+    <figure>
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_wireless_charging_4.png"
+        width="400"
+      />
+      <figcaption>The Husky AMP, with the add-on Autonomous Wireless Charger.</figcaption>
+    </figure>
+  </center>
+
+  <center>
+    <figure>
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_wireless_charging_3.png"
+        width="600"
+      />
+    </figure>
+  </center>
+</Admonition>}
+
+
+{(props.robotModel == "Observer") && <div>
+  <br/>
+  <h4>Additional Components Related To Husky Observer</h4>
+
+  <center>
+    <figure>
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_observer_isometric_1.png"
+        width="400"
+      />
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_observer_isometric_2.png"
+        width="400"
+      />
+    </figure>
+  </center>
+
+  <ol>
+    <li>Pan-Tilt-Zoom Camera, <em>(Axis Q6225-LE)</em></li>
+    <li>Wireless Charge Coil, <em>(Wiferion)</em></li>
+    <li>2D lidar, <em>(Hokuyo UST10-LX)</em></li>
+  </ol>
+
+  <br/>
+
+  <center>
+    <figure>
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_observer_isometric_3.png"
+        width="800"
+      />
+      <figcaption>The Husky Oberver, with the included Stationary Dock.</figcaption>
+    </figure>
+  </center>
+
+</div>}

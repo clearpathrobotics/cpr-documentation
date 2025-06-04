@@ -1,0 +1,64 @@
+### Debugging The System Interface Assembly, _(Debug LEDs)_
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_system_interface_board_2.png"
+      width="450"
+    />
+  </figure>
+</center>
+
+The System Interface Assembly includes many LEDs to help debug system issues.
+
+:::safety-warning
+
+The Husky must be powered on, with the Top Plate removed to see these Debug LEDs.
+This exposes significant battery energy to the technician, and risk of starting a fire.
+
+Review your worksite's safe operating procedures before performing this task.
+
+:::
+
+<br/>
+
+<details>
+  <summary>Click to see all the LED functions</summary>
+
+  #### Common Core Debug LEDs
+
+  - `D6: USB 5V`: Solid green if a USB cable is plugged in and used to power the board
+  - `D7: 3.3V`: Solid green when the 3.3 V power rail is operational; else off
+  - `D9: DBG/CON`: For future use
+  - `D11: HB/ERR`: Heartbeat that toggles (red/off) every 500 ms when the main firmware loop is running; solid on or off indicates an error
+
+  #### DC/DC Debug LEDs
+
+  - `D3: V OUT`: Solid green when the output is operational; else off
+
+  #### Motor Controller LEDs
+
+  - `5V0`: Solid green when the 5 V power rail is operational; else off
+  - `3V3`: Solid green when the 3.3 V power rail is operational; else off
+  - `MTR_FAULT`: Solid red when a motor fault is detected; else off
+  - `ERROR`: Toggles (red/off) every 500 ms when a motor control error is detected; else off
+  - `DBG2`: For future use
+  - `DBG1`: Heartbeat that toggles (green/off) every 500 ms when the firmware loop is running; solid on or off indicates an error
+
+  #### Main Circuit Board Debug LEDs
+
+  - `D2`: UVB FLT: User power VBAT fault: red if the user battery rail is not enabled or if there has been a fault such as an overcurrent or over temperature event; else off
+  - `D3`: U24 FLT: User power 24V fault: red if the user 24V rail is not enabled or if there has been a fault such as an overcurrent or over temperature event; else off
+  - `D4`: U12A FLT: User power 12VA fault: red if the user 12VA rail is not enabled or if there has been a fault such as an overcurrent or over temperature event; else off
+  - `D5`: U12B FLT: User power 12VB fault: red if the user 12VB rail is not enabled or if there has been a fault such as an overcurrent or over temperature event; else off
+  - `D6`: PWR GD: Main power good indicator: red if any power supply is not enabled or has a fault; else off
+  - `D7`: 3.3V: Solid green if 3.3V rail is operational; else off
+  - `D9`: UPWR GD: User power good indicator: red if any of the 4 user power rails are not enabled or have a fault (including and overcurrent on any channel); else off
+  - `D10`: 5V: Solid green if 5V rail is operational; else off
+  - `D12`: APWR GD: Auxiliary power good indicator: red if either of the auxiliary power supplies are not enabled or has a fault (Auxiliary power supplies the USER power as well as other PCBA subsystem power rails at 12V and 24V); else off
+  - `D13`: SPWR GD: System power good indicator: red if either of the system power supplies are not enabled or has a fault (System power supplies the power for PCs, any optional GPU, and the primary network switch); else off
+  - `D30`: WES BP: Wireless E-Stop Bypass indicator: green if the Wireless E-Stop Bypass is enabled; else off
+  - `D31`: WES PFLT: Wireless E-Stop Power fault: red if the power supply is not enabled or has a fault; else off
+  - `D46`: XPWR GD: Expansion power good indicator: red if expansion power is not enabled or has a fault; else off
+
+</details>

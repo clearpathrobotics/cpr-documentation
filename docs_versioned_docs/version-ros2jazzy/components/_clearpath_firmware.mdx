@@ -8,290 +8,218 @@ Before flashing firmware, place your robot up on blocks or disengage the drivetr
 :::
 
 
-<Tabs groupId="platform">
+### Download the Clearpath Firmware package from the Clearpath package server
 
+On an external computer, run the following commands:
+
+```bash
+sudo apt-get update
+sudo apt-get install ros-jazzy-clearpath-firmware
+```
+
+### Prepare the robot
+
+<Tabs groupId="platform">
   <TabItem
     value="A300"
     label="A300"
+    default
   >
-
-  #### 1. Download the Clearpath Firmware package from the Clearpath package server
-
-  On the robot computer, run the following commands:
-
-  ```
-  sudo apt update
-  sudo apt install ros-jazzy-clearpath-firmware
-  ```
-
-  #### 2. Prepare the robot
-
-  Skip this step for Husky A300.
-
+    Skip this step for Husky A300.
   </TabItem>
   <TabItem
     value="J100"
     label="J100"
   >
+    :::note
+
+    The J100 MCU does not have an Ethernet interface, and therefore cannot be flashed using the Ethernet bootloader.
+    You must follow the subsequent steps to flash the J100 MCU over mini-USB.
+
+    :::
+
+    The J100 MCU is mounted to the rear inside wall of the robot. To access it, open the lid, keeping the computer
+    tray secured to the underside of the lid.
+
+    <center>
+      <figure>
+        <img
+          src="/img/robot_images/jackal_images/mcu-annotated.jpg"
+          width="800"
+        />
+        <figcaption>J100 MCU</figcaption>
+      </figure>
+    </center>
 
 
-  #### 1. Download the Clearpath Firmware package from the Clearpath package server
-
-  On the robot computer, run the following commands:
-
-  ```
-  sudo apt-get update
-  sudo apt-get install ros-jazzy-clearpath-firmware
-  ```
-
-  #### 2. Prepare the Robot
-
-:::note
-
-  The J100 MCU does not have an ethernet interface, and therefore cannot be flashed using the ethernet bootloader. You must follow the subsequent steps to flash the J100 MCU over mini-USB.
-
-:::
-
-  The J100 MCU is mounted to the rear inside wall of the robot. To access it, open the lid, keeping the computer
-  tray secured to the underside of the lid.
-
-  <center>
     <figure>
-      <img
-        src="/img/robot_images/jackal_images/mcu-annotated.jpg"
-        width="800"
-      />
-      <figcaption>J100 MCU</figcaption>
+      <figcaption><b>J100 MCU labels</b></figcaption>
+      <ol>
+        <li>
+          The <code>M_RST</code> button, used to reset the MCU.
+        </li>
+        <li>
+          The <code>PWR_MODE</code> switch. Left is <code>NORM</code> or normal mode, right is <code>ALT</code> or bootloader mode. This is used for flashing the firmware.
+        </li>
+        <li>
+          The mini-USB port used for transmitting data. This should be connected to J100's computer for both normal operation and  firmware flashing.
+        </li>
+      </ol>
     </figure>
-  </center>
 
+    **Place the J100 MCU into bootloader mode**
 
-  <figure>
-    <figcaption><b>J100 MCU labels</b></figcaption>
-    <ol>
-      <li>
-      The <code>M_RST</code> button, used to reset the MCU.
-      </li>
-      <li>
-        The <code>PWR_MODE</code> switch. Left is <code>NORM</code> or normal mode, right is <code>ALT</code> or bootloader mode. This is used for flashing the firmware.
-      </li>
-      <li>
-        The mini-USB port used for transmitting data. This should be connected to J100's computer for both normal operation and  firmware flashing.
-      </li>
-    </ol>
-  </figure>
-
-  **Place the J100 MCU into bootloader mode**
-
-  Open the lid of the robot to expose the MCU and make sure the mini-USB cable is connected to the robot computer.
-  Switch the <code>PWR_MODE</code> switch from <code>NORM</code> to <code>ALT</code>. If the robot is on, press the <code>M_RST</code> button. Otherwise, turn the robot on with the power button.
-
+    Open the lid of the robot to expose the MCU and make sure the mini-USB cable is connected to the robot computer.
+    Switch the <code>PWR_MODE</code> switch from <code>NORM</code> to <code>ALT</code>. If the robot is on, press the <code>M_RST</code> button. Otherwise, turn the robot on with the power button.
   </TabItem>
-
   <TabItem
     value="W200"
     label="W200"
     default
   >
+    :::note
 
-  #### 1. Download the Clearpath Firmware package from the Clearpath package server
+    ROS 2 Jazzy firmware on W200 must be flashed via USB. Flashing via Ethernet is not supported at this time.
 
-  On an external computer, run the following commands:
+    :::
 
-  ```
-  sudo apt-get update
-  sudo apt-get install ros-jazzy-clearpath-firmware
-  ```
+    The W200 MCU is located on the underside of the metal frame over the top of the computer.
 
-  #### 2. Prepare the Robot
+    <center>
+      <figure>
+        <img
+          src="/img/robot_images/warthog_images/mcu_buttons.jpg"
+          width="800"
+        />
+        <figcaption>W200 MCU</figcaption>
+      </figure>
+    </center>
 
-:::note
-
-  ROS 2 Jazzy firmware on W200 must be flashed via USB. Flashing via Ethernet is not supported at this time.
-
-:::
-
-  The W200 MCU is located on the underside of the metal frame over the top of the computer.
-
-  <center>
     <figure>
-      <img
-        src="/img/robot_images/warthog_images/mcu_buttons.jpg"
-        width="800"
-      />
-      <figcaption>W200 MCU</figcaption>
+      <figcaption><b>W200 MCU labels</b></figcaption>
+      <ul>
+        <li>
+        The <code>RST</code> button, used to reset the MCU.
+        </li>
+        <li>
+          The <code>BT0</code> button, used to enter the USB bootloader mode.
+        </li>
+      </ul>
     </figure>
-  </center>
 
+    **Place the W200 MCU into bootloader mode**
 
-  <figure>
-    <figcaption><b>W200 MCU labels</b></figcaption>
-    <ul>
-      <li>
-      The <code>RST</code> button, used to reset the MCU.
-      </li>
-      <li>
-        The <code>BT0</code> button, used to enter the USB bootloader mode.
-      </li>
-    </ul>
-  </figure>
-
-  **Place the W200 MCU into bootloader mode**
-
-  While pressing <code>BT0</code> on the MCU, connect the external computer to Warthog's MCU using a USB cable.
-
+    While pressing <code>BT0</code> on the MCU, connect the external computer to Warthog's MCU using a USB cable.
   </TabItem>
-
   <TabItem
     value="R100"
     label="R100"
     default
   >
+    :::note
 
-  #### 1. Download the Clearpath Firmware package from the Clearpath package server
+    ROS 2 Jazzy firmware on R100 must be flashed via USB. Flashing via Ethernet is not supported at this time.
 
-  On the robot computer, run the following commands:
+    :::
 
-  ```
-  sudo apt-get update
-  sudo apt-get install ros-jazzy-clearpath-firmware
-  ```
+    Place the R100 Ridgeback up on blocks. Firmware loading does not usually result in unintended motion, but it's safest when off the ground.
 
-  #### 2. Prepare the Robot
+    Remove the side panels to access the robot computer and MCU.
 
-:::note
+    Connect the MCU to the R100 Ridgeback's onboard computer using a mini-USB cable connected to the port shown below:
 
-  ROS 2 Jazzy firmware on R100 must be flashed via USB. Flashing via Ethernet is not supported at this time.
+    <center>
+      <figure>
+        <img
+          src="/img/robot_images/ridgeback_images/mcu_usb.png"
+          width="800"
+        />
+        <figcaption>R100 MCU mini-USB port</figcaption>
+      </figure>
+    </center>
 
-:::
+    In the middle of the MCU, there is a two-position switch labelled `PWR_MODE`. Move the switch from the default `NORM` position to the `AUX` position.
 
-  Place the R100 Ridgeback up on blocks. Firmware loading does not usually result in unintended motion, but it's safest when off the ground.
+    Press the `M_RST` to restart the MCU. Now, the MCU is in bootloader mode, ready to receive new firmware.
 
-  Remove the side panels to access the robot computer and MCU.
+    <center>
+      <figure>
+        <img
+          src="/img/robot_images/ridgeback_images/mcu_buttons.png"
+          width="800"
+        />
+        <figcaption>R100 MCU mode switch and reset button</figcaption>
+      </figure>
+    </center>
 
-  Connect the MCU to the R100 Ridgeback's onboard computer using a mini-USB cable connected to the port shown below:
+    :::note
 
-  <center>
-    <figure>
-      <img
-        src="/img/robot_images/ridgeback_images/mcu_usb.png"
-        width="800"
-      />
-      <figcaption>R100 MCU mini-USB port</figcaption>
-    </figure>
-  </center>
+    The Ridgeback's MCU is normally rotated 90 degrees when it is installed in the robot; the `NORM` position is typically towards the top of the robot's chassis and the `AUX` position is normally towards the bottom.
 
-  In the middle of the MCU, there is a two-position switch labelled `PWR_MODE`. Move the switch from the default `NORM` position to the `AUX` position.
-
-  Press the `M_RST` to restart the MCU. Now, the MCU is in boot-loader mode, ready to receive new firmware.
-
-  <center>
-    <figure>
-      <img
-        src="/img/robot_images/ridgeback_images/mcu_buttons.png"
-        width="800"
-      />
-      <figcaption>R100 MCU mode switch and reset button</figcaption>
-    </figure>
-  </center>
-
-:::note
-
-The Ridgeback's MCU is normally rotated 90 degrees when it is installed in the robot; the `NORM` position is typically towards the top of the robot's chassis and the `AUX` position is normally towards the bottom.
-
-:::
-
+    :::
   </TabItem>
-
-  <TabItem
+    <TabItem
     value="DX100"
     label="DX100"
     default
   >
+    :::note
 
-  #### 1. Download the Clearpath Firmware package from the Clearpath package server
+    ROS 2 Jazzy firmware on DX100 must be flashed via USB. Flashing via Ethernet is not supported at this time.
 
-  On the robot computer, run the following commands:
+    :::
 
-  ```
-  sudo apt-get update
-  sudo apt-get install ros-jazzy-clearpath-firmware
-  ```
+    The DX100 MCU is mounted near the HMI panel towards the rear of the robot. To access it, remove the antennas and the center channel panel.
 
-  #### 2. Prepare the Robot
+    Connect the MCU to the onboard computer using a mini-USB cable connected to the port as shown below:
 
-:::note
+    <center>
+      <figure>
+        <img
+          src="/img/robot_images/dingo_images/dingo-d-100-bootloader.jpg"
+          width="800"
+        />
+        <figcaption>DX100 MCU mini-USB port</figcaption>
+      </figure>
+    </center>
 
-  ROS 2 Jazzy firmware on DX100 must be flashed via USB. Flashing via Ethernet is not supported at this time.
+    As is shown in the image above, set the `PWR_MODE` switch to the `ALT` position.
 
-:::
-
-  The DX100 MCU is mounted near the HMI panel towards the rear of the robot. To access it, remove the antennas and the center channel panel.
-
-  Connect the MCU to the onboard computer using a mini-USB cable connected to the port as shown below:
-
-  <center>
-    <figure>
-      <img
-        src="/img/robot_images/dingo_images/dingo-d-100-bootloader.jpg"
-        width="800"
-      />
-      <figcaption>DX100 MCU mini-USB port</figcaption>
-    </figure>
-  </center>
-
-  As is shown in the image above, set the `PWR_MODE` switch to the `ALT` position.
-
-  Press the `M_RST` or restart the robot using the HMI panel. Now, the MCU is in boot-loader mode, ready to receive new firmware.
-
+    Press the `M_RST` or restart the robot using the HMI panel. Now, the MCU is in bootloader mode, ready to receive new firmware.
   </TabItem>
-
-  <TabItem
+    <TabItem
     value="DX150"
     label="DX150"
     default
   >
+    :::note
 
-  #### 1. Download the Clearpath Firmware package from the Clearpath package server
+    ROS 2 Jazzy firmware on DX150 must be flashed via USB. Flashing via Ethernet is not supported at this time.
 
-  On the robot computer, run the following commands:
+    :::
 
-  ```
-  sudo apt-get update
-  sudo apt-get install ros-jazzy-clearpath-firmware
-  ```
+    The DX150 MCU is mounted near the HMI panel towards the rear of the robot. To access it, remove the antennas and the center channel panel.
 
-  #### 2. Prepare the Robot
+    Connect the MCU to the onboard computer using a mini-USB cable connected to the port as shown below:
 
-:::note
+    <center>
+      <figure>
+        <img
+          src="/img/robot_images/dingo_images/dingo-d-150-bootloader.jpg"
+          width="800"
+        />
+        <figcaption>DX150 MCU mini-USB port</figcaption>
+      </figure>
+    </center>
 
-  ROS 2 Jazzy firmware on DX150 must be flashed via USB. Flashing via Ethernet is not supported at this time.
+    As is shown in the image above, set the `PWR_MODE` switch to the `ALT` position.
 
-:::
-
-  The DX150 MCU is mounted near the HMI panel towards the rear of the robot. To access it, remove the antennas and the center channel panel.
-
-  Connect the MCU to the onboard computer using a mini-USB cable connected to the port as shown below:
-
-  <center>
-    <figure>
-      <img
-        src="/img/robot_images/dingo_images/dingo-d-150-bootloader.jpg"
-        width="800"
-      />
-      <figcaption>DX150 MCU mini-USB port</figcaption>
-    </figure>
-  </center>
-
-  As is shown in the image above, set the `PWR_MODE` switch to the `ALT` position.
-
-  Press the `M_RST` or restart the robot using the HMI panel. Now, the MCU is in boot-loader mode, ready to receive new firmware.
-
+    Press the `M_RST` or restart the robot using the HMI panel. Now, the MCU is in bootloader mode, ready to receive new firmware.
   </TabItem>
 </Tabs>
 
 
-#### 3. Flash the firmware
+### Flash the firmware
 
 Run the Clearpath firmware flash tool:
 
@@ -318,7 +246,7 @@ flashing, you can attempt to flash again over USB.
 
 :::
 
-#### 4. Place the robot back into normal operating mode
+### Place the robot back into normal operating mode
 
 :::note
 

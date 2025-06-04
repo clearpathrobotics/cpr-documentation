@@ -34,6 +34,102 @@ extras:
 Remember, absolute paths start with `/` and relative paths do not.
 :::
 
+:::note
+
+If your extras file is in a ROS package built from source in a workspace, make sure to
+[add the workspace to `robot.yaml`](../system#ros-2-environment) by adding it
+to `system.ros2.workspaces`.
+
+:::
+
+## URDF Extras
+
+If an `extras.urdf` is specified, it is included as part of the `robot_description`. The specified
+URDF file can either be an absolute path on the robot's filesystem or a relative path within a ROS
+package:
+
+**Absolute path**
+```yaml
+platform:
+  extras:
+    urdf:
+      path: /home/robot/my_urdf_extras.urdf.xacro
+```
+
+**Relative path within a ROS package**
+```yaml
+platform:
+  extras:
+    urdf:
+      package: my_robot_extras
+      path: urdf/my_urdf_extras.urdf.xacro
+```
+
+### URDF Extras Example
+
+:::note
+
+This example assumes you are modifying `robot.yaml` on a physical robot. The same process will
+also work if you are using a simulation.
+
+:::
+
+**1. Create your URDF file**
+
+First, create a URDF file and save it on the robot. This example adds a simple cylindrical
+antenna:
+
+```xml
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+  <link name="my_antenna">
+    <visual>
+      <geometry>
+        <cylinder radius="0.01" length="0.4" />
+      </geometry>
+      <material name="grey">
+        <color rgba="0.6 0.6 0.6 1.0" />
+      </material>
+      <origin xyz="0.0 0.0 0.2" rpy="0.0 0.0 0.0" />
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="0.01" length="0.4" />
+      </geometry>
+      <origin xyz="0.0 0.0 0.2" rpy="0.0 0.0 0.0" />
+    </collision>
+  </link>
+  <joint name="my_antenna_joint" type="fixed">
+    <parent link="default_mount" />
+    <child link="my_antenna" />
+    <origin xyz="-0.2 0.1 0.0" rpy="0.0 0.0 0.0" />
+  </joint>
+</robot>
+```
+Save this file as `/home/robot/my_antenna.urdf.xacro` on the robot.
+
+**2. Modify `robot.yaml`**
+
+Add the following to `robot.yaml`:
+```yaml
+platform:
+  extras:
+    urdf:
+      path: /home/robot/my_antenna.urdf.xacro
+```
+
+The robot's URDF will now include the antenna, as shown in the image below:
+
+<center>
+    <figure>
+      <img
+        src={require("/img/software_images/ros2/tutorials/urdf/my_antenna.png").default}
+        width="500"
+      />
+      <figcaption>Husky A300 modified with the `my_antenna` custom URDF</figcaption>
+    </figure>
+  </center>
+
 ## Extras Launch
 
 If an `extras.launch` is specified, it is launched as part of the `clearpath-platform-extras.service` job. To check the status

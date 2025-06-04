@@ -1,0 +1,377 @@
+import Admonition from "@theme/Admonition";
+
+### Power Connections
+
+#### User Power Connections  {#user-power-connections}
+
+The System Interface circuit board has 8 User Power connectors, labelled USER 1 through USER 8. 
+
+User power is divided into 4 power rails and the power for each rail is shared across each of the 8 connectors.
+The maximum—_(aggregate)_—current available on each power rail is outlined in the table below.
+These circuits are protected with self resetting fuses.
+These circuits can also be toggled on and off through ROS.
+
+| User Power Rail                        | Maximum (Aggregate) Current |
+| :------------------------------------- | :-------------------------- |
+| 12 V Rail A                            | 5 A                         |
+| 12 V Rail B                            | 5 A                         |
+| 24 V                                   | 5 A                         |
+| VBAT <em>(24 - 29 V, unregulated)</em> | 5 A                         |
+
+<Admonition type="danger">
+  Do not exceed the specified maximum current limit of each power rail.
+  Exceeding the maximum current may damage to your payload.
+</Admonition>
+
+
+##### User Power Pinout
+
+The pinout for each of the 8 connectors—_(USER 1 through USER 8)_—is illustrated below.
+
+| USER connector pin | Function                               |
+| :----------------- | :------------------------------------- |
+| 1                  | 12 V <em>(Rail B)</em>                 |
+| 2                  | 12 V <em>(Rail A)</em>                 |
+| 3                  | 24 V                                   |
+| 4                  | VBAT <em>(24 - 29 V, unregulated)</em> |
+| 5                  | GND                                    |
+| 6                  | GND                                    |
+| 7                  | GND                                    |
+| 8                  | GND                                    |
+
+
+<details>
+  <summary>Making User Power Cables</summary>
+
+  Connecting to user power requires the use of a Molex connector and compatible crimp terminals.
+  To create these cables, follow the steps below.
+
+  1.  Expose about 5 mm of bare wire from the payload power leads and twist the exposed wire on both leads.
+  2.  Take 2 Molex terminals from the spare parts kit provided and insert the exposed wire and crimp the terminals,
+        ensuring the wires are well secured inside the terminal, as shown below.
+  3.  Take 1 connector housing from the spare parts kit provided and insert the positive payload power lead—_(red)_—into position
+        1, 2, 3 or 4 of the connector until it locks into place.
+      The positions numbers are visible on the back of the plastic housing.
+  4.  Insert the negative payload power lead (black) into position 5, 6, 7, or 8 of the connector until it locks into place.
+
+  [//]: <> (TODO, update images to show a higher quality crimp)
+  [//]: <> (TODO, update images to remove the background colour)
+
+  <center>
+    <figure>
+      <img
+        src="/img/robot_images/husky_images/robot_husky_16.jpg"
+        width="300"
+      />
+      <figcaption>Crimping A Wire</figcaption>
+    </figure>
+  </center>
+  <center>
+    <figure>
+      <img
+        src="/img/robot_images/husky_a300_images/husky_a300_user_power_connector.jpg"
+        width="200"
+      />
+      <figcaption>Inserting The Crimped Wires Into The Molex Connector</figcaption>
+    </figure>
+  </center>
+
+  For more technical information on the Molex power connectors, as well as their corresponding mating connectors,
+    please visit the [Digi-Key WM3703-ND Product Page](https://www.digikey.ca/en/products/detail/molex/0039012080/61382).
+</details>
+<br/>
+
+##### Software Control of User Power Rails {#user_power_control}
+
+User power can be enabled or disabled through ROS by publishing to `/a300_#####/platform/mcu/cmd_user_power` ROS topic.
+
+- To disable user power, run:
+
+  ```
+  ros2 topic pub --once /a300_#####/platform/mcu/cmd_user_power std_msgs/msg/Bool '{data: false}'
+  ```
+
+- To enable user power, run:
+
+  ```
+  ros2 topic pub --once /a300_#####/platform/mcu/cmd_user_power std_msgs/msg/Bool '{data: true}'
+  ```
+
+:::note
+
+User Power is enabled by default shortly after the robot first powers up, regardless of its state when the robot was powered off.
+
+:::
+
+<br/>
+
+#### Expansion Power _(EXP 1 and EXP 2)_  {#expansion-power}
+
+There are 2 Expansion Power connectors on the System Interface circuit board.
+The Expanison Power connectors can power small manipulators, DC-AC inverters, and DC-DC supplies.
+
+These connectors supply VBAT voltage, with a combined current of up to 20 A.
+The connectors also include soft-start circuitry which limits inrush current to 25 A.
+This soft-start circuit reduces the chance of a high capacitance load causing the 20 A fuse to pop.
+
+:::info Replacement Fuse
+
+Use a [Littelfuse 0297020.U](https://www.digikey.ca/en/products/detail/littelfuse-inc/0297020-U/3427482?s=N4IgTCBcDaIAxgJwHYFwHQFUQF0C%2BQA) as the replacement.
+
+:::
+
+##### Expansion Power Pinout
+
+The pinout for each of the 2 connectors—_(EXP 1 and EXP 2)_—is illustrated below.
+
+| Expansion Power connector pin | Function                               |
+| :---------------------------- | :------------------------------------- |
+| 1                             | VBAT <em>(24 - 29 V, unregulated)</em> |
+| 2                             | GND                                    |
+
+<br/>
+
+##### Software Control of Expansion Power Rails
+
+The Expansion Power connectors are connected to the same control system as the User Power.
+Refer to the [Software Control of User Power Rails](#user_power_control) section for details.
+
+<br/>
+
+#### High Power Expansion Kit _(Large VBAT)_  {#high-power-expansion-kit}
+
+:::note
+
+The optional High Power Expansion Kit can purchased at the time of your original Husky order—_(Clearpath item 032001)_.
+We do not allow field installation of the kit.
+
+:::
+
+:::tip
+
+We suggest you purchase a 80 Ah or 120 Ah Husky if you plan to operate on hills steeper than 5°, and have a payload of more than 50kg.
+40 Ah battery configuration may not provide enough power in the worst case.
+Contact [Support](#support) for more details.
+
+:::
+
+Some high power payloads, such as manipulators, require more power than can be provided through the User Power connectors.
+The optional High Power Expansion Kit provides VBAT voltage at 40 A.
+It also includes 2 contactors for enabling and disabling power to the payload.
+
+<details>
+  <summary>Making A Large VBAT Cable</summary>
+
+  We suggest using #10 AWG wire for this cable routing if it is completely inside the robot's chassis.
+  We suggest using #8 AWG wire for this cable routing if it is outside the chassis, where someone could touch the cable.
+  #8 AWG surface temperature is acceptable in an exposed cable for 40 A, per UL 1740.
+  
+  The mating cable will connect to the yellow Anderson Power Products SB50 connector in left-rear of the robot's chassis, under the Top Plate.
+
+  <Admonition type="danger" title=" ">
+    Always observe local laws and electrical standards when building cables.
+  </Admonition>
+
+  <Admonition type="warning" title=" ">
+    Consult the manufacturer's documentation for full details on proper crimping.
+  </Admonition>
+
+  | Description           | Vendor Part                                                                                                  | CPR Part Number |
+  | :-------------------- | :----------------------------------------------------------------------------------------------------------- | :-------------- |
+  | Mating connector      | [Anderson 992G5-BK](https://www.digikey.ca/en/products/detail/anderson-power-products-inc/992G5-BK/10650433) | 022554          |
+  | Crimps, #8 AWG        | [Anderson 5952-BK](https://www.digikey.ca/en/products/detail/anderson-power-products-inc/5952-BK/10650106)   | 017281          |
+  | Crimps, #10 - #12 AWG | [Anderson 5953-BK](https://www.digikey.ca/en/products/detail/anderson-power-products-inc/5953-bk/10650410)   | 022562          |
+  | Crimping tool         | [Anderson 1309G4](https://www.digikey.ca/en/products/detail/anderson-power-products,-inc./1309G4/10650073)   | N/A             |
+
+</details>
+
+:::info Replacement Fuse
+
+Use a [Littelfuse 142.5631.5402](https://www.digikey.ca/en/products/detail/littelfuse-inc/142-5631-5402/2515916) as the replacement.
+
+:::
+
+<br/>
+
+##### On/Off Control via Software
+
+The High Power Expansion Kit output is controlled through software by publishing to the ROS topic `/a300_#####/platform/mcu/cmd_high_power`,
+  similar to [Software Control of User Power Rails](#user_power_control).
+
+:::note
+
+The High Power Expansion Kit output is always disabled when the system powers up.
+You must enable the output, via the ROS topic above, each time after the system powers up.
+
+:::
+
+<br />
+
+### AUX Inputs {#aux-inputs}
+
+The System Interface circuit board has 3 auxilliary inputs—_(AUX1 IN, AUX2 IN, AUX3 IN)_—that allow external payloads to provide inputs to the robot.
+Each of these auxilliary inputs can be driven by one of the following:
+
+- a 12 V input
+- a 24 V input
+- a push button or switch
+
+The state of the input can be read from the ROS topic `/a300_#####/platform/mcu/status/aux_inputs`.
+The AUX inputs are active low and are mapped to the ROS message bits as follows:
+
+- AUX1 IN: bit 0
+- AUX2 IN: bit 1
+- AUX3 IN: bit 2
+
+| AUX Input            | Payload State                                                                         | `/a300_#####/platform/mcu/status/aux_inputs` Value  |
+| :------------------- | :------------------------------------------------------------------------------------ | :---------------------------------------- |
+| AUX1 IN              | 24 V on OR 12 V on OR button pressed<br/>24 V off AND 12 V off AND button not pressed | bit 0 reads as '0'<br/>bit 0 reads as '1' |
+| AUX2 IN              | 24 V on OR 12 V on OR button pressed<br/>24 V off AND 12 V off AND button not pressed | bit 1 reads as '0'<br/>bit 1 reads as '1' |
+| AUX3 IN              | 24 V on OR 12 V on OR button pressed<br/>24 V off AND 12 V off AND button not pressed | bit 2 reads as '0'<br/>bit 2 reads as '1' |
+
+#### AUX Input Pinout
+
+The pinout for each of the connectors—_(AUX1 IN, AUX2 IN, AUX3 IN)_—is illustrated below.
+
+| AUX IN Connector's Pin | Function                    |
+| :--------------------- | :-------------------------- |
+| 1                      | 24 V In                     |
+| 2                      | 12 V In                     |
+| 3                      | Button/Switch In, _(3.3 V)_ |
+| 4                      | 24 V Return                 |
+| 5                      | 12 V Return                 |
+| 6                      | GND                         |
+
+<details>
+  <summary>AUX Input Example #1</summary>
+
+  Consider the example where AUX2 IN has a 12 V supply connected to pins 2 and 5, with the remaining pins unconnected.
+
+  Monitor the input reading in ROS.
+
+  ```
+  ros2 topic echo /a300_#####/platform/mcu/status/aux_inputs
+  ```
+
+  | Action                                | `/a300_#####/platform/mcu/status/aux_inputs` value | Bit 2 Explanation                  | Bit 1 Explanation            | Bit 0 Explanation                  |
+  | :------------------------------------ | :------------------------------------------------- | :--------------------------------- | :--------------------------- | :--------------------------------- |
+  | Begin with the 12 V supply turned off | 7 (8b00000111)                                     | '1' since AUX3 IN is not connected | '1' since 12 V supply is off | '1' since AUX1 IN is not connected |
+  | Turn the 12 V power supply on         | 5 (8b00000101)                                     | '1' since AUX3 IN is not connected | '0' since 12 V supply is on  | '1' since AUX1 IN is not connected |
+  | Turn the 12 V supply off              | 7 (8b00000111)                                     | '1' since AUX3 IN is not connected | '1' since 12 V supply is off | '1' since AUX1 IN is not connected |
+</details>
+
+<details>
+  <summary>AUX Input Example #2</summary>
+
+  Consider the example where AUX1 IN has a 24 V supply connected to pins 1 and 4,
+    AUX2 IN has a 12 V supply connected to pins 2 and 5, and AUX3 IN has a push button connected to pin 3.
+
+  | Action                                                                             | `/a300_#####/platform/mcu/status/aux_inputs` value | Bit 2 Explanation               | Bit 1 Explanation            | Bit 0 Explanation            |
+  | :--------------------------------------------------------------------------------- | :------------------------------------------------- | :------------------------------ | :--------------------------- | :--------------------------- |
+  | Begin with 12 V supply turned off, the 24 V supply off, and the button not pressed | 7 (8b00000111)                                     | '1' since button is not pressed | '1' since 12 V supply is off | '1' since 24 V supply is off |
+  | Turn the 24 V power supply on                                                      | 6 (8b00000110)                                     | '1' since button is not pressed | '1' since 12 V supply is off | '0' since 24 V supply is on  |
+  | Turn the 12 V supply on                                                            | 4 (8b00000100)                                     | '1' since button is not pressed | '0' since 12 V supply is on  | '0' 24 V supply is on        |
+  | Press and hold the button                                                          | 0 (8b00000000)                                     | '0' since button is pressed     | '0' since 12 V supply is on  | '0' 24 V supply is on        |
+
+</details>
+
+<br/>
+
+### AUX Outputs {#aux-outputs}
+
+The System Interface circuit board includes 3 outputs—_(AUX1 OUT, AUX2 OUT, AUX3 OUT)_—that can be controlled by publishing to the `/a300_#####/platform/mcu/cmd_aux_outputs` ROS topic.
+To enable the AUX outputs, publish a single message with the appropriate bits set to 1 to turn the output on, and 0 to turn it off.
+The state does not persist so new commands will need to keep the bit enabled as well.
+The AUX outputs are mapped to the ROS message bits as follows:
+
+- AUX1 OUT: bit 0
+- AUX2 OUT: bit 1
+- AUX3 OUT: bit 2
+
+#### AUX Output Pinout
+
+Each of the AUX outputs is an 8 position connector with pinout as outlined below.
+The output value is available in several modes:
+
+- MOSFET outputs, _(2X)_
+- Normally open relay
+- Normally closed relay
+
+| AUX OUT Connector Pin | Name             | Function                                                  | Output when corresponding `cmd_aux_outputs` bit is '0' | Output when corresponding `cmd_aux_outputs` bit is '1' | 
+| :-------------------- | :--------------- | :-------------------------------------------------------- | :----------------------------------------------------- | :----------------------------------------------------- |
+| 1                     | AUX_24V          | 24 V output, fused at 3&nbsp;A                                 | 24 V                                                   | 24 V                                                   |
+| 2                     | GND              | GND                                                       | GND                                                    | GND                                                    |
+| 3                     | AUX_RELAY_NC     | Normally closed relay pin                                 | Connected to AUX_RELAY_COMMON                          | Floating                                               |
+| 4                     | AUX_MOSFET2      | MOSFET #2 DRAIN                                           | GND                                                    | Floating                                               |
+| 5                     | GND              | GND                                                       | GND                                                    | GND                                                    |
+| 6                     | AUX_RELAY_COMMON | Input that gets connected to AUX_RELAY_NC or AUX_RELAY_NO | Connected to AUX_RELAY_NC                              | Connected to AUX_RELAY_NO                              |
+| 7                     | AUX_RELAY_NO     | Normally open relay pin                                   | Floating                                               | Connected to AUX_RELAY_COMMON                          |
+| 8                     | AUX_MOSFET1      | MOSFET #1 DRAIN                                           | GND                                                    | Floating                                               |
+
+{((props.robotModel == "AMP") || (props.robotModel == "Observer")) && <Admonition type="info">
+  Husky AMP's lights and sounder are controlled by the 3 AUX Output connectors.
+  The AUX Outputs cannot be used for a user payload on Husky AMP or Husky Observer.
+</Admonition>}
+
+<details>
+  <summary>AUX Output Examples</summary>
+
+  - To disable all AUX outputs:
+
+    ```
+    rostopic pub /a300_#####/platform/mcu/cmd_aux_outputs std_msgs/UInt8 "data: 0"
+    ```
+
+  - To enable all AUX outputs:
+
+    ```
+    rostopic pub /a300_#####/platform/mcu/cmd_aux_outputs std_msgs/UInt8 "data: 7"
+    ```
+
+  - To enable just the AUX3 output:
+
+    ```
+    rostopic pub /a300_#####/platform/mcu/cmd_aux_outputs std_msgs/UInt8 "data: 4"
+    ```
+
+</details>
+
+
+### General Purpose Inputs and Outputs _(GPIO)_ {#gpio}
+
+The System Interface circuit board includes 4 general purpose inputs, and 4 general purpose outputs.
+All GPIOs are at the 3.3 V logic level.
+General purpose inputs are readable from the `/a300_#####/platform/mcu/status/gp_inputs` ROS topic.
+Publishing to the `/a300_#####/platform/mcu/cmd_gp_outputs` ROS topic controls the general purpose outputs.
+
+:::info
+
+All the inputs and outputs are exposed through a single connector.
+
+:::
+
+#### General Purpose Input Pinout
+
+| GPIO connector pin | Function | `gp_inputs` value when driven at 0 V | `gp_inputs` value when driven at 3.3 V |
+| :----------------- | :------- | :----------------------------------- | :------------------------------------- |
+| 5                  | GP In 1  | Bit 0 is '0'                         | Bit 0 is '1'                           |
+| 6                  | GP In 2  | Bit 1 is '0'                         | Bit 1 is '1'                           |
+| 7                  | GP In 3  | Bit 2 is '0'                         | Bit 2 is '1'                           |
+| 8                  | GP In 4  | Bit 3 is '0'                         | Bit 3 is '1'                           |
+| 13                 | GND      | N/A                                  | N/A                                    |
+| 14                 | GND      | N/A                                  | N/A                                    |
+| 15                 | GND      | N/A                                  | N/A                                    |
+| 16                 | GND      | N/A                                  | N/A                                    |
+
+#### General Purpose Output Pinout
+
+| GPIO connector pin | Function | Corresponding bit in `cmd_gp_outputs` | Output value when set to '0' | Output value when set to '1' |
+| :----------------- | :------- | :------------------------------------ | :--------------------------- | :--------------------------- |
+| 1                  | GP Out 1 | 0                                     | 0 V                          | 3.3 V                        |
+| 2                  | GP Out 2 | 1                                     | 0 V                          | 3.3 V                        |
+| 3                  | GP Out 3 | 2                                     | 0 V                          | 3.3 V                        |
+| 4                  | GP Out 4 | 3                                     | 0 V                          | 3.3 V                        |
+| 9                  | GND      | N/A                                   | GND                          | GND                          |
+| 10                 | GND      | N/A                                   | GND                          | GND                          |
+| 11                 | GND      | N/A                                   | GND                          | GND                          |
+| 12                 | GND      | N/A                                   | GND                          | GND                          |

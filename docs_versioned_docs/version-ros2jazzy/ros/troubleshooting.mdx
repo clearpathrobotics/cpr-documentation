@@ -1,0 +1,194 @@
+---
+title: Troubleshooting & FAQ
+sidebar_label: Troubleshooting
+sidebar_position: 8
+---
+
+The following are common problems our [support team](https://support.clearpathrobotics.com/hc/en-us)
+have received. Before [submitting a request](https://support.clearpathrobotics.com/hc/en-us/requests/new)
+please review the items below to see if they resolve your problem.
+
+Our [getting started](/docs/ros) section may also help answer some questions.
+
+## Robot cannot drive after upgrading from ROS 1
+
+Ensure that you have [upgraded the MCU firmware](installation/robot.mdx#firmware-update) as well as the robot's primary
+computer; the firmware is ROS-distribution-specific, and must have a version compatible with your ROS
+2 distribution (e.g. Jazzy or Humble).
+
+One significant change between ROS 1 and ROS 2 is that Clearpath robots using ROS 2 Humble or Jazzy
+have their MCUs boot to a reset state. To establish communication between the robot's primary computer
+you must press a button on the robot:
+- on Ridgeback or Husky A300 press the e-stop reset button located on the rear of the robot
+- on Jackal or Dingo, press the MCU disconnect (<img src="/img/robot_images/dingo_images/icon-motor.png" width="24"/>) button
+
+## Robot's COMM light is off after upgrading to ROS 2
+
+Most Clearpath robots have an MCU that must also be updated. Ensure you have installed the correct
+MCU firmware for your ROS distribution.  Refer to your robot's [user manual](/docs_robots/robots)
+for instructions on updating the MCU firmware.
+
+USB or serial-based MCUs require [`udev` rules](https://github.com/clearpathrobotics/clearpath_robot/blob/jazzy/clearpath_robot/debian/udev)
+to be installed on the robot.
+
+If you have installed the ROS 2 packages as `.deb` packages (using the `apt` or `apt-get` command)
+these udev rules will be installed automatically. Verify that `/usr/lib/udev/rules.d/60-ros-jazzy-clearpath-robot.rules`
+exists in your system. If it does not, try reinstalling the `clearpath_robot` ROS package:
+```bash
+sudo apt-get update
+sudo apt-get install --reinstall ros-jazzy-clearpath-robot
+```
+
+If you have installed the packages from source (i.e. they are built in a `colcon` workspace), make
+sure you have installed the udev rules by running these commands:
+```
+sudo cp /path/to/colcon_ws/src/clearpath_robot/clearpath_robot/debian/udev /etc/udev/rules.d/60-clearpath-robot.rules
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+```
+
+## How do I tell if my MCU firmware has been successfully installed?
+
+The command to install the firmware will exit normally if the firmware is successfully installed.
+If you do not see any error messages then the program finished normally. To double-check,
+_immediately after_ running the firmware installation command you can run
+```bash
+echo $?
+```
+to print the exit code of the previous command. If this prints `0` then the previous command
+finished normally.
+
+To verify that the version of the MCU firmware running on your robot, run
+```bash
+ros2 topic echo /a300_00000/platform/mcu/status --once
+```
+(replacing `a300_00000` with your robot's root namespace). The result will look something like this:
+```yaml
+header:
+  stamp:
+    sec: 1747405186
+    nanosec: 816000000
+  frame_id: base_link
+hardware_id: A300-000-00
+firmware_version: 2.4.1
+mcu_uptime:
+  sec: 60622
+  nanosec: 426000000
+connection_uptime:
+  sec: 610
+  nanosec: 338000000
+---
+```
+The `firmware_version` field shows the MCU firmware version currently running. Ensure that this
+matches the version you just installed:
+```
+ros2 pkg xml clearpath_firmware
+```
+This command will print the `clearpath_firmware` package's meta-data:
+```xml
+<package format="3">
+  <name>clearpath_firmware</name>
+  <version>2.4.1</version>
+  <description>Clearpath Robot Firmware</description>
+
+  <maintainer email="rkreinin@clearpathrobotics.com">Roni Kreinin</maintainer>
+  <maintainer email="lcamero@clearpathrobotics.com">Luis Camero</maintainer>
+  <maintainer email="tbaltovski@clearpathrobotics.com">Tony Baltovski</maintainer>
+
+  <license>BSD</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>ament_cmake_python</buildtool_depend>
+
+  <exec_depend>dfu-util</exec_depend>
+  <exec_depend>python3-tftpy</exec_depend>
+  <exec_depend>python3-simple-term-menu</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
+```
+The `version` tag near the top should match the `firmware_version` field of the MCU status message.
+In this case, both are `2.4.1`, indicating the latest firmware is installed.
+
+## `robot.yaml` is invalid after upgrading from Jazzy to Humble
+
+An invalid `robot.yaml` file may result in one or more of the `clearpath-*` systemd jobs to crash
+or for the simulation to fail to start. Check the ROS output for errors errors with any of the
+following prefixes:
+- `generate_description`
+- `clearpath_config`
+- `clearpath_config_live`
+
+Ensure your `robot.yaml` file corresponds to the [current format](config/yaml/overview) and has
+[valid yaml syntax](https://yaml.org/spec/1.2.2/). Some features of the configuration generators
+get added/removed/modified across major ROS versions. The output from the Clearpath
+generators should indicate what the specific problem is.
+
+## Jazzy support for Nvidia Jetson computers
+
+Not yet. Nvidia's release cycle for Ubuntu support is consistently behind ROS. In order to
+natively install ROS 2 Jazzy, the Nvidia computer must support Ubuntu 24.04. At the time of writing
+the latest OS Nvidia supports installing through their [JetPack](https://developer.nvidia.com/embedded/jetpack)
+installer is 22.04. Nvidia has not yet announced a release date for Ubuntu 24.04 support.
+
+If you absolutely require ROS 2 Jazzy on your Nvidia computer, you may be able to run the necessary
+software inside [docker containers](https://www.docker.com/).
+
+## ROS 1 and ROS 2 on the same computer
+
+It is currently not possible to install ROS 1 and ROS 2 distributions on the same computer.
+Currently-supported ROS distributions are ROS 2 "Jazzy Jalisco" (which runs on Ubuntu 24.04
+"Noble Numbat") and ROS 2 "Humble Hawksbill" (which runs on Ubuntu 22.04 "Jammy Jellyfish").
+
+ROS 1 went end-of-life in May 2025, with its final release "Noetic Ninjemys" running on Ubuntu
+20.04. There are currently no supported ROS 1 distributions that will run on Ubuntu 22.04 nor 24.04.
+Nor are there any supported ROS 2 distributions that will run on Ubuntu 20.04.
+
+## Red error screen when installing Ubuntu with Clearpath's ISO
+
+Clearpath provides a [modified Ubuntu Server image](https://packages.clearpathrobotics.com/stable/images/2.0.0/)
+for installing Ubuntu 24.04 "Noble Numbat" on our robots. This ISO requires a wired internet connection
+to download and install packages. Most errors encountered when using the ISO are the result of not
+properly configuring the internet connection.
+
+The installer always uses the first-enumerated ethernet port on the computer, typically
+identified as `eno1` to connect to the internet. This port usually corresponds to the port
+physically labelled "Ethernet 1" or similar on the motherboard. If your computer's ethernet ports
+are unlabelled, you may need to try connecting via one, and switch to the other if the first doesn't work.
+
+:::note
+
+Ensure that the ethernet cable you connect to the computer goes to a router with DHCP enabled
+and is connected to the internet. Ubuntu's installer will request a DHCP lease from the router
+before it downloads any packages from the internet.
+
+:::
+
+The second common source of errors is due to unsupported hardware combinations. For robots
+purchased from Clearpath Robotics and our affiliates, this is not a problem. But if you have
+purchased your own hardware to upgrade the robot after purchase, it may happen. The most common
+problem is an unsupported combination of motherboard and SSD format. Small form-factor SSDs are
+typically either `mSATA` or `M.2 NVMe`. These two formats are often physically interchangeable,
+but not all motherboards support both. Always make sure that your motherboard supports your
+SSD format.
+
+## Support for ROS middleware implementations besides `Fast DDS`
+
+See [supported middleware](supported-components#supported-middleware) for the full list of
+middleware supported on each Clearpath platform.
+
+## When should I change my ROS Domain ID?
+
+If you have more than one ROS 2 system (one or more robots, simulations, and external computers to
+monitor and/or control them) operating on the same network that do not need to communicate with
+each other it is advisable to assign each system a unique domain ID. This will minimize network
+traffic, saving bandwidth and preventing nodes from accidentally communicating if they have topic
+names in common.
+
+See [ROS 2 communication](networking/ros2_networking/ros2_communication) for more information about
+configuring domain IDs.

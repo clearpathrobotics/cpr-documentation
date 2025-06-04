@@ -6,7 +6,7 @@ export default function DocVersionBannerWrapper(props) {
   const { pathname } = useLocation();
 
   const doesPathnameContainKey =
-    pathname.includes("ros1noetic/robots/solutions/husky_observer") ||
+    pathname.includes("ros1noetic/robots/solutions/husky_a200_observer") ||
     pathname.includes("ros1noetic/robots/indoor_robots/dingo") ||
     pathname.includes("ros1noetic/robots/indoor_robots/boxer") ||
     pathname.includes("ros1noetic/robots/indoor_robots/ridgeback") ||

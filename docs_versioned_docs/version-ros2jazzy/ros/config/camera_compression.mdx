@@ -33,10 +33,10 @@ Compressed, FFMPEG and Theora types are not standard ROS 2 datatypes, therefore 
 
 However, for any node that does not support these plugins by default, a separate compression (encoding) or decompression (decoding) "republisher" node must be run. Decompressing the images into standard `sensor_msgs/Image` messages allow viewing or processing them using standard tools such as RViz. However, these "republisher" nodes are inefficient because they introduce another subscriber and publisher, and this can cause significant load on the computer networking depending on the size of image and networking configuration. Supporting image transport and image transport plugins directly is much more efficient, avoiding the need for copying and transferring the uncompressed data. This should be done in any situation where the performance of "republisher" nodes is insufficient. Examples on how to directly use image transport can be found in the [Image Transport Tutorials Repo](https://github.com/ros-perception/image_transport_tutorials).
 
-The `clearpath_sensors` package has launch files to start "republisher" nodes to convert to and from these compressed transport types. This allows the usage of compressed topics to optimize networking without requiring custom development. To use these launch files, ensure that the Clearpath sensor package is installed on the computer that will be performing the decompression / decoding:
+The `clearpath_offboard_sensors` package has launch files to start "republisher" nodes to convert to and from these compressed transport types. This allows the usage of compressed topics to optimize networking without requiring custom development. To use these launch files, ensure that the Clearpath sensor package is installed on the computer that will be performing the decompression / decoding:
 
 ```bash
-sudo apt install ros-jazzy-clearpath-sensors
+sudo apt install ros-jazzy-clearpath-offboard-sensors
 ```
 
 :::note
@@ -58,7 +58,7 @@ Assume that the following image topic needs to be compressed:
 
 Then, compress this image topic by launching the following:
 ```bash
-ros2 launch clearpath_sensors image_raw_to_compressed.launch.py in_raw:=/a200_0000/sensors/camera_0/color/image out_compressed:=/a200_0000/sensors/camera_0/color/compressed
+ros2 launch clearpath_offboard_sensors image_raw_to_compressed.launch.py in_raw:=/a200_0000/sensors/camera_0/color/image out_compressed:=/a200_0000/sensors/camera_0/color/compressed
 ```
 
 Now, the following topics will be available:
@@ -71,7 +71,7 @@ Now, the following topics will be available:
 
 To reverse this process on the receiving computer, use the `image_compressed_to_raw.launch.py` to decompress back to `sensor_msgs/Image` messages:
 ```bash
-ros2 launch clearpath_sensors image_compressed_to_raw.launch.py in_compressed:=/a200_0000/sensors/camera_0/color/compressed out_raw:=/a200_0000/sensors/camera_0/decompressed/image
+ros2 launch clearpath_offboard_sensors image_compressed_to_raw.launch.py in_compressed:=/a200_0000/sensors/camera_0/color/compressed out_raw:=/a200_0000/sensors/camera_0/decompressed/image
 ```
 
 Now, the following topics will be available:
@@ -96,7 +96,7 @@ Assume that the following image topic needs to be compressed:
 
 Then, compress this image topic by launching the following:
 ```bash
-ros2 launch clearpath_sensors image_raw_to_ffmpeg.launch.py in_raw:=/a200_0000/sensors/camera_0/color/image out_ffmpeg:=/a200_0000/sensors/camera_0/color/ffmpeg
+ros2 launch clearpath_offboard_sensors image_raw_to_ffmpeg.launch.py in_raw:=/a200_0000/sensors/camera_0/color/image out_ffmpeg:=/a200_0000/sensors/camera_0/color/ffmpeg
 ```
 
 There are several optional parameters that can be passed in order to adjust the compression:
@@ -122,7 +122,7 @@ Now, the following topics will be available:
 
 To reverse this process on the receiving computer, use the `image_ffmpeg_to_raw.launch.py` to decode back to `sensor_msgs/Image` messages:
 ```bash
-ros2 launch clearpath_sensors image_ffmpeg_to_raw.launch.py in_ffmpeg:=/a200_0000/sensors/camera_0/color/ffmpeg out_raw:=/a200_0000/sensors/camera_0/decoded/image
+ros2 launch clearpath_offboard_sensors image_ffmpeg_to_raw.launch.py in_ffmpeg:=/a200_0000/sensors/camera_0/color/ffmpeg out_raw:=/a200_0000/sensors/camera_0/decoded/image
 ```
 
 Now, the following topics will be available:
@@ -151,12 +151,12 @@ Assume that the following image topic needs to be compressed:
 
 First, launch the decoder:
 ```bash
-ros2 launch clearpath_sensors image_theora_to_raw.launch.py in_theora:=/a200_0000/sensors/camera_0/color/theora out_raw:=/a200_0000/sensors/camera_0/decoded/image
+ros2 launch clearpath_offboard_sensors image_theora_to_raw.launch.py in_theora:=/a200_0000/sensors/camera_0/color/theora out_raw:=/a200_0000/sensors/camera_0/decoded/image
 ```
 
 Then, launch the encoder:
 ```bash
-ros2 launch clearpath_sensors image_raw_to_theora.launch.py in_raw:=/a200_0000/sensors/camera_0/color/image out_theora:=/a200_0000/sensors/camera_0/color/theora
+ros2 launch clearpath_offboard_sensors image_raw_to_theora.launch.py in_raw:=/a200_0000/sensors/camera_0/color/image out_theora:=/a200_0000/sensors/camera_0/color/theora
 ```
 
 As long as the first header packet is communicated without loss, the decoder will be able to decode and publish the raw image data. The following topics will then be available:

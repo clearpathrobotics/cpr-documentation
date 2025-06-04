@@ -1,79 +1,19 @@
 ---
 title: SLAM
 sidebar_label: SLAM
-sidebar_position: 2
+sidebar_position: 3
 toc_min_heading_level: 2
 toc_max_heading_level: 5
 ---
 
-Simultaneous localization and mapping (SLAM) is a method of generating a map and tracking the robot's
-location within the map. It is generally done using
-laser scan data from a 2D LIDAR, and the robot's odometry. For this demo we are using the
+Simultaneous Localization And Mapping (SLAM) is a method of generating a map and tracking the robot's
+location within the map at the same time. It is generally done using
+laser scan data from a 2D LIDAR and the robot's odometry. For this demo we are using the
 [slam_toolbox](https://github.com/SteveMacenski/slam_toolbox) package to map our environment.
 This tutorial will use the [Clearpath simulator](../simulator/overview), but will work on a physical
-robot too. We will be using a J100 with a Hokuyo UST10 attached to the front of the robot.
+robot too. We will be using a Husky A300 with a Hokuyo UST10 attached to the top of the robot.
 
-<details>
-  <summary>J100 YAML</summary>
-  <p>
-  ```yaml
-  serial_number: j100-0001
-  version: 0
-  system:
-    username: robot
-    hosts:
-      - hostname: cpr-j100-0001
-        ip: 192.168.131.1
-    ros2:
-      namespace: j100_0001
-      domain_id: 0
-      middleware:
-        implementation: rmw_fastrtps_cpp
-    extras:
-      ros_parameters:
-        linear.x.max_velocity": 2.0
-        linear.x.min_velocity": -2.0
-        linear.x.max_acceleration": 20.0
-        linear.x.min_acceleration": -20.0
-        angular.z.max_velocity": 4.0
-        angular.z.min_velocity": -4.0
-        angular.z.max_acceleration": 25.0
-        angular.z.min_acceleration": -25.0
-  platform:
-    controller: ps4
-    decorations:
-      front_bumper:
-        enabled: true
-        model: default
-        xyz: [0.0, 0.0, 0.0]
-        rpy: [0.0, 0.0, 0.0]
-        extension: 0.0
-      rear_bumper:
-        enabled: true
-        model: default
-        xyz: [0.0, 0.0, 0.0]
-        rpy: [0.0, 0.0, 0.0]
-        extension: 0.0
-      top_plate:
-        enabled: true
-        model: default
-        xyz: [0.0, 0.0, 0.0]
-        rpy: [0.0, 0.0, 0.0]
-  sensors:
-    lidar2d:
-      - model: hokuyo_ust
-        urdf_enabled: true
-        launch_enabled: true
-        parent: front_mount
-        xyz: [0.0, 0.0, 0.0]
-        rpy: [0.0, 0.0, 0.0]
-        ros_parameters:
-          urg_node:
-            angle_min: -1.5707
-            angle_max: 1.5707
-  ```
-  </p>
-</details>
+See the sample [`robot.yaml`](configuration.mdx) for configuration details.
 
 :::tip
 
@@ -82,31 +22,29 @@ Make sure you have installed the simulator before starting this tutorial. Take a
 
 :::
 
-## Launching the simulation and SLAM
+## Launching SLAM
 
-**1. Move the `robot.yaml` file to your setup folder (`$HOME/clearpath` by default).**
+:::note
 
-**2. Launch the simulation**
+When using the simulation, it is important to add `use_sim_time:=true` to the Nav2, SLAM, and
+Localization launch files. When using a physical robot, either omit `use_sim_time` or set it
+to `false`.
 
-```
-ros2 launch clearpath_gz simulation.launch.py
-```
+:::
 
-Click on the orange play button in the bottom left corner to start the simulation.
+**1.** [Start the simulation and Nav2](nav2.mdx#launching-the-simulation-and-nav2)
+by following steps 1-3 of the Nav2 startup
 
-**3. In another terminal, launch RViz**
-
-```
-ros2 launch clearpath_viz view_navigation.launch.py namespace:=j100_0001
-```
-
-**4. In another terminal, launch SLAM**
-
-```
-ros2 launch clearpath_nav2_demos slam.launch.py setup_path:=$HOME/clearpath/ use_sim_time:=true
+**2.** Open a terminal and run
+```bash
+ros2 launch clearpath_nav2_demos slam.launch.py use_sim_time:=true
 ```
 
-**5. Drive the robot around the world until the entire map has been generated**
+**3.** [Start Rviz](nav2.mdx#launching-the-simulation-and-nav2) and set the robot's initial pose
+estimate by following steps 5-6 of the Nav2 startup
+
+**4.** Drive the robot around the world. Ensure you have mapped the region you want the robot
+to navigate through autonomously.
 
 <center>
   <figure>
@@ -118,9 +56,10 @@ ros2 launch clearpath_nav2_demos slam.launch.py setup_path:=$HOME/clearpath/ use
   </figure>
 </center>
 
-**6. Save the map**
+**5.** Save the map by opening a new terminal and running
+```bash
+ros2 run nav2_map_server map_saver_cli -f "map_name"
+--ros-args -p map_subscribe_transient_local:=true -r __ns:=/a300_0000
+```
 
-```
-ros2 run nav2_map_server map_saver_cli -f "map_name" \
---ros-args -p map_subscribe_transient_local:=true -r __ns:=/j100_0001
-```
+**6.** Give the robot a navigation goal using the [Nav2 Goal](nav2.mdx#nav2-goal) tool.

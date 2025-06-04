@@ -6,6 +6,22 @@ toc_min_heading_level: 2
 toc_max_heading_level: 5
 ---
 
+:::note
+
+The navigation demos can be run on either the robot computer, or an offboard computer. This
+tutorial assumes you are using the simulation, but the launch files described in the
+[Nav2](nav2.mdx), [SLAM](slam.mdx), and [Localization](localization.mdx) sections can be
+used on a physical robot, too.
+
+:::
+
+:::tip
+
+Make sure you have installed the simulator before starting this tutorial. Take a look at the
+[installation](../simulator/install.mdx) guide for details.
+
+:::
+
 The [clearpath_nav2_demos](https://github.com/clearpathrobotics/clearpath_nav2_demos) package contains
 launch files and configurations for [Nav2](https://github.com/ros-planning/navigation2) and
 [slam_toolbox](https://github.com/SteveMacenski/slam_toolbox) demos. These are open source
@@ -18,8 +34,52 @@ sudo apt-get update
 sudo apt-get install ros-jazzy-clearpath-nav2-demos
 ```
 
-:::tip
+## Nav2
 
-The navigation demos can be run on either the robot computer, or an offboard computer.
+Clearpath robots use the [Nav2](https://docs.nav2.org/) stack for navigation. Nav2 is what sends
+[velocity commands](../../api/platform_api.mdx) to the robot to make it drive autonomously. The
+stack relies on [sensor data](../../api/sensors_api.mdx) published by the robot to operate.
+
+## SLAM vs Localization
+
+In order for the robot to determine where it is in the world it uses a map in combination with
+its sensor data (primarily its IMU and lidar sensors). This map can be provided in one of two ways:
+SLAM (Simultaneous Localization and Mapping), or Localization.
+
+:::warning
+
+The SLAM and Localization implementations in the `clearpath_nav2_demos` package are intended to be
+used in flat, indoor environents. We do not recommend using them to navigate through
+unstructured, outdoor environments nor in indoor enviromnents with elevation changes and ramps.
 
 :::
+
+### SLAM
+
+SLAM is used to generate a new map or to navigate through new environents. It uses the robot's
+lidar sensor to locate walls and other obstacles, building a map of the area as it explores. SLAM
+can also modify areas of the map dynamically, keeping track of mobile obstacles as well as static
+ones.
+
+SLAM is useful for navigating new or changing environments, but is limited in that it can only
+navigate through areas of the map it has already explored.
+
+### Localization
+
+Localization uses an existing map along with live odometry and laserscan data to determine the position
+and orientation of the robot on the given map. It does not update the map if any changes have been made
+to the environment, but it can avoid new obstacles when navigating. Because the map doesn't change,
+the robot can more reliably navigate across large areas within the map, taking more predictable
+paths to get from one location to another.
+
+If you are [working in simulation](../simulator/overview.mdx) the `clearpath_nav2_demos` package
+[includes maps](https://github.com/clearpathrobotics/clearpath_nav2_demos/tree/jazzy/maps) of
+the `warehouse` simulation environment.
+
+## Prerequisites
+
+To use the Nav2 demos your robot must be equipped with a 2D lidar. An IMU is also recommended,
+though many Clearpath robots include a built-in IMU that can be used.
+
+For simplicity, this tutorial will use [the simulator](../simulator/overview.mdx), but the nav2,
+SLAM, and localization launch files can be used on a physical robot too.

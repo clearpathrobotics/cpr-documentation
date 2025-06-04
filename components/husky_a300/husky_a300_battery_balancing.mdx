@@ -1,0 +1,30 @@
+import Admonition from "@theme/Admonition";
+
+### Battery Cell Balancing {#quick-cell-balance}
+
+Husky is powered by LiFePO<sub>4</sub> batteries.
+The function and health of these batteries is monitored by a Battery Management Unit—_(BMU)_—which is internal to each of the battery packs.
+
+Over the operating life of Husky, the State of Charge—_(SoC)_—of the batteries may start being misreported, accompanied by a higher voltage difference between the batteries' cells.
+Ideally; battery cells should be within a range of 50 mV.
+If the cell voltage difference is larger than 50 mV; Husky's batteries may suddenly drop in SoC while operating, or the Husky may unexpectedly shut off.
+
+You should cell balance the batteries at least once per week to avoid this issue.
+
+:::info Battery Cell Balance Procedure
+
+1.  Place the robot on a level surface.
+2.  Power off the robot.
+3.  Confirm the robot's circuit breaker is in the On position.
+4.  Connect the manual charger.
+5.  Let the batteries charge for at least 12 hours.
+  
+  <Admonition type="note">
+    The intention of the Battery Cell Balance is to reach 100% SoC, and then charge for an additional hour while the robot is off.
+    The suggested charge times above may be shorter if:
+
+    1.  Husky's batteries are already close to 100% SoC,
+    2.  Or you are using an upgraded manual charger.
+  </Admonition>
+
+:::

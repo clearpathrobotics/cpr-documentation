@@ -1,0 +1,342 @@
+### Technical Specifications {#technical-specifications}
+
+<div class="table-container-for-centering">
+  <table class="centred-table">
+    <tr>
+      <td>&nbsp;</td>
+      <td><b>Husky A300,<br/>40 Ah</b></td>
+      <td><b>Husky A300,<br/>80 Ah</b></td>
+      <td><b>Husky A300,<br/>120 Ah</b></td>
+    </tr>
+    <tr>
+      <td>Battery, Chemistry</td>
+      <td colspan="3"><center>LiFePO<sub>4</sub></center></td>
+    </tr>
+    <tr>
+      <td>Battery, Nominal Voltage</td>
+      <td colspan="3"><center>25.6 V</center></td>
+    </tr>
+    <tr>
+      <td>Battery, Capacity</td>
+      <td><center>40 Ah</center></td>
+      <td><center>80 Ah</center></td>
+      <td><center>120 Ah</center></td>
+    </tr>
+    <tr>
+      <td>Battery, Capacity</td>
+      <td><center>1024 Wh</center></td>
+      <td><center>2048 Wh</center></td>
+      <td><center>3072 Wh</center></td>
+    </tr>
+    <tr>
+      <td>Operating Time, Average<sup>6</sup></td>
+      <td><center>4 h</center></td>
+      <td><center>8 h</center></td>
+      <td><center>12 h</center></td>
+    </tr>
+    <tr>
+      <td>Operating Time, Standby</td>
+      <td><center>8 h</center></td>
+      <td><center>16 h</center></td>
+      <td><center>24 h</center></td>
+    </tr>
+    <tr>
+      <td>Charge Time, Standard Charger <em>(North America)</em></td>
+      <td><center>4h</center></td>
+      <td><center>8h</center></td>
+      <td><center>12h</center></td>
+    </tr>
+      <tr>
+      <td>Charge Time, Standard Charger <em>(Europe)</em></td>
+      <td><center>5h</center></td>
+      <td><center>10h</center></td>
+      <td><center>15h</center></td>
+    </tr>
+    <tr>
+      <td>Charge Time, Upgraded 650 W Charger</td>
+      <td><center>1h 45m</center></td>
+      <td><center>3h 30m</center></td>
+      <td><center>5h 15m</center></td>
+    </tr>
+    <tr>
+      <td>Charge Time, Upgraded 1200 W Charger</td>
+      <td><center>Not Supported</center></td>
+      <td><center>2h</center></td>
+      <td><center>3h</center></td>
+    </tr>
+    <tr>
+      <td>Charge Time, Wireless Charger</td>
+      <td><center>2h</center></td>
+      <td><center>2h</center></td>
+      <td><center>3h</center></td>
+    </tr>
+
+    {(props.robotModel == "A300") && <tr>
+      <td>Mass, Robot</td>
+      <td><center>78.5 kg</center></td>
+      <td><center>93.5 kg</center></td>
+      <td><center>105 kg</center></td>
+    </tr>}
+    {(props.robotModel == "AMP") && <tr>
+      <td>Mass, Robot</td>
+      <td><center>98.5 kg</center></td>
+      <td><center>113.5 kg</center></td>
+      <td><center>125 kg</center></td>
+    </tr>}
+    {(props.robotModel == "Observer") && <tr>
+      <td>Mass, Robot</td>
+      <td><center>111.2 kg</center></td>
+      <td><center>126.2 kg</center></td>
+      <td><center>137.7 kg</center></td>
+    </tr>}
+    
+    {(props.robotModel == "A300") && <tr>
+      <td>Centre Of Mass, Robot, X<sup>7</sup></td>
+      <td><center>-41 mm</center></td>
+      <td><center>-33 mm</center></td>
+      <td><center>-7 mm</center></td>
+    </tr>}
+    {(props.robotModel == "A300") && <tr>
+      <td>Centre Of Mass, Robot, Y<sup>7</sup></td>
+      <td><center>3 mm</center></td>
+      <td><center>3 mm</center></td>
+      <td><center>2 mm</center></td>
+    </tr>}
+    {(props.robotModel == "A300") && <tr>
+      <td>Centre Of Mass, Robot, Z<sup>7</sup></td>
+      <td><center>70 mm</center></td>
+      <td><center>70 mm</center></td>
+      <td><center>70 mm</center></td>
+    </tr>}
+
+    {(props.robotModel == "AMP") && <tr>
+      <td>Centre Of Mass, Robot, X<sup>7</sup></td>
+      <td><center>-63 mm</center></td>
+      <td><center>-53 mm</center></td>
+      <td><center>-28 mm</center></td>
+    </tr>}
+    {(props.robotModel == "AMP") && <tr>
+      <td>Centre Of Mass, Robot, Y<sup>7</sup></td>
+      <td><center>-1 mm</center></td>
+      <td><center>0 mm</center></td>
+      <td><center>0 mm</center></td>
+    </tr>}
+    {(props.robotModel == "AMP") && <tr>
+      <td>Centre Of Mass, Robot, Z<sup>7</sup></td>
+      <td><center>133 mm</center></td>
+      <td><center>124 mm</center></td>
+      <td><center>119 mm</center></td>
+    </tr>}
+
+    {(props.robotModel == "Observer") && <tr>
+      <td>Centre Of Mass, Robot, X<sup>7</sup></td>
+      <td><center>-35 mm</center></td>
+      <td><center>-30 mm</center></td>
+      <td><center>-10 mm</center></td>
+    </tr>}
+    {(props.robotModel == "Observer") && <tr>
+      <td>Centre Of Mass, Robot, Y<sup>7</sup></td>
+      <td><center>-9 mm</center></td>
+      <td><center>-8 mm</center></td>
+      <td><center>-7 mm</center></td>
+    </tr>}
+    {(props.robotModel == "Observer") && <tr>
+      <td>Centre Of Mass, Robot, Z<sup>7</sup></td>
+      <td><center>170 mm</center></td>
+      <td><center>157 mm</center></td>
+      <td><center>150 mm</center></td>
+    </tr>}
+
+    {(props.robotModel == "A300") && <tr>
+      <td>Mass, Allowable Payload<sup>1</sup></td>
+      <td><center>101.5 kg</center></td>
+      <td><center>86.5 kg</center></td>
+      <td><center>75 kg</center></td>
+    </tr>}
+    {(props.robotModel == "AMP") && <tr>
+      <td>Mass, Allowable Payload<sup>1</sup></td>
+      <td><center>81.5 kg</center></td>
+      <td><center>66.5 kg</center></td>
+      <td><center>55 kg</center></td>
+    </tr>}
+    {(props.robotModel == "Observer") && <tr>
+      <td>Mass, Allowable Payload<sup>1</sup></td>
+      <td><center>68.8 kg</center></td>
+      <td><center>53.8 kg</center></td>
+      <td><center>42.3 kg</center></td>
+    </tr>}
+
+    {(props.robotModel == "A300") && <tr>
+      <td>Mass, Allowable Payload For All Terrain<sup>2</sup></td>
+      <td><center>51.5 kg</center></td>
+      <td><center>36.5 kg</center></td>
+      <td><center>25 kg</center></td>
+    </tr>}
+    {(props.robotModel == "AMP") && <tr>
+      <td>Mass, Allowable Payload For All Terrain<sup>2</sup></td>
+      <td><center>31.5 kg</center></td>
+      <td><center>16.5 kg</center></td>
+      <td><center>5 kg</center></td>
+    </tr>}
+    {(props.robotModel == "Observer") && <tr>
+      <td>Mass, Allowable Payload For All Terrain<sup>2</sup></td>
+      <td colspan="3"><center>Not Supported</center></td>
+    </tr>}
+
+    <tr>
+      <td>Dimensions, Length</td>
+      <td colspan="3"><center>990 mm</center></td>
+    </tr>
+    <tr>
+      <td>Dimensions, Width</td>
+      <td colspan="3"><center>698 mm</center></td>
+    </tr>
+    {(props.robotModel == "A300") && <tr>
+      <td>Dimensions, Height</td>
+      <td colspan="3"><center>372 mm</center></td>
+    </tr>}
+    {(props.robotModel == "AMP") && <tr>
+      <td>Dimensions, Height</td>
+      <td colspan="3"><center>1074 mm</center></td>
+    </tr>}
+    {(props.robotModel == "Observer") && <tr>
+      <td>Dimensions, Height</td>
+      <td colspan="3"><center>1074 mm</center></td>
+    </tr>}
+
+    <tr>
+      <td>Dimensions, Wheelbase Length</td>
+      <td colspan="3"><center>512 mm</center></td>
+    </tr>
+    <tr>
+      <td>Dimensions, Track Width</td>
+      <td colspan="3"><center>566 mm</center></td>
+    </tr>
+    <tr>
+      <td>Dimensions, Ground Clearance</td>
+      <td colspan="3"><center>130 mm</center></td>
+    </tr>
+    <tr>
+      <td>Dimensions, Nominal Tire Diameter</td>
+      <td colspan="3"><center>336 mm</center></td>
+    </tr>
+    <tr>
+      <td>Dimensions, Effective Tire Radius</td>
+      <td colspan="3"><center>162.5 mm <br/><em>(value for odometry control software)</em></center></td>
+    </tr>
+    <tr>
+      <td>Mobility, Total Power</td>
+      <td colspan="3"><center>1080 W total, from 4 BLDC motors</center></td>
+    </tr>
+    <tr>
+      <td>Mobility, Maximum Speed<sup>3</sup></td>
+      <td colspan="3"><center>2 m/s</center></td>
+    </tr>
+    <tr>
+      <td>Mobility, Maximum Climb Grade<sup>4</sup></td>
+      <td colspan="3"><center>30°</center></td>
+    </tr>
+
+    {(props.robotModel == "A300") && <tr>
+      <td>Mobility, Allowable Sideslope</td>
+      <td colspan="3"><center>30°</center></td>
+    </tr>}
+    {(props.robotModel == "AMP") && <tr>
+      <td>Mobility, Allowable Sideslope</td>
+      <td colspan="3"><center>15°</center></td>
+    </tr>}
+    {(props.robotModel == "Observer") && <tr>
+      <td>Mobility, Allowable Sideslope</td>
+      <td colspan="3"><center>15°</center></td>
+    </tr>}
+
+    <tr>
+      <td>Environment, Storage Temperature</td>
+      <td colspan="3"><center>-20°C to +60°C</center></td>
+    </tr>
+    <tr>
+      <td>Environment, Operating Temperature<sup>5</sup></td>
+      <td colspan="3"><center>-20°C to +40°C <br/></center></td>
+    </tr>
+    <tr>
+      <td>Environment, Operating Humidity</td>
+      <td colspan="3"><center>0% to 85% relative humidity, non-condensing</center></td>
+    </tr>
+    <tr>
+      <td>Environment, Ingress Protection</td>
+      <td colspan="3"><center>IP54</center></td>
+    </tr>
+    <tr>
+      <td>User Power, 12 V</td>
+      <td colspan="3"><center>10 A</center></td>
+    </tr>
+    <tr>
+      <td>User Power, 24 V</td>
+      <td colspan="3"><center>5 A</center></td>
+    </tr>
+    <tr>
+      <td>User Power, VBAT</td>
+      <td colspan="3"><center>5 A</center></td>
+    </tr>
+    <tr>
+      <td>User Power, Large VBAT</td>
+      <td colspan="3"><center>40 A</center></td>
+    </tr>
+    <tr>
+      <td>Computer Options</td>
+      <td colspan="3"><center>Standard: i3-13100TE Processor <br/>Performance: i7-13700TE Processor <br/> <em>GPU Optional</em></center></td>
+    </tr>
+  </table>
+</div>
+
+<br />
+
+:::note Technical Specification Footnotes
+
+_<sup>1</sup> &ensp; Continuous operation on relatively flat terrain with wide turns._ <br />
+
+_<sup>2</sup> &ensp; Robot climbing 30° grade with high-mounted payload, or turning in place in high-friction conditions such as asphalt, concrete, and carpet._ <br />
+
+_<sup>3</sup> &ensp; Maximum speed should be limited to 1 m/s in off-road conditions when the payload exceeds 50 kg._ <br />
+
+_<sup>4</sup> &ensp; See also [Important System Limits](#important-system-limits) for additional considerations related to slopes._ <br />
+
+_<sup>5</sup> &ensp; Robot must be powered on at a minimum temperature of 0 °C._ <br />
+_You may notice odd sensor data as the AMP or Observer warms up; such as with the included [Luxonis OAK-D Pro](https://docs.luxonis.com/hardware/platform/environmental-specifications/operating-temperature/#Operating%20temperature-Min%20temperature) cameras which limits its functionality when internal components are cold._ <br />
+
+_<sup>6</sup> &ensp; Based on 33% driving at 2 m/s with 50 kg payload on level ground and 67% idle._ <br />
+
+_<sup>7</sup> &ensp; With reference to the Husky A300's `base_link`._ <br />
+
+:::
+
+:::note Dimensional Drawing
+
+{(props.robotModel == "A300") && <center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/dimensional_drawing_husky_a300.png"
+      width="800"
+    />
+  </figure>
+</center>}
+
+{(props.robotModel == "AMP") && <center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/dimensional_drawing_husky_amp.png"
+      width="800"
+    />
+  </figure>
+</center>}
+
+{(props.robotModel == "Observer") && <center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/dimensional_drawing_husky_observer.png"
+      width="800"
+    />
+  </figure>
+</center>}
+
+:::

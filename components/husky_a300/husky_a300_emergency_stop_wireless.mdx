@@ -1,0 +1,67 @@
+import ComponentLightingStates from "/components/common_lighting_states_estop_reset_operational.mdx"
+
+### Wireless Emergency Stop
+
+:::note
+
+This is an optional add-on kit. 
+
+:::
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/common_images/wireless_emergency_stop_charger_transmitter_and_key.png"
+      width="500"
+    />
+    <figcaption>Wireless Emergency Stop Transmitter, With Its Key Removed</figcaption>
+  </figure>
+</center>
+
+This kit adds some electronics inside the Husky, adds another antenna to the Husky, and includes a handheld transmitter for exerting an Emergency Stop.
+
+To use the Wireless Emergency Stop:
+
+1.  Turn off the Husky.
+2.  Open the _Rear Charge Port Door_ at the back of the Husky.
+3.  Turn the _Wireless Emergency Stop Bypass Keyswitch_ to the enable position _(vertical)_.
+4.  Turn on the Husky.
+5.  With the _Wireless Emergency Stop Transmitter_:
+    1.  Stand within 40 metres of the Husky.
+    2.  Twist the transmitter's red button _(GSS)_.
+    3.  Insert the Transmitter's key _(M-KEY)_.
+    4.  Hold the Start button.
+        The green LED should start blinking quickly.
+        This indicates that the transmitter has connected to the robot, but is still in a Emergency Stop state.
+    5.  Press the Start button again.
+        The green LED should start blinking slowly.
+        This indicates that the Emergency Stop state has been cleared.
+
+The Husky's _Status Lights_ should now be in an operational state.
+
+<ComponentLightingStates />
+
+:::info
+
+* Press the red button _(GSS)_ to exert an Emergency Stop.
+* Store the _Wireless Emergency Stop Transmitter_ with the red button depressed.
+  This is also the transmitter's off button.
+* The transmitter will automatically exert an Emergency Stop if it loses signal to the robot.
+  Keep the transmitter within 40 metres of the robot to maintain the connection.
+* The transmitter will automatically exert an Emergency Stop if it is low battery.
+
+:::
+
+:::danger Intended Use
+
+The Wireless Emergency Stop is intended for use in emergency situations.
+It should not be used as the means of controlling robot motion during regular operation.
+
+:::
+
+:::caution Risk Assessment
+
+Your worksite commissioning team should have created a Risk Assessment for using Husky in their application.
+The _Wireless Emergency Stop Bypass Keyswitch_ should not be set to disabled if your Risk Assessment required the use of this optional kit.
+
+:::

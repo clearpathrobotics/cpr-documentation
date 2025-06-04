@@ -1,0 +1,21 @@
+### base_link
+
+`base_link` is the primary coordinate system for the robot.
+All sensors, manipulators, and brackets are positioned with reference to `base link`.
+[This ROS 2 Documentation page](https://docs.ros.org/en/jazzy/Tutorials/Intermediate/URDF/Building-a-Visual-Robot-Model-with-URDF-from-Scratch.html) explains how a robot's model is constructed.
+
+Husky's model is included on the robot, and is available on our public GitHub.
+Husky's `base_link` is located on the bottom of the chassis, with +X pointed toward the front panel, and +Y toward the robot's left side. 
+
+<center>
+  <img
+    src="/img/robot_images/husky_a300_images/husky_a300_base_link.png"
+    width="700"
+  />
+</center>
+
+:::info
+
+The [STEP Model](#step-model)'s origin is aligned with `base_link`.
+
+:::

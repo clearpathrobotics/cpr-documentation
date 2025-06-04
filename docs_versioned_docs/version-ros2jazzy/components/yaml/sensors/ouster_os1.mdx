@@ -1,0 +1,44 @@
+<table>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("./img/ouster_os1.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+<div style={{overflow:"auto", width:"350"}}>
+
+```yaml
+lidar3d:
+    - model: ouster_os1
+      urdf_enabled: true
+      launch_enabled: true
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ros_parameters:
+        ouster_driver:
+          sensor_hostname: 192.168.131.20
+          udp_dest: 192.168.131.100
+          lidar_port: 7502
+          imu_port: 7503
+          proc_mask: IMU|PCL|SCAN|IMG|RAW|TLM
+          use_system_default_qos: false
+          cap_type: halo
+```
+
+</div>
+</td>
+</tr>
+</table>
+
+#### Package and Setup
+Ouster lidars use the [`ouster_ros`](https://github.com/ouster-lidar/ouster-ros) driver. This is
+an open-source driver, maintained by the manufacturer.
+
+For more specifics on the way Clearpath's configuration system launches the `ouster_ros` nodes,
+see the Ouster [launch file](https://github.com/clearpathrobotics/clearpath_robot/blob/jazzy/clearpath_sensors/launch/ouster_os1.launch.py)
+and the [default parameter file](https://github.com/clearpathrobotics/clearpath_robot/blob/jazzy/clearpath_sensors/config/ouster_os1.yaml)
+in `clearpath_sensors`.

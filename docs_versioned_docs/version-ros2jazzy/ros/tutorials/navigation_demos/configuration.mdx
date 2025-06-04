@@ -1,0 +1,95 @@
+---
+title: Configuration
+sidebar_label: Configuration
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 5
+---
+
+:::note
+
+If you are using a physical robot you must integrate the 2D lidar and IMU. This includes
+ensuring `robot.yaml` is configured as described below as well as ensuring the sensors are
+mechanically mounted and have all necessary power/USB/ethernet cables connected.
+
+:::
+
+## Configuring `robot.yaml`
+
+The [robot configuration file `robot.yaml`](../../config/overview.mdx) must be set up to include
+a 2D laser scanner and an IMU by adding the `sensors.lidar2d` and `sensors.imu` fields. For this
+example we will use a Husky A300 with the standard Phidgets IMU and a Hokuyo UST sensor.
+
+The following is the sample `robot.yaml` file used for this tutorial:
+```yaml
+serial_number: a300-0000
+version: 0
+system:
+  hosts:
+    - hostname: a300-0000
+      ip: 127.0.0.1
+  ros2:
+    namespace: a300_0000
+#  workspaces:
+#    - /path/to/my/workspace/install/setup.bash
+platform:
+  enable_ekf: true
+  controller: ps4
+  attachments:
+    - name: front_bumper
+      type: a300.bumper
+      parent: front_bumper_mount
+    - name: rear_bumper
+      type: a300.bumper
+      parent: rear_bumper_mount
+    - name: top_plate
+      type: a300.top_plate
+sensors:
+  imu:
+    - model: phidgets_spatial
+      urdf_enabled: true
+      launch_enabled: true
+      parent: base_link
+      xyz: [0.059, 0.0, 0.161275]
+      rpy: [0.0, 0.0, 0.0]
+      ros_parameters:
+        phidgets_spatial:
+          data_interval_ms: 20
+  lidar2d:
+    - model: hokuyo_ust
+      parent: default_mount
+```
+
+## Modifying Navigation Parameters
+
+The `clearpath_nav2_demos` package contains default configurations for all supported platforms:
+* Husky A300 and A200;
+* Jackal J100;
+* Dingo DO100, DO150, DD100, and DD150;
+* Ridgeback R100; and
+* Warthog W200.
+If you need to modify the `nav2`, `slam` or `localization` parameters you can use the
+[configuration extras](../../config/yaml/platform/extras#ros-parameters) to override the default
+parameters included in the `clearpath_nav2_demos` package. For example, if your robot has
+additional attachments that extend beyond the normal footprint of the robot you can resize
+the footprint:
+
+```yaml
+platform:
+  extras:
+    ros_parameters:
+      local_costmap:
+        footprint: "[ [0.495, 0.349], [0.495, -0.349], [-0.600, -0.349], [-0.600, 0.349] ]"
+      global_costmap:
+        footprint: "[ [0.495, 0.349], [0.495, -0.349], [-0.600, -0.349], [-0.600, 0.349] ]"
+```
+
+In this example, the rear of the footprint has been extended from `-0.495` to `-0.600`, representing
+some extension or attachment that extends out the back of the robot.
+
+:::tip
+
+The default parameters should only be modified if necessary; if you do not have a specific need to
+change the defaults, we strongly advise not modifying them.
+
+:::

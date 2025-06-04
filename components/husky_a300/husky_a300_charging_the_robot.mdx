@@ -1,0 +1,144 @@
+import Admonition from "@theme/Admonition";
+
+### Charging The Robot
+
+The robot can be on or off while charging.
+To charge the Husky:
+
+1.  Open the _Rear Charge Port Door_.
+2.  Connect your _Manual Charger_ to an AC outlet at your worksite.
+3.  Plug the charger's red connector into the mating port on the back of the Husky.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_rear_charge_port_door_with_sb50.jpg"
+      width="700"
+    />
+    <figcaption>Husky's <em>Rear Charge Port Area</em>, With The Manual Charger Connected</figcaption>
+  </figure>
+</center>
+
+:::tip
+
+The robot's batteries will not charge if the robot's circuit breaker is in the OFF position.
+ 
+:::
+
+:::info
+
+The _Manual Charger_ has a light on it which confirms the robot's batteries are charging.
+
+| Charger                         | Ready To Charge                                                                                         | Charging                                                                                                   |
+| :------------------------------ | :-----------------------------------------------------------------------------------------------------: |  :-------------------------------------------------------------------------------------------------------: |
+| Standard Charger, North America | <img src="/img/robot_images/husky_a300_images/husky_a300_charger_ready_north_america.png" width="300"/> | <img src="/img/robot_images/husky_a300_images/husky_a300_charger_charging_north_america.png" width="300"/> |
+| Standard Charger, Europe        | <img src="/img/robot_images/husky_a300_images/husky_a300_charger_ready_europe.png" width="300"/>        | <img src="/img/robot_images/husky_a300_images/husky_a300_charger_charging_europe.png" width="300"/>        |
+| Upgraded Charger<sup>1</sup>                | <img src="/img/robot_images/husky_a300_images/husky_a300_charger_ready_fast.png" width="250"/>          | <img src="/img/robot_images/husky_a300_images/husky_a300_charger_charging_fast.png" width="250"/>          |
+
+<Admonition type="note" title="Manual Charger Footnotes">
+  <em>
+    <sup>1</sup> &ensp; The images show our 1200 W Upgraded Charger.
+    Our 650 W Upgraded Charger has the same light patterns to indicate charging.
+  </em>
+</Admonition>
+:::
+
+:::note
+
+The Husky's status lights should pulse to show that the batteries are charging.
+These lights may not show the charging pattern if the Husky is reporting a higher priority state—such as a Battery Fault.
+Refer to the [Lighting page](/docs/ros/api/lighting) for details of all the robot states.
+
+<div class="table-container-for-centering">
+  <div class="centred-table">
+    | Lighting State | Lighting Pattern                                                                      |
+    | :------------- | :-----------------------------------------------------------------------------------: |
+    | Charging       | <img src="/img/robot_images/common_images/lighting_images/charging.gif" width="100"/> |
+    | Charged        | <img src="/img/robot_images/common_images/lighting_images/charged.png" width="100"/>  |
+  </div>
+</div>
+
+:::
+
+<Admonition type="danger" title="Waterproofing">
+  The standard <em>Manual Charger</em> must be used in a dry environment.
+  We sell a <em>Fast Charger</em> upgrade, which is waterproof.
+  This <em>Fast Charger</em> can be used outdoors, as long as water is not entering the robot's <em>Rear Charge Port</em> area.
+  
+  {((props.robotModel == "A300") || (props.robotModel == "AMP")) && <>The optional <em>Wireless Charger</em> can also be used in a wet environment, aligning with Husky's IP54 ingress protection rating.</>}
+  {(props.robotModel == "Observer") && <>The included <em>Wireless Charger</em> can also be used in a wet environment, aligning with Husky's IP54 ingress protection rating.</>}
+</Admonition>
+
+#### Wireless Charging
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_wireless_charging_3.png"
+      width="500"
+    />
+    <figcaption>Husky AMP Docking With The Autonomous Wireless Charger</figcaption>
+  </figure>
+</center>
+
+The Autonomous Wireless Charger is part of the Husky Observer.
+This includes:
+
+1.  A stationary dock.
+2.  A mobile charge coil on the robot.
+3.  A 2D lidar for perceiving the stationary dock, allowing the robot to autonomously park near it to charge.
+
+For the first time setup
+
+1.  Place the Stationary Dock on flat and level ground. 
+    We intend the dock to be placed on a concrete slab.
+    Concrete is ideal since it does not have potholes or other undulations that affect the robot's motion during docking.
+2.  After placing the dock, connect it to main AC power.
+    We configure the Stationary Dock's AC power cable for the destination country.
+    The dock's electronics will power on.
+3.  Drive your Husky towards the Stationary Dock.
+    You should park the robot's Mobile Coil within 30 mm of the Stationary Coil to get the maximum charge rate.
+    Charging will begin automatically when the robot is parked near the Dock's Stationary Coil.
+    The Dock's fans will get louder as charging starts.
+    if the Husky is on, the robot's [Status Lights](/docs/ros/api/lighting) will show that the robot is charging.
+
+The Dock will terminate charging when it detects the robot's batteries are charged.
+The Dock will continuously top up the batteries, so you can leave the robot near the Dock indefinitely.
+When you want to send the robot on a mission, just drive it away from the Dock—no need to tell the wireless charger to stop charging.
+
+The [OutdoorNav pages](https://docs.clearpathrobotics.com/docs_outdoornav_user_manual/) of our user manual explain how to setup docking, and then use it in missions.
+ 
+:::note
+
+The Autonomous Wireless Charger is an optional add-on for Husky AMP.
+
+:::
+
+:::info
+
+We sell the Wireless Charger add-on for base Husky A300 robots.
+This uses the same stationary dock and charge coil, but it does not include the lidar or OutdoorNav autonomy software.
+This allows you to manually drive the robot up to the dock, or configure your own perception sensors and autonomy software.
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_wireless_charging_2.png"
+      width="280"
+    />
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_wireless_charging_1.png"
+      width="380"
+    />
+    <figcaption>Husky A300 Wireless Charging</figcaption>
+  </figure>
+</center>
+
+:::
+
+:::tip
+
+Talk to our <a href="mailto:research-sales@clearpathrobotics.com">Sales Team</a> if you want to deploy a fleet of robots with wireless charging.
+We can unbundle the robots and docks, since fleets typically need more robots than docks.
+
+:::

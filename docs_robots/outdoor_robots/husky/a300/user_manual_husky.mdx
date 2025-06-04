@@ -6,11 +6,13 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
+export const robotModel="A300"
 import ComponentIntroductionHusky from "/components/introduction_husky_a300.mdx";
 import Support from "/components/support.mdx";
 import ComponentUsingRos from "/components/using_ros.mdx";
 import ComponentCommonSafeWorkProcedures from "/components/common_safe_work_procedures.mdx";
 import ComponentSafetyWarning from "/components/safety_warning.mdx";
+import ComponentUnboxingTheHuskyA300 from "/components/husky_a300/husky_a300_unboxing.mdx";
 
 <ComponentIntroductionHusky />
 
@@ -61,30 +63,33 @@ avoid them.
 
 The hazards currently identified are outlined below.
 
-### Fire / Explosion
+<div>
 
-:::safety-danger[Fire]
+  :::safety-danger[Fire]
 
-**Never use the Husky A300 robot in an environment outside the specified temperature
-and humidity constraints.**
+  **Never use the Husky A300 robot in an environment outside the specified temperature
+  and humidity constraints.**
 
-The Husky A300 robot contains lithium iron-phosphate chemistry batteries, which can create
-a fire hazard if used improperly.
+  The Husky A300 robot contains lithium iron-phosphate chemistry batteries, which can create
+  a fire hazard if used improperly.
 
-:::
+  :::
 
-<br/>
+  <br/>
 
-:::safety-danger[Explosion]
+  :::safety-danger[Explosion]
 
-**Do not operate Husky A300 in explosive atmospheres, such as in the
-presence of flammable liquids, gases or dust.**
+  **Do not operate Husky A300 in explosive atmospheres, such as in the
+  presence of flammable liquids, gases or dust.**
 
-Husky A300 can create sparks which may ignite the dust or fumes.
+  Husky A300 can create sparks which may ignite the dust or fumes.
 
-:::
+  :::
+  
+  <br/>
+  
+</div>
 
-### Crushing / Impact / Pinching
 
 :::safety-danger[Crushing / Impact]
 
@@ -410,7 +415,7 @@ Additional items may need to be addressed based on the site-specific operating e
 :::safety-caution
 
 **Never attempt to have Husky A300 climb curbs higher than 150 mm, operate near overhanging obstacles,
-or drive across gaps or depressions in the ground more than 130 mm deep, such as the top of stairs,
+or drive across gaps or depressions in the ground more than 150 mm deep, such as the top of stairs,
 at a cliff edge, or at large potholes.**
 
 This may result in damage to the robot drive systems, attachments, or accessories.
@@ -483,7 +488,7 @@ contact [Support](#support).
 Husky A300 is intended for use in:
 
 - indoor and outdoor research laboratories and light industrial environments for inspection, materials transport, and manipulation;
-- environments free of vertical drops greater than 130 mm;
+- environments free of vertical drops greater than 150 mm;
 - environments free of fast-moving people or vehicles;
 - environments free of glass or transparent plastic floors or walls;
 - temperatures between -20°C and +40°C;
@@ -615,7 +620,7 @@ prevent re-initiation of motion.
 <center>
   <figure>
     <img
-      src="/img/robot_images/husky_observer_images/wireless_motion_stop_controller.png"
+      src="/img/robot_images/husky_a200_observer_images/wireless_motion_stop_controller.png"
       width="200"
     />
     <figcaption>Wireless Emergency Stop controller</figcaption>
@@ -1005,31 +1010,6 @@ The base Husky exterior is shown below and includes:
   </figure>
 </center>
 
-The Husky AMP extends the base Husky by adding the following as shown below:
-
-- 1: Sensor tower
-- 2: GPS antennas
-- 3: Wi-Fi and/or LTE/5G antennas
-- 4: Front and rear driving cameras
-- 5: Obstacle detection sensor(s)
-
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/husky_a300_images/husky_a300_amp_exterior_front.png"
-      width="800"
-    />
-    <figcaption>Husky A300 AMP Exterior Features, Front</figcaption>
-  </figure>
-  <figure>
-    <img
-      src="/img/robot_images/husky_a300_images/husky_a300_amp_exterior_rear.png"
-      width="800"
-    />
-    <figcaption>Husky A300 AMP Exterior Features, Rear</figcaption>
-  </figure>
-</center>
-
 #### Chassis
 
 The chassis contains the robot's batteries, electronics, and cooling systems. It is an IP54-rated enclosure.
@@ -1295,35 +1275,28 @@ Refer to [Maintenance](maintenance_husky) for details on battery maintenance.
 An optional USB hub can be added and connected to the computer to increase the number of USB
 ports available.
 
-### Autonomous Mobile Platform (AMP) Kit
+### Husky AMP _(Autonomous Mobile Platform)_
 
-Husky A300 can be equipped with an Autonomous Mobile Platform (AMP) Kit, which includes extra sensors
-(as illustrated below) and [OutdoorNav](/docs_outdoornav_user_manual/) software. Combined, this allows
-for autonomous navigation of Husky A300 and related system development.
+Husky A300 can be configured as a Husky AMP or a Husky Observer.
 
-:::safety-danger[Crushing / Impact]
+The Husky AMP adds sensors to the robot, and our [OutdoorNav](/docs_outdoornav_user_manual/) software.
+The sensors and software create a robot with autonomous navigation, and able to be driven through camera _(teleoperation)_.
+Refer to the [Husky AMP](../../../solutions/husky_a300_amp) user manual for more details.
 
-**Never rely on the AMP kit as only method to avoid collisions.**
-
-While extensive testing has been performed to validate system robustness, autonomous operation of
-Husky A300 with the AMP kit is not safety rated in accordance with ISO 13849 or similar standards.
-The AMP kit is intended for research and development purposes and is not intended for use in deployments
-where hazards are mitigated exclusively through the use of the AMP kit. The user is responsible for
-ensuring that the Husky A300 with AMP kit does not result in hazards in the target operating
-environment.
-
-Contact [Support](#support) for details on how to upgrade to a safety-rated autonomy system for
-Husky A300.
-
-:::
+The Husky Observer includes all the equipment from Husky AMP, and then adds Autonomous Wireless Charging, and a Pan-Tilt-Zoom Camera.
+Refer to the [Husky Observer](../../../solutions/husky_a300_observer) user manual for more details.
 
 <center>
   <figure>
     <img
-      src="/img/robot_images/husky_a300_images/husky_a300_amp.png"
-      width="600"
+      src="/img/robot_images/husky_a300_images/husky_a300_amp_isometric_0.png"
+      width="400"
     />
-    <figcaption>Husky A300 AMP</figcaption>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_observer_isometric_0.png"
+      width="400"
+    />
+    <figcaption>Husky AMP, and Husky Observer</figcaption>
   </figure>
 </center>
 
@@ -1361,49 +1334,7 @@ $W$ is the effective track of the robot, 0.562 m.
 
 ## Unboxing
 
-### Time Required
-
-Approximately 15 minutes.
-
-### Required tools
-
-- 14 mm socket and driver
-
-### What's Inside
-
-Your Husky A300 base platform shipment contains the following:
-
-- Husky A300 robot
-   - Two or more LiFePO<sub>4</sub> batteries (integrated)
-   - Computer (integrated)
-   - IMU (integrated)
-   - Network switch (integrated)
-- One battery charger
-- One PS4 controller
-
-If you purchased the AMP variant, standard payload modules or custom integration services with Husky, then additional equipment
-will be included per your specific configuration, plus further documentation as required.
-
-### Unboxing the Husky A300  {#unboxing-a300}
-
-Follow the steps below to remove Husky A300 from its crate.
-
-1. Remove the bolts securing the front panel of the crate.
-    <center>
-      <img
-        src="/img/robot_images/husky_a300_images/husky_a300_crate_closed.png"
-        width="400"
-      />
-    </center>
-1. Position the front panel as a ramp at the bottom of the crate.
-    <center>
-      <img
-        src="/img/robot_images/husky_a300_images/husky_a300_crate_open.png"
-        width="400"
-      />
-    </center>
-1. Loosen and remove the retaining straps.
-1. Gently roll the Husky A300 out of the crate.
+<ComponentUnboxingTheHuskyA300 />
 
 ---
 
@@ -1570,48 +1501,50 @@ robot is powered off.
 1.  Unplug the Standard Charger from the wall and then disconnect it from the Battery Charger Port.
 1.  Close the Access Panel cover.
 
-#### Wireless Charging (Optional Kit)
+#### Wireless Charging _(Add-on Kit)_
 
-The system may include an optional wireless charging kit.
-When the kit is included, it includes two main parts:
+When this kit is installed, it includes two main parts:
 
-- a wireless charging receiver mounted on the right side of the Husky A300;
-- a docking station, separate from the robot, which includes the wireless charging transmitter.
+- A _Mobile Coil_ mounted on the right side of the Husky A300.
+- A _Docking Station_, separate from the robot, which includes the Stationary Electronics and Stationary Coil. 
 
-This optional kit allows the Husky A300 to be charged by positioning it such that the
-wireless charging receiver is located near the wireless charging transmitter. For maximum
-charge rates, the receiver should be positioned within 30 mm of the transmitter. This
-positioning can be performed manually by the user or automatically using the
-[OutdoorNav docking function](/docs_outdoornav_user_manual/web_user_interface/ui_overview),
-when the robot is equipped with the optional AMP Kit. Note that wireless
-charging can be performed with the robot in both the powered and unpowered states, as
-long as the Battery Breaker is in the "ON" position.
+These components charge the Husky A300's battery when it parked near the Dock's Stationary Coil.
+You should park the robot's Mobile Coil within 30 mm of the Stationary Coil to get the maximum charge rate.
+Charging will begin automatically when the robot is parked near the Dock's Stationary Coil.
+The Dock's fans will become louder as charging starts.
+If the Husky is on, the robot's [Status Lights](/docs/ros/api/lighting) will show that the robot is charging.
 
-When the wireless charging receiver is near the transmitter, charging will begin automatically without
-any user intervention.
-When charging is complete, the transmitter will stop charging automatically and the status display
-will be updated accordingly. Note that when the robot is powered
-on, the charging may remain on indefinitely (though at a reduced rated) as the transmitter
-provides the on-going power for the powered-on electronics.
+:::note
 
-At any time while charging, the robot can be moved away from the transmitter to
-stop charging and begin using the robot. No other user intervention is required to
-stop charging.
+The Husky A300 can be charged even when the robot is off.
+The Husky's Battery Breaker must be in the "ON" position to charge.
+
+:::
+
+The Dock will terminate charging when it detects the robot's batteries are charged.
+The Dock will continuously top up the batteries, so you can leave the robot near the Dock indefinitely.
+
+When you want to send the robot on a mission, just drive it away from the Dock—no need to tell the wireless charger to stop charging.
+
+:::info
+
+Robots that include our [OutdoorNav](/docs_outdoornav_user_manual/web_user_interface/ui_overview) autonomy can be configured with an Autonomous Wireless Charger.
+This functions the same as the Wireless Charging kit, but we also add sensors that allow the robot to see the Dock.
+The Autonomous Wireless Charger is included with our [Husky A300 Observer](../../../solutions/husky_a300_observer).
+
+:::
 
 <center>
   <figure>
     <img
-      src="/img/robot_images/husky_a300_images/husky_a300_wireless_charging_receiver.png"
-      width="600"
+      src="/img/robot_images/husky_a300_images/husky_a300_wireless_charging_1.png"
+      width="400"
     />
-    <figcaption>Husky A300 Wireless Charging Receiver</figcaption>
-  </figure>
-  <figure>
     <img
-      src="/img/robot_images/husky_a300_images/husky_a300_wireless_charging_transmitter.png"
-      width="600"
+      src="/img/robot_images/husky_a300_images/husky_a300_wireless_charging_2.png"
+      width="300"
     />
-    <figcaption>Husky A300 Wireless Charging Transmitter and Dock</figcaption>
+    <figcaption>Husky A300 Wireless Charging</figcaption>
   </figure>
 </center>
 

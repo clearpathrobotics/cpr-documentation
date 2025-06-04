@@ -1,0 +1,19 @@
+### CANbus Connection
+
+Husky has up to 3 standard CAN networks:
+
+| Network name    | Data Rate   | Purpose                   | Devices                                                                         |
+| :-------------- | :---------- | :------------------------ | :------------------------------------------------------------------------------ |
+| `vcan0`         | 1000 kBit/s | Motor Control             | Primary Computer, MCU, 4 Motor Controllers                                      |
+| `vcan1`         | 250 kBit/s  | Batteries                 | Primary Computer, MCU, Batteries _(up to 6 batteries)_, Wireless Emergency Stop |
+| `usbcan0`       | 250 kBit/s  | Optional Wireless Charger | Primary Computer, Wireless Charger                                              |
+
+:::info
+
+We suggest you add custom CAN devices to a new network, using a USB-CAN adapter such as a PEAK System PCAN-USB.
+You would need to name the new network something different than the 3 networks listed above.
+We configure these networks using SocketCAN.
+
+It is possible to add new devices to the Husky's existing networks, but this requires significant testing time.
+
+:::

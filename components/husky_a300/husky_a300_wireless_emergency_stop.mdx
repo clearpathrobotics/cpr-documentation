@@ -1,0 +1,26 @@
+### Wireless Emergency Stop  {#wireless-stop}
+
+A wireless dual-channel emergency stop can be added to Husky.
+This allows you to invoke an emergency stop remotely—_(either through a button press or when the remote unit is out of range)_.
+This is in addition to the Husky's built-in Emergency Stop Buttons.
+Refer to the User Manual for details on how the Wireless Emergency Stop can be bypassed in certain debugging scenarios.
+
+The Wireless Emergency Stop can be connected to Husky on the System Interface circuit board at the `W ES` connector, based on the pinout below.
+
+| W ES Pin | Function / Value                                                                                                                                               |
+| :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1        | 24 V, _(fused at 3 A)_                                                                                                                                         |
+| 2        | CAN High: combined with CAN Low, connected to the CAN2 pins on the MCU; see additional notes below                                                             |
+| 3        | Reset In: Pull to GND for at least 100 ms to restart the robot after all emergency stops have been cleared; equivalent to pressing the Restart Button on Husky |
+| 4        | Channel 1 Out, _(24 V)_: normally connected to Channel 1 In; disconnect to trigger an emergency stop                                                           |
+| 5        | Channel 1 In                                                                                                                                                   |
+| 6        | GND                                                                                                                                                            |
+| 7        | CAN Low                                                                                                                                                        |
+| 8        | GND                                                                                                                                                            |
+| 9        | Channel 2 Out, _(24 V)_: normally connected to Channel 2 In; disconnect to trigger an emergency stop                                                           |
+| 10       | Channel 2 In                                                                                                                                                   |
+
+#### Receiver Installation
+
+In addition to the electrical integration noted above, the wireless receiver will normally require mechanical mounting inside the Husky, along with external mounting of an antenna.
+Refer to Wireless Stop receivers and Cable Passthrough for additional details.

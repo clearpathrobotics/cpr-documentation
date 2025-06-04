@@ -6,7 +6,10 @@ toc_min_heading_level: 2
 toc_max_heading_level: 5
 ---
 
-Corner lighting is unified for platforms that support it (D100, D150, R100, W200). Lighting is controlled by the [lighting node](https://github.com/clearpathrobotics/clearpath_robot/tree/jazzy/clearpath_hardware_interfaces/src/lighting) which defines multiple lighting states.
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Corner lighting is unified for platforms that support it (A300, DX100, DX150, R100, W200). Lighting is controlled by the [lighting node](https://github.com/clearpathrobotics/clearpath_robot/tree/jazzy/clearpath_hardware_interfaces/src/lighting) which defines multiple lighting states.
 
 The platforms lighting state is determined based on data from multiple platform status topics. Lighting states are given a priority, such that the most important state (lowest priority value) is displayed first.
 
@@ -15,21 +18,76 @@ The lighting node will publish the current lighting command directly to the MCU.
 
 ## Lighting States
 
-| Lighting State | Lighting Pattern | Priority | User commands allowed | Platform |
-| :------------- | :--------------- | :------- | :-------------------- | :------- |
-| Light Control Fault (or boot failure)     | <img src="/img/robot_images/common_images/lighting_images/light_control_fault.gif" width="100"/> | N/A | No | All |
-| Battery Fault                             | <img src="/img/robot_images/common_images/lighting_images/battery_fault.gif" width="100"/> | 0 | No | D100, D150, R100, W200, A300 |
-| Shore Power Fault                         | <img src="/img/robot_images/common_images/lighting_images/shore_fault.gif" width="100"/> | 1 | No | D100, D150 |
-| Motor Fault                               | <img src="/img/robot_images/common_images/lighting_images/motor_fault.gif" width="100"/> | 2 | No | A300 |
-| Motors Overheated                         | <img src="/img/robot_images/common_images/lighting_images/motor_overheated.gif" width="100"/> | 3 | No | A300 |
-| Motors Throttled                          | <img src="/img/robot_images/common_images/lighting_images/motor_throttled.gif" width="100"/> | 4 | Yes | A300 |
-| Shore Power and Charged                   | <img src="/img/robot_images/common_images/lighting_images/shore_and_charged.gif" width="100"/> | 5 | Yes | D100, D150 |
-| Shore Power and Charging                  | <img src="/img/robot_images/common_images/lighting_images/shore_and_charging.gif" width="100"/> | 6 | Yes | D150 |
-| Shore Power                               | <img src="/img/robot_images/common_images/lighting_images/shore_power.png" width="100"/> | 7 | Yes | D100, D150 |
-| Charged                                   | <img src="/img/robot_images/common_images/lighting_images/charged.png" width="100"/> | 8 | Yes | D100, D150, R100, W200, A300 |
-| Charging (wired or wireless)              | <img src="/img/robot_images/common_images/lighting_images/charging.gif" width="100"/> | 9 | Yes | D150, R100, A300 |
-| Needs Reset (after Emergency Stop)        | <img src="/img/robot_images/common_images/lighting_images/needs_reset.gif" width="100"/> | 10 | No | R100, A300 |
-| Emergency Stop Engaged                    | <img src="/img/robot_images/common_images/lighting_images/stopped.gif" width="100"/> | 11 | No | D100, D150, R100, W200, A300 |
-| Low Battery                               | <img src="/img/robot_images/common_images/lighting_images/low_battery.gif" width="100"/> | 12 | No | D100, D150, R100, W200, A300 |
-| Driving                                   | <img src="/img/robot_images/common_images/lighting_images/driving.png" width="100"/> | 13 | Yes | D100, D150, R100, W200, A300 |
-| Idle                                      | <img src="/img/robot_images/common_images/lighting_images/idle.png" width="100"/> | 14 | Yes | D100, D150, R100, W200, A300 |
+<Tabs>
+    <TabItem value="Husky A300" default>
+        | Lighting State | Lighting Pattern | Priority | User commands allowed | Notes |
+        | :------------- | :--------------- | :------- | :-------------------- | :---- |
+        | Light Control Fault (or boot failure)     | <img src="/img/robot_images/common_images/lighting_images/light_control_fault.gif" width="100"/> | N/A | No | |
+        | Battery Fault                             | <img src="/img/robot_images/common_images/lighting_images/battery_fault.gif" width="100"/> | 0 | No | |
+        | Motor Fault                               | <img src="/img/robot_images/common_images/lighting_images/motor_fault.gif" width="100"/> | 2 | No | The light in the same corner as the faulted motor will flash |
+        | Motors Overheated                         | <img src="/img/robot_images/common_images/lighting_images/motor_overheated.gif" width="100"/> | 3 | No | |
+        | Motors Throttled                          | <img src="/img/robot_images/common_images/lighting_images/motor_throttled.gif" width="100"/> | 4 | Yes | |
+        | Charged                                   | <img src="/img/robot_images/common_images/lighting_images/charged.png" width="100"/> | 8 | Yes | |
+        | Charging (wired or wireless)              | <img src="/img/robot_images/common_images/lighting_images/charging.gif" width="100"/> | 9 | Yes | |
+        | Needs Reset (after Emergency Stop)        | <img src="/img/robot_images/common_images/lighting_images/needs_reset.gif" width="100"/> | 10 | No | |
+        | Emergency Stop Engaged                    | <img src="/img/robot_images/common_images/lighting_images/stopped.gif" width="100"/> | 11 | No | |
+        | Low Battery                               | <img src="/img/robot_images/common_images/lighting_images/low_battery.gif" width="100"/> | 12 | No | |
+        | Driving                                   | <img src="/img/robot_images/common_images/lighting_images/driving.png" width="100"/> | 13 | Yes | |
+        | Idle                                      | <img src="/img/robot_images/common_images/lighting_images/idle.png" width="100"/> | 14 | Yes | |
+    </TabItem>
+    <TabItem value="Dingo D100">
+        | Lighting State | Lighting Pattern | Priority | User commands allowed |
+        | :------------- | :--------------- | :------- | :-------------------- |
+        | Light Control Fault (or boot failure)     | <img src="/img/robot_images/common_images/lighting_images/light_control_fault.gif" width="100"/> | N/A | No |
+        | Battery Fault                             | <img src="/img/robot_images/common_images/lighting_images/battery_fault.gif" width="100"/> | 0 | No |
+        | Shore Power Fault                         | <img src="/img/robot_images/common_images/lighting_images/shore_fault.gif" width="100"/> | 1 | No |
+        | Shore Power and Charged                   | <img src="/img/robot_images/common_images/lighting_images/shore_and_charged.gif" width="100"/> | 5 | Yes |
+        | Shore Power                               | <img src="/img/robot_images/common_images/lighting_images/shore_power.png" width="100"/> | 7 | Yes |
+        | Charged                                   | <img src="/img/robot_images/common_images/lighting_images/charged.png" width="100"/> | 8 | Yes |
+        | Charging (wired or wireless)              | <img src="/img/robot_images/common_images/lighting_images/charging.gif" width="100"/> | 9 | Yes |
+        | Emergency Stop Engaged                    | <img src="/img/robot_images/common_images/lighting_images/stopped.gif" width="100"/> | 11 | No |
+        | Low Battery                               | <img src="/img/robot_images/common_images/lighting_images/low_battery.gif" width="100"/> | 12 | No |
+        | Driving                                   | <img src="/img/robot_images/common_images/lighting_images/driving.png" width="100"/> | 13 | Yes |
+        | Idle                                      | <img src="/img/robot_images/common_images/lighting_images/idle.png" width="100"/> | 14 | Yes |
+    </TabItem>
+    <TabItem value="Dingo D150">
+        | Lighting State | Lighting Pattern | Priority | User commands allowed |
+        | :------------- | :--------------- | :------- | :-------------------- |
+        | Light Control Fault (or boot failure)     | <img src="/img/robot_images/common_images/lighting_images/light_control_fault.gif" width="100"/> | N/A | No |
+        | Battery Fault                             | <img src="/img/robot_images/common_images/lighting_images/battery_fault.gif" width="100"/> | 0 | No |
+        | Shore Power Fault                         | <img src="/img/robot_images/common_images/lighting_images/shore_fault.gif" width="100"/> | 1 | No |
+        | Shore Power and Charged                   | <img src="/img/robot_images/common_images/lighting_images/shore_and_charged.gif" width="100"/> | 5 | Yes |
+        | Shore Power and Charging                  | <img src="/img/robot_images/common_images/lighting_images/shore_and_charging.gif" width="100"/> | 6 | Yes |
+        | Shore Power                               | <img src="/img/robot_images/common_images/lighting_images/shore_power.png" width="100"/> | 7 | Yes |
+        | Charged                                   | <img src="/img/robot_images/common_images/lighting_images/charged.png" width="100"/> | 8 | Yes |
+        | Charging (wired or wireless)              | <img src="/img/robot_images/common_images/lighting_images/charging.gif" width="100"/> | 9 | Yes |
+        | Emergency Stop Engaged                    | <img src="/img/robot_images/common_images/lighting_images/stopped.gif" width="100"/> | 11 | No |
+        | Low Battery                               | <img src="/img/robot_images/common_images/lighting_images/low_battery.gif" width="100"/> | 12 | No |
+        | Driving                                   | <img src="/img/robot_images/common_images/lighting_images/driving.png" width="100"/> | 13 | Yes |
+        | Idle                                      | <img src="/img/robot_images/common_images/lighting_images/idle.png" width="100"/> | 14 | Yes |
+    </TabItem>
+    <TabItem value="Ridgeback R100">
+        | Lighting State | Lighting Pattern | Priority | User commands allowed |
+        | :------------- | :--------------- | :------- | :-------------------- |
+        | Light Control Fault (or boot failure)     | <img src="/img/robot_images/common_images/lighting_images/light_control_fault.gif" width="100"/> | N/A | No |
+        | Battery Fault                             | <img src="/img/robot_images/common_images/lighting_images/battery_fault.gif" width="100"/> | 0 | No |
+        | Charged                                   | <img src="/img/robot_images/common_images/lighting_images/charged.png" width="100"/> | 8 | Yes |
+        | Charging (wired or wireless)              | <img src="/img/robot_images/common_images/lighting_images/charging.gif" width="100"/> | 9 | Yes |
+        | Needs Reset (after Emergency Stop)        | <img src="/img/robot_images/common_images/lighting_images/needs_reset.gif" width="100"/> | 10 | No |
+        | Emergency Stop Engaged                    | <img src="/img/robot_images/common_images/lighting_images/stopped.gif" width="100"/> | 11 | No |
+        | Low Battery                               | <img src="/img/robot_images/common_images/lighting_images/low_battery.gif" width="100"/> | 12 | No |
+        | Driving                                   | <img src="/img/robot_images/common_images/lighting_images/driving.png" width="100"/> | 13 | Yes |
+        | Idle                                      | <img src="/img/robot_images/common_images/lighting_images/idle.png" width="100"/> | 14 | Yes |
+    </TabItem>
+    <TabItem value="Warthog W200">
+        | Lighting State | Lighting Pattern | Priority | User commands allowed |
+        | :------------- | :--------------- | :------- | :-------------------- |
+        | Light Control Fault (or boot failure)     | <img src="/img/robot_images/common_images/lighting_images/light_control_fault.gif" width="100"/> | N/A | No |
+        | Battery Fault                             | <img src="/img/robot_images/common_images/lighting_images/battery_fault.gif" width="100"/> | 0 | No |
+        | Charged                                   | <img src="/img/robot_images/common_images/lighting_images/charged.png" width="100"/> | 8 | Yes |
+        | Emergency Stop Engaged                    | <img src="/img/robot_images/common_images/lighting_images/stopped.gif" width="100"/> | 11 | No |
+        | Low Battery                               | <img src="/img/robot_images/common_images/lighting_images/low_battery.gif" width="100"/> | 12 | No |
+        | Driving                                   | <img src="/img/robot_images/common_images/lighting_images/driving.png" width="100"/> | 13 | Yes |
+        | Idle                                      | <img src="/img/robot_images/common_images/lighting_images/idle.png" width="100"/> | 14 | Yes |
+    </TabItem>
+</Tabs>
