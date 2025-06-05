@@ -1,4 +1,4 @@
-import styles from "./button_step_download.module.css";
+import styles from "./button_download.module.css";
 
 export default function ButtonStepDownload(props) {
   return(
