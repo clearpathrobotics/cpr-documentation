@@ -100,6 +100,51 @@ import ComponentCommonSoftwareIntegration from "/components/common_software_inte
   <TOCInline toc={toc} />
 </details>
 
+## Quick Start  {#quick-start}
+
+1. Review the [important safety notes](#a300-safety).
+1. [Remove Husky AMP from its shipping crate](#unboxing-a300).
+1. [Turn on the circuit breaker](#turning-the-circuit-breaker-on) and
+   [turn the robot on](#turning-the-robot-on).
+1. [Clear any stop conditions](#clearing-an-emergency-stop), [press the Safety Restart Button](#clear-needs-reset),
+   and check the status lights and confirm that the robot is in the [idle state](#clearing-an-emergency-stop).
+1. [Connect the joystick and drive the robot](#controller).
+1. Connect your laptop to Husky AMP over an [Ethernet connection](#ethernet-connection) or through
+   its [Wi-Fi Access Point](#wifi-ap-connection).
+1. Use `ping` the various sensors to confirm that they are operational. For example, to confirm that
+   the front teleop camera is working:
+
+   ```
+   $ ping 192.168.131.15
+   PING 192.168.131.15 (192.168.131.2) 56(84) bytes of data.
+   64 bytes from 192.168.131.15: icmp_seq=1 ttl=255 time=0.265 ms
+   64 bytes from 192.168.131.15: icmp_seq=2 ttl=255 time=0.213 ms
+   64 bytes from 192.168.131.15: icmp_seq=3 ttl=255 time=0.282 ms
+   64 bytes from 192.168.131.15: icmp_seq=4 ttl=255 time=0.216 ms
+   ^C
+   --- 192.168.131.15 ping statistics ---
+   4 packets transmitted, 4 received, 0% packet loss, time 3100ms
+   rtt min/avg/max/mdev = 0.213/0.244/0.282/0.030 ms
+   ```
+
+   Repeat for each of the [sensors](#ip-addresses).
+
+1. Confirm that OutdoorNav software is operational.
+   1. [Connect to Web UI](/docs_outdoornav_user_manual/quick_start#connecting_to_web_ui)
+   1. [Check camera views](/docs_outdoornav_user_manual/quick_start#check-camera-views)
+   1. [Check system status](/docs_outdoornav_user_manual/quick_start#checking-system-status)
+   1. [Check GPS RTK fix](/docs_outdoornav_user_manual/quick_start#checking-gpt-rtk-fix)
+   1. Complete system configuration:
+      1. [Load map tiles](/docs_outdoornav_user_manual/quick_start#loading_map_tiles)
+      1. [Set dock location](/docs_outdoornav_user_manual/quick_start#set-dock-location), if a dock is included with your system
+   1. [Create your first map](/docs_outdoornav_user_manual/quick_start#create-your-first-map)
+   1. [Create your first mission](/docs_outdoornav_user_manual/quick_start#create-your-first-mission)
+   1. [Execute your first mission](/docs_outdoornav_user_manual/quick_start#execute-your-first-mission)
+1. When the battery gets low, as seen on the rear display or based on the status lights,
+   [connect the charger](#charging-the-robot). If your robot is equipped with an optional
+   wireless charger, you may dock the robot at the [wireless charger](#wireless-charging) instead.
+
+
 ## Introduction
   ### About
   The Husky AMP—_(Autonomous  Mobile Platform)_—uses a Husky A300 as its base.
@@ -131,8 +176,136 @@ import ComponentCommonSoftwareIntegration from "/components/common_software_inte
   <ComponentInCaseOfCollision />
   <ComponentIssuesAfterGettingStarted />
 
+
 ## Operating The Robot {#operating-the-robot}
   <ComponentPreOperationInspection />
+
+### Robot Network Connection  {#network-connection}
+
+Husky AMP provides Ethernet, Wi-Fi, and cellular network connection options. The details below outline the configuration for the different options.
+
+#### Connecting to Husky AMP over Ethernet {#ethernet-connection}
+
+Husky AMP can always be accessed over an Ethernet connection, following the steps below.
+
+1. Open the Access Panel cover on Husky AMP to expose the debug Ethernet port.
+1. Connect an Ethernet cable from Husky AMP's debug Ethernet port to a computer.
+1. Set the computer's IP address and netmask as shown below.
+   - **IP Address**: 192.168.131.100
+   - **Netmask**: 255.255.255.0
+1. Confirm that you can ping Husky AMP from the computer's terminal window in Linux or the
+   command prompt in Windows by entering the following command:
+   ```ping 192.168.131.1```
+   The output should be similar to the following.
+   ```
+   Pinging 192.168.131.1 with 32 bytes of data:
+   Reply from 192.168.131.1: bytes=32 time<1ms TTL=128
+   Reply from 192.168.131.1: bytes=32 time<1ms TTL=128
+   Reply from 192.168.131.1: bytes=32 time<1ms TTL=128
+   Reply from 192.168.131.1: bytes=32 time<1ms TTL=128
+
+   Ping statistics for 192.168.131.1:
+       Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+   Approximate round trip times in milli-seconds:
+       Minimum = 0ms, Maximum = 0ms, Average = 0ms
+   ```
+1. Connect to your robot via SSH. To do so, execute the following in a terminal window:
+   ```
+   ssh robot@192.168.131.1
+   ```
+   You will be promoted to enter a password. The default password is `clearpath`.
+   :::note
+   All Clearpath robots ship from the factory with their login password set to `clearpath`.
+   Upon receipt of your robot we recommend changing the password. To change the password,
+   run the following command on the robot:
+   ```
+   passwd
+   ```
+   This will prompt you to enter the current password, followed by the new password twice.
+   While typing the passwords in the `passwd` prompt there will be no visual feedback
+   (e.g. "*" characters).
+   :::
+
+#### Connecting to Husky AMP's Wi-Fi Access Point  {#wifi-ap-connection}
+
+As an alternative to connecting over Ethernet, it is always possible to connect to Husky AMP's
+Wi-Fi access point, following the steps below.
+
+1. Use a computer to connect to Husky AMP's Wi-Fi network, whose network name (SSID) will be
+   `cpr_a300_amp_XXXXX`, where `XXXXX` matches the serial number of the Husky AMP. When
+   prompted, use the password `clearpath`.
+
+1. Confirm that the computer's Wi-Fi network interface is configured to use DHCP and that it
+   has been assigned an IP address in the `192.168.131.XXX` range.
+
+1. Confirm that you can ping Husky AMP from the computer's terminal window in Linux or the
+   command prompt in Windows by entering the following command:
+   ```ping 192.168.131.1```
+   The output should be similar to the following.
+   ```
+   Pinging 192.168.131.1 with 32 bytes of data:
+   Reply from 192.168.131.1: bytes=32 time<1ms TTL=128
+   Reply from 192.168.131.1: bytes=32 time<1ms TTL=128
+   Reply from 192.168.131.1: bytes=32 time<1ms TTL=128
+   Reply from 192.168.131.1: bytes=32 time<1ms TTL=128
+
+   Ping statistics for 192.168.131.1:
+       Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+   Approximate round trip times in milli-seconds:
+       Minimum = 0ms, Maximum = 0ms, Average = 0ms
+   ```
+
+1. Connect to your robot via SSH. To do so, execute the following in a terminal window:
+   ```
+   ssh robot@192.168.131.1
+   ```
+
+#### Connecting Husky to a Wi-Fi Network  {#wifi-client-setup}
+
+To get Husky AMP connected to your local Wi-Fi network, follow the steps below.
+
+1. Connect to Husky AMP over an [Ethernet connection](#ethernet-connection) or through
+   its [Wi-Fi Access Point](#wifi-ap-connection).
+
+1. In a web browser, open the configuration page for Husky AMP's router: https://192.168.131.51
+   - Username: `admin`
+   - Default password: `clearpath`
+
+1. TODO: choose menu, make changes, Apply Changes
+
+:::info
+
+For more advanced configurations, refer to the "Wi-Fi WAN" section of the
+[router's user manual](https://manual.peplink.com/peplink-max-user-manual/).
+
+:::
+
+#### Connecting Husky to a Cellular Network  {#cellular-setup}
+
+To get Husky AMP connected to a cellular network, follow the steps below.
+
+1. Install your SIM card into Husky AMP's router by removing the Husky AMP's
+   right side panel, removing the cover on the "Cellular SIM" port on the router
+   inserting the SIM card into slot "A", and reinstalling the covers.
+
+1. Connect to Husky AMP over an [Ethernet connection](#ethernet-connection) or through
+   its [Wi-Fi Access Point](#wifi-ap-connection).
+
+1. In a web browser, open the configuration page for Husky AMP's router: https://192.168.131.51
+   - Username: `admin`
+   - Default password: `clearpath`
+
+1. TODO: choose menu, make changes, Apply Changes
+
+:::info
+
+For more advanced configurations, refer to the "Cellular WAN" section of the
+[router's user manual](https://manual.peplink.com/peplink-max-user-manual/).
+
+:::
+
+
+
   <ComponentMobilityControlOptions />
   <ComponentOrientationReferences />
   <ComponentChargingTheRobot robotModel={robotModel}/>
