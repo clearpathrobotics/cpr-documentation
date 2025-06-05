@@ -1,0 +1,41 @@
+1. Review the [important safety notes](#a300-safety).
+1. [Remove Husky AMP from its shipping crate](#unboxing-a300).
+1. [Turn on the circuit breaker](#turning-the-circuit-breaker-on) and
+   [turn the robot on](#turning-the-robot-on).
+1. [Clear any stop conditions](#clearing-an-emergency-stop), [press the Safety Restart Button](#clear-needs-reset),
+   and check the status lights and confirm that the robot is in the [idle state](#clearing-an-emergency-stop).
+1. [Connect the joystick and drive the robot](#controller).
+1. Connect your laptop to Husky AMP over an [Ethernet connection](#ethernet-connection) or through
+   its [Wi-Fi Access Point](#wifi-ap-connection).
+1. Use `ping` the various sensors to confirm that they are operational. For example, to confirm that
+   the front teleop camera is working:
+
+   ```
+   $ ping 192.168.131.15
+   PING 192.168.131.15 (192.168.131.2) 56(84) bytes of data.
+   64 bytes from 192.168.131.15: icmp_seq=1 ttl=255 time=0.265 ms
+   64 bytes from 192.168.131.15: icmp_seq=2 ttl=255 time=0.213 ms
+   64 bytes from 192.168.131.15: icmp_seq=3 ttl=255 time=0.282 ms
+   64 bytes from 192.168.131.15: icmp_seq=4 ttl=255 time=0.216 ms
+   ^C
+   --- 192.168.131.15 ping statistics ---
+   4 packets transmitted, 4 received, 0% packet loss, time 3100ms
+   rtt min/avg/max/mdev = 0.213/0.244/0.282/0.030 ms
+   ```
+
+   Repeat for each of the [sensors](#ip-addresses).
+
+1. Confirm that OutdoorNav software is operational.
+   1. [Connect to Web UI](/docs_outdoornav_user_manual/quick_start#connecting_to_web_ui)
+   1. [Check camera views](/docs_outdoornav_user_manual/quick_start#checking-camera-feeds)
+   1. [Check system status](/docs_outdoornav_user_manual/quick_start#checking-system-status)
+   1. [Check GPS RTK fix](/docs_outdoornav_user_manual/quick_start#checking-gpt-rtk-fix)
+   1. Complete system configuration:
+      1. [Load map tiles](/docs_outdoornav_user_manual/quick_start#loading_map_tiles)
+      1. [Set dock location](/docs_outdoornav_user_manual/quick_start#set-dock-location), if a dock is included with your system
+   1. [Create your first map](/docs_outdoornav_user_manual/quick_start#create-your-first-map)
+   1. [Create your first mission](/docs_outdoornav_user_manual/quick_start#create-your-first-mission)
+   1. [Execute your first mission](/docs_outdoornav_user_manual/quick_start#execute-your-first-mission)
+1. When the battery gets low, as seen on the rear display or based on the status lights,
+   [connect the charger](#charging-the-robot). If your robot is equipped with an optional
+   wireless charger, you may dock the robot at the [wireless charger](#wireless-charging) instead.
