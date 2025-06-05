@@ -84,8 +84,10 @@ import ComponentAdditionalEmergencyStopDevices from "/components/husky_a300/husk
 import ComponentSystemPower from "/components/husky_a300/husky_a300_system_power.mdx";
 import ComponentSystemInterfaceDebugLed from "/components/husky_a300/husky_a300_system_interface_debug_led.mdx";
 import ComponentCommonSoftwareIntegration from "/components/common_software_integration.mdx";
-import ComponentAmpQuickstart from "/components/husky_a300/husky_a300_amp_quickstart.mdx";
-import ComponentAmpNetworkConnection from "/components/husky_a300/husky_a300_amp_network_connection.mdx";
+import ComponentNetworkConnection from "/components/husky_a300/husky_a300_network_connection.mdx";
+import ComponentNetworkBasic from "/components/husky_a300/husky_a300_amp_networking_basic.mdx";
+import ComponentSensorChecks from "/components/husky_a300/husky_a300_amp_check_sensors.mdx";
+import ComponentOutdoorNavChecks from "/components/husky_a300/husky_a300_amp_outdoornav_checks.mdx";
 
 <center>
   <figure>
@@ -101,10 +103,6 @@ import ComponentAmpNetworkConnection from "/components/husky_a300/husky_a300_amp
   <summary>Click to view this page's table of contents</summary>
   <TOCInline toc={toc} />
 </details>
-
-## Quick Start
-
-  <ComponentAmpQuickstart />
 
 ## Introduction
   ### About
@@ -135,11 +133,14 @@ import ComponentAmpNetworkConnection from "/components/husky_a300/husky_a300_amp
   <ComponentEmergencyStopWireless />
   <ComponentConnectingWirelessJoystick />
   <ComponentInCaseOfCollision />
+  <ComponentNetworkBasic />
+  <ComponentSensorChecks />
+  <ComponentOutdoorNavChecks />
   <ComponentIssuesAfterGettingStarted />
 
 ## Operating The Robot {#operating-the-robot}
   <ComponentPreOperationInspection />
-  <ComponentAmpNetworkConnection />
+  <ComponentNetworkConnection robotModel={robotModel}/>
   <ComponentMobilityControlOptions />
   <ComponentOrientationReferences />
   <ComponentChargingTheRobot robotModel={robotModel}/>

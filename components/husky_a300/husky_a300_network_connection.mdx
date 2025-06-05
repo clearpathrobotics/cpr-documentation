@@ -1,0 +1,15 @@
+import ComponentEthernetConnection from "/components/husky_a300/networking/husky_a300_ethernet_connection.mdx";
+import ComponentPeplinkWifiApCconnection from "/components/husky_a300/networking/husky_a300_peplink_wifi_ap_connection.mdx";
+import ComponentNetplanWifiClient from "/components/husky_a300/networking/husky_a300_netplan_wifi_client.mdx";
+import ComponentPeplinkWifiClient from "/components/husky_a300/networking/husky_a300_peplink_wifi_client.mdx";
+import ComponentPeplinkCellular from "/components/husky_a300/networking/husky_a300_peplink_cellular.mdx";
+
+### Robot Network Connection  {#network-connection}
+
+Husky provides several network connection options, the details of which are outlined below.
+
+<ComponentEthernetConnection />
+{(props.robotModel == "A300") && <ComponentNetplanWifiClient />}
+{((props.robotModel == "AMP") || (props.robotModel == "Observer")) && <ComponentPeplinkWifiApCconnection />}
+{((props.robotModel == "AMP") || (props.robotModel == "Observer")) && <ComponentPeplinkWifiClient />}
+{((props.robotModel == "AMP") || (props.robotModel == "Observer")) && <ComponentPeplinkCellular />}

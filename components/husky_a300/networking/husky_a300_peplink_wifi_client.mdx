@@ -1,0 +1,49 @@
+#### Connecting Husky to a Wi-Fi Network  {#wifi-client-setup}
+
+To get Husky AMP connected to your local Wi-Fi network, follow the steps below.
+
+1. Connect to Husky AMP over an [Ethernet connection](#ethernet-connection) or through
+   its [Wi-Fi Access Point](#wifi-ap-connection).
+1. In a web browser, open the configuration page for Husky AMP's router: https://192.168.131.51
+   - Username: `admin`
+   - Default password: `Clearpath1`
+1. Click on either the "Wi-Fi WAN on 2.4 GHz" or "Wi-Fi WAN on 5GHz" link, depending on
+   whether you are setting up a 2.4 GHz or 5 GHz connection.
+   <center>
+     <figure>
+       <img
+         src="/img/robot_images/husky_a300_images/peplink_select_24g.png"
+         width="700"
+       />
+       <figcaption>Select 2.4 GHz for configuration</figcaption>
+     </figure>
+   </center>
+1. On the new configuration page, scroll to the bottom; under "Wi-Fi Connection Profiles"
+   click "Create Profile".
+   <center>
+     <figure>
+       <img
+         src="/img/robot_images/husky_a300_images/peplink_create_connection_profile.png"
+         width="700"
+       />
+       <figcaption>Create network profile</figcaption>
+     </figure>
+   </center>
+1. Enter the SSID and password for the network, then click OK.
+   <center>
+     <figure>
+       <img
+         src="/img/robot_images/husky_a300_images/peplink_connection_profile_details.png"
+         width="700"
+       />
+       <figcaption>Configure network profile</figcaption>
+     </figure>
+   </center>
+1. Click "Save and Apply" and wait for a message confirming that the configuration has been applied.
+
+:::info
+
+For more advanced configurations, refer to the "Wi-Fi WAN" section of the
+[router's user manual](https://manual.peplink.com/peplink-max-user-manual/).
+
+:::
