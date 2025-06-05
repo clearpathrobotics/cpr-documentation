@@ -182,7 +182,7 @@ import ComponentCommonSoftwareIntegration from "/components/common_software_inte
 
 ### Robot Network Connection  {#network-connection}
 
-Husky AMP provides Ethernet, Wi-Fi, and cellular network connection options. The details below outline the configuration for the different options.
+Husky AMP provides Ethernet, Wi-Fi, and cellular network connection options, the details of which are outlined below.
 
 #### Connecting to Husky AMP over Ethernet {#ethernet-connection}
 
@@ -231,7 +231,7 @@ Husky AMP can always be accessed over an Ethernet connection, following the step
 As an alternative to connecting over Ethernet, it is always possible to connect to Husky AMP's
 Wi-Fi access point, following the steps below.
 
-1. Use a computer to connect to Husky AMP's Wi-Fi network, whose network name (SSID) will be
+1. Use a computer to connect to Husky AMP's Wi-Fi network. The Wi-Fi network name (SSID) will be
    `cpr_a300_amp_XXXXX`, where `XXXXX` matches the serial number of the Husky AMP. When
    prompted, use the password `clearpath`.
 
@@ -269,9 +269,44 @@ To get Husky AMP connected to your local Wi-Fi network, follow the steps below.
 
 1. In a web browser, open the configuration page for Husky AMP's router: https://192.168.131.51
    - Username: `admin`
-   - Default password: `clearpath`
+   - Default password: `Clearpath1`
 
-1. TODO: choose menu, make changes, Apply Changes
+1. Click on either the "Wi-Fi WAN on 2.4 GHz" or "Wi-Fi WAN on 5GHz" link, depending on
+   whether you are setting up a 2.4 GHz or 5 GHz connection.
+   <center>
+     <figure>
+       <img
+         src="/img/robot_images/husky_a300_images/peplink_select_24g.png"
+         width="700"
+       />
+       <figcaption>Select 2.4 GHz for configuration</figcaption>
+     </figure>
+   </center>
+
+1. On the new configuration page, scroll to the bottom; under "Wi-Fi Connection Profiles"
+   click "Create Profile".
+   <center>
+     <figure>
+       <img
+         src="/img/robot_images/husky_a300_images/peplink_create_connection_profile.png"
+         width="700"
+       />
+       <figcaption>Create network profile</figcaption>
+     </figure>
+   </center>
+
+1. Enter the SSID and password for the network, then click OK.
+   <center>
+     <figure>
+       <img
+         src="/img/robot_images/husky_a300_images/peplink_connection_profile_details.png"
+         width="700"
+       />
+       <figcaption>Configure network profile</figcaption>
+     </figure>
+   </center>
+
+1. Click "Save and Apply" and wait for a message confirming that the configuration has been applied.
 
 :::info
 
@@ -293,9 +328,32 @@ To get Husky AMP connected to a cellular network, follow the steps below.
 
 1. In a web browser, open the configuration page for Husky AMP's router: https://192.168.131.51
    - Username: `admin`
-   - Default password: `clearpath`
+   - Default password: `Clearpath1`
 
-1. TODO: choose menu, make changes, Apply Changes
+1. Click on the "Cellular" link.
+   <center>
+     <figure>
+       <img
+         src="/img/robot_images/husky_a300_images/peplink_select_cellular.png"
+         width="700"
+       />
+       <figcaption>Select Cellular</figcaption>
+     </figure>
+   </center>
+
+1. On the new configuration page, complete the configuration as specified by your
+   cellular network provider. Ensure that the "Enabled" checkbox is clicked.
+   <center>
+     <figure>
+       <img
+         src="/img/robot_images/husky_a300_images/peplink_cellular_details.png"
+         width="700"
+       />
+       <figcaption>Cellular settings</figcaption>
+     </figure>
+   </center>
+
+1. Click "Save and Apply" and wait for a message confirming that the configuration has been applied.
 
 :::info
 
