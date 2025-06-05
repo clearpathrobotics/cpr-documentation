@@ -1,0 +1,34 @@
+import Admonition from "@theme/Admonition";
+import ButtonDownloadWiringDiagram from "/components/button_download_wiring_diagram.tsx";
+
+### Wiring Diagram
+
+<center>
+  <figure>
+    <img
+      src="/img/robot_images/husky_a300_images/husky_a300_wiring_diagram_example.png"
+      width="700"
+    />
+    <figcaption>Snippet Of The Husky's Wiring Diagram, Showing The Optional 120 Ah Battery</figcaption>
+  </figure>
+</center>
+
+<ButtonDownloadWiringDiagram filePath={"/assets/pdf/clearpath_robotics_032188.pdf"} />
+
+Wiring diagrams help diagnose the cause of issues, such as damaged cables or loose connections.
+This wiring diagram lists Clearpath's 6 digit item numbers for circuit boards and cables.
+The diagram does not include pinouts for individual cables.
+
+Please contact our [Support Team](#support) if you need more debugging information, or want a replacement cable.
+
+
+[//]: <> (TODO, replace this admonition with conditionally rendered wiring diagrams for AMP and Observer)
+
+{((props.robotModel == "AMP") || (props.robotModel == "Observer")) && <Admonition type="info" title="Husky AMP & Husky Observer">
+  This wiring diagram only includes the base Husky A300's hardware.
+  It does not include the additional hardware for Husky AMP or Husky Observer.
+  We will add wiring diagrams for these robots soon.
+  <br/>
+  <br/>
+  Please contact our <a href="#support">Support Team</a> if you need wiring information for either of these robots.
+</Admonition>}
