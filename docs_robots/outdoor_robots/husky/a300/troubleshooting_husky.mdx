@@ -203,7 +203,13 @@ roll speed in this state depends on both the slope and payload.
 
 ### Not getting Wi-Fi internet connection
 
-See [above](#wifi-fault).
+1. Confirm that Husky Wi-Fi has been [configured correctly](user_manual_husky#wifi-client-setup),
+   including correct SSID and password. Confirm that the settings are correct in the
+   corresponding `/etc/netplan/` file.
+1. From Husky's computer, run `ip a` to review the status of the wireless interface and
+   determine if the connection has been established.
+1. Power cycle the robot and see if the issue persists.
+1. If the issues persists, contact [Support](#support).
 
 ### Cannot connect to the robot's computer over a network cable
 
