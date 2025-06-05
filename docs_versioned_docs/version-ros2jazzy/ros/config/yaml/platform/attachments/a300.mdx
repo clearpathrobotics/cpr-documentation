@@ -1,0 +1,65 @@
+---
+title: A300 Attachments
+sidebar_label: A300
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 5
+---
+import A300AmpEnclosure from "/docs_versioned_docs/version-ros2jazzy/components/yaml/attachments/a300/amp_enclosure.mdx";
+import A300AmpSensorArch from "/docs_versioned_docs/version-ros2jazzy/components/yaml/attachments/a300/amp_sensor_arch.mdx";
+import A300Bumper from "/docs_versioned_docs/version-ros2jazzy/components/yaml/attachments/a300/bumper.mdx";
+import A300Spotlight from "/docs_versioned_docs/version-ros2jazzy/components/yaml/attachments/a300/spotlight.mdx";
+import A300TopPlateDefault from "/docs_versioned_docs/version-ros2jazzy/components/yaml/attachments/a300/top_plate_default.mdx";
+import A300TopPlatePacs from "/docs_versioned_docs/version-ros2jazzy/components/yaml/attachments/a300/top_plate_pacs.mdx";
+import A300WirelessCharger from "/docs_versioned_docs/version-ros2jazzy/components/yaml/attachments/a300/wireless_charger.mdx";
+
+## Bumper
+
+The A300 can have bumpers. By default, we have two bumpers, on the front and rear of the robot.
+
+<A300Bumper />
+
+
+## Top Plate
+The A300 has two types of top plates that modify the mounting surface of the robot.
+
+### Default
+
+The **default** top plate is mounted on top of the robot. When properly installed it provides IP54 protection.
+<A300TopPlateDefault/>
+<br/>
+
+### PACS
+The **PACS** top plate has a grid of mounting holes in it, using the PACS-compatible **80mm x 80mm** spacing.
+Because of the number of mounting holes, the PACS top plate is not IP54 rated.
+<A300TopPlatePacs/>
+<br/>
+
+## Wireless Charger
+
+<A300WirelessCharger />
+
+## AMP Attachments
+
+The Husky AMP (Autonomous Mobile Platform) has large enclosure on top to contain additional computers, sensors, and
+power-distribution equipment and an arch to support additional sensors. These attachments can be added to
+the A300 just like any other attachment.
+
+### AMP Enclosure
+
+If the AMP Enclosure is used, the [top plate](#top-plate) should be omitted.
+
+<A300AmpEnclosure />
+
+### AMP Sensor Arch
+
+The AMP sensor arch is used to attach additional sensors and antennas.
+
+<A300AmpSensorArch />
+
+### Spotlights
+
+The AMP is equipped with multiple spotlights to assist in teleoperation in dark environments. The models also include
+simulated light sources when used with [Gazebo](../../../../tutorials/simulator/overview.mdx)
+
+<A300Spotlight />
