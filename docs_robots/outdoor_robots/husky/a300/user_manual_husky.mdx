@@ -13,6 +13,7 @@ import ComponentUsingRos from "/components/using_ros.mdx";
 import ComponentCommonSafeWorkProcedures from "/components/common_safe_work_procedures.mdx";
 import ComponentSafetyWarning from "/components/safety_warning.mdx";
 import ComponentUnboxingTheHuskyA300 from "/components/husky_a300/husky_a300_unboxing.mdx";
+import ComponentIntendedUse from "/components/husky_a300/husky_a300_intended_use.mdx";
 
 <ComponentIntroductionHusky />
 
@@ -483,24 +484,7 @@ contact [Support](#support).
 
 ---
 
-## Intended Use
-
-Husky A300 is intended for use in:
-
-- indoor and outdoor research laboratories and light industrial environments for inspection, materials transport, and manipulation;
-- environments free of vertical drops greater than 150 mm;
-- environments free of fast-moving people or vehicles;
-- environments free of glass or transparent plastic floors or walls;
-- temperatures between -20°C and +40°C;
-- environments free of open water or other liquids deeper than 130 mm;
-- environments free of grades greater than 15°.
-
-The system is intended to be operated by trained personnel familiar with mobile robotic technology.
-It is intended to be monitored constantly by those personnel during operation.
-
-The system is intended to be operated around trained personnel familiar with the hazards that the system presents.
-
-The system is intended to be operated in the as-furnished condition, without additional equipment, payload or passengers.
+<ComponentIntendedUse />
 
 ---
 
@@ -965,6 +949,7 @@ In case of a collision:
 | Traversal Grade / Sideslope    | 30 °                                                                     |
 | Operating Temperature⁵         | -20 °C to 40 °C                                                          |
 | Storage Temperature            | -20 °C to 60 °C                                                          |
+| Charging Temperature           | 0 °C to 40 °C                                                            |
 | Operating Relative Humidity    | 0 to 85% non-condensing                                                  |
 | Operating Time, Average⁶       | 4 hours (2-battery) or 8 hours (4-battery) or 12 hours (6-battery) |
 | Operating Time, Standby        | 12 hours (2-battery) or 24 hours (4-battery) or 36 hours (6-battery) |
@@ -1489,13 +1474,14 @@ may be charged with the standard manual/wired charger or with the optional wirel
 #### Manual/Wired Charging
 
 A manual (wired) charger can be used to charge the Husky batteries by following the steps outlined below.
-The following manual chargers are supported with Husky A300:
+The following manual chargers are supported with Husky A300.
 
-- Standard Manual Charger, North America (Henryuan Model PSY27710000): 277 W, indoor use only
-- Standard Manual Charger, Europe (Mean Well Model NPB-240-24TB): 222 W, indoor use only
-- High Power Manual Chargers
-   - Robots with 2 batteries: Delta-Q Model IC650: 650W, indoor or outdoor use (IP66)
-   - Robots with 4 or 6 batteries: Delta-Q Model IC1200: 1200 W, indoor or outdoor use (IP66)
+| Charger | Vendor / Model | Power | Voltage | Current | Operating Environment |
+| :------ | :------------- | :---- | :------ | :------ | :-------------------- |
+| Standard Manual Charger, North America | Henryuan PSY27710000 | 277 W | 27.7 V | 10.0 A | Indoor use only |
+| Standard Manual Charger, Europe | Mean Well NPB-240-24TB | 222 W | 27.7 V | 8.0 A | Indoor use only |
+| Upgraded Charger, 650 W | Delta-Q IC650 | 650 W | 27.7 V | 23.5 A | Indoor or outdoor use (IP66) |
+| Upgraded Charger, 1200 W | Delta-Q IC1200 | 650 W | 27.7 V | 43.3 A | Indoor or outdoor use (IP66) |
 
 :::safety-caution
 
