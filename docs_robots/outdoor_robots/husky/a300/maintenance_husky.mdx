@@ -35,6 +35,9 @@ import ComponentNetworkSwitch from "/components/husky_a300/husky_a300_network_sw
 import ComponentComputer from "/components/husky_a300/husky_a300_computer.mdx";
 import ComponentSystemInterfaceDebugLed from "/components/husky_a300/husky_a300_system_interface_debug_led.mdx";
 import ComponentFrontCover from "/components/husky_a300/husky_a300_front_cover.mdx";
+import ComponentLockoutTagout from "/components/husky_a300/husky_a300_lockout_tagout.mdx";
+import ComponentReplacingFusesMiniBlade from "/components/husky_a300/husky_a300_replacing_fuses_mini_blade.mdx";
+import ComponentReplacingFusesBf1 from "/components/husky_a300/husky_a300_replacing_fuses_bf1.mdx";
 import Support from "/components/support.mdx";
 
 <ComponentIntroductionHusky />
@@ -68,6 +71,10 @@ These may present a slip hazard.
 
 :::
 
+## Maintenance Safety
+
+<ComponentLockoutTagout />
+
 ## Weekly Preventative Maintenance
 
 Perform the following tasks at least once every week.
@@ -93,7 +100,7 @@ to ensure that any water has drained out through the drain plug, and allow Husky
 
 :::
 
-### Clean or Replace Air Filter
+### Clean or Replace Air Filter  {#air-filter-maintenance}
 
 The air filter is used to prevent dirt and dust from entering the robot at the front air
 intake. It must be cleaned or replaced on a regular basis. High-dust environments will require
@@ -218,17 +225,8 @@ have any concerns.
   <ComponentComputer />
   <ComponentSystemInterfaceDebugLed />
   <ComponentReplacingCircuitBoards />
-
-### Replacing Fuses
-
-In the unlikely event that a fuse fails, refer to the table below for the required replacement fuse.
-
-| Circuit Board Designator | Fuse Type and Rating  | Part Number |
-| :----------------------- | :-------------------- | :---------- |
-| F1, F2, F3, F4, F5, F8   | 125 V, 3 A, fast-blow | [Littelfuse 0453003.MR](https://www.digikey.ca/en/products/detail/littelfuse-inc/0453003-MR/552259) |
-| F6, F10                  | 125 V, 5 A, slow-blow | [Littelfuse 0454005.MR](https://www.digikey.ca/en/products/detail/littelfuse-inc/0454005-MR/552287) |
-| F7, F9                   | 125 V, 8 A, fast-blow | [Littelfuse 0453008.MR](https://www.digikey.ca/en/products/detail/littelfuse-inc/0453008-MR/552263) |
-| F52, F53, F54, F55, F56, F57, F58 | 32 V, 10 A, MINI Blade | [Littelfuse 0297010.WXT](https://www.digikey.ca/en/products/detail/littelfuse-inc/0297010-wxt/5233693) | 
+  <ComponentReplacingFusesMiniBlade />
+  <ComponentReplacingFusesBf1 />
 
 ---
 
