@@ -1,0 +1,34 @@
+---
+title: Cockpit ROS 2 Diagnostics
+sidebar_label: ROS 2 Diagnostics
+sidebar_position: 3
+---
+
+The [Cockpit ROS 2 Diagnostics](https://github.com/clearpathrobotics/cockpit-ros2-diagnostics) extension was developed by Clearpath Robotics to add more ROS specific functionality to Cockpit and specifically to help in monitoring and troubleshooting ROS 2 robots.
+
+## Capture Diagnostics
+
+While in [administrative access](./overview.mdx#admin-access) mode you can generate a diagnostic capture. This collects together a TAR file of system information that can be used to help diagnose robot issues. If you need to reach out to the Clearpath Support team, ensure to attach a diagnostic capture from the robot while the issue was active or as soon as possible after the issue occurred.
+
+After you click `Generate Capture` it may take up to several minutes to generate the file. Once the file is successfully generated, an alert will appear showing where the file was saved and with a link to download it directly from the webpage.
+
+### Downloading Past Captures
+
+Previous diagnostic capture file can be found in the `$HOME/diagnostic_captures/` directory on the robot and will contain the timestamp in `year-month-day_hour-minute-second` format.
+
+## Errors & Warnings
+
+Errors are unexpected situations that prevent normal operation of one or more features or software systems of the robot. Warnings are unexpected or expected situations that may or may not impact normal operation of the robot.
+
+Active errors and warnings are each separated into dedicated tables in order to bring emphasis to what issues need to be addressed on a given robot. Clicking on these errors and warnings opens the diagnostic details in the section below.
+
+## All Diagnostics
+
+This section displays all ROS 2 diagnostics in an expandable table. If a diagnostic is clicked, the diagnostic details are displayed in a drawer, including associated values.
+
+<center>
+  <figure>
+    <img src={require("./img/all_diagnostics.png").default} />
+    <figcaption>Cockpit ROS 2 Diagnostics Extension - All Diagnostics</figcaption>
+  </figure>
+</center>

@@ -1,0 +1,36 @@
+---
+title: Installation
+sidebar_label: Installation
+sidebar_position: 1
+---
+
+The [Cockpit Project](https://cockpit-project.org/) is a web-based graphical interface for server management. It offers many features to facilitate monitoring and managing the robot from a browser, including reviewing logs, managing services and monitoring storage and networks. In addition, there is a [Cockpit ROS 2 Diagnostics](https://github.com/clearpathrobotics/cockpit-ros2-diagnostics) extension to view ROS 2 diagnostics and to trigger diagnostic captures.
+
+Cockpit and the Cockpit ROS 2 diagnostics extension are now installed by default on all new clearpath robots.
+
+## Recommended Installation
+
+Open a terminal on the robot computer while connected to the internet and run the following command:
+
+```bash
+wget -c https://raw.githubusercontent.com/clearpathrobotics/clearpath_computer_installer/main/cockpit_installer.sh && bash -e cockpit_installer.sh
+```
+
+## Manual or Source Installation
+
+For manual installation instructions or source installation instructions, see the Cockpit ROS 2 Diagnostic extension ReadMe file sections:
+
+- [Manual Installation Instructions](https://github.com/clearpathrobotics/cockpit-ros2-diagnostics#installation-instructions)
+- [Development and Source Instructions](https://github.com/clearpathrobotics/cockpit-ros2-diagnostics#development-and-source-instructions)
+
+## Accessing Cockpit Webserver
+
+1. Ensure that the device shares a network with the robot. This could be a direct wired connection or they can be on the same wireless network.
+
+2. If running clearpath_config software version 2.5: enable the [Foxglove Bridge](../config/yaml/platform/foxglove_bridge.mdx). This will be enabled by default on future versions.
+
+3. Open a browser and go to `http://ipaddress:9090` where `ipaddress` is replaced with the IP address of the robot over the shared network. For example, for a wired connection it would be http://192.168.131.1:9090. If the website is accessed over HTTPS, the ROS 2 Diagnostics connection will not work.
+
+## Enabling Administrative Access mode {#admin-access}
+
+If the top of the page says `Limited access` then this indicates that administrative access is not enabled. Click on where it says `Limited access` and enter the password. If successful, the top of the page will now say `Administrative access`. Administrative access is required for any functionality that modifies the system.
