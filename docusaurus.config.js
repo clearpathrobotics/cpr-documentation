@@ -14,7 +14,7 @@ const config = {
   url: "https://docs.clearpathrobotics.com",
   baseUrl: "/",
   onBrokenLinks: "throw",
-  onBrokenMarkdownLinks: "warn",
+  onBrokenMarkdownLinks: "throw",
   favicon: "img/website_images/favicon.ico",
 
   i18n: {
