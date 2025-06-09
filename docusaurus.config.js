@@ -15,6 +15,7 @@ const config = {
   baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
+  onBrokenAnchors: "throw",
   favicon: "img/website_images/favicon.ico",
 
   i18n: {
