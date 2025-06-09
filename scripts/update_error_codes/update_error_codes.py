@@ -40,7 +40,7 @@ def add_section_description(file_path):
 
 # Error Codes
 
-This document contains error codes and troubleshooting notes for each error code.
+This section includes a full list of the possible error codes along with troubleshooting guidance for each one.
 
 """
         f.write(section_description)
@@ -64,7 +64,7 @@ def preamble_error_code_file(file_path, category_number, category_description):
     """Write the preamble for the mdx file."""
     with open(file_path, 'a', encoding='utf-8') as f:
         f.write(
-            f'---\n## E{category_number}00 {category_description} {{#{category_description.lower().replace(" ", "-")}}}\n\n'
+            f'---\n## E{category_number}00 - {category_description} {{#{category_description.lower().replace(" ", "-")}}}\n\n'
         )
 
 
