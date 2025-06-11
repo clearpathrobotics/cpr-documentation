@@ -1,0 +1,44 @@
+---
+title: Cockpit Features
+sidebar_label: Features
+sidebar_position: 2
+---
+
+This page reviews the key features available on each section of the webserver.
+
+## Overview
+
+- High level summaries of computer health, CPU and memory usage, Hardware Information and Computer Configuration
+
+## Logs
+
+- View the systemd journal (equivalent to using `journalctl`) and filter for specific messages
+
+## Storage
+
+- Monitor reading and writing from the hard drive(s)
+- View available space and storage logs
+
+## Networking
+
+- Monitor the bandwidth usage on each of the connected networks. Note that any network managed by the networkd renderer will be displayed as "Unmanaged interfaces". This is expected because Cockpit is only looking for interfaces managed by the Network Manager renderer.
+- View the IP addresses assigned for each network interface
+- View network logs
+
+## Accounts
+
+- View users and groups
+- While in [administrative access mode](./overview.mdx#admin-access) you can also create accounts and groups
+
+## Services
+
+- Monitor all of the services including service status and logs
+- While in [administrative access mode](./overview.mdx#admin-access) you can manage whether or not services are enabled.
+
+## ROS 2 Diagnostics
+
+- See [ROS 2 Diagnostics](./ros2_diagnostics.mdx)
+
+## Terminal
+
+- This page gives terminal access through the browser.

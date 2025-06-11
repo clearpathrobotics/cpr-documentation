@@ -11,6 +11,8 @@
 
 ```yaml
 manipulators:
+  moveit:
+    enable: false
   arms:
     - model: universal_robots
       parent: default_mount
@@ -200,6 +202,8 @@ ros2 launch ur_calibration calibration_correction.launch.py robot_ip:=<robot_ip>
 Then, in the entry to the configuration file, pass in the path to the calibrated kinematics file.
 ```yaml
 manipulators:
+  moveit:
+    enable: false
   arms:
     - model: universal_robots
       parent: default_mount
