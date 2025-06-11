@@ -1,13 +1,12 @@
 #### Connecting Husky to a Wi-Fi Network  {#wifi-client-setup}
 
-To get Husky AMP connected to your local Wi-Fi network, follow the steps below.
+To get Husky AMP or Husky Observer connected to your local Wi-Fi network, follow the steps below.
 
-1. Connect to Husky AMP over an [Ethernet connection](#ethernet-connection) or through
-   its [Wi-Fi Access Point](#wifi-ap-connection).
-1. In a web browser, open the configuration page for Husky AMP's router: https://192.168.131.51
+1. [Connect your laptop to Husky's AMP network](#basic-network-connection).
+1. In a web browser, open the configuration page for Husky's router: https://192.168.131.51
    - Username: `admin`
    - Default password: `Clearpath1`
-1. Click on either the "Wi-Fi WAN on 2.4 GHz" or "Wi-Fi WAN on 5GHz" link, depending on
+1. Click on either the `Wi-Fi WAN on 2.4 GHz` or `Wi-Fi WAN on 5GHz` link, depending on
    whether you are setting up a 2.4 GHz or 5 GHz connection.
    <center>
      <figure>
@@ -18,8 +17,8 @@ To get Husky AMP connected to your local Wi-Fi network, follow the steps below.
        <figcaption>Select 2.4 GHz for configuration</figcaption>
      </figure>
    </center>
-1. On the new configuration page, scroll to the bottom; under "Wi-Fi Connection Profiles"
-   click "Create Profile".
+1. On the new configuration page, scroll to the bottom; under `Wi-Fi Connection Profiles`
+   click `Create Profile`.
    <center>
      <figure>
        <img
@@ -39,11 +38,22 @@ To get Husky AMP connected to your local Wi-Fi network, follow the steps below.
        <figcaption>Configure network profile</figcaption>
      </figure>
    </center>
-1. Click "Save and Apply" and wait for a message confirming that the configuration has been applied.
+1. Click `Save and Apply` and wait for a message confirming that the configuration has been applied.
+1. Click on the `Dashboard` tab and confirm that the configured WAN connection reports as `Connected`.
+   <center>
+     <figure>
+       <img
+         src="/img/robot_images/husky_a300_images/peplink_wan_connected.png"
+         width="550"
+       />
+       <figcaption>WAN Connection Status</figcaption>
+     </figure>
+   </center>
 
 :::info
 
-For more advanced configurations, refer to the "Wi-Fi WAN" section of the
+For more advanced configurations, refer to the `Wi-Fi WAN` section of the
 [router's user manual](https://manual.peplink.com/peplink-max-user-manual/).
 
 :::
+
