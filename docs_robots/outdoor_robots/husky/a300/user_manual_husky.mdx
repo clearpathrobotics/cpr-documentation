@@ -13,6 +13,7 @@ import ComponentUsingRos from "/components/using_ros.mdx";
 import ComponentCommonSafeWorkProcedures from "/components/common_safe_work_procedures.mdx";
 import ComponentSafetyWarning from "/components/safety_warning.mdx";
 import ComponentUnboxingTheHuskyA300 from "/components/husky_a300/husky_a300_unboxing.mdx";
+import ComponentTechnicalSpecifications from "/components/husky_a300/husky_a300_technical_specifications.mdx";
 
 <ComponentIntroductionHusky />
 
@@ -511,7 +512,7 @@ rapid prototyping, and deployments.
 It is available both as a base platform and as an autonomous mobile platform (AMP).
 
 - Read all instructions before using this product.
-- Familiarize yourself with the [System Specifications](#system-specifications).
+- Familiarize yourself with the [Technical Specifications](#technical-specifications).
 
 <center>
   <figure>
@@ -775,7 +776,7 @@ target environment (based on slopes, terrains, etc).
 To ensure safe operation in the target environment, suitable safety margin should be applied
 to the minimum limits outlined below.
 
-When no payload is present, refer to the [System Specifications](#system-specifications) for
+When no payload is present, refer to the [Technical Specifications](#technical-specifications) for
 the safe operating limits.
 
 :::
@@ -947,41 +948,7 @@ In case of a collision:
 
 ## System Overview
 
-### System Specifications  {#system-specifications}
-
-| Specification                  | Measurement                                                              |
-| :----------------------------- | :----------------------------------------------------------------------- |
-| Dimension, Length              | 990 mm                                                                   |
-| Dimension, Width               | 698 mm                                                                   |
-| Dimension, Height              | 372 mm                                                                   |
-| Track Width                    | 566 mm                                                                   |
-| Wheelbase Length               | 512 mm                                                                   |
-| Ground Clearance               | 130 mm                                                                   |
-| Mass                           | 80 kg                                                                    |
-| Maximum Payload¹               | 100 kg                                                                   |
-| All-terrain Payload²           | 50 kg                                                                    |
-| Speed, Maximum³                | 2.0 m/s                                                                  |
-| Climb Grade⁴                   | 30 °                                                                     |
-| Traversal Grade / Sideslope    | 30 °                                                                     |
-| Operating Temperature⁵         | -20 °C to 40 °C                                                          |
-| Storage Temperature            | -20 °C to 60 °C                                                          |
-| Operating Relative Humidity    | 0 to 85% non-condensing                                                  |
-| Operating Time, Average⁶       | 4 hours (2-battery) or 8 hours (4-battery) or 12 hours (6-battery) |
-| Operating Time, Standby        | 12 hours (2-battery) or 24 hours (4-battery) or 36 hours (6-battery) |
-| Battery                        | 40 Ah @ 25.6 V (2-battery) or 80 Ah @ 25.6 V (4-battery) or 120 Ah @ 25.6 V (6-battery), LiFePO<sub>4</sub>   |
-| Charge Time, Standard Charger _(North America)_ | 4 hours (2-battery) or 8 hours (4-battery) or 12 hours (6-battery)            |
-| Charge Time, Standard Charger _(Europe)_ | 5 hours (2-battery) or 10 hours (4-battery) or 15 hours (6-battery)            |
-| Charge Time, Upgraded 650 W Charger | 1.75 hours (2-battery) or 3.5 hours (4-battery) or 5.25 hours (6-battery)            |
-| Charge Time, Upgraded 650 W Charger | 2 hours (4-battery) or 3 hours (6-battery)            |
-| User Power                     | 12 V @ 10 A, 24 V @ 5 A, VBAT @ 5 A<br/>Optional expansion: VBAT @ 40 A |
-| Environmental                  | IP54                                                                     |
-
-_¹ Continuous operation on relatively flat terrain with wide turns. See also [Important System Limits](#important-system-limits)_ <br />
-_² Robot climbing 30° grade with high-mounted payload, or turning in place in high-friction conditions such as asphalt, concrete, and carpet. See also [Important System Limits](#important-system-limits)._ <br />
-_³ Maximum speed should be reduced in off-road conditions. See also [Important System Limits](#important-system-limits)._ <br />
-_⁴ See also [Important System Limits](#important-system-limits) for additional considerations related to slopes._ <br />
-_⁵ Robot must be powered on at a minimum temperature of 0 °C._ <br />
-_⁶ Based on 33% driving at 2 m/s with 50 kg payload on level ground and 67% idle._ <br />
+<ComponentTechnicalSpecifications robotModel={robotModel}/>
 
 <center>
   <figure>
@@ -1614,7 +1581,7 @@ Husky has a robust structure that allows it to be picked up or reoriented by han
 the use of lifting machinery such as a crane, using lifting straps on the bottom of the robot. When using
 lifting straps, they should be positioned as shown in the images below. The lifting equipment and straps used
 shall be rated to minimum weight equal to the weight of Husky, including any mounted payloads.
-See [System Specifications](#system-specifications) for the weight of Husky and its maximum payload.
+See [Technical Specifications](#technical-specifications) for the weight of Husky and its maximum payload.
 
 <center>
   <figure>
@@ -1686,7 +1653,7 @@ once every three months, its battery levels checked, and if the reported charge 
 should be charged back up to at least 50% before returning it to extended storage.
 
 Husky and any spare batteries outside of the vehicle should be stored within the
-temperature range outlined in [System Specifications](#system-specifications).
+temperature range outlined in [Technical Specifications](#technical-specifications).
 
 ### Husky Networking  {#husky-networking}
 
