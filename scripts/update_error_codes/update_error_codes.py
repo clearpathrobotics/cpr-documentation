@@ -71,7 +71,7 @@ def preamble_error_code_file(file_path, category_number, category_description):
 def update_error_code_file(file_path, error_number, error_title, error_message):
     """Update the mdx file with the error code and message."""
     with open(file_path, 'a', encoding='utf-8') as f:
-        f.write(f'### E{int(error_number):02d} - {error_title} {{#e{int(error_number):02d}}} \n{error_message}\n\n')
+        f.write(f'### E{int(error_number):02d} - {error_title} {{#E{int(error_number):02d}}} \n{error_message}\n\n')
 
 
 if __name__ == '__main__':
