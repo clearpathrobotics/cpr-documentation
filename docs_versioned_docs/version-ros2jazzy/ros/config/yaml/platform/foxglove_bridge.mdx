@@ -1,0 +1,22 @@
+---
+title: Enable/Disable Foxglove Bridge
+sidebar_label: Enable Foxglove Bridge
+sidebar_position: 7
+toc_min_heading_level: 2
+toc_max_heading_level: 5
+---
+
+By default, all Clearpath platforms launch a [Foxglove bridge node](https://docs.foxglove.dev/docs/connecting-to-data/ros-foxglove-bridge)
+as part of the diagnostics features. This is required for the [Cockpit ROS 2 Diagnostic extension](../../../cockpit/ros2_diagnostics.mdx).
+If the Cockpit webserver is not being used then the node can be disabled.
+
+|           Key           | Value / Datatype | Description                                                   |
+| :---------------------: | :--------------: | ------------------------------------------------------------- |
+| enable_foxglove_bridge: |     boolean      | Enables or disables the Foxglove bridge node. Default: `false` |
+
+For example, to disable the EKF node:
+
+```yaml
+platform:
+  enable_foxglove_bridge: false
+```

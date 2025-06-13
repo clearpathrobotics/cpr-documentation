@@ -1,0 +1,39 @@
+---
+title: Troubleshooting
+sidebar_label: Troubleshooting
+sidebar_position: 5
+---
+
+## Troubleshooting Cockpit Webserver:
+
+### Site can't be reached
+
+**Problem:** The browser shows "This site can't be reached" and / or Address Unreachable
+
+**Solution:** The most likely reason for this error is that either that your computer is trying to access the robot on the wrong network or at the wrong address for that network. This can happen if the computer is connected to
+
+- multiple networks simultaneously and the traffic is being routed to the wrong network (for example being routed to the internet instead of to the local robot)
+- the incorrect network (no shared network with the robot)
+- or if the IP address being used is not the correct IP address for the network being used.
+
+To address this, start by only connecting the computer to the one shared network with the robot and verify that the IP address is correct. If needed review the routing active on the computer, on the router and on the robot to ensure an intact route for the data in both directions.
+
+### Redirected to HTTPS
+
+**Problem:** Every time I try to access cockpit over http it redirects me to an https connection
+
+**Solution:** This generally means that at some point you tried to access the webpage over https and the browser remembers that. To address this, clear your browser history and cache and then close and reopen the browser. If you do not want to clear your browser history fully, then search through the browser history and delete any trace of that domain / IP.
+
+## Troubleshooting Cockpit ROS 2 Diagnostics Extension:
+
+### Ooops!
+
+**Problem:** The ROS 2 Diagnostics extension does not load and just shows "Ooops!" in red text. If you open the console log you see an error that starts with `Mixed Content: The Page at https://ip-address/ros2-diagnostics was loaded over HTTPS, but attempted to connect to the insecure WebSocket endpoint...` or `Uncaught SecurityError: Failed to construct 'WebSocket': An insecure WebSocket connection may not be initiated from a page loaded over HTTPS.`
+
+**Solution:** This means that you have connected over https but the ROS 2 connection is only available over unsecured connections. Please access the website over http. If the browser redirects from http to https see [Redirected to HTTPS](#redirected-to-https).
+
+### Attempting to connect to the Foxglove bridge
+
+**Problem:** The ROS 2 Diagnostics section shows a loading symbol with the text "Connecting" and "Attempting to connect to the Foxglove bridge..."
+
+**Solution:** This means that it is not able to establish a connection with the Foxglove bridge. This is most commonly because the Foxglove bridge has been disabled in the [robot.yaml](../config/yaml/platform/foxglove_bridge.mdx) or that the bridge has been configured to use a different port. Verify that the bridge is being started with the default port number.
