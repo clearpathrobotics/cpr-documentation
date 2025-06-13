@@ -1,0 +1,61 @@
+---
+title: Manipulation across Multiple Machines
+sidebar_label: Multiple Machines
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+MoveIt! can require significant resources to generate complex manipulator trajectories. Ideally, a single powerful computer would handle the robot's nodes, sensor drivers, manipulator controllers, and MoveIt!. However, if a secondary computer is available onboard the robot and on the same local network, it could be used to handle some of the load of the primary platform computer.
+
+# MoveIt on Secondary Computer
+The manipulators' controllers can be launched on the primary platform computer, while the motion planning can be launched independently on the secondary computer.
+
+The secondary computer does not need to be connected over ethernet to the primary platform computer, but doing so simplifies the networking setup which will not be covered in this tutorial. For more information on setting up networks with the ROS 2 middleware see the [networking section](../../networking/overview.mdx).
+
+## Setup
+The secondary computer must have the same environment as the primary platform computer. Ensure that they both have the same version of packages, and if workspaces are required to build packages from source, they should be mirrored and built on the two computers. Then a `clearpath` setup directory must be created with the same `robot.yaml` as the one on the robot, see [offboard computer setup instructions](../../installation/offboard_pc.mdx) for more details. For the remainder of this tutorial, the `clearpath` setup directory will be assumed to be in the `home` directory.
+
+## Launching MoveIt!
+Source all required workspaces on the secondary computer and generate all description, configuration, and launch files.
+```bash
+source /opt/ros/humble/setup.bash
+```
+
+### Generate Environment Setup
+Generate the environment setup bash file. This file will contain any environment variables required to setup the networking between the multiple computer setup.
+```bash
+ros2 run clearpath_generator_common generate_bash -s $HOME/clearpath/
+```
+
+This script will generate the `$HOME/clearpath/setup.bash` with the environment required to communicate with the primary platform computer.
+
+### Generate Description Files
+Then, generate the description files:
+```bash
+ros2 run clearpath_generator_common generate_description -s $HOME/clearpath/
+ros2 run clearpath_generator_common generate_semantic_description -s $HOME/clearpath/
+```
+These scripts will generate the `robot.urdf.xacro`, `robot.srdf.xacro`, and `robot.srdf` files in the `$HOME/clearpath` directory which contain necessary robot description information to launch MoveIt!.
+
+### Generate Launch and Configuration Files
+Then, generate the MoveIt! launch file and parameter file:
+```bash
+ros2 run clearpath_generator_robot generate_launch -s $HOME/clearpath/
+ros2 run clearpath_generator_robot generate_param -s $HOME/clearpath/
+```
+
+These scripts will generate the `manipulators/launch/manipulators.launch.py` and `manipulators/config/moveit.config` files.
+
+### Launch
+Once these files are all generated, launch MoveIt! by passing it the path to the directory:
+```
+ros2 launch clearpath_manipulators moveit.launch.py setup_path:=$HOME/clearpath/
+```
+
+## Launching RViz
+Once MoveIt! is running, to open RViz with the MoveIt MotionPlanning plugin, with the appropriate namespace, and interactive markers:
+```
+ros2 launch clearpath_viz view_moveit.launch.py namespace:=''
+```
+> Make sure to pass the same namespace as the robot's
