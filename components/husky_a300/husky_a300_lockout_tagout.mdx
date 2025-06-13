@@ -1,4 +1,6 @@
-### Lockout Tagout
+import Admonition from "@theme/Admonition";
+
+### Lockout Tagout  {#lockout-tagout}
 
 <center>
   <figure>
@@ -37,3 +39,37 @@ We cannot completely discharge these batteries without damaging them, but we can
     :::
 
 </details>
+
+<Admonition type="danger" title="Safe Maintenance Practices">
+  Follow the guidance below while performing maintenance to ensure that the system is
+  in a safe state following any maintenance work on the robot.
+
+  1. Clean up all tools and ensure that no tools or installation materials have been left inside the robot.
+  1. Ensure that all cables have been tightened to the specified torque values and that there are no loose or unconnected cables.
+  1. Reinstall any fuse covers that were removed.
+  1. Restore all terminal boots to their original position prior to maintenance.
+
+  Once all parts have been reinstalled and maintenance is completed, perform the following system checks:
+  1. Power on the robot.
+  1. Place the robot up on blocks and confirm that each source of an emergency stop can be used to trigger the emergency stop condition by:
+     1. confirming that the joystick can be used to make the wheels spin
+     1. engaging the stop condition
+     1. confirming that the corner lights go into a flashing red light pattern
+     1. confirming that the joystick can no longer make the wheels spin
+     1. disengaging the stop condition
+     1. pressing the restart button
+     1. confirming that the corner lights return to the normal driving pattern
+     1. confirming that the joystick can be used to make the wheels spin again.
+     :::note
+     Perform this check of emergency stop functionality individually for each of:
+     1. _Front Emergency Stop Button_
+     1. _Rear Emergency Stop Button_
+     1. _Rear Charge Port Door_
+     1. _Wireless Emergency Stop Button_ (if present)
+     1. _Additional Emergency Stop Buttons_ (if present)
+     :::
+  1. Connect the manual charger and charge the robot for at least 5 minutes. Confirm that the state of charge is increasing
+     and that there are no unexpected sounds or smells.
+  1. With the robot in an open area at least 10 m in diameter and away from other people, connect the joystick and drive the
+     robot for at least 30 seconds to confirm it is performing as expected.
+</Admonition>

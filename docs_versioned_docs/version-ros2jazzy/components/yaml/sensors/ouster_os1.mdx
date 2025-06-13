@@ -27,6 +27,7 @@ lidar3d:
           proc_mask: IMU|PCL|SCAN|IMG|RAW|TLM
           use_system_default_qos: false
           cap_type: halo
+          base_type: base
 ```
 
 </div>
@@ -42,3 +43,44 @@ For more specifics on the way Clearpath's configuration system launches the `ous
 see the Ouster [launch file](https://github.com/clearpathrobotics/clearpath_robot/blob/jazzy/clearpath_sensors/launch/ouster_os1.launch.py)
 and the [default parameter file](https://github.com/clearpathrobotics/clearpath_robot/blob/jazzy/clearpath_sensors/config/ouster_os1.yaml)
 in `clearpath_sensors`.
+
+#### Base & Cap
+The Ouster lidar can be configured with different base and cap options:
+
+* `base_type`: one of `base` (default) or `none`.
+* `cap_type`: one of `halo` (default) or `fins`.
+
+The table below shows all combinations of base and cap options:
+
+<table>
+  <tr>
+    <td></td>
+    <td></td>
+    <th colspan="2"><tt>cap_type</tt></th>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td><tt>halo</tt></td>
+    <td><tt>fins</tt></td>
+  </tr>
+  <tr>
+    <th rowspan="2"><tt>base_type</tt></th>
+    <td><tt>base</tt></td>
+    <td>
+      <img src={require("./img/ouster_base_halo.png").default} width="200" />
+    </td>
+    <td>
+      <img src={require("./img/ouster_base_fins.png").default} width="200" />
+    </td>
+  </tr>
+  <tr>
+    <td><tt>none</tt></td>
+    <td>
+      <img src={require("./img/ouster_none_halo.png").default} width="200" />
+    </td>
+    <td>
+      <img src={require("./img/ouster_none_fins.png").default} width="200" />
+    </td>
+  </tr>
+</table>

@@ -28,18 +28,30 @@
       <td><center>2048 Wh</center></td>
       <td><center>3072 Wh</center></td>
     </tr>
-    <tr>
+    {(props.robotModel == "A300") && <tr>
       <td>Operating Time, Average<sup>6</sup></td>
-      <td><center>4 h</center></td>
       <td><center>8 h</center></td>
+      <td><center>16 h</center></td>
+      <td><center>24 h</center></td>
+    </tr>}
+    {((props.robotModel == "AMP") || (props.robotModel == "Observer")) && <tr>
+      <td>Operating Time, Average<sup>6</sup></td>
+      <td><center>6 h</center></td>
       <td><center>12 h</center></td>
-    </tr>
-    <tr>
+      <td><center>18 h</center></td>
+    </tr>}
+    {(props.robotModel == "A300") && <tr>
+      <td>Operating Time, Standby</td>
+      <td><center>16 h</center></td>
+      <td><center>32 h</center></td>
+      <td><center>48 h</center></td>
+    </tr>}
+    {((props.robotModel == "AMP") || (props.robotModel == "Observer")) && <tr>
       <td>Operating Time, Standby</td>
       <td><center>8 h</center></td>
       <td><center>16 h</center></td>
       <td><center>24 h</center></td>
-    </tr>
+    </tr>}
     <tr>
       <td>Charge Time, Standard Charger <em>(North America)</em></td>
       <td><center>4h</center></td>
@@ -259,6 +271,10 @@
       <td colspan="3"><center>-20°C to +40°C <br/></center></td>
     </tr>
     <tr>
+      <td>Environment, Charging Temperature</td>
+      <td colspan="3"><center>0°C to +40°C <br/></center></td>
+    </tr>
+    <tr>
       <td>Environment, Operating Humidity</td>
       <td colspan="3"><center>0% to 85% relative humidity, non-condensing</center></td>
     </tr>
@@ -293,11 +309,11 @@
 
 :::note Technical Specification Footnotes
 
-_<sup>1</sup> &ensp; Continuous operation on relatively flat terrain with wide turns._ <br />
+_<sup>1</sup> &ensp; Continuous operation on relatively flat terrain with wide turns. See also [Important System Limits](#important-system-limits)_ <br />
 
-_<sup>2</sup> &ensp; Robot climbing 30° grade with high-mounted payload, or turning in place in high-friction conditions such as asphalt, concrete, and carpet._ <br />
+_<sup>2</sup> &ensp; Robot climbing 30° grade with high-mounted payload, or turning in place in high-friction conditions such as asphalt, concrete, and carpet. See also [Important System Limits](#important-system-limits)_ <br />
 
-_<sup>3</sup> &ensp; Maximum speed should be limited to 1 m/s in off-road conditions when the payload exceeds 50 kg._ <br />
+_<sup>3</sup> &ensp; Maximum speed should be limited to 1 m/s in off-road conditions when the payload exceeds 50 kg. See also [Important System Limits](#important-system-limits)_ <br />
 
 _<sup>4</sup> &ensp; See also [Important System Limits](#important-system-limits) for additional considerations related to slopes._ <br />
 

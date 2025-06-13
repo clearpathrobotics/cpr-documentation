@@ -1,20 +1,24 @@
 import ComponentBillOfMaterialsNote from "/components/maintenance/bill_of_materials_note.mdx";
 
-### Common Replacement Items
+### Common Replacement Items  {#common-replacement-items}
 
 <ComponentBillOfMaterialsNote />
 
-| Description       | What Subsystem Is This Used In?                                                                     | CPR Item | Manufacturer       | Manufacturer Item |
-| :---------------- | :-------------------------------------------------------------------------------------------------- | :------: | :----------------- | :---------------- |
-| Fuse, 10 A        | _System Interface Assembly_,<br/>and _System Interface Assembly's_ Standby Power Cable              | 018897   | Littelfuse         | 0297010.WXNV      |
-| Fuse, 20 A        | _System Interface Assembly_                                                                         | 032295   | Littelfuse         | 0297020.U         |
-| Fuse, 40 A        | _Power Distribution's_ Large VBAT Contactors                                                        | 023567   | Littelfuse         | 142.5631.5402     |
-| Fuse, 50 A        | _Power Distribution's_ Manual Charger                                                               | 029139   | Littelfuse         | 142.5631.5502     |
-| Fuse, 60 A        | _Batteries_,<br/>_Power Distribution's_ Mobility Contactors,<br/>_Power Distribution's_ Shunt Brake | 029140   | Littelfuse         | 142.5631.5602     |
-| Fuse, 150 A       | _Batteries_                                                                                         | 029145   | Littelfuse         | 142.5631.6152     |
-| Air Filter        | _Fans_                                                                                              | 032403   | Clearpath Robotics | -                 |
-| Tire              | _Mobility_                                                                                          | 000269   | Carlisle           | 5100201           |
-| Tire's Inner Tube | _Mobility_                                                                                          | 000435   | Carlisle           | 323790            |
+| Description       | What Subsystem Is This Used In?                                                                     | CPR Item | Manufacturer       | Manufacturer Item | Maintenance Procedure                                       |
+| :---------------- | :-------------------------------------------------------------------------------------------------- | :------: | :----------------- | :---------------- | :---------------------------------------------------------- |
+| Fuse, 3A          | _System Interface Assembly_ (F2, F3, F4, F5, F8)                                                    | -        | Littelfuse         | 0453003.MR        | [Replacing board mount fuses](#replacing-fuses-board-mount) |
+| Fuse, 5A          | _System Interface Assembly_ (F6, F10)                                                               | -        | Littelfuse         | 0454005.MR        | [Replacing board mount fuses](#replacing-fuses-board-mount) |
+| Fuse, 8A          | _System Interface Assembly_ (F7, F9)                                                                | -        | Littelfuse         | 0453008.MR        | [Replacing board mount fuses](#replacing-fuses-board-mount) |
+| Fuse, 10 A        | _System Interface Assembly_ (F52, F53, F54, F55, F56, F57, F58)                                     | -        | Littelfuse         | 0297010.WXT       | [Replacing blade mini fuses](#replacing-fuses-blade-mini)   |
+| Fuse, 10 A        | _System Interface Assembly_,<br/>and _System Interface Assembly's_ Standby Power Cable              | 018897   | Littelfuse         | 0297010.WXNV      | [Replacing blade mini fuses](#replacing-fuses-blade-mini)   |
+| Fuse, 20 A        | _System Interface Assembly_                                                                         | 032295   | Littelfuse         | 0297020.U         | [Replacing blade mini fuses](#replacing-fuses-blade-mini)   |
+| Fuse, 40 A        | _Power Distribution's_ Large VBAT Contactors                                                        | 023567   | Littelfuse         | 142.5631.5402     | [Replacing BF1 fuses](#replacing-fuses-bf1)                 |
+| Fuse, 50 A        | _Power Distribution's_ Manual Charger                                                               | 029139   | Littelfuse         | 142.5631.5502     | [Replacing BF1 fuses](#replacing-fuses-bf1)                 |
+| Fuse, 60 A        | _Batteries_,<br/>_Power Distribution's_ Mobility Contactors,<br/>_Power Distribution's_ Shunt Brake | 029140   | Littelfuse         | 142.5631.5602     | [Replacing BF1 fuses](#replacing-fuses-bf1)                 |
+| Fuse, 150 A       | _Batteries_                                                                                         | 029145   | Littelfuse         | 142.5631.6152     | [Replacing BF1 fuses](#replacing-fuses-bf1)                 |
+| Air Filter        | _Fans_                                                                                              | 032403   | Clearpath Robotics | -                 | [Air Filter Maintenance](#air-filter-maintenance)           |
+| Tire              | _Mobility_                                                                                          | 000269   | Carlisle           | 5100201           | [Tire Maintenance](#tire-maintenance)                       |
+| Tire's Inner Tube | _Mobility_                                                                                          | 000435   | Carlisle           | 323790            | [Tire Maintenance](#tire-maintenance)                       |
 
 ### Critical Items
 

@@ -4,6 +4,7 @@ sidebar_label: Maintenance
 sidebar_position: 5
 ---
 
+export const robotModel="A300"
 import ComponentIntroductionHusky from "/components/introduction_husky_a300.mdx";
 import ComponentReplacingTireOrInnerTube from "/components/maintenance_husky/maintenance_husky_tire_and_inner_tube.mdx";
 import ComponentUpdatingPumaFirmware from "/components/maintenance/firmware_update_puma.mdx";
@@ -15,11 +16,32 @@ import GettingNewPackages from "/components/maintenance/getting_new_packages.mdx
 import ComponentMotors from "/components/husky_a300/husky_a300_motors.mdx";
 import ComponentTireAndTube from "/components/husky_a300/husky_a300_tire.mdx";
 import ComponentReplacingCircuitBoards from "/components/husky_a300/husky_a300_replacing_circuit_boards.mdx";
+import ComponentBatteryCellBalancing from "/components/husky_a300/husky_a300_battery_balancing.mdx";
+import ComponentTirePressure from "/components/husky_a300/husky_a300_tire_pressure.mdx";
+import ComponentWiringDiagram from "/components/husky_a300/husky_a300_wiring_diagram.mdx";
+import ComponentRearCover from "/components/husky_a300/husky_a300_rear_cover.mdx";
+import ComponentAirGrilles from "/components/husky_a300/husky_a300_air_grilles.mdx";
+import ComponentNameplate from "/components/husky_a300/husky_a300_nameplate.mdx";
+import ComponentAirFilter from "/components/husky_a300/husky_a300_air_filter.mdx";
+import ComponentRemovingTheTopPlate from "/components/husky_a300/husky_a300_top_plate.mdx";
+import ComponentElectronicsTray from "/components/husky_a300/husky_a300_electronics_tray.mdx";
+import ComponentBatteryIntegrationTray from "/components/husky_a300/husky_a300_battery_integration_tray.mdx";
+import ComponentBatteries from "/components/husky_a300/husky_a300_batteries.mdx";
+import ComponentPowerDistribution from "/components/husky_a300/husky_a300_power_distribution.mdx";
+import ComponentBumpers from "/components/husky_a300/husky_a300_bumpers.mdx";
+import ComponentFans from "/components/husky_a300/husky_a300_fans.mdx";
+import ComponentStatusLights from "/components/husky_a300/husky_a300_status_lights.mdx";
+import ComponentNetworkSwitch from "/components/husky_a300/husky_a300_network_switch.mdx";
+import ComponentComputer from "/components/husky_a300/husky_a300_computer.mdx";
+import ComponentSystemInterfaceDebugLed from "/components/husky_a300/husky_a300_system_interface_debug_led.mdx";
+import ComponentFrontCover from "/components/husky_a300/husky_a300_front_cover.mdx";
+import ComponentLockoutTagout from "/components/husky_a300/husky_a300_lockout_tagout.mdx";
+import ComponentReplacingFusesBoardMount from "/components/husky_a300/husky_a300_replacing_fuses_board_mount.mdx";
+import ComponentReplacingFusesMiniBlade from "/components/husky_a300/husky_a300_replacing_fuses_mini_blade.mdx";
+import ComponentReplacingFusesBf1 from "/components/husky_a300/husky_a300_replacing_fuses_bf1.mdx";
 import Support from "/components/support.mdx";
 
 <ComponentIntroductionHusky />
-
-## Preventative Maintenance
 
 :::safety-warning
 
@@ -50,11 +72,15 @@ These may present a slip hazard.
 
 :::
 
-### Weekly Prevenative Maintenance
+## Maintenance Safety
+
+<ComponentLockoutTagout />
+
+## Weekly Preventative Maintenance
 
 Perform the following tasks at least once every week.
 
-#### Circle Check
+### Circle Check
 
 Perform a circle check around Husky daily to ensure no damage has occurred since its last usage.
 During this visual inspection, ensure the robot is turned on and verify that:
@@ -75,7 +101,7 @@ to ensure that any water has drained out through the drain plug, and allow Husky
 
 :::
 
-#### Clean or Replace Air Filter
+### Clean or Replace Air Filter  {#air-filter-maintenance}
 
 The air filter is used to prevent dirt and dust from entering the robot at the front air
 intake. It must be cleaned or replaced on a regular basis. High-dust environments will require
@@ -110,93 +136,28 @@ Procedure:
 1. Install the clean filter.
 1. Replace the front livery panel by aligning the pins and tighten the quarter-turn latches.
 
-#### Full Battery Charge
+<ComponentBatteryCellBalancing />
 
-Husky is powered by LiFePO<sub>4</sub> batteries. The function and health of these
-batteries is monitored by a Battery Management Unit (BMU) which is internal to the battery pack itself.
-It is recommended that the batteries be charged to 100% at least once per week.
-
-Procedure:
-
-1. Power off the robot.
-1. Place the robot on a level surface.
-1. Connect the manual charger.
-1. Let the batteries charge until they reach a full charge, as indicated on the charger.
-
-#### AMP Sensor Cleaning
-
-The AMP variant of Husky is equipped with additional sensors that should be inspected at least weekly
-(more often in high dust/dirt environments) and cleaned as needed.
-
-##### LiDAR Lens Cleaning
-
-1. Inspect LiDAR lens with a flashlight for any dust and/or debris.
-2. Using the Lens Cleaning Wipes (Clearpath p/n 015591), clear the LiDAR of any dust/debris.
-
-:::safety-caution
-
-Do not use abrasive items or solvents on the LiDAR assembly, as this will damage the LiDAR.
-Used and dirty cleaning cloths or wipes will scratch the window over time. The LiDAR window is
-a wear item but proper care and cleaning can significantly extend its life.
-
-:::
-
-##### Camera Cleaning (clean with microfiber cloth or CPR-approved cleaning wipe if dirty)
-
-1. Visually inspect the camera lenses and confirm there is no dust or debris on them.
-1. If necessary, carefully clean the lenses with a microfiber cloth or a Clearpath Robotics-approved
-   cleaning wipe.
-
-:::safety-caution
-
-Do not apply excessive pressure to the camera lenses.
-
-:::
-
-### Monthly Preventative Maintenance
+## Monthly Preventative Maintenance
 
 Perform the following tasks once every month.
 
-#### Tire Inspection
+<ComponentTirePressure />
 
-Tire pressure may change with temperature and should be checked monthly with a pressure gauge. Inspecting tires,
-releasing pressure, and inflating tires are completed through the tire's inflation stem.
-Tire pressure should not exceed 137 kPa (20 psi), and lower pressure may be desired based on terrain requirements.
-A monthly visual inspection of the tire treads is also recommended. Replacement tires and tubes assemblies can be
-purchased from Clearpath Robotics and can be installed by the user.
-
-:::tip
-
-Husky's wheels can handle a range of different terrains, but work best when inflated to the proper pressure.
-Lower tire pressures, for example 68.5 kPa (10 psi), ensure better traction in rough and varied terrain, where rocks
-or other obstacles may be encountered. This has the adverse effect of lowering drivetrain efficiency and decreasing
-battery charge, so high pressures up to a maximum of 137 kPa (20 psi) should be used when driving on flat surfaces.
-
-Lower tire pressuses also reduce the effective diameter of the wheel, and will impact your odometry readings.
-Odometry is calculated using the average diameter of a tire inflated to 137 kPa (20 psi).
-
-:::
-
-Tire inspection procedure:
-
-1. Power off the robot.
-1. Place the robot on a level surface.
-1. Using a tire pressure gauge, check the pressure on each tire to confirm it is 68.5 - 137 kPa (10 - 20 psi). Add or remove air
-   as needed to ensure each tire is in the proper range. If leaks persist, [change the tire tube](#tire-maintenance).
-1. One wheel at a time, slowly roll Husky through full wheel revolution while inspecting the tire for excessive wear,
-   cuts, or punctures. If any damage is detected, [replace the tire](#tire-maintenance).
-
-#### Drivetrain Inspection
+### Drivetrain Inspection
 
 It is recommended that an auditory inspection of the robot drivetrain be performed once per month. Take note of any clicking,
 grinding or irregular skipping sounds while the robot is moving. Note that some clicking in the gearheads is normal during
 stops and starts, due to backlash between the gears.
 
-### Annual Preventative Maintenance
+In addition, one wheel at a time, slowly roll Husky through full wheel revolution while inspecting the tire for excessive wear,
+cuts, or punctures.
+
+## Annual Preventative Maintenance
 
 Perform the following tasks once every year.
 
-#### Safety Function Checks  {#safety-function-checks}
+### Safety Function Checks  {#safety-function-checks}
 
 :::note
 
@@ -205,29 +166,37 @@ remain operational.
 
 :::
 
-##### Emergency Stop Buttons Check
+#### Emergency Stop Buttons Check
 
 1. Confirm that the robot can be driven normally and then stop driving.
 1. Press the front emergency stop button, attempt to drive the robot again, and confirm that it does not move.
 1. Clear the front emergency stop and confirm that the robot can be driven again normally.
 1. Repeat the steps above for the rear emergency stop button and any wireless emergency stop buttons.
 
-##### Debug Panel Door Check
+#### Debug Panel Door Check
 
 1. Confirm that the robot can be driven normally and then stop driving.
 1. Open the rear debug panel door, attempt to drive the robot again, and confirm that it does not move.
 1. Close the rear debug panel door, clear the emergency stop condition, and confirm that the robot can be driven again normally.
 
-##### Emergency Stop Braking Check
+#### Emergency Stop Braking Check
 
-1. On a robot with no payload, while driving the robot at 1.0 m/s on flat ground, press one of the emergency stop buttons.
-2. Measure the stopping distance and confirm it is less than 40 cm.
+1.  Remove any payload from your robot.
+1.  Turn the robot on.
+1.  Find a 10 metre stretch of flat ground.
+    At the 5 metre point, mark the ground with a braking test starting point.
+1.  Drive the robot at 1 m/s.
+1.  Press an Emergency Stop button as the robot's front tire touches the braking test mark.
+1.  Measure the braking distance from the mark, to the stopped position of the front tire.
+    Confirm that the stopping distance was less than 40 cm.
 
-### 36-Month Preventative Maintenance
+[Contact our Support Team](#support) if the stopping distance was more than 40 cm.
+
+## 36-Month Preventative Maintenance
 
 Perform the following tasks once every thirty-six months.
 
-#### Battery Health Check
+### Battery Health Check
 
 Husky's batteries are expected to last for at least 36 months of
 continuous operation. The actual lifetime experienced will vary greatly depending on the usage and
@@ -238,200 +207,28 @@ have any concerns.
 
 ## Hardware Maintenance
   <ComponentCommonReplacementItems />
+  <ComponentWiringDiagram robotModel={robotModel} />
   <ComponentTireAndTube />
+  <ComponentMotors />
+  <ComponentFrontCover />
+  <ComponentNameplate />
+  <ComponentRemovingTheTopPlate />
+  <ComponentElectronicsTray />
+  <ComponentBatteryIntegrationTray />
+  <ComponentBatteries />
+  <ComponentRearCover />
+  <ComponentBumpers />
+  <ComponentAirGrilles />
+  <ComponentFans />
+  <ComponentPowerDistribution />
+  <ComponentStatusLights />
+  <ComponentNetworkSwitch />
+  <ComponentComputer />
+  <ComponentSystemInterfaceDebugLed />
   <ComponentReplacingCircuitBoards />
-
-### Replacing the Computer
-
-:::safety-caution
-
-Circuit boards are sensitive components and can be damaged easily through electrostatic discharge (ESD).
-Be sure to follow proper ESD protection measures prior to handling any circuit boards.
-
-:::
-
-<br/>
-
-:::info
-
-If the existing computer is still operational, a backup of any important data should be
-made prior to its replacement.
-
-:::
-
-Procedure:
-
-1. Follow the [Lock-Out Tag-Out](user_manual_husky#lockout-tagout) procedure.
-1. Remove the seven screws that fasten the Top Plate to the chassis and remove the Top Plate.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_1.jpg"
-       width="600"
-     />
-   </center>
-1. Disconnect all cables from the computer.
-1. Remove the computer by removing the four retaining screws and lifting it
-   out of the robot.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_computer_1.jpg"
-       width="400"
-     />
-   </center>
-1. Install the new computer and tighten the four retaining screws to 1 Nm.
-1. Reconnect all cables.
-1. Put the Top Plate back in place and finger tighten the seven screws that were removed in Step 2.
-   Note that the screw with the sealing washer goes in the inner location and the remaining
-   six screws are installed at the perimeter. Tighten all seven screws to 3 Nm.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_6.jpg"
-       width="600"
-     />
-   </center>
-1. As needed, reinstall any custom configuration that has been backed up.
-
-<ComponentMotors />
-
-### Replacing Batteries
-
-:::safety-danger
-
-Battery terminals and connected cables / busbars may be live. Follow proper safety procedures when
-performing any maintenance on the batteries.
-
-Only trained personnel authorised by Clearpath Robotics shall perform maintenance on the batteries.
-
-Ensure proper personal protective equipment is used when performing battery maintenance.
-
-:::
-
-1. Follow the [Lock-Out Tag-Out](user_manual_husky#lockout-tagout) procedure.
-1. Remove the cable gland brackets on both sides of the robot by removing five screws on each.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_image.png"
-       width="600"
-     />
-   </center>
-1. Disconnect all motor power and encoder cables from the chassis.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_motor_2.jpg"
-       width="600"
-     />
-   </center>
-1. Remove the seven screws that fasten the Top Plate to the chassis and remove the Top Plate.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_1.jpg"
-       width="600"
-     />
-   </center>
-1. Locate the V+ connector and pull the handle to disconnect it.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_battery_1.jpg"
-       width="600"
-     />
-   </center>
-1. Disconnect all cables at the front of the electronics tray, at a minimum
-   the red Ethernet cable highlighted in the image.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_battery_2.jpg"
-       width="600"
-     />
-   </center>
-1. Disconnect all cables at the rear of the electronics tray.
-1. Remove the four screws used to fasten the electronics tray to the side of the robot.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_battery_3.jpg"
-       width="600"
-     />
-   </center>
-1. Remove the electronics tray to expose the batteries.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_battery_4.jpg"
-       width="600"
-     />
-   </center>
-1. Disconnect and remove the positive battery busbar by removing the
-   two fuse covers, disconnecting the terminals, and lifting up the busbar.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_battery_5.jpg"
-       width="400"
-     />
-   </center>
-1. Disconnect and remove the negative battery busbar by removing the
-   two screws. This also disconnects the battery ground cable.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_battery_6.jpg"
-       width="400"
-     />
-   </center>
-1. Disconnect any CAN bus cables (RJ45 connectors) at the batteries.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_battery_7.jpg"
-       width="400"
-     />
-   </center>
-1. Remove the battery to be replaced and the battery to which its
-   terminals were facing. Note that batteries are installed in pairs.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_battery_8.jpg"
-       width="600"
-     />
-   </center>
-1. Move the terminal connectors from the old battery to the new battery.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_battery_9.jpg"
-       width="600"
-     />
-   </center>
-1. Align the pair of batteries so that their terminals are facing and
-   slide the pair of batteries into the robot. A temporary locking strap
-   to hold the two batteries together may make this step easier.
-1. Reconnect the CAN bus cables (RJ45 connectors).
-1. Re-install the negative battery busbar and ground cable. Tighten
-   the two screws to 5 Nm.
-1. Re-install the positive battery busbar by placing it across the
-   two fuses and tightening the two nuts to 3 Nm.
-1. Replace the two fuse covers.
-1. Put the electronics tray back into position and tighten the
-   four screws used to fasten the tray to the side of the robot to 3 Nm.
-1. Reconnect all cables at the front and rear of the electronics tray.
-1. Locate the V+ connector handle and re-install the connector.
-1. Put the Top Plate back in place and finger tighten the seven screws that were removed in Step 2.
-   Note that the screw with the sealing washer goes in the inner location and the remaining
-   six screws are installed at the perimeter. Tighten all seven screws to 3 Nm.
-   <center>
-     <img
-       src="/img/robot_images/husky_a300_images/husky_a300_circuitboard_6.jpg"
-       width="600"
-     />
-   </center>
-1. Reconnect all motor power and encoder cables on the chassis.
-1. Re-install the cable gland brackets on both siders of the robot,
-   tightening the five screws on each to 1 Nm.
-
-### Replacing Fuses
-
-In the unlikely event that a fuse fails, refer to the table below for the required replacement fuse.
-
-| Circuit Board Designator | Fuse Type and Rating  | Part Number |
-| :----------------------- | :-------------------- | :---------- |
-| F1, F2, F3, F4, F5, F8   | 125 V, 3 A, fast-blow | [Littlefuse 0453003.MR](https://www.digikey.ca/en/products/detail/littelfuse-inc/0453003-MR/552259) |
-| F6, F10                  | 125 V, 5 A, slow-blow | [Littlefuse 0454005.MR](https://www.digikey.ca/en/products/detail/littelfuse-inc/0454005-MR/552287) |
-| F7, F9                   | 125 V, 8 A, fast-blow | [Littlefuse 0453008.MR](https://www.digikey.ca/en/products/detail/littelfuse-inc/0453008-MR/552263) |
-| F52, F53, F54, F55, F56, F57, F58 | 32 V, 10 A, MINI Blade | [Littlefuse 0297010.WXT](https://www.digikey.ca/en/products/detail/littelfuse-inc/0297010-wxt/5233693) | 
+  <ComponentReplacingFusesBoardMount />
+  <ComponentReplacingFusesMiniBlade />
+  <ComponentReplacingFusesBf1 />
 
 ---
 
@@ -465,8 +262,9 @@ Once all four motor controllers have been updated, power cycle the robot.
 
 ### Motor Controller Calibration  {#maintenance_husky_motor_calibration}
 
-The motor controllers are configured in the factory and do not normally to be reconfigured in the field.
-If you have been instructed by Clearpath Support to recalibrate, use the command below, using the serial number
+The motor controllers are configured in the factory and do not normally need to be reconfigured in the field.
+If you have been instructed by Clearpath Support to recalibrate, place the robot up on blocks so that the
+wheels do not touch the ground, and then use the command below, using the serial number
 of your robot rather than `xxxxx`.
 
 :::caution
@@ -483,8 +281,7 @@ Ensure that the robot does not have its Emergency Stop engage while running this
 
 :::info
 
-Ensure that the robot is on a level surface with at least 1 metre of clearance in all directions
-before running this command.
+Ensure that the robot is up on blocks so that the wheels do not touch the ground and can spin freely.
 
 :::
 
