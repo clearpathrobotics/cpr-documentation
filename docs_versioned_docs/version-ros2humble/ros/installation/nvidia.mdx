@@ -127,3 +127,16 @@ Enter the username and password you intend to use to log into the Jetson compute
 the username `administrator` and the password `clearpath`.
 
 When ready, click the green **Flash** button at the bottom of the window.
+
+## Installing Firmware Updates
+
+If you need to [install firmware updates](robot#firmware-update) for your robot, you must install the
+`clearpath_firmware` package on an `amd64` (aka `x64 or x86_64) [offboard computer](offboard_pc); the
+`clearpath_firmware` package is not available for ARM processors as a debian package.
+
+Connect the robot's MCU directly to the offboard computer (using either ethernet or USB, as appropriate for your
+model of robot) and run
+```bash
+ros2 run clearpath_firmware flash
+```
+on the offboard computer to update the firmware.
