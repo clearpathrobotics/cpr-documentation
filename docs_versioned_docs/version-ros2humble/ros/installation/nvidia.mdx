@@ -1,0 +1,129 @@
+---
+title: Nvidia Installation
+sidebar_label: Nvidia Installation
+sidebar_position: 3
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+:::note
+
+This page explains how to install Ubuntu 22.04 and ROS 2 Humble on an Nvidia Jetson computer.
+
+For installation instructions on a standard `amd64` computer, see [Robot Installation](robot.mdx)
+
+The Clearpath Robotics ISO image only targets x86 computers (`amd64` architecture).
+
+:::
+
+## Install SDK Manager
+
+To install the OS on Nvidia Jetson computers, download Nvidia's [SDK Manager](https://developer.nvidia.com/sdk-manager)
+program. This program is available for Ubuntu (as a `.deb` package), Windows (as a `.exe`), and in a Docker container.
+
+Download and install the appropriate version for your desktop from [Nvidia's website](https://developer.nvidia.com/sdk-manager).
+
+## Install JetPack 6.2 and SDKs
+
+Follow the instructions for your Jetson computer to power it on and connect it via USB to your desktop. Open SDK Manager.
+
+<center>
+  <figure>
+    <img
+      src={require("./img/jetpack_detect_board.png").default}
+      width="900"
+    />
+  </figure>
+</center>
+
+### Select harget hardware
+
+Ensure the **Jetson** category at the top of the window is checked and that the **Target Hardware** matches your
+model of Jetson computer. If the board is not detected, refer to the instructions provided with your Jetson computer
+for any additional steps that may be be needed, such as entering bootloader mode.
+
+### Select SDK Version
+
+Select SDK version `6.2.x` (`6.2.1` is the latest at the time of writing).
+
+### Additional SDKs
+
+If desired, you may install additional SDKs. These are not required for ROS 2 Humble, but may be needed for specific
+applications you intend to run on your robot.
+
+### Start the installer
+
+After selecting the appropriate options, click the green **Continue** button in the lower right of the window.
+
+## Details and license
+
+Review the selected components. You may customize which specific components will be installed by checking or
+unchecking them.
+
+<center>
+  <figure>
+    <img
+      src={require("./img/jetpack_details.png").default}
+      width="900"
+    />
+  </figure>
+</center>
+
+Check the license agreement at the bottom of the window and click the green **Continue** button.
+
+If the **Download folder** and **SDKs instakll folder** specified at the bottom of the window do not already exist on
+your computer you will be prompted to create them. If this happens, click the green **Create** button.
+
+<center>
+  <figure>
+    <img
+      src={require("./img/jetpack_create.png").default}
+      width="400"
+    />
+  </figure>
+</center>
+
+If you are running on Ubuntu you may be asked to enter your password to run some commands as `root`.
+
+### Wait for the download and installation to progress
+
+Wait for JetPack to downloading and install. Depending on your internet connection speed this may take some
+time.
+
+<center>
+  <figure>
+    <img
+      src={require("./img/jetpack_progress.png").default}
+      width="900"
+    />
+  </figure>
+</center>
+
+The download and installation progress is shown at the bottom of the screen. If you need to pause the process, you can
+press the green **Pause** button and resume the installation at a later time.
+
+## Flash the Jetson
+
+:::note
+
+Some Jetson computers skip this step. Please refer to the instructions for your specific computer.
+
+For example, **Forcecr** boards use a different set of steps, [documented here](https://www.forecr.io/blogs/installation/jetpack-6-x-installation-for-dsboard-ornx).
+
+:::
+
+After the download has proceeded sufficiently, SDK Manager will prompt you to flash your Jetson computer.
+
+<center>
+  <figure>
+    <img
+      src={require("./img/jetpack_flash.png").default}
+      width="900"
+    />
+  </figure>
+</center>
+
+Enter the username and password you intend to use to log into the Jetson computer. By default Clearpath Robotics uses
+the username `administrator` and the password `clearpath`.
+
+When ready, click the green **Flash** button at the bottom of the window.
