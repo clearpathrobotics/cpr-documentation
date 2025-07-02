@@ -67,3 +67,25 @@ may make the robot difficult to control. The robot will not exceed its maximum s
 on the joystick may result in awkward clipping, causing teleoperation to be jerky.
 
 :::
+
+## Changing the `joy` device
+
+By default the `joy_node` will open one of the following devices, created by a `udev` rule included in
+the `clearpath_robot` package:
+
+| Controller type | Linux `joy` device |
+|:--------------- |:------------------ |
+| `ps4`           | `/dev/input/ps4`   |
+| `ps5`           | `/dev/input/ps5`   |
+| `xbox`          | `/dev/input/xbox`  |
+| `logitech`      | `/dev/input/f710`  |
+
+To manually specify a different device file or symlink, use the [`extras.ros_parameters`](extras) field in
+`robot.yaml`, for example:
+
+```yaml
+extras:
+  ros_parameters:
+    joy_node:
+      dev: /dev/input/js0
+```
