@@ -10,23 +10,47 @@ import Style from '/assets/css/changelog.css';
 
 ## Current versions:
 
+:::note
+Nested packages are part of the top repository.
+:::
+
 - clearpath_msgs: ![GitHub Tag](https://img.shields.io/github/v/tag/clearpathrobotics/clearpath_msgs?label=latest)
-- clearpath_motor_msgs: ![GitHub Tag](https://img.shields.io/github/v/tag/clearpathrobotics/clearpath_msgs?label=latest)
-- clearpath_platform_msgs: ![GitHub Tag](https://img.shields.io/github/v/tag/clearpathrobotics/clearpath_msgs?label=latest)
+    - clearpath_motor_msgs
+    - clearpath_msgs
+    - clearpath_platform_msgs
 - clearpath_config: ![GitHub Tag](https://img.shields.io/github/v/tag/clearpathrobotics/clearpath_config?label=latest)
+- clearpath_common: ![GitHub Tag](https://img.shields.io/github/v/tag/clearpathrobotics/clearpath_common?label=latest)
+    - clearpath_bt_joy
+    - clearpath_common
+    - clearpath_control
+    - clearpath_customization
+    - clearpath_description
+    - clearpath_diagnostics
+    - clearpath_generator_common
+    - clearpath_manipulators
+    - clearpath_manipulators_description
+    - clearpath_mounts_description
+    - clearpath_platform_description
+    - clearpath_sensors_description
 
 
 ## [2.6] 2025-07-04
 
 ### New Features
-- Added travel field to lynx feedback
+- Added Lynx 1.0.0 firmware for A300 motor controllers (see [here](https://docs.clearpathrobotics.com/docs_robots/outdoor_robots/husky/a300/maintenance_husky#maintenance_husky_motor_controller_firmware) to update)
+- Added travel field to Lynx feedback
 - Updated Power.msg CC01 enums
 - Added sensor sample for phidgets_spatial
 - Added support for W200
 - Enabled foxglove bridge by default
-- Add A300 AMP attachments, samples
+- Added A300 AMP attachments, samples
+- Added foxglove dependency 
 
 ### Fixed
+- Fixed W200 Diff Drive Parameters
+- Re-enable publishing controller input to joy_teleop/cmd_vel
+- Dropped A200 controller manager update rate 
+- Fixed expected diagnostics rates 
 
 
 ## [2.5] 2025-05-30
