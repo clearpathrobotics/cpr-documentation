@@ -32,12 +32,22 @@ Nested packages are part of the top repository.
     - clearpath_mounts_description
     - clearpath_platform_description
     - clearpath_sensors_description
+- clearpath_robot: ![GitHub Tag](https://img.shields.io/github/v/tag/clearpathrobotics/clearpath_robot?label=latest)
+    - clearpath_generator_robot
+    - clearpath_platform
+    - lynx_motor_driver
+    - puma_motor_driver
+    - clearpath_robot
+    - clearpath_sensors
+    - clearpath_tests
+
+
 
 
 ## [2.6] 2025-07-04
 
 ### New Features
-- Added Lynx 1.0.0 firmware for A300 motor controllers (see [here](https://docs.clearpathrobotics.com/docs_robots/outdoor_robots/husky/a300/maintenance_husky#maintenance_husky_motor_controller_firmware) to update)
+- Added Lynx 1.0.1 firmware for A300 motor controllers (see [here](https://docs.clearpathrobotics.com/docs_robots/outdoor_robots/husky/a300/maintenance_husky#maintenance_husky_motor_controller_firmware) to update) with many performance improvements
 - Added travel field to Lynx feedback
 - Updated Power.msg CC01 enums
 - Added sensor sample for phidgets_spatial
@@ -45,13 +55,15 @@ Nested packages are part of the top repository.
 - Enabled foxglove bridge by default
 - Added A300 AMP attachments, samples
 - Added foxglove dependency 
+- Enabled dependency on sevcon and valence bms
+- Updated grab-diagnostics to latest
 
 ### Fixed
 - Fixed W200 Diff Drive Parameters
 - Re-enable publishing controller input to joy_teleop/cmd_vel
 - Dropped A200 controller manager update rate 
 - Fixed expected diagnostics rates 
-
+- Fixed missing dependency lms1xx
 
 ## [2.5] 2025-05-30
 
