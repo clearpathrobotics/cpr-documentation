@@ -25,6 +25,7 @@ toc_max_heading_level: 4
 
 ## MCU services
 
-| Service                | Service type                                                                                                                                        | Server   | Description                           | QoS            | Platform                             |
-| :--------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------- | :------- | :------------------------------------ | :------------- | :----------------------------------- |
-| platform/mcu/configure | [clearpath_platform_msgs/ConfigureMcu](https://github.com/clearpathrobotics/clearpath_msgs/blob/jazzy/clearpath_platform_msgs/srv/ConfigureMcu.srv) | MCU node | Configure MCU domain ID and namespace | System default | A300, J100, DX100, DX150, R100, W200 |
+| Service                              | Service type                                                                                                                                        | Server   | Description                           | QoS            | Platform                             |
+| :----------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------- | :------- | :------------------------------------ | :------------- | :----------------------------------- |
+| platform/mcu/configure               | [clearpath_platform_msgs/ConfigureMcu](https://github.com/clearpathrobotics/clearpath_msgs/blob/jazzy/clearpath_platform_msgs/srv/ConfigureMcu.srv) | MCU node | Configure MCU domain ID and namespace | System default | A300, J100, DX100, DX150, R100, W200 |
+| platform/mcu/clear_estop_needs_reset | [std_srvs/Empty](https://github.com/ros2/common_interfaces/blob/jazzy/std_srvs/srv/Empty.srv)                                                       | MCU node | Clears a Needs Reset State            | System default | A300                                 |

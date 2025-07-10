@@ -29,4 +29,5 @@ This state is common for machinery safety; as it waits for the machine operator 
 #### To Clear The Needs Reset State:  {#clear-needs-reset}
 
 1.  Press the _Emergency Stop Restart Button_ on at the back of the Husky.
-2.  Or, if included, connect your Wireless Emergency Stop remote.
+2.  Alternatively, it can be clearing by running `ros2 service call /a300_00000/platform/mcu/clear_estop_needs_reset std_srvs/srv/Empty "{}"` on the Husky's computer.
+3.  Or, if included, connect your Wireless Emergency Stop remote.
