@@ -1,6 +1,15 @@
-Clearpath robots use [`netplan`](https://netplan.io/) to configure all network connections, including wired and
-wireless interfaces. The `netplan` package is installed on Ubuntu by default.
+The `clearpath_computer_setup` package offers a terminal menu tool for configuring a robot computer.
+The main feature of this tool is the ability to generate `netplan` configurations. The `clearpath_computer_setup`
+package is available on the [Clearpath package server](../../ros/installation/robot.mdx#clearpath-package-server).
 
-To edit the `netplan` configuration files you will also need a text editor. The `nano` and
-`vi` editors are included by default, but additional editors such as `vim` or `emacs` can
-also be installed using the `apt` command.
+It should be installed on the robot's computer:
+
+```
+sudo apt install python3-clearpath-computer-setup
+```
+
+To run the tool, call:
+
+```
+sudo clearpath-computer-setup
+```

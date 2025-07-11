@@ -5,130 +5,565 @@ sidebar_position: 2
 import ComputerNetworkingSetupInstall from "../../components/networking/_computer_networking_setup_install.mdx";
 import StandardClearpathBridgeSetup from "../../components/networking/_standard_clearpath_bridge_setup.mdx";
 
-<ComputerNetworkingSetupInstall />
-
-## Connecting to an Existing Wi-Fi Network {#netplan-wifi}
-
-Use `netplan` to connect your robot to an existing wireless network.
-
-First, determine the name of your wireless interface by running `iwconfig` you should see
-an entry similar to this:
-
-```
-wlp59s0   IEEE 802.11  ESSID:off/any
-          Mode:Managed  Access Point: Not-Associated   Tx-Power=off
-          Retry short limit:7   RTS thr:off   Fragment thr:off
-          Power Management:on
-```
-
-The interface name is in the left column, starting with `w`.
-
-Once you have identified your interface, edit or create a file
-called `/etc/netplan/60-wifi.yaml` containing the following:
-
-```yaml
-network:
-  wifis:
-    MY_WIFI_INTERFACE:
-      optional: true
-      access-points:
-        MY_WIFI_SSID:
-          password: MY_WIFI_PASSWORD
-      dhcp4: true
-```
-
-with the following substitutions:
-1. Replace `MY_WIFI_INTERFACE` with the name of the interface you identified in the first step,
-   e.g. `wlp59s0`
-2. Replace `MY_WIFI_SSID` with the SSID of your network.
-3. Replace `MY_WIFI_PASSWORD` with your network's password.
-
-For example:
-
-```yaml
-network:
-  wifis:
-    wlp59s0:
-      optional: true
-      access-points:
-        BabCom:
-          password: peekaboo
-      dhcp4: true
-```
-
-This configuration will connect your robot via DHCP to your WPA2/3 wireless network. If you
-need to use a static IP address, modify the file to contain the following:
-
-```yaml
-network:
-  wifis:
-    MY_WIFI_INTERFACE:
-      optional: true
-      access-points:
-        MY_WIFI_SSID:
-          password: MY_WIFI_PASSWORD
-      dhcp4: false
-      dhcp4-overrides:
-        send-hostname: true
-      addresses:
-        - MY_STATIC_IP/MY_SUBNET
-      nameservers:
-        addresses:
-          - MY_NAMESERVER
-```
-
-with the same substitutions noted earlier, plus
-1. Replace `MY_STATIC_IP` with the desired static IP address.
-2. Replace `MY_SUBNET` with the length of your network's subnet mask (typically `24` or `16`)
-3. Replace `MY_NAMESERVER` with the IP address of your DNS server You may add multiple DNS servers
-   with each one on its own line.
-
-For example:
-
-```yaml
-network:
-  wifis:
-    wlp59s0:
-      optional: true
-      access-points:
-        BabCom:
-          password: peekaboo
-      dhcp4: false
-      dhcp4-overrides:
-        send-hostname: true
-      addresses:
-        - 10.25.0.134/16
-      nameservers:
-        addresses:
-          - 10.25.0.10
-          - 8.8.8.8
-          - 8.8.4.4
-```
-
-Once you have edited the netplan configuration file, run the following two commands:
-1. `sudo netplan --debug generate` -- this will verify that the netplan configuration files can
-   be read properly. Correct any errors before proceeding.
-2. `sudo netplan try` -- this will try running the new configuration, but will automatically
-   roll back if it doesn't work correctly.
-3. `sudo netplan apply` -- this will apply the new configuration to your network interfaces.
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 :::note
 
-By convention, all Netplan configuration files should be prefixed with two numbers indicating the
-order in which the file should be read. Files are read in alphanumeric order, with `00-` prefixes
-first and `99-` prefixes last.
-
-If multiple files define the same configuration, the last-read file will override the earlier
-definitions.
-
-Once all files have been processed the result is amalgamated to create the system's Netplan
-confguration.
+<ComputerNetworkingSetupInstall />
 
 :::
 
+## Connecting to an Existing Wi-Fi Network {#netplan-wifi}
+
+<Tabs>
+  <TabItem value="Using clearpath-computer-setup" default>
+
+    Use the `sudo clearpath-computer-setup` command to connect your robot to an existing wireless network.
+
+    ```
+     ___     _         _      ___                     _             ___      _
+    | _ \___| |__  ___| |_   / __|___ _ __  _ __ _  _| |_ ___ _ _  / __| ___| |_ _  _ _ __
+    |   / _ \ '_ \/ _ \  _| | (__/ _ \ '  \| '_ \ || |  _/ -_) '_| \__ \/ -_)  _| || | '_ \
+    |_|_\___/_.__/\___/\__|  \___\___/_|_|_| .__/\_,_|\__\___|_|   |___/\___|\__|\_,_| .__/
+                                          |_|                                       |_|
+    Press Q, Esc, or CTRL+C to go back.
+    ----------------------------------------------------------------------------------------
+    > Netplan Setup
+
+      About
+      Exit
+
+    ```
+
+    Select `Netplan Setup` and press the `ENTER` key.
+
+    ```
+     _  _     _        _              ___           __ _                    _   _
+    | \| |___| |_ _ __| |__ _ _ _    / __|___ _ _  / _(_)__ _ _  _ _ _ __ _| |_(_)___ _ _
+    | .` / -_)  _| '_ \ / _` | ' \  | (__/ _ \ ' \|  _| / _` | || | '_/ _` |  _| / _ \ ' \
+    |_|\_\___|\__| .__/_\__,_|_||_|  \___\___/_||_|_| |_\__, |\_,_|_| \__,_|\__|_\___/_||_|
+                |_|                                    |___/
+    Press Q, Esc, or CTRL+C to go back.
+    ----------------------------------------------------------------------------------------
+      Bridge Setup
+      Ethernet Setup
+    > Wifi Setup
+
+      Pre-set Configurations
+
+      Read Configuration YAML
+      Write Configuration YAML
+      Apply Configuration Changes
+      View Netplan Configurations
+
+    ```
+
+    Use the arrow keys to select `Wifi Setup` and press `ENTER`.
+
+    If you have multiple wifi interfaces, use the arrow keys to select the one you wish to configure. If
+    you only have one interface, it will be seleced automatically.
+
+    ```
+    __      ___ ___ _   ___      _
+    \ \    / (_) __(_) / __| ___| |_ _  _ _ __
+     \ \/\/ /| | _|| | \__ \/ -_)  _| || | '_ \
+      \_/\_/ |_|_| |_| |___/\___|\__|\_,_| .__/
+                                        |_|
+    Interface Menu
+    Press Q, Esc, or CTRL+C to go back.
+    --------------------------------------------
+    > Wi-Fi 'wlp59s0' Setup
+
+    ```
+
+    Press `ENTER` once you have selected the interface to configure.
+
+    ```
+    __      ___ ___ _   ___      _
+    \ \    / (_) __(_) / __| ___| |_ _  _ _ __
+     \ \/\/ /| | _|| | \__ \/ -_)  _| || | '_ \
+      \_/\_/ |_|_| |_| |___/\___|\__|\_,_| .__/
+                                        |_|
+    Press Q, Esc, or CTRL+C to go back.
+    --------------------------------------------
+    > SSID: ssid
+      Password: password
+
+      Save Settings
+      Reset Settings
+
+    ```
+
+    Select `SSID` and press `ENTER`. You will be prompted to enter the SSID of your wireless network.
+
+    ```
+    Wi-Fi Network SSID
+    ------------------
+    SSID (ssid):
+
+    ```
+
+    Then select `Password` and press `ENTER`
+
+    ```
+    __      ___ ___ _   ___      _
+    \ \    / (_) __(_) / __| ___| |_ _  _ _ __
+     \ \/\/ /| | _|| | \__ \/ -_)  _| || | '_ \
+      \_/\_/ |_|_| |_| |___/\___|\__|\_,_| .__/
+                                        |_|
+    Press Q, Esc, or CTRL+C to go back.
+    --------------------------------------------
+    > SSID: ssid
+      Password: password
+
+      Save Settings
+      Reset Settings
+
+    ```
+
+    Type in the password for your wireless network and press `ENTER`. The password is case-sensitive. Note that
+    only `wpa` family encryption is supported using this tool. If your network requires certificates you
+    must manually configure Netplan.
+
+    ```
+    Wi-Fi Network Password
+    ----------------------
+    Password (password):
+
+    ```
+
+    Type the SSID of your network and press `ENTER`. Note that the SSID is case-sensitive.
+
+    Finally, select `Save Settings` and press the `ENTER` key.
+
+    ```
+    __      ___ ___ _   ___      _
+    \ \    / (_) __(_) / __| ___| |_ _  _ _ __
+     \ \/\/ /| | _|| | \__ \/ -_)  _| || | '_ \
+      \_/\_/ |_|_| |_| |___/\___|\__|\_,_| .__/
+                                        |_|
+    Press Q, Esc, or CTRL+C to go back.
+    --------------------------------------------
+      SSID: ssid
+      Password: password
+
+    > Save Settings
+      Reset Settings
+    ```
+
+    Once you have configured the wireless interfaces, press `Esc` until you return to
+    the main menu. Select `Write Configuration YAML` and press `ENTER`
+
+    ```
+     _  _     _        _              ___           __ _                    _   _
+    | \| |___| |_ _ __| |__ _ _ _    / __|___ _ _  / _(_)__ _ _  _ _ _ __ _| |_(_)___ _ _
+    | .` / -_)  _| '_ \ / _` | ' \  | (__/ _ \ ' \|  _| / _` | || | '_/ _` |  _| / _ \ ' \
+    |_|\_\___|\__| .__/_\__,_|_||_|  \___\___/_||_|_| |_\__, |\_,_|_| \__,_|\__|_\___/_||_|
+                |_|                                    |___/
+    Press Q, Esc, or CTRL+C to go back.
+    ----------------------------------------------------------------------------------------
+      Bridge Setup
+      Ethernet Setup
+      Wifi Setup
+
+      Pre-set Configurations
+
+      Read Configuration YAML
+    > Write Configuration YAML
+      Apply Configuration Changes
+      View Netplan Configurations
+
+    ```
+
+    Enter the path `/etc/netplan/60-wifi.yaml` and press `ENTER`.
+
+    ```
+    After saving, run `Apply` to update Netplan.
+    --------------------------------------------
+    _  _     _        _              ___           __ _                    _   _
+    | \| |___| |_ _ __| |__ _ _ _    / __|___ _ _  / _(_)__ _ _  _ _ _ __ _| |_(_)___ _ _
+    | .` / -_)  _| '_ \ / _` | ' \  | (__/ _ \ ' \|  _| / _` | || | '_/ _` |  _| / _ \ ' \
+    |_|\_\___|\__| .__/_\__,_|_||_|  \___\___/_||_|_| |_\__, |\_,_|_| \__,_|\__|_\___/_||_|
+                |_|                                    |___/
+    Save YAML:
+    Enter path to Netplan Configuration YAML
+    >
+
+    ```
+
+    Finally, select `Apply Configuration changes` and press `ENTER`.
+
+    ```
+     _  _     _        _              ___           __ _                    _   _
+    | \| |___| |_ _ __| |__ _ _ _    / __|___ _ _  / _(_)__ _ _  _ _ _ __ _| |_(_)___ _ _
+    | .` / -_)  _| '_ \ / _` | ' \  | (__/ _ \ ' \|  _| / _` | || | '_/ _` |  _| / _ \ ' \
+    |_|\_\___|\__| .__/_\__,_|_||_|  \___\___/_||_|_| |_\__, |\_,_|_| \__,_|\__|_\___/_||_|
+                |_|                                    |___/
+    Apply Netplan Configuration:
+      - changes will not take effect until you
+          apply the configuration.
+      - applying changes may take a 15-30 seconds
+          depending on the system.
+      - depending on the new changes,
+          you may be disconnected from the system.
+
+    Press Q, Esc, or CTRL+C to go back.
+    ----------------------------------------------------------------------------------------
+    > Apply Changes
+      Cancel
+
+    ```
+
+    Select `Apply Changes` and press `ENTER`. If you are logged into the robot via SSH you may lose your
+    connection when applying the changes. If this happens, simply open a new terminal and log in again.
+  </TabItem>
+  <TabItem value="Manual netplan configuration">
+    First, determine the name of your wireless interface by running `iwconfig` you should see
+    an entry similar to this:
+
+    ```
+    wlp59s0   IEEE 802.11  ESSID:off/any
+              Mode:Managed  Access Point: Not-Associated   Tx-Power=off
+              Retry short limit:7   RTS thr:off   Fragment thr:off
+              Power Management:on
+    ```
+
+    The interface name is in the left column, starting with `w`.
+
+    Once you have identified your interface, edit or create a file
+    called `/etc/netplan/60-wifi.yaml` containing the following:
+
+    ```yaml
+    network:
+      wifis:
+        MY_WIFI_INTERFACE:
+          optional: true
+          access-points:
+            MY_WIFI_SSID:
+              password: MY_WIFI_PASSWORD
+          dhcp4: true
+    ```
+
+    with the following substitutions:
+    1. Replace `MY_WIFI_INTERFACE` with the name of the interface you identified in the first step,
+      e.g. `wlp59s0`
+    2. Replace `MY_WIFI_SSID` with the SSID of your network.
+    3. Replace `MY_WIFI_PASSWORD` with your network's password.
+
+    For example:
+
+    ```yaml
+    network:
+      wifis:
+        wlp59s0:
+          optional: true
+          access-points:
+            BabCom:
+              password: peekaboo
+          dhcp4: true
+    ```
+
+    This configuration will connect your robot via DHCP to your WPA2/3 wireless network. If you
+    need to use a static IP address, modify the file to contain the following:
+
+    ```yaml
+    network:
+      wifis:
+        MY_WIFI_INTERFACE:
+          optional: true
+          access-points:
+            MY_WIFI_SSID:
+              password: MY_WIFI_PASSWORD
+          dhcp4: false
+          dhcp4-overrides:
+            send-hostname: true
+          addresses:
+            - MY_STATIC_IP/MY_SUBNET
+          nameservers:
+            addresses:
+              - MY_NAMESERVER
+    ```
+
+    with the same substitutions noted earlier, plus
+    1. Replace `MY_STATIC_IP` with the desired static IP address.
+    2. Replace `MY_SUBNET` with the length of your network's subnet mask (typically `24` or `16`)
+    3. Replace `MY_NAMESERVER` with the IP address of your DNS server You may add multiple DNS servers
+      with each one on its own line.
+
+    For example:
+
+    ```yaml
+    network:
+      wifis:
+        wlp59s0:
+          optional: true
+          access-points:
+            BabCom:
+              password: peekaboo
+          dhcp4: false
+          dhcp4-overrides:
+            send-hostname: true
+          addresses:
+            - 10.25.0.134/16
+          nameservers:
+            addresses:
+              - 10.25.0.10
+              - 8.8.8.8
+              - 8.8.4.4
+    ```
+
+    Once you have edited the netplan configuration file, run the following two commands:
+    1. `sudo netplan --debug generate` -- this will verify that the netplan configuration files can
+      be read properly. Correct any errors before proceeding.
+    2. `sudo netplan try` -- this will try running the new configuration, but will automatically
+      roll back if it doesn't work correctly.
+    3. `sudo netplan apply` -- this will apply the new configuration to your network interfaces.
+
+    :::note
+
+    By convention, all Netplan configuration files should be prefixed with two numbers indicating the
+    order in which the file should be read. Files are read in alphanumeric order, with `00-` prefixes
+    first and `99-` prefixes last.
+
+    If multiple files define the same configuration, the last-read file will override the earlier
+    definitions.
+
+    Once all files have been processed the result is amalgamated to create the system's Netplan
+    confguration.
+
+    :::
+  </TabItem>
+</Tabs>
+
 ## Standard Clearpath Bridge
 
-<StandardClearpathBridgeSetup />
+<Tabs>
+  <TabItem value="Using clearpath-computer-setup" default>
+
+    Use the `sudo clearpath-computer-setup` command to connect your robot to an existing wireless network.
+
+    ```
+     ___     _         _      ___                     _             ___      _
+    | _ \___| |__  ___| |_   / __|___ _ __  _ __ _  _| |_ ___ _ _  / __| ___| |_ _  _ _ __
+    |   / _ \ '_ \/ _ \  _| | (__/ _ \ '  \| '_ \ || |  _/ -_) '_| \__ \/ -_)  _| || | '_ \
+    |_|_\___/_.__/\___/\__|  \___\___/_|_|_| .__/\_,_|\__\___|_|   |___/\___|\__|\_,_| .__/
+                                          |_|                                       |_|
+    Press Q, Esc, or CTRL+C to go back.
+    ----------------------------------------------------------------------------------------
+    > Netplan Setup
+
+      About
+      Exit
+
+    ```
+
+    Select `Netplan Setup` and press the `ENTER` key.
+
+    ```
+     _  _     _        _              ___           __ _                    _   _
+    | \| |___| |_ _ __| |__ _ _ _    / __|___ _ _  / _(_)__ _ _  _ _ _ __ _| |_(_)___ _ _
+    | .` / -_)  _| '_ \ / _` | ' \  | (__/ _ \ ' \|  _| / _` | || | '_/ _` |  _| / _ \ ' \
+    |_|\_\___|\__| .__/_\__,_|_||_|  \___\___/_||_|_| |_\__, |\_,_|_| \__,_|\__|_\___/_||_|
+                |_|                                    |___/
+    Press Q, Esc, or CTRL+C to go back.
+    ----------------------------------------------------------------------------------------
+    > Bridge Setup
+      Ethernet Setup
+      Wifi Setup
+
+      Pre-set Configurations
+
+      Read Configuration YAML
+      Write Configuration YAML
+      Apply Configuration Changes
+      View Netplan Configurations
+
+    ```
+
+    If you do not have a bridge defined, use the arrow keys to select `Bridge Setup` and press `ENTER`.
+
+    ```
+     ___     _    _            ___      _
+    | _ )_ _(_)__| |__ _ ___  / __| ___| |_ _  _ _ __
+    | _ \ '_| / _` / _` / -_) \__ \/ -_)  _| || | '_ \
+    |___/_| |_\__,_\__, \___| |___/\___|\__|\_,_| .__/
+                  |___/                        |_|
+    Interface Menu
+    Press Q, Esc, or CTRL+C to go back.
+    ---------------------------------------------------
+    > Add Bridge
+      Remove Bridge
+
+    ```
+
+    Use the arrow keys to select `Add Bridge` and press `ENTER`.
+
+    Enter the name of the bridge you want to create. By default the first bridge should be called
+    `br0`. Press `ENTER` to continue.
+
+    ```
+    Bridge interface name must start with 'br'
+    ------------------------------------------
+    Enter name of bridge to add.
+    >
+
+    ```
+
+    Select the bridge to edit (`br0` by default) and press `ENTER`.
+
+    ```
+     ___     _    _            ___      _
+    | _ )_ _(_)__| |__ _ ___  / __| ___| |_ _  _ _ __
+    | _ \ '_| / _` / _` / -_) \__ \/ -_)  _| || | '_ \
+    |___/_| |_\__,_\__, \___| |___/\___|\__|\_,_| .__/
+                  |___/                        |_|
+    Interface Menu
+    Press Q, Esc, or CTRL+C to go back.
+    ---------------------------------------------------
+    > Bridge 'br0' Setup
+
+      Add Bridge
+      Remove Bridge
+
+    ```
+
+    Enable or disable DHCP for IPv4 and IPv6 as desired.
+
+    ```
+     ___     _    _            ___      _
+    | _ )_ _(_)__| |__ _ ___  / __| ___| |_ _  _ _ __
+    | _ \ '_| / _` / _` / -_) \__ \/ -_)  _| || | '_ \
+    |___/_| |_\__,_\__, \___| |___/\___|\__|\_,_| .__/
+                  |___/                        |_|
+    Bridge 'br0' Configuration
+    Press Q, Esc, or CTRL+C to go back.
+    ---------------------------------------------------
+    > dhcp4               : [yes]
+      dhcp6               : [no]
+      bridged             : [[]]
+      addresses           : [[]]
+
+    ```
+
+    To select what interfaces to bridge together, select `bridged` and press `ENTER`. Use the arrow
+    keys to select each interface you want to add to the bridge and press the spacebar to check/uncheck it.
+
+    ```
+    br0 bridged
+    Press Q, Esc, or CTRL+C to reset.
+    Press Enter to accept changes and exit.
+    ---------------------------------------
+    > [ ] enp3s0
+      [ ] enp4s0
+      [ ] wlp59s0
+
+    Press <space>, <tab> for multi-selection and <enter> to accept
+
+    ```
+
+    Press `ENTER` once you have selected all of the desired interfaces to bridge.
+
+    To add static IP addresses to the bridge, select `addresses` and press `ENTER`.
+
+    ```
+     ___     _    _            ___      _
+    | _ )_ _(_)__| |__ _ ___  / __| ___| |_ _  _ _ __
+    | _ \ '_| / _` / _` / -_) \__ \/ -_)  _| || | '_ \
+    |___/_| |_\__,_\__, \___| |___/\___|\__|\_,_| .__/
+                  |___/                        |_|
+    Bridge 'br0' Configuration
+    Press Q, Esc, or CTRL+C to go back.
+    ---------------------------------------------------
+      dhcp4               : [yes]
+      dhcp6               : [no]
+      bridged             : [['enp3s0', 'enp4s0']]
+    > addresses           : [[]]
+
+    ```
+
+    Select `Add IP Address` and enter `192.168.131.1/24` to create the robot's internal network.
+
+    ```
+    Select option to edit, add, or remove bridge IP addresses:
+    Press Q, Esc, or CTRL+C to go back.
+    ----------------------------------------------------------
+    > Add IP Address
+      Remove IP Address
+
+    ```
+
+    Once you have added all desired static IP addresses to the bridge, press `Esc` until you return to
+    the main menu. Select `Write Configuration YAML` and press `ENTER`
+
+    ```
+     _  _     _        _              ___           __ _                    _   _
+    | \| |___| |_ _ __| |__ _ _ _    / __|___ _ _  / _(_)__ _ _  _ _ _ __ _| |_(_)___ _ _
+    | .` / -_)  _| '_ \ / _` | ' \  | (__/ _ \ ' \|  _| / _` | || | '_/ _` |  _| / _ \ ' \
+    |_|\_\___|\__| .__/_\__,_|_||_|  \___\___/_||_|_| |_\__, |\_,_|_| \__,_|\__|_\___/_||_|
+                |_|                                    |___/
+    Press Q, Esc, or CTRL+C to go back.
+    ----------------------------------------------------------------------------------------
+      Bridge Setup
+      Ethernet Setup
+      Wifi Setup
+
+      Pre-set Configurations
+
+      Read Configuration YAML
+    > Write Configuration YAML
+      Apply Configuration Changes
+      View Netplan Configurations
+
+    ```
+
+    Enter the path `/etc/netplan/50-clearpath-bridge.yaml` and press `ENTER`.
+
+    ```
+    After saving, run `Apply` to update Netplan.
+    --------------------------------------------
+    _  _     _        _              ___           __ _                    _   _
+    | \| |___| |_ _ __| |__ _ _ _    / __|___ _ _  / _(_)__ _ _  _ _ _ __ _| |_(_)___ _ _
+    | .` / -_)  _| '_ \ / _` | ' \  | (__/ _ \ ' \|  _| / _` | || | '_/ _` |  _| / _ \ ' \
+    |_|\_\___|\__| .__/_\__,_|_||_|  \___\___/_||_|_| |_\__, |\_,_|_| \__,_|\__|_\___/_||_|
+                |_|                                    |___/
+    Save YAML:
+    Enter path to Netplan Configuration YAML
+    >
+
+    ```
+
+    Finally, select `Apply Configuration changes` and press `ENTER`.
+
+    ```
+     _  _     _        _              ___           __ _                    _   _
+    | \| |___| |_ _ __| |__ _ _ _    / __|___ _ _  / _(_)__ _ _  _ _ _ __ _| |_(_)___ _ _
+    | .` / -_)  _| '_ \ / _` | ' \  | (__/ _ \ ' \|  _| / _` | || | '_/ _` |  _| / _ \ ' \
+    |_|\_\___|\__| .__/_\__,_|_||_|  \___\___/_||_|_| |_\__, |\_,_|_| \__,_|\__|_\___/_||_|
+                |_|                                    |___/
+    Apply Netplan Configuration:
+      - changes will not take effect until you
+          apply the configuration.
+      - applying changes may take a 15-30 seconds
+          depending on the system.
+      - depending on the new changes,
+          you may be disconnected from the system.
+
+    Press Q, Esc, or CTRL+C to go back.
+    ----------------------------------------------------------------------------------------
+    > Apply Changes
+      Cancel
+
+    ```
+
+    Select `Apply Changes` and press `ENTER`. If you are logged into the robot via SSH you may lose your
+    connection when applying the changes. If this happens, simply open a new terminal and log in again.
+
+  </TabItem>
+  <TabItem value="Manual netplan configuration">
+    <StandardClearpathBridgeSetup />
+  </TabItem>
+</Tabs>
 
 ## Determining the robot's IP address {#determine-ip-address}
 
