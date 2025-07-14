@@ -68,7 +68,7 @@
 
       Note, we used to suggest the command `npm run format-write` to update all the files in this repository.
       We don't suggest this command anymore, since it is then difficult for reviewers of Pull Requests to find the intended content changes.
-      If you do continue to use this entire repositry command, you may see files that claim to be updated in Source Control, but don't have any visible changes.
+      If you do continue to use this entire repository command, you may see files that claim to be updated in Source Control, but don't have any visible changes.
       If so, you should run these commands in your terminal to prevent Git from noting these types of changes:
 
       git config --global core.filemode false
