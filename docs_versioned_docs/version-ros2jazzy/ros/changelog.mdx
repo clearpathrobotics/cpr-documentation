@@ -10,39 +10,68 @@ import Style from '/assets/css/changelog.css';
 
 ## Current versions:
 
-:::note
-Nested packages are part of the top repository.
-:::
-
-- clearpath_msgs: ![GitHub Tag](https://img.shields.io/github/v/tag/clearpathrobotics/clearpath_msgs?label=latest)
-    - clearpath_motor_msgs
-    - clearpath_msgs
-    - clearpath_platform_msgs
-- clearpath_config: ![GitHub Tag](https://img.shields.io/github/v/tag/clearpathrobotics/clearpath_config?label=latest)
-- clearpath_common: ![GitHub Tag](https://img.shields.io/github/v/tag/clearpathrobotics/clearpath_common?label=latest)
-    - clearpath_bt_joy
-    - clearpath_common
-    - clearpath_control
-    - clearpath_customization
-    - clearpath_description
-    - clearpath_diagnostics
-    - clearpath_generator_common
-    - clearpath_manipulators
-    - clearpath_manipulators_description
-    - clearpath_mounts_description
-    - clearpath_platform_description
-    - clearpath_sensors_description
-- clearpath_robot: ![GitHub Tag](https://img.shields.io/github/v/tag/clearpathrobotics/clearpath_robot?label=latest)
-    - clearpath_generator_robot
-    - clearpath_platform
-    - lynx_motor_driver
-    - puma_motor_driver
-    - clearpath_robot
-    - clearpath_sensors
-    - clearpath_tests
-
-
-
+<table>
+    <thead>
+        <tr>
+            <th>Github Repository</th>
+            <th>Version</th>
+            <th>ROS Packages</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>clearpath_msgs</td>
+            <td><img src="https://img.shields.io/github/v/tag/clearpathrobotics/clearpath_msgs?label=latest&color=rgb(244%2C%20211%2C%2015)" alt="GitHub Tag"/></td>
+            <td>
+                <ul>
+                    <li>clearpath_motor_msgs</li>
+                    <li>clearpath_msgs</li>
+                    <li>clearpath_platform_msgs</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>clearpath_config</td>
+            <td><img src="https://img.shields.io/github/v/tag/clearpathrobotics/clearpath_config?label=latest&color=rgb(244%2C%20211%2C%2015)" alt="GitHub Tag"/></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>clearpath_common</td>
+            <td><img src="https://img.shields.io/github/v/tag/clearpathrobotics/clearpath_common?label=latest&color=rgb(244%2C%20211%2C%2015)" alt="GitHub Tag"/></td>
+            <td>
+                <ul>
+                    <li>clearpath_bt_joy</li>
+                    <li>clearpath_common</li>
+                    <li>clearpath_control</li>
+                    <li>clearpath_customization</li>
+                    <li>clearpath_description</li>
+                    <li>clearpath_diagnostics</li>
+                    <li>clearpath_generator_common</li>
+                    <li>clearpath_manipulators</li>
+                    <li>clearpath_manipulators_description</li>
+                    <li>clearpath_mounts_description</li>
+                    <li>clearpath_platform_description</li>
+                    <li>clearpath_sensors_description</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>clearpath_robot</td>
+            <td><img src="https://img.shields.io/github/v/tag/clearpathrobotics/clearpath_robot?label=latest&color=rgb(244%2C%20211%2C%2015)" alt="GitHub Tag"/></td>
+            <td>
+                <ul>
+                    <li>clearpath_generator_robot</li>
+                    <li>clearpath_platform</li>
+                    <li>lynx_motor_driver</li>
+                    <li>puma_motor_driver</li>
+                    <li>clearpath_robot</li>
+                    <li>clearpath_sensors</li>
+                    <li>clearpath_tests</li>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 ## [2.6] 2025-07-04
 
@@ -55,15 +84,15 @@ Nested packages are part of the top repository.
 - Added support for W200
 - Enabled foxglove bridge by default
 - Added A300 AMP attachments, samples
-- Added foxglove dependency 
+- Added foxglove dependency
 - Enabled dependency on sevcon and valence bms
 - Updated grab-diagnostics to latest
 
 ### Fixed
 - Fixed W200 Diff Drive Parameters
 - Re-enable publishing controller input to joy_teleop/cmd_vel
-- Dropped A200 controller manager update rate 
-- Fixed expected diagnostics rates 
+- Dropped A200 controller manager update rate
+- Fixed expected diagnostics rates
 - Fixed missing dependency lms1xx
 
 ## [2.5] 2025-05-30
