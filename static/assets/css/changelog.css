@@ -39,3 +39,8 @@
   content: none;
   counter-increment: none;
 }
+
+.changelog table {
+    display: table;
+    margin: 0 auto;
+}
