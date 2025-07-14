@@ -63,6 +63,8 @@
       You can fix the errors by running Prettier on a single file, with `npx prettier --write <FILE PATH>`.
       For example, you can run the command `npx prettier --write README.md` to format this README.
 
+      If you have added a new folder and need to format all files within it you can use the `*` wildcard, for example" `npx prettier --write folder/*`
+
       - Refer to the _package.json_ to understand what this script calls.
       - Refer to the _.prettierrc.json_ to understand the rules Prettier is using when checking files.
 
