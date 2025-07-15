@@ -54,7 +54,7 @@ ros2 launch clearpath_manipulators moveit.launch.py setup_path:=$HOME/clearpath/
 ```
 
 ## Launching RViz
-Once MoveIt! is running, to open RViz with the MoveIt MotionPlanning plugin, with the appropriate namespace, and interactive markers:
+Once MoveIt! is running, open RViz with the MoveIt MotionPlanning plugin, with the appropriate namespace, and interactive markers. To do so, create a new terminal, source the workspace, and call the `view_moveit` launch file:
 ```
 ros2 launch clearpath_viz view_moveit.launch.py namespace:=''
 ```
