@@ -58,4 +58,8 @@ Once MoveIt! is running, open RViz with the MoveIt MotionPlanning plugin, with t
 ```
 ros2 launch clearpath_viz view_moveit.launch.py namespace:=''
 ```
-> Make sure to pass the same namespace as the robot's
+
+Make sure to pass the same namespace as the robot's. For example, a robot with namespace `a300_0001` will have topics such as `/a300_0001/platform/mcu/status` and `/a300_0001/manipulators/arm_0_joint_trajectory_controller/controller_state`. To launch its viewing command:
+```
+ros2 launch clearpath_viz view_moveit.launch.py namespace:='a300_0001'
+```
