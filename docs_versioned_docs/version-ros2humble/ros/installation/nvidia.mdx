@@ -156,7 +156,88 @@ If you see warnings about the following dependencies being uninstallable, you ma
 | `sevcon_traction`                | Needed by Warthog W200, which cannot use an Nvidia Jetson as its primary computer                                |
 | `ros-humble-gazebo-ros2-control` | Needed for simulation support by `ros2_kortex` (Kinova manipulator driver). Not currently available for ARM CPUs |
 
-## Installing Firmware Updates
+## Building additional kernel modules
+
+At the time of writing, JetPack 6.1 installs the kernel `5.15.148-tegra`. This kernel by default does not include the
+`uinput` and `slcan` modules. Clearpath has [pre-built copies](https://github.com/clearpathrobotics/clearpath_computer_installer/tree/feature/humble-jetson)
+of these modules for kernel `5.15.148-tegra`.
+
+If you have a different kernel, or want to build these modules yourself, follow
+[Nvidia's developer guide](https://docs.nvidia.com/jetson/archives/r36.4.4/DeveloperGuide/SD/Kernel/KernelCustomization.html).
+The essential steps are summarized below, but refer to Nvidia's kernel customization guide for more details.
+
+:::note
+
+The following instructions assume you are building the kernel and modules directly on the Jetson. To cross-compile,
+refer to Nvidia's developer guide.
+
+:::
+
+### Install prerequisites
+
+Run the following command:
+
+```bash
+sudo apt-get install build-essential bc flex bison libssl-dev zstd
+```
+
+### Download and extract the kernel sources
+
+:::note
+
+At the time of writing, the latest kernel sources are available at https://developer.nvidia.com/embedded/jetson-linux-r3644
+
+:::
+
+Run the following commands:
+
+```bash
+cd $HOME
+wget https://developer.nvidia.com/downloads/embedded/l4t/r36_release_v4.4/sources/public_sources.tbz2
+tar xf public_sources.tbz2
+cd Linux_for_Tegra/source
+tar xf kernel_src.tbz2
+```
+
+### Customize the kernel modules
+
+To enable the `slcan` and `uinput` modules you must edit the kernel configuration file.
+
+```bash
+echo "CONFIG_CAN_SLCAN=m" >> $HOME/Linux_for_Tegra/source/kernel/kernel-jammy-src/arch/arm64/configs/defconfig
+echo "CONFIG_INPUT_UINPUT=m" >> $HOME/Linux_for_Tegra/source/kernel/kernel-jammy-src/arch/arm64/configs/defconfig
+```
+
+### Build the kernel and modules
+
+:::note
+
+This step can take some time. Be patient.
+
+:::
+
+Run the following commands to build the kernel and modules:
+
+```bash
+cd $HOME/Linux_for_Tegra/source
+mkdir kernel_out
+./nvbuild.sh
+```
+
+### Install the modules
+
+After the build finishes, run the following commands to install the new modules:
+
+```bash
+cd $HOME/Linux_for_Tegra/source/kernel_out/kernel/kernel-jammy-src
+sudo cp drivers/net/can/socat.ko /lib/modules/$(uname -r)/kernel/drivers/net/can/
+sudo cp drivers/input/misc/uinput.ko /lib/modules/$(uname -r)/kernel/drivers/input/misc/
+sudo depmod
+sudo modprobe slcan
+sudo modprobe uinput
+```
+
+## Installing firmware updates
 
 If you need to [install firmware updates](robot#firmware-update) for your robot, you must install the
 `clearpath_firmware` package on an `amd64` (aka `x64` or `x86_64`) [offboard computer](offboard_pc); the
