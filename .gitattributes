@@ -1,1 +1,19 @@
+# Files determined by git to be text files
+# are automatically normalized to LF line endings.
 *       text=auto eol=lf
+# The following files are explicitly set to use LF line endings.
+*.mdx   eol=lf
+*.md    eol=lf
+*.json  eol=lf
+
+# If there are files which are generated with CRLF line endings,
+# it is recommended to set them to CRLF so that there is no unnecessary
+# diff when regenerating them.
+
+# The binary macro is equivalent to the following:
+# -text -diff
+# Which means that line endings are not normalized and no diff is generated.
+*.jpg   binary
+*.png   binary
+*.gif   binary
+*.mp4   binary
