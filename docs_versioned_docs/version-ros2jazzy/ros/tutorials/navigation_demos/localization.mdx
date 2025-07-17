@@ -29,12 +29,11 @@ to `false`.
 
 :::
 
-**1.** [Start the simulation and Nav2](nav2.mdx#launching-the-simulation-and-nav2)
-by following steps 1-3 of the Nav2 startup
-
-**2.** Open a terminal and run
+To start localization using [AMCL](https://docs.nav2.org/configuration/packages/configuring-amcl.html)
+[follow the steps](nav2.mdx#launching-the-simulation-and-nav2) described in the Nav2
+startup. When you get to step 4, run
 ```bash
-ros2 launch clearpath_nav2_demos localization.launch.py use_sim_time:=true
+ros2 launch clearpath_nav2_demos localiztion.launch.py use_sim_time:=true
 ```
 
 The default map used by `localization.launch.py` is a
@@ -43,8 +42,3 @@ If you are using a custom map, pass it in with the `map` launch argument:
 ```bash
 ros2 launch clearpath_nav2_demos localization.launch.py use_sim_time:=true map:=/path/to/my/map.yaml
 ```
-
-**3.** [Start Rviz](nav2.mdx#launching-the-simulation-and-nav2) and set the robot's initial pose
-estimate by following steps 5-6 of the Nav2 startup
-
-**4.** Give the robot a navigation goal using the [Nav2 Goal](nav2.mdx#nav2-goal) tool.

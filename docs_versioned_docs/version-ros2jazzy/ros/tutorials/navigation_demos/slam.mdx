@@ -32,18 +32,15 @@ to `false`.
 
 :::
 
-**1.** [Start the simulation and Nav2](nav2.mdx#launching-the-simulation-and-nav2)
-by following steps 1-3 of the Nav2 startup
-
-**2.** Open a terminal and run
+To start SLAM, [follow the steps](nav2.mdx#launching-the-simulation-and-nav2) described in the Nav2
+startup. When you get to step 4, run
 ```bash
 ros2 launch clearpath_nav2_demos slam.launch.py use_sim_time:=true
 ```
 
-**3.** [Start Rviz](nav2.mdx#launching-the-simulation-and-nav2) and set the robot's initial pose
-estimate by following steps 5-6 of the Nav2 startup
+### Building the map
 
-**4.** Drive the robot around the world. Ensure you have mapped the region you want the robot
+Drive the robot around the world. Ensure you have mapped the region you want the robot
 to navigate through autonomously.
 
 <center>
@@ -56,10 +53,10 @@ to navigate through autonomously.
   </figure>
 </center>
 
-**5.** Save the map by opening a new terminal and running
+### Saving the map
+
+To save the map, open a new terminal and run
 ```bash
 ros2 run nav2_map_server map_saver_cli -f "map_name"
 --ros-args -p map_subscribe_transient_local:=true -r __ns:=/a300_0000
 ```
-
-**6.** Give the robot a navigation goal using the [Nav2 Goal](nav2.mdx#nav2-goal) tool.
