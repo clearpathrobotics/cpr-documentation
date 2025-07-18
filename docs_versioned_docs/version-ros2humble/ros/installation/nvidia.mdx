@@ -139,8 +139,13 @@ wget https://raw.githubusercontent.com/clearpathrobotics/clearpath_computer_inst
 bash jetson-humble-setup.bash
 ```
 
-This script will (re-)configure `apt` with addional sources, download core ROS components, and create a ROS workspace
-at `/home/<user>/colcon_ws` containing ROS packages that are not available as debian packages for ARM processors.
+This script will:
+- (re-)configure `apt` with addional sources;
+- install additional `apt` and `pip` packages needed for Clearpath robots;
+- install core ROS components;
+- create and build a ROS workspace (`$HOME/colcon_ws`);
+- install additional Linux kernel modules; and
+- configure your robot's initial `/etc/clearpath/robot.yaml` file.
 
 ### Missing ROS dependencies
 
