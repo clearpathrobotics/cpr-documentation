@@ -42,7 +42,7 @@ Ensure the **Jetson** category at the top of the window is checked and that the 
 model of Jetson computer. If the board is not detected, refer to the instructions provided with your Jetson computer
 for any additional steps that may be be needed, such as entering bootloader mode.
 
-### Select SDK Version
+### Select SDK version
 
 Select SDK version `6.2.x` (`6.2.1` is the latest at the time of writing).
 
@@ -144,7 +144,7 @@ bash jetson-humble-setup.bash
 This script will (re-)configure `apt` with addional sources, download core ROS components, and create a ROS workspace
 at `/home/<user>/colcon_ws` containing ROS packages that are not available as debian packages for ARM processors.
 
-### Missing Dependencies
+### Missing ROS dependencies
 
 Manually running `rosdep install` in the generated workspace will result in warnings about some missing dependencies.
 This is normal; the missing dependencies are for Clearpath platforms that are not supported on Jetson computers.
