@@ -128,15 +128,21 @@ When ready, click the green **Flash** button at the bottom of the window.
 
 ## Post-installation configuration
 
+:::note
+
+See Clearpath's [computer Jetson setup script documentation](https://github.com/clearpathrobotics/clearpath_computer_installer/blob/feature/humble-jetson/README.md)
+for mode details on post-installation configuration.
+
+:::
+
 Once the core OS and Jetson APIs are installed the next step is to install the necessary ROS components to allow the
 computer to control your robot.
 
-Connect the Jetson to the internet, log in, and run the following commands to download and run Clearpath's
+Connect the Jetson to the internet, log in, and run the following command to download and run Clearpath's
 Jetson setup script:
 
 ```bash
-wget https://raw.githubusercontent.com/clearpathrobotics/clearpath_computer_installer/refs/heads/feature/humble-jetson/jetson-humble-setup.bash
-bash jetson-humble-setup.bash
+wget -c https://raw.githubusercontent.com/clearpathrobotics/clearpath_computer_installer/refs/heads/feature/humble-jetson/jetson-humble-setup.bash && bash -e jetson-humble-setup.bash
 ```
 
 This script will:
@@ -144,8 +150,9 @@ This script will:
 - install additional `apt` and `pip` packages needed for Clearpath robots;
 - install core ROS components;
 - create and build a ROS workspace (`$HOME/colcon_ws`);
-- install additional Linux kernel modules; and
-- configure your robot's initial `/etc/clearpath/robot.yaml` file.
+- install additional Linux kernel modules;
+- configure your robot's initial `/etc/clearpath/robot.yaml` file; and
+- optionally reconfigure carrier board USB connections to enable bluetooth.
 
 ### Missing ROS dependencies
 
@@ -154,10 +161,11 @@ This is normal; the missing dependencies are for Clearpath platforms that are no
 
 If you see warnings about the following dependencies being uninstallable, you may safely ignore them:
 
-| Package                          | Notes                                                                                                            |
-|:-------------------------------- |:---------------------------------------------------------------------------------------------------------------- |
-| `sevcon_traction`                | Needed by Warthog W200, which cannot use an Nvidia Jetson as its primary computer                                |
-| `ros-humble-gazebo-ros2-control` | Needed for simulation support by `ros2_kortex` (Kinova manipulator driver). Not currently available for ARM CPUs |
+| ROS Package           | Debian Package                   | Notes                                                                                                            |
+|:--------------------- |:-------------------------------- |:---------------------------------------------------------------------------------------------------------------- |
+| `gazebo_ros2_control` | `ros-humble-gazebo-ros2-control` | Needed for simulation support by `ros2_kortex` (Kinova manipulator driver). Not currently available for ARM CPUs |
+| `sevcon_traction`     | `ros-humble-sevcon-traction`     | Needed by Warthog W200, which cannot use an Nvidia Jetson as its primary computer                                |
+| `valence_bms_driver`  | `ros-humble-valence-bms-driver`  | Needed for Valence batteries, which are not used in Jackal, Dingo, nor Ridgeback                                 |
 
 ## Building additional kernel modules
 
