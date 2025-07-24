@@ -132,7 +132,7 @@ When ready, click the green **Flash** button at the bottom of the window.
 
 :::note
 
-See Clearpath's [computer Jetson setup script documentation](https://github.com/clearpathrobotics/clearpath_computer_installer/blob/feature/humble-jetson/README.md)
+See Clearpath's [computer Jetson setup script documentation](https://github.com/clearpathrobotics/clearpath_computer_installer/blob/jetson-setup/README.md)
 for mode details on post-installation configuration.
 
 :::
@@ -144,7 +144,7 @@ Connect the Jetson to the internet, log in, and run the following command to dow
 Jetson setup script:
 
 ```bash
-wget -c https://raw.githubusercontent.com/clearpathrobotics/clearpath_computer_installer/refs/heads/feature/humble-jetson/jetson-humble-setup.bash && bash -e jetson-humble-setup.bash
+wget -c https://raw.githubusercontent.com/clearpathrobotics/clearpath_computer_installer/refs/heads/jetson-setup/jetson-humble-setup.bash && bash -e jetson-humble-setup.bash
 ```
 
 This script will:
@@ -172,7 +172,7 @@ If you see warnings about the following dependencies being uninstallable, you ma
 ## Building additional kernel modules
 
 At the time of writing, JetPack 6.1 installs the kernel `5.15.148-tegra`. This kernel by default does not include the
-`uinput` and `slcan` modules. Clearpath has [pre-built copies](https://github.com/clearpathrobotics/clearpath_computer_installer/tree/feature/humble-jetson)
+`uinput` and `slcan` modules. Clearpath has [pre-built copies](https://github.com/clearpathrobotics/clearpath_computer_installer/tree/jetson-setup)
 of these modules for kernel `5.15.148-tegra`.
 
 If you have a different kernel, or want to build these modules yourself, follow
