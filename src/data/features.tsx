@@ -1,6 +1,5 @@
 import React from "react";
 import Translate, { translate } from "@docusaurus/Translate";
-
 export type FeatureItem = {
   title: string;
   image: {
@@ -10,20 +9,19 @@ export type FeatureItem = {
   };
   text: JSX.Element;
 };
-
 const FEATURES: FeatureItem[] = [
   {
     title: translate({
-      message: "JACKAL",
-      id: "homepage_jackal",
+      message: "WARTHOG",
+      id: "homepage_warthog",
     }),
     image: {
-      src: "/img/website_images/jackal_thumbnail.png",
+      src: "/img/website_images/warthog_thumbnail.png",
       width: 250,
       height: 150,
-      hyperlink: "/docs_robots/outdoor_robots/jackal/user_manual_jackal",
+      hyperlink: "/docs_robots/outdoor_robots/warthog/user_manual_warthog",
     },
-    text: <Translate id="homepage_jackal">Small Outdoor Platform</Translate>,
+    text: <Translate id="homepage_warthog">Large Outdoor Platform</Translate>,
   },
   {
     title: translate({
@@ -40,55 +38,42 @@ const FEATURES: FeatureItem[] = [
   },
   {
     title: translate({
-      message: "HUSKY A200 OBSERVER",
-      id: "homepage_husky_a200_observer",
+      message: "HUSKY A300 AMP",
+      id: "homepage_husky_a300_amp",
     }),
     image: {
-      src: "/img/website_images/husky_a200_observer_thumbnail.png",
+      src: "/img/website_images/husky_a300_amp_thumbnail.png",
       width: 114,
       height: 150,
-      hyperlink: "/docs_robots/legacy/ros1_robots/solutions/husky_a200_observer/user_manual_husky_a200_observer",
+      hyperlink: "/docs_robots/solutions/husky_a300_amp/",
     },
-    text: <Translate id="homepage_husky_a200_observer">Medium Outdoor Solution</Translate>,
+    text: <Translate id="homepage_husky_a300_amp">Medium Outdoor Solution</Translate>,
   },
   {
     title: translate({
-      message: "WARTHOG",
-      id: "homepage_warthog",
+      message: "JACKAL",
+      id: "homepage_jackal",
     }),
     image: {
-      src: "/img/website_images/warthog_thumbnail.png",
+      src: "/img/website_images/jackal_thumbnail.png",
       width: 250,
       height: 150,
-      hyperlink: "/docs_robots/outdoor_robots/warthog/user_manual_warthog",
+      hyperlink: "/docs_robots/outdoor_robots/jackal/user_manual_jackal",
     },
-    text: <Translate id="homepage_warthog">Large Outdoor Platform</Translate>,
+    text: <Translate id="homepage_jackal">Small Outdoor Platform</Translate>,
   },
   {
     title: translate({
-      message: "TURTLEBOT 4",
-      id: "homepage_turtlebot",
+      message: "RIDGEBACK",
+      id: "homepage_ridgeback",
     }),
     image: {
-      src: "/img/website_images/turtlebot_thumbnail.png",
+      src: "/img/website_images/ridgeback_thumbnail.png",
       width: 250,
       height: 150,
-      hyperlink: "/docs_robots/learning_platforms/turtlebot4",
+      hyperlink: "/docs_robots/indoor_robots/ridgeback/user_manual_ridgeback",
     },
-    text: <Translate id="homepage_turtlebot">Classroom Indoor Differential Platform</Translate>,
-  },
-  {
-    title: translate({
-      message: "DINGO",
-      id: "homepage_dingo",
-    }),
-    image: {
-      src: "/img/website_images/dingo_thumbnail.png",
-      width: 250,
-      height: 150,
-      hyperlink: "/docs_robots/indoor_robots/dingo/user_manual_dingo",
-    },
-    text: <Translate id="homepage_dingo">Small Indoor Platform, Differential And Omnidirectional Configurations</Translate>,
+    text: <Translate id="homepage_ridgeback">Large Indoor Omnidirectional Platform</Translate>,
   },
   {
     title: translate({
@@ -105,17 +90,29 @@ const FEATURES: FeatureItem[] = [
   },
   {
     title: translate({
-      message: "RIDGEBACK",
-      id: "homepage_ridgeback",
+      message: "DINGO",
+      id: "homepage_dingo",
     }),
     image: {
-      src: "/img/website_images/ridgeback_thumbnail.png",
+      src: "/img/website_images/dingo_thumbnail.png",
       width: 250,
       height: 150,
-      hyperlink: "/docs_robots/indoor_robots/ridgeback/user_manual_ridgeback",
+      hyperlink: "/docs_robots/indoor_robots/dingo/user_manual_dingo",
     },
-    text: <Translate id="homepage_ridgeback">Large Indoor Omnidirectional Platform</Translate>,
+    text: <Translate id="homepage_dingo">Small Indoor Platform, Differential And Omnidirectional Configurations</Translate>,
+  },
+  {
+    title: translate({
+      message: "TURTLEBOT 4",
+      id: "homepage_turtlebot",
+    }),
+    image: {
+      src: "/img/website_images/turtlebot_thumbnail.png",
+      width: 250,
+      height: 150,
+      hyperlink: "/docs_robots/learning_platforms/turtlebot4",
+    },
+    text: <Translate id="homepage_turtlebot">Classroom Indoor Differential Platform</Translate>,
   },
 ];
-
 export default FEATURES;
