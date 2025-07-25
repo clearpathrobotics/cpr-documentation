@@ -1,0 +1,111 @@
+---
+title: CUDA Installation
+sidebar_label: CUDA Installation
+sidebar_position: 8
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+:::note
+
+CUDA is a proprietary framework developed by Nvidia. To use CUDA you must have a compatible GPU from Nvidia.
+
+:::
+
+## Verify your GPU supports CUDA
+
+To check that you have an Nvidia GPU, run the following command:
+
+```bash
+lspci | grep -i nvidia
+```
+
+Check that
+1. there is at least one graphics card listed, and
+2. that your GPU model [supports CUDA](https://developer.nvidia.com/cuda-gpus)
+
+## Add Nvidia package sources
+
+The easiest way to install CUDA is to add Nvidia's `apt` sources to your configuration. Run the following
+commands on the robot:
+
+```bash
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb
+sudo dpkg -i cuda-keyring_1.1-1_all.deb
+sudo apt-get update
+```
+
+## Install CUDA
+
+:::note
+
+If you have a realtime Linux kernel installed (`PREEMPT_RT`) you may encounter errors when installing CUDA, as it
+does not officially support realtime kernels. To work around these errors add `IGNORE_PREEMPT_RT_PRESENCE=1`
+before any `apt` or `apt-get` commands, e.g.
+```
+sudo IGNORE_PREEMPT_RT_PRESENCE=1 apt-get install cuda-toolkit
+```
+
+:::
+
+To install CUDA, run the following command:
+```bash
+sudo apt-get install cuda-toolkit
+```
+
+Optionally you can also install all GDS packages:
+```bash
+sudo apt-get install nvidia-gds
+```
+
+Reboot the computer after installing the packages.
+
+## Configure environment
+
+:::note
+
+At the time of writing, CUDA `12.9` is the latest version. The instructions below assume this version is
+being installed, but if you installed a different version you will need to modify the instructions
+accordingly.
+
+:::
+
+After rebooting, it is recommended to modify `$HOME/.bashrc` to update your environment variables to
+enable CUDA tools. Add the following to `.bashrc`:
+
+```
+export PATH=/usr/local/cuda-12.9/bin${PATH:+:${PATH}}
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/cuda-12.9/lib64
+```
+
+After modifying `.bashrc` either close the terminal and re-open it or run `source $HOME/.bashrc` to apply
+the changes.
+
+### Nvidia samples
+
+You can optionally download and build the [CUDA samples](https://github.com/NVIDIA/cuda-samples) to verify
+your installation:
+
+```bash
+git clone https://github.com/NVIDIA/cuda-samples.git
+cd cuda-samples
+mkdir build
+cd build
+cmake ..
+make
+```
+
+Run the `deviceQuery` sample from the `build` directory to make sure CUDA can run correctly on your system:
+```bash
+./Samples/1_Utilities/deviceQuery/deviceQuery
+```
+You should see `Result = PASS` at the bottom of the output, indicating a CUDA-capable GPU was is
+detected and usable.
+
+Refer the [CUDA samples documentation](https://github.com/NVIDIA/cuda-samples/tree/master?tab=readme-ov-file#samples-list)
+for details on additional sample programs.
+
+## External Links
+
+- [CUDA installation guide for Linux](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/)
+- [CUDA supported GPUs](https://developer.nvidia.com/cuda-gpus)
