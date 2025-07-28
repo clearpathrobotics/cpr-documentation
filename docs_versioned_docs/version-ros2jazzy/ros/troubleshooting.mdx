@@ -4,6 +4,8 @@ sidebar_label: Troubleshooting
 sidebar_position: 9
 ---
 
+import JitterError from "/docs_versioned_docs/version-ros2jazzy/components/troubleshooting/_jitter_error.mdx";
+
 The following are common problems our [support team](https://support.clearpathrobotics.com/hc/en-us)
 have received. Before [submitting a request](https://support.clearpathrobotics.com/hc/en-us/requests/new)
 please review the items below to see if they resolve your problem. If your problem is not resolved, download a [diagnostic capture](./cockpit/ros2_diagnostics.mdx#capture-diagnostics) from the [Cockpit webserver](./cockpit/overview.mdx) and attach it to the support request.
@@ -226,3 +228,7 @@ Fast CDR exception deserializing message of type rmw_dds_common::msg::dds_::Part
 ```
 
 It is recommended that all ROS 2 devices on a network use the same ROS 2 distribution and middleware.
+
+## Jitter Warning or Error
+
+<JitterError />

@@ -4,6 +4,8 @@ sidebar_label: ROS 2 Diagnostics
 sidebar_position: 3
 ---
 
+import JitterError from "/docs_versioned_docs/version-ros2jazzy/components/troubleshooting/_jitter_error.mdx";
+
 The [Cockpit ROS 2 Diagnostics](https://github.com/clearpathrobotics/cockpit-ros2-diagnostics) extension was developed by Clearpath Robotics to add more ROS specific functionality to Cockpit and specifically to help in monitoring and troubleshooting ROS 2 robots.
 
 ## Capture Diagnostics
@@ -21,6 +23,12 @@ Previous diagnostic capture file can be found in the `$HOME/diagnostic_captures/
 Errors are unexpected situations that prevent normal operation of one or more features or software systems of the robot. Warnings are unexpected or expected situations that may or may not impact normal operation of the robot.
 
 Active errors and warnings are each separated into dedicated tables in order to bring emphasis to what issues need to be addressed on a given robot. Clicking on these errors and warnings opens the diagnostic details in the section below.
+
+:::note
+
+<JitterError />
+
+:::
 
 ## All Diagnostics
 
