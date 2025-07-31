@@ -43,7 +43,7 @@ const FEATURES: FeatureItem[] = [
     }),
     image: {
       src: "/img/website_images/husky_a300_amp_thumbnail.png",
-      width: 114,
+      width: 140,
       height: 150,
       hyperlink: "/docs_robots/solutions/husky_a300_amp/",
     },
