@@ -44,13 +44,13 @@ sudo apt-get install ros-jazzy-teleop-twist-keyboard
 Once installed, run the node:
 
 ```
-ros2 run teleop_twist_keyboard teleop_twist_keyboard
+ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -p stamped:=true
 ```
 
 If your robot uses a namespace, the namespace should be applied to `teleop_twist_keyboard`:
 
 ```
-ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r __ns:=/j100_0001
+ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -p stamped:=true -r __ns:=/j100_0001
 ```
 
 ## Command Velocity
@@ -58,15 +58,16 @@ ros2 run teleop_twist_keyboard teleop_twist_keyboard --ros-args -r __ns:=/j100_0
 You can manually publish to the `cmd_vel` topic through the command line by calling:
 
 ```
-ros2 topic pub /cmd_vel geometry_msgs/msg/Twist \
-"linear:
-  x: 0.0
-  y: 0.0
-  z: 0.0
-angular:
-  x: 0.0
-  y: 0.0
-  z: 0.0"
+ros2 topic pub /cmd_vel geometry_msgs/msg/TwistStamped \
+"twist:
+  linear:
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  angular:
+    x: 0.0
+    y: 0.0
+    z: 0.0"
 ```
 
 Set the `linear.x` value to drive the robot forwards or backwards, and the `angular.z` value to rotate left or right.
