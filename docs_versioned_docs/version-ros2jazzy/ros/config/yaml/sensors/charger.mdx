@@ -9,6 +9,8 @@ import Wiferion from "/docs_versioned_docs/version-ros2jazzy/components/yaml/sen
 
 Wireless battery chargers are necessary attachments for a fully autonomous, self docking robot platform. These devices incorporate sensors that determine the quality of the charging position and orientation, status of the charging coil, and status of the stationary unit.
 
+Note that adding the charger sensor does not modify the URDF to add the charging coil itself. To add the charging coil to the URDF, use the [`platform/extras`](../platform/extras#urdf-extras) to add a custom mesh, or use a supported `attachment`, such as the [`A300 wireless charger`](../platform/attachments/a300#wireless-charger).
+
 ## Supported Chargers
 
 ### Wiferion Wireless Charger
