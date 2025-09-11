@@ -23,8 +23,17 @@ This launch file is used to visualize the robot model without needing a robot pr
 ### View Robot
 
 ```bash
-ros2 launch clearpath_viz view_robot.launch.py namespace:=a200_0000
+ros2 launch clearpath_viz view_robot.launch.py namespace:=a200_0000 setup_path:=SETUP_PATH
+
 ```
+
+> Replace `SETUP_PATH` with the path to the directory where the `robot.yaml` is located.
+
+> Do not include `~` in the `SETUP_PATH`, use `$HOME` instead.
+
+> Make sure that `SETUP_PATH` ends with `/`.
+
+> If following the [offboard computer setup instructions](../installation/offboard_pc.mdx), this will be `$HOME/clearpath`.
 
 This launch file should be used when visualizing the robot while connected to the robot (wired or wirelessly). This will subscribe to topics from the robot to populate the visualization. Update the `namespace` parameter to match the robot's namespace.
 
