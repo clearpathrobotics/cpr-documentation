@@ -67,10 +67,12 @@ Currently only the Husky A200 can use `rmw_zenoh_cpp`. Attempting to use Zenoh o
 
 | Key | Value / Datatype | Description |
 |:---:| :--------------: | ----------- |
-| **implementation** | `rmw_fastrtps_cpp`   | Declares the RMW Implementation to use. Currently only supports `rmw_fastrtps_cpp` and `rmw_zenoh_cpp`. |
+| **implementation** | string               | Declares the RMW Implementation to use. Currently only supports `rmw_fastrtps_cpp` and `rmw_zenoh_cpp`. |
 | **discovery**      | `simple` or `server` | Select `simple` for simple discovery and `server` for discovery server. (Defaults to `simple`. Ignored if `implementation` is not `rmw_fastrtps_cpp`.) |
 | **profile**        | string               | Advanced feature, allows an optional custom profile to be provided - RMW Implementation / vendor specific. |
 | **servers**        | list                 | Provides a list of all discovery servers in the system and whether or not the robot should connect to them. Ignored if `implementation` is not `rmw_fastrtps_cpp`.|
+| **automatic_discovery_range** | string    | Sets the value for the `ROS_AUTOMATIC_DISCOVERY_RANGE` environment variable. Must be one of `subnet`, `localhost`, `system_default`, or `off`. |
+| **static_peers**   | list                 | List of IP addresses or hostnames that ROS should discover nodes on. Sets the value of the `ROS_STATIC_PEERS` environment variable. |
 
 For example:
 
@@ -78,6 +80,10 @@ For example:
 middleware:
   implementation: rmw_fastrtps_cpp
   discovery: simple
+  automatic_discovery_range: subnet
+  static_peers:
+    - 192.168.131.1
+    - 192.168.131.2
   profile: path/to/profile.xml
   servers: # This section is described further below
     - hostname: cpr-a200-0000
