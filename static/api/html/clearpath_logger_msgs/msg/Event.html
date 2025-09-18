@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>msg/Event Documentation</title>
+    <link type="text/css" rel="stylesheet" href="../../msg-styles.css" />
+  </head>
+  <body>
+    <div id="container">
+      <h1 class="msg-title"><a href="../index-msg.html">clearpath_logger_msgs</a>/msg/Event Message</h1>
+      <div class="msg">
+        <h2>File: <span class="filename">clearpath_logger_msgs/msg/Event.msg</span></h2>
+        <h2>Raw Message Definition</h2>
+        <div class="raw-msg">
+          <div class="comment-text">#</div><br>
+          <div class="comment-text"># Universal log event. Represents a single even recorded to the log</div><br>
+          <div class="comment-text">#</div><br>
+          <br>
+          <div class="comment-text"># Tag for events that include a media_path</div><br>
+          string TAG_MEDIA = media<br>
+          <br>
+          <div class="comment-text"># Tag indicating that the event&#x27;s charger status &amp; battery level have been set</div><br>
+          string TAG_POWER = power<br>
+          <br>
+          <div class="comment-text"># Tag indicating that the event&#x27;s GPS position has been set</div><br>
+          string TAG_LOCATION = location<br>
+          <br>
+          <div class="comment-text"># Tag indicating that the event&#x27;s odometry data has been set</div><br>
+          string TAG_ODOMETRY = odom<br>
+          <br>
+          <div class="comment-text"># Tag indicating that the event&#x27;s velocity data has been set</div><br>
+          string TAG_VELOCITY = vel<br>
+          <br>
+          <div class="comment-text"># Tag indicating that the event&#x27;s error/debugging data has been set</div><br>
+          string TAG_ERROR = error<br>
+          <br>
+          <div class="comment-text"># Tag indicating that this event was automatically recorded telemetry</div><br>
+          string TAG_AUTO_TELEMETRY = auto_telemetry<br>
+          <br>
+          <div class="comment-text">#</div><br>
+          <div class="comment-text"># Header &amp; general meta-data about the event</div><br>
+          <div class="comment-text">#</div><br>
+          <br>
+          <div class="comment-text"># Header</div><br>
+          <div class="comment-text"># - seq: the order of this event within its parent ExecutionLog</div><br>
+          <div class="comment-text"># - frame_id: the sensor/manipulator frame referenced by the frame_pose field</div><br>
+          <div class="comment-text"># - stamp: the time that this event occurred</div><br>
+          std_msgs/Header header<br>
+          <br>
+          <div class="comment-text">#</div><br>
+          <div class="comment-text"># Media &amp; sensor data</div><br>
+          <div class="comment-text">#</div><br>
+          <br>
+          <div class="comment-text"># If this even has media, this is its path on-disk</div><br>
+          string media_path<br>
+          <br>
+          <div class="comment-text"># If this event has media, this is its MIME type</div><br>
+          <div class="comment-text"># May be left blank</div><br>
+          string media_mime_type<br>
+          <br>
+          <div class="comment-text"># The pose of the sensor/manipulator frame given by header.frame_id relative to</div><br>
+          <div class="comment-text"># base_link</div><br>
+          geometry_msgs/Pose frame_pose<br>
+          <br>
+          <div class="comment-text">#</div><br>
+          <div class="comment-text"># Robot location, orientation, velocity</div><br>
+          <div class="comment-text">#</div><br>
+          <br>
+          <div class="comment-text"># The robot&#x27;s latitude, longitude, and heading as recorded by the GPS</div><br>
+          <div class="comment-text"># - lat: decimal degrees</div><br>
+          <div class="comment-text"># - lon: decimal degrees</div><br>
+          <div class="comment-text"># - heading: ENU orientation in radians</div><br>
+          geometry_msgs/Point lat_lon_heading<br>
+          <br>
+          <div class="comment-text"># The robot&#x27;s location relative to the odometry frame</div><br>
+          nav_msgs/Odometry odometry<br>
+          <br>
+          <div class="comment-text"># The robot&#x27;s linear &amp; angular velocity</div><br>
+          geometry_msgs/Twist velocity<br>
+          <br>
+          <div class="comment-text">#</div><br>
+          <div class="comment-text"># Power &amp; battery</div><br>
+          <div class="comment-text">#</div><br>
+          <br>
+          <div class="comment-text"># The 0-1 charge level of the battery</div><br>
+          float32 battery_percent<br>
+          <br>
+          <div class="comment-text"># True of the robot&#x27;s battery is charging, otherwise False</div><br>
+          bool charging<br>
+          <br>
+          <div class="comment-text"># True if power-saving/low-power mode is enabled, otherwise False</div><br>
+          bool power_saver<br>
+          <br>
+          <div class="comment-text">#</div><br>
+          <div class="comment-text"># Error and debugging events</div><br>
+          <div class="comment-text">#</div><br>
+          <br>
+          <div class="comment-text"># An error code indicating the type of error</div><br>
+          int32 error_code<br>
+          <br>
+          <div class="comment-text"># A diagnostic error message, or non-integer error code</div><br>
+          string error_msg<br>
+          <br>
+          <div class="comment-text"># The name of the module/process/pipeline/etc... that signalled the error</div><br>
+          string error_component<br>
+          <br>
+          <div class="comment-text">#</div><br>
+          <div class="comment-text"># Custom fields for expansion</div><br>
+          <div class="comment-text">#</div><br>
+          <br>
+          <div class="comment-text"># Arbitrary free-form tags usable to annotate custom data</div><br>
+          string[] tags<br>
+          <br>
+          <div class="comment-text"># Arbitrary JSON-formatted data that can contain user-defined fields</div><br>
+          string custom_fields_json<br>
+        </div>
+        <h2>Compact Message Definition</h2>
+        <div class="compact_definition-msg">
+          string TAG_MEDIA=media<br>
+          string TAG_POWER=power<br>
+          string TAG_LOCATION=location<br>
+          string TAG_ODOMETRY=odom<br>
+          string TAG_VELOCITY=vel<br>
+          string TAG_ERROR=error<br>
+          string TAG_AUTO_TELEMETRY=auto_telemetry<br>
+          <a href="../../std_msgs/msg/Header.html"> std_msgs/msg/Header</a> header<br>
+          string media_path<br>
+          string media_mime_type<br>
+          <a href="../../geometry_msgs/msg/Pose.html"> geometry_msgs/msg/Pose</a> frame_pose<br>
+          <a href="../../geometry_msgs/msg/Point.html"> geometry_msgs/msg/Point</a> lat_lon_heading<br>
+          <a href="../../nav_msgs/msg/Odometry.html"> nav_msgs/msg/Odometry</a> odometry<br>
+          <a href="../../geometry_msgs/msg/Twist.html"> geometry_msgs/msg/Twist</a> velocity<br>
+          float battery_percent<br>
+          boolean charging<br>
+          boolean power_saver<br>
+          int32 error_code<br>
+          string error_msg<br>
+          string error_component<br>
+          string[] tags<br>
+          string custom_fields_json<br>
+        </div>
+      </div>
+      <p class="footer">autogenerated on Jun 19 2025 15:17:06</p>
+    </div>
+  </body>
+</html>

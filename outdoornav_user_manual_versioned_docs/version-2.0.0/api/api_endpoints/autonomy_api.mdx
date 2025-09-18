@@ -1,0 +1,118 @@
+---
+title: Autonomy API Endpoints
+sidebar_label: Autonomy API
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+:::note
+
+All nodes, topics, and services are namespace prefixed with the robot serial number.
+
+If your serial number is `cpr-a300-00001`, then your namespace
+will be `a300_00001`. This can be overwritten in the [robot.yaml](../../../../docs/ros/config/yaml/overview) file.
+
+:::
+
+&nbsp;
+
+## Subscribers {#autonomy-subscribers}
+
+&nbsp;
+
+| Topic                   | Message type                                                                                                 | Description     | QoS                                           |
+| :---------------------- | :----------------------------------------------------------------------------------------------------------- | :-------------- | :-------------------------------------------- |
+| platform/cmd_vel_out | [geometry_msgs/msg/TwistStamped](https://github.com/ros2/common_interfaces/blob/jazzy/geometry_msgs/msg/TwistStamped.msg) | Continuous platform level velocity output | [System Default](/docs/ros/api/overview#system-default)  |
+| platform/odom | [nav_msgs/msg/Odometry](https://github.com/ros2/common_interfaces/blob/jazzy/nav_msgs/msg/Odometry.msg) | Platform wheel odometry | [System Default](/docs/ros/api/overview#system-default)  |
+| joy_teleop/cmd_vel | [geometry_msgs/msg/TwistStamped](https://github.com/ros2/common_interfaces/blob/jazzy/geometry_msgs/msg/TwistStamped.msg) | Velocity commands from joystick inputs | [System Default](/docs/ros/api/overview#system-default)  |
+
+&nbsp;
+
+## Publishers {#autonomy-publishers}
+
+&nbsp;
+
+| Topic                   | Message type                                                                                                 | Description     | QoS                                           |
+| :---------------------- | :----------------------------------------------------------------------------------------------------------- | :-------------- | :-------------------------------------------- |
+| autonomy/config | [clearpath_navigation_msgs/msg/AutonomyConfig](pathname:///api/html/clearpath_navigation_msgs/msg/AutonomyConfig.html) | Autonomy configuration | [System Default](/docs/ros/api/overview#system-default)  |
+| autonomy/initial_path | [nav_msgs/msg/Path](https://github.com/ros2/common_interfaces/blob/jazzy/nav_msgs/msg/Path.msg) | Initial Path computed by autonomy | [System Default](/docs/ros/api/overview#system-default)  |
+| autonomy/status | [clearpath_navigation_msgs/msg/AutonomyStatus](pathname:///api/html/clearpath_navigation_msgs/msg/AutonomyStatus.html) | Status of the autonomy | [System Default](/docs/ros/api/overview#system-default)  |
+| control_selection/current_mode | [clearpath_control_msgs/msg/ControlMode](pathname:///api/html/clearpath_control_msgs/msg/ControlMode.html) | Current control mode (NEUTRAL, MANUAL, AUTONOMY). | [System Default](/docs/ros/api/overview#system-default)  |
+| control_selection/control_state | [clearpath_control_msgs/msg/ControlSelectionState](pathname:///api/html/clearpath_control_msgs/msg/ControlSelectionState.html) | Complete state of control selection node. | [System Default](/docs/ros/api/overview#system-default)  |
+| docking/docking_server/path | [nav_msgs/msg/Path](https://github.com/ros2/common_interfaces/blob/jazzy/nav_msgs/msg/Path.msg) | Docking path |
+| docking/undocking_server/path | [nav_msgs/msg/Path](https://github.com/ros2/common_interfaces/blob/jazzy/nav_msgs/msg/Path.msg) | Undocking path |
+| goto/preview | [clearpath_navigation_msgs/msg/GoToPreview](pathname:///api/html/clearpath_navigation_msgs/msg/GoToPreview.html) | Preview points for a GoTo execution | [System Default](/docs/ros/api/overview#system-default)  |
+| localization/datum | [sensor_msgs/msg/NavSatFix](https://github.com/ros2/common_interfaces/blob/jazzy/sensor_msgs/msg/NavSatFix.msg) | Map origin (0, 0), specified as the datum | [System Default](/docs/ros/api/overview#system-default)  |
+| localization/fix | [sensor_msgs/msg/NavSatFix](https://github.com/ros2/common_interfaces/blob/jazzy/sensor_msgs/msg/NavSatFix.msg) | Platform lat/lon coordinates | [System Default](/docs/ros/api/overview#system-default)  |
+| localization/odom | [nav_msgs/msg/Odometry](https://github.com/ros2/common_interfaces/blob/jazzy/nav_msgs/msg/Odometry.msg) | Platform map coordinates | [System Default](/docs/ros/api/overview#system-default)  |
+| mission/preview | [clearpath_navigation_msgs/msg/MissionPreview](pathname:///api/html/clearpath_navigation_msgs/msg/MissionPreview.html) | Preview points for a mission execution | [System Default](/docs/ros/api/overview#system-default)  |
+| speed_limit | [clearpath_navigation_msgs/msg/GoToPreview](https://github.com/ros-navigation/navigation2/blob/main/nav2_msgs/msg/SpeedLimit.msg) | Current navigation speed limit | [System Default](/docs/ros/api/overview#system-default)  |
+| ui/heartbeat | [geometry_msgs/msg/TwistStamped](https://github.com/ros2/common_interfaces/blob/jazzy/geometry_msgs/msg/TwistStamped.msg) | Heartbeat of the UI | [System Default](/docs/ros/api/overview#system-default)  |
+| ui_teleop/cmd_vel | [geometry_msgs/msg/TwistStamped](https://github.com/ros2/common_interfaces/blob/jazzy/geometry_msgs/msg/TwistStamped.msg) | Velocity commands fron the UI joystick | [System Default](/docs/ros/api/overview#system-default)  |
+
+&nbsp;
+
+## Services {#autonomy-services}
+
+&nbsp;
+
+| Service                 | Service type                                                                                                 | Description     |
+| :---------------------- | :----------------------------------------------------------------------------------------------------------- | :-------------- |
+| autonomy/stop | [std_srvs/srv/Trigger](https://docs.ros2.org/foxy/api/std_srvs/srv/Trigger.html) | Stop all autonomy executions |
+| control_selection/set_mode | [clearpath_control_msgs/srv/SetControlMode](pathname:///api/html/clearpath_control_msgs/srv/SetControlMode.html) | Set the control mode |
+| control_selection/pause | [std_srvs/srv/SetBool](https://docs.ros2.org/foxy/api/std_srvs/srv/SetBool.html) | Pause execution |
+| control_selection/resume | [std_srvs/srv/SetBool](https://docs.ros2.org/foxy/api/std_srvs/srv/SetBool.html) | Resume execution |
+| docking/dock_manager/add_dock | [clearpath_dock_msgs/srv/AddDock](pathname:///api/html/clearpath_dock_msgs/srv/AddDock.html) | Add a dock |
+| docking/dock_manager/clear_data | [std_srvs/srv/Trigger](https://docs.ros2.org/foxy/api/std_srvs/srv/Trigger.html) | Clear all dock data |
+| docking/dock_manager/delete_dock | [clearpath_dock_msgs/srv/RemoveDock](pathname:///api/html/clearpath_dock_msgs/srv/RemoveDock.html) | Delete a dock |
+| docking/dock_manager/export | [clearpath_dock_msgs/srv/ExportData](pathname:///api/html/clearpath_dock_msgs/srv/ExportData.html) | Export dock data |
+| docking/dock_manager/get_database | [clearpath_dock_msgs/srv/GetDockDatabase](pathname:///api/html/clearpath_dock_msgs/srv/GetDockDatabase.html) | Returns the entire dock database |
+| docking/dock_manager/get_dock | [clearpath_dock_msgs/srv/GetDock](pathname:///api/html/clearpath_dock_msgs/srv/GetDock.html) | Returns a docks info  |
+| docking/dock_manager/import | [clearpath_dock_msgs/srv/ImportData](pathname:///api/html/clearpath_dock_msgs/srv/ImportData.html) | Import a dock |
+| docking/dock_manager/update_dock | [clearpath_dock_msgs/srv/UpdateDock](pathname:///api/html/clearpath_dock_msgs/srv/UpdateDock.html) | Update a docks information |
+| docking/dock_localizer/add_dock_current_pose| [clearpath_dock_msgs/srv/AddDockCurrentPose](pathname:///api/html/clearpath_dock_msgs/srv/AddDockCurrentPose.html) | Add a dock with the current pose |
+| docking/dock_localizer/get_dock_poses| [clearpath_dock_msgs/srv/GetDockPoses](pathname:///api/html/clearpath_dock_msgs/srv/GetDockPoses.html) | Return the dock and predock poses of a specific dock |
+| docking/dock_localizer/survey_dock| [clearpath_dock_msgs/srv/SurveyDock](pathname:///api/html/clearpath_dock_msgs/srv/SurveyDock.html) | Survey the docks position |
+| localization/lat_lon_to_xy | [clearpath_localization_msgs/srv/ConvertLatLonToCartesian](pathname:///api/html/clearpath_localization_msgs/srv/ConvertLatLonToCartesian.html) | Convert lat/lon condinate to map XY coordinate |
+| localization/lat_lon_to_xy_array | [clearpath_localization_msgs/srv/ConvertLatLonToCartesianArray](pathname:///api/html/clearpath_localization_msgs/srv/ConvertLatLonToCartesianArray.html) | Convert a set of lat/lon coordinates to map XY coordinates |
+| localization/set_datum | [clearpath_localization_msgs/srv/SetDatum](pathname:///api/html/clearpath_localization_msgs/srv/SetDatum.html) | Set the datum |
+| localization/xy_to_lat_lon | [clearpath_localization_msgs/srv/ConvertCartesianToLatLon](pathname:///api/html/clearpath_localization_msgs/srv/ConvertCartesianToLatLon.html) | Convert map XY coordinate to lat/lon coordinate |
+| localization/xy_to_lat_lon_array | [clearpath_localization_msgs/srv/ConvertCartesianToLatLonArray](pathname:///api/html/clearpath_localization_msgs/srv/ConvertCartesianToLatLonArray.html) | Convert a set of map XY coordinates to lat/lon coordinates |
+| log_manager/delete_log | [clearpath_logger_msgs/srv/DeleteLog](pathname:///api/html/clearpath_logger_msgs/srv/DeleteLog.html) | Delete a secific log |
+| log_manager/start_recording | [std_srvs/srv/Trigger](https://docs.ros2.org/foxy/api/std_srvs/srv/Trigger.html) | Start logging data |
+| log_manager/stop_recording | [std_srvs/srv/Trigger](https://docs.ros2.org/foxy/api/std_srvs/srv/Trigger.html) | Stop logging data |
+| safety/watchdogs/add_communication_watchdog | [clearpath_safety_msgs/srv/AddCommunicationWatchdog](pathname:///api/html/clearpath_safety_msgs/srv/AddCommunicationWatchdog.html) | Create a new Communication watchdog |
+| safety/watchdogs/add_heartbeat_watchdog | [clearpath_safety_msgs/srv/AddHeartbeatWatchdog](pathname:///api/html/clearpath_safety_msgs/srv/AddHeartbeatWatchdog.html) | Create a new Heartbeat watchdog |
+| safety/watchdogs/add_inclination_watchdog | [clearpath_safety_msgs/srv/AddInclinationWatchdog](pathname:///api/html/clearpath_safety_msgs/srv/AddInclinationWatchdog.html) | Create a new Inclination watchdog |
+| safety/watchdogs/add_num_points_watchdog | [clearpath_safety_msgs/srv/AddNumPointsWatchdog](pathname:///api/html/clearpath_safety_msgs/srv/AddNumPointsWatchdog.html) | Create a new NumPoints watchdog |
+| safety/watchdogs/add_odom_covariance_watchdog | [clearpath_safety_msgs/srv/AddOdomCovarianceWatchdog](pathname:///api/html/clearpath_safety_msgs/srv/AddOdomCovarianceWatchdog.html) | Create a new OdomCovariance watchdog |
+| safety/watchdogs/add_rtk_fix_watchdog | [clearpath_safety_msgs/srv/AddRtkFixWatchdog](pathname:///api/html/clearpath_safety_msgs/srv/AddRtkFixWatchdog.html) | Create a new RTKFix watchdog |
+| safety/watchdogs/add_topic_data_watchdog | [clearpath_safety_msgs/srv/AddTopicDataWatchdog](pathname:///api/html/clearpath_safety_msgs/srv/AddTopicDataWatchdog.html) | Create a new TopicData watchdog |
+| safety/watchdogs/add_trigger_watchdog | [clearpath_safety_msgs/srv/AddTriggerWatchdog](pathname:///api/html/clearpath_safety_msgs/srv/AddTriggerWatchdog.html) | Create a new Trigger watchdog |
+| safety/watchdogs/enable_all | [std_srvs/srv/SetBool](https://docs.ros2.org/foxy/api/std_srvs/srv/SetBool.html) | Enable/disable all watchdogs |
+| safety/watchdogs/remove_watchdog | [clearpath_safety_msgs/srv/RemoveWatchdog](pathname:///api/html/clearpath_safety_msgs/srv/RemoveWatchdog.html) | Remove/delete a watchdog |
+| safety/watchdogs/update_communication_watchdog | [clearpath_safety_msgs/srv/UpdateCommunicationWatchdog](pathname:///api/html/clearpath_safety_msgs/srv/UpdateCommunicationWatchdog.html) | Create a new Communication watchdog |
+| safety/watchdogs/update_heartbeat_watchdog | [clearpath_safety_msgs/srv/UpdateHeartbeatWatchdog](pathname:///api/html/clearpath_safety_msgs/srv/UpdateHeartbeatWatchdog.html) | Create a new Heartbeat watchdog |
+| safety/watchdogs/update_inclination_watchdog | [clearpath_safety_msgs/srv/UpdateInclinationWatchdog](pathname:///api/html/clearpath_safety_msgs/srv/UpdateInclinationWatchdog.html) | Create a new Inclination watchdog |
+| safety/watchdogs/update_num_points_watchdog | [clearpath_safety_msgs/srv/UpdateNumPointsWatchdog](pathname:///api/html/clearpath_safety_msgs/srv/UpdateNumPointsWatchdog.html) | Create a new NumPoints watchdog |
+| safety/watchdogs/update_odom_covariance_watchdog | [clearpath_safety_msgs/srv/UpdateOdomCovarianceWatchdog](pathname:///api/html/clearpath_safety_msgs/srv/UpdateOdomCovarianceWatchdog.html) | Create a new OdomCovariance watchdog |
+| safety/watchdogs/update_rtk_fix_watchdog | [clearpath_safety_msgs/srv/UpdateRtkFixWatchdog](pathname:///api/html/clearpath_safety_msgs/srv/UpdateRtkFixWatchdog.html) | Create a new RTKFix watchdog |
+| safety/watchdogs/update_topic_data_watchdog | [clearpath_safety_msgs/srv/UpdateTopicDataWatchdog](pathname:///api/html/clearpath_safety_msgs/srv/UpdateTopicDataWatchdog.html) | Create a new TopicData watchdog |
+| safety/watchdogs/update_trigger_watchdog | [clearpath_safety_msgs/srv/UpdateTriggerWatchdog](pathname:///api/html/clearpath_safety_msgs/srv/UpdateTriggerWatchdog.html) | Create a new Trigger watchdog |
+
+&nbsp;
+
+## Actions {#autonomy-actions}
+
+&nbsp;
+
+| Action Name                   | Action type                                                                                                 | Description     |
+| :---------------------- | :----------------------------------------------------------------------------------------------------------- | :-------------- |
+| autonomy/network_mission | [clearpath_navigation_msgs/action/ExecuteNetworkMissionByUuid](pathname:///api/html/clearpath_navigation_msgs/action/ExecuteNetworkMissionByUuid.html) | Execute an autonomous mission |
+| autonomy/network_mission_from_goal | [clearpath_navigation_msgs/action/ExecuteNetworkMissionFromGoal](pathname:///api/html/clearpath_navigation_msgs/action/ExecuteNetworkMissionFromGoal.html) | Execute an autonomous mission, starting from a specific goal |
+| autonomy/network_goto | [clearpath_navigation_msgs/action/ExecuteNetworkGoTo](pathname:///api/html/clearpath_navigation_msgs/action/ExecuteNetworkGoTo.html) | Send platform to location  |
+| autonomy/network_goto_poi | [clearpath_navigation_msgs/action/ExecuteNetworkGoToPOI](pathname:///api/html/clearpath_navigation_msgs/action/ExecuteNetworkGoToPOI.html) | Send platform to a point of interest |
+| autonomy/local_dock | [clearpath_dock_msgs/action/Dock](pathname:///api/html/clearpath_dock_msgs/action/Dock.html) | Dock the platform (charge target must be visible by platform 2D lidar sensor) |
+| autonomy/local_undock | [clearpath_dock_msgs/action/Undock](pathname:///api/html/clearpath_dock_msgs/action/Undock.html) | Undock the platform (charge target must be visible by the 2D lidar sensor) |
+| autonomy/network_dock | [clearpath_dock_msgs/action/NetworkDock](pathname:///api/html/clearpath_dock_msgs/action/NetworkDock.html) | Send robot to charger (charger must be in the driveable space of the map) |

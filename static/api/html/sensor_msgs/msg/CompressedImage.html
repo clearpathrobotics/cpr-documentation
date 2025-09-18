@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>msg/CompressedImage Documentation</title>
+    <link type="text/css" rel="stylesheet" href="../../msg-styles.css" />
+  </head>
+  <body>
+    <div id="container">
+      <h1 class="msg-title"><a href="../index-msg.html">sensor_msgs</a>/msg/CompressedImage Message</h1>
+      <div class="msg">
+        <h2>File: <span class="filename">sensor_msgs/msg/CompressedImage.msg</span></h2>
+        <h2>Raw Message Definition</h2>
+        <div class="raw-msg">
+          <div class="comment-text"># This message contains a compressed image.</div><br>
+          <br>
+          <div class="comment-text">#std_msgs/Header header # Header timestamp should be acquisition time of image</div><br>
+          <div class="comment-text">#                             # Header frame_id should be optical frame of camera</div><br>
+          <div class="comment-text">#                             # origin of frame should be optical center of cameara</div><br>
+          <div class="comment-text">#                             # +x should point to the right in the image</div><br>
+          <div class="comment-text">#                             # +y should point down in the image</div><br>
+          <div class="comment-text">#                             # +z should point into to plane of the image</div><br>
+          <br>
+          <div class="comment-text">#string format                # Specifies the format of the data</div><br>
+          <div class="comment-text">#                             # Acceptable values differ by the image transport used:</div><br>
+          <div class="comment-text">#                             # - compressed_image_transport:</div><br>
+          <div class="comment-text">#                             #     ORIG_PIXFMT; CODEC compressed [COMPRESSED_PIXFMT]</div><br>
+          <div class="comment-text">#                             #   where:</div><br>
+          <div class="comment-text">#                             #   - ORIG_PIXFMT is pixel format of the raw image, i.e.</div><br>
+          <div class="comment-text">#                             #     the content of sensor_msgs/Image/encoding with</div><br>
+          <div class="comment-text">#                             #     values from include/sensor_msgs/image_encodings.h</div><br>
+          <div class="comment-text">#                             #   - CODEC is one of [jpeg, png, tiff]</div><br>
+          <div class="comment-text">#                             #   - COMPRESSED_PIXFMT is only appended for color images</div><br>
+          <div class="comment-text">#                             #     and is the pixel format used by the compression</div><br>
+          <div class="comment-text">#                             #     algorithm. Valid values for jpeg encoding are:</div><br>
+          <div class="comment-text">#                             #     [bgr8, rgb8]. Valid values for png encoding are:</div><br>
+          <div class="comment-text">#                             #     [bgr8, rgb8, bgr16, rgb16].</div><br>
+          <div class="comment-text">#                             #   If the field is empty or does not correspond to the</div><br>
+          <div class="comment-text">#                             #   above pattern, the image is treated as bgr8 or mono8</div><br>
+          <div class="comment-text">#                             #   jpeg image (depending on the number of channels).</div><br>
+          <div class="comment-text">#                             # - compressed_depth_image_transport:</div><br>
+          <div class="comment-text">#                             #     ORIG_PIXFMT; compressedDepth CODEC</div><br>
+          <div class="comment-text">#                             #   where:</div><br>
+          <div class="comment-text">#                             #   - ORIG_PIXFMT is pixel format of the raw image, i.e.</div><br>
+          <div class="comment-text">#                             #     the content of sensor_msgs/Image/encoding with</div><br>
+          <div class="comment-text">#                             #     values from include/sensor_msgs/image_encodings.h</div><br>
+          <div class="comment-text">#                             #     It is usually one of [16UC1, 32FC1].</div><br>
+          <div class="comment-text">#                             #   - CODEC is one of [png, rvl]</div><br>
+          <div class="comment-text">#                             #   If the field is empty or does not correspond to the</div><br>
+          <div class="comment-text">#                             #   above pattern, the image is treated as png image.</div><br>
+          <div class="comment-text">#                             # - Other image transports can store whatever values they</div><br>
+          <div class="comment-text">#                             #   need for successful decoding of the image. Refer to</div><br>
+          <div class="comment-text">#                             #   documentation of the other transports for details.</div><br>
+          <br>
+          <div class="comment-text">#uint8[] data                 # Compressed image buffer</div><br>
+        </div>
+        <h2>Compact Message Definition</h2>
+        <div class="compact_definition-msg">
+          <a href="../../std_msgs/msg/Header.html"> std_msgs/msg/Header</a> header<br>
+          string format<br>
+          uint8[] data<br>
+        </div>
+      </div>
+      <p class="footer">autogenerated on Jun 19 2025 15:17:06</p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,164 @@
+---
+title: Using the API
+sidebar_label: Using the API
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+:::note
+
+All action names and service names are namespace prefixed with the robot serial number.
+
+:::
+
+
+## Commanding the Robot
+
+To command a robot, we provide action interfaces that are defined in our Autonomy API.
+Below, are the `action_name`, `action_type`, and `pkg_name` for each required action.
+The user is then able to write their own C++ or Python action client using this
+information.
+
+### Start a mission
+
+| | |
+| :---------------------- | :--------------|
+| `action_name` | autonomy/network_mission |
+| `pkg_name` | clearpath_navigation_msgs |
+| `action_type` | ExecuteNetworkMissionByUuid |
+
+### Start a Mission from a specific goal
+
+| | |
+| :---------------------- | :--------------|
+| `action_name` | autonomy/network_mission_from_goal |
+| `pkg_name` | clearpath_navigation_msgs |
+| `action_type` | ExecuteNetworkMissionFromGoal |
+
+
+### Send the robot to a location in the map
+
+| | |
+| :---------------------- | :--------------|
+| `action_name` | autonomy/network_goto |
+| `pkg_name` | clearpath_navigation_msgs |
+| `action_type` | ExecuteNetworkGoTo |
+
+### Send the robot to a point of interest (POI)
+
+| | |
+| :---------------------- | :--------------|
+| `action_name` | autonomy/network_goto_poi |
+| `pkg_name` | clearpath_navigation_msgs |
+| `action_type` | ExecuteNetworkGoToPOI |
+
+## Docking the robot
+
+### Local docking
+
+| | |
+| :---------------------- | :--------------|
+| `action_name` | autonomy/local_dock |
+| `pkg_name` | clearpath_navigation_msgs |
+| `action_type` | Dock |
+
+### Local undocking
+
+| | |
+| :---------------------- | :--------------|
+| `action_name` | autonomy/local_undock |
+| `pkg_name` | clearpath_navigation_msgs |
+| `action_type` | Undock |
+
+`action_name`: autonomy/local_undock
+
+`pkg_name`: clearpath_dock_msgs
+
+`action_type`: Undock
+
+### Network docking
+
+| | |
+| :---------------------- | :--------------|
+| `action_name` | autonomy/network_dock |
+| `pkg_name` | clearpath_navigation_msgs |
+| `action_type` | NetworkDock |
+
+## Navigation Control
+
+### Pause navigation
+
+| | |
+| :---------------------- | :--------------|
+| `service_name` | control_selection/pause |
+| `pkg_name` | std_srvs |
+| `service_type` | SetBool |
+
+### Resume navigation
+
+| | |
+| :---------------------- | :--------------|
+| `service_name` | control_selection/resume |
+| `pkg_name` | std_srvs |
+| `service_type` | SetBool |
+
+### Stop all autonomy actions
+
+| | |
+| :---------------------- | :--------------|
+| `service_name` | autonomy/stop|
+| `pkg_name` | std_srvs |
+| `service_type` | Trigger |
+
+## [Action Client (C++)](https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Writing-an-Action-Server-Client/Cpp.html#writing-an-action-client)
+```cpp
+#include "action_tutorials_interfaces/action/fibonacci.hpp"
+
+#include "rclcpp/rclcpp.hpp"
+#include "rclcpp_action/rclcpp_action.hpp"
+#include "rclcpp_components/register_node_macro.hpp"
+
+...
+  using <action_type> = action_tutorials_interfaces::action::<action_type>;
+  using GoalHandle<action_type> = rclcpp_action::ClientGoalHandle<action_type>;   
+
+...
+    this->client_ptr_ = rclcpp_action::create_client<<action_type>>(
+      this, <action_name>);
+
+...
+    auto goal_msg = <action_type>::Goal();
+    auto send_goal_options = rclcpp_action::Client<<action_type>>::SendGoalOptions();
+
+...
+    this->client_ptr_->async_send_goal(goal_msg, send_goal_options);
+```
+
+## [Action Client (Python)](https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Writing-an-Action-Server-Client/Py.html#writing-an-action-client)
+
+```python
+from <pkg_name>.action import <action_type>
+
+...
+
+        self._action_client = ActionClient(self, <action_type>, <action_name>)
+
+...
+        goal_msgs = <action_type>.Goal()
+        self._action_client.wait_for_server()
+        self._action_client.send_goal_async(goal_msg)
+```
+
+
+## Terminal Command-line
+
+In order to command the robot from the command-line, you will need to run the
+following command, where the `--feedack` argument will allow the user to view
+the action feedbacks message:
+
+```bash
+ros2 action send_goal <action_name> <action_type> <values> --feedback
+```
+
+The `values` are based on the actions message type.
