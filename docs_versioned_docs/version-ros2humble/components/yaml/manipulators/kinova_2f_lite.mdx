@@ -1,3 +1,5 @@
+import KinovaCommon from "/docs_versioned_docs/version-ros2humble/components/yaml/manipulators/kinova_common.mdx";
+
 <table>
 <tr>
 <td>
@@ -27,11 +29,11 @@ manipulators:
 </tr>
 </table>
 
-#### Package and Setup
+<details>
+<summary>Kinova 2F Lite Gripper Setup</summary>
 :::note
 The Kinova 2F Lite gripper is the standard gripper on the Kinova Gen3 Lite. It is controlled via the arm's hardware interface and therefore, does not need its own controller.
 :::
-The Kinova 2F Lite gripper uses the `kortex_description` and `kortex_driver` ROS 2 Packages. The driver is open source, maintained by Kinova Robotics, and hosted on [GitHub](https://github.com/Kinovarobotics/ros2_kortex).
+<KinovaCommon/>
 
-For more specifics on the way Clearpath's configuration system adds the manipulator to the robot description, see the Kinova 2F Lite gripper [description file](https://github.com/clearpathrobotics/clearpath_common/blob/humble/clearpath_manipulators_description/urdf/gripper/kinova_2f_lite.urdf.xacro) in `clearpath_manipulators_description`.
-
+</details>

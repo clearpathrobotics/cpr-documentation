@@ -12,7 +12,8 @@ import Kinova2FLite from "/docs_versioned_docs/version-ros2humble/components/yam
 import Robotiq2F85 from "/docs_versioned_docs/version-ros2humble/components/yaml/manipulators/robotiq_2f_85.mdx";
 import Robotiq2F140 from "/docs_versioned_docs/version-ros2humble/components/yaml/manipulators/robotiq_2f_140.mdx";
 import UniversalRobots from "/docs_versioned_docs/version-ros2humble/components/yaml/manipulators/universal_robots.mdx";
-
+import Franka from "/docs_versioned_docs/version-ros2humble/components/yaml/manipulators/franka.mdx";
+import FrankaGripper from "/docs_versioned_docs/version-ros2humble/components/yaml/manipulators/franka_gripper.mdx";
 
 Manipulators include all robotic arms and grippers. Unlike sensors, manipulators are not controlled by external drivers. Instead, a hardware controller must be loaded into the controller manager to handle the joint interface to move the specific manipulator joints.
 
@@ -20,27 +21,45 @@ Additionally, MoveIt! must be launched to plan paths and move manipulators to a 
 
 Every arm can have at most one gripper, and grippers can only be added to an existing arm. This way, depending on the arm and the gripper, the configuration system can determine whether the arm handles communication with the gripper or whether it must be done through an external connection directly to the robot computer.
 
-## Kinova Arms {#kinova-arms}
+# Arms
+
+## Kinova Gen3 Lite {#kinova-gen3-lite}
 <KinovaGen3Lite/>
 <br/>
 
+## Kinova Gen3 6DoF {#kinova-gen3-6dof}
 <KinovaGen36Dof/>
 <br/>
 
+## Kinova Gen3 7DoF {#kinova-gen3-7dof}
 <KinovaGen37Dof/>
-<br/>
-
-## Kinova Grippers {#kinova-grippers}
-<Kinova2FLite/>
-<br/>
-
-## Robotiq Grippers {#robotiq-grippers}
-<Robotiq2F85/>
-<br/>
-
-<Robotiq2F140/>
 <br/>
 
 ## Universal Robots {#universal-robots}
 <UniversalRobots/>
 <br/>
+
+## Franka {#franka}
+<Franka/>
+<br/>
+
+# Grippers
+
+## Kinova 2F Lite {#kinova-2f-lite}
+<Kinova2FLite/>
+<br/>
+
+## Robotiq 2F 85 {#robotiq-2F-85}
+<Robotiq2F85/>
+<br/>
+
+## Robotiq 2F 140 {#robotiq-2F-140}
+<Robotiq2F140/>
+<br/>
+
+## Franka Hand {#franka-hand}
+<FrankaGripper/>
+<br/>
+
+# Lifts
+
