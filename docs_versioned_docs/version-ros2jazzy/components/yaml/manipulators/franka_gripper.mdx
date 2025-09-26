@@ -1,0 +1,38 @@
+<table>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("./img/franka_gripper.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+manipulators:
+  moveit:
+    enable: false
+  arms:
+    - model: franka
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      arm_id: fr3
+      robot_ip: 192.168.131.40
+      gripper:
+        model: franka_gripper
+```
+</td>
+</tr>
+</table>
+
+<details>
+<summary>Franka Gripper Setup</summary>
+
+### Package and Setup
+The Franka grippers can only be used with the Franka arms and have the same dependencies. They use the `franka_description` and `franka_ros2` ROS 2 packages abd the `libfranka` SDK. The description and driver are open source, maintained by Franka Robotics, and hosted on GitHub. Refer to the [description repository](https://github.com/frankarobotics/franka_description), [driver repository](https://github.com/frankarobotics/franka_ros2), and [SDK repository](https://github.com/frankarobotics/libfranka). Follow the [instructions in the driver repository's README](https://github.com/frankarobotics/franka_ros2/blob/humble/README.md#franka-ros-2-dependencies-setup) to build the Franka packages in a workspace.
+
+For more specifics on the way Clearpath's configuration system adds the arm to the robot description, see the [description file](https://github.com/clearpathrobotics/clearpath_common/blob/humble/clearpath_manipulators_description/urdf/arm/franka.urdf.xacro). Note, all parameters to the `xacro:macro franka` can be passed through the `robot.yaml` entry above. For examples, read the sections below.
+
+</details>
