@@ -12,11 +12,12 @@ Despite all current customization options, we still would like our users to be a
 Extras have the following entries:
 
 - **urdf:**
-  - **package:** name of the ROS 2 package that contains the extras URDF (optional).
   - **path:** relative path within the package or absolute path to robot extras URDF
-- **launch:**
-  - **package:** name of the ROS 2 package that contains the extras launch file (optional).
+  - **package:** name of the ROS 2 package that contains the extras URDF (optional)
+- **launch:** a list of objects containing
   - **path:** relative path within the package or absolute path to robot extras launch file
+  - **package:** name of the ROS 2 package that contains the extras launch file (optional)
+  - **args:** launch arguments to pass to the launch file when it is started (optional)
 - **ros_parameters:** in YAML to pass in parameters to platform nodes. This is useful to change parameters such as the robot's velocity and acceleration.
 
 ```yaml
@@ -25,8 +26,8 @@ extras:
     package: package_name
     path: relative/path/to/urdf/in/package.urdf.xacro # or can contain /absolute/path/to/urdf.urdf.xacro
   launch:
-    package: package_name
-    path: relative/path/to/launch/in/package.launch.py
+    - package: package_name
+      path: relative/path/to/launch/in/package.launch.py
   ros_parameters: {} # node parameters, see below
 ```
 
@@ -132,8 +133,48 @@ The robot's URDF will now include the antenna, as shown in the image below:
 
 ## Extras Launch
 
-If an `extras.launch` is specified, it is launched as part of the `clearpath-platform-extras.service` job. To check the status
-of the extras launch, run
+The launch files specified in this section are started as part of the `clearpath-platform-extras.service` job. Each launch file can be specified either as an absolute path or as a relative path within a package. Additionally, launch arguments may be specified with the `args` field:
+
+```yaml
+platform:
+  extras:
+    launch:
+      - path: /absolute/path/to/some/file.launch.py
+      - path: launch/my_launch_file.launch.py
+        package: my_package
+      - path: launch/my_launch_with_args.launch.py
+        package: my_other_package
+        args:
+          spam: eggs
+          foo: bar
+```
+
+The three launches above are equivalent to the following command-line invocations:
+
+```bash
+ros2 launch /absolute/path/to/some/file.launch.py
+
+ros2 launch my_package launch/my_launch_file.launch.py
+
+ros2 launch my_other_package launch/my_launch_with_args.launch.py spam:=eggs foo:=bar
+```
+
+:::note
+
+In `2.7.x` and earlier `extras.launch` only supported a single launch file:
+
+```yaml
+platform:
+  extras:
+    path: launch/my_launch_file.launch.py
+    package: my_package
+```
+
+If your `robot.yaml` file contains the old format you will see a deprecation notice. We recommend updating your `robot.yaml` to the new format by converting `extras.launch` to a list.
+
+:::
+
+To check the status of the extras launch, run
 
 ```bash
 systemctl status clearpath-platform-extras.service

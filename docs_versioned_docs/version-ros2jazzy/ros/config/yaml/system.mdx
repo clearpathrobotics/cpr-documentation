@@ -121,6 +121,30 @@ servers:
     enabled: True
 ```
 
+## Bash Environment
+
+Some ROS nodes may expect additional environment variables to be set. Instead of setting these system-wide, you may instead use the `system.bash` section to define additional environment variables or source additional bash files _before_ any ROS nodes are started by the Clearpath systemd jobs.
+
+```yaml
+system:
+  bash:
+    source:
+      - /path/to/some_config.bash
+      - /path/to/another_setup.bash
+    env:
+      ADDITIONAL_ENVAR: spam
+      ANOTHER_ENVAR: eggs
+```
+
+This example will include the following in the generated `setup.bash` file used by all Clearpath systemd jobs:
+
+```bash
+source /path/to/some_config.bash
+source /path/to/another_setup.bash
+export ADDITIONAL_ENVAR="spam"
+export ANOTHER_ENVAR="eggs"
+```
+
 ## Sample
 
 <details>
