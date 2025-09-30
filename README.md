@@ -133,14 +133,14 @@ Follow the steps for the OutdoorNav User Manual workflow above, replacing
 
 </details>
 
-## Workflow for publishing Robots / ROS User Manual updates
+## Workflow for publishing Software User Manual updates
 
 <details>
 
-<summary>Click to expand for details on how to update the Robots / ROS User Manual</summary>
+<summary>Click to expand for details on how to update the Software User Manual</summary>
 
 <br>
-The Robots / ROS sections of the website are a "versioned" document called <code>docs</code>, which means that a snapshot of the content is
+The Software sections of the website are a "versioned" document called <code>docs</code>, which means that a snapshot of the content is
 made to align with each ROS version. This allows users to access version-specific copies of the
 documentation.
 
