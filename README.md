@@ -513,3 +513,33 @@ Even though the font size has been modified, the rendered diagram's font may not
   `}
 />
 ```
+
+## Spelling Guide
+
+Spelling on within this repository should align with the Government of Canada's [TERMIUM Plus®](https://www.btb.termiumplus.gc.ca/).
+Industry terms should align with the related organization's preferred spelling.
+
+<details>
+  <summary>Click to expand spelling examples</summary>
+  <table>
+    <tr><th>Correct spelling</th><th>Mistake</th></tr>
+    <tr><th>10</th><th>Ten</th></tr>
+    <tr><th>2X</th><th>2x</th></tr>
+    <tr><th>Aluminum</th><th>Aluminium</th></tr>
+    <tr><th>Antennas</th><th>Antennae</th></tr>
+    <tr><th>Antennas</th><th>Aerial</th></tr>
+    <tr><th>AWS, or Amazon Web Services</th><th>Amazon AWS</th></tr>
+    <tr><th>Colour</th><th>Color</th></tr>
+    <tr><th>Computer</th><th>PC</th></tr>
+    <tr><th>Enable Switch</th><th>Deadman Switch</th></tr>
+    <tr><th>Emergency Stop</th><th>E-stop</th></tr>
+    <tr><th>GitHub</th><th>Github</th></tr>
+    <tr><th>Lidar</th><th>LiDAR</th></tr>
+    <tr><th>Metre</th><th>Meter</th></tr>
+    <tr><th>ROS 2</th><th>ROS2</th></tr>
+    <tr><th>RViz</th><th>Rviz</th></tr>
+    <tr><th>Gmapping</th><th>gmapping</th></tr>
+    <tr><th>Tire</th><th>Tyre</th></tr>
+    <tr><th>Wi-Fi</th><th>wifi</th></tr>
+  </table>
+</details>
