@@ -217,7 +217,7 @@ includeCurrentVersion: false,
     HTML commenting—`<!-- -->`—causes issues with the MDX extension in VS Code.
 2.  Refer to [Docusaurus's guide](https://docusaurus.io/docs/next/markdown-features) for supported Markdown features.
 3.  For advanced users, refer to [Markdown MDX](https://mdxjs.com/) for adding React Components to a Markdown file.
-4.  for advanced users, you may create React pages using _.js_ or _.ts_ file types.
+4.  For advanced users, you may create React pages using _.js_ or _.ts_ file types.
 
 ## How should I name files?
 
