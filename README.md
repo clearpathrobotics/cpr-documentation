@@ -129,7 +129,7 @@ When it is time to publish a numbered release of the user manual:
 
 <br>
 Follow the steps for the OutdoorNav User Manual workflow above, replacing
-**outdoornav** with **indoornav**.
+<b>outdoornav</b> with <b>indoornav</b>.
 
 </details>
 
