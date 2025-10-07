@@ -24,19 +24,7 @@ Make sure you have installed the simulator before starting this tutorial. Take a
 
 ## Launching SLAM
 
-:::note
-
-When using the simulation, it is important to add `use_sim_time:=true` to the Nav2, SLAM, and
-Localization launch files. When using a physical robot, either omit `use_sim_time` or set it
-to `false`.
-
-:::
-
-To start SLAM, [follow the steps](nav2.mdx#launching-the-simulation-and-nav2) described in the Nav2
-startup. When you get to step 4, run
-```bash
-ros2 launch clearpath_nav2_demos slam.launch.py use_sim_time:=true
-```
+See [launch instructions](nav2) for instructions on how to launch SLAM.
 
 ### Building the map
 
