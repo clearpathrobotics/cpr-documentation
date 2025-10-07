@@ -51,7 +51,7 @@ The message is divided into 3 parts:
 * the result (what the robot sends back to us when the action completes), and
 * feedback (what the robot sends to us while the action is still in-progress).
 
-## Determine the goal location {#goal-position}
+### Determine the goal location {#goal-position}
 
 First we must determine where we want the robot to drive to. The easiest way to do this is to
 use the [publish point](nav2.mdx#publish-point) tool.
@@ -89,7 +89,7 @@ These alternate ways to determine the robot's goal are outside the scope of this
 
 :::
 
-## Determine the goal orientation {#goal-orientation}
+### Determine the goal orientation {#goal-orientation}
 
 The `navigate_to_pose` action requires a `PoseStamped` object. A `Pose` in ROS consists of an
 XYZ location in space and a [**Quaternion**](https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Tf2/Quaternion-Fundamentals.html)
@@ -144,7 +144,7 @@ $$Z = sin(\frac{\theta}{2})$$
 
 $$W = cos(\frac{\theta}{2})$$
 
-## Sending the Action Goal
+### Sending the Action Goal
 
 :::tip
 

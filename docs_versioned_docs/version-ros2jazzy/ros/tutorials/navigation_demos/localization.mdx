@@ -21,6 +21,8 @@ Make sure you have installed the simulator before starting this tutorial. Take a
 
 ## Launching Localization
 
+See [Launching Nav2](nav2) for instructions on launching localization
+
 :::note
 
 When using the simulation, it is important to add `use_sim_time:=true` to the Nav2, SLAM, and
@@ -29,16 +31,30 @@ to `false`.
 
 :::
 
-To start localization using [AMCL](https://docs.nav2.org/configuration/packages/configuring-amcl.html)
-[follow the steps](nav2.mdx#launching-the-simulation-and-nav2) described in the Nav2
-startup. When you get to step 4, run
-```bash
-ros2 launch clearpath_nav2_demos localization.launch.py use_sim_time:=true
-```
+## Setting the 2D Pose Estimate
 
-The default map used by `localization.launch.py` is a
-[map](https://github.com/clearpathrobotics/clearpath_nav2_demos/blob/jazzy/maps/warehouse.yaml) of the simulated warehouse world.
-If you are using a custom map, pass it in with the `map` launch argument:
-```bash
-ros2 launch clearpath_nav2_demos localization.launch.py use_sim_time:=true map:=/path/to/my/map.yaml
-```
+When starting localization, the robot will be `lost` -- no transform from `base_link` to the `map` frame will be published.
+To fix this you must manually set an initial 2D pose estimate.
+
+The **2D Pose Estimate** tool in Rviz allows you to provide Nav2 with the robot's approximate initial position on the map.
+This is a necessary step before you can navigate with the robot.
+This step connects the `map` frame to the rest of the robot's TF tree.
+
+To set the robot's initial position, click and hold the mouse button on the map in the robot's approximate location.
+While holding the left mouse button, drag the green arrow to set the robot's orientation. Releasing the left
+mouse button will set the robot's position and orientation relative to the `map` frame.
+
+If you are using SLAM and there is no map yet, simply click on the centre of the screen and drag up.
+
+Once you have set the robot's initial pose you should see red markers representing the lidar data as well
+as coloured gradients indicating collision zones around walls and obstacles.
+
+<center>
+  <figure>
+    <img
+      src={require("./img/pose_estimate.gif").default}
+      width="900"
+    />
+    <figcaption>Setting the initial pose estimate</figcaption>
+  </figure>
+</center>

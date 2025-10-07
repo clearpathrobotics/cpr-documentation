@@ -1,6 +1,6 @@
 ---
-title: Nav2
-sidebar_label: Nav2
+title: Launching Navigation
+sidebar_label: Launching Nav2
 sidebar_position: 2
 toc_min_heading_level: 2
 toc_max_heading_level: 5
@@ -18,128 +18,165 @@ to `false`.
 
 :::
 
-## Launching the simulation and Nav2
+:::note
 
-**1.** Move the `robot.yaml` file to your setup folder (`$HOME/clearpath` by default for the simulation or `/etc/clearpath/robot.yaml` on a physical robot).
+Clearpath's Nav2 demos are written to support 2D lidars. If your robot has a 3D lidar on it, you can use the
+[3d lidar's `scan` topic](../../api/sensors_api#3d-lidar-topics) to provide the necessary 2d `laserscan` input by
+using the `scan_topic` argument, e.g. `scan_topic:=/a300_0000/sensors/lidar3d_0/scan`.
 
-**2.** Open a terminal and launch the simulation:
+:::
 
+:::warning
+
+Some lidars, especially 3D lidars, can have a minimum range that is _larger_ than the robot's footprint.
+In this case it is possible for an obstacle to be so close to the robot that the lidar cannot detect it, potentially causing damage or injury.
+Always keep an eye on the robot and be ready to press the emergency stop if necessary.
+
+:::
+
+## Launching Nav2 and SLAM on a physical robot
+
+The following commands can be run on the robot itself, or on an [offboard computer](../../installation/offboard_pc).
+Running on the robot will result in less latency, but can also result in high CPU usage on the robot, depending what other nodes are running.
+
+**1.** Ensure the `clearpath-platform` and `clearpath-sensors` services are running. Run `ros2 topic list` to make sure the robot's `scan` topic is visible
+
+**2.** Start Nav2 by running
+```bash
+ros2 launch clearpath_nav2_demos nav2.launch.py
 ```
-ros2 launch clearpath_gz simulation.launch.py
+If your robot uses a 3D lidar instead of a 2D lidar, specify the `scan_topic` argument:
+```bash
+ros2 launch clearpath_nav2_demos nav2.launch.py scan_topic:=/a300_0000/sensors/lidar3d_0/scan
 ```
 
-If the simulation does not start automatically, press the large orange "play" button in the bottom left corner.
-
-**3.** Open a second terminal and start Rviz. If you are using a physical robot or running the simulation
-on an external server, this step should be done on your workstation, not on the robot or simulation server itself.
+**3.** Start SLAM by running:
+```bash
+ros2 launch clearpath_nav2_demos slam.launch.py
 ```
-ros2 launch clearpath_viz view_navigation.launch.py namespace:=a300_0000 use_sim_time:=true
+If your robot uses a 3D lidar instead of a 2D lidar, specify the `scan_topic` argument:
+```bash
+ros2 launch clearpath_nav2_demos slam.launch.py scan_topic:=/a300_0000/sensors/lidar3d_0/scan
 ```
 
-**4.** Open a third terminal and start either [SLAM](slam.mdx) or [Localization](localization.mdx), depending on
-whether or not you want to create a new map or use a pre-existing map.
-
-**5.** Set the initial pose of the robot using the [**2D Pose Estimate**](#2d-pose-estimate) tool in RViz.
-
-**6.** Open fourth terminal and launch nav2:
-
+**4.** On your laptop, start Rviz to view the map by running
+```bash
+ros2 launch clearpath_viz view_navigation namespace:=/a300_0000
 ```
+
+**5.** Drive the robot around manually, or by sending it Nav2 goals.
+
+See [SLAM](slam) for more information about interacting with SLAM.
+
+See [Nav2 Goals](rviz#nav2-goal) for more information about sending navigation goals.
+
+## Launching Nav2 and SLAM in simulation
+
+**1.** Start the simulation by running
+```bash
+ros2 launch clearpath_gz simulation.launch setup_path:=/path/to/robot_setup
+```
+The `setup_path` should point to the folder you have your [`robot.yaml`](../../config/yaml/overview) file,
+e.g. `/home/username/clearpath` or `/etc/clearpath`
+
+**2.** Start Nav2 by running
+```bash
+ros2 launch clearpath_nav2_demos nav2.launch.py use_sim_time:=true setup_path:=/path/to/robot_setup
+```
+If your simulated robot uses a 3D lidar instead of a 2D lidar, specify the `scan_topic` argument:
+```bash
+ros2 launch clearpath_nav2_demos nav2.launch.py scan_topic:=/a300_0000/sensors/lidar3d_0/scan use_sim_time:=true setup_path:=/path/to/robot_setup
+```
+
+**3.** Start SLAM by running:
+```bash
+ros2 launch clearpath_nav2_demos slam.launch.py use_sim_time:=true setup_path:=/path/to/robot_setup
+```
+If your robot uses a 3D lidar instead of a 2D lidar, specify the `scan_topic` argument:
+```bash
+ros2 launch clearpath_nav2_demos slam.launch.py scan_topic:=/a300_0000/sensors/lidar3d_0/scan use_sim_time:=true setup_path:=/path/to/robot_setup
+```
+
+**4.** Start Rviz to view the map by running
+```bash
+ros2 launch clearpath_viz view_navigation namespace:=/a300_0000 use_sim_time:=true
+```
+
+**5.** Drive the robot around manually, or by sending it 2D nav goals.
+
+See [SLAM](slam) for more information about interacting with SLAM.
+
+See [Nav2 Goals](rviz#nav2-goal) for more information about sending navigation goals.
+
+## Launching Nav2 and Localization on a physical robot
+
+The following commands can be run on the robot itself, or on an [offboard computer](../../installation/offboard_pc).
+Running on the robot will result in less latency, but can also result in high CPU usage on the robot, depending what other nodes are running.
+
+**1.** Ensure the `clearpath-platform` and `clearpath-sensors` services are running. Run `ros2 topic list` to make sure the robot's `scan` topic is visible
+
+**2.** Start Nav2 by running
+```bash
+ros2 launch clearpath_nav2_demos nav2.launch.py
+```
+If your robot uses a 3D lidar instead of a 2D lidar, specify the `scan_topic` argument:
+```bash
+ros2 launch clearpath_nav2_demos nav2.launch.py scan_topic:=/a300_0000/sensors/lidar3d_0/scan
+```
+
+**3.** Start localization by running:
+```bash
+ros2 launch clearpath_nav2_demos localization.launch.py map:=/path/to/map.yaml
+```
+If your robot uses a 3D lidar instead of a 2D lidar, specify the `scan_topic` argument:
+```bash
+ros2 launch clearpath_nav2_demos localization.launch.py scan_topic:=/a300_0000/sensors/lidar3d_0/scan map:=/path/to/map.yaml
+```
+
+**4.** On your laptop, start Rviz to view the map by running
+```bash
+ros2 launch clearpath_viz view_navigation namespace:=/a300_0000
+```
+
+**5.** Use Rviz to [set the 2D pose estimate](localization#setting-the-2d-pose-estimate).
+
+**6.** Send 2D a nav goal to the robot [using Rviz' 2D Nav Goal tool](rviz#nav2-goal) or [the Navigation to Pose action](actions#the-navigate-to-pose-action).
+
+## Launching Nav2 and Localization in simulation
+
+The following commands can be run on the robot itself, or on an [offboard computer](../../installation/offboard_pc).
+Running on the robot will result in less latency, but can also result in high CPU usage on the robot, depending what other nodes are running.
+
+**1.** Start the simulation by running
+```bash
+ros2 launch clearpath_gz simulation.launch setup_path:=/path/to/robot_setup
+```
+The `setup_path` should point to the folder you have your [`robot.yaml`](../../config/yaml/overview) file,
+e.g. `/home/username/clearpath` or `/etc/clearpath`
+
+**2.** Start Nav2 by running
+```bash
 ros2 launch clearpath_nav2_demos nav2.launch.py use_sim_time:=true
 ```
-
-**7.** Give the robot a navigation goal using the [**Nav2 Goal**](#nav2-goal) tool in RViz.
-
-## Nav2 Tools in Rviz
-
-The Rviz configuration used by the `clearpath_viz view_navigation.launch.py` file includes several
-tools for interacting with Nav2. These tools require Rviz's **Fixed Frame** to be set to `map`. To
-set the fixed frame, use the toolbar on the left and open Displays > Global Options > Fixed Frame.
-
-Initially the `map` frame may not be connected to the rest of the **TF Tree**. This is normal, and
-will be fixed when we use the **2D Pose Estimate** tool. If `map` does not appear in the frame drop-down
-simply type the word `map` into the box and press `ENTER`.
-
-To select a Nav2 tool, simply click on the button on the toolbar at the top of Rviz's main window
-
-<center>
-  <figure>
-    <img
-      src={require("./img/rviz_nav2_tools.png").default}
-      width="600"
-    />
-    <figcaption>Rviz's toolbar with Nav2 tools</figcaption>
-  </figure>
-</center>
-
-### 2D Pose Estimate
-
-The **2D Pose Estimate** tool allows you to provide Nav2 with the robot's approximate initial position on
-the map. This is a necessary step before you can navigate with the robot. This step connects the `map`
-frame to the rest of the robot's TF tree.
-
-To set the robot's initial position, click and hold the mouse button on the map in the robot's approximate location.
-While holding the left mouse button, drag the green arrow to set the robot's orientation. Releasing the left
-mouse button will set the robot's position and orientation relative to the `map` frame.
-
-If you are using SLAM and there is no map yet, simply click on the centre of the screen and drag up.
-
-Once you have set the robot's initial pose you should see red markers representing the lidar data as well
-as coloured gradients indicating collision zones around walls and obstacles.
-
-<center>
-  <figure>
-    <img
-      src={require("./img/pose_estimate.gif").default}
-      width="900"
-    />
-    <figcaption>Setting the initial pose estimate</figcaption>
-  </figure>
-</center>
-
-### Publish Point
-
-The **Publish Point** tool allows you to click on the map and publish the XYZ coordinates of that
-point to the `clicked_point` topic. In a terminal run the command
+If your robot uses a 3D lidar instead of a 2D lidar, specify the `scan_topic` argument:
 ```bash
-ros2 topic echo /a300_0000/clicked_point
-```
-Then select the Publish Point tool and click somewhere on the map. In the terminal you will see
-the location you clicked as a `geometry_msgs/msg/PointStamped` message:
-```yaml
-header:
-  stamp:
-    sec: 1747855824
-    nanosec: 867726206
-  frame_id: map
-point:
-  x: -0.12474524974822998
-  y: 0.002330044750124216
-  z: -0.001434326171875
+ros2 launch clearpath_nav2_demos nav2.launch.py scan_topic:=/a300_0000/sensors/lidar3d_0/scan use_sim_time:=true
 ```
 
-<center>
-  <figure>
-    <img
-      src={require("./img/publish_point.gif").default}
-      width="900"
-    />
-    <figcaption>Publishing a point</figcaption>
-  </figure>
-</center>
+**3.** Start localization by running:
+```bash
+ros2 launch clearpath_nav2_demos localization.launch.py map:=/path/to/map.yaml use_sim_time:=true
+```
+If your robot uses a 3D lidar instead of a 2D lidar, specify the `scan_topic` argument:
+```bash
+ros2 launch clearpath_nav2_demos localization.launch.py scan_topic:=/a300_0000/sensors/lidar3d_0/scan map:=/path/to/map.yaml use_sim_time:=true
+```
 
-### Nav2 Goal
+**4.** On your laptop, start Rviz to view the map by running
+```bash
+ros2 launch clearpath_viz view_navigation namespace:=/a300_0000
+```
 
-The **Nav2 Goal** tool allows you to set a goal pose for the robot. The Nav2 stack will then plan a path to the goal pose
-and attempt to drive the robot there.
+**5.** Use Rviz to [set the 2D pose estimate](localization#setting-the-2d-pose-estimate).
 
-You will see a red path line appear, indicating the robot's planned path, and the robot will start to drive along this path.
-
-<center>
-  <figure>
-    <img
-      src={require("./img/nav_goal.gif").default}
-      width="900"
-    />
-    <figcaption>Navigation in simulation</figcaption>
-  </figure>
-</center>
+**6.** Send 2D a nav goal to the robot [using Rviz' 2D Nav Goal tool](rviz#nav2-goal) or [the Navigation to Pose action](actions#the-navigate-to-pose-action).
