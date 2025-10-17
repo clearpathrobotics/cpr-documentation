@@ -1,5 +1,5 @@
 const versions = Object.freeze({
-  "outdoornav": "0.14.0",
+  "outdoornav": "2.1.0",
 });
 
 export default versions;

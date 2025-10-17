@@ -1,0 +1,102 @@
+---
+title: Installing Updates
+sidebar_label: Installing Updates
+sidebar_position: 1
+toc_min_heading_level: 4
+toc_max_heading_level: 4
+---
+
+The following page details the steps to update the OutdoorNav software that is already
+installed on your platform.
+
+
+:::note
+
+Please ensure that you have received an email advising you that an update is available
+since only those who receive the update emails will be have access to the update files.
+
+:::
+
+## Download
+
+1. Click the link that was sent to you in the update email. You will be sent to a cloud storage
+drive with the following file structure (/Documents/General/Releases/...)
+
+2. Navigate to the version folder you wish to update to and download the following files:
+
+    - **cpr-onav-ui.tar**
+
+    - **cpr-onav-base.tar**
+
+    - **cpr-onav-autonomy.tar**
+
+    - **cpr-onav-app.zip**
+
+3. Connect to the robot 
+
+    Option 1: via ethernet (port located inside of the rear charge port door)
+
+    Option 2: via wifi (Husky SSID: cpr_a300_amp_xxx)
+
+4. Transfer all files to the robots **/opt/onav/** folder
+
+    **Linux**:
+
+    ```code
+    scp cpr-onav-app.zip cpr-onav-ui.tar cpr-onav-base.tar cpr-onav-autonomy.tar robot@192.168.131.1:/opt/onav/
+    ```
+
+    **Windows**: Use [FileZilla Client](https://filezilla-project.org/download.php?platform=win64) to transfer all files to the robot.
+    
+    SFTP Connection:
+
+        * Host: sftp://192.168.131.1
+
+        * Username: robot
+
+        * Password: clearpath
+
+
+## Update
+
+1. Run the below command to update the version of OutdoorNav, where
+***\<latest_version\>*** is the folder of the last version of OutdoorNav that
+has been installed on the robot and ***\<new_version\>*** is the version you want
+to update to.
+
+    ```code
+    python3 /opt/onav/<latest_version>/app/update/update.py -v <new_version>
+    ```
+
+    Eg. To update from version 2.1.0 to version 2.2.0 run the following
+
+    ```code
+    python3 /opt/onav/2.1.0/app/update/update.py -v 2.2.0
+    ```
+
+    * this will create a new version folder in /opt/onav/
+
+    * copy all persistent data from the last version
+
+    * installs the app folder
+
+    * stops the currently running version of OutdoorNav
+
+    * starts the new version of OutdoorNav
+
+
+## Cleanup
+
+1. Remove all extraneous files
+
+    ```code
+    rm /opt/onav/cpr-onav-ui.tar /opt/onav/cpr-onav-base.tar /opt/onav/cpr-onav-autonomy.tar /opt/onav/cpr-onav-app.zip
+    ```
+
+:::note
+
+If you have made any customization changes to the **app/** directory of your 
+previous version, you will need to make these same modifications manually 
+yourself to the new versions app/ directory files.
+
+:::

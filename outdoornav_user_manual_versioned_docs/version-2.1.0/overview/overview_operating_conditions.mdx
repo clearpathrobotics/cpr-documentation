@@ -1,0 +1,113 @@
+---
+title: Operating Conditions
+sidebar_label: Operating Conditions
+sidebar_position: 3
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+OutdoorNav Software is designed and tested for use in rugged outdoor
+environments.
+
+## Operating Conditions
+
+### Terrain
+
+OutdoorNav Software is compatible with terrains in which the UGV can be
+driven manually without excessive slipping. The performance limits will
+be a function of the base UGV traction.
+
+Using Clearpath Robotics Husky, Jackal, and Warthog as a the base UGV,
+OutdoorNav Software is suitable for use in the following terrains:
+
+-   asphalt
+-   concrete
+-   grass
+-   snow
+
+:::note
+
+Grass should not exceed 30 cm in height if collision avoidance is
+enabled.
+
+:::
+
+:::note
+
+Winter/studded tires may be required for proper traction on snow.
+
+:::
+
+OutdoorNav Software is currently **not** suitable in the following
+terrains:
+
+-   ice
+-   loose gravel
+
+The terrain capabilities of third-party UGVs will be dependent on a
+variety of factors including the vehicle mass, the tire treading, and
+motor power.
+
+### Environment
+
+OutdoorNav Software is suitable for use in the following environmental
+conditions:
+
+-   light rainfall (drizzle)
+-   light snowfall (powdery snow)
+
+:::note
+
+If erratic behavior, such as frequent replanning, is perceived in these
+light precipitation conditions, disabling the "continuous planning"
+feature may help.
+
+:::
+
+OutdoorNav Software is **not** suitable for use in the following
+environmental conditions:
+
+-   heavy rainfall
+-   heavy snowfall
+
+:::note
+
+If navigation is required in heavy rain or snow, disabling the collision
+avoidance feature will allow the UGV to navigate properly. This should
+be done with caution.
+
+![](/img/outdoornav_images/gps_danger.png)
+
+:::
+
+## Performance
+
+The performance of the system is highly dependent on both the base UGV,
+the sensors, the system integration details, and the environment. With
+standard sensors:
+
+- Location accuracy (position & heading): Less than 5 cm and less than 2°
+- Path tracking accuracy (approximate): 10 cm
+
+## Limitations
+
+While OutdoorNav Software operates effectively in a range of rugged
+outdoor environments, the operator should be aware of the following
+limitations and plan accordingly.
+
+_OutdoorNav System Limitations_
+
+| Limitation                                       | Details                                                                                                                                                                                                                                                                                                                    |
+|--------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| RTK accuracy                                     | Localization accuracy for the Standard (RTK) configuration assumes the base station location has been accurately surveyed.                                                                                                                                                                                                 |
+| Localization accuracy                            | Localization accuracy is influenced by the quality of GNSS data that is available. Navigating in GNSS denied areas (e.g., under bridges, near tall buildings, etc.) will cause degradation in localization performance.                                                                                                    |
+| Negative obstacle detection not present          | Outdoor Navigation Software does not have negative obstacle detection capability. Your UGV will not detect stairs, cliffs, potholes, depressions or edges and may drive into these obstacles causing harm to people or property.                                                                                           |
+| Limited obstacle detection in vertical dimension | The small vertical field of view of 3D LiDARs limits the vertical obstacle detection capability of the OutdoorNav Software.                                                                                                                                                                                                |
+| Low traction may cause UGV to get stuck          | Your UGV may navigate itself into a situation where wheels slip or do not make contact with the ground.                                                                                                                                                                                                                    |
+| Rain and snow may affect obstacle detection      | Adverse weather conditions may obscure obstacle detection and avoidance data from 3D LiDARs. Obstacle detection and avoidance may not function in all weather conditions and must be disabled to navigate in heavy snow or rain.                                                                                           |
+| WiFi range limits                                | The current configurations of the OutdoorNav Software will continue navigation if the WiFi disconnects or goes out of range. The Web UI will reconnect once the WiFi has reconnected but certain functions of the UI may be limited such as the ability to issue a pause/stop commands or sending new missions to the UGV. |
+| Wireless motion stop range limits                | The UGV will motion stop if the UGV is driven out of range of the wireless motion stop device.                                                                                                                                                                                                                             |
+| RTK GPS limited by WiFi range                    | If WiFi goes out of range, your UGV will not receive RTK corrections from the Base Station. This can potentially decrease the accuracy of the GPS signal which can subsequently degrade path following performance of your system.                                                                                         |
+| Obstacle detection may cause UGV to become stuck | The UGV may stop and become stuck if obstacles are detected and not cleared from its path. If obstacle avoidance is enabled, it may not be able to calculate an acceptable path to the next Viapoint or Goal Point under all circumstances. This will result in the UGV becoming stuck and failing its Mission.            |
+| Zones are not currently supported                | It is not possible to define “keep-out” or “unsafe” zones that the UGV needs to avoid. Rather, careful use of Waypoint placement by the operator can be used to keep the UGV at a safe distance from unsafe zones.                                                                                                         |
+| No collision avoidance during teleoperation mode | When operating in Manual Mode (Teleoperation), no collision avoidance is enabled. The operator is responsible for avoiding collisions.                                                                                                                                                                                     |
