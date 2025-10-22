@@ -1,0 +1,160 @@
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs>
+
+<!-- Kinova Gen3 Lite -->
+<TabItem default value="Gen3 Lite">
+<table>
+
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("/components/rviz_models/manipulators/kinova/gen3_lite.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+manipulators:
+  moveit:
+    enable: false
+  arms:
+    - model: kinova_gen3_lite
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ip: 192.168.131.40
+      port: 10000
+      gripper:
+        model: kinova_2f_lite
+```
+</td>
+</tr>
+</table>
+</TabItem>
+
+<!-- Kinova Gen3 6Dof -->
+<TabItem default value="Gen3 6DoF">
+<table>
+<!-- Gen3 6DoF: robotiq_2f_85 -->
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("/components/rviz_models/manipulators/kinova/gen3_6dof_85.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+manipulators:
+  moveit:
+    enable: false
+  arms:
+    - model: kinova_gen3_6dof
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ip: 192.168.131.40
+      port: 10000
+      gripper:
+        model: robotiq_2f_85
+```
+</td>
+</tr>
+<!-- Gen3 6DoF: robotiq_2f_140 -->
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("/components/rviz_models/manipulators/kinova/gen3_6dof_140.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+manipulators:
+  moveit:
+    enable: false
+  arms:
+    - model: kinova_gen3_6dof
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ip: 192.168.131.40
+      port: 10000
+      gripper:
+        model: robotiq_2f_140
+```
+</td>
+</tr>
+</table>
+</TabItem>
+
+
+<!-- Kinova Gen3 7Dof -->
+<TabItem default value="Gen3 7DoF">
+<table>
+<!-- Gen3 7DoF: robotiq_2f_85 -->
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("/components/rviz_models/manipulators/kinova/gen3_7dof_85.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+manipulators:
+  moveit:
+    enable: false
+  arms:
+    - model: kinova_gen3_7dof
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ip: 192.168.131.40
+      port: 10000
+      gripper:
+        model: robotiq_2f_85
+```
+</td>
+</tr>
+<!-- Gen3 7DoF: robotiq_2f_140 -->
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("/components/rviz_models/manipulators/kinova/gen3_7dof_140.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+manipulators:
+  moveit:
+    enable: false
+  arms:
+    - model: kinova_gen3_7dof
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ip: 192.168.131.40
+      port: 10000
+      gripper:
+        model: robotiq_2f_140
+```
+</td>
+</tr>
+</table>
+</TabItem>
+
+</Tabs>

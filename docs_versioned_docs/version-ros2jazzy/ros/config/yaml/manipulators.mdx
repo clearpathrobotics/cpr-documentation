@@ -5,15 +5,29 @@ sidebar_position: 8
 toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
-import KinovaGen3Lite from "/docs_versioned_docs/version-ros2jazzy/components/yaml/manipulators/kinova_gen3_lite.mdx";
+<!-- import KinovaGen3Lite from "/docs_versioned_docs/version-ros2jazzy/components/yaml/manipulators/kinova_gen3_lite.mdx";
 import KinovaGen36Dof from "/docs_versioned_docs/version-ros2jazzy/components/yaml/manipulators/kinova_gen3_6dof.mdx";
 import KinovaGen37Dof from "/docs_versioned_docs/version-ros2jazzy/components/yaml/manipulators/kinova_gen3_7dof.mdx";
 import Kinova2FLite from "/docs_versioned_docs/version-ros2jazzy/components/yaml/manipulators/kinova_2f_lite.mdx";
+import Kinova from "/docs_versioned_docs/version-ros2jazzy/components/yaml/manipulators/kinova.mdx";
 import Robotiq2F85 from "/docs_versioned_docs/version-ros2jazzy/components/yaml/manipulators/robotiq_2f_85.mdx";
 import Robotiq2F140 from "/docs_versioned_docs/version-ros2jazzy/components/yaml/manipulators/robotiq_2f_140.mdx";
 import UniversalRobots from "/docs_versioned_docs/version-ros2jazzy/components/yaml/manipulators/universal_robots.mdx";
 import Franka from "/docs_versioned_docs/version-ros2jazzy/components/yaml/manipulators/franka.mdx";
-import FrankaGripper from "/docs_versioned_docs/version-ros2jazzy/components/yaml/manipulators/franka_gripper.mdx";
+import FrankaGripper from "/docs_versioned_docs/version-ros2jazzy/components/yaml/manipulators/franka_gripper.mdx"; -->
+
+
+import KinovaLineUp from "/docs_versioned_docs/version-ros2jazzy/components/yaml/manipulators/kinova/lineup.mdx";
+import KinovaConfigs from "/docs_versioned_docs/version-ros2jazzy/components/yaml/manipulators/kinova/configs.mdx";
+import KinovaDetails from "/docs_versioned_docs/version-ros2jazzy/components/yaml/manipulators/kinova/details.mdx";
+
+import UniversalRobotsLineUp from "/docs_versioned_docs/version-ros2jazzy/components/yaml/manipulators/universal_robots/lineup.mdx";
+import UniversalRobotsConfigs from "/docs_versioned_docs/version-ros2jazzy/components/yaml/manipulators/universal_robots/configs.mdx";
+import UniversalRobotsDetails from "/docs_versioned_docs/version-ros2jazzy/components/yaml/manipulators/universal_robots/details.mdx";
+
+import FrankaLineUp from "/docs_versioned_docs/version-ros2jazzy/components/yaml/manipulators/franka/lineup.mdx";
+import FrankaConfigs from "/docs_versioned_docs/version-ros2jazzy/components/yaml/manipulators/franka/configs.mdx";
+import FrankaDetails from "/docs_versioned_docs/version-ros2jazzy/components/yaml/manipulators/franka/details.mdx";
 
 
 Manipulators include all robotic arms and grippers. Unlike sensors, manipulators are not controlled by external drivers. Instead, a hardware controller must be loaded into the controller manager to handle the joint interface to move the specific manipulator joints.
@@ -24,7 +38,7 @@ Every arm can have at most one gripper, and grippers can only be added to an exi
 
 By default, MoveIt! is disabled but can be enabled in the `robot.yaml`.
 
-# Arms
+<!--
 ## Kinova Gen3 Lite {#kinova-gen3-lite}
 <KinovaGen3Lite/>
 <br/>
@@ -36,16 +50,27 @@ By default, MoveIt! is disabled but can be enabled in the `robot.yaml`.
 ## Kinova Gen3 7DoF {#kinova-gen3-7dof}
 <KinovaGen37Dof/>
 <br/>
+-->
+## Franka {#franka}
+<FrankaLineUp/>
+<FrankaConfigs/>
+<FrankaDetails/>
+<br/>
+
+## Kinova {#kinova}
+<KinovaLineUp/>
+<KinovaConfigs/>
+<KinovaDetails/>
+<br/>
 
 ## Universal Robots {#universal-robots}
-<UniversalRobots/>
+<UniversalRobotsLineUp/>
+<UniversalRobotsConfigs/>
+<UniversalRobotsDetails/>
 <br/>
 
-## Franka {#franka}
-<Franka/>
-<br/>
 
-# Grippers
+<!-- # Grippers
 
 ## Kinova 2F Lite {#kinova-2f-lite}
 <Kinova2FLite/>
@@ -61,4 +86,4 @@ By default, MoveIt! is disabled but can be enabled in the `robot.yaml`.
 
 ## Franka Hand {#franka-hand}
 <FrankaGripper/>
-<br/>
+<br/> -->

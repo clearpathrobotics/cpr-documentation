@@ -1,0 +1,34 @@
+### Package and Setup {#franka_package_and_setup}
+The Franka arms use the `franka_description` and `franka_ros2` ROS 2 packages abd the `libfranka` SDK. The description and driver are open source, maintained by Franka Robotics, and hosted on GitHub. Refer to the [description repository](https://github.com/frankarobotics/franka_description), [driver repository](https://github.com/frankarobotics/franka_ros2), and [SDK repository](https://github.com/frankarobotics/libfranka). Follow the [instructions in the driver repository's README](https://github.com/frankarobotics/franka_ros2/blob/humble/README.md#franka-ros-2-dependencies-setup) to build the Franka packages in a workspace.
+
+For more specifics on the way Clearpath's configuration system adds the arm to the robot description, see the [description file](https://github.com/clearpathrobotics/clearpath_common/blob/humble/clearpath_manipulators_description/urdf/arm/franka.urdf.xacro). Note, all parameters to the `xacro:macro franka` can be passed through the `robot.yaml` entry above. For examples, read the sections below.
+
+### Franka Desk Setup {#franka_desk_setup}
+
+#### Networking Settings {#franka_networking_settings}
+<details>
+
+<summary>Networking Settings Setup</summary>
+
+<figure>
+    <img src={require("/components/manipulators/franka/network.png").default} width="500" />
+</figure>
+By default, the `C2 - Shop Floor network` should have `DHCP Client` disabled and set to the static `192.168.131.40` IP address. If changed to an IP other than `192.168.131.40`, then that new address must be passed to the `robot.yaml` entry through the `robot_ip` parameter.
+
+</details>
+
+#### Initializing the Arm {#franka_arm_initialization}
+<details>
+
+<summary>Initializing the Arm</summary>
+
+<figure>
+    <img src={require("/components/manipulators/franka/activate_fci.png").default} width="500" />
+</figure>
+To begin moving the arm, unlock the joints. Then, enable the `FCI` mode to allow a an external computer to control the arm.
+
+</details>
+
+### Parameter: Device IP {#franka_param_ip}
+The `robot_ip` must be set to match the networking settings of the arm's control box. By default, we use the `192.168.131.40` address.
+

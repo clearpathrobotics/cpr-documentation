@@ -1,0 +1,330 @@
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+
+<Tabs>
+<TabItem default value="Franka Research 3">
+
+<table>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("/components/rviz_models/manipulators/franka/fr3.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+manipulators:
+  moveit:
+    enable: false
+  arms:
+    - model: franka
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      arm_id: fr3
+      robot_ip: 192.168.131.40
+```
+</td>
+</tr>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("/components/rviz_models/manipulators/franka/fr3_franka_hand.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+manipulators:
+  moveit:
+    enable: false
+  arms:
+    - model: franka
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      arm_id: fr3
+      robot_ip: 192.168.131.40
+      gripper:
+        model: franka_gripper
+```
+</td>
+</tr>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("/components/rviz_models/manipulators/franka/fr3_robotiq_2f_85.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+manipulators:
+  moveit:
+    enable: false
+  arms:
+    - model: franka
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      arm_id: fr3
+      robot_ip: 192.168.131.40
+      gripper:
+        model: robotiq_2f_85
+```
+</td>
+</tr>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("/components/rviz_models/manipulators/franka/fr3_robotiq_2f_140.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+manipulators:
+  moveit:
+    enable: false
+  arms:
+    - model: franka
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      arm_id: fr3
+      robot_ip: 192.168.131.40
+      gripper:
+        model: robotiq_2f_140
+```
+</td>
+</tr>
+</table>
+
+</TabItem>
+
+<TabItem default value="Franka Production 3">
+<table>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("/components/rviz_models/manipulators/franka/fp3.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+manipulators:
+  moveit:
+    enable: false
+  arms:
+    - model: franka
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      arm_id: fp3
+      robot_ip: 192.168.131.40
+```
+</td>
+</tr>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("/components/rviz_models/manipulators/franka/fp3_franka_hand.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+manipulators:
+  moveit:
+    enable: false
+  arms:
+    - model: franka
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      arm_id: fp3
+      robot_ip: 192.168.131.40
+      gripper:
+        model: franka_gripper
+```
+</td>
+</tr>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("/components/rviz_models/manipulators/franka/fp3_robotiq_2f_85.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+manipulators:
+  moveit:
+    enable: false
+  arms:
+    - model: franka
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      arm_id: fp3
+      robot_ip: 192.168.131.40
+      gripper:
+        model: robotiq_2f_85
+```
+</td>
+</tr>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("/components/rviz_models/manipulators/franka/fp3_robotiq_2f_140.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+manipulators:
+  moveit:
+    enable: false
+  arms:
+    - model: franka
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      arm_id: fp3
+      robot_ip: 192.168.131.40
+      gripper:
+        model: robotiq_2f_140
+```
+</td>
+</tr>
+</table>
+
+</TabItem>
+<TabItem default value="Franka Emika Robot">
+<table>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("/components/rviz_models/manipulators/franka/fer.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+manipulators:
+  moveit:
+    enable: false
+  arms:
+    - model: franka
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      arm_id: fer
+      robot_ip: 192.168.131.40
+```
+</td>
+</tr>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("/components/rviz_models/manipulators/franka/fer_franka_hand.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+manipulators:
+  moveit:
+    enable: false
+  arms:
+    - model: franka
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      arm_id: fer
+      robot_ip: 192.168.131.40
+      gripper:
+        model: franka_gripper
+```
+</td>
+</tr>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("/components/rviz_models/manipulators/franka/fer_robotiq_2f_85.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+manipulators:
+  moveit:
+    enable: false
+  arms:
+    - model: franka
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      arm_id: fer
+      robot_ip: 192.168.131.40
+      gripper:
+        model: robotiq_2f_85
+```
+</td>
+</tr>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("/components/rviz_models/manipulators/franka/fer_robotiq_2f_140.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+manipulators:
+  moveit:
+    enable: false
+  arms:
+    - model: franka
+      parent: default_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      arm_id: fer
+      robot_ip: 192.168.131.40
+      gripper:
+        model: robotiq_2f_140
+```
+</td>
+</tr>
+</table>
+
+</TabItem>
+</Tabs>
