@@ -145,9 +145,6 @@ ros2 launch clearpath_viz view_navigation.launch.py namespace:=/a300_0000
 
 ## Launching Nav2 and Localization in simulation
 
-The following commands can be run on the robot itself, or on an [offboard computer](../../installation/offboard_pc).
-Running on the robot will result in less latency, but can also result in high CPU usage on the robot, depending what other nodes are running.
-
 **1.** Start the simulation by running
 ```bash
 ros2 launch clearpath_gz simulation.launch.py setup_path:=/path/to/robot_setup
