@@ -19,127 +19,14 @@ The XY position of the robot is relative to this location.
 <Tabs groupId="autonomy_goto">
   <TabItem value="Python" label="Python" default>
 
-```python
-from clearpath_config.common.utils.yaml import read_yaml
-from clearpath_localization_msgs.srv import SetDatum
-import rclpy
-from rclpy.node import Node
-
-ROBOT_CONFIG_PATH = '/etc/clearpath/robot.yaml'
-LOGGING_NAME = 'SetDatum'
-
-# TODO: Enter your datum latitude/longitude
-DATUM_LATITUDE: float =
-DATUM_LONGITUDE: float =
-
-
-class SetDatumCLient(Node):
-
-    def __init__(self, namespace: str):
-        super().__init__('set_datum_client')
-        self._set_datum_client = self.create_client(SetDatum, f'/{namespace}/localization/set_datum')
-
-        while not self._set_datum_client.wait_for_service(timeout_sec=2.0):
-            self.get_logger().info(f'[{LOGGING_NAME}] /{namespace}/localization/set_datum service not available, waiting again...')
-
-    def set_datum(self, latitude, longitude):
-        req = SetDatum.Request()
-        req.lat = latitude
-        req.lon = longitude
-        self.future = self._set_datum_client.call_async(req)
-        self.future.add_done_callback(self.set_datum_srv_response_cb)
-
-    def set_datum_srv_response_cb(self, future):
-        try:
-            response = future.result()
-            if response.success:
-                self.get_logger().info(f'[{LOGGING_NAME}] Set datum successfully!')
-            else:
-                self.get_logger().error(f'[{LOGGING_NAME}] Failed to set datum')
-        except Exception as e:
-            self.get_logger().error(f'[{LOGGING_NAME}] Service call failed: {e}')
-
-        self.destroy_node()
-        rclpy.shutdown()
-
-
-def main(args=None):
-    rclpy.init(args=args)
-    robot_config = read_yaml(ROBOT_CONFIG_PATH)
-    namespace = robot_config['system']['ros2']['namespace']
-
-    set_datum_client = SetDatumCLient(namespace)
-    set_datum_client.set_datum(DATUM_LATITUDE, DATUM_LONGITUDE)
-
-    rclpy.spin(set_datum_client)
-
-
-if __name__ == '__main__':
-    main()
-
+```python reference showLineNumbers
+https://github.com/cpr-application/clearpath_outdoornav/blob/ros2/python/endpoints/localization/set_datum.py
 ```
   </TabItem>
   <TabItem value="C++" label="C++">
 
-```cpp
-#include "rclcpp/rclcpp.hpp"
-#include "clearpath_localization_msgs/srv/set_datum.hpp"
-
-#include <chrono>
-#include <cstdlib>
-#include <memory>
-#include <yaml-cpp/yaml.h>
-
-const double DATUM_LAT = 43.5009;
-const double DATUM_LON = -80.5474;
-
-using namespace std::chrono_literals;
-
-int main(int argc, char **argv)
-{
-  rclcpp::init(argc, argv);
-  
-  YAML::Node robot_config = YAML::LoadFile("/etc/clearpath/robot.yaml");
-  std::string namespace_ = robot_config["system"]["ros2"]["namespace"].as<std::string>();
-
-  std::shared_ptr<rclcpp::Node> node = rclcpp::Node::make_shared("set_datum_client");
-  rclcpp::Client<clearpath_localization_msgs::srv::SetDatum>::SharedPtr client =
-    node->create_client<clearpath_localization_msgs::srv::SetDatum>("/" + namespace_ + "/" + std::string("localization/set_datum"));
-
-  auto request = std::make_shared<clearpath_localization_msgs::srv::SetDatum::Request>();
-  request->lat = DATUM_LAT;
-  request->lon = DATUM_LON;
-
-  while (!client->wait_for_service(2s)) {
-    if (!rclcpp::ok()) {
-      RCLCPP_ERROR(rclcpp::get_logger("set_datum_client"), "Interrupted while waiting for the service. Exiting.");
-      return 0;
-    }
-    RCLCPP_INFO(rclcpp::get_logger("set_datum_client"), "/%s/localization/set_datum service not available, waiting again...", namespace_.c_str());
-  }
-
-  auto result = client->async_send_request(request);
-
-  // Wait for the result.
-  if (rclcpp::spin_until_future_complete(node, result) ==
-    rclcpp::FutureReturnCode::SUCCESS)
-  {
-    if (result.get()->success)
-    {
-      RCLCPP_INFO(rclcpp::get_logger("set_datum_client"), "Datum set successfully!");
-    }
-    else
-    {
-      RCLCPP_ERROR(rclcpp::get_logger("set_datum_client"), "Failed to set datum!");
-    }
-  } else {
-    RCLCPP_ERROR(rclcpp::get_logger("set_datum_client"), "Failed to call service /%s/localization/set_datum", namespace_.c_str());
-  }
-
-  rclcpp::shutdown();
-  return 0;
-}
-
+```cpp reference showLineNumbers
+https://github.com/cpr-application/clearpath_outdoornav/blob/ros2/cpp/endpoints/localization/set_datum.cpp
 ```
   </TabItem>
 

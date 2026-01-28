@@ -18,118 +18,14 @@ Pause the currently running autonomy action.
 <Tabs groupId="autonomy_pause">
   <TabItem value="Python" label="Python" default>
 
-```python
-from clearpath_config.common.utils.yaml import read_yaml
-import rclpy
-from rclpy.node import Node
-from std_srvs.srv import SetBool
-
-ROBOT_CONFIG_PATH = '/etc/clearpath/robot.yaml'
-LOGGING_NAME = 'PauseAutonomy'
-
-
-class PauseAutonomy(Node):
-
-    def __init__(self, namespace: str):
-        super().__init__('pause_autonomy_client')
-        self._autonomy_pause_client = self.create_client(SetBool, f'/{namespace}/autonomy/pause')
-
-        while not self._autonomy_pause_client.wait_for_service(timeout_sec=2.0):
-            self.get_logger().info(f'[{LOGGING_NAME}] /{namespace}/autonomy/pause service not available, waiting again...')
-
-    def pause(self):
-        req = SetBool.Request()
-        req.data = True
-        self.future = self._autonomy_pause_client.call_async(req)
-        self.future.add_done_callback(self.autonomy_pause_srv_response_cb)
-
-    def autonomy_pause_srv_response_cb(self, future):
-        try:
-            response = future.result()
-            if response.success:
-                self.get_logger().info(f'[{LOGGING_NAME}] Autonomy paused!')
-            else:
-                self.get_logger().error(f'[{LOGGING_NAME}] Failed to pause autonomy')
-        except Exception as e:
-            self.get_logger().error(f'[{LOGGING_NAME}] Service call failed: {e}')
-
-        self.destroy_node()
-        rclpy.shutdown()
-
-
-def main(args=None):
-    rclpy.init(args=args)
-    robot_config = read_yaml(ROBOT_CONFIG_PATH)
-    namespace = robot_config['system']['ros2']['namespace']
-
-    pause_autonomy_client = PauseAutonomy(namespace)
-    pause_autonomy_client.pause()
-
-    rclpy.spin(pause_autonomy_client)
-
-
-if __name__ == '__main__':
-    main()
-
+```python reference showLineNumbers
+https://github.com/cpr-application/clearpath_outdoornav/blob/ros2/python/endpoints/autonomy/pause_autonomy.py
 ```
   </TabItem>
   <TabItem value="C++" label="C++">
 
-```cpp
-#include "rclcpp/rclcpp.hpp"
-#include "std_srvs/srv/set_bool.hpp"
-
-#include <chrono>
-#include <cstdlib>
-#include <memory>
-#include <yaml-cpp/yaml.h>
-
-using namespace std::chrono_literals;
-
-int main(int argc, char **argv)
-{
-  rclcpp::init(argc, argv);
-  
-  YAML::Node robot_config = YAML::LoadFile("/etc/clearpath/robot.yaml");
-  std::string namespace_ = robot_config["system"]["ros2"]["namespace"].as<std::string>();
-
-  std::shared_ptr<rclcpp::Node> node = rclcpp::Node::make_shared("pause_autonomy_client");
-  rclcpp::Client<std_srvs::srv::SetBool>::SharedPtr client =
-    node->create_client<std_srvs::srv::SetBool>("/" + namespace_ + "/" + std::string("autonomy/pause"));
-
-  auto request = std::make_shared<std_srvs::srv::SetBool::Request>();
-  request->data = true;
-
-  while (!client->wait_for_service(2s)) {
-    if (!rclcpp::ok()) {
-      RCLCPP_ERROR(rclcpp::get_logger("pause_autonomy_client"), "Interrupted while waiting for the service. Exiting.");
-      return 0;
-    }
-    RCLCPP_INFO(rclcpp::get_logger("pause_autonomy_client"), "/%s/autonomy/pause service not available, waiting again...", namespace_.c_str());
-  }
-
-  auto result = client->async_send_request(request);
-
-  // Wait for the result.
-  if (rclcpp::spin_until_future_complete(node, result) ==
-    rclcpp::FutureReturnCode::SUCCESS)
-  {
-    if (result.get()->success)
-    {
-      RCLCPP_INFO(rclcpp::get_logger("pause_autonomy_client"), "Autonomy paused!");
-    }
-    else
-    {
-      RCLCPP_ERROR(rclcpp::get_logger("pause_autonomy_client"), "Autonomy failed to pause!");
-    }
-  } else {
-    RCLCPP_ERROR(rclcpp::get_logger("pause_autonomy_client"), "Failed to call service /%s/autonomy/pause", namespace_.c_str());
-  }
-
-  rclcpp::shutdown();
-  return 0;
-}
-
+```cpp reference showLineNumbers
+https://github.com/cpr-application/clearpath_outdoornav/blob/ros2/cpp/endpoints/autonomy/pause_autonomy.cpp
 ```
   </TabItem>
 

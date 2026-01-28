@@ -19,127 +19,14 @@ this survey process to succeed.
 <Tabs groupId="docking_survey">
   <TabItem value="Python" label="Python" default>
 
-```python
-from clearpath_config.common.utils.yaml import read_yaml
-from clearpath_dock_msgs.srv import SurveyDock
-import rclpy
-from rclpy.node import Node
-
-ROBOT_CONFIG_PATH = '/etc/clearpath/robot.yaml'
-LOGGING_NAME = 'SurveyDock'
-
-# TODO: Enter your dock info
-DOCK_NAME: str = 'lma02_doghouse_dock'
-TIMEOUT: float = 30.0
-
-
-class SurveyDockCLient(Node):
-
-    def __init__(self, namespace: str):
-        super().__init__('add_dock_client')
-        self._survey_dock_client = self.create_client(SurveyDock, f'/{namespace}/docking/dock_localizer/survey_dock')
-
-        while not self._survey_dock_client.wait_for_service(timeout_sec=2.0):
-            self.get_logger().info(f'[{LOGGING_NAME}] /{namespace}/docking/dock_localizer/survey_dock service not available, waiting again...')
-
-    def survey_dock(self, dock_name, timeout):
-        req = SurveyDock.Request()
-        req.dock_name = dock_name
-        req.timeout = timeout
-        self.future = self._survey_dock_client.call_async(req)
-        self.future.add_done_callback(self.survey_dock_srv_response_cb)
-
-    def survey_dock_srv_response_cb(self, future):
-        try:
-            response = future.result()
-            if response.success:
-                self.get_logger().info(f'[{LOGGING_NAME}] Surveyed dock successfully!')
-            else:
-                self.get_logger().error(f'[{LOGGING_NAME}] Failed to survey dock')
-        except Exception as e:
-            self.get_logger().error(f'[{LOGGING_NAME}] Service call failed: {e}')
-
-        self.destroy_node()
-        rclpy.shutdown()
-
-
-def main(args=None):
-    rclpy.init(args=args)
-    robot_config = read_yaml(ROBOT_CONFIG_PATH)
-    namespace = robot_config['system']['ros2']['namespace']
-
-    survey_dock_client = SurveyDockCLient(namespace)
-    survey_dock_client.survey_dock(DOCK_NAME, TIMEOUT)
-
-    rclpy.spin(survey_dock_client)
-
-
-if __name__ == '__main__':
-    main()
-
+```python reference showLineNumbers
+https://github.com/cpr-application/clearpath_outdoornav/blob/ros2/python/endpoints/docking/survey_dock.py
 ```
   </TabItem>
   <TabItem value="C++" label="C++">
 
-```cpp
-#include "rclcpp/rclcpp.hpp"
-#include "clearpath_dock_msgs/srv/survey_dock.hpp"
-
-#include <chrono>
-#include <cstdlib>
-#include <memory>
-#include <yaml-cpp/yaml.h>
-
-const std::string DOCK_NAME = "lma02_doghouse_dock";
-const double TIMEOUT = 30.0;
-
-using namespace std::chrono_literals;
-
-int main(int argc, char **argv)
-{
-  rclcpp::init(argc, argv);
-  
-  YAML::Node robot_config = YAML::LoadFile("/etc/clearpath/robot.yaml");
-  std::string namespace_ = robot_config["system"]["ros2"]["namespace"].as<std::string>();
-
-  std::shared_ptr<rclcpp::Node> node = rclcpp::Node::make_shared("survey_dock_client");
-  rclcpp::Client<clearpath_dock_msgs::srv::SurveyDock>::SharedPtr client =
-    node->create_client<clearpath_dock_msgs::srv::SurveyDock>("/" + namespace_ + "/" + std::string("docking/dock_localizer/survey_dock"));
-
-  auto request = std::make_shared<clearpath_dock_msgs::srv::SurveyDock::Request>();
-  request->dock_name = DOCK_NAME;
-  request->timeout = TIMEOUT;
-
-  while (!client->wait_for_service(2s)) {
-    if (!rclcpp::ok()) {
-      RCLCPP_ERROR(rclcpp::get_logger("survey_dock_client"), "Interrupted while waiting for the service. Exiting.");
-      return 0;
-    }
-    RCLCPP_INFO(rclcpp::get_logger("survey_dock_client"), "/%s/docking/dock_localizer/survey_dock service not available, waiting again...", namespace_.c_str());
-  }
-
-  auto result = client->async_send_request(request);
-
-  // Wait for the result.
-  if (rclcpp::spin_until_future_complete(node, result) ==
-    rclcpp::FutureReturnCode::SUCCESS)
-  {
-    if (result.get()->success)
-    {
-      RCLCPP_INFO(rclcpp::get_logger("survey_dock_client"), "Surveyed dock succesfully!");
-    }
-    else
-    {
-      RCLCPP_ERROR(rclcpp::get_logger("survey_dock_client"), "Failed to survey dock!");
-    }
-  } else {
-    RCLCPP_ERROR(rclcpp::get_logger("survey_dock_client"), "Failed to call service /%s/docking/dock_localizer/survey_dock", namespace_.c_str());
-  }
-
-  rclcpp::shutdown();
-  return 0;
-}
-
+```cpp reference showLineNumbers
+https://github.com/cpr-application/clearpath_outdoornav/blob/ros2/cpp/endpoints/docking/survey_dock.cpp
 ```
   </TabItem>
 

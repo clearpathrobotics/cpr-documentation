@@ -18,6 +18,10 @@ const config = {
   onBrokenAnchors: "throw",
   favicon: "img/website_images/favicon.ico",
 
+  themes: [
+      '@saucelabs/theme-github-codeblock'
+  ],
+
   i18n: {
     defaultLocale: "en",
     locales: ["en"],
@@ -105,7 +109,7 @@ const config = {
         remarkPlugins: [remarkMath],
         rehypePlugins: [rehypeKatex],
         showLastUpdateTime: true,
-        includeCurrentVersion: false,
+        includeCurrentVersion: true,
       },
     ],
     [
