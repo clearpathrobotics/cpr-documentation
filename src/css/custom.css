@@ -126,6 +126,12 @@ h6::before {
   counter-increment: h6_section;
 }
 
+
 .anchor-target {
   scroll-margin-top: 70px;
+
+.navbar__logo img {
+  height: 160%;
+  margin-top: -10px;
+
 }
