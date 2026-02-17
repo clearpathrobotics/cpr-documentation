@@ -225,7 +225,7 @@ const config = {
         },
       },
       footer: {
-        copyright: `Clearpath Robotics, by Rockwell Automation. All rights reserved. © Clearpath Robotics, Inc., a Rockwell Automation Company. All rights reserved.`,
+        copyright: `© Clearpath Robotics by Rockwell Automation. All rights reserved. © Rockwell Automation Inc. All rights reserved.`,
       },
       prism: {
         theme: lightCodeTheme,
