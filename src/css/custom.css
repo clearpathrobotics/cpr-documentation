@@ -125,8 +125,3 @@ h6::before {
   content: counter(h2_section) "." counter(h3_section) "." counter(h4_section) "." counter(h5_section) "." counter(h6_section) " ";
   counter-increment: h6_section;
 }
-
-.no-number::before {
-  content: "" !important;
-  counter-increment: none !important;
-}
