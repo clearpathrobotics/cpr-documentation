@@ -147,32 +147,27 @@ and orientation.
 2.  Start by manually driving the UGV to the dock target and align it as
     straight and centered as possible so that it begins charging. 
 
-3.  Let the UGV sit in this position for 2 minutes to acquire an RTK GPS
-    fix. The POS (position), DIR (heading), and FUS (sensor fusion) GPS status indicators on
-    the UI should be green: <img src="/img/outdoornav_images/ui_status_indicators-2_0_0.png" width="75px" />.
+3.  On the left side of the UI, select the Edit mode button (pencil icon) and then select the Docks option.
 
-    :::note
-    
-    If the GPS status indicators are yellow or red, the selected
-    location of the dock is NOT appropriate. Please change the dock
-    location such that the GPS antennas have a clearer visibility.
+4.  Click anywhere on the map to create a dock. Name it and selectthe defualt configuration.
 
-    :::
+5.  Click and drag the dock to the location of the robot icon and align its position and orientation.
+    To rotate the dock, hold the `Ctrl` button and use the cursor to orient the dock (the arrow on the
+    dock should be used as a guide).
 
-4.  On the UI, **Menu** &srarr; **SETTINGS** &srarr; **Add New Dock Location**.
-    The dock location will be stored in 5 - 10 seconds as data is collected.
+6.  On the left side of the UI, select the Edit mode button and then select the cursor option.
+
+7.  With the remote controller, drive the robot at low speed purely in reverse so that it appear on the
+    green dot on the UI (ie. the rpedock point).
+
+8.  Right click the dock and select `Survey` in the list of option.
+
+9.  The docks position/orientation will be updated in 10 seconds. You should see the dock snap to its new pose.
+
 
 If the Base Station has been moved (and therefore been resurveyed), or
 if the dock has been moved to a new location, the user will need to
-reset the location of the dock. This is done in the following manner:
-
-1.  Repeat the previous set of instructions from step 1 to 4.
-
-2.  While in **Edit Mode** select the dock on the UI. A drop down should appear
-    with the option to reset the dock location. Select that option.
-
-3.  After approximately 5 - 10 seconds the dock location should be updated and the UI will
-    reflect the change accordingly.
+repeat the above steps to set the location of the dock.
 
 ## Create Your First Map
 
