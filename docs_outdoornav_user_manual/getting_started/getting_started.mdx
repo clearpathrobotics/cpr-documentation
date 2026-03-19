@@ -6,8 +6,7 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-This section outlines how to set up your OutdoorNav system for some
-preliminary testing with the OutdoorNav Software on a UGV.
+This section outlines how to set up your OutdoorNav system for initial testing.
 
 - Ensure that the UGV is powered on.
 - If the optional Base Station is included, ensure that it is also powered on.
@@ -25,10 +24,10 @@ Below, each method is listed with instructions on how to access the UGV.
 ### Via Ethernet
 
 Connecting to the robot via the ethernet port allows for the fastest connection speed, ideal for
-transferring large files and for quick/easy access to the robot. It is not recommended to
+transferring large files and for quick/easy access to the robot. It is not possible to
 connect via ethernet if you wish to run any Outdoornav missions.
 
-1. Connect an ethernet cable between your PC (Windows/Linux) and the ethernet port on the robot.
+1. Connect an ethernet cable between your PC (Windows/Linux) and the ethernet port on the rear of the robot.
 2. Set up the ethernet port on your PC to have a static IP address on the 192.168.131.XXX
 subnet (eg. 192.168.131.200)
 3. Open a terminal (Linux)/command prompt (Windows) and test the communication between your PC and the robot PC
@@ -40,10 +39,10 @@ subnet (eg. 192.168.131.200)
 4. If the ping test is successfull and you are receiving replies, then you can SSH into the robot's PC 
 and access the UI at the following,
 
-    |                     |                                      |
-    | ------------------- | ------------------------------------ |
-    | SSH (password)      | `ssh robot@192.168.131.1` (clearpath)|
-    | UI URL              | http://192.168.131.1                 |
+    |                     |                                       |
+    | ------------------- | ------------------------------------  |
+    | SSH (password)      | `ssh robot@192.168.131.1` (clearpath) |
+    | UI (URL)            | http://192.168.131.1                  |
 
     If the ping test was unsuccessful, then confirm that you have set up your ethernet interface
     properly to have a static IP on the correct subnet 192.168.131.XXX (eg. 192.168.131.200)
@@ -53,15 +52,15 @@ and access the UI at the following,
     ipconfig (Windows)
     ```
 
-    If you are still having issues, please contact [Support](../support.mdx)
+    If you are still having issues, please contact [Support](../support.mdx).
 
 #### Access the Robot Peplink
 
-|             |                       |
-| ----------- | --------------------- |
-| Peplink URL | http://192.168.131.51 |
-| Username    | admin                 |
-| Password    | Clearpath123          |
+|               |                       |
+| ------------- | --------------------- |
+| Peplink (URL) | http://192.168.131.51 |
+| Username      | admin                 |
+| Password      | Clearpath123          |
 
 
 :::note
@@ -69,7 +68,7 @@ and access the UI at the following,
 The robot PC will not have internet access unless you have connected the onboard robot Peplink to an
 internet source (ie. connecting via wifi or by adding a SIM card and connecting to a carriers network)
 
-To connect the robot Peplink to a internet source follow [these instructions](#robot_peplink_connect_to_internet)
+To connect the robot Peplink to a internet source follow [these instructions](#robot_peplink_connect_to_internet).
 
 :::
 
@@ -81,15 +80,15 @@ To connect the robot Peplink to a internet source follow [these instructions](#r
 ### Via the Robot's wireless network
 
 Each OutdoorNav robot contains a Peplink MAX BR1 Pro 5G router which is configured to act as
-a wireless access point. Connect your PC to the following SSID:
+a wireless access point. Connect your PC to the following wifi source (SSID):
 
-|          |                    |
-| -------- | -------------------|
-| SSID     | cpr_a300_amp_XXXXX |
-| Password | clearpath          |
+|          |                     |
+| -------- | ------------------- |
+| SSID     | cpr_a300_amp_XXXXX  |
+| Password | clearpath           |
 
 Depending on whether or not a base station is included with your robot there will be two different
-configurations. Follow the tables below base on whether or not you have a base station included.
+configurations. Follow the tables below based on whether or not you have a base station included.
 
 #### Access the Robot/UI
 
@@ -97,7 +96,7 @@ configurations. Follow the tables below base on whether or not you have a base s
 | ---------------| ------------------------------------- | --------------------------------------- |
 | DHCP Lease     | 192.168.131.XXX                       | 192.168.130.XXX                         |
 | SSH (password) | `ssh robot@192.168.131.1` (clearpath) | `ssh robot@192.168.130.201` (clearpath) |
-| UI URL         | http://192.168.131.1                  | http://192.168.130.201                  |
+| UI (URL)       | http://192.168.131.1                  | http://192.168.130.201                  |
 
 #### Access the Robot Peplink
 
@@ -166,7 +165,14 @@ To connect the robot Peplink to a internet source follow [these instructions](#r
 
 ### Via Cellular
 
-tbd
+Connecting via cellular is likely the most versatile method for deployment of your robot. It allows
+the robot to access the internet to receive RTK corrections and also allows for remote access, almost
+anywhere in the world.
+
+Requirements:
+
+1. SIM card with a data plan (prepaid or plan) from a local network provider.
+2. A tunnelling software (eg. Cloudflare)
 
 </details>
 
@@ -208,7 +214,7 @@ connect to the SSID of the profile you created.
 
 Use an existing SIM card or purchase a SIM card to be used for internet access to the robot.
 
-1. Insert the SIM card into Slot A or B on the peplink (under screwed cover)
+1. Insert the SIM card into Slot A or B on the peplink (under screwed cover labeled `Cellular SIM`)
 
 <center>
   <figure>
@@ -221,24 +227,27 @@ Use an existing SIM card or purchase a SIM card to be used for internet access t
 3. Click on the `Cellular` connection in the list of connections on the dashboard.
 4. Ensure that the `Enable` field is toggled to ON.
 5. Click `Save and Apply` at the bottom right of the `WAN Connection Settings` pop-up.
-6. If you have added a data plan enabled on your SIM card, then it should automatically
+6. Drag and dro whatever connection is in the priority 1 slot and drag and drop the cellular connection
+to priority 1.
+7. If you have added a data plan enabled on your SIM card, then it should automatically
    connect to the carriers network and provide an IP in the connections list.
-7. If you click the IP address it will pop-up all of the details of the cellular SIM.
+8. If you click the IP address it will pop-up all of the details of the cellular SIM.
 
 #### Connect Base Station to Internet
 
 1) You can insert a SIM card into the Base stations Peplink in a similar manner to the section above.
 
 2) You can connect the `WAN` ethernet port on the side of the base station to a live internet
-connection and the Base Station shold be granted an IP address via DHCP.  If the Base Station is
+connection (physical ethernet cable) and the Base Station should be granted an IP address via DHCP.  If the Base Station is
 not able to connect to the Internet, or is not granted a WAN IP address, contact your network
-administrator in case additional login credentials are needed
+administrator in case additional login credentials are needed.
 
 
 ## Check Camera Views {#checking-camera-feeds}
 
-When your system includes cameras, the live view from each camera is shown on the right side
-of the OutdoorNav Homepage. Clicking on a camera view will maximize it on the screen.
+All AMP robot include a front and rear Oak-D Pro W PoE cameras. The Observer upgrade also
+includes an Axis Q62 camera. The live view from each camera is shown on the right side
+of the OutdoorNav dashboard. Clicking on a camera view will maximize it on the screen.
 Cycle through each camera view and confirm that it is providing live updates.
 
 Refer to [Camera Views](../web_user_interface/ui_overview#camera-views) for more details.
@@ -255,7 +264,7 @@ Refer to [Camera Views](../web_user_interface/ui_overview#camera-views) for more
 RTK corrections are required in order for the XVN to output a localization. OutdoorNav will not work
 if you do not have RTK corrections set up.
 
-1. Open the OutdoorNav UI. Click one of the GNSS status indicators and then Click the `Open XVN UI` button.
+1. Open the OutdoorNav UI. Click one of the GNSS status indicators and then click the `Open XVN UI` button.
 2. In the XVN UI, navigate to Status (top bar) -> Fusion. Click the `Stop` button to stop the fusion.
 3. Navigate to Configuration (top bar) -> GNSS
   - Enter the details below depending on your connectivity source.
@@ -266,9 +275,9 @@ if you do not have RTK corrections set up.
   comming in for at least one minute.
 
 <details>
-<summary>**RTK via Base Station**</summary>
+<summary>**RTK via CPR Base Station**</summary>
 
-### Via Base Station
+### Via CPR Base Station
 |            |                |
 | ---------- | -------------- |
 | Source     | TCP Client     |
@@ -284,6 +293,8 @@ if you do not have RTK corrections set up.
 <summary>**RTK via Correction Service**</summary>
 
 ### Via Correction Service
+
+Below are a list of RTK correction services that are available depending on the region:
 
 - [ublox PointPerfect](https://www.u-blox.com/en/product/pointperfectflex) 
   - Canada, US & Europe
@@ -309,14 +320,40 @@ if you do not have RTK corrections set up.
   - no guarantee that they are maintained or continually operated
 - Others available...
 
+The service will provide you with the following information to be entered in the XVN UI:
+
+|            |                                           |
+| ---------- | ----------------------------------------- |
+| Source     | TCP Client                                |
+| User       | To be provided by service once subscribed |
+| Password   | To be provided by service once subscribed |
+| Host       | To be provided by service once subscribed |
+| Port       | To be provided by service once subscribed |
+| Mountpoint | To be provided by service once subscribed |
+
+
 </details>
 
 
-## Check System Status {#checking-system-status}
+## Check the Localization Status GPS RTK Fix {#checking-localization-status}
 
-Access **Menu** &srarr; **TOOLS** &srarr; **Status Monitor** to display the system status.
+The POS (position), DIR (heading), and FUS (sensor fusion) GNSS status indicators on the UI
+should be green: <img src="/img/outdoornav_images/ui_status_indicators-2_0_0.png" width="75px" />.
 
-Make note of any issues and correct those before proceeding.
+:::note
+
+If the GNSS status indicators are yellow or red, the selected location
+does not have an adequate GPS signal. Move the UGV such that the GNSS
+antennas have clearer visibility to satellites.
+
+:::
+
+Click any of the GNSS status indicator buttons or Navigate to
+**Menu** &srarr; **TOOLS** &srarr; **Status Monitor** to display the system status. All 5 localization
+statuses should be green. If the `IMU Status` and/or the `Wheelspeed` statuses are not green they should
+turn green once the robot drives around a little while, until the two IMU and wheel encoder data have
+converged.
+
 
 <center>
   <figure>
@@ -325,28 +362,7 @@ Make note of any issues and correct those before proceeding.
   </figure>
 </center>
 
-## Check the Localization Status GPS RTK Fix {#checking-localization-status}
 
-Access **Menu** &srarr; **TOOLS** &srarr; **Status Monitor** to display the system status.
-
-
-Each time the UGV has been powered up (or moved from a GPS-denied
-environment to a GPS-available environment), let the UGV sit in this
-position for 2 minutes to acquire an RTK GPS fix. The POS (position), 
-DIR (heading), and FUS (sensor fusion) GPS status indicators on the UI
-should be green: <img src="/img/outdoornav_images/ui_status_indicators-2_0_0.png" width="75px" />.
-
-:::note
-
-If the GPS status indicators are yellow or red, the selected location
-does not have an adequate GPS signal. Move the UGV such that the GPS
-antennas have clearer visibility to satellites.
-
-If your robot is not equipped with a Base Station, a separate data
-source is required to obtain a GPS fix. Contact [Support](../support)
-for additional details.
-
-:::
 
 ## Complete the System Configuration {#system_config}
 
@@ -367,11 +383,19 @@ this:
     the Internet, zoom in/out of the map to load the tiles then switch
     back to the original network.
 
+### Set Datum
+
+Navigate to **Menu** &srarr; **Settings**. In the `Map Settings` section, enter the latitude
+and longitude of the datum you want to set. The datum will represent the (x,y) = (0,0) map coordinate frame
+origin and must be set within 1 km of your deployment location.
+
+TODO: add image
+
 ### Set Dock Location
 
 :::note
 
-If the Clearpath Robotics autonomous docking package has been included,
+If the autonomous docking package has been included,
 follow these instructions to set up the dock location. Otherwise, this
 section can be skipped.
 
@@ -406,40 +430,30 @@ and orientation.
 2.  Start by manually driving the UGV to the dock target and align it as
     straight and centered as possible so that it begins charging. 
 
-3.  Let the UGV sit in this position for 2 minutes to acquire an RTK GPS
-    fix. The POS (position), DIR (heading), and FUS (sensor fusion) GPS status indicators on
-    the UI should be green: <img src="/img/outdoornav_images/ui_status_indicators-2_0_0.png" width="75px" />.
+3.  On the left side of the UI, select the Edit mode button (pencil icon) and then select the Docks option.
 
-    :::note
-    
-    If the GPS status indicators are yellow or red, the selected
-    location of the dock is NOT appropriate. Please change the dock
-    location such that the GPS antennas have a clearer visibility.
+4.  Click anywhere on the map to create a dock. Name it and selectthe defualt configuration.
 
-    :::
+5.  Click and drag the dock to the location of the robot icon and align its position and orientation.
+    To rotate the dock, hold the `Ctrl` button and use the cursor to orient the dock (the arrow on the
+    dock should be used as a guide).
 
-4.  On the UI, **Menu** &srarr; **SETTINGS** &srarr; **Add New Dock Location**.
-    The dock location will be stored in 5 - 10 seconds as data is collected.
+6.  On the left side of the UI, select the Edit mode button and then select the cursor option.
 
-If the Base Station has been moved (and therefore been resurveyed), or
-if the dock has been moved to a new location, the user will need to
-reset the location of the dock. This is done in the following manner:
+7.  With the remote controller, drive the robot at low speed purely in reverse so that it appear on the
+    green dot on the UI (ie. the rpedock point).
 
-1.  Repeat the previous set of instructions from step 1 to 4.
+8.  Right click the dock and select `Survey` in the list of option.
 
-2.  While in **Edit Mode** select the dock on the UI. A drop down should appear
-    with the option to reset the dock location. Select that option.
-
-3.  After approximately 5 - 10 seconds the dock location should be updated and the UI will
-    reflect the change accordingly.
+9.  The docks position/orientation will be updated in 10 seconds. You should see the dock snap to its new pose.
 
 ## Create Your First Map
 
 1.  Ensure that the UI is in "Map Edit Mode":
     <img src="/img/outdoornav_images/ui_edit_button.png" width="40px" />  &srarr; 
     <img src="/img/outdoornav_images/ui_edit_map.png" width="40px" />.
-1.  Open the drop down menu in the bottom bar (left-side) and select the "Add Map" option.
-1.  Start placing points and building paths. (A map will be created with the default settings.)
+2.  Open the drop down menu in the bottom bar (left-side) and select the "Add Map" option.
+3.  Start placing points and building paths. (A map will be created with the default settings.)
 
 For more details, refer to [Map Creation](../web_user_interface/ui_map_mode#mapCreation).
 
@@ -448,16 +462,23 @@ For more details, refer to [Map Creation](../web_user_interface/ui_map_mode#mapC
 1.  Ensure that the UI is in "Mission Edit Mode":
     <img src="/img/outdoornav_images/ui_edit_button.png" width="40px" />  &srarr; 
     <img src="/img/outdoornav_images/ui_edit_mission.png" width="40px" />.
-1.  Open the drop down menu in the bottom bar (right side) and select the "Add Mission" option.
-1.  Select the "Goalpoint Mode" button.
-1.  Click on the map to add a goalpoint.
-1.  Confirm that a preview path is shown on the map.
+2.  Open the drop down menu in the bottom bar (right side) and select the "Add Mission" option.
+3.  Select the "Goalpoint Mode" button.
+4.  Click on the map to add a goalpoint.
+5.  Confirm that a preview path is shown on the map.
 
 For more details, refer to [Mission Creation](../web_user_interface/ui_map_mode#missionCreation).
 
+## Execute a GoTo
+
+1.  Right-click on a location within the map (ie. anywhere that is in the green navigable space).
+2.  Select `GoTo`, a previewed path will show up. If you approve of the path that the robot will
+traverse, click the checkmark. The robot will begin navigating to the selected point.
+
+
 ## Execute Your First Mission
 
-1.  In the bottom bar of the UI, click the "Play" button <img src="/img/outdoornav_images/ui_start_button_simple.png" width="16px"/>.
-1.  Confirm that the "Play" button has turned green, which indicates that the mission has started.
+1.  In the bottom bar of the UI, click the `Play` button <img src="/img/outdoornav_images/ui_start_button_simple.png" width="16px"/>.
+2.  Confirm that the "Play" button has turned green, which indicates that the mission has started.
 
 For more details, refer to [Mission Execution](../web_user_interface/ui_map_mode#missionExecution).
