@@ -112,7 +112,7 @@ configurations. Follow the tables below based on whether or not you have a base 
 The robot PC will not have internet access unless you have connected the onboard robot Peplink to an
 internet source (ie. connecting via wifi or by adding a SIM card and connecting to a carriers network)
 
-To connect the robot Peplink to a internet source follow [these instructions](#robot_peplink_connect_to_internet)
+To connect the robot Peplink to a internet source follow [these instructions](#robot_peplink_connect_to_internet).
 
 :::
 
@@ -125,7 +125,24 @@ To connect the robot Peplink to a internet source follow [these instructions](#r
 ### Via a CPR provided Base Station
 
 If you have purchased a seperate (optional) Base Station, it will be configured to act as the 
-a wireless access point for your robot. Connect your PC to the following SSID:
+a wireless access point for your robot. 
+
+  - Place the base station outside with a clear view of the sky. It should be at least 5m away
+  from large buildings or trees.
+  - Power on the base station.
+  - The base station will automatically connect to the robot and provide a wifi network for you
+    to connect to.
+  - The base station will also automatically start an auto-survey and will start providing an
+    RTK fix to the robot in approx. 10 - 15 minutes.
+
+:::note
+
+If you move the base station while it is still powered on, it will need to be powered off and
+back on again to re-survey and provide an accurate RTK fix.
+
+:::
+
+Connect your PC to the following SSID:
 
 |          |                  |
 | -------- | ---------------- |
@@ -133,6 +150,8 @@ a wireless access point for your robot. Connect your PC to the following SSID:
 | Password | clearpath        |
 
 Your PC will automatically be assigned a DHCP lease and an IP on the 192.168.130.xxx subnet.
+
+FOr more detailed information on the CPR base station, refer to the [Base Station User Manual](../base_station/base_station.mdx).
 
 #### Access the Robot/UI
 
@@ -154,7 +173,7 @@ Your PC will automatically be assigned a DHCP lease and an IP on the 192.168.130
 The robot PC will not have internet access unless you have connected the onboard robot Peplink to an
 internet source (ie. connecting via wifi or by adding a SIM card and connecting to a carriers network)
 
-To connect the robot Peplink to a internet source follow [these instructions](#robot_peplink_connect_to_internet)
+To connect the robot Peplink to a internet source follow [these instructions](#robot_peplink_connect_to_internet).
 
 :::
 
@@ -242,23 +261,6 @@ connection (physical ethernet cable) and the Base Station should be granted an I
 not able to connect to the Internet, or is not granted a WAN IP address, contact your network
 administrator in case additional login credentials are needed.
 
-
-## Check Camera Views {#checking-camera-feeds}
-
-All AMP robot include a front and rear Oak-D Pro W PoE cameras. The Observer upgrade also
-includes an Axis Q62 camera. The live view from each camera is shown on the right side
-of the OutdoorNav dashboard. Clicking on a camera view will maximize it on the screen.
-Cycle through each camera view and confirm that it is providing live updates.
-
-Refer to [Camera Views](../web_user_interface/ui_overview#camera-views) for more details.
-
-<center>
-  <figure>
-    <img src="/img/outdoornav_images/ui_front_camera_view_2_0_0.png" />
-    <figcaption>Web UI Front Camera View</figcaption>
-  </figure>
-</center>
-
 ## RTK Corrections Setup {#rtk_setup}
 
 RTK corrections are required in order for the XVN to output a localization. OutdoorNav will not work
@@ -267,12 +269,29 @@ if you do not have RTK corrections set up.
 1. Open the OutdoorNav UI. Click one of the GNSS status indicators and then click the `Open XVN UI` button.
 2. In the XVN UI, navigate to Status (top bar) -> Fusion. Click the `Stop` button to stop the fusion.
 3. Navigate to Configuration (top bar) -> GNSS
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/xvn_rtk_setup.png" />
+    <figcaption>XVN RTK Setup Page</figcaption>
+  </figure>
+</center>
+
   - Enter the details below depending on your connectivity source.
   - Click `Save & Apply`.
 4. Confirm connection to RTK correction server.
-  - The `Correction data` indicator wil turn green and say `connected`.
+  - The `Correction data` indicator will turn green and say `connected`.
   - You should also check the Status -> GNSS page and confirm that `good/complete` corrections have been
   comming in for at least one minute.
+5. Restart the fusion by navigating to Status (top bar) -> Fusion and clicking the `Start` button.
+  You should start seeing the indicators on the page start turning green as the fusion starts converging.
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/xvn_fusion_start.png" />
+    <figcaption>XVN Fusion Start</figcaption>
+  </figure>
+</center>
 
 <details>
 <summary>**RTK via CPR Base Station**</summary>
@@ -324,7 +343,7 @@ The service will provide you with the following information to be entered in the
 
 |            |                                           |
 | ---------- | ----------------------------------------- |
-| Source     | TCP Client                                |
+| Source     | NTRIP client (auto)                       |
 | User       | To be provided by service once subscribed |
 | Password   | To be provided by service once subscribed |
 | Host       | To be provided by service once subscribed |
@@ -362,6 +381,21 @@ converged.
   </figure>
 </center>
 
+## Check Camera Views {#checking-camera-feeds}
+
+All AMP robot include a front and rear Oak-D Pro W PoE cameras. The Observer upgrade also
+includes an Axis Q62 camera. The live view from each camera is shown on the right side
+of the OutdoorNav dashboard. Clicking on a camera view will maximize it on the screen.
+Cycle through each camera view and confirm that it is providing live updates.
+
+Refer to [Camera Views](../web_user_interface/ui_overview#camera-views) for more details.
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/ui_front_camera_view_2_0_0.png" />
+    <figcaption>Web UI Front Camera View</figcaption>
+  </figure>
+</center>
 
 
 ## Complete the System Configuration {#system_config}
