@@ -1,0 +1,44 @@
+<table>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("./img/flir_ptu_5.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+
+```yaml
+ptu:
+  - model: flir_ptu
+    urdf_enabled: true
+    launch_enabled: true
+    parent: base_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ptu_model: ptu5
+    ros_parameters:
+      ptu_driver:
+        connection_type: tcp
+        ip_addr: 192.168.131.70
+        tcp_port: 4000
+        limits_enabled: false
+```
+</td>
+</tr>
+</table>
+
+#### Package and Setup
+The FLIR Pan-Tilt Unit uses the `flir_ptu_driver` ROS 2 package. The driver is open source, hosted on [GitHub](https://github.com/ros-drivers/flir_ptu), and installed alongside the `clearpath_robot` package as a dependency.
+
+For more specifics on the way Clearpath's configuration system launches the `flir_ptu_driver` node, see the FLIR PTU [launch file](https://github.com/clearpathrobotics/clearpath_robot/blob/jazzy/clearpath_sensors/launch/flir_ptu.launch.py) and the [default parameter file](https://github.com/clearpathrobotics/clearpath_robot/blob/jazzy/clearpath_sensors/config/flir_ptu.yaml) in `clearpath_sensors`.
+
+#### Hardware Model
+The FLIR PTU-5 is supported. Set `ptu_model: ptu5` on the sensor entry.
+
+#### Connection
+The FLIR PTU can be connected over TCP/IP (Ethernet) or over a serial TTY. The `ptu_driver.connection_type` parameter selects the transport:
+
+- `tcp`: Use the `ip_addr` and `tcp_port` parameters to specify the device address. The default IP address is `192.168.131.70`, port `4000`.
+- `tty`: Use the `port` parameter to specify the serial device path (default: `/dev/ptu`).
