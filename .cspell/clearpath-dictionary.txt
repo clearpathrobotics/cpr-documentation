@@ -22,6 +22,7 @@ Ewellix
 FireWire
 Fixposition
 Flaticon
+FLIR
 Freepik
 Futaba
 Greenlee
@@ -203,6 +204,8 @@ odometry
 odom
 openni
 pointcloud
+PTU
+ptu5
 RSSI
 RTK
 SBAS
