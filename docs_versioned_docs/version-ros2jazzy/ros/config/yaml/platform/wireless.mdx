@@ -1,0 +1,101 @@
+---
+title: Wireless
+sidebar_label: Wireless
+sidebar_position: 7
+toc_min_heading_level: 2
+toc_max_heading_level: 5
+---
+
+The **wireless** section configures wireless networking nodes that run on the robot, including the wireless watcher and any
+supported external wireless devices such as routers or base stations.
+
+| Key                       | Value / Datatype       | Description                                                                                                                  |
+| :-----------------------: | :--------------------: | ---------------------------------------------------------------------------------------------------------------------------- |
+| `router`                  | [See below](#router)   | Configuration for an onboard wireless router (e.g. a Peplink router installed on the robot). Default: `null` (no router).    |
+| `base_station`            | [See below](#router)   | Configuration for an external base station router (using the same schema as `router`). Default: `null` (no base station).    |
+| `enable_wireless_watcher` | boolean                | Enables or disables the [wireless watcher node](https://github.com/clearpathrobotics/wireless). Default: `true`.             |
+
+For example:
+
+```yaml
+platform:
+  wireless:
+    enable_wireless_watcher: true
+    router:
+      model: peplink
+      ip_address: 192.168.131.51
+      username: admin
+      password: admin
+      enable_gps: false
+      publish_passwords: false
+```
+
+## Wireless Watcher
+
+By default, all Clearpath platforms launch a [Wireless Watcher node](https://github.com/clearpathrobotics/wireless).
+This node monitors the computer's integrated wireless interface connection. Some applications may not use this integrated
+wireless connection, in which case the wireless watcher node can be disabled, although it can be left enabled without
+negative ramifications.
+
+For example, to disable the wireless watcher node:
+
+```yaml
+platform:
+  wireless:
+    enable_wireless_watcher: false
+```
+
+:::note
+
+The `platform.enable_wireless_watcher` key is deprecated and has been moved to `platform.wireless.enable_wireless_watcher`.
+The legacy key still works for backwards compatibility, but new configurations should use the `wireless` section.
+
+:::
+
+## Router  {#router}
+
+The `router` and `base_station` entries share a common schema. The `router` entry describes a wireless router installed
+_on_ the robot, while the `base_station` entry describes an external router (e.g. mounted at a fixed location) that the
+robot communicates with.
+
+The available options depend on the `model`. The currently supported models are listed below.
+
+### Common Options
+
+| Key              | Value / Datatype | Description                                                                                                |
+| :--------------: | :--------------: | ---------------------------------------------------------------------------------------------------------- |
+| `model`          | string           | The router model. Required. Currently only `peplink` is supported.                                         |
+| `ip_address`     | string           | The IPv4 address of the router on the robot's network.                                                     |
+| `launch_enabled` | boolean          | Whether the driver node for this router should be launched. Default: `true`.                               |
+
+### Peplink
+
+When `model` is set to `peplink`, the [`peplink_router_driver`](https://github.com/clearpathrobotics/peplink_router_driver)
+package is used to communicate with the router over its web API.
+
+| Key                 | Value / Datatype | Description                                                                                                  |
+| :-----------------: | :--------------: | ------------------------------------------------------------------------------------------------------------ |
+| `ip_address`        | string           | The IPv4 address of the Peplink router. Default: `192.168.131.51`.                                           |
+| `username`          | string           | The username used to authenticate with the router's web API. Default: `admin`.                               |
+| `password`          | string           | The password used to authenticate with the router's web API. Default: `admin`.                               |
+| `enable_gps`        | boolean          | If `true`, the driver publishes GPS data reported by the router (for routers equipped with GPS). Default: `false`. |
+| `publish_passwords` | boolean          | If `true`, Wi-Fi passwords reported by the router are published on the corresponding ROS topics. Default: `false`. |
+
+For example, configuring an onboard Peplink router and an external Peplink base station:
+
+```yaml
+platform:
+  wireless:
+    router:
+      model: peplink
+      ip_address: 192.168.131.51
+      username: admin
+      password: admin
+      enable_gps: true
+      publish_passwords: false
+    base_station:
+      model: peplink
+      ip_address: 192.168.131.52
+      username: admin
+      password: admin
+```
