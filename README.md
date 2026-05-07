@@ -2,6 +2,21 @@
 
 <br/>
 
+## About
+
+This repository holds the source of Clearpath Robotics technical documentation, including:
+
+- hardware user manuals
+- hardware maintenance manuals
+- software configuration guides
+- software changelogs, and instructions for updating robots
+- ROS tutorials
+
+The source files here are then built and deployed as docs.clearpathrobotics.com using AWS Amplify.
+
+
+<br/>
+
 ## Links to the deployed website:
 
 - [_production_ branch](https://docs.clearpathrobotics.com)
