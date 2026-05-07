@@ -1,9 +1,12 @@
 # cpr-documentation
 
+<br/>
 ## Links to the deployed website:
 
 - [_production_ branch](https://docs.clearpathrobotics.com)
 - [_development_ branch](https://development.dfy90wyu8dics.amplifyapp.com/)
+
+<br/>
 
 ## Tools used:
 
@@ -11,6 +14,8 @@
 2.  [Docusaurus](https://docusaurus.io/) _by Facebook / Meta_
 3.  [AWS Amplify](https://aws.amazon.com/amplify/)
 4.  _Full list detailed in the file `./package.json` as dependencies and devDependencies_
+
+<br/>
 
 ## Steps to run this on your computer locally:
 
@@ -47,6 +52,8 @@
       <br />
       <img src="/static/img/readme_images/readme_chrome_developer_2.png" width="800"/>
     </details>
+
+<br/>
 
 ## Workflow for making updates:
 
@@ -231,6 +238,8 @@ includeCurrentVersion: false,
 
 </details>
 
+<br/>
+
 ## How should I write pages?
 
 1.  Refer to [Markdown's guide](https://www.markdownguide.org/basic-syntax/) for syntax.
@@ -240,6 +249,7 @@ includeCurrentVersion: false,
 3.  For advanced users, refer to [Markdown MDX](https://mdxjs.com/) for adding React Components to a Markdown file.
 4.  For advanced users, you may create React pages using _.js_ or _.ts_ file types.
 
+<br/>
 ## How should I name files?
 
 All files should use lowercase letters for their names and file extensions.
@@ -253,6 +263,8 @@ Using lowercase letters minimizes the number of build issues.
 
 Downloadable assets like PDFs should say _clearpath_robotics_ at the start of the name.
 This helps Users know where they downloaded the file from later, as the asset is saved to their _Downloads_ folder.
+
+<br/>
 
 ## Where should I place files?
 
@@ -292,6 +304,8 @@ This helps Users know where they downloaded the file from later, as the asset is
       This is the public URL to access the file you uploaded.
       Note that this S3 Bucket is configured so all files' permissions are automatically set to public access.
 
+<br/>
+
 ## How to merge branches into the Production branch?
 
 The website is built and deployed using AWS Amplify.
@@ -324,6 +338,8 @@ Follow this process to keep the _development_ and _production_ branches aligned,
     5.  Force Push this commit to the _development_ branch on GitHub.
         Note: our branch protection rules in the GitHub repository only allow Administrators and Owners to Force Push to the _production_ and _development_ branches.
 
+<br/>
+
 ## How does the deployed website get updated?
 
 We have this site deployed on _AWS Amplify_.
@@ -341,9 +357,13 @@ The downsides of deploying more branches are:
 - A small cost to AWS for using their Server.
   At the time of writing (May 2022), [AWS charges](https://aws.amazon.com/amplify/pricing/) $0.01 USD per build minute.
 
+<br/>
+
 ## Structure for pages
 
 You can find templates in the directory _/static/reference_pages_
+
+<br/>
 
 ## Equations
 
@@ -356,6 +376,8 @@ $$
 $$
 
 You can test equation syntax using [this tool](https://katex.org/) from KaTex.
+
+<br/>
 
 ## Image formatting
 
@@ -382,6 +404,8 @@ The list below are not strict rules, but are considered good practice to keep im
 
     Note: icons, logos, and symbols that are part of the physical product are exempt from this suggestion.
 
+<br/>
+
 ## Links and Imports
 
 All links to, or imports of versioned elements (images, markdown files etc.) must be referred to using relative links (`img/image-name.png` or `../../robots/add-ons/pacs.mdx`), including the file extension. These versioned pages will be moved together and ensures that the correct version is used. Including the file extension ensures that the next page will be located based on the file location not the generated links. This method is much more robust and should be followed whenever possible. When using visual studio code, the `Relative Path` extension can make this process easy.
@@ -389,6 +413,8 @@ All links to, or imports of versioned elements (images, markdown files etc.) mus
 All links to, or imports of unversioned static elements must be referred to using absolute paths (`/static/img/image-name.png`). This allows these assets to be found irrelevant of the location of the particular page. This link should be the path to the file including the file extension, even when it is an md or mdx file.
 
 Links to headings must not include an extra slash between the name of the page and the name of the heading. Doing this can result in broken links. For example: `../ros/#supported-platforms` is incorrect. It will initially work but any relative links that rely on the url (instead of file path) that the user clicks will appear to be broken. Instead, it must be `../ros#supported-platforms`. This is irrelevant when the relative links are based on file path.
+
+<br/>
 
 ## SolidWorks image exports
 
@@ -415,6 +441,8 @@ Links to headings must not include an extra slash between the name of the page a
     Finally, select _OK_, and _Save_
 
     <img src="/static/img/readme_images/readme_solidworks_image_4.png" width="800"/>
+
+<br/>
 
 ## Mermaid Diagrams
 
@@ -534,6 +562,8 @@ Even though the font size has been modified, the rendered diagram's font may not
   `}
 />
 ```
+
+<br/>
 
 ## Spelling Guide
 
