@@ -50,56 +50,60 @@
 
 ## Workflow for making updates:
 
-1.  Clone or fork this repository,
+<details>
+  <summary>Click to expand for details on how to update pages and content</summary>
 
-        git clone https://github.com/clearpathrobotics/cpr-documentation.git
+  1.  Clone or fork this repository,
 
-    The default branch is _development_, which reflects the current state of reviewed documentation.
-    The _production_ branch is just a means to delay the website rebuild, till we have bundled a release.
-2.  Create a branch from _development_ with a name indicating the purpose, such as _feature_xxxxxx_.
-3.  Make changes to the relevant files.
-4.  Test using your local server, using the steps mentioned [Steps to run this on your computer locally](#steps-to-run-this-on-your-computer-locally)
-5.  When ready, enter `ctrl-c` in your terminal to stop the server. Then run `npm run build` to test that the site builds correctly.
-6.  Resolve any errors that the terminal reports, and rerun the command `npm run build`.
-7.  Finally, check that your updates adhere to our code formatting standard, by running the command `npm run format-check`.
-    The terminal will either report:
+          git clone https://github.com/clearpathrobotics/cpr-documentation.git
 
-    - _All matched files use Prettier code style!_
-    - _Code style issues found in the above file(s). Forgot to run Prettier?_
-      You can fix the errors by running Prettier on a single file, with `npx prettier --write <FILE PATH>`.
-      For example, you can run the command `npx prettier --write README.md` to format this README.
+      The default branch is _development_, which reflects the current state of reviewed documentation.
+      The _production_ branch is just a means to delay the website rebuild, till we have bundled a release.
+  2.  Create a branch from _development_ with a name indicating the purpose, such as _feature_xxxxxx_.
+  3.  Make changes to the relevant files.
+  4.  Test using your local server, using the steps mentioned [Steps to run this on your computer locally](#steps-to-run-this-on-your-computer-locally)
+  5.  When ready, enter `ctrl-c` in your terminal to stop the server. Then run `npm run build` to test that the site builds correctly.
+  6.  Resolve any errors that the terminal reports, and rerun the command `npm run build`.
+  7.  Finally, check that your updates adhere to our code formatting standard, by running the command `npm run format-check`.
+      The terminal will either report:
 
-      If you have added a new folder and need to format all files within it you can use the `*` wildcard, for example" `npx prettier --write folder/*`
+      - _All matched files use Prettier code style!_
+      - _Code style issues found in the above file(s). Forgot to run Prettier?_
+        You can fix the errors by running Prettier on a single file, with `npx prettier --write <FILE PATH>`.
+        For example, you can run the command `npx prettier --write README.md` to format this README.
 
-      - Refer to the _package.json_ to understand what this script calls.
-      - Refer to the _.prettierrc.json_ to understand the rules Prettier is using when checking files.
+        If you have added a new folder and need to format all files within it you can use the `*` wildcard, for example" `npx prettier --write folder/*`
 
-      > [!NOTE]  
-      > We used to suggest the command `npm run format-write` to update all the files in this repository.
-      > We don't suggest this command anymore, since it is then difficult for reviewers of Pull Requests to find the intended content changes.
-      > If you continue to use this entire repository command, you may see files that claim to be updated in Source Control, but don't have any visible changes.
-      > If so, you should run these commands in your terminal to prevent Git from noting these types of changes:
-      > 
-      > ```bash
-      > git config --global core.filemode false
-      > git config --global core.autocrlf false
-      > ```
+        - Refer to the _package.json_ to understand what this script calls.
+        - Refer to the _.prettierrc.json_ to understand the rules Prettier is using when checking files.
 
-8.  Run the spell checker to catch any spelling errors by running `npm run spellcheck`.
-    If there are spelling errors, correct them in the source files. If you encounter a valid word that is flagged
-    _(such as a technical term, brand name, or Canadian English spelling)_, add it to `.cspell/clearpath-dictionary.txt`.
+        > [!NOTE]  
+        > We used to suggest the command `npm run format-write` to update all the files in this repository.
+        > We don't suggest this command anymore, since it is then difficult for reviewers of Pull Requests to find the intended content changes.
+        > If you continue to use this entire repository command, you may see files that claim to be updated in Source Control, but don't have any visible changes.
+        > If so, you should run these commands in your terminal to prevent Git from noting these types of changes:
+        > 
+        > ```bash
+        > git config --global core.filemode false
+        > git config --global core.autocrlf false
+        > ```
 
-9.  When ready, publish your branch on GitHub, and submit a Pull Request to merge your changes into the _development_ branch.
-    Pull Requests to the _production_ branch will not merged.
-    Also note that this GitHub repository has branch protection rules, that prevent you from committing directly to _production_ and _development_.
-    The Pull Request will automatically request reviews from people listed in the codeowners file, but you can also add more reviewers.
-    PRs opened by organization members are automatically assigned to the author.
-    PRs from external contributors are automatically assigned to the code owners.
+  8.  Run the spell checker to catch any spelling errors by running `npm run spellcheck`.
+      If there are spelling errors, correct them in the source files. If you encounter a valid word that is flagged
+      _(such as a technical term, brand name, or Canadian English spelling)_, add it to `.cspell/clearpath-dictionary.txt`.
 
-    <img src="/static/img/readme_images/readme_github_1.png" width="467"/>
+  9.  When ready, publish your branch on GitHub, and submit a Pull Request to merge your changes into the _development_ branch.
+      Pull Requests to the _production_ branch will not merged.
+      Also note that this GitHub repository has branch protection rules, that prevent you from committing directly to _production_ and _development_.
+      The Pull Request will automatically request reviews from people listed in the codeowners file, but you can also add more reviewers.
+      PRs opened by organization members are automatically assigned to the author.
+      PRs from external contributors are automatically assigned to the code owners.
 
-10. The administrators of this documentation will review the website for any functional issues,
-    and will periodically merge the latest commits in the _development_ branch into the _production_ branch.
+      <img src="/static/img/readme_images/readme_github_1.png" width="467"/>
+
+  10. The administrators of this documentation will review the website for any functional issues,
+      and will periodically merge the latest commits in the _development_ branch into the _production_ branch.
+</details>
 
 ## Workflow for publishing OutdoorNav User Manual updates
 
