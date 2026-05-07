@@ -270,7 +270,9 @@ includeCurrentVersion: false,
 3.  For advanced users, refer to [Markdown MDX](https://mdxjs.com/) for adding React Components to a Markdown file.
 4.  For advanced users, you may create React pages using _.js_ or _.ts_ file types.
 
+
 <br/>
+
 ## How should I name files?
 
 All files should use lowercase letters for their names and file extensions.
