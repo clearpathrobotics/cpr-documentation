@@ -54,6 +54,8 @@
 
         git clone https://github.com/clearpathrobotics/cpr-documentation.git
 
+    The default branch is _development_, which reflects the current state of reviewed documentation.
+    The _production_ branch is just a means to delay the website rebuild, till we have bundled a release.
 2.  Create a branch from development with a name indicating the purpose, such as _feature_xxxxxx_
 3.  Make changes to the relevant files.
 4.  Test using your local server, using the steps mentioned [Steps to run this on your computer locally](#steps-to-run-this-on-your-computer-locally)
