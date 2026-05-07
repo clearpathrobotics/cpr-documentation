@@ -87,7 +87,7 @@
 
 8.  Run the spell checker to catch any spelling errors by running `npm run spellcheck`.
     If there are spelling errors, correct them in the source files. If you encounter a valid word that is flagged
-    (such as a technical term, brand name, or Canadian English spelling), add it to `.cspell/clearpath-dictionary.txt`.
+    _(such as a technical term, brand name, or Canadian English spelling)_, add it to `.cspell/clearpath-dictionary.txt`.
 
 9.  When ready, publish your branch on GitHub, and submit a Pull Request to merge your changes into the _development_ branch.
     Pull Requests to the _production_ branch will not merged.
