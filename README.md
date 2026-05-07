@@ -36,7 +36,7 @@
 7.  If you want to test something on a mobile screensize; you can do this within your desktop's Chrome browser.
 
     <details>
-      <summary>Expand, for Chrome's mobile screensize instructions</summary>
+      <summary>Click to expand, for Chrome's mobile screensize instructions</summary>
 
       When the site is running locally; enter Chrome's developer tools by selecting:
         The _vertical ellipsis (3 dots) in the top right_ → _More tools_ → _Developer tools_.
