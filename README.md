@@ -10,6 +10,7 @@
 1.  [Node.js](https://nodejs.org/en/)
 2.  [Docusaurus](https://docusaurus.io/) _by Facebook / Meta_
 3.  [AWS Amplify](https://aws.amazon.com/amplify/)
+4.  _Full list detailed in the file `./package.json` as dependencies and devDependencies_
 
 ## Steps to run this on your computer locally:
 
