@@ -50,7 +50,7 @@
 
 ## Workflow for making updates:
 
-### Workflow, Robot, Proton, and general pages:
+### Workflow—Robot, Proton, and general pages:
 
 <details>
   <summary>Click to expand for details on how to update pages and content</summary>
@@ -107,7 +107,7 @@
       and will periodically merge the latest commits in the _development_ branch into the _production_ branch.
 </details>
 
-### Workflow, OutdoorNav User Manual updates
+### Workflow—OutdoorNav
 
 <details>
 
@@ -142,7 +142,7 @@ When it is time to publish a numbered release of the user manual:
 
 </details>
 
-### Workflow, IndoorNav User Manual updates
+### Workflow—IndoorNav
 
 <details>
 
@@ -154,7 +154,7 @@ Follow the steps for the OutdoorNav User Manual workflow above, replacing
 
 </details>
 
-### Workflow, Software User Manual updates
+### Workflow—Software
 
 <details>
 
