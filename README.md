@@ -50,6 +50,8 @@
 
 ## Workflow for making updates:
 
+### Workflow, Robot, Proton, and general pages:
+
 <details>
   <summary>Click to expand for details on how to update pages and content</summary>
 
@@ -105,7 +107,7 @@
       and will periodically merge the latest commits in the _development_ branch into the _production_ branch.
 </details>
 
-## Workflow for publishing OutdoorNav User Manual updates
+### Workflow, OutdoorNav User Manual updates
 
 <details>
 
@@ -116,12 +118,12 @@ The OutdoorNav User Manual is a "versioned" document, which means that a snapsho
 made to align with a release. This allows users to access version-specific copies of the
 documentation.
 
-### Development Phase
+#### Development Phase
 
 During the development phase, follow steps 1-10 of the workflow above. Note that the updates will not affect
 the default view of the user manual, only the "next" version of the manual
 
-### Release Phase
+#### Release Phase
 
 When it is time to publish a numbered release of the user manual:
 
@@ -140,7 +142,7 @@ When it is time to publish a numbered release of the user manual:
 
 </details>
 
-## Workflow for publishing IndoorNav User Manual updates
+### Workflow, IndoorNav User Manual updates
 
 <details>
 
@@ -152,7 +154,7 @@ Follow the steps for the OutdoorNav User Manual workflow above, replacing
 
 </details>
 
-## Workflow for publishing Software User Manual updates
+### Workflow, Software User Manual updates
 
 <details>
 
@@ -163,11 +165,11 @@ The Software sections of the website are a "versioned" document called <code>doc
 made to align with each ROS version. This allows users to access version-specific copies of the
 documentation.
 
-### Maintenance Phase (For Existing Version)
+#### Maintenance Phase (For Existing Version)
 
 Follow steps 1-10 from [above](#workflow-for-making-updates). However, all changes will be made to the files within `docs_versioned_docs/` for the particular version that needs to be changed. E.g. any changes to the ROS 2 Humble documentation would be made to the files within `docs_versioned_docs/version-ros2humble/`.
 
-### Development Phase (For New Version)
+#### Development Phase (For New Version)
 
 Start by following step 1 & 2 [above](#workflow-for-making-updates).
 
@@ -188,7 +190,7 @@ Continue through to step 9 of the workflow above to complete the update. Once co
 > **Note**
 > The documentation includes unversioned mdx components from `components/` and versioned components from `docs/components/`. If versioning needs to be added move the component into the versioned folder for each version and remap the imports (using relative links).
 
-### Release Phase (For New Version)
+#### Release Phase (For New Version)
 
 When it is time to publish a new version of the manual:
 
