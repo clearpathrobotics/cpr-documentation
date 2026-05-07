@@ -74,13 +74,16 @@
       - Refer to the _package.json_ to understand what this script calls.
       - Refer to the _.prettierrc.json_ to understand the rules Prettier is using when checking files.
 
-      Note, we used to suggest the command `npm run format-write` to update all the files in this repository.
-      We don't suggest this command anymore, since it is then difficult for reviewers of Pull Requests to find the intended content changes.
-      If you do continue to use this entire repository command, you may see files that claim to be updated in Source Control, but don't have any visible changes.
-      If so, you should run these commands in your terminal to prevent Git from noting these types of changes:
-
-      git config --global core.filemode false
-      git config --global core.autocrlf false
+      > [!NOTE]  
+      > We used to suggest the command `npm run format-write` to update all the files in this repository.
+      > We don't suggest this command anymore, since it is then difficult for reviewers of Pull Requests to find the intended content changes.
+      > If you continue to use this entire repository command, you may see files that claim to be updated in Source Control, but don't have any visible changes.
+      > If so, you should run these commands in your terminal to prevent Git from noting these types of changes:
+      > 
+      > ```bash
+      > git config --global core.filemode false
+      > git config --global core.autocrlf false
+      > ```
 
 8.  Run the spell checker to catch any spelling errors by running `npm run spellcheck`.
     If there are spelling errors, correct them in the source files. If you encounter a valid word that is flagged
