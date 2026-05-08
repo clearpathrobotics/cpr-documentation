@@ -6,7 +6,8 @@ hide_table_of_contents: true
 
 ## About this site
 
-This site hosts the documentation for the products that Clearpath Robotics supports. You will find manuals, tutorials, and troubleshooting guides for robots, sensors, and software.
+This site hosts the documentation for the products that Clearpath Robotics supports.
+You will find manuals, tutorials, and troubleshooting guides for robots, sensors, and software.
 
 ## About Clearpath Robotics
 
@@ -21,6 +22,12 @@ Our team is passionate about building robots for the greater good.
 We love to problem solve, make innovative ideas a reality, and play the occasional game of frisbee over lunch.
 We’re the leader in research robotics and blazing the trail for robots in industry.
 Ready to be a part of it?
+
+## About Rockwell Automation
+
+Clearpath Robotics was acquired by Rockwell Automation in 2023.
+Rockwell Automation is a global leader in industrial automation and digital transformation, 
+with a mission to improve the quality of life by making the world more productive and sustainable.
 
 ## About ROS
 
