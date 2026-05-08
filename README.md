@@ -373,20 +373,14 @@ Follow this process to keep the _development_ and _production_ branches aligned,
 
 ## How does the deployed website get updated?
 
-We have this site deployed on _AWS Amplify_.
-Their server is monitoring the _production_ and _development_ branches of this repository.
+The public site is deployed with _AWS Amplify_.
+AWS is monitoring the _production_ and _development_ branches of this repository.
 When AWS sees a new commit on either branch, it will rebuild the site.
 The image below shows the _development_ branch rebuilding after the GitHub branch was updated by a Pull Request.
 
 <img src="/static/img/readme_images/readme_aws_1.png" width="800"/>
 
 This example took 2 minutes and 14 seconds to deploy.
-If your _feature_ branch change is large, we can deploy it as a temporary site on AWS to confirm that it builds before submitting a Pull Request into Development.
-The downsides of deploying more branches are:
-
-- Possible time lost, though this may save time by preventing build errors on the _production_ branch
-- A small cost to AWS for using their Server.
-  At the time of writing (May 2022), [AWS charges](https://aws.amazon.com/amplify/pricing/) $0.01 USD per build minute.
 
 
 <br/>
