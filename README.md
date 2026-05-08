@@ -294,9 +294,13 @@ This helps Users know where they downloaded the file from later, as the asset is
 
 1.  Markdown page
 
-        /docs
+        /docs_proton
+        /docs_robots
+        /docs_versioned_docs
+        /docs_indoornav_user_manual
+        /docs_outdoornav_user_manual
 
-2.  Markdown component, like a section to be reused in multiple pages (unversioned)
+2.  Markdown component, like a section to be reused in multiple pages _(unversioned)_
 
         /components
 
