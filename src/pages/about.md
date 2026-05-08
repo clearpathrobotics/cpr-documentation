@@ -1,7 +1,7 @@
 ---
 title: About
 description: a description of this site
-hide_table_of_contents: false
+hide_table_of_contents: true
 ---
 
 ## About this site
