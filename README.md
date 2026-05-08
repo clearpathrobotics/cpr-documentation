@@ -448,6 +448,9 @@ Links to headings must not include an extra slash between the name of the page a
 
 ## SolidWorks image exports
 
+>[!NOTE]
+> This process was developed with SolidWorks 2020.
+
 1.  Open your assembly in SolidWorks.
     Orient the model to the view you want to capture.
     Click _File_ → _Save-As_.
