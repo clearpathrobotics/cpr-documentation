@@ -417,6 +417,31 @@ Clearpath's IT team maintains this DNS, and is responsible for updating CNAME an
 
 <br/>
 
+## AWS configuration settings
+
+<details>
+ <summary>Click to expand for <b>build settings with amplify.yml</b></summary>
+ 
+ - `version 1` is a Amplify configuration flag, it does not refer to revision control of the text file.
+ - This includes a build command for `--no-minify`.
+   This was added because AWS was changing the website's CSS, causing the header autonumbering not to render correctly.
+
+   >[!NOTE]
+   > The header autonumbering CSS is detailed in this repository's file `./src/css/custom.css`, in the sections `h2::before`, `h3::before` ...
+
+</details>
+
+<details>
+ <summary>Click to expand for <b>customHttp.yml and CSP content security policy</b></summary>
+ 
+ This repository's file `./customHttp.yml` was added to align with Rockwell Automation's web security policies.
+ Testing methods and reasoning for the change are detailed in the Jira ticket RPSW-2903.
+    
+</details>
+
+
+<br/>
+
 ## Structure for pages
 
 You can find templates in the directory _/static/reference_pages_
