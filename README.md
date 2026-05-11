@@ -363,12 +363,12 @@ This helps Users know where they downloaded the file from later, as the asset is
 > Refer to the Workflow for making updates section for making updates to the _development_ branch.
 
 This section explains how to push the latest state of the _development_ branch to the _production_ branch.
-Updating the |production| branch will trigger AWS Amplify to rebuild the website, and deploy the latest version to docs.clearpathrobotics.com.
+Updating the _production_ branch will trigger AWS Amplify to rebuild the website, and deploy the latest version to docs.clearpathrobotics.com.
 
 Follow this process to keep the _development_ and _production_ branches aligned, without adding many unneccessary commits:
 
 1.  Confirm that _development_ is in an acceptable state, and ready to get pushed to _production_.
-2.  Create a pull request in GitHub, to merge your _development_ into _production_.
+2.  Create a pull request in GitHub, to merge _development_ into _production_.
 3.  One of the GitHub repository's administrators will review the Pull Request, and merge it using the Create-a-Merge-Commit option.
     
     >[!NOTE]
