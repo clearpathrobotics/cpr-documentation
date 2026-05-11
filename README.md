@@ -397,6 +397,14 @@ This example took 2 minutes and 14 seconds to deploy.
 
 <br/>
 
+>[!NOTE]
+> Clearpath developers can submit an IAM request through AWS to get access to the AWS Amplify console.
+> Our AWS organization name is `aws_0042_clearpath_robotics`.
+> A Clearpath administrator will discuss the request with you through our internal messaging tools, _(not email)_, to confirm this is not an external phishing attempt.
+
+
+<br/>
+
 ## Website routing, DNS, and expired certificates
 
 Our main site is www.clearpathrobotics.com.
