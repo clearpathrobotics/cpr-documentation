@@ -488,20 +488,25 @@ The list below are not strict rules, but are considered good practice to keep im
 
 Mermaid is a JavaScript based diagram generator that uses Markdown for descriptions and is available to docusaurus through a [plug-in](https://docusaurus.io/docs/next/markdown-features/diagrams).
 
-To get started with Mermaid diagrams, use their [live tool](https://mermaid.live/edit). The live viewing tool is useful to explore the various diagrams using their readily available templates.
+To get started with Mermaid diagrams, use their [live tool](https://mermaid.live/edit).
 
-> > Currently, we are on version 2.4.3 of the Mermaid plug-in. Therefore, not all of the templates in the live version are available.
+> [!NOTE]
+> Currently, we are on version 2.4.3 of the Mermaid plug-in.
+> Therefore, not all of the templates in the live version are available.
 
-Although Mermaid is more complicated to use than other tools, it is easy to version and outputs HTML objects; the resulting diagrams can include links and the text within it is searchable. Additionally, HTML tags can be included within the diagrams for further customization. Refer to the [Mermaid Documentation](https://mermaid.js.org/intro/getting-started.html) for more details on the diagram descriptions.
+Although Mermaid is more complicated to use than other tools, it is easy to version and outputs HTML objects; the resulting diagrams can include links and the text within it is searchable.
+Additionally, HTML tags can be included within the diagrams for further customization.
+Refer to the [Mermaid Documentation](https://mermaid.js.org/intro/getting-started.html) for more details on the diagram descriptions.
 
-### Themes
-
+<details>
+ <summary>Click to expand for <b>Mermaid themes</b></summary>
 In the [Docusaurus configuration file](./docusaurus.config.js), we have defined the site-wide themes for the Mermaid diagrams. Mermaid offers a choice of five different themes to choose from. There is a way to call the `mermaidAPI` to set a customized site-wide theme, however, this has not yet been implemented.
 
 See their [theming documentation](https://mermaid.js.org/config/theming.html) for more information.
+</details>
 
-### Creating a Diagram
-
+<details>
+ <summary>Click to expand for <b>creating a diagram</b></summary>
 In Docusaurus, we can use a [dyanmic Mermaid component](https://docusaurus.io/docs/next/markdown-features/diagrams#component) to define and load diagrams.
 
 First, we import the dynamic component.
@@ -524,8 +529,10 @@ Then, we instantiate the component with the graph passed in as an argument.
 />
 ```
 
-### Configuring the Diagram
+</details>
 
+<details>
+ <summary>Click to expand for <b>configuring a diagram</b></summary>
 Diagrams can be modified indepent from the site-wide theme and configuration using [directives](https://mermaid.js.org/config/directives.html). Essentially, these directives are used to pass in an initialization configuration to the local diagram that overrides the existing global configuration.
 
 For example, we can modify the way the arrow connecting two nodes is generated. Instead of the default, we can set the `curve` parameter to `step` to have the generated arrow move in steps rather than a smooth curve.
@@ -602,6 +609,9 @@ Even though the font size has been modified, the rendered diagram's font may not
   `}
 />
 ```
+
+</details>
+
 
 <br/>
 
