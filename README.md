@@ -441,6 +441,23 @@ Clearpath's IT team maintains this DNS, and is responsible for updating CNAME an
     
 </details>
 
+<details>
+  <summary>Click to expand for <b>Node.js version</b></summary>
+ 
+  Node.js releases long term stable versions every few years.
+  AWS supports some of these LTS version, but you will need to confirm with their documentation.
+  This repository and the AWS Amplify configuration will need to be updated every few years to continue using suppored versions of Node.js.
+  These are the files that need to be updated:
+ 
+  - This repository's file, `/package.json`.
+  - This repository's file, `./README.md`.
+  - AWS Amplify's "Build Settings ⟶ Advanced Settings".
+    >[!NOTE]
+    > At the time of writing in 2026-May, AWS needs to be explicitly told what version of Node.Js to use;
+    > it does not read the configuration detailed in the repository's `package.json`.
+    
+</details>
+
 
 <br/>
 
