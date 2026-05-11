@@ -397,6 +397,18 @@ This example took 2 minutes and 14 seconds to deploy.
 
 <br/>
 
+## Website routing, DNS, and expired certificates
+
+Our main site is www.clearpathrobotics.com.
+We have an onsite DNS that directs requests to the main website, as well as to our subdomains like docs.clearpathrobotics.com.
+Clearpath's IT team maintains this DNS, and is responsible for updating CNAME and SSL certificate configuration settings.
+
+>[!NOTE]
+> Refer to Jira ticket SES-11130 for an template of getting these configuration settings updated.
+
+
+<br/>
+
 ## Structure for pages
 
 You can find templates in the directory _/static/reference_pages_
@@ -419,17 +431,6 @@ You can test equation syntax using [this tool](https://katex.org/) from KaTex.
 
 <br/>
 
-## Website routing, DNS, and expired certificates
-
-Our main site is www.clearpathrobotics.com.
-We have an onsite DNS that directs requests to the main website, as well as to our subdomains like docs.clearpathrobotics.com.
-Clearpath's IT team maintains this DNS, and is responsible for updating CNAME and SSL certificate configuration settings.
-
->[!NOTE]
-> Refer to Jira ticket SES-11130 for an template of getting these configuration settings updated.
-
-
-<br/>
 
 ## Image formatting
 
