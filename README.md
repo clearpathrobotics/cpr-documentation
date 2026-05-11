@@ -601,6 +601,13 @@ Even though the font size has been modified, the rendered diagram's font may not
 
 ## Spelling Guide
 
+>[!NOTE]
+> Run the spell checker to catch any spelling errors by running `npm run spellcheck`.
+> If there are spelling errors, correct them in the source files.
+> If you encounter a valid word that is flagged 
+>   _(such as a technical term, brand name, or Canadian English spelling)_,
+>   add it to `.cspell/clearpath-dictionary.txt`.
+
 Spelling on within this repository should align with the Government of Canada's [TERMIUM Plus®](https://www.btb.termiumplus.gc.ca/).
 Industry terms should align with the related organization's preferred spelling.
 
