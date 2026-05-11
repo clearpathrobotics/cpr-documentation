@@ -17,12 +17,12 @@ The source files in this repository are built and deployed as docs.clearpathrobo
 
 <br/>
 
->[!NOTE]
+> [!NOTE]
 > Clearpath developers can submit an IAM request through AWS to get access to the AWS Amplify console.
 > Our AWS organization name is `aws_0042_clearpath_robotics`.
 > A Clearpath administrator will discuss the request with you through our internal messaging tools, _(not email)_, to confirm this is not an external phishing attempt.
 
->[!NOTE]
+> [!NOTE]
 > After logging into the AWS console for `aws_0042_clearpath_robotics`, confirm that you have selected the `Ohio us-east-2` data centre in the top right dropdown.
 
 
@@ -224,7 +224,7 @@ in `docusaurus.config.js` alongside `id: "docs",`. Ensure to reset this to false
 
 Continue through to step 9 of the workflow above to complete the update. Once complete, continue to the release phase.
 
-> **Note**
+> [!NOTE]
 > The documentation includes unversioned mdx components from `components/` and versioned components from `docs/components/`. If versioning needs to be added move the component into the versioned folder for each version and remap the imports (using relative links).
 
 #### Release Phase (For New Version)
@@ -280,7 +280,7 @@ includeCurrentVersion: false,
 3.  For advanced users, refer to [Markdown MDX](https://mdxjs.com/) for adding React Components to a Markdown file.
 4.  For advanced users, you may create React pages using _.js_ or _.ts_ file types.
 
->[!NOTE]
+> [!NOTE]
 > All links and image import paths of versioned elements _(images, markdown files, components)_ 
 >   must be referred to using relative links including the file extension,
 >   `img/image-name.png`, or `../../robots/add-ons/pacs.mdx`.
@@ -359,7 +359,7 @@ This helps Users know where they downloaded the file from later, as the asset is
 
 ## How to update the public website
 
->[!NOTE] 
+> [!NOTE] 
 > Refer to the Workflow for making updates section for making updates to the _development_ branch.
 
 This section explains how to push the latest state of the _development_ branch to the _production_ branch.
@@ -371,7 +371,7 @@ Follow this process to keep the _development_ and _production_ branches aligned,
 2.  Create a pull request in GitHub, to merge _development_ into _production_.
 3.  One of the GitHub repository's administrators will review the Pull Request, and merge it using the Create-a-Merge-Commit option.
     
-    >[!NOTE]
+    > [!NOTE]
     > You should not use the Squash-and-Merge option here, otherwise _production_ will not have the latest commits from _development_, which were created in step 1 of this list.
     > The source data will be the same on the 2 branches, but the commit hashes will not be aligned.
     > The Create-a-Merge-Commit option prevents this issue, by adding all the commits from _development_ to _production_, and also adding a commit to _production_ that mentions the Pull Request.
@@ -387,7 +387,7 @@ Follow this process to keep the _development_ and _production_ branches aligned,
         It should be the commit related to merging the Pull Request.
     5.  Force Push this commit to the _development_ branch on GitHub.
         
-        >[!NOTE]
+        > [!NOTE]
         > The GitHub repository's branch protection rules only allow Administrators and Owners to Force Push to the _production_ and _development_ branches.
 
 
@@ -413,7 +413,7 @@ Our main site is www.clearpathrobotics.com.
 We have an onsite DNS that directs requests to the main website, as well as to our subdomains like docs.clearpathrobotics.com.
 Clearpath's IT team maintains this DNS, and is responsible for updating CNAME and SSL certificate configuration settings.
 
->[!NOTE]
+> [!NOTE]
 > Refer to Jira ticket SES-11130 for an template of getting these configuration settings updated.
 
 
@@ -428,7 +428,7 @@ Clearpath's IT team maintains this DNS, and is responsible for updating CNAME an
  - This includes a build command for `--no-minify`.
    This was added because AWS was changing the website's CSS, causing the header autonumbering not to render correctly.
 
-   >[!NOTE]
+   > [!NOTE]
    > The header autonumbering CSS is detailed in this repository's file `./src/css/custom.css`, in the sections `h2::before`, `h3::before` ...
 
 </details>
@@ -452,7 +452,7 @@ Clearpath's IT team maintains this DNS, and is responsible for updating CNAME an
   - This repository's file, `/package.json`.
   - This repository's file, `./README.md`.
   - AWS Amplify's "Build Settings ⟶ Advanced Settings".
-    >[!NOTE]
+    > [!NOTE]
     > At the time of writing in 2026-May, AWS needs to be explicitly told what version of Node.Js to use;
     > it does not read the configuration detailed in the repository's `package.json`.
     
@@ -514,7 +514,7 @@ The list below are not strict rules, but are considered good practice to keep im
 
 ## SolidWorks image exports
 
->[!NOTE]
+> [!NOTE]
 > This process was developed with SolidWorks 2020.
 
 <details>
@@ -682,7 +682,7 @@ Refer to the [Mermaid Documentation](https://mermaid.js.org/intro/getting-starte
 
 ## Spelling Guide
 
->[!NOTE]
+> [!NOTE]
 > Run the spell checker to catch any spelling errors by running `npm run spellcheck`.
 > If there are spelling errors, correct them in the source files.
 > If you encounter a valid word that is flagged 
