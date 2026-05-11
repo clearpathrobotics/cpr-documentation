@@ -453,29 +453,31 @@ Links to headings must not include an extra slash between the name of the page a
 
 <details>
   <summary>Click to expand for the SolidWorks image export process</summary>
-1.  Open your assembly in SolidWorks.
-    Orient the model to the view you want to capture.
-    Click _File_ → _Save-As_.
 
-    <img src="/static/img/readme_images/readme_solidworks_image_1.png" width="800"/>
+  1.  Open your assembly in SolidWorks.
+      Orient the model to the view you want to capture.
+      Click _File_ → _Save-As_.
 
-2.  Select _.png_ as the file type.
-    Then click the _Options_ button.
+      <img src="/static/img/readme_images/readme_solidworks_image_1.png" width="800"/>
 
-    <img src="/static/img/readme_images/readme_solidworks_image_2.png" width="800"/>
+  2.  Select _.png_ as the file type.
+      Then click the _Options_ button.
 
-3.  Make sure the _Remove background_ box has a check mark.
-    Click the _Print capture_ box, so you can manually choose the image's width and height.
+      <img src="/static/img/readme_images/readme_solidworks_image_2.png" width="800"/>
 
-    <img src="/static/img/readme_images/readme_solidworks_image_3.png" width="800"/>
+  3.  Make sure the _Remove background_ box has a check mark.
+      Click the _Print capture_ box, so you can manually choose the image's width and height.
 
-4.  In the same window as Step 3; scroll down to the bottom.
-    Change the _Width_ and _Height_ fields to adjust the bounding box around the SolidWorks model.
-    300 mm tall should be a good balance between image resolution and file size.
+      <img src="/static/img/readme_images/readme_solidworks_image_3.png" width="800"/>
 
-    Finally, select _OK_, and _Save_
+  4.  In the same window as Step 3; scroll down to the bottom.
+      Change the _Width_ and _Height_ fields to adjust the bounding box around the SolidWorks model.
+      300 mm tall should be a good balance between image resolution and file size.
 
-    <img src="/static/img/readme_images/readme_solidworks_image_4.png" width="800"/>
+      Finally, select _OK_, and _Save_
+
+      <img src="/static/img/readme_images/readme_solidworks_image_4.png" width="800"/>
+
 </details>
 
 
