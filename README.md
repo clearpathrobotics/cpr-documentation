@@ -13,7 +13,14 @@ This repository holds the source of Clearpath Robotics technical documentation, 
 - software changelogs, and instructions for updating robots
 - ROS tutorials
 
-The source files here are then built and deployed as docs.clearpathrobotics.com using AWS Amplify.
+The source files in this repository are built and deployed as docs.clearpathrobotics.com using AWS Amplify.
+
+<br/>
+
+>[!NOTE]
+> Clearpath developers can submit an IAM request through AWS to get access to the AWS Amplify console.
+> Our AWS organization name is `aws_0042_clearpath_robotics`.
+> A Clearpath administrator will discuss the request with you through our internal messaging tools, _(not email)_, to confirm this is not an external phishing attempt.
 
 
 <br/>
@@ -393,14 +400,6 @@ The image below shows the _development_ branch rebuilding after the GitHub branc
 <img src="/static/img/readme_images/readme_aws_1.png" width="800"/>
 
 This example took 2 minutes and 14 seconds to deploy.
-
-
-<br/>
-
->[!NOTE]
-> Clearpath developers can submit an IAM request through AWS to get access to the AWS Amplify console.
-> Our AWS organization name is `aws_0042_clearpath_robotics`.
-> A Clearpath administrator will discuss the request with you through our internal messaging tools, _(not email)_, to confirm this is not an external phishing attempt.
 
 
 <br/>
