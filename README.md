@@ -451,6 +451,8 @@ Links to headings must not include an extra slash between the name of the page a
 >[!NOTE]
 > This process was developed with SolidWorks 2020.
 
+<details>
+  <summary>Click to expand for the SolidWorks image export process</summary>
 1.  Open your assembly in SolidWorks.
     Orient the model to the view you want to capture.
     Click _File_ → _Save-As_.
@@ -474,6 +476,7 @@ Links to headings must not include an extra slash between the name of the page a
     Finally, select _OK_, and _Save_
 
     <img src="/static/img/readme_images/readme_solidworks_image_4.png" width="800"/>
+</details>
 
 
 <br/>
