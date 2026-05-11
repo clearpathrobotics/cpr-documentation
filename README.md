@@ -270,6 +270,18 @@ includeCurrentVersion: false,
 3.  For advanced users, refer to [Markdown MDX](https://mdxjs.com/) for adding React Components to a Markdown file.
 4.  For advanced users, you may create React pages using _.js_ or _.ts_ file types.
 
+>[!NOTE]
+> All links and image import paths of versioned elements _(images, markdown files, components)_ 
+>   must be referred to using relative links including the file extension,
+>   `img/image-name.png`, or `../../robots/add-ons/pacs.mdx`.
+>  
+> All links and image imports paths of unversioned static elements may be referred to using absolute paths (`/static/img/image-name.png`).
+> 
+> Links to headings must not include an extra slash between the name of the page and the name of the heading.
+> Doing this can result in broken links.
+> For example: `../ros/#supported-platforms` is incorrect.
+> The correct syntax is `../ros#supported-platforms`.
+
 
 <br/>
 
@@ -431,17 +443,6 @@ The list below are not strict rules, but are considered good practice to keep im
     Consider using arrows and circles to notate images, with the text included in your Markdown file.
 
     Note: icons, logos, and symbols that are part of the physical product are exempt from this suggestion.
-
-
-<br/>
-
-## Links and Imports
-
-All links to, or imports of versioned elements (images, markdown files etc.) must be referred to using relative links (`img/image-name.png` or `../../robots/add-ons/pacs.mdx`), including the file extension. These versioned pages will be moved together and ensures that the correct version is used. Including the file extension ensures that the next page will be located based on the file location not the generated links. This method is much more robust and should be followed whenever possible. When using visual studio code, the `Relative Path` extension can make this process easy.
-
-All links to, or imports of unversioned static elements must be referred to using absolute paths (`/static/img/image-name.png`). This allows these assets to be found irrelevant of the location of the particular page. This link should be the path to the file including the file extension, even when it is an md or mdx file.
-
-Links to headings must not include an extra slash between the name of the page and the name of the heading. Doing this can result in broken links. For example: `../ros/#supported-platforms` is incorrect. It will initially work but any relative links that rely on the url (instead of file path) that the user clicks will appear to be broken. Instead, it must be `../ros#supported-platforms`. This is irrelevant when the relative links are based on file path.
 
 
 <br/>
