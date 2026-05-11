@@ -419,6 +419,18 @@ You can test equation syntax using [this tool](https://katex.org/) from KaTex.
 
 <br/>
 
+## Website routing, DNS, and expired certificates
+
+Our main site is www.clearpathrobotics.com.
+We have an onsite DNS that directs requests to the main website, as well as to our subdomains like docs.clearpathrobotics.com.
+Clearpath's IT team maintains this DNS, and is responsible for updating CNAME and SSL certificate configuration settings.
+
+>[!NOTE]
+> Refer to Jira ticket SES-11130 for an template of getting these configuration settings updated.
+
+
+<br/>
+
 ## Image formatting
 
 We want images to convey information.
