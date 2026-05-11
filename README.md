@@ -22,6 +22,9 @@ The source files in this repository are built and deployed as docs.clearpathrobo
 > Our AWS organization name is `aws_0042_clearpath_robotics`.
 > A Clearpath administrator will discuss the request with you through our internal messaging tools, _(not email)_, to confirm this is not an external phishing attempt.
 
+>[!NOTE]
+> After logging into the AWS console for `aws_0042_clearpath_robotics`, confirm that you have selected the `Ohio us-east-2` data centre in the top right dropdown.
+
 
 <br/>
 
