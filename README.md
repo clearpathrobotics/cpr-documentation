@@ -115,17 +115,16 @@ The source files in this repository are built and deployed as docs.clearpathrobo
 
         - Refer to the _package.json_ to understand what this script calls.
         - Refer to the _.prettierrc.json_ to understand the rules Prettier is using when checking files.
-
-        > [!NOTE]  
-        > We used to suggest the command `npm run format-write` to update all the files in this repository.
-        > We don't suggest this command anymore, since it is then difficult for reviewers of Pull Requests to find the intended content changes.
-        > If you continue to use this entire repository command, you may see files that claim to be updated in Source Control, but don't have any visible changes.
-        > If so, you should run these commands in your terminal to prevent Git from noting these types of changes:
-        > 
-        > ```bash
-        > git config --global core.filemode false
-        > git config --global core.autocrlf false
-        > ```
+          > **NOTE**  
+          > We used to suggest the command `npm run format-write` to update all the files in this repository.
+          > We don't suggest this command anymore, since it is then difficult for reviewers of Pull Requests to find the intended content changes.
+          > If you continue to use this entire repository command, you may see files that claim to be updated in Source Control, but don't have any visible changes.
+          > If so, you should run these commands in your terminal to prevent Git from noting these types of changes:
+          > 
+          > ```bash
+          > git config --global core.filemode false
+          > git config --global core.autocrlf false
+          > ```
 
   8.  Run the spell checker to catch any spelling errors by running `npm run spellcheck`.
       If there are spelling errors, correct them in the source files. If you encounter a valid word that is flagged
@@ -279,18 +278,17 @@ includeCurrentVersion: false,
 2.  Refer to [Docusaurus's guide](https://docusaurus.io/docs/next/markdown-features) for supported Markdown features.
 3.  For advanced users, refer to [Markdown MDX](https://mdxjs.com/) for adding React Components to a Markdown file.
 4.  For advanced users, you may create React pages using _.js_ or _.ts_ file types.
-
-> [!NOTE]
-> All links and image import paths of versioned elements _(images, markdown files, components)_ 
->   must be referred to using relative links including the file extension,
->   `img/image-name.png`, or `../../robots/add-ons/pacs.mdx`.
->  
-> All links and image imports paths of unversioned static elements may be referred to using absolute paths (`/static/img/image-name.png`).
-> 
-> Links to headings must not include an extra slash between the name of the page and the name of the heading.
-> Doing this can result in broken links.
-> For example: `../ros/#supported-platforms` is incorrect.
-> The correct syntax is `../ros#supported-platforms`.
+    > **NOTE**
+    > All links and image import paths of versioned elements _(images, markdown files, components)_ 
+    >   must be referred to using relative links including the file extension,
+    >   `img/image-name.png`, or `../../robots/add-ons/pacs.mdx`.
+    >  
+    > All links and image imports paths of unversioned static elements may be referred to using absolute paths (`/static/img/image-name.png`).
+    > 
+    > Links to headings must not include an extra slash between the name of the page and the name of the heading.
+    > Doing this can result in broken links.
+    > For example: `../ros/#supported-platforms` is incorrect.
+    > The correct syntax is `../ros#supported-platforms`.
 
 
 <br/>
@@ -370,8 +368,7 @@ Follow this process to keep the _development_ and _production_ branches aligned,
 1.  Confirm that _development_ is in an acceptable state, and ready to get pushed to _production_.
 2.  Create a pull request in GitHub, to merge _development_ into _production_.
 3.  One of the GitHub repository's administrators will review the Pull Request, and merge it using the Create-a-Merge-Commit option.
-    
-    > [!NOTE]
+    > **NOTE**
     > You should not use the Squash-and-Merge option here, otherwise _production_ will not have the latest commits from _development_, which were created in step 1 of this list.
     > The source data will be the same on the 2 branches, but the commit hashes will not be aligned.
     > The Create-a-Merge-Commit option prevents this issue, by adding all the commits from _development_ to _production_, and also adding a commit to _production_ that mentions the Pull Request.
@@ -386,8 +383,7 @@ Follow this process to keep the _development_ and _production_ branches aligned,
         This should pull one commit into _development_.
         It should be the commit related to merging the Pull Request.
     5.  Force Push this commit to the _development_ branch on GitHub.
-        
-        > [!NOTE]
+        > **NOTE**
         > The GitHub repository's branch protection rules only allow Administrators and Owners to Force Push to the _production_ and _development_ branches.
 
 
@@ -427,8 +423,7 @@ Clearpath's IT team maintains this DNS, and is responsible for updating CNAME an
  - `version 1` is a Amplify configuration flag, it does not refer to revision control of the text file.
  - This includes a build command for `--no-minify`.
    This was added because AWS was changing the website's CSS, causing the header autonumbering not to render correctly.
-
-   > [!NOTE]
+   > **NOTE**
    > The header autonumbering CSS is detailed in this repository's file `./src/css/custom.css`, in the sections `h2::before`, `h3::before` ...
 
 </details>
@@ -452,7 +447,7 @@ Clearpath's IT team maintains this DNS, and is responsible for updating CNAME an
   - This repository's file, `/package.json`.
   - This repository's file, `./README.md`.
   - AWS Amplify's "Build Settings ⟶ Advanced Settings".
-    > [!NOTE]
+    > **NOTE**
     > At the time of writing in 2026-May, AWS needs to be explicitly told what version of Node.Js to use;
     > it does not read the configuration detailed in the repository's `package.json`.
     
