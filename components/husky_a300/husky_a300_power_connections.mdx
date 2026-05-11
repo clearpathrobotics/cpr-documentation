@@ -316,22 +316,16 @@ The output value is available in several modes:
 <details>
   <summary>AUX Output Examples</summary>
 
-  - To disable all AUX outputs:
+  - To enable the AUX1 output:
 
     ```
-    rostopic pub /a300_#####/platform/mcu/cmd_aux_outputs std_msgs/UInt8 "data: 0"
+    ros2 service call /a300_#####/platform/pinout/aux_1 clearpath_platform_msgs/srv/SetPinout "{state: true, toggle_period: 0}"
     ```
 
-  - To enable all AUX outputs:
+  - To disable the AUX1 output:
 
     ```
-    rostopic pub /a300_#####/platform/mcu/cmd_aux_outputs std_msgs/UInt8 "data: 7"
-    ```
-
-  - To enable just the AUX3 output:
-
-    ```
-    rostopic pub /a300_#####/platform/mcu/cmd_aux_outputs std_msgs/UInt8 "data: 4"
+    ros2 service call /a300_#####/platform/pinout/aux_1 clearpath_platform_msgs/srv/SetPinout "{state: false, toggle_period: 0}"
     ```
 
 </details>
