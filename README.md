@@ -500,115 +500,115 @@ Refer to the [Mermaid Documentation](https://mermaid.js.org/intro/getting-starte
 
 <details>
  <summary>Click to expand for <b>Mermaid themes</b></summary>
-In the [Docusaurus configuration file](./docusaurus.config.js), we have defined the site-wide themes for the Mermaid diagrams. Mermaid offers a choice of five different themes to choose from. There is a way to call the `mermaidAPI` to set a customized site-wide theme, however, this has not yet been implemented.
+  In the [Docusaurus configuration file](./docusaurus.config.js), we have defined the site-wide themes for the Mermaid diagrams. Mermaid offers a choice of five different themes to choose from. There is a way to call the `mermaidAPI` to set a customized site-wide theme, however, this has not yet been implemented.
 
-See their [theming documentation](https://mermaid.js.org/config/theming.html) for more information.
+  See their [theming documentation](https://mermaid.js.org/config/theming.html) for more information.
 </details>
 
 <details>
  <summary>Click to expand for <b>creating a diagram</b></summary>
-In Docusaurus, we can use a [dyanmic Mermaid component](https://docusaurus.io/docs/next/markdown-features/diagrams#component) to define and load diagrams.
+  In Docusaurus, we can use a [dyanmic Mermaid component](https://docusaurus.io/docs/next/markdown-features/diagrams#component) to define and load diagrams.
 
-First, we import the dynamic component.
+  First, we import the dynamic component.
 
-```
-import Mermaid from '@theme/Mermaid';
-```
+  ```
+  import Mermaid from '@theme/Mermaid';
+  ```
 
-Then, we instantiate the component with the graph passed in as an argument.
+  Then, we instantiate the component with the graph passed in as an argument.
 
-```
-<Mermaid
-  value={`
-    graph TD;
-      A-->B;
-      A-->C;
-      B-->D;
-      C-->D;
-  `}
-/>
-```
+  ```
+  <Mermaid
+    value={`
+      graph TD;
+        A-->B;
+        A-->C;
+        B-->D;
+        C-->D;
+    `}
+  />
+  ```
 
 </details>
 
 <details>
  <summary>Click to expand for <b>configuring a diagram</b></summary>
-Diagrams can be modified indepent from the site-wide theme and configuration using [directives](https://mermaid.js.org/config/directives.html). Essentially, these directives are used to pass in an initialization configuration to the local diagram that overrides the existing global configuration.
+  Diagrams can be modified indepent from the site-wide theme and configuration using [directives](https://mermaid.js.org/config/directives.html). Essentially, these directives are used to pass in an initialization configuration to the local diagram that overrides the existing global configuration.
 
-For example, we can modify the way the arrow connecting two nodes is generated. Instead of the default, we can set the `curve` parameter to `step` to have the generated arrow move in steps rather than a smooth curve.
+  For example, we can modify the way the arrow connecting two nodes is generated. Instead of the default, we can set the `curve` parameter to `step` to have the generated arrow move in steps rather than a smooth curve.
 
-```
-<Mermaid
-  value={`
-    %%{ \
-      init: { \
-        'flowchart': { \
-          'curve': 'step'
+  ```
+  <Mermaid
+    value={`
+      %%{ \
+        init: { \
+          'flowchart': { \
+            'curve': 'step'
+          } \
         } \
-      } \
-    }%%
-    flowchart TD;
-      A-->B;
-      A-->C;
-      B-->D;
-      C-->D;
-  `}
-/>
-```
+      }%%
+      flowchart TD;
+        A-->B;
+        A-->C;
+        B-->D;
+        C-->D;
+    `}
+  />
+  ```
 
-Notice that when defining a directive within the dynamic component, we must end every line with a backslash `\`. Make sure to not have any trailing commas, `,`, at the end of a list or dictionary.
+  Notice that when defining a directive within the dynamic component, we must end every line with a backslash `\`. Make sure to not have any trailing commas, `,`, at the end of a list or dictionary.
 
-See the [flowchart configuration](https://mermaid.js.org/config/schema-docs/config-defs-flowchart-diagram-config.html) to see all the settings specific to flowcharts that can be modified with directives.
+  See the [flowchart configuration](https://mermaid.js.org/config/schema-docs/config-defs-flowchart-diagram-config.html) to see all the settings specific to flowcharts that can be modified with directives.
 
-You may notice that there is no way to set the font size through the diagram's configuration. Instead that must be done by modifying the theme variables.
+  You may notice that there is no way to set the font size through the diagram's configuration. Instead that must be done by modifying the theme variables.
 
-```
-<Mermaid
-  value={`
-    %%{ \
-      init: { \
-        'themeVariables': { \
-          'fontSize': '16px'
+  ```
+  <Mermaid
+    value={`
+      %%{ \
+        init: { \
+          'themeVariables': { \
+            'fontSize': '16px'
+          } \
+          'flowchart': { \
+            'curve': 'step'
+          } \
         } \
-        'flowchart': { \
-          'curve': 'step'
-        } \
-      } \
-    }%%
-    flowchart TD;
-      A-->B;
-      A-->C;
-      B-->D;
-      C-->D;
-  `}
-/>
-```
+      }%%
+      flowchart TD;
+        A-->B;
+        A-->C;
+        B-->D;
+        C-->D;
+    `}
+  />
+  ```
 
-See the (Mermaid configuration)[https://mermaid.js.org/config/schema-docs/config.html] documentation page for an exhaustive list of parameters.
+  See the (Mermaid configuration)[https://mermaid.js.org/config/schema-docs/config.html] documentation page for an exhaustive list of parameters.
 
-Even though the font size has been modified, the rendered diagram's font may not appear to change size. Instead, the text size will remain a relatively similar size while the boxes and arrows appear smaller. Therefore, the sure-fire method to set a font size is to use HTML `<font size=10></font>` tags to wrap the text within a node.
+  Even though the font size has been modified, the rendered diagram's font may not appear to change size. Instead, the text size will remain a relatively similar size while the boxes and arrows appear smaller. Therefore, the sure-fire method to set a font size is to use HTML `<font size=10></font>` tags to wrap the text within a node.
 
-```
-<Mermaid
-  value={`
-    %%{ \
-      init: { \
-        'themeVariables': { \
-          'fontSize': '16px'
+  ```
+  <Mermaid
+    value={`
+      %%{ \
+        init: { \
+          'themeVariables': { \
+            'fontSize': '16px'
+          } \
+          'flowchart': { \
+            'curve': 'step'
+          } \
         } \
-        'flowchart': { \
-          'curve': 'step'
-        } \
-      } \
-    }%%
-    flowchart TD;
-      A-->B(<font size=10>B Text<font>);
-      A-->C;;
-      B-->D;
-      C-->D;
-  `}
-/>
-```
+      }%%
+      flowchart TD;
+        A-->B(<font size=10>B Text<font>);
+        A-->C;;
+        B-->D;
+        C-->D;
+    `}
+  />
+  ```
 
 </details>
 
