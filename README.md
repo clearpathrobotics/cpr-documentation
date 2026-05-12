@@ -18,7 +18,7 @@ The source files in this repository are built and deployed as docs.clearpathrobo
 <br/>
 
 > [!TIP]
-> The `Contributions` tab at the top of this page details how to update our public documentation website, docs.clearpathrobotics.com
+> The `Contributing` tab at the top of this page details how to update our public documentation website, docs.clearpathrobotics.com
 
 > [!NOTE]
 > Clearpath developers can submit an IAM request through AWS to get access to the AWS Amplify console.
