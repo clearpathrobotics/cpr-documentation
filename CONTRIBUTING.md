@@ -1,3 +1,12 @@
+# Contributing to Clearpath Robotics documentation
+
+We appreciate your interest in improving Clearpath Robotics documentation.
+This page is intended for Clearpath Robotics employees, but we also welcome public contributions.
+Even small changes like fixing a typo help keep our documentation accurate and accessible for the entire robotics community.
+
+
+<br/>
+
 ## How to update the public website
 
 > [!NOTE] 
