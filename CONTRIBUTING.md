@@ -10,7 +10,7 @@ Even small changes like fixing a typo help keep our documentation accurate and a
 ## How to update the public website
 
 > [!NOTE] 
-> Refer to the Workflow for making updates section for making updates to the _development_ branch.
+> Refer to the Workflow section for making updates to the _development_ branch.
 
 This section explains how to push the latest state of the _development_ branch to the _production_ branch.
 Updating the _production_ branch will trigger AWS Amplify to rebuild the website, and deploy the latest version to docs.clearpathrobotics.com.
