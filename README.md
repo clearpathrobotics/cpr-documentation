@@ -107,10 +107,10 @@ Clearpath's IT team maintains this DNS, and is responsible for updating CNAME an
  
  - `version 1` is a Amplify configuration flag, it does not refer to revision control of the text file.
  - This includes a build command for `--no-minify`.
-   This was added because AWS was changing the website's CSS, causing the header autonumbering not to render correctly.
+   This was added because AWS was changing the website's CSS, causing the header automatic numbering not to render correctly.
    > **NOTE**
    > 
-   > The header autonumbering CSS is detailed in this repository's file `./src/css/custom.css`, in the sections `h2::before`, `h3::before` ...
+   > The header automatic numbering CSS is detailed in this repository's file `./src/css/custom.css`, in the sections `h2::before`, `h3::before` ...
 
 </details>
 
@@ -127,7 +127,7 @@ Clearpath's IT team maintains this DNS, and is responsible for updating CNAME an
  
   Node.js releases long term stable versions every few years.
   AWS supports some of these LTS version, but you will need to confirm with their documentation.
-  This repository and the AWS Amplify configuration will need to be updated every few years to continue using suppored versions of Node.js.
+  This repository and the AWS Amplify configuration will need to be updated every few years to continue using supported versions of Node.js.
   These are the files that need to be updated:
  
   - This repository's file, `/package.json`.

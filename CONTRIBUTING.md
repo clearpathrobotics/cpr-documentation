@@ -15,7 +15,7 @@ Even small changes like fixing a typo help keep our documentation accurate and a
 This section explains how to push the latest state of the _development_ branch to the _production_ branch.
 Updating the _production_ branch will trigger AWS Amplify to rebuild the website, and deploy the latest version to docs.clearpathrobotics.com.
 
-Follow this process to keep the _development_ and _production_ branches aligned, without adding many unneccessary commits:
+Follow this process to keep the _development_ and _production_ branches aligned, without adding many unnecessary commits:
 
 1.  Confirm that _development_ is in an acceptable state, and ready to get pushed to _production_.
 2.  Create a pull request in GitHub, to merge _development_ into _production_.
