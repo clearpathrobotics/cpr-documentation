@@ -30,11 +30,11 @@
       <td>192.168.131.16</td>
       <td>Rear OAK-D Camera</td>
     </tr>}
-    <tr>
+    {((props.robotModel == "AMP") || (props.robotModel == "Observer")) && <tr>
       <td>192.168.131.20</td>
       {(props.robotModel == "AMP") && <td>Side Hokuyo Lidar <em>(Optional, Autonomous Wireless Charging)</em></td> }
       {(props.robotModel == "Observer") && <td>Side Hokuyo Lidar</td> }
-    </tr>
+    </tr>}
     {((props.robotModel == "AMP") || (props.robotModel == "Observer")) && <tr>
       <td>192.168.131.25</td>
       <td>Seyond Robin W Lidar</td>
