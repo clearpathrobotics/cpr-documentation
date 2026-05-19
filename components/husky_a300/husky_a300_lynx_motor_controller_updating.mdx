@@ -1,0 +1,99 @@
+### Motor Controller Firmware Update {#maintenance_husky_motor_controller_firmware}
+
+Use the following command to update the firmware on the motor controllers, using the serial number
+of your robot rather than `xxxxx`.
+
+:::caution
+
+Do NOT power off the robot while this command is running. The update typically takes a few minutes
+to complete for all four motor controllers.
+
+:::
+
+```
+ros2 action send_goal /a300_xxxxx/platform/motors/update clearpath_motor_msgs/action/LynxUpdate {} -f
+```
+
+#### What to Expect
+
+The update is implemented as a [ROS 2 action](https://design.ros2.org/articles/actions.html), so the command
+will stream feedback while it runs and then print a final result. Both pieces of output are normal and should
+be reviewed to confirm a successful update.
+
+**Feedback (during the update)**
+
+While the update is in progress, the action publishes a `Feedback` message containing a `progress` array, with one
+entry per motor controller (front-left, front-right, rear-left, rear-right). Each value is the percentage of the
+firmware image that has been transferred to that controller (0.0 - 100.0). A typical feedback block looks like:
+
+```
+Feedback:
+  progress:
+  - 100.0
+  - 100.0
+  - 100.0
+  - 99.0
+```
+
+The values increment as each controller is flashed and will end at `100.0` for every controller that updated
+successfully. It is normal to see one controller briefly lag behind the others.
+
+**Result (when the update finishes)**
+
+When the action completes, a `Result` message is printed with a `success` array, again with one entry per motor
+controller, in the same order as the feedback `progress` array. A `true` value means that controller was
+re-flashed with the new firmware; a `false` value means that controller was already running the target firmware
+version (or did not need to be updated) and was therefore skipped. The action itself reports
+`Goal finished with status: SUCCEEDED` in both cases; `false` entries are **not** an error.
+
+```
+Result:
+  success:
+  - false
+  - false
+  - false
+  - false
+
+Goal finished with status: SUCCEEDED
+```
+
+The example above is what you will see if all four motor controllers are already on the latest firmware: the
+action succeeds, but no controller actually needed to be reflashed.
+
+:::note
+
+If the action exits with a status other than `SUCCEEDED`, or if any feedback `progress` entry stops increasing
+and never reaches `100.0`, contact [Clearpath Support](https://clearpathrobotics.com/support/).
+
+:::
+
+Once the action has completed, power cycle the robot for the new firmware to take effect.
+
+### Motor Controller Calibration  {#maintenance_husky_motor_calibration}
+
+The motor controllers are configured in the factory and do not normally need to be reconfigured in the field.
+If you have been instructed by Clearpath Support to recalibrate, place the robot up on blocks so that the
+wheels do not touch the ground, and then use the command below, using the serial number
+of your robot rather than `xxxxx`.
+
+:::caution
+
+Do NOT power off the robot while this command is running.
+
+:::
+
+:::info
+
+Ensure that the robot does not have its Emergency Stop engage while running this command.
+
+:::
+
+:::info
+
+Ensure that the robot is up on blocks so that the wheels do not touch the ground and can spin freely.
+
+:::
+
+```
+ros2 action send_goal /a300_xxxxx/platform/motors/calibrate clearpath_motor_msgs/action/LynxCalibrate {} -f
+```

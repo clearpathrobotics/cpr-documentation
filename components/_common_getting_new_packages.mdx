@@ -1,0 +1,19 @@
+{(props.headingSize == 2) && <h2>Getting New packages</h2>}
+{(props.headingSize == 3) && <h3>Getting New packages</h3>}
+
+:::note
+
+If you are upgrading your robot from an older version of ROS, please refer to our upgrade instructions for upgrading to [ROS 1 Melodic](https://clearpathrobotics.com/assets/guides/kinetic/kinetic-to-melodic/index.html), [ROS 1 Noetic](https://clearpathrobotics.com/assets/guides/melodic/melodic-to-noetic/index.html) and [ROS 2](/docs/ros/installation/upgrading).
+
+:::
+
+Clearpath Robotics robots are always being improved, both its own software and the many community ROS packages upon which it depends!
+You can use the `apt` package management system to receive new versions all software running on the platform.
+
+Each robot leaves the factory already configured to pull packages from http://packages.ros.org as well as http://packages.clearpathrobotics.com.
+To update your package and download new package versions, simply run:
+
+```
+sudo apt-get update
+sudo apt-get dist-upgrade
+```
