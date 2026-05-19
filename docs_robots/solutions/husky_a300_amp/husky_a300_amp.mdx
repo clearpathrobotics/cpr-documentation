@@ -96,6 +96,7 @@ import ComponentReplacingFusesBf1 from "/components/husky_a300/husky_a300_replac
 import ComponentCmosBattery from "/components/maintenance/_cmos_intel_thirteenth_gen.mdx";
 import ComponentCustomPanelColour from "/components/_common_robot_panel_colour.mdx";
 import ComponentCommonSafeWorkProcedures from "/components/_common_safe_work_procedures.mdx";
+import ComponentRobotEquations from "/components/_common_robot_equations_skid_steer.mdx";
 
 <center>
   <figure>
@@ -152,6 +153,7 @@ import ComponentCommonSafeWorkProcedures from "/components/_common_safe_work_pro
   <ComponentNetworkConnection robotModel={robotModel}/>
   <ComponentMobilityControlOptions />
   <ComponentOrientationReferences />
+  <ComponentRobotEquations robotModel={robotModel}/>
   <ComponentChargingTheRobot robotModel={robotModel}/>
   <ComponentChargingTheWirelessJoystick />
   <ComponentChargingTheWirelessEmergencyStopTransmitter />

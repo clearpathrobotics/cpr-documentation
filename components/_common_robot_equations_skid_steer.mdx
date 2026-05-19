@@ -1,0 +1,29 @@
+export function getTrackwidth(robotModel) {
+  const widths = {
+    A200: 0.555,
+    A300: 0.555,
+    AMP: 0.555,
+    Observer: 0.555,
+  };
+  return widths[robotModel] ?? null;
+}
+
+### Robot Equations
+
+As a starting point, Clearpath Robotics recommends using the following relationship between wheel velocity and platform velocity:
+
+$$
+v=\cfrac{v_{r}+v_{l}}{2}
+$$
+
+$$
+\omega=\cfrac{v_{r}-v_{l}}{W}
+$$
+
+$v$ represents the instantaneous translational speed of the platform and $\omega$ the instantaneous rotational speed.
+
+$v_{r}$ and $v_{l}$ are the right and left wheel velocities, respectively.
+
+$W$ is the effective track of the robot, {getTrackwidth(props.robotModel)} metres
+
+<br />
