@@ -74,6 +74,27 @@ To reduce current draw, consider commanding wider-radius turns from your control
 
 :::
 
+:::safety-caution
+
+**Avoid operating on steep hills when the batteries are a very high or low temperatures.**
+
+When stopping Husky A300, especially while driving down a hill or incline, high regenerative currents will
+be fed back into the batteries.
+In certain operating conditions, especially when the batteries are at very high or low temperatures,
+these regenerative currents may exceed the battery limits.
+
+Follow the current guidelines when operating Husky A300 on hills or inclines.
+
+- For two-battery configuration _(40 Ah)_:
+  - Monitor the battery temperatures using ROS topics, and avoid operating on hills when the battery temperatures are below 10°C or above 45°C.
+  - Monitor the battery state-of-charge using ROS topics, and avoid operating on hills when the state-of-charge is above 90%.
+- For four-battery _(80 Ah)_, and six-battery _(120 Ah)_ battery configurations:
+  - Monitor the battery temperatures using ROS topics, and avoid operating on hills when the battery temperatures are below 10°C.
+  - Monitor the battery state-of-charge using ROS topics, and avoid operating on hills when the state-of-charge is above 90%, except when the reported battery temperature is in the 20°C to 45°C range.
+
+:::
+
+<br />
 
 #### Stability Limits
 
