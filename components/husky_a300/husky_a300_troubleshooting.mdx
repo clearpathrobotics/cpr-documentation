@@ -1,0 +1,269 @@
+## Troubleshooting
+
+### Checking Husky serial number
+
+The robot's serial number is on a label behind the front panel.
+
+<center>
+   <figure>
+      <img
+         src="/img/robot_images/husky_a300_images/husky_a300_serial_number.jpg"
+         width="600"
+      />
+      <figcaption>Accessing the A300 serial number label</figcaption>
+   </figure>
+</center>
+
+To open the front panel, turn the two small thumb screws at the bottom of the front panel inwards.
+They will rotate approximately 90 degrees.
+Once the screws are rotated, the front panel is retained by two pins held in rubber bushings at the top of the panel 
+_(position marked with green arrows in the image above).
+Gently lift the front panel up and out to free it.
+
+The serial number is on the white label indicated. It will be of the form `A300-#####`.
+
+To reinstall the front panel, reinsert the metal rods into the rubber bushings and press the panel into place.
+Then rotate the two thumbscrews outward to lock it into position.
+
+### Husky will not turn on
+
+1. Check that both On/Off Breaker is in the "ON" position, then press and hold the Power Button for 1 second.
+2. If the step above does not work,
+   connect the manual charger for one hour to ensure that the batteries have sufficient charge and repeat the step above.
+3. If the issue persists, contact [Support](#support).
+
+### Status lights are solid red
+
+:::info
+
+This indicates that the MCU is not in contact with the computer. This condition will be seen briefly on startup while robot's computer is booting up.
+If it persists, or is seen after initialization, refer to the debugging steps below.
+
+:::
+
+1. Try power cycling the robot to see if the issue persists.
+2. If the issue persists, the base node on the computer has crashed, the network switch has failed, or a serious MCU error has occurred.
+   The following checks can help isolate the source of the error.
+Run the check below and then contact [Support](#support) for further assistance.
+   1. From a [wired Ethernet connection](user_manual_husky#ethernet-connection), attempt to ping the robot computer to see if it is accessible:
+      ```
+      ping 192.168.131.1
+      ```
+   2. From a [wired Ethernet connection](user_manual_husky#ethernet-connection), SSH to the robot computer (`ssh robot@192.168.131.1`) and determine if ROS is running:
+      ```
+      sudo systemctl status clearpath-platform
+      ```
+   3. From a [wired Ethernet connection](user_manual_husky#ethernet-connection), attempt to ping the robot MCU to see if it is accessible:
+      ```
+      ping 192.168.131.2
+      ```
+
+### Status lights indicated a battery fault
+
+:::warning
+
+Only original chargers from Clearpath Robotics should be used when charging the Husky A300 to avoid any damage to the batteries and to reduce hazards.
+Use proper personal protective equipment _(PPE)- if attempting to handle the batteries.
+
+:::
+
+1. Disconnect any chargers and power cycle the robot to clear any transient state issues.
+2. If the issue persists, power off the robot, charge the robot batteries fully using the manual charger, disconnect the charger, and power on the robot.
+3. If the issues persists, contact [Support](#support).
+
+### Status lights indicate a motor fault
+
+1. Make note of the motor with the fault condition based on the status light pattern.
+2. Power cycle the robot to see if the issue persists.
+3. If the issue persists, [collect a rosbag](#collecting-rosbag) of the following topics, then contact [Support](#support) with the rosbag.
+   - /a300_XXXXX/platform/mcu/status
+   - /a300_XXXXX/platform/mcu/status/power
+   - /a300_XXXXX/platform/motors/feedback
+   - /a300_XXXXX/platform/motors/status
+   - /a300_XXXXX/platform/motors/system_protection
+   - /a300_XXXXX/platform/emergency_stop
+
+### Robot is stuck in emergency stop state
+
+1. Confirm that all [Emergency Stop buttons](user_manual_husky#emergency-stop-buttons) on the robot are disengaged.
+2. Confirm that any remote emergency stop units, if present, have their stop buttons disengaged and restart button pressed _(if applicable)_.
+3. Confirm that all external stop devices are functioning, and that their related switches and relays are closed.
+   You may need to use a multimeter to test voltage between the external stop connector and each of these external stop switches.
+4. Press the [Restart button](user_manual_husky#restart-button).
+5. If the above fails, power cycle the robot to see if the issue persists.
+6. If the issues persists, contact [Support](#support).
+
+:::info
+
+You can confirm the emergency stop state in ROS by running:
+
+```
+ros2 topic echo /a300_XXXXX/platform/emergency_stop
+```
+
+:::
+
+### Status lights indicate that motor protection is engaged  {#motor-protection}
+
+1. On the robot, check the following topics to confirm that one or motors are in the protection state:
+   ```
+   ros2 topic echo /a300_XXXX/platform/motors/system_protection
+   ```
+2. Wait 30 minutes for the motors to cool and confirm that the protection state has cleared.
+3. If the issues persists, contact [Support](#support).
+
+### Status panel indicates a fault
+
+:::info
+For troubleshooting error codes, refer to the [Error Codes](error_codes_husky) page.
+:::
+
+### Husky experiences momentary drops in communication, or Husky's velocity has an inconsistent jumping motion
+
+It's possible the robot has reached the thermal limit, or current limit. Refer to the
+[notes above regarding motor protection](#motor-protection).
+
+If you are unsure whether this is the case, [collect a rosbag](#collecting-rosbag) of the following
+topics, then contact [Support](#support) with the rosbag.
+
+- /a300_XXXXX/platform/mcu/status
+- /a300_XXXXX/platform/mcu/status/power
+- /a300_XXXXX/platform/motors/feedback
+- /a300_XXXXX/platform/motors/status
+- /a300_XXXXX/platform/motors/system_protection
+- /a300_XXXXX/platform/emergency_stop
+
+### Husky speed is momentarily incorrect when first driving after power up
+
+When first attempting to drive Husky after power-up, Husky's motors go through a calibration process
+(requires less than a quarter of a wheel revolution). During this time, there may be minor deviations in the
+commanded and actual motor speeds. No user intervention is required.
+
+### Husky stutters when first stopped on a slope
+
+To minimize the holding current required when stopped on a slope (to avoid thermal limits over time), Husky
+may undergo a very minor positioning adjustment to reduce forces in the flexible suspension.
+
+To reduce the stutter, only enter a hold position on a slope from a straight direction rather than a turn.
+
+### Husky rolls on a slope during emergency stop
+
+As outlined in the [User Manual](user_manual_husky#husky-emergency-stop-button), during the emergency stop state, no
+power is supplied to the motors. As such, Husky can roll, either due to user intervention or due to
+gravitational forces on a slope.
+
+Husky is equipped with a resistive electric brake that limits its speed in the emergency stop state. The maximum
+roll speed in this state depends on both the slope and payload.
+
+### Husky is making a loud or unusual mechanical noise
+
+- If the sound is coming from the sides of the robot, check the wheels to ensure no debris or object
+  is jammed in or near the wheels.
+- If the sound is coming from the top of the robot, check to make sure the
+  payloads are attached securely.
+
+
+### Not getting Wi-Fi internet connection
+
+1. Confirm that Husky Wi-Fi has been [configured correctly](user_manual_husky#wifi-client-setup),
+   including correct SSID and password. Confirm that the settings are correct in the
+   corresponding `/etc/netplan/` file.
+2. From Husky's computer, run `ip a` to review the status of the wireless interface and
+   determine if the connection has been established.
+3. Power cycle the robot and see if the issue persists.
+4. If the issues persists, contact [Support](#support).
+
+### Cannot connect to the robot's computer over a network cable
+
+1. Check that  the robot is powered on and that no faults are report on the Status Lights or Status Panel.
+2. Check that the external computer is configured correctly (IP address, netmask).
+3. Check that the Ethernet cable is connected securely between the robot and the external computer. Where
+   possible, check for Ethernet link LEDs being illuminated.
+4. Attempt to `ping 192.168.131.1` from the external computer.
+5. If the `ping` fails, connect a keyboard and monitor to the Debug Ports and log in to the
+   computer directly. This confirms the username and password.
+6. Using the keyboard/monitor, run `ip a` and confirm that an interface with IP address of
+   `192.168.131.1` exists.
+7. Power cycle the robot to see if the issue persists.
+8. For additional assistance, refer to the [Networking page](/docs/ros/networking/overview) or
+   contact [Support](#support).
+
+### The computer does not start automatically
+
+Refer to the [Mini ITX troubleshooting page](/docs_robots/accessories/computers/mini_itx).
+
+### The computer keeps reverting to old BIOS settings
+
+Refer to the [Mini ITX troubleshooting page](/docs_robots/accessories/computers/mini_itx).
+
+### The 13th-gen Mini ITX computer does not power on and has no output on HDMI
+
+On rare occasions, this can occur if the BIOS gets reset and does not power on the computer by default.
+
+1. Remove the top plate from the robot, then power cycle the robot and check the following.
+   1. Is the CPU fan spinning?
+   1. Are there any beeps at power on?
+1. If the CPU fan is not spinning and there are no beeps at power on, use a paperclip to short
+   the PWRBTN# and GND pins on the PANEL1 header on the motherboard. Remove the paperclip after
+   one second.
+   <center>
+     <figure>
+       <img
+         src="/img/robot_images/husky_a300_images/husky_a300_system_panel_header1.png"
+         width="600"
+       />
+       <img
+         src="/img/robot_images/husky_a300_images/husky_a300_system_panel_header2.png"
+         width="600"
+       />
+       <figcaption>Husky A300 Mini ITX PANEL1 (Position 23)</figcaption>
+     </figure>
+   </center>
+1. If the step above was successful in powering on the computer, reboot the computer, enter
+   the BIOS setup and update the settings so that the computer powers on by default.
+   Specifically, navigate to `Advanced → Chipset Configuration → Restore on AC/Power Loss`
+   and set the value to `Power On`.
+1. If the computer does not power on after shorting the PWRBTN# and GND pins,
+   unplug the 2x2 power connector on the motherboard and (using a Multimeter set to DC voltage)
+   probe it, ensuring that the necessary 12 V is being supplied.
+
+---
+
+## ROS
+
+### ROS is not starting
+
+Contact [Support](#support).
+
+### Sensors are not turning on
+
+1.  Check that the sensor's User Power connector has the correct voltage.
+2.  If the voltage is correct, then review the [Troubleshooting section for the related sensor](/docs_robots/accessories/sensors/sensors).
+
+---
+
+## Support  {#support}
+
+<Support />
+
+### Collecting a rosbag  {#collecting-rosbag}
+
+Our Support team may ask you to create a _rosbag_.
+This is a tool that saves ROS data to a file, so we can review it after the robot has been turned off.
+
+For example, we may ask you to record these topics:
+- `/a300_XXXXX/platform/mcu/status`
+- `/a300_XXXXX/platform/mcu/status/power`
+- `/a300_XXXXX/platform/motors/feedback`
+- `/a300_XXXXX/platform/motors/status`
+- `/a300_XXXXX/platform/motors/system_protection`
+- `/a300_XXXXX/platform/emergency_stop`
+so we can review motor temperatures, and other diagnostic data. To create this rosbag, you would:
+
+1.  Log into the robot's computer.
+2.  Run the command `ros2 bag record /a300_XXXXX/platform/mcu/status /a300_XXXXX/platform/mcu/status/power /a300_XXXXX/platform/motors/feedback /a300_XXXXX/platform/motors/status /a300_XXXXX/platform/motors/system_protection /a300_XXXXX/platform/emergency_stop`
+3.  Use your robot as you typically would, trying to recreate the issue you have been experiencing.
+4.  Once done, in the terminal, press `ctrl+c` to stop the command.
+5.  Enter `ls`, and find the new folder named `ros2bag_YYYY_MM_DD-hh_mm_ss` that was created. It will contain two files: `metadata.yaml` and a file with an extension of `.mcap`
+6.  Copy this directory to your development computer, using a command like [`scp`](https://help.ubuntu.com/community/SSH/TransferFiles).
+    Send the files to Clearpath Robotics in your Support email request.
