@@ -1,3 +1,6 @@
+import ComponentSafetyWarning from "/components/safety_warning.mdx";
+
+
 ### Important System Limits {#important-system-limits}
 
 
@@ -232,3 +235,39 @@ This setting is configurable—_(see [ROS Parameters](/docs/ros/config/yaml/plat
     | 100 kg       | 15°      | High friction | 1.0 m              |
   </div>
 </div>
+
+#### Suspension and Performance Limits {#suspension-limits}
+
+:::note
+
+While A300 is a rugged robot, it does not have a suspension system.
+Bumps are damped by the tires, but the robot's motors and other components will experience shock loads when traversing rough terrain, especially at higher speeds.
+The robot's speed must be reduced when approaching obstacles such as curbs.
+
+- When in off-road conditions, maximum speeds must be reduced as follows:
+   - maximum speed of 1.5 m/s with no payload;
+   - maximum speed of 1.0 m/s with up to 50 kg payload;
+   - payloads above 50 kg are not supported.
+- Husky A300 can drive over 13 mm curbs at full speed.
+  Reduce speed when approaching larger curbs.
+  Approaching the curb at an angle will allow for higher speed limits.
+- When approaching the maximum curb height of 150 mm, reduce the Husky's speed to 0.1 m/s or less.
+  Approaching the curb at an angle will allow for higher speed limits.
+- When operating in environments with depressions in the ground like potholes,
+  confirm that the holes are shallow enough to not cause the robot to bottom out.
+  Also reduce the robot's velocity in these environments, similar to climbing curbs.
+
+:::
+
+:::info
+
+Lowering the robot's tire pressure can reduce shock values.
+
+:::
+
+:::tip
+
+If your application requires higher speed operation on off-road terrain,
+consider using our [Warthog](../../warthog/user_manual_warthog) robot platform.
+
+:::
