@@ -1,0 +1,42 @@
+---
+title: Monitor Location
+sidebar_label: Monitor Location
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+## Map location
+
+The XY location of the platform in the 'map' coordinate frame. These values are relative to the datum coordinate.
+
+- Topic Name: **localization/odom**
+
+- Topic Type: [nav_msgs/msg/Odometry](https://github.com/ros2/common_interfaces/blob/jazzy/nav_msgs/msg/Odometry.msg)
+
+- Topic QoS: 
+
+## Lat/Lon location
+
+The lat/lon location of the platform.
+
+- Topic Name: **localization/fix**
+
+- Topic Type: [sensor_msgs/msg/NavSatFix](https://github.com/ros2/common_interfaces/blob/jazzy/sensor_msgs/msg/NavSatFix.msg)
+
+- Topic QoS: 
+
+<Tabs groupId="localization_odom">
+  <TabItem value="Python" label="Python" default>
+
+```python reference showLineNumbers
+https://github.com/cpr-application/clearpath_outdoornav/blob/ros2/python/endpoints/localization/monitor_location.py
+```
+  </TabItem>
+  <TabItem value="C++" label="C++">
+
+  </TabItem>
+
+</Tabs>
