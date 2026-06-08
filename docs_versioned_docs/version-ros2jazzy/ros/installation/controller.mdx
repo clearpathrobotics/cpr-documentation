@@ -5,18 +5,21 @@ sidebar_position: 7
 toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 Joystick controllers are used for teleoperation; they allow you to remotely drive the robot, whether it is a physical robot,
 or a simulated robot. The following instructions below detail how to pair different controllers to the robot's computer; however,
 these instructions can also be used to pair these controllers to your own computer.
 
-## PS4 Controller
-
 :::note
 
-If your robot comes with a PS4 controller, it will be paired already. Simply turn on the robot and turn on the controller.
+If your robot comes with a controller (either PS4 or PS5), it will be paired already. Simply turn on the robot and turn on the controller.
 
 :::
+
+<Tabs groupId="controller">
+  <TabItem value="ps4" label="PS4 Controller" default>
 
 To re-pair the PS4 controller or pair a new PS4 controller:
 
@@ -50,7 +53,7 @@ sudo apt-get install bluez
 sudo bluetoothctl
 ```
 
-3. Use `bluetoothctl` to scan for nearby devices. In the bluetooth control application, run:
+3. Use `bluetoothctl` to scan for nearby devices. In the Bluetooth control application, run:
 
 ```
 agent on
@@ -59,8 +62,8 @@ scan on
 
 4. Put the controller in pairing mode. Press and hold the PS and Share buttons on your controller until
    the LED begins rapidly flashing white.
-5. The bluetooth scan will display the MAC addresses of nearby devices. Determine which MAC address
-   corresponds to the controller and copy it. In the bluetooth control application, run:
+5. The Bluetooth scan will display the MAC addresses of nearby devices. Determine which MAC address
+   corresponds to the controller and copy it. In the Bluetooth control application, run:
 
 ```
 scan off
@@ -70,6 +73,48 @@ connect <MAC Address>
 ```
 
 The controller should now be paired.
+
+  </TabItem>
+  <TabItem value="ps5" label="PS5 Controller">
+
+The PS5 (DualSense) controller does not require `ds4drv`; it is supported directly through the Linux kernel.
+To re-pair the PS5 controller or pair a new PS5 controller, use `bluetoothctl`:
+
+1. Install the `bluez` package if it is not installed already. In terminal, run:
+
+```
+sudo apt-get install bluez
+```
+
+2. Run the `bluetoothctl` command. In terminal, run:
+
+```
+sudo bluetoothctl
+```
+
+3. Use `bluetoothctl` to scan for nearby devices. In the Bluetooth control application, run:
+
+```
+agent on
+scan on
+```
+
+4. Put the controller in pairing mode. Press and hold the PS and Create buttons on your controller until
+   the light bar begins rapidly flashing blue.
+5. The Bluetooth scan will display the MAC addresses of nearby devices. Determine which MAC address
+   corresponds to the controller and copy it. In the Bluetooth control application, run:
+
+```
+scan off
+pair <MAC Address>
+trust <MAC Address>
+connect <MAC Address>
+```
+
+The controller should now be paired.
+
+  </TabItem>
+</Tabs>
 
 :::note
 

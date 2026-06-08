@@ -220,6 +220,8 @@ velodyne
 # Networking and Communication
 bgna
 BLDC
+bluetoothctl
+bluez
 CMOS
 DDS
 DHCP
