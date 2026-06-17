@@ -43,7 +43,7 @@ In recent versions of the UR control box firmware, the services required to star
 
 </details>
 
-#### URCap
+#### URCap {#ur_urcap}
 <details>
 
 <summary>URCap Setup</summary>
@@ -247,3 +247,47 @@ Note, you can also pass in substitution arguments:
 ```
 
 </details>
+
+
+### Robotiq Gripper
+On the UR arms, the Robotiq gripper is exposed to the robot computer as a serial device.
+
+It is possible to connect the gripper to the robot computer directly using a serial (RS485) to USB cable and externally routing the cable down the arm using anchors to prevent the cable from interfering with the arm's motion.
+
+However, it is recommended to use a UR coupling kit attached at the wrist to connect the UR directly to the arm's wrist interface.
+
+#### URCap for Wrist Adapter
+If the gripper has been attached to the arm using the appropriate wrist adapter, we can install a URCap to command the gripper through the arm.
+
+Using the same method as discussed in the [Teach Pendant Setup/URCap](#ur_urcap), install the [Universal_Robots_ToolComm_Forwarder_URCap](https://github.com/UniversalRobots/Universal_Robots_ToolComm_Forwarder_URCap).
+
+The `RS485 URCap` installs a daemon on the UR controller that executes a script to setup a `socat` connection to expose the tool's serial device by forwarding the port to a remote computer.
+Once installed, if the Universal Robot configuration in the `robot.yaml` contains the `gripper.model.robotiq_2f_85` entry, then the `RobotiqHardwareInterface` will be launched alongside the arm's controllers.
+
+:::warning
+There also exists a `Robotiq URCap` maintained and provided by Robotiq. This URCap can be downloaded from the Robotiq support page and allows for a user to command the gripper through Polyscope.
+While some users may prefer this configuration because it allows t#### URCaphem to write Polyscope programs that command the arm, this URCap will take absolute control over the gripper's communication and prevent the robot computer from commanding the gripper.
+In other words, direct ROS control of the gripper will not be possible.
+:::
+
+#### Robotiq ROS 2 Driver
+The Robotiq ROS 2 driver is not available through binaries, and therefore, must be built from source. The [`ros2_robotiq_gripper`](https://github.com/PickNikRobotics/ros2_robotiq_gripper) repository contains all the necessary Robotiq ROS 2 packages.
+These are owned by PickNikRobotics and maintained with community support.
+
+To build the driver, create a workspace if one does not exist already, and in that workspace clone [`ros2_robotiq_gripper`](https://github.com/PickNikRobotics/ros2_robotiq_gripper) repository, specifically choosing the `main` branch:
+```bash
+cd ~/colcon_ws/src
+git clone https://github.com/PickNikRobotics/ros2_robotiq_gripper.git -b main
+```
+
+Then, the required dependencies must also be cloned from the `.repos` file:
+```bash
+cd ~/colcon_ws/src
+vcs import --input ros2_robotiq_gripper/ros2_robotiq_gripper.rolling.repos
+```
+
+Now, the workspace can be built:
+```bash
+cd ~/colcon_ws/
+colcon build --symlink-install --cmake-args=-DCMAKE_BUILD_TYPE=Release
+```

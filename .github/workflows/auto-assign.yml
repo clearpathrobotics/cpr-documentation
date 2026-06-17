@@ -18,7 +18,7 @@ jobs:
             gh pr edit ${{ github.event.pull_request.number }} --repo "${REPO}" --add-assignee "${AUTHOR}"
           else
             echo "${AUTHOR} is not a member of ${ORG}, assigning code owners"
-            gh pr edit ${{ github.event.pull_request.number }} --repo "${REPO}" --add-assignee rhysfaultless-cpr,jhiggins-cpr,tonybaltovski,luis-camero
+            gh pr edit ${{ github.event.pull_request.number }} --repo "${REPO}" --add-assignee jmastrangelo-cpr,jhiggins-cpr,tonybaltovski,luis-camero
           fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

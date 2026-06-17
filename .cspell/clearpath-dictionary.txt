@@ -11,6 +11,7 @@ Clearpath
 clearpathrobotics
 
 # Sensor and Component Manufacturers
+Ardusimple
 Blackfly
 Blox
 Botic
@@ -39,6 +40,7 @@ Knipex
 Littelfuse
 Loctite
 Luxonis
+Meanwell
 Microhard
 Microstrain
 Misumi
@@ -67,6 +69,7 @@ Telegrey
 Traco
 Tyco
 Vette
+Victron
 Wiha
 Wurth
 Xsens
@@ -195,6 +198,7 @@ kinect
 LiDAR
 lidar
 localization
+MPPT
 madgwick
 mosaicing
 NAVSAT
@@ -207,6 +211,7 @@ pointcloud
 PTU
 ptu5
 RSSI
+RTCM
 RTK
 SBAS
 SLAM

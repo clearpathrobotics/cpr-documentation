@@ -23,6 +23,10 @@ const config = {
   },
   favicon: "img/website_images/favicon.ico",
 
+  themes: [
+      '@saucelabs/theme-github-codeblock'
+  ],
+
   i18n: {
     defaultLocale: "en",
     locales: ["en"],

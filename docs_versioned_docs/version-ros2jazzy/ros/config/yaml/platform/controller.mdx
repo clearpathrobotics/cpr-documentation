@@ -13,11 +13,12 @@ We support the following types of controllers on all platforms:
   - **ps5**: standard Playstation5 controller (bluetooth).
   - **logitech**: Logitech F710 (USB dongle).
   - **xbox**: Xbox controller (bluetooth).
+  - **fort_vsc**: FORT Robotics VSC safety controller (USB receiver).
 
 Switching between each is done by setting the `controller` parameter under the `platform` tag.
 
 ```yaml
-controller: ps4 # one of ps4, ps5, logitech, xbox
+controller: ps4 # one of ps4, ps5, logitech, xbox, fort_vsc
 ```
 
 :::warning
@@ -129,10 +130,11 @@ the `clearpath_robot` package:
 
 | Controller type | Linux `joy` device |
 |:--------------- |:------------------ |
-| `ps4`           | `/dev/input/ps4`   |
-| `ps5`           | `/dev/input/ps5`   |
-| `xbox`          | `/dev/input/xbox`  |
-| `logitech`      | `/dev/input/f710`  |
+| `ps4`           | `/dev/input/ps4`      |
+| `ps5`           | `/dev/input/ps5`      |
+| `xbox`          | `/dev/input/xbox`     |
+| `logitech`      | `/dev/input/f710`     |
+| `fort_vsc`      | `/dev/input/fort_vsc` |
 
 To manually specify a different device file or symlink, use the [`extras.ros_parameters`](extras) field in
 `robot.yaml`, for example:
