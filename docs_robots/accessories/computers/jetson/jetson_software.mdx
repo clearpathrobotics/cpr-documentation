@@ -72,7 +72,7 @@ This step is not required for Jetson Nano
 
    :::note
    If your system is missing dependencies you may see error messages in the output of the `dpkg` command.
-   To resolve these, run `sudo apt-get -f install`.
+   To resolve these, run `sudo apt install --fix-broken`.
    :::
 
 3. Login the the SDK Manager using your Nvidia developer credentials.
@@ -356,7 +356,7 @@ This step is not required for Jetson Nano
 
    :::note
 
-   If `curl` is not installed on your Jetson by default you can install it by running `sudo apt-get install curl`.
+   If `curl` is not installed on your Jetson by default you can install it by running `sudo apt install curl`.
 
    :::
 
