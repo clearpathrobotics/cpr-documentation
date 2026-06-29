@@ -10,6 +10,27 @@ import Style from '/assets/css/changelog.css';
 
 <div class="changelog">
 
+## 2.1.0
+
+### New Features
+
+- Added logger node to record execution logs on the robot. Logs include all mission data, images, video/audio recordings as well as telemetry and GPS data.
+  Details of the logs can be viewed through the UI or you can access the file browser.
+- Removed onav-backup node
+
+### API Changes
+
+- Updated docker images to confirm with Clearpath API
+
+### Bug Fixes
+
+- Fixed autonomy/status pause field not working
+
+### Known Issues 
+
+- Docking timeout not working
+- Duplicating mission should not duplicate tasks
+
 ## 2.0.0
 
 ### New Features
@@ -27,6 +48,11 @@ import Style from '/assets/css/changelog.css';
 ### Known Issues 
 
 - None
+
+## 1.0.0
+
+- Version bump to 1.0.0 to reflect the last official ROS1 release.
+  This version includes all features and bug fixes from the previous version.
 
 ## 0.14.0
 
