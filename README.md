@@ -58,7 +58,7 @@ The source files in this repository are built and deployed as docs.clearpathrobo
         - Extension: _MDX_
     2.  Terminal configured to work with this GitHub repository
     3.  Node.js (22.x or newer) is installed
-        1.  To install `nodejs` LTS (22.x currently) on Ubuntu run: `curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - && sudo apt-get install -y nodejs`
+        1.  To install `nodejs` LTS (22.x currently) on Ubuntu run: `curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash - && sudo apt install -y nodejs`
         2.  For all other platforms use: https://nodejs.org/en/download
 2.  Clone this repository,
 
