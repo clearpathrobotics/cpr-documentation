@@ -36,29 +36,51 @@ When a user wants to connect a remote computer to communicate with the nodes run
 ```
 sudo apt update && sudo apt install ros-jazzy-rmw-zenoh-cpp
 ```
-2. Set the Zenoh ROS Middleware in the environment:
+2. Create an offboard setup folder and copy the robot configuration by following the [offboard setup instructions](../../installation/offboard_pc.mdx#setup-folder).
+3. Set the Zenoh ROS Middleware in the offboard `robot.yaml`:
+
+```yaml
+system:
+    ros2:
+        middleware:
+            implementation: rmw_zenoh_cpp
 ```
-export RMW_IMPLEMENTATION=rmw_zenoh_cpp
+
+4. Set the remote computer's Zenoh router endpoint in the offboard `robot.yaml` under `system.bash.env`:
+
+        a. **Wired Connection**: Set the endpoint to the robot's static IP address (`192.168.131.1`):
+        ```yaml
+        system:
+            bash:
+                env:
+                    ZENOH_CONFIG_OVERRIDE: 'mode="client";connect/endpoints=["tcp/192.168.131.1:7447"]'
+        ```
+
+        b. **Wireless Connection**: Set the endpoint to the robot's IP address assigned by the Wi-Fi router:
+        ```yaml
+        system:
+            bash:
+                env:
+                    ZENOH_CONFIG_OVERRIDE: 'mode="client";connect/endpoints=["tcp/ROBOT_WIFI_IP:7447"]'
+        ```
+
+5. Generate and source the offboard `setup.bash` file:
+
 ```
-3. Connect the remote computer and robot computer to the same network.
+source /opt/ros/jazzy/setup.bash
+ros2 run clearpath_generator_common generate_bash -s ~/clearpath
+source ~/clearpath/setup.bash
+```
+
+6. Connect the remote computer and robot computer to the same network.
 
     a. **Wired Connection**: Connect the remote computer to the robot's ethernet port and set the remote computer's IP address in the range `192.168.131.100` to `192.168.131.255`.
 
     b. **Wireless Connection**: Connect the robot computer to the same WiFi router as the remote computer. Find the IP address that the WiFi router assigned the robot's computer using the `ip a` command on a terminal on the robot's computer.
 
-4. Set the remote computer's Zenoh router configuration:
+If you switch between wired and wireless networking, update the offboard `robot.yaml` IP and regenerate `setup.bash`, or edit `~/clearpath/setup.bash` directly.
 
-    a. **Wired Connection**: Set the endpoint to the robot's static IP address (`192.168.131.1`):
-    ```
-    export ZENOH_CONFIG_OVERRIDE='mode="client";connect/endpoints=["tcp/192.168.131.1:7447"]'
-    ```
-
-    b. **Wireless Connection**: Set the endpoint to the robot's IP address assigned by the WiFi router:
-    ```
-    export ZENOH_CONFIG_OVERRIDE='mode="client";connect/endpoints=["tcp/ROBOT_WIFI_IP:7447"]'
-    ```
-
-5. Then make sure to restart the ROS2 daemon on the remote computer before using command line tools:
+7. Then make sure to restart the ROS2 daemon on the remote computer before using command line tools:
 ```
 ros2 daemon stop
 ros2 topic list
