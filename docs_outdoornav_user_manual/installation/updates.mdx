@@ -26,8 +26,6 @@ drive with the following file structure (/Documents/General/Releases/...)
 
     - **cpr-onav-ui.tar**
 
-    - **cpr-onav-base.tar**
-
     - **cpr-onav-autonomy.tar**
 
     - **cpr-onav-app.zip**
@@ -43,7 +41,7 @@ drive with the following file structure (/Documents/General/Releases/...)
     **Linux**:
 
     ```code
-    scp cpr-onav-app.zip cpr-onav-ui.tar cpr-onav-base.tar cpr-onav-autonomy.tar robot@192.168.131.1:/opt/onav/
+    scp cpr-onav-app.zip cpr-onav-ui.tar cpr-onav-autonomy.tar robot@192.168.131.1:/opt/onav/
     ```
 
     **Windows**: Use [FileZilla Client](https://filezilla-project.org/download.php?platform=win64) to transfer all files to the robot.
@@ -90,7 +88,7 @@ to update to.
 1. Remove all extraneous files
 
     ```code
-    rm /opt/onav/cpr-onav-ui.tar /opt/onav/cpr-onav-base.tar /opt/onav/cpr-onav-autonomy.tar /opt/onav/cpr-onav-app.zip
+    rm /opt/onav/cpr-onav-ui.tar /opt/onav/cpr-onav-autonomy.tar /opt/onav/cpr-onav-app.zip
     ```
 
 :::note
