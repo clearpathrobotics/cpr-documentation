@@ -157,7 +157,7 @@ sudo systemctl start clearpath-manipulators.service
 
 
 ### Headless Initialization
-If the arm has been setup to accept external control by surrendering manual control in the teach pendant, then it is possible to bypass the manual initialization of the UR program on the tablet. If this is the case, make sure the arm has been turned on and initialized through the teach pendant, then set, `headless: true` in the `robot.yaml`. This will restart the services and the arm should connect automatically.
+If the arm has been setup to accept external control by surrendering manual control in the teach pendant, then it is possible to bypass the manual initialization of the UR program on the tablet. If this is the case, make sure the arm has been turned on and initialized through the teach pendant, then set, `headless_mode: true` in the `robot.yaml`. This will restart the services and the arm should connect automatically.
 
 #### Setup
 The headless setup is not recommended as it is more complicated, however it exposes the entire teach pendant's functionality to the ROS interface, and thus, provides experienced ROS users with the ability to detect arm faults, clear faults, and restart the arm programmatically.
