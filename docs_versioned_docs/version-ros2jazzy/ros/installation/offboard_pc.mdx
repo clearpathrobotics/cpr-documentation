@@ -89,6 +89,22 @@ source /opt/ros/jazzy/setup.bash
 ros2 run clearpath_generator_common generate_bash -s ~/clearpath
 ```
 
+:::note
+If the offboard computer is using Zenoh (`rmw_zenoh_cpp`), define `ZENOH_CONFIG_OVERRIDE` in the offboard copy of `robot.yaml` under `system.bash.env` before generating `setup.bash`.
+
+For example:
+
+```yaml
+system:
+    bash:
+        env:
+            ZENOH_CONFIG_OVERRIDE: 'mode="client";connect/endpoints=["tcp/192.168.131.1:7447"]'
+```
+
+Use the robot IP that this offboard computer should connect to (typically the wired `192.168.131.1`, or the robot's Wi-Fi IP when using wireless).
+If the robot IP changes, update `~/clearpath/robot.yaml` and regenerate `setup.bash`, or edit `~/clearpath/setup.bash` directly.
+:::
+
 Add the following line to your `~/.bashrc` file to automatically source the generated `setup.bash` file in new terminals:
 
 ```
