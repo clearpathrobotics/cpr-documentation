@@ -37,7 +37,7 @@ wget https://packages.clearpathrobotics.com/public.key -O - | sudo apt-key add -
 sudo sh -c 'echo \
     "deb https://packages.clearpathrobotics.com/stable/ubuntu $(lsb_release -cs) main" > \
     /etc/apt/sources.list.d/clearpath-latest.list'
-sudo apt-get update
+sudo apt update
 ```
 
 To update `rosdep` dependencies with the package built & hosted on Clearpath's servers, run

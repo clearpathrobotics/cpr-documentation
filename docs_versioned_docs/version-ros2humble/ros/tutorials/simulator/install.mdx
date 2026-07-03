@@ -21,10 +21,10 @@ Follow the [Offboard Computer](../../installation/offboard_pc.mdx) setup guide.
 Run the following commands in your terminal:
 
 ```
-sudo apt-get update && sudo apt-get install wget
+sudo apt update && sudo apt install wget
 sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
 wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
-sudo apt-get update && sudo apt-get install ignition-fortress
+sudo apt update && sudo apt install ignition-fortress
 ```
 
 ### Installing Clearpath Simulator
@@ -32,8 +32,8 @@ sudo apt-get update && sudo apt-get install ignition-fortress
 Run the following commands in your terminal:
 
 ```
-sudo apt-get update
-sudo apt-get install ros-humble-clearpath-simulator
+sudo apt update
+sudo apt install ros-humble-clearpath-simulator
 ```
 
 #### Source install

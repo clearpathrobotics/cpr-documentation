@@ -9,10 +9,10 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
 We support the following types of controllers on all platforms:
-  - **ps4**: standard Playstation4 controller (bluetooth).
-  - **ps5**: standard Playstation5 controller (bluetooth).
+  - **ps4**: standard Playstation4 controller (Bluetooth).
+  - **ps5**: standard Playstation5 controller (Bluetooth).
   - **logitech**: Logitech F710 (USB dongle).
-  - **xbox**: Xbox controller (bluetooth).
+  - **xbox**: Xbox controller (Bluetooth).
   - **fort_vsc**: FORT Robotics VSC safety controller (USB receiver).
 
 Switching between each is done by setting the `controller` parameter under the `platform` tag.
@@ -71,6 +71,35 @@ extras:
       enable_turbo_button: 7
 ```
   </TabItem>
+  <TabItem value="right_hand_control_ps5" label="Right Hand Differential control (PS5)" default>
+```yaml
+extras:
+  ros_parameters:
+    teleop_twist_joy_node:
+      axis_linear.x: 4
+      axis_angular.yaw: 3
+      enable_button: 5
+      enable_turbo_button: 4
+```
+  </TabItem>
+  <TabItem value="omni_swap_horizontal_ps5" label="Swap linear Y and angular Yaw axes (PS5)" default>
+```yaml
+extras:
+  ros_parameters:
+    teleop_twist_joy_node:
+      axis_linear.y: 0
+      axis_angular.yaw: 3
+```
+  </TabItem>
+  <TabItem value="deadman_l2_r2_ps5" label="Deadman buttons on L2 and R2 (PS5)" default>
+```yaml
+extras:
+  ros_parameters:
+    teleop_twist_joy_node:
+      enable_button: 6
+      enable_turbo_button: 7
+```
+  </TabItem>
 </Tabs>
 
 ## Teleop Speeds
@@ -100,7 +129,7 @@ extras:
   ros_parameters:
     teleop_twist_joy_node:
       scale_linear.x: 0.6
-      scale_angular.z: 0.75
+      scale_angular.yaw: 0.75
       scale_linear_turbo.x: 2.0
       scale_angular_turbo.yaw: 1.0
 ```
@@ -108,7 +137,7 @@ extras:
 **Normal speed parameters**
 - `scale_linear.x` sets the maximum forward/reverse velocity
 - `scale_linear.y` sets the maximum left/right velocity (Omnidirectional control only)
-- `scale_angular.z` sets the maximum angular velocity
+- `scale_angular.yaw` sets the maximum angular velocity
 
 **Turbo speed parameters**
 - `scale_linear_turbo.x` sets the maximum forward/reverse velocity

@@ -32,7 +32,7 @@ commands on the robot:
 ```bash
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb
 sudo dpkg -i cuda-keyring_1.1-1_all.deb
-sudo apt-get update
+sudo apt update
 ```
 
 ## Install CUDA
@@ -41,21 +41,21 @@ sudo apt-get update
 
 If you have a realtime Linux kernel installed (`PREEMPT_RT`) you may encounter errors when installing CUDA, as it
 does not officially support realtime kernels. To work around these errors add `IGNORE_PREEMPT_RT_PRESENCE=1`
-before any `apt` or `apt-get` commands, e.g.
+before any `apt` commands, e.g.
 ```
-sudo IGNORE_PREEMPT_RT_PRESENCE=1 apt-get install cuda-toolkit
+sudo IGNORE_PREEMPT_RT_PRESENCE=1 apt install cuda-toolkit
 ```
 
 :::
 
 To install CUDA, run the following command:
 ```bash
-sudo apt-get install cuda-toolkit
+sudo apt install cuda-toolkit
 ```
 
 Optionally you can also install all GDS packages:
 ```bash
-sudo apt-get install nvidia-gds
+sudo apt install nvidia-gds
 ```
 
 Reboot the computer after installing the packages.

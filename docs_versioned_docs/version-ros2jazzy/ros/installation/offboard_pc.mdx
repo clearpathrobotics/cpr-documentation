@@ -37,7 +37,7 @@ wget https://packages.clearpathrobotics.com/public.key -O - | sudo apt-key add -
 sudo sh -c 'echo \
     "deb https://packages.clearpathrobotics.com/stable/ubuntu $(lsb_release -cs) main" > \
     /etc/apt/sources.list.d/clearpath-latest.list'
-sudo apt-get update
+sudo apt update
 ```
 
 To update `rosdep` dependencies with the package built & hosted on Clearpath's servers, run
@@ -88,6 +88,22 @@ If you have workspaces defined in the `robot.yaml` that do not exist on the offb
 source /opt/ros/jazzy/setup.bash
 ros2 run clearpath_generator_common generate_bash -s ~/clearpath
 ```
+
+:::note
+If the offboard computer is using Zenoh (`rmw_zenoh_cpp`), define `ZENOH_CONFIG_OVERRIDE` in the offboard copy of `robot.yaml` under `system.bash.env` before generating `setup.bash`.
+
+For example:
+
+```yaml
+system:
+    bash:
+        env:
+            ZENOH_CONFIG_OVERRIDE: 'mode="client";connect/endpoints=["tcp/192.168.131.1:7447"]'
+```
+
+Use the robot IP that this offboard computer should connect to (typically the wired `192.168.131.1`, or the robot's Wi-Fi IP when using wireless).
+If the robot IP changes, update `~/clearpath/robot.yaml` and regenerate `setup.bash`, or edit `~/clearpath/setup.bash` directly.
+:::
 
 Add the following line to your `~/.bashrc` file to automatically source the generated `setup.bash` file in new terminals:
 

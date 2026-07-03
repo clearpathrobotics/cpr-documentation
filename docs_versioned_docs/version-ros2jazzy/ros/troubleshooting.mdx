@@ -36,13 +36,13 @@ for instructions on updating the MCU firmware.
 USB or serial-based MCUs require [`udev` rules](https://github.com/clearpathrobotics/clearpath_robot/blob/jazzy/clearpath_robot/debian/udev)
 to be installed on the robot.
 
-If you have installed the ROS 2 packages as `.deb` packages (using the `apt` or `apt-get` command)
+If you have installed the ROS 2 packages as `.deb` packages (using the `apt` command)
 these udev rules will be installed automatically. Verify that `/usr/lib/udev/rules.d/60-ros-jazzy-clearpath-robot.rules`
 exists in your system. If it does not, try reinstalling the `clearpath_robot` ROS package:
 
 ```bash
-sudo apt-get update
-sudo apt-get install --reinstall ros-jazzy-clearpath-robot
+sudo apt update
+sudo apt install --reinstall ros-jazzy-clearpath-robot
 ```
 
 If you have installed the packages from source (i.e. they are built in a `colcon` workspace), make

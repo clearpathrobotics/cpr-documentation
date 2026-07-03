@@ -1,0 +1,32 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+## Supported Joystick Controllers {#supported-joysticks}
+
+:::note
+
+Debian drivers are automatically installed on robots as part of the
+[Clearpath Robot Metapackage](../ros/installation/robot#clearpath-robot-metapackage).
+
+:::
+
+<Tabs defaultValue={props.rosVersion || 'jazzy'}>
+  <TabItem value="humble" label="ROS 2 Humble">
+
+| Controller                                                                              | `amd64` | `arm64` |
+|:--------------------------------------------------------------------------------------- |:------- |:------- |
+| [Logitech F710](/docs_robots/accessories/add-ons/controllers#controllers_logitech_f710) | Debian  | Debian  |
+| [PS4 (DualShock 4)](/docs_robots/accessories/add-ons/controllers#controllers_sony_dualshock) | Debian  | Debian  |
+
+  </TabItem>
+  <TabItem value="jazzy" label="ROS 2 Jazzy">
+
+| Controller                                                                              | `amd64` | `arm64` |
+|:--------------------------------------------------------------------------------------- |:------- |:------- |
+| [Logitech F710](/docs_robots/accessories/add-ons/controllers#controllers_logitech_f710) | Debian  | Debian  |
+| [PS4 (DualShock 4)](/docs_robots/accessories/add-ons/controllers#controllers_sony_dualshock) | Debian  | Debian  |
+| PS5 (DualSense)                                                                         | Debian  | Debian  |
+| [FORT Robotics Safe Remote Control](/docs_robots/accessories/add-ons/controllers#controllers_fort_robotics_src) | Debian  | Debian  |
+
+  </TabItem>
+</Tabs>

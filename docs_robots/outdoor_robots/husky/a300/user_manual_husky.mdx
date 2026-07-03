@@ -8,6 +8,8 @@ toc_max_heading_level: 4
 
 export const robotModel="A300"
 import ComponentIntroductionHusky from "/components/introduction_husky_a300.mdx";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 import Support from "/components/support.mdx";
 import ComponentUsingRos from "/components/using_ros.mdx";
 import ComponentCommonSafeWorkProcedures from "/components/common_safe_work_procedures.mdx";
@@ -1672,15 +1674,30 @@ thumbstick to drive Husky.
 
 In slow mode, the maximum robot speed is 0.3 m/s; in fast mode, the maximum robot speed is 2.0 m/s.
 
-<center>
-  <figure>
-    <img
-      src="/img/robot_images/common_images/controller_ps4.png"
-      width="400"
-    />
-    <figcaption>PS4 Controller</figcaption>
-  </figure>
-</center>
+<Tabs>
+  <TabItem value="ps4" label="PS4 Controller" default>
+    <center>
+      <figure>
+        <img
+          src="/img/robot_images/common_images/controller_ps4.png"
+          width="400"
+        />
+        <figcaption>PS4 Controller</figcaption>
+      </figure>
+    </center>
+  </TabItem>
+  <TabItem value="ps5" label="PS5 Controller">
+    <center>
+      <figure>
+        <img
+          src="/img/robot_images/common_images/controller_ps5.png"
+          width="400"
+        />
+        <figcaption>PS5 Controller</figcaption>
+      </figure>
+    </center>
+  </TabItem>
+</Tabs>
 
 ### Using ROS  {#using-ros}
 
