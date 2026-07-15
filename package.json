@@ -38,7 +38,7 @@
     "@docusaurus/types": "^3.10.1",
     "@types/react": "^18.3.1",
     "cspell": "^10.0.1",
-    "prettier": "^3.9.4",
+    "prettier": "^3.9.5",
     "typescript": "^6.0.3"
   },
   "engines": {
