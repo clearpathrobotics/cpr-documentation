@@ -1,0 +1,36 @@
+{
+  // Display name shown in the VS Code "Reopen in Container" UI.
+  "name": "cpr-documentation",
+  // Prebuilt Microsoft dev container image with Node.js 22 and common tooling.
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+  // Expose the Docusaurus dev/serve port to the host.
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      // Friendly name and auto-open a preview when the port becomes available.
+      "label": "Docusaurus site",
+      "onAutoForward": "openPreview"
+    }
+  },
+  // node_modules/build are created as root by the base image before the
+  // container user is added; hand ownership back to `node` before installing.
+  "onCreateCommand": "sudo chown -R node:node /workspaces/cpr-documentation",
+  // Install dependencies from the lockfile and produce a production build.
+  "postCreateCommand": "npm ci && npm run build",
+  // Re-assert ownership on each start in case a volume reset root ownership.
+  "postStartCommand": "sudo chown -R node:node /workspaces/cpr-documentation",
+  // runs in VS Code's integrated terminal, which stays open for the container's lifetime, keeping the server alive
+  "postAttachCommand": "npm run serve -- --host 0.0.0.0",
+  // Run as the non-root `node` user provided by the base image.
+  "remoteUser": "node",
+  "customizations": {
+    "vscode": {
+      // Extensions auto-installed in the container for a consistent dev setup.
+      "extensions": [
+        "esbenp.prettier-vscode", // Prettier code formatter
+        "streetsidesoftware.code-spell-checker", // Spell checking for docs
+        "dbaeumer.vscode-eslint" // ESLint integration
+      ]
+    }
+  }
+}
