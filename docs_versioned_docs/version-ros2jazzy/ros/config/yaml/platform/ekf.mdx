@@ -23,3 +23,54 @@ For example, to disable the EKF node:
 platform:
   enable_ekf: false
 ```
+
+## Adding Sensors to the EKF
+
+By default, the EKF node (`ekf_node`) automatically fuses the platform's wheel odometry with any
+IMU or GPS-with-IMU sensor defined under [`sensors`](../sensors/overview.mdx). Rather than disabling this, additional
+sources can be added, such as an extra odometry or pose topic, use the
+[`extras.ros_parameters`](extras#ros-parameters) field in `robot.yaml` to pass in
+[`robot_localization`](https://index.ros.org/p/robot_localization) parameters directly to the
+`ekf_node`.
+
+:::caution
+
+Setting `extras.ros_parameters.ekf_node` completely replaces the automatically generated fusion
+parameters, it does not merge with them. If you add your own `ekf_node` entry, you must also
+re-declare the `odom0`/`imu0`/`pose0` inputs for any Clearpath-managed sensors you still want fused.
+
+:::
+
+For example, to additionally fuse an external pose source published on `external_pose/data`:
+
+```yaml
+platform:
+  extras:
+    ros_parameters:
+      ekf_node:
+        odom0: platform/odom
+        odom0_config: [true,  true,  false,
+                        false, false, true,
+                        true,  true,  false,
+                        false, false, true,
+                        false, false, false]
+        odom0_differential: false
+        odom0_queue_size: 10
+        imu0: sensors/imu_0/data
+        imu0_config: [false, false, false,
+                        false, false, false,
+                        false, false, false,
+                        true,  true,  true,
+                        true,  false, false]
+        imu0_differential: false
+        imu0_queue_size: 10
+        imu0_remove_gravitational_acceleration: true
+        pose0: external_pose/data
+        pose0_config: [true,  true,  true,
+                        true,  true,  true,
+                        false, false, false,
+                        false, false, false,
+                        false, false, false]
+        pose0_differential: false
+        pose0_queue_size: 10
+```
