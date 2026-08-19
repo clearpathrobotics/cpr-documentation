@@ -29,6 +29,7 @@ Futaba
 Greenlee
 Gurum
 Henryuan
+Hesai
 Hokuyo
 Icotek
 Inventus
