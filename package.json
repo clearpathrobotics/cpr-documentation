@@ -19,7 +19,7 @@
     "spellcheck:fix": "cspell --words-only --unique \"**/*.{md,mdx}\" | sort -f"
   },
   "dependencies": {
-    "@docusaurus/core": "^3.9.2",
+    "@docusaurus/core": "^3.10.2",
     "@docusaurus/preset-classic": "^3.9.2",
     "@docusaurus/theme-mermaid": "^3.9.2",
     "@mdx-js/react": "^3.1.1",
