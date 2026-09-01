@@ -243,6 +243,20 @@ includeCurrentVersion: false,
 
 <br/>
 
+## Continuous integration
+
+[`Node.js CI`](.github/workflows/node.js.yml) runs on every pull request: it installs dependencies,
+runs the spell checker (`npm run spellcheck`), and builds the site (`npm run build`). A pull request
+should not be merged until this job passes — a spelling error or a build failure will fail it, which
+mirrors the local `npm run spellcheck` and `npm run build` steps in the workflow above.
+
+This repository is standalone documentation with no ROS or other upstream code dependencies, so its
+CI is **not** affected by changes in other Clearpath repositories. The `preview` workflows only
+deploy a temporary preview of your branch and do not gate merging.
+
+
+<br/>
+
 ## How should I write pages?
 
 1.  Refer to [Markdown's guide](https://www.markdownguide.org/basic-syntax/) for syntax.
