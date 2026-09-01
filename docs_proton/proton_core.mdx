@@ -1,0 +1,221 @@
+---
+title: Proton Core
+sidebar_label: Proton Core
+sidebar_position: 3
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+# proton_core
+
+**proton_core** is the central C implementation and code generation toolchain for Proton. It's designed for resource-constrained microcontrollers where memory and CPU are limited.
+
+All other Proton-related libraries expand upon concepts and methods defined in proton_core.
+
+## Main Features
+
+- **Signal/Bundle Handling**: Initialization, encoding/decoding via nanopb
+- **Signal Registry API**: Set and get signal values
+- **Node Manager API**: Periodic updates, bundle-decode callbacks, marking bundles for transmission
+- **Transport Framing Helper Functions**: Magic bytes, length encoding, CRC16 validation
+
+## Signal Registry API
+
+
+## Node Manager API
+
+The node implementation in **proton_core** enables automatic transport management and Bundle handling. The `node.c` and `node.h` files implement the function prototypes, structs, and definitions to enable node and transport functionality.
+
+
+
+## Adding Proton to Your Project
+
+To include Proton, it is recommended to use `FetchContent` to fetch the Proton repository from github as part of your build process.
+
+```CMake
+include(FetchContent)
+FetchContent_Declare(
+  proton
+  GIT_REPOSITORY https://github.com/clearpathrobotics/proton.git
+  GIT_TAG 2.0.0
+)
+
+FetchContent_MakeAvailable(proton)
+```
+
+:::note
+Set the GIT_TAG to a specific commit hash or tag for consistency, otherwise you will always pull in the latest changes.
+:::
+
+#### Including proton_core in your project
+
+With the files generated, you can now add the source and header files to your project, and link the **proton_core** library:
+
+```CMake
+# Add source files
+add_executable(${PROJECT_NAME}
+  # Your sources
+
+  ${PROTON_GENERATED_C_FILES}
+)
+
+# Add include directory
+target_include_directories(${PROJECT_NAME} PRIVATE
+  # Your include paths
+
+  ${PROTON_GENERATED_FOLDER}
+)
+
+# Link library
+target_link_libraries(${PROJECT_NAME}
+  # Your libraries
+
+  proton::proton_core
+)
+```
+
+Now you can include the generated header file in your project and begin working with Proton:
+
+```c
+#include "proton__config_target.h"
+```
+
+## Usage
+
+Once proton has been included into your project, you can begin to define proton structs and buffers to be used by your application.
+
+
+#### Encoding a Bundle
+
+If you are just using the core functionality of **proton_core**, then at this point you can fill out the Bundle data, and manually use the generated `proton_bundle_encode` function with your encode buffer to encode your Bundle.
+
+```c
+bundles.produced_bundle_bundle.integer = 12;
+bundles.produced_bundle_bundle.floats[3] = -12.53f;
+strncpy(bundles.produced_bundle_bundle.name, "NAME", PROTON__BUNDLE__PRODUCED_BUNDLE__SIGNAL__NAME__CAPACITY);
+bundles.produced_bundle_bundle.hex_codes[4][0] = 0xFF;
+
+size_t bytes_encoded = 0;
+if (proton_bundle_encode(proton_encode_buffer, PROTON__BUNDLE__PRODUCED_BUNDLE, &bytes_encoded) == PROTON_OK)
+{
+  // Send the first bytes_encoded bytes of encode_buffer
+}
+```
+
+#### Decoding a Bundle
+
+The decoding process requires knowing which peer sent the Bundle, and what the length of the received serialized packet is. The decode function will also indicate the ID of the received Bundle.
+
+
+#### Transport
+
+The transport functions for each peer must be defined in your application source. They should adhere to the function prototypes, and return an appropriate status. The `read` and `write` functions must correctly populate the `bytes_read` or `bytes_written` variables on success.
+
+```c
+proton_status_e proton_node_node2_transport_connect(void * context);
+proton_status_e proton_node_node2_transport_disconnect(void * context);
+proton_status_e proton_node_node2_transport_read(void * context, uint8_t * buf, size_t len, size_t * bytes_read);
+proton_status_e proton_node_node2_transport_write(void * context, const uint8_t * buf, size_t len, size_t * bytes_written);
+```
+
+:::note
+The Proton node does handle transport timeouts. These should be implemented within your transport functions.
+:::
+
+##### Serial Transport
+
+For serial transport, the `read` and `write` functions must implement Proton's [framing](./index.mdx#serial-transport) to correctly extract the serialized Bundle from the serial stream, and correctly send a Bundle to another peer. The [protoncpp](https://github.com/clearpathrobotics/proton/blob/1.0.1/protoncpp/src/transport/serial.cpp) implementation of serial transport can be used as reference.
+
+#### Thread Safety
+
+The **proton_core** generator will also generate optional mutex lock and unlock functions. These can also be implemented, using platform specific
+mutexes, to provide atomic access to the encode and decode buffers.
+
+```c
+proton_status_e proton_node_node2_lock(void * context);
+proton_status_e proton_node_node2_unlock(void * context);
+
+proton_status_e proton_node_node1_lock(void * context);
+proton_status_e proton_node_node1_unlock(void * context);
+```
+
+#### Callbacks
+
+Each Bundle that is defined as being consumed by the target node will have a generated callback function. These are called every time the corresponding Bundle is decoded. Your application should implement these as required.
+
+```c
+void proton_bundle_consumed_bundle_callback(void * context)
+{
+  if (context == NULL) return;
+
+  context_t * c = (context_t *)context;
+
+  if (c->bundles.consumed_bundle_bundle.booleans[c->bundles.consumed_bundle_bundle.BOOL0])
+  {
+    // Do something
+  }
+}
+```
+
+#### Spinning a Peer
+
+Once all proton structs have been initialized and transport and callback functions have been defined, the `proton_spin` or `proton_spin_once` functions can be used to run the automatic transport and Bundle management of a peer.
+
+The `proton_spin_once` function runs the peer's state machine, utilizing the transport functions to manage the transport connection, and handling the reception of Bundles from this peer. `proton_spin` is simply an infinite loop that repeatedly calls `proton_spin_once`, and so it is a blocking call intended to run in its own thread or task.
+
+When the peer's transport is in a **connected** state, the `proton_spin_once` function will call the transport read function to receive serialized Bundles from the peer, decode their IDs and data into the appropriate Bundle structs, and execute the Bundle's callback. If mutexes are implemented, it will ensure thread safety around the decode buffer.
+
+```c
+proton_spin_once(&context.node, PROTON__PEER__NODE2);
+```
+
+#### Producing Bundles
+
+While spinning a peer is used for handling Bundle reception, the production of Bundles occurs asynchronously. The `proton_bundle_send` function should be used to automatically encode and send a Bundle to each of its consumers.
+
+The Bundle struct that was initialized should be filled out with the appropriate data, then `proton_bundle_send` should be called with the Bundle's ID.
+
+```c
+context.bundles.produced_bundle_bundle.integer = 12;
+context.bundles.produced_bundle_bundle.floats[3] = -12.53f;
+strncpy(context.bundles.produced_bundle_bundle.name, "NAME", PROTON__BUNDLE__PRODUCED_BUNDLE__SIGNAL__NAME__CAPACITY);
+context.bundles.produced_bundle_bundle.hex_codes[4][0] = 0xFF;
+
+proton_bundle_send(&context.node, PROTON__BUNDLE__PRODUCED_BUNDLE);
+```
+
+#### Heartbeats
+
+Heartbeats can be enabled on a per-node basis in the Proton configuration file:
+
+```yaml
+nodes:
+  - name: node1
+    heartbeat:
+      enabled: true
+      period: 1000
+```
+
+The period is the expected rate at which heartbeats will be produced by this node in milliseconds.
+
+In **proton_core**, a `proton_bundle_heartbeat_t` struct will be generated for each node that enables the heartbeat. They can be initialized the same way as any other Bundle. The heartbeat bundle is unique in that it uses the ID 0 (defined as `PROTON_HEARTBEAT_ID`), and has a single predefined `heartbeat` signal of type `uint32`. It is expected for the application to increment the `heartbeat` signal each time it is produced.
+
+Heartbeats can be produced the same way as any other Bundle:
+
+```c
+context.bundles.node1_heartbeat_bundle.heartbeat++;
+proton_bundle_send(&context.node, PROTON_HEARTBEAT_ID);
+```
+
+and similarly received in a callback:
+
+```c
+void proton_bundle_node2_heartbeat_callback(void * context)
+{
+  if (context == NULL) return;
+
+  context_t * c = (context_t *)context;
+
+  printf("Received Node 2 heartbeat %ul\r\n", c->bundles.node2_heartbeat_bundle.heartbeat);
+}
+```

@@ -8,18 +8,18 @@ toc_max_heading_level: 5
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-Since the `Jazzy 2.9` (and `clearpath_firmware` `3.0.0`) release, the communication between the robot's MCU and computer has been updated to the Proton protocol. Proton is a _protobuf_ based communication protocol that is ROS agnostic (and ROS middleware agnostic). Therefore to use middlewares other than Fast DDS on Clearpath platforms, the robot's MCU firmware must be at least version `3.0.0`.
+Since the `Jazzy 2.9` (and `clearpath_firmware` `3.0.0`) release, the communication between the robot's MCU and computer has been updated to the proton protocol. proton is a _protobuf_ based communication protocol that is ROS agnostic (and ROS middleware agnostic). Therefore to use middlewares other than Fast DDS on Clearpath platforms, the robot's MCU firmware must be at least version `3.0.0`.
 
 On most Clearpath platforms, the robot's computer launches a base node to establish communication with the robot's MCU. The base node depends on the MCU firmware version:
 - With MCU firmware `2.7` or older, the base node is a micro-ROS node.
-- With MCU firmware `3.0.0` or newer, the base node is a Proton node.
+- With MCU firmware `3.0.0` or newer, the base node is a proton node.
 
-The Husky A200 is the exception: it does not use micro-ROS or Proton, and it cannot be upgraded to firmware `3.0.0`. It therefore cannot use the Proton protocol.
+The Husky A200 is the exception: it does not use micro-ROS or proton, and it cannot be upgraded to firmware `3.0.0`. It therefore cannot use the proton protocol.
 
-For the purposes of maintaining backward compatibility, the default protocol will remain micro-ROS (`uros`), but users with new robots or that have upgraded their robot's firmware to `3.0.0`, will need to set the protocol to Proton (`proton`) in the Clearpath configuration file, `robot.yaml`.
+For the purposes of maintaining backward compatibility, the default protocol will remain micro-ROS (`uros`), but users with new robots or that have upgraded their robot's firmware to `3.0.0`, will need to set the protocol to proton (`proton`) in the Clearpath configuration file, `robot.yaml`.
 
 <Tabs groupId="MCU Protocols">
-<TabItem value="Proton" label="Proton" default>
+<TabItem value="proton" label="proton" default>
 
 ***
 ```yaml
@@ -30,7 +30,7 @@ platform:
 
 :::warning
 
-The Proton protocol is required when using `clearpath_firmware` version `3.0.0`. If `clearpath_firmware` is older (e.g. `2.7` or older), use `uros` instead.
+The proton protocol is required when using `clearpath_firmware` version `3.0.0`. If `clearpath_firmware` is older (e.g. `2.7` or older), use `uros` instead.
 
 :::
 

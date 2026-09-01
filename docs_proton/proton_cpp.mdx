@@ -1,21 +1,21 @@
 ---
-title: Proton CPP
+title: proton_cpp
 sidebar_label: Proton CPP
-sidebar_position: 4
+sidebar_position: 5
 toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-# Proton CPP
+# proton_cpp
 
-**protoncpp** is the C++ implementation of Proton, intended to run on more powerful 64-bit processors. **protoncpp** parses the Proton configuration file at run-time, and dynamically creates the Bundle and Signal objects required for the target node, no code generation required. It also fully handles peer connections and transport functionality, so no transport abstraction is required by the user.
+**proton_cpp** is the C++ implementation of Proton, intended to run on more powerful 64-bit processors. **proton_cpp** parses the Proton configuration file at run-time, and dynamically creates the Bundle and Signal objects required for the target node, no code generation required. It also fully handles peer connections and transport functionality, so no transport abstraction is required by the user.
 
 ## Core functionality
 
-**protoncpp** utilizes the Protobuf compiler to generate C++ classes for the Bundle and Signal protobufs. Then, much like **protonc**, it wraps these classes with the `BundleHandle` and `SignalHandle` classes.
+**proton_cpp** utilizes the Protobuf compiler to generate C++ classes for the Bundle and Signal protobufs. Then, much like **protonc**, it wraps these classes with the `BundleHandle` and `SignalHandle` classes.
 These classes add Proton specific functionality, such as Bundle IDs and names, as well as C++ features such as templating and data structures for ease of use.
 
-**protoncpp** also implements the `Node` class, with node state machine and peer connection management.
+**proton_cpp** also implements the `Node` class, with node state machine and peer connection management.
 
 ### Runtime configuration model
 
@@ -23,7 +23,7 @@ At startup, `Node` loads the YAML configuration file and builds the runtime mode
 
 ### Bundles, Signals, and typed access
 
-Bundles represent message groups, while Signals represent typed fields inside a Bundle. **protoncpp** wraps the generated Protobuf types with `BundleHandle` and `SignalHandle` to provide strongly-typed access (`getValue<T>()` / `setValue<T>()`), list indexing, and name-based lookup.
+Bundles represent message groups, while Signals represent typed fields inside a Bundle. **proton_cpp** wraps the generated Protobuf types with `BundleHandle` and `SignalHandle` to provide strongly-typed access (`getValue<T>()` / `setValue<T>()`), list indexing, and name-based lookup.
 
 ### Signal value types in C++
 
@@ -50,7 +50,7 @@ Connections are created for each peer listed in the config. Each connection sele
 
 ### Heartbeats and liveness
 
-When enabled, **protoncpp** automatically creates a heartbeat bundle per peer. The heartbeat thread increments and sends the heartbeat signal periodically, while connection threads track the last received heartbeat to mark peers active/inactive.
+When enabled, **proton_cpp** automatically creates a heartbeat bundle per peer. The heartbeat thread increments and sends the heartbeat signal periodically, while connection threads track the last received heartbeat to mark peers active/inactive.
 
 ### Threading and statistics
 
@@ -59,7 +59,7 @@ Each connection runs in its own thread for I/O, with optional heartbeat and stat
 
 ## Adding Proton CPP to your project
 
-**protoncpp** can be added to a CMake project much like [protonc](./protonc.mdx#fetch-proton). The Proton repo is fetched and made available to the project:
+**proton_cpp** can be added to a CMake project much like [protonc](./protonc.mdx#fetch-proton). The Proton repo is fetched and made available to the project:
 
 ```cmake
 include(FetchContent)
@@ -77,23 +77,23 @@ set(PROTON_INSTALL OFF)
 FetchContent_MakeAvailable(proton)
 ```
 
-Because no code generation needs to be added, simply link the **protoncpp** library to your executable:
+Because no code generation needs to be added, simply link the **proton_cpp** library to your executable:
 
 ```cmake
-target_link_libraries(${MY_TARGET} proton::protoncpp)
+target_link_libraries(${MY_TARGET} proton::proton_cpp)
 ```
 
-Now, the **protoncpp** library is available to use:
+Now, the **proton_cpp** library is available to use:
 
 ```cpp
-#include "protoncpp/proton.hpp"
+#include "proton_cpp/proton.hpp"
 ```
 
 ## Usage
 
 ### Initialize the Node
 
-To start using **protoncpp**, first create a `Node` object, and pass it your YAML configuration file, and target node:
+To start using **proton_cpp**, first create a `Node` object, and pass it your YAML configuration file, and target node:
 
 ```cpp
 proton::Node node("/path/to/my/config.yaml", "target");
