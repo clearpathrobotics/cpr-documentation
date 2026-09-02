@@ -8,7 +8,7 @@ toc_max_heading_level: 4
 
 # proton_ros2
 
-**proton_ros2** is a ROS 2 adapter for Proton. It runs both a ROS 2 node and a `protoncpp` node in the same process, and bridges Proton bundles to ROS 2 topics for publishers and subscribers, or services for servers and clients.
+**proton_ros2** is a ROS 2 adapter for Proton. It runs both a ROS 2 node and a `proton_cpp` node in the same process, and bridges Proton bundles to ROS 2 topics for publishers and subscribers, or services for servers and clients.
 
 :::note
 The **proton_ros2** package is only released in **ROS 2 Jazzy**, but can be built from source in other ROS 2 distros.
@@ -590,7 +590,7 @@ Signals do not support dynamically sized arrays, so dynamic arrays in ROS 2 will
 
 **proton_ros2** registers diagnostics stats via `diagnostic_updater`:
 
-- Per-connection RX/TX rates (KB/s) from the embedded `protoncpp` node
+- Per-connection RX/TX rates (KB/s) from the embedded `proton_cpp` node
 - Per-bundle frequency (Hz) depending on whether `target` produces or consumes the bundle
 - Heartbeat frequency checks for peers that have heartbeat enabled in the Proton config
 

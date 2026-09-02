@@ -12,14 +12,14 @@ toc_max_heading_level: 4
 
 ## Core functionality
 
-**proton_cpp** utilizes the Protobuf compiler to generate C++ classes for the Bundle and Signal protobufs. Then, much like **protonc**, it wraps these classes with the `BundleHandle` and `SignalHandle` classes.
+**proton_cpp** utilizes the Protobuf compiler to generate C++ classes for the Bundle and Signal protobufs. Then, much like **proton_core**, it wraps these classes with the `BundleHandle` and `SignalHandle` classes.
 These classes add Proton specific functionality, such as Bundle IDs and names, as well as C++ features such as templating and data structures for ease of use.
 
 **proton_cpp** also implements the `Node` class, with node state machine and peer connection management.
 
 ### Runtime configuration model
 
-At startup, `Node` loads the YAML configuration file and builds the runtime model (Bundles, Signals, peers, and connections) dynamically. Unlike **protonc**, there is no code generation step: the config is parsed at runtime, and all objects are created in memory based on the config.
+At startup, `Node` loads the YAML configuration file and builds the runtime model (Bundles, Signals, peers, and connections) dynamically. Unlike **proton_core**, there is no code generation step: the config is parsed at runtime, and all objects are created in memory based on the config.
 
 ### Bundles, Signals, and typed access
 
@@ -59,7 +59,7 @@ Each connection runs in its own thread for I/O, with optional heartbeat and stat
 
 ## Adding Proton CPP to your project
 
-**proton_cpp** can be added to a CMake project much like [protonc](./protonc.mdx#fetch-proton). The Proton repo is fetched and made available to the project:
+**proton_cpp** can be added to a CMake project much like [proton_core](./proton_core.mdx). The Proton repo is fetched and made available to the project:
 
 ```cmake
 include(FetchContent)

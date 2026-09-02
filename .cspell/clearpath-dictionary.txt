@@ -363,8 +363,8 @@ nanopb
 Protobuf
 protobuf
 protobufs
-protonc
-protoncpp
+proton_core
+proton_cpp
 
 # Internal Part Numbers and Codes
 APWR
