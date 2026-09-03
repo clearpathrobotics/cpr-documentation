@@ -8,235 +8,368 @@ toc_max_heading_level: 4
 
 # proton_cpp
 
-**proton_cpp** is the C++ implementation of Proton, intended to run on more powerful 64-bit processors. **proton_cpp** parses the Proton configuration file at run-time, and dynamically creates the Bundle and Signal objects required for the target node, no code generation required. It also fully handles peer connections and transport functionality, so no transport abstraction is required by the user.
+`proton_cpp` is a C++ extension of [proton_core](./proton_core.mdx). Using the same principles and concepts as `proton_core`, proton_cpp provides type-safe access to the Node Manager and Signal Registry API's, as well as runtime generation of the node and registry via feature flags.
 
-## Core functionality
+In its base form without any feature flags set, `proton_cpp` can be used in embedded projects as it does not use any dynamic allocation, exceptions, RTTI, or smart pointers.
 
-**proton_cpp** utilizes the Protobuf compiler to generate C++ classes for the Bundle and Signal protobufs. Then, much like **proton_core**, it wraps these classes with the `BundleHandle` and `SignalHandle` classes.
-These classes add Proton specific functionality, such as Bundle IDs and names, as well as C++ features such as templating and data structures for ease of use.
+## Accessor Functions
 
-**proton_cpp** also implements the `Node` class, with node state machine and peer connection management.
+`proton_cpp` uses the same registry structs from `proton_core`. But to provide more ergonomic wrapping around the C API, non-owning accessor classes exist to read and write to the Registry, as well as updating the Node Manager
 
-### Runtime configuration model
+### Signal Access
 
-At startup, `Node` loads the YAML configuration file and builds the runtime model (Bundles, Signals, peers, and connections) dynamically. Unlike **proton_core**, there is no code generation step: the config is parsed at runtime, and all objects are created in memory based on the config.
+`proton_cpp` provides overload methods via the `SignalAccess` class for better shorthand when getting/setting Signal values from the Registry
 
-### Bundles, Signals, and typed access
+```C++
+  constexpr explicit SignalAccess(proton_registry_t * registry) noexcept : registry_(registry) {}
 
-Bundles represent message groups, while Signals represent typed fields inside a Bundle. **proton_cpp** wraps the generated Protobuf types with `BundleHandle` and `SignalHandle` to provide strongly-typed access (`getValue<T>()` / `setValue<T>()`), list indexing, and name-based lookup.
+  proton_status_e get(uint32_t id, double & out) const noexcept;
+  proton_status_e set(uint32_t id, double value) noexcept;
 
-### Signal value types in C++
+  proton_status_e get(uint32_t id, float & out) const noexcept;
+  proton_status_e set(uint32_t id, float value) noexcept;
 
-Signal values are represented using native C++ types and `std::vector` containers. The template type you use with `getValue<T>()` / `setValue<T>()` must match the configured signal type:
+  proton_status_e get(uint32_t id, int32_t & out) const noexcept;
+  proton_status_e set(uint32_t id, int32_t value) noexcept;
 
-- Scalar types: `double`, `float`, `int32_t`, `int64_t`, `uint32_t`, `uint64_t`, `bool`, `std::string`
-- Bytes: `proton::bytes` (alias for `std::vector<uint8_t>`)
-- Lists: `proton::list_double`, `proton::list_float`, `proton::list_int32`, `proton::list_int64`, `proton::list_uint32`, `proton::list_uint64`, `proton::list_bool`, `proton::list_string`
-- List of bytes: `proton::list_bytes` (alias for `std::vector<proton::bytes>`)
+  proton_status_e get(uint32_t id, int64_t & out) const noexcept;
+  proton_status_e set(uint32_t id, int64_t value) noexcept;
 
-List signals also support indexed setters (for example `setValue<float>(index, value)`), and list-of-bytes supports both element updates and byte-level updates with `setValue<uint8_t>(index, subindex, value)`.
+  proton_status_e get(uint32_t id, uint32_t & out) const noexcept;
+  proton_status_e set(uint32_t id, uint32_t value) noexcept;
 
-### Constant signals
+  proton_status_e get(uint32_t id, uint64_t & out) const noexcept;
+  proton_status_e set(uint32_t id, uint64_t value) noexcept;
 
-Signals with defined values in the config are initialized as read-only from the config value and cannot be modified at runtime. Attempting to call `setValue()` on a constant signal throws an exception.
+  proton_status_e get(uint32_t id, bool & out) const noexcept;
+  proton_status_e set(uint32_t id, bool value) noexcept;
 
-### Node lifecycle and callbacks
+  proton_status_e get(uint32_t id, char * buf, size_t cap, size_t & len) const noexcept;
+  proton_status_e set(uint32_t id, const char * buf, size_t len) const noexcept;
 
-`Node` supports an explicit lifecycle: configure bundles and peers, activate connections, then spin to receive bundles. Bundle callbacks are registered per bundle name and invoked when new data arrives for that bundle.
-
-### Peer connections and transports
-
-Connections are created for each peer listed in the config. Each connection selects a transport (UDP4 or Serial) and handles low-level I/O, framing, and heartbeat monitoring. This is fully managed by `Node` and does not require user code.
-
-### Heartbeats and liveness
-
-When enabled, **proton_cpp** automatically creates a heartbeat bundle per peer. The heartbeat thread increments and sends the heartbeat signal periodically, while connection threads track the last received heartbeat to mark peers active/inactive.
-
-### Threading and statistics
-
-Each connection runs in its own thread for I/O, with optional heartbeat and stats threads. Bundles track RX/TX counts and rates, which can be printed with `printStats()`.
-
-
-## Adding Proton CPP to your project
-
-**proton_cpp** can be added to a CMake project much like [proton_core](./proton_core.mdx). The Proton repo is fetched and made available to the project:
-
-```cmake
-include(FetchContent)
-FetchContent_Declare(
-  proton
-  GIT_REPOSITORY https://github.com/clearpathrobotics/proton.git
-  GIT_TAG 1.0.1
-)
-
-set(PROTON_BUILD_PROTONC OFF)
-set(PROTON_BUILD_EXAMPLES OFF)
-set(PROTON_BUILD_TESTS OFF)
-set(PROTON_INSTALL OFF)
-
-FetchContent_MakeAvailable(proton)
+  proton_status_e get(uint32_t id, uint8_t * buf, size_t cap, size_t & len) const noexcept;
+  proton_status_e set(uint32_t id, const uint8_t * buf, size_t len) const noexcept;
 ```
 
-Because no code generation needs to be added, simply link the **proton_cpp** library to your executable:
+And can be used via the following pattern:
 
-```cmake
-target_link_libraries(${MY_TARGET} proton::proton_cpp)
+```C++
+  double value;
+  SignalAccess access(&g_proton_registry);
+  proton_status_e status = access.get(PROTON_SIGNAL_DEFAULT_DOUBLE_ID, value);
+  status = access.set(PROTON_SIGNAL_DEFAULT_DOUBLE_ID, 1.111);
 ```
 
-Now, the **proton_cpp** library is available to use:
+Templated Signal access on a specific ID can be arranged by the `Signal<T>` class
 
-```cpp
-#include "proton_cpp/proton.hpp"
+```C++
+  Signal<double> signal(&g_proton_registry, PROTON_SIGNAL_DEFAULT_DOUBLE_ID);
+
+  double value;
+  proton_status_e status = signal.get(value);
+  status = signal.set(1.111);
 ```
 
-## Usage
+#### Feature Flags
 
-### Initialize the Node
+- **PROTON_ENABLE_ALLOC**
+  - Allow for `Signal<std::string>` and `Signal<std::vector<uint8_t>>` to represent `string` and `bytes` signals.
+  - Enables RTTI to enable dynamic casting a `SignalBase` to a `Signal<T>` via the `as()` method
 
-To start using **proton_cpp**, first create a `Node` object, and pass it your YAML configuration file, and target node:
-
-```cpp
-proton::Node node("/path/to/my/config.yaml", "target");
+```C++
+SignalBase sig_base(&g_proton_registry, PROTON_SIGNAL_DEFAULT_DOUBLE_ID);
+Signal<double> sig_double = sig_base.as<double>();
 ```
 
-The constructor for `Node` will automatically parse the configuration file and set up all Signals, Bundles, and Transport for you.
+- **C++20 and up**
+  - Convenience methods for `bytes` Signals using `std::span<uint8_t>`
 
-### Register Bundle callbacks
+### Bundle Access
 
-Now you can register callback functions for each Bundle that the target node consumes. Bundles are referenced by their name. The callback will accept a `BundleHandle` reference to the received Bundle.
+Bundle functionality is largely a thin wrapper over the Bundle API's in `proton_core` with some ergonomics
 
-```cpp
-void log_bundle_callback(proton::BundleHandle& handle);
+```C++
+  explicit BundleAccess(proton_registry_t * registry, uint32_t id) noexcept;
 
-node.registerCallback("log", log_bundle_callback);
+  uint32_t id() const noexcept { return id_; }
+
+  const bundle_desc_t * descriptor() const noexcept;
+
+  void set_period(uint32_t period_ms) noexcept;
+  void set_callback(proton_bundle_cb_f cb, void * ctx) noexcept;
+
+  std::optional<SignalBase> operator[](uint32_t signal_id) const noexcept;
 ```
 
-### Getting Bundles and Signals
+#### Feature Flags
 
-The `Node` object acts as a `BundleManager`, meaning that it exposes getter and setter functions for the Bundle and Signal handles.
+- **PROTON_ENABLE_ALLOC**: Enables setting Bundle callbacks with `std::function`
 
-To get a reference to a Bundle, simply use the `getBundle` function, and the Bundle's name:
+:::note
+calling `BundleAccess::set_callback()` with a `std::function` intentionally leaks memory. This is largely due to the fact that the function object is required to live as long as the `Bundle` (indefinitely). So the `std::function` is intentionally released from RAII automatic destruction to prevent dangling pointers.
+:::
 
-```cpp
-auto& log_bundle = node.getBundle("log_bundle");
-```
+### Node Access
 
-From the Bundle, you can now get a specific Signal in a similar fashion:
+The same Node Manager API remains via `NodeAccess`
 
-```cpp
-auto& msg_signal = log_bundle.getSignal("msg");
-```
-
-To access the value of the Signal, use the `getValue` function, with the correct templated type:
-
-```cpp
-std::string msg = msg_signal.getValue<std::string>();
-```
-
-The same result can be achieved in a single line as well:
-
-```cpp
-std::string msg = node.getBundle("log_bundle").getSignal("msg").getValue<std::string>();
-```
-
-### Setting Signal values
-
-To set the value of a Signal, first get a reference to a Bundle:
-
-```cpp
-auto& log_bundle = node.getBundle("log_bundle");
-```
-
-Then get a reference to the Signal from the Bundle:
-
-```cpp
-auto& msg_signal = log_bundle.getSignal("msg");
-```
-
-To set the value of the Signal, use the `setValue` function, with the correct templated type:
-
-```cpp
-msg_signal.setValue<std::string>("My message");
-```
-
-The same result can be achieved in a single line as well:
-
-```cpp
-node.getBundle("log_bundle").getSignal("msg").setValue<std::string>("My message");
-```
-
-### Spinning and receiving bundles
-
-To process incoming bundles, call `spinOnce()` in your loop, or `spin()` to block forever:
-
-```cpp
-while (true)
+```C++
+proton_status_e receive(const uint8_t * buffer, size_t len) noexcept
 {
-  node.spinOnce();
+  return proton_node_receive(node_, buffer, len);
+}
+
+uint32_t id() const noexcept { return node_->id; }
+
+size_t num_peers() const noexcept { return node_->num_peers; }
+
+proton_status_e update(
+  uint64_t uptime_ms, uint8_t * buffer, size_t buffer_len, size_t & out_len,
+  Endpoint * dest_peers, size_t num_dest_peers, size_t & num_selected_peers) noexcept
+{
+  return proton_node_update(
+    node_, uptime_ms, buffer, buffer_len, &out_len, dest_peers, num_dest_peers,
+    &num_selected_peers);
+}
+
+proton_status_e trigger_bundle(uint32_t bundle_id) noexcept
+{
+  return proton_node_trigger_bundle(node_, bundle_id);
 }
 ```
 
-### Sending bundles
+#### Feature Flags
 
-To produce a bundle, set its signals and call `sendBundle()` by name or by handle:
+- **PROTON_ENABLE_ALLOC**: Enables `BundleAccess::on_bundle_update(uint32_t, std::function)` as a passthrough for setting Bundle callbacks
+- **C++20**: Enables `std::span` overloads for methods that usually take a pointer + length combo.
 
-```cpp
-auto& log_bundle = node.getBundle("log_bundle");
-log_bundle.getSignal("msg").setValue<std::string>("Hello");
+## Registry Locking
 
-node.sendBundle("log_bundle");
-// or
-node.sendBundle(log_bundle);
+A utility class `proton::ScopedLock` enables RAII access to the Signal Registry if the Registry has the lock/unlock functions set.
+
+```C++
+void do_something_with_signal_registry(proton_registry_t * registry) {
+  proton::ScopedLock lock(registry);
+
+  // Signals can now be read/written in this scope
+}
 ```
 
-### Heartbeats
+## Transport API
 
-If heartbeats are enabled in the config, you can manually send one with `sendHeartbeat()`:
+The transport API in `proton_cpp` is largely untouched compared to `proton_core`, operating as helper methods, since the original transport API does not contain any stateful info.
 
-```cpp
-node.sendHeartbeat();
+### Feature Flags
+
+**C++20**: Enables `std::span` versions of functions that usually take a pointer + length combo
+
+## Node Builder
+
+Enabled via `-DPROTON_NODE_BUILDER=ON -DPROTON_ENABLE_ALLOC=ON`, the Node Builder API allows for runtime generation of a Node and Signal Registry. Additional feature flags are useful for parsing different configuration languages
+
+### Dependencies and Feature Flags
+
+- **PROTON_NODE_BUILDER_YAML_PARSER** (requires `libyaml-cpp-dev` to be installed): parse YAML configuration files and to generate the Node
+- **PROTON_NODE_BUILDER_JSON_PARSER** (requires `nlohmann-json3-dev` to be installed): parse JSON configuration files and to generate the Node
+
+:::note
+Configuration parser feature flags require `PROTON_ENABLE_ALLOC` and `PROTON_NODE_BUILDER` to be enabled.
+:::
+
+### Using Node Builder
+
+#### Loading the Configuration
+
+Similar to the [registry generator](./registry_generator.mdx) A configuration tree must be created from a configuration file, and must then be filtered down to the target node you care about.
+
+```C++
+class Config
+{
+public:
+  explicit Config() = default;
+
+  /**
+   * @brief Construct from a ConfigTree (format-agnostic)
+   */
+  explicit Config(const ConfigTree & tree);
+
+  /**
+   * @brief Convenience: construct from YAML file path
+   */
+  static Config from_yaml(const std::string & yaml_file);
+
+  /**
+   * @brief Convenience: construct from JSON file path
+   */
+  static Config from_json(const std::string & json_file);
+
+  ~Config() = default;
+
+  std::vector<BundleConfig> bundles;
+  std::map<std::string, NodeConfig> nodes;
+  std::vector<ConnectionConfig> connections;
+  std::vector<SignalConfig> signals;
+
+private:
+  void parse(const ConfigTree & tree);
+};
+
+#include "protoncpp/node_builder/config.hpp"
+#include <yaml-cpp/yaml.h>
+#include <nlohmann/json.hpp>
+
+void main() {
+  Config config = Config::from_yaml("test_configs/yaml/test.yaml");
+
+  // OR
+
+  YAML::Node node = YAML::LoadFile("test_configs/yaml/test.yaml");
+  std::stringstream ss;
+  ss << node;
+
+  ConfigTree config_tree = ConfigTree::from_yaml_string(ss.str());
+  Config config_2(config_tree);
+
+  // JSON
+  Config config = Config::from_json("test_configs/json/test.json");
+
+  // OR
+  std::ifstream f("test_configs/json/test.json");
+  std::stringstream ss;
+  ss << f.rdbuf();
+  ConfigTree config_tree = ConfigTree::from_json_string(ss.str());
+  Config config_2(config_tree);
+}
 ```
 
-To receive peer heartbeats, register a heartbeat callback using the peer name:
+#### Creating the Node
 
-```cpp
-void hb_callback(proton::BundleHandle& handle);
+Creating a `proton::node_builder::Config` simply creates the entire proton configuration as an object. When building a node and registry from the config, a target name must be applied.
 
-node.registerHeartbeatCallback("peer_node", hb_callback);
+```C++
+explicit GeneratedNode(const Config & config, const std::string & target_name);
 ```
 
-### Lists and bytes signals
+Note that creating a `GeneratedNode` will also validate the config's integrity, looking for missing or broken fields such as missing ID's, capacities smaller than default values, existence of endpoints specified in connections, etc.
 
-List and bytes signals can be set as full vectors, or updated by index:
+:::node
+It is best to wrap the creation of a `GeneratedNode` in a `try/catch` block
+:::
 
-```cpp
-auto& list_signal = node.getBundle("float_bundle").getSignal("values");
-list_signal.setValue<proton::list_float>({1.0f, 2.0f, 3.0f});
-list_signal.setValue<float>(1, 9.5f); // update index 1
+```C++
+void main() {
+  try {
+    Config config = Config::from_yaml("test_configs/yaml/test.yaml");
+    GeneratedNode node (config, "producer");
+  } catch (const NodeBuilderException & e) {
+    std::cerr << "something exploded: " << e.what() << std::endl;
+  }
+}
 ```
 
-For bytes and list-of-bytes signals you can also update individual elements:
+#### Using the Generated Node
 
-```cpp
-auto& bytes_signal = node.getBundle("hex_bundle").getSignal("values");
-bytes_signal.setValue<proton::bytes>({0x01, 0x02, 0x03});
-bytes_signal.setValue<uint8_t>(2, 0xFF); // update byte index 2
+Once the node is generated, it can be used via the standard `NodeAccess` accessor functions
+
+```C++
+  Config config = create_default_values_config();
+  GeneratedNode node(config, "node_a");
+
+  double value = 0.0;
+  ASSERT_EQ(proton_signal_get_double(node.registry(), SIG_DEFAULT_DOUBLE_ID, &value), PROTON_OK);
+  EXPECT_DOUBLE_EQ(value, 3.14159);
 ```
 
-### Bundle inspection and stats
+## Adding proton_cpp to Your Project
 
-You can inspect bundle metadata and print bundle contents:
+Very similar to [proton_core's include model](./proton_core.mdx#adding-proton-to-your-project), `proton_cpp` can be included via cmake install, `FetchContent` or `ExternalProject`, or direct source inclusion.
 
-```cpp
-auto& log_bundle = node.getBundle("log_bundle");
-log_bundle.printBundle();
-log_bundle.printBundleVerbose();
+```CMake
+cmake_minimum_required(VERSION 3.20)
+project(cpp_include_example)
+find_package(proton REQUIRED)
+add_executable(${PROJECT_NAME}$ main.cpp)
+target_link_libraries(${PROJECT_NAME}$ proton::proton_cpp)
 ```
 
-For runtime stats, call `startStatsThread()` to update counters and `printStats()` to display connection and rate info:
+An example of how to use `ExternalProject` to include `proton_cpp` is in [proton_vendor](https://github.com/clearpathrobotics/proton_vendor/blob/main/CMakeLists.txt), a shim package that is used to expose `proton_cpp` as a ROS 2 package.
 
-```cpp
-node.startStatsThread();
-node.printStats();
+```CMake
+include(ExternalProject)
+
+set(PROTON_EXTERNAL_PROJECT_NAME proton_external_project)
+
+set(EXTERNAL_PROJECT_PREFIX ${CMAKE_CURRENT_BINARY_DIR}/proton_external_build)
+set(EXTERNAL_PROJECT_SOURCE_DIR ${EXTERNAL_PROJECT_PREFIX}/src/proton)
+set(EXTERNAL_PROJECT_BINARY_DIR ${EXTERNAL_PROJECT_PREFIX}/build/proton)
+# Proton library should install its files (libraries, headers) into proton_vendor package install space
+set(EXTERNAL_PROJECT_INSTALL_DIR ${CMAKE_INSTALL_PREFIX})
+
+# Use sequential build for ExternalProject to avoid file descriptor issues
+set(EXTERNAL_PROJECT_BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --parallel 1)
+
+ExternalProject_Add(${PROTON_EXTERNAL_PROJECT_NAME}
+    # download step
+    GIT_REPOSITORY    "https://github.com/clearpathrobotics/proton.git"
+    GIT_TAG           "2.0.0"
+
+    # directiories config
+    PREFIX            ${EXTERNAL_PROJECT_PREFIX}
+    SOURCE_DIR        ${EXTERNAL_PROJECT_SOURCE_DIR}
+    BINARY_DIR        ${EXTERNAL_PROJECT_BINARY_DIR}
+    INSTALL_DIR       ${EXTERNAL_PROJECT_INSTALL_DIR}
+
+    # after initial download, don't re-fetch source on subsequent CMake runs
+    UPDATE_COMMAND    ""
+
+    # configure step
+    CONFIGURE_COMMAND ${CMAKE_COMMAND} -S <SOURCE_DIR> -B <BINARY_DIR>
+                      -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+                      -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+                      -DBUILD_SHARED_LIBS=ON
+                      -DCMAKE_CXX_STANDARD=20
+                      -DCMAKE_CXX_STANDARD_REQUIRED=ON
+                      -DPROTON_BUILD_TESTS=OFF
+                      -DPROTON_ENABLE_ALLOC=ON
+                      -DPROTON_NODE_BUILDER=ON
+                      -DPROTON_NODE_BUILDER_YAML_PARSER=ON
+                      -DPROTON_NODE_BUILDER_JSON_PARSER=ON
+                      -DPROTON_INSTALL=ON
+
+    # build step
+    BUILD_COMMAND     ${EXTERNAL_PROJECT_BUILD_COMMAND}
+
+    # install step
+    INSTALL_COMMAND   ""
+
+    # logging
+    LOG_CONFIGURE     YES
+    LOG_BUILD         YES
+    LOG_INSTALL       YES
+)
+
+# ros buildfarm fix: separate ExternalProject install step from the clone/build steps.
+# Reference: https://github.com/ros-industrial/ros2_canopen/blob/master/lely_core_libraries/CMakeLists.txt
+install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} --install ${EXTERNAL_PROJECT_BINARY_DIR})")
+
+target_include_directories(proton_vendor
+  INTERFACE
+  $<INSTALL_INTERFACE:include>
+)
+
+# Propagate compile definitions that were used to build proton
+# These must match the flags in the ExternalProject CONFIGURE_COMMAND above
+target_compile_definitions(proton_vendor
+  INTERFACE
+  PROTON_ENABLE_ALLOC=1
+  PROTON_NODE_BUILDER=1
+  PROTON_NODE_BUILDER_YAML_PARSER=1
+  PROTON_NODE_BUILDER_JSON_PARSER=1
+)
+
+target_link_libraries(proton_vendor
+  INTERFACE
+  ${CMAKE_INSTALL_PREFIX}/lib/libproton_core.so
+  ${CMAKE_INSTALL_PREFIX}/lib/libproton_cpp.so
+)
 ```
-
