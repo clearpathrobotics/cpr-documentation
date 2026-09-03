@@ -8,7 +8,7 @@ toc_max_heading_level: 4
 
 # proton
 
-proton is a lightweight, efficient, peer-to-peer communication protocol designed for embedded systems and robotics applications. It enables bidirectional communication between nodes (typically MCU and PC systems) over a transport layer. The protocol is built on top of Google Protocol Buffers (protobuf) and provides a C implementation optimized for resource-constrained embedded systems, and a dynamic C++ implementation for high-powered devices. proton also offers a **ROS 2** adapter that bridges communication between the proton protocol and ROS 2, allowing embedded devices to still participate in a ROS 2 network without the complexity and overhead of the ROS 2 middleware. Additionally, unlike existing protocols such as micro-ROS, the proton ROS 2 node is not limited to specific middlewares, and does not require building ROS 2 message definitions into MCU firmware.
+proton is a lightweight, efficient, peer-to-peer communication protocol designed for embedded systems and robotics applications. It enables bidirectional communication between nodes (typically MCU and PC systems) over a transport layer. The protocol is built on top of Google Protocol Buffers (protobuf) and provides a C implementation optimized for resource-constrained embedded systems, and a dynamic C++ implementation for high-powered devices. proton also offers a **ROS 2** adaptor that bridges communication between the proton protocol and ROS 2, allowing embedded devices to still participate in a ROS 2 network without the complexity and overhead of the ROS 2 middleware. Additionally, unlike existing protocols such as micro-ROS, the proton ROS 2 node is not limited to specific middlewares, and does not require building ROS 2 message definitions into MCU firmware.
 
 As of the `Jazzy 2.9` software release (and `clearpath_firmware` version `3.0.0`), all Clearpath robots use this protocol for MCU to PC communication.
 
@@ -20,7 +20,7 @@ See the [MCU Protocol](../docs/ros/config/yaml/platform/mcu) section for details
 proton source code is available on GitHub:
 
 - Core libraries: https://github.com/clearpathrobotics/proton
-- ROS 2 adapter: https://github.com/clearpathrobotics/proton_ros2
+- ROS 2 adaptor: https://github.com/clearpathrobotics/proton_ros2
 
 # Key Concepts
 

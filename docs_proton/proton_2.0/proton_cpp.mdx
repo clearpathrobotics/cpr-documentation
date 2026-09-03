@@ -252,7 +252,7 @@ explicit GeneratedNode(const Config & config, const std::string & target_name);
 
 Note that creating a `GeneratedNode` will also validate the config's integrity, looking for missing or broken fields such as missing ID's, capacities smaller than default values, existence of endpoints specified in connections, etc.
 
-:::node
+:::note
 It is best to wrap the creation of a `GeneratedNode` in a `try/catch` block
 :::
 
