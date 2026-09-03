@@ -5,3 +5,108 @@ sidebar_position: 4
 toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
+
+# Proton Registry Generator
+
+Proton includes a Python tool to take registry definitions written in YAML or JSON and convert them to the C `proton_registry_t` and `proton_node_t` structs used for the Signal Registry API and Node Manager API. The output of this tool is a set of files that must be included in your project manually.
+
+## How It Works
+
+The generator parses the proton configuration file and selects bundles, signals and peers that are relevant to a given node. Relevancy is determined by the Bundles and Signals sent or received by a peer connected to the target node. So Bundles sent between Nodes A and B are included, but not Bundles sent between B and C exclusively.
+
+Registry generation uses [jinja](https://jinja.palletsprojects.com/en/stable/) templates to define the basis of a set of C files used to hold the registry.
+
+## Using the Generator
+
+The generator can be manually invoked using Python:
+
+```sh
+cd proton
+python3 -m venv venv
+. venv/bin/activate
+pip3 install pyyaml jinja2
+python3 generator_scripts -c /path/to/your/proton/config.yaml -d /path/to/your/generated/folder -t name-of-your-node
+```
+
+The generator can also be invoked as part of a cmake script
+
+```CMake
+include("${proton_DIR}/protonCoreGenerator.cmake")
+
+set(GENERATED_FOLDER /path/to/your/generated/folder)
+
+# autogen registry for tests
+set(GENERATED_REGISTRY_FILES
+  "${GENERATED_FOLDER}/target_registry.c"
+  "${GENERATED_FOLDER}/target_node.c"
+  "${GENERATED_FOLDER}/target_registry_ids.h"
+  "${GENERATED_FOLDER}/target_registry_sizes.h"
+  "${GENERATED_FOLDER}/target_connections.h"
+)
+
+proton_core_generator(
+  "${GENERATED_REGISTRY_FILES}"
+  ${GENERATED_FOLDER}
+  "name-of-your-node"
+  CONFIG_FILE /path/to/your/proton/config.yaml
+)
+```
+
+## Generated Files
+
+- **target_registry.c**
+  - Signal Registry `g_proton_registry` -> this is the struct passed to the Signal Registry API.
+  - Statically-allocated Signal and Bundle definitions
+  - Signal lookup `g_signal_registry`
+  - Bundle lookup `g_bundle_table`
+  - Encode/Decode Buffers for non-scalar types `string` and `bytes`
+- **target_node.c**
+  - `g_target_node`: Node configuration and all endpoint configurations for a given node.
+- **target_connections.h**
+  - Names and sizes of constant values used for endpoint configurations (IP addresses, ports, etc)
+- **target_registry_ids.h**
+  - ID's of Bundles and Signals
+- **target_registry_sizes.h**
+  - Constants defining number of Signals, Bundles, and capacities of non-scalar types
+
+### Including the Generated Files in Your Project
+
+The generated files are not part of `libproton_core` or `libproton_cpp`, meaning that the burden is on developers to include the generated files in their projects themselves. For a common cmake project, this process is quite simple:
+
+```CMake
+set(GENERATED_FOLDER ${CMAKE_CURRENT_BINARY_DIR}/generated)
+
+# autogen registry for tests
+set(GENERATED_REGISTRY_FILES
+  "${GENERATED_FOLDER}/target_registry.c"
+  "${GENERATED_FOLDER}/target_node.c"
+  "${GENERATED_FOLDER}/target_registry_ids.h"
+  "${GENERATED_FOLDER}/target_registry_sizes.h"
+  "${GENERATED_FOLDER}/target_connections.h"
+)
+
+add_executable(${PROJECT_NAME}
+  src/main.c
+  ${GENERATED_REGISTRY_FILES}
+)
+
+target_link_libraries(${PROJECT_NAME}$ PUBLIC
+  proton::proton_core
+)
+
+target_include_directories(${PROJECT_NAME}$ PUBLIC
+  ${GENERATED_FOLDER}
+  ${CMAKE_CURRENT_SOURCE_DIR}/tests/core
+)
+```
+
+The registry then appears as an `extern` variable.
+
+```C
+extern proton_registry_t g_proton_registry;
+extern proton_node_t g_target_node;
+
+void main() {
+  g_target_node.registry = &g_proton_registry;
+}
+```
