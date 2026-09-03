@@ -1,0 +1,197 @@
+---
+title: Configuration
+sidebar_label: Configuration
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+# Configuration System
+
+Proton uses YAML configuration files to define the communication topology. The configuration defines every participating node in the Proton network,
+how nodes in the network can connect to each other, and every Bundle and Signal that can be used. Each node in the network will use the exact same configuration
+file to ensure that everything is synchronized.
+
+## Nodes
+
+The nodes section defines every node in the Proton network. Nodes are defined with a name, a list of endpoints where the node can receive bundles, and optionally a heartbeat configuration.
+
+```yaml
+nodes:
+  - name: node1
+    heartbeat:
+      enabled: true
+      period: 100
+    endpoints:
+      - id: 0
+        type: udp4
+        ip: 127.0.0.1
+        port: 11417
+      - id: 1
+        type: serial
+        device: /tmp/ttyNode1
+  - name: node2
+    heartbeat:
+      enabled: true
+      period: 1000
+    endpoints:
+      - id: 0
+        type: udp4
+        ip: 127.0.0.1
+        port: 11416
+      - id: 1
+        type: udp4
+        ip: 127.0.0.1
+        port: 11418
+  - name: node3
+    heartbeat:
+      enabled: true
+      period: 1000
+    endpoints:
+      - id: 0
+        type: serial
+        device: /tmp/ttyNode3
+      - id: 1
+        type: udp4
+        ip: 127.0.0.1
+        port: 11419
+```
+
+### Heartbeat
+
+The heartbeat configuration of a node indicates whether or not the node will produce heartbeats, and at what rate.
+
+- **enabled**: `true` indicates this node will produce heartbeats, `false` indicates it won't
+- **period**: The period in milliseconds between heartbeats
+
+:::note
+Heartbeat periodicity and sequence incrementing is not enforced by Proton, and should be done at the application level.
+:::
+
+### Endpoints
+
+The endpoint indicates the transport endpoint at which this node can receive Bundles from another peer.
+
+- **id**: Endpoint ID. Used in [Connections](#connections) to pair two nodes.
+- **type**: Endpoint Type. Currently the options are `udp4` or `serial`.
+- **ip**: UDP4 socket IP address. Not used for `serial`.
+- **port**: UDP4 socket port. Not used for `serial`.
+- **device**: Serial device name. Not used for `udp4`.
+
+## Connections
+
+The connections section is used to connect two nodes together by their endpoints. It is a simple list of pairs of nodes and the endpoint ID to be used for this connection.
+
+```yaml
+connections:
+  - first: {node: node1, id: 0}
+    second: {node: node2, id: 0}
+  - first: {node: node1, id: 1}
+    second: {node: node3, id: 0}
+  - first: {node: node2, id: 1}
+    second: {node: node3, id: 1}
+```
+
+:::note
+Each node must define a unique endpoint for each peer it will be communicating with. Two peers cannot connect to a single UDP socket, for example.
+:::
+
+## Bundles
+
+This section defines every Bundle that can be sent in this Proton network. A Bundle consists of a unique name and non-zero ID, a producer or list of producers, a consumer or list of consumers, and a list of signals. An empty Bundle without any Signals is also allowed.
+
+```yaml
+bundles:
+  - name: log
+    id: 0x100
+    producers: node1
+    consumers: [node2, node3]
+    signals:
+      - {name: level, type: uint32}
+      - {name: name, type: string, capacity: 64}
+      - {name: msg, type: string, capacity: 64}
+      - {name: file, type: string, capacity: 64}
+      - {name: function, type: string, capacity: 64}
+      - {name: line, type: uint32}
+  - name: sensor_data
+    id: 0x101
+    producers: [node2, node3]
+    consumers: node1
+    signals:
+      - {name: data, type: list_float, length: 10}
+  - name: byte_array
+    id: 0x102
+    producers: node2
+    consumers: node3
+    signals:
+      - {name: data, type: list_bytes, length: 4, capacity: 3}
+```
+
+Entries:
+- **name**: A unique string representing the bundle name
+- **id**: A unique, non-zero unsigned integer representing the Bundle ID
+- **producers**: A single node name, or list of node names, indicating the node(s) which can produce this Bundle. The nodes must be defined in the [Nodes](#nodes) section.
+- **consumers**: A single node name, or list of node names, indicating the node(s) which can consume this Bundle. The nodes must be defined in the [Nodes](#nodes) section.
+- **signals**: A list of Signals that make up this Bundle. Can be omitted.
+
+### Defining Signals
+
+Each signal is defined with a name that is unique within that Bundle, a primitive type, and a length and capacity if applicable.
+
+The `length` attribute applies to any signals that are a list type. It indicates the fixed length of the list. This value must be defined, as dynamically sized lists
+are not allowed.
+
+The `capacity` attribute applies to the `string`, `bytes`, `list_string`, and `list_bytes` types. This indicates the number of bytes the signal can hold.
+
+As an example, a signal of type `list_bytes` with a length of 4 and capacity of 3 consists of 4 arrays of 3 bytes, with a total size of 12 bytes.
+
+:::note
+The capacity of a `string` or `list_string` signal should account for the NULL termination character (`\0`)
+:::
+
+### Constant Signals
+
+Signals can also be defined with a constant value. These signals are not serialized as part of the Bundle, and so will not actually be placed on the wire when sending the Bundle.
+
+Constant signals can be useful for reducing traffic, or as list indices.
+
+For example, if sending a Bundle representing IMU data where the covariance never changes, the Bundle can be defined like this:
+
+```yaml
+- name: imu
+  id: 0x106
+  producers: mcu
+  consumers: pc
+  signals:
+    - {name: header_frame_id, type: string, value: imu_0_link}
+    - {name: linear_acceleration_x, type: double}
+    - {name: linear_acceleration_y, type: double}
+    - {name: linear_acceleration_z, type: double}
+    - {name: linear_acceleration_covariance, type: list_double, value: [0.03924, 0, 0, 0, 0.03924, 0, 0, 0, 0.03924]}
+    - {name: angular_velocity_x, type: double}
+    - {name: angular_velocity_y, type: double}
+    - {name: angular_velocity_z, type: double}
+    - {name: angular_velocity_covariance, type: list_double, value: [0.0000010966, 0, 0, 0, 0.0000010966, 0, 0, 0, 0.0000010966]}
+```
+
+Only the `linear_acceleration_*` and `angular_velocity_*` signals will be serialized and sent to peers, while constant signals will already be known to the entire network.
+
+In the next example, constant signals are used to indicate what each index of the `list_float` signal represents.
+
+```yaml
+- name: power
+  id: 0x102
+  producers: mcu
+  consumers: pc
+  signals:
+    - {name: measured_voltages, type: list_float, length: 3}
+    - {name: J100_MEASURED_BATTERY, type: uint32, value: 0}
+    - {name: J100_MEASURED_5V, type: uint32, value: 1}
+    - {name: J100_MEASURED_12V, type: uint32, value: 2}
+
+    - {name: measured_currents, type: list_float, length: 4}
+    - {name: J100_TOTAL_CURRENT, type: uint32, value: 0}
+    - {name: J100_COMPUTER_CURRENT, type: uint32, value: 1}
+    - {name: J100_DRIVE_CURRENT, type: uint32, value: 2}
+    - {name: J100_USER_CURRENT, type: uint32, value: 3}
+```

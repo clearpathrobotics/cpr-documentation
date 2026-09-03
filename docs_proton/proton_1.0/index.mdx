@@ -1,0 +1,129 @@
+---
+title: Proton
+sidebar_label: Proton
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+# Proton
+
+Proton is a lightweight, efficient, peer-to-peer communication protocol designed for embedded systems and robotics applications. It enables bidirectional communication between nodes (typically MCU and PC systems) over a transport layer. The protocol is built on top of Google Protocol Buffers (protobuf) and provides a C implementation optimized for resource-constrained embedded systems, and a dynamic C++ implementation for high-powered devices. Proton also offers a **ROS 2** adapter that bridges communication between the Proton protocol and ROS 2, allowing embedded devices to still participate in a ROS 2 network without the complexity and overhead of the ROS 2 middleware. Additionally, unlike existing protocols such as micro-ROS, the Proton ROS 2 node is not limited to specific middlewares, and does not require building ROS 2 message definitions into MCU firmware.
+
+As of the `Jazzy 2.9` software release (and `clearpath_firmware` version `3.0.0`), all Clearpath robots use this protocol for MCU to PC communication.
+
+:::note
+This documentation is intended for users wishing to understand the Proton protocol and implement it into their robots or projects. Users with Clearpath robots only need to update their robots to the latest firmware and set Proton as their MCU communication protocol in the Robot Configuration.
+See the [MCU Protocol](../docs/ros/config/yaml/platform/mcu) section for details.
+:::
+
+Proton source code is available on GitHub:
+
+- Core libraries: https://github.com/clearpathrobotics/proton/tree/1.0.1
+- ROS 2 adapter: https://github.com/clearpathrobotics/proton_ros2
+
+# Key Concepts
+
+## Signals
+
+The fundamental data unit in Proton. A signal represents a single typed value that can be a:
+
+- **Primitive type**: double, float, int32, int64, uint32, uint64, bool, string, bytes
+- **List type**: Arrays of any primitive type (list_double, list_float, etc.)
+
+Each signal is encoded as a Protocol Buffer message with a oneof field, allowing efficient serialization of different data types.
+
+```protobuf
+message Signal {
+  oneof signal {
+    double double_value = 1;
+    float float_value = 2;
+    int32 int32_value = 3;
+    int64 int64_value = 4;
+    uint32 uint32_value = 5;
+    uint64 uint64_value = 6;
+    bool bool_value = 7;
+    string string_value = 8;
+    bytes bytes_value = 9;
+
+    ListDoubles list_double_value = 10;
+    ListFloats list_float_value = 11;
+    ListInt32s list_int32_value = 12;
+    ListInt64s list_int64_value = 13;
+    ListUint32s list_uint32_value = 14;
+    ListUint64s list_uint64_value = 15;
+    ListBools list_bool_value = 16;
+    ListStrings list_string_value = 17;
+    ListBytes list_bytes_value = 18;
+  }
+}
+```
+
+## Bundles
+
+A bundle is a collection of related signals that are transmitted together. Think of it as a message or packet containing multiple data fields. Each bundle has:
+
+- **Unique ID**: A 32-bit identifier (e.g., 0x100 for logs, 0x101 for status)
+- **Signal list**: An ordered collection of signals
+
+```protobuf
+message Bundle {
+  uint32 id = 1;
+  repeated Signal signals = 2;
+}
+```
+
+The Signal list can vary in length, and each Signal in the list can use a different value type.
+
+### Heartbeat
+
+Proton reserves the Bundle ID 0 for the heartbeat bundle. This is an optional bundle that can be periodically sent out by each node to indicate to other peers in the network that
+this node is active. The heartbeat bundle has a single `uint32` signal which should be incremented on each heartbeat as a sign of liveliness.
+
+## Nodes
+
+A node represents a participant in the communication network. Each node can:
+
+- Produce bundles (send data)
+- Consume bundles (receive data)
+- Communicate with multiple peer nodes
+- Send periodic heartbeats to indicate liveliness
+
+A node is also defined with a list of endpoints at which it can be reached.
+
+Node states:
+
+- `PROTON_NODE_UNCONFIGURED`: Initial state
+- `PROTON_NODE_INACTIVE`: Configured but not actively communicating
+- `PROTON_NODE_ACTIVE`: Fully operational
+
+## Peers
+
+Peers are other nodes in the Proton network that a given node can communicate with. A node is paired with a peer with a pair of endpoints called a *connection*.
+
+## Transport Layers
+
+Proton leverages Protobuf serialization to encode data into packets, enabling it to be sent over any transport layer that can handle dynamically sized packets.
+
+Currently, Serial and UDP transport is supported.
+
+### UDP Transport
+
+When using the UDP transport, both nodes in a connection will bind to a socket at a specified port and receive bundles they consume at that socket. They will then send bundles they produce
+to their peer's socket. UDP handles framing and ensures data integrity, so no additional data needs to be sent in the packet.
+
+### Serial Transport
+
+For serial communication, Proton expects the bundles to be framed:
+
+```
+[ Magic 0 ][ Magic 1 ][ Length ][     Payload     ][  CRC  ]
+    0x50       0x52     2 bytes     Length bytes    2 bytes
+```
+
+- **Magic bytes**: 0x50 0x52 ("PR") for synchronization
+- **Length**: 16-bit payload length (allows up to 65535 bytes)
+- **Payload**: Serialized Proton bundle
+- **CRC16**: 16-bit cyclic redundancy check for error detection
+
+The Proton libraries provide useful helper functions for framing, calculating CRC, and validating serial packets.
