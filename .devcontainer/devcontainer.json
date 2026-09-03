@@ -20,7 +20,7 @@
   // Re-assert ownership on each start in case a volume reset root ownership.
   "postStartCommand": "sudo chown -R node:node /workspaces/cpr-documentation",
   // runs in VS Code's integrated terminal, which stays open for the container's lifetime, keeping the server alive
-  "postAttachCommand": "npm run serve -- --host 0.0.0.0",
+  "postAttachCommand": "npm run start -- --host 0.0.0.0",
   // Run as the non-root `node` user provided by the base image.
   "remoteUser": "node",
   "customizations": {
