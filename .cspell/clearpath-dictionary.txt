@@ -110,6 +110,8 @@ catkin
 colcon
 distros
 Nav2
+pluginlib
+rclcpp
 ros2
 ros2launch
 ros2run
@@ -238,6 +240,8 @@ MCU
 MIMO
 multicast
 NTP
+packetization
+packetized
 PCAN
 rmw
 SPI
@@ -311,6 +315,10 @@ gamepad
 joystick
 thumbstick
 
+# Dependencies
+libyaml
+nlohmann
+
 # =============================================================================
 # GPS NMEA MESSAGE TYPES
 # =============================================================================
@@ -358,11 +366,18 @@ onav
 Viapoint
 
 # Proton Protocol
+DPROTON
+libproton
 libprotonc
+libprotoncpp
+libproton_core
+libproton_cpp
 nanopb
 Protobuf
 protobuf
 protobufs
+protonc
+protoncpp
 proton_core
 proton_cpp
 
@@ -407,6 +422,7 @@ yml
 # =============================================================================
 airlab
 Atel
+BYOM
 Dozzle
 Elektronik
 etc
@@ -414,6 +430,7 @@ Eurorack
 Franka
 PC
 PCs
+RTTI
 UGV
 UGVs
 waypoint
