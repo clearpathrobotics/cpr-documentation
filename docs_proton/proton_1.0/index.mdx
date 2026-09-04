@@ -1,26 +1,12 @@
 ---
-title: Proton
-sidebar_label: Proton
+title: Proton 1.0
+sidebar_label: Proton 1.0
 sidebar_position: 1
 toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-# Proton
-
-Proton is a lightweight, efficient, peer-to-peer communication protocol designed for embedded systems and robotics applications. It enables bidirectional communication between nodes (typically MCU and PC systems) over a transport layer. The protocol is built on top of Google Protocol Buffers (protobuf) and provides a C implementation optimized for resource-constrained embedded systems, and a dynamic C++ implementation for high-powered devices. Proton also offers a **ROS 2** adapter that bridges communication between the Proton protocol and ROS 2, allowing embedded devices to still participate in a ROS 2 network without the complexity and overhead of the ROS 2 middleware. Additionally, unlike existing protocols such as micro-ROS, the Proton ROS 2 node is not limited to specific middlewares, and does not require building ROS 2 message definitions into MCU firmware.
-
-As of the `Jazzy 2.9` software release (and `clearpath_firmware` version `3.0.0`), all Clearpath robots use this protocol for MCU to PC communication.
-
-:::note
-This documentation is intended for users wishing to understand the Proton protocol and implement it into their robots or projects. Users with Clearpath robots only need to update their robots to the latest firmware and set Proton as their MCU communication protocol in the Robot Configuration.
-See the [MCU Protocol](../docs/ros/config/yaml/platform/mcu) section for details.
-:::
-
-Proton source code is available on GitHub:
-
-- Core libraries: https://github.com/clearpathrobotics/proton/tree/1.0.1
-- ROS 2 adapter: https://github.com/clearpathrobotics/proton_ros2
+# Proton 1.0
 
 # Key Concepts
 
@@ -100,30 +86,3 @@ Node states:
 ## Peers
 
 Peers are other nodes in the Proton network that a given node can communicate with. A node is paired with a peer with a pair of endpoints called a *connection*.
-
-## Transport Layers
-
-Proton leverages Protobuf serialization to encode data into packets, enabling it to be sent over any transport layer that can handle dynamically sized packets.
-
-Currently, Serial and UDP transport is supported.
-
-### UDP Transport
-
-When using the UDP transport, both nodes in a connection will bind to a socket at a specified port and receive bundles they consume at that socket. They will then send bundles they produce
-to their peer's socket. UDP handles framing and ensures data integrity, so no additional data needs to be sent in the packet.
-
-### Serial Transport
-
-For serial communication, Proton expects the bundles to be framed:
-
-```
-[ Magic 0 ][ Magic 1 ][ Length ][     Payload     ][  CRC  ]
-    0x50       0x52     2 bytes     Length bytes    2 bytes
-```
-
-- **Magic bytes**: 0x50 0x52 ("PR") for synchronization
-- **Length**: 16-bit payload length (allows up to 65535 bytes)
-- **Payload**: Serialized Proton bundle
-- **CRC16**: 16-bit cyclic redundancy check for error detection
-
-The Proton libraries provide useful helper functions for framing, calculating CRC, and validating serial packets.

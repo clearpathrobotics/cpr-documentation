@@ -1,39 +1,27 @@
 ---
-title: Proton
-sidebar_label: Proton
+title: Proton 2.0
+sidebar_label: Proton 2.0
 sidebar_position: 1
 toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-# proton
-
-proton is a lightweight, efficient, peer-to-peer communication protocol designed for embedded systems and robotics applications. It enables bidirectional communication between nodes (typically MCU and PC systems) over a transport layer. The protocol is built on top of Google Protocol Buffers (protobuf) and provides a C implementation optimized for resource-constrained embedded systems, and a dynamic C++ implementation for high-powered devices. proton also offers a **ROS 2** adaptor that bridges communication between the proton protocol and ROS 2, allowing embedded devices to still participate in a ROS 2 network without the complexity and overhead of the ROS 2 middleware. Additionally, unlike existing protocols such as micro-ROS, the proton ROS 2 node is not limited to specific middlewares, and does not require building ROS 2 message definitions into MCU firmware.
-
-As of the `Jazzy 2.9` software release (and `clearpath_firmware` version `3.0.0`), all Clearpath robots use this protocol for MCU to PC communication.
-
-:::note
-This documentation is intended for users wishing to understand the proton protocol and implement it into their robots or projects. Users with Clearpath robots only need to update their robots to the latest firmware and set proton as their MCU communication protocol in the Robot Configuration.
-See the [MCU Protocol](../docs/ros/config/yaml/platform/mcu) section for details.
-:::
-
-proton source code is available on GitHub:
-
-- Core libraries: https://github.com/clearpathrobotics/proton
-- ROS 2 adaptor: https://github.com/clearpathrobotics/proton_ros2
+# proton 2.0
 
 # Key Concepts
 
 ## Signals
 
-The fundamental data unit in proton. A signal represents a single typed value that can be a:
+The fundamental data unit in proton. A Signal represents a single typed value that can be a:
 
 - **Primitive type**: double, float, int32, int64, uint32, uint64, bool
 - **Repeated type**: string, bytes
 
-Each signal must have a unique id. The id value is a 32-bit unsigned integer.
+A Signal represents a shared piece of data between Nodes. Signals can be reused across multiple Bundles, and even sent between different Nodes.
 
-Each signal is encoded as a Protocol Buffer message with a oneof field, allowing efficient serialization of different data types.
+Each Signal must have a unique id. The id value is a 32-bit unsigned integer.
+
+Each Signal is encoded as a Protocol Buffer message with a oneof field, allowing efficient serialization of different data types.
 
 ```protobuf
 message Signal {
@@ -76,25 +64,25 @@ signals:
 
 ## Bundles
 
-A bundle is a collection of related signals that are transmitted together. Think of it as a message or packet containing multiple data fields. Each bundle has:
+A bundle is a collection of related Signals that are transmitted together. Think of it as a message or packet containing multiple data fields. Each bundle has:
 
 - **Unique ID**: A 32-bit identifier (e.g., 0x100 for logs, 0x101 for status)
-- **Signal list**: An ordered collection of signals
+- **Signal list**: An ordered collection of Signals
 - **Period (ms)**: An optional field (u32) denoting how often a bundle should be sent to peers. If a bundle does not specify a period, it must be manually "triggered" to send
 
 ```protobuf
 message Bundle {
   uint32 id = 1;
-  repeated Signal signals = 2;
+  repeated Signal Signals = 2;
 }
 ```
 
 ## Top Level
 
-proton has a top-level message conveniently named `proton` to act as a container for all message types. Currently this is only `Bundle`, with options reserved for future use.
+Proton has a top-level message conveniently named `Proton` to act as a container for all message types. Currently this is only `Bundle`, with options reserved for future use.
 
 ```protobuf
-message proton {
+message Proton {
   option (nanopb_msgopt).submsg_callback = true;
   oneof operation {
     Bundle bundle = 1;
@@ -103,54 +91,8 @@ message proton {
 }
 ```
 
-## Nodes
-
-A node represents a participant in the communication network. Each node can:
-
-- Produce bundles (send data)
-- Consume bundles (receive data)
-- Communicate with multiple peer nodes
-
-A node is also defined with a list of endpoints at which it can be reached.
-
-## Peers
-
-Peers are other nodes in the proton network that a given node can communicate with. A node is paired with a peer with a pair of endpoints called a *connection*.
-
 ## Signal Registry
 
-proton synchronizes signal data between peers using the signal registry. The signal registry is a list of all signal data a node and its connected peers. The registry is the main setter/getter interface for loading and storing signal values to share amongst peers. When getting the latest bundle data to send to a peer, proton will give caller the most updated signal values. When a bundle is received from another peer, proton will update the signal registry automatically.
+Proton synchronizes Signal data between peers using the Signal registry. The Signal registry is a list of all Signal data a node and its connected peers. The registry is the main setter/getter interface for loading and storing Signal values to share amongst peers. When getting the latest bundle data to send to a peer, proton will give caller the most updated Signal values. When a bundle is received from another peer, proton will update the Signal registry automatically.
 
 The registry is not created as part of the proton library itself, but can be created using the registry generation script for statically allocated registries.
-
-## Transport Layers
-
-proton leverages Protobuf serialization to encode data into packets, enabling it to be sent over any transport layer that can handle dynamically sized packets.
-
-Currently, Serial and UDP transport is supported.
-
-### UDP Transport
-
-When using the UDP transport, both nodes in a connection will bind to a socket at a specified port and receive bundles they consume at that socket. They will then send bundles they produce
-to their peer's socket. The following minimal header is applied to each UDP transaction
-
-| Version | Node ID | Flags | Reserved |
-|---|---|---|---|
-| uint8_t | uint8_t | uint8_t | uint8_t |
-
-### Serial Transport
-
-For serial communication, proton expects the bundles to be framed:
-
-```
-| Magic 0 | Magic 1 | Length | Payload |  CRC16 |
-|---|---|---|---|---|
-| uint8_t (0x50) | uint8_t (0x52) | uint16_t | `Length` bytes | uint16_t |
-```
-
-- **Magic bytes**: 0x50 0x52 ("PR") for synchronization
-- **Length**: 16-bit payload length (allows up to 65535 bytes)
-- **Payload**: Serialized proton bundle
-- **CRC16**: 16-bit cyclic redundancy check for error detection
-
-The proton libraries provide useful helper functions for framing, calculating CRC, and validating received data.
