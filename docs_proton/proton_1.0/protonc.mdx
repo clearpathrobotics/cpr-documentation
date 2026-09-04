@@ -1204,7 +1204,7 @@ The Proton node does handle transport timeouts. These should be implemented with
 
 ##### Serial Transport
 
-For serial transport, the `read` and `write` functions must implement Proton's [framing](../index#serial-transport) to correctly extract the serialized Bundle from the serial stream, and correctly send a Bundle to another peer. The [protoncpp](https://github.com/clearpathrobotics/proton/blob/1.0.1/protoncpp/src/transport/serial.cpp) implementation of serial transport can be used as reference.
+For serial transport, the `read` and `write` functions must implement Proton's [framing](..#serial-transport) to correctly extract the serialized Bundle from the serial stream, and correctly send a Bundle to another peer. The [protoncpp](https://github.com/clearpathrobotics/proton/blob/1.0.1/protoncpp/src/transport/serial.cpp) implementation of serial transport can be used as reference.
 
 #### Thread Safety
 
