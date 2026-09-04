@@ -8,98 +8,91 @@ toc_max_heading_level: 4
 
 # Proton
 
-Proton is a lightweight, efficient, peer-to-peer communication protocol designed for embedded systems and robotics applications. It enables bidirectional communication between nodes (typically MCU and PC systems) over a transport layer. The protocol is built on top of Google Protocol Buffers (protobuf) and provides a C implementation optimized for resource-constrained embedded systems, and a dynamic C++ implementation for high-powered devices. Proton also offers a **ROS 2** adapter that bridges communication between the Proton protocol and ROS 2, allowing embedded devices to still participate in a ROS 2 network without the complexity and overhead of the ROS 2 middleware. Additionally, unlike existing protocols such as micro-ROS, the Proton ROS 2 node is not limited to specific middlewares, and does not require building ROS 2 message definitions into MCU firmware.
+Proton is a lightweight, efficient, peer-to-peer communication protocol designed for embedded systems and robotics applications. It enables bidirectional communication between nodes. The protocol is built on top of Google Protocol Buffers (protobuf) and provides a lightweight C or C++ implementation optimized for resource-constrained embedded systems, extendable to a runtime-configurable C++ implementation for high-powered devices. Proton also offers a **ROS 2** adapter that bridges communication between the Proton protocol and ROS 2, allowing embedded devices to still participate in a ROS 2 network without the complexity and overhead of ROS 2 middleware.
 
 As of the `Jazzy 2.9` software release (and `clearpath_firmware` version `3.0.0`), all Clearpath robots use this protocol for MCU to PC communication.
 
 :::note
 This documentation is intended for users wishing to understand the Proton protocol and implement it into their robots or projects. Users with Clearpath robots only need to update their robots to the latest firmware and set Proton as their MCU communication protocol in the Robot Configuration.
-See the [MCU Protocol](../docs/ros/config/yaml/platform/mcu) section for details.
+See the [MCU Protocol](../../docs/ros/config/yaml/platform/mcu) section for details.
 :::
 
-Proton source code is available on GitHub:
+## Key Concepts
 
-- Core libraries: https://github.com/clearpathrobotics/proton/tree/1.0.1
-- ROS 2 adapter: https://github.com/clearpathrobotics/proton_ros2
+### Signals
 
-# Key Concepts
+The fundamental data unit in proton. A Signal represents a typed value with a known size.
 
-## Signals
+:::note
+There are nuances to how Signals and Bundles are defined between the two different versions of Proton, see the [1.0 documentation](proton_1.0/index.mdx) vs the [2.0 documentation](./proton_2.0/index.mdx) for comparison.
+:::
 
-The fundamental data unit in Proton. A signal represents a single typed value that can be a:
+| Proton 1.0 | Proton 2.0 |
+| ---------- | ---------- |
+| Signals must be associated with a single Bundle | Signals can be part of 0 or more Bundles |
+| A Signal represents data that is specific to that Bundle | Signals represent data shared between Nodes, the Bundle is simply the grouping |
+| Signals can be lists of almost any type that is also a scalar | Signals are scalar-only |
+| Signals with default values are immutable | All Signals are mutable, but can have a default value |
 
-- **Primitive type**: double, float, int32, int64, uint32, uint64, bool, string, bytes
-- **List type**: Arrays of any primitive type (list_double, list_float, etc.)
+### Bundles
 
-Each signal is encoded as a Protocol Buffer message with a oneof field, allowing efficient serialization of different data types.
+A Bundle is a collection of Signals, associated with a 32-bit "Bundle ID". Bundles are the main data type used for messaging between devices.
 
-```protobuf
-message Signal {
-  oneof signal {
-    double double_value = 1;
-    float float_value = 2;
-    int32 int32_value = 3;
-    int64 int64_value = 4;
-    uint32 uint32_value = 5;
-    uint64 uint64_value = 6;
-    bool bool_value = 7;
-    string string_value = 8;
-    bytes bytes_value = 9;
-
-    ListDoubles list_double_value = 10;
-    ListFloats list_float_value = 11;
-    ListInt32s list_int32_value = 12;
-    ListInt64s list_int64_value = 13;
-    ListUint32s list_uint32_value = 14;
-    ListUint64s list_uint64_value = 15;
-    ListBools list_bool_value = 16;
-    ListStrings list_string_value = 17;
-    ListBytes list_bytes_value = 18;
-  }
-}
-```
-
-## Bundles
-
-A bundle is a collection of related signals that are transmitted together. Think of it as a message or packet containing multiple data fields. Each bundle has:
-
-- **Unique ID**: A 32-bit identifier (e.g., 0x100 for logs, 0x101 for status)
-- **Signal list**: An ordered collection of signals
-
-```protobuf
-message Bundle {
-  uint32 id = 1;
-  repeated Signal signals = 2;
-}
-```
-
-The Signal list can vary in length, and each Signal in the list can use a different value type.
-
-### Heartbeat
-
-Proton reserves the Bundle ID 0 for the heartbeat bundle. This is an optional bundle that can be periodically sent out by each node to indicate to other peers in the network that
-this node is active. The heartbeat bundle has a single `uint32` signal which should be incremented on each heartbeat as a sign of liveliness.
-
-## Nodes
+### Nodes
 
 A node represents a participant in the communication network. Each node can:
 
 - Produce bundles (send data)
 - Consume bundles (receive data)
 - Communicate with multiple peer nodes
-- Send periodic heartbeats to indicate liveliness
 
 A node is also defined with a list of endpoints at which it can be reached.
 
-Node states:
+### Peers
 
-- `PROTON_NODE_UNCONFIGURED`: Initial state
-- `PROTON_NODE_INACTIVE`: Configured but not actively communicating
-- `PROTON_NODE_ACTIVE`: Fully operational
+Peers are other nodes in the proton network that a given node can communicate with. A node is paired with a peer with a pair of endpoints called a *connection*.
 
-## Peers
+## Proton Versions
 
-Peers are other nodes in the Proton network that a given node can communicate with. A node is paired with a peer with a pair of endpoints called a *connection*.
+### Proton 1
+
+The original version of the Proton library, released as part of `Jazzy 2.9` and `clearpath_firmware v3.0.0`. The core library (`protonc`) uses a build-time generation script to create individual message Bundles with unique Signals, akin to ROS 2 messages. Signals are accessed via name within bespoke Bundle structs.
+
+Proton 1 also incorporates a liveliness mechanism for participant nodes via "heartbeat Bundles", and the concept of "const" immutable Signals.
+
+This ecosystem has two main libraries:
+
+- `protonc`: C library using nanopb for protobuf encode/decode. Requires code generation to create the bundles and nodes used in operation.
+- `protoncpp`: C++ library using Google's protobuf library, compatible with Linux and incorporates asynchronous message transport from `boost asio`
+
+Proton 1 also incorporates a ROS 2 package to convert Proton Bundles into ROS 2 messages and services.
+
+:::note
+Adding custom messages to proton_ros2 requires a fork of the existing codebase as the message bridging classes are built as part of the package.
+:::
+
+Proton source code is available on GitHub:
+
+- Core libraries: https://github.com/clearpathrobotics/proton/tree/1.0.1
+- ROS 2 adapter: https://github.com/clearpathrobotics/proton_ros2/tree/1.0.0
+
+:::note
+Proton 1 is no longer being actively developed.
+:::
+
+### Proton 2
+
+A refactored version of Proton written specifically to address the need for removing re-declaring signals between Bundles, and to remove the need to compile autogenerated code within `libprotonc`. Proton 2.0 uses a "Signal Registry" for a participant Node to access Signal data via 32-bit identifiers, operating on a bring-your-own-memory (BYOM) model to allow a user to declare their Signal Registry either via the included code generation system, or allocating it themselves. The transport framing API is largely unchanged from Proton 1.
+
+This ecosystem also has two libraries:
+
+- `proton_core`: C library including the Signal Registry API and Node Manager API. Defines types for the Signal Registry and Node Manager, but does not allocate directly.
+- `proton_cpp`: C++ Superset of `proton_core`, scaling from simple no-alloc type-safe C++ wrapper all the way up to runtime generation of a Signal Registry and Node Manager from YAML and JSON configuration files. Does not include asynchronous message transport to allow for portability.
+
+Proton 2 also has a ROS 2 bridging ecosystem (the 2.0 release of `proton_ros2`), rewritten to use `pluginlib` to easily add user-defined ROS 2 messages, and reuse Proton Signals between topics. `proton_ros2_node` incorporates OTTO Motors' asynchronous transport packages with `proton_ros2` to complete the Proton/ROS 2 communication ecosystem.
+
+- Core libraries: https://github.com/clearpathrobotics/proton
+- ROS 2 adaptor: https://github.com/clearpathrobotics/proton_ros2
 
 ## Transport Layers
 
@@ -107,23 +100,31 @@ Proton leverages Protobuf serialization to encode data into packets, enabling it
 
 Currently, Serial and UDP transport is supported.
 
-### UDP Transport
+### UDP Transport (2.0 and up)
 
-When using the UDP transport, both nodes in a connection will bind to a socket at a specified port and receive bundles they consume at that socket. They will then send bundles they produce
-to their peer's socket. UDP handles framing and ensures data integrity, so no additional data needs to be sent in the packet.
+When using the UDP transport, both nodes in a connection will bind to a socket at a specified port and receive bundles they consume at that socket. They will then send bundles they produce to their peer's socket. The following minimal header is applied to each UDP transaction
+
+| Version | Node ID | Flags | Reserved |
+|---|---|---|---|
+| uint8_t | uint8_t | uint8_t | uint8_t |
 
 ### Serial Transport
 
-For serial communication, Proton expects the bundles to be framed:
+For serial communication, proton expects the bundles to be framed:
 
 ```
-[ Magic 0 ][ Magic 1 ][ Length ][     Payload     ][  CRC  ]
-    0x50       0x52     2 bytes     Length bytes    2 bytes
+| Magic 0 | Magic 1 | Length | Payload |  CRC16 |
+|---|---|---|---|---|
+| uint8_t (0x50) | uint8_t (0x52) | uint16_t | `Length` bytes | uint16_t |
 ```
 
 - **Magic bytes**: 0x50 0x52 ("PR") for synchronization
 - **Length**: 16-bit payload length (allows up to 65535 bytes)
-- **Payload**: Serialized Proton bundle
+- **Payload**: Serialized proton bundle
 - **CRC16**: 16-bit cyclic redundancy check for error detection
 
-The Proton libraries provide useful helper functions for framing, calculating CRC, and validating serial packets.
+The proton libraries provide useful helper functions for framing, calculating CRC, and validating received data.
+
+## Which Version of Proton is Right For Me?
+
+Proton 2 is the currently developed version, but if you are running Clearpath release `Jazzy 2.9` specifically to talk to Clearpath MCU's, use Proton 1.
