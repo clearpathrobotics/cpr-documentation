@@ -93,6 +93,6 @@ message Proton {
 
 ## Signal Registry
 
-Proton synchronizes Signal data between peers using the Signal registry. The Signal registry is a list of all Signal data a node and its connected peers. The registry is the main setter/getter interface for loading and storing Signal values to share amongst peers. When getting the latest bundle data to send to a peer, proton will give caller the most updated Signal values. When a bundle is received from another peer, proton will update the Signal registry automatically.
+Proton synchronizes Signal data between peers using the Signal registry. The Signal registry is a list of all Signal data a node and its connected peers. The registry is the main setter/getter interface for loading and storing Signal values to share amongst peers. When getting the latest bundle data to send to a peer, proton will give the caller the most updated Signal values. When a bundle is received from another peer, proton will update the Signal registry automatically.
 
 The registry is not created as part of the proton library itself, but can be created using the registry generation script for statically allocated registries.

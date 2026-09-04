@@ -205,7 +205,7 @@ UDP4 operates over Ethernet, which provides built-in packetization and checksumm
 
 Serial transport is more involved, requiring stream synchronization and integrity checking. See [the transport framing](..#serial-transport) for more information on formatting.
 
-The serial API is contains methods to populate the 6-byte header, including the CRC. It also contains functions to validate and de-payload data received from peers.
+The serial API contains methods to populate the 6-byte header, including the CRC. It also contains functions to validate and de-payload data received from peers.
 
 Because serial streams are not packetized, the user is expected to implement buffering the data from the hardware transport, as well as maintaining the following state machine.
 
