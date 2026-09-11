@@ -1,0 +1,84 @@
+<table>
+<tr>
+<td>
+<center>
+<figure>
+    <img src={require("./img/hesai_xt32_lidar.png").default} width="250" />
+</figure>
+</center>
+</td>
+<td>
+<div style={{overflow:"auto", width:"350"}}>
+
+```yaml
+lidar3d:
+  - model: hesai_lidar
+    urdf_enabled: true
+    launch_enabled: true
+    parent: lidar3d_row_link
+    xyz: [0.0, 0.0, 0.0]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      hesai_driver:
+        config_path: /path/to/hesai/config/file0.yaml
+  - model: hesai_lidar
+    urdf_enabled: true
+    launch_enabled: true
+    parent: lidar3d_row_link
+    xyz: [0.1, 0.1, 0.1]
+    rpy: [0.0, 0.0, 0.0]
+    ros_parameters:
+      hesai_driver:
+        config_path: /path/to/hesai/config/file1.yaml
+```
+
+</div>
+</td>
+</tr>
+</table>
+
+#### Package and Setup
+The Hesai LiDAR uses the `hesai_ros_driver` ROS 2 driver. The driver is open source, maintained by Hesai Technology, 
+and hosted on [GitHub - HesaiLidar_ROS_2.0](https://github.com/HesaiTechnology/HesaiLidar_ROS_2.0). The `hesai_ros_driver` 
+nodes depend on the [HesaiLidar_SDK_2.0](https://github.com/HesaiTechnology/HesaiLidar_SDK_2.0). The `hesai_ros_driver` 
+ROS2 package and SDK **are not installed by ROS dependencies** and need to be built against the specific version 
+installed on your computer. Therefore, **you will have to install these manually by following the instructions in the 
+[`HesaiLidar_ROS_2.0`](https://github.com/HesaiTechnology/HesaiLidar_ROS_2.0/blob/master/README.md) repository**.
+
+The `hesai_ros_driver` only accepts one single ROS parameter which is `config_path` as shown above. 
+The `config_path` points to a configuraiton file formated as shown in the HesaiLidar_SDK_2.0 [config.yaml](https://github.com/HesaiTechnology/HesaiLidar_ROS_2.0/blob/master/config/config.yaml).
+
+Each Hesai LiDAR must be listed first under lidar3d in the `robot.yaml` file and provide a different
+the `config_path`. Each Hesai LiDAR must point to a unique `config.yaml`.
+For the first Hesai LiDAR listed in the `robot.yaml` the following parameters in the `config.yaml` 
+must be modifed as shown:
+```
+lidar:
+  - driver:
+    ...
+      lidar_udp_type:
+        device_ip_address: 192.168.131.25
+        ...
+        multicast_ip_address: 192.168.131.1
+    ...
+    ros:
+      ros_frame_id: lidar3d_0_laser    
+    ...       
+```
+Any additional Hesai LiDAR should increment the `device_ip_address` (first lidar ip = 192.168.131.25, second lidar ip = 192.168.131.26, etc.)
+along with the `ros_frame_id` (first lidar frame ID = `lidar3d_0_laser`, second lidar frame ID = `lidar3d_1_laser`, etc.)
+The IP of the physical Hesai LiDAR must be updated as well. See the User Guide for the XT32 Hesai Lidar that can be downloaded here: https://www.cratustech.com/downloads/.
+
+The change of `multicast_ip_address` should be set according to the [Reserved IP Addresses](/docs/ros/networking/network_ip_addresses). 
+The value of `192.168.131.1` should be used if the hesai lidar is connected to the Primary Computer.
+
+The user can change any other parameter in the `config.yaml` based on their own use case.
+
+
+#### Model
+
+There are several types of Hesai LiDAR models. Currently only the XT32 is supported.
+
+#### Mesh-Only Support
+
+The Hesai XT32 Lidar is only supported as a mesh in `robot.yaml`.
