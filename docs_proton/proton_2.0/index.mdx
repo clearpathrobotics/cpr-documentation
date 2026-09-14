@@ -1,0 +1,98 @@
+---
+title: Proton 2.0
+sidebar_label: Proton 2.0
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+# proton 2.0
+
+# Key Concepts
+
+## Signals
+
+The fundamental data unit in proton. A Signal represents a single typed value that can be a:
+
+- **Primitive type**: double, float, int32, int64, uint32, uint64, bool
+- **Repeated type**: string, bytes
+
+A Signal represents a shared piece of data between Nodes. Signals can be reused across multiple Bundles, and even sent between different Nodes.
+
+Each Signal must have a unique id. The id value is a 32-bit unsigned integer.
+
+Each Signal is encoded as a Protocol Buffer message with a oneof field, allowing efficient serialization of different data types.
+
+```protobuf
+message Signal {
+  reserved 10 to 18;
+
+  oneof signal {
+    double double_value = 1;
+    float float_value = 2;
+    int32 int32_value = 3;
+    int64 int64_value = 4;
+    uint32 uint32_value = 5;
+    uint64 uint64_value = 6;
+    bool bool_value = 7;
+    string string_value = 8;
+    bytes bytes_value = 9;
+  }
+
+  uint32 id = 19;
+}
+```
+
+Signal configuration looks like this:
+
+```yaml
+signals:
+  - {name: double_value, id: 0x1000, type: double}
+  - {name: float_value, id: 0x1001, type: float}
+  - {name: int32_value, id: 0x1002, type: int32}
+  - {name: int64_value, id: 0x1003, type: int64}
+  - {name: uint32_value, id: 0x1004, type: uint32}
+  - {name: uint64_value, id: 0x1005, type: uint64}
+  - {name: bool_value, id: 0x1006, type: bool}
+  - {name: string_value, id: 0x1007, type: string, capacity: 8}
+  - {name: bytes_value, id: 0x1008, type: bytes, capacity: 8}
+  - {name: default_double, id: 0x1010, type: double, value: 3.14159}
+  - {name: default_string, id: 0x1011, type: string, value: "foo"}
+  - {name: default_bytes, id: 0x1012, type: bytes, value: [0, 1, 2], capacity: 3}
+  - {name: really_long_string, id: 0x1013, type: string, value: "ipsumsedolorsitametconsecteturadipiscingelit", capacity: 44}
+```
+
+## Bundles
+
+A bundle is a collection of related Signals that are transmitted together. Think of it as a message or packet containing multiple data fields. Each bundle has:
+
+- **Unique ID**: A 32-bit identifier (e.g., 0x100 for logs, 0x101 for status)
+- **Signal list**: An ordered collection of Signals
+- **Period (ms)**: An optional field (u32) denoting how often a bundle should be sent to peers. If a bundle does not specify a period, it must be manually "triggered" to send
+
+```protobuf
+message Bundle {
+  uint32 id = 1;
+  repeated Signal Signals = 2;
+}
+```
+
+## Top Level
+
+Proton has a top-level message conveniently named `Proton` to act as a container for all message types. Currently this is only `Bundle`, with options reserved for future use.
+
+```protobuf
+message Proton {
+  option (nanopb_msgopt).submsg_callback = true;
+  oneof operation {
+    Bundle bundle = 1;
+    // Reserved for future operation types
+  }
+}
+```
+
+## Signal Registry
+
+Proton synchronizes Signal data between peers using the Signal registry. The Signal registry is a list of all Signal data a node and its connected peers. The registry is the main setter/getter interface for loading and storing Signal values to share amongst peers. When getting the latest bundle data to send to a peer, proton will give the caller the most updated Signal values. When a bundle is received from another peer, proton will update the Signal registry automatically.
+
+The registry is not created as part of the proton library itself, but can be created using the registry generation script for statically allocated registries.

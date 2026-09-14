@@ -6,6 +6,11 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
+    # Update all direct dependencies, plus the transitive caniuse-lite database
+    # so the Browserslist "supported browsers" data stays current.
+    allow:
+      - dependency-type: "direct"
+      - dependency-name: "caniuse-lite"
 
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
