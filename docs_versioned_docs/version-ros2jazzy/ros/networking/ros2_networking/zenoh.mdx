@@ -5,21 +5,62 @@ sidebar_position: 4
 
 ## Zenoh Router
 
-In early 2025 a new ROS middleware implementation called **Zenoh** was released. For a
-detailed description of Zenoh, please refer to [Zenoh's design document](https://github.com/ros2/rmw_zenoh/blob/rolling/docs/design.md).
+`rmw_zenoh_cpp` is a ROS 2 middleware implementation that uses **Zenoh** for discovery and communication. For a
+detailed description of the ROS 2 integration, please refer to
+[the `rmw_zenoh` design document](https://github.com/ros2/rmw_zenoh/blob/jazzy/docs/design.md).
 
-Zenoh is only available on ROS 2 Jazzy and later; it cannot be used on ROS 2 Humble. See the [documentation on the system section of the Clearpath configuration YAML](../../config/yaml/system.mdx#middleware) to set the middleware to Zenoh.
+Zenoh is only available on ROS 2 Jazzy and later; it cannot be used on ROS 2 Humble. See the
+[documentation on the system section of the Clearpath configuration YAML](../../config/yaml/system.mdx#middleware)
+to set the middleware to Zenoh.
+
+### Configuring Zenoh on the Robot
+
+Install the Zenoh ROS middleware package on the robot. The package is also required on each offboard computer that
+will use `rmw_zenoh_cpp`:
+
+```bash
+sudo apt update
+sudo apt install ros-jazzy-rmw-zenoh-cpp
+```
+
+On the robot, edit `/etc/clearpath/robot.yaml` and set the middleware implementation to `rmw_zenoh_cpp`:
+
+```yaml
+system:
+  ros2:
+    middleware:
+      implementation: rmw_zenoh_cpp
+```
+
+Keep the robot's existing namespace and domain ID unless you have a reason to change them. A remote computer
+that should communicate with this robot must use the same domain ID. The `ZENOH_CONFIG_OVERRIDE` client endpoint
+is configured on the remote computer, not on the robot; the robot's ROS sessions connect to its local router.
+
+Restart the robot service to regenerate the configuration and start the Zenoh router:
+
+```bash
+sudo systemctl restart clearpath-robot
+```
+
+Check that the router started successfully:
+
+```bash
+systemctl status clearpath-zenoh-router
+```
 
 ### Automatically starting the Zenoh Router
 
-By setting the middleware in the system section of the Clearpath configuration file (found in the default Clearpath directory `/etc/clearpath/robot.yaml`), the Zenoh router start script is added to the generated `zenoh-router-start` script. This script is ran by the `clearpath-zenoh-router` service when the `clearpath-robot` service is started.
+By setting the middleware in the system section of the Clearpath configuration file
+(found in the default Clearpath directory `/etc/clearpath/robot.yaml`), the Zenoh router
+start script is added to the generated `zenoh-router-start` script. This script is ran by
+the `clearpath-zenoh-router` service when the `clearpath-robot` service is started.
 
 ### Manually starting the Zenoh Router
 
 Alternatively, if the service is not running or has been manually stopped, manually launch the Zenoh router run
 
 ```bash
-bash -e ~/clearpath/zenoh-router-start
+bash -e /etc/clearpath/zenoh-router-start
 ```
 
 This process can also be daemonized and launched via the `systemctl` command:
@@ -31,40 +72,33 @@ sudo systemctl start clearpath-zenoh-router
 
 ## Communicating with the Zenoh router from a remote computer
 
-When a user wants to connect a remote computer to communicate with the nodes running on the robot's computer using the Zenoh middleware, the user is recommended to follow these steps on the user's remote computer:
+To connect a remote computer to a robot using Zenoh, follow these steps on the remote computer:
 1. Install the Zenoh ROS Middleware:
 ```
 sudo apt update && sudo apt install ros-jazzy-rmw-zenoh-cpp
 ```
-2. Create an offboard setup folder and copy the robot configuration by following the [offboard setup instructions](../../installation/offboard_pc.mdx#setup-folder).
-3. Set the Zenoh ROS Middleware in the offboard `robot.yaml`:
+2. Create an offboard setup folder and copy the robot configuration by following the
+[offboard setup instructions](../../installation/offboard_pc.mdx#setup-folder).
+3. Edit the offboard `robot.yaml`. Merge these settings into its existing `system:` section;
+do not add a second top-level `system:` key. Use the robot's namespace and domain ID:
 
 ```yaml
 system:
-    ros2:
-        middleware:
-            implementation: rmw_zenoh_cpp
+  ros2:
+    namespace: robot_1
+    domain_id: 0
+    middleware:
+      implementation: rmw_zenoh_cpp
+  bash:
+    env:
+      ZENOH_CONFIG_OVERRIDE: 'mode="client";connect/endpoints=["tcp/ROBOT_IP:7447"]'
 ```
 
-4. Set the remote computer's Zenoh router endpoint in the offboard `robot.yaml` under `system.bash.env`:
+Replace `ROBOT_IP` with the robot's reachable address. For a wired connection this is typically
+`192.168.131.1`; for Wi-Fi, use the address assigned to the robot by the Wi-Fi network.
+The `ZENOH_CONFIG_OVERRIDE` belongs on the offboard computer; the robot uses its local Zenoh router.
 
-        a. **Wired Connection**: Set the endpoint to the robot's static IP address (`192.168.131.1`):
-        ```yaml
-        system:
-            bash:
-                env:
-                    ZENOH_CONFIG_OVERRIDE: 'mode="client";connect/endpoints=["tcp/192.168.131.1:7447"]'
-        ```
-
-        b. **Wireless Connection**: Set the endpoint to the robot's IP address assigned by the Wi-Fi router:
-        ```yaml
-        system:
-            bash:
-                env:
-                    ZENOH_CONFIG_OVERRIDE: 'mode="client";connect/endpoints=["tcp/ROBOT_WIFI_IP:7447"]'
-        ```
-
-5. Generate and source the offboard `setup.bash` file:
+4. Generate and source the offboard `setup.bash` file:
 
 ```
 source /opt/ros/jazzy/setup.bash
@@ -72,16 +106,377 @@ ros2 run clearpath_generator_common generate_bash -s ~/clearpath
 source ~/clearpath/setup.bash
 ```
 
-6. Connect the remote computer and robot computer to the same network.
+5. Connect the remote computer and robot computer to the same network.
 
-    a. **Wired Connection**: Connect the remote computer to the robot's ethernet port and set the remote computer's IP address in the range `192.168.131.100` to `192.168.131.255`.
+    a. **Wired Connection**: Connect the remote computer to the robot's ethernet port and set the remote computer's
+    IP address in the range `192.168.131.100` to `192.168.131.255`.
 
-    b. **Wireless Connection**: Connect the robot computer to the same WiFi router as the remote computer. Find the IP address that the WiFi router assigned the robot's computer using the `ip a` command on a terminal on the robot's computer.
+    b. **Wireless Connection**: Connect the robot computer to the same WiFi router as the remote computer.
+    Find the IP address that the WiFi router assigned the robot's computer using the `ip a` command on a
+    terminal on the robot's computer.
 
-If you switch between wired and wireless networking, update the offboard `robot.yaml` IP and regenerate `setup.bash`, or edit `~/clearpath/setup.bash` directly.
+If you switch between wired and wireless networking, update the offboard `robot.yaml` IP and regenerate
+`setup.bash`, or edit `~/clearpath/setup.bash` directly.
 
-7. Then make sure to restart the ROS2 daemon on the remote computer before using command line tools:
+6. Ensure the robot's router is running and reachable from the remote computer. The default router listens on
+TCP port `7447`; check it on the robot with `systemctl status clearpath-zenoh-router` and from the remote computer with:
+
+```bash
+nc -zv <ROBOT_IP> 7447
 ```
+You should see the following output:
+```bash
+Connection to <ROBOT_IP> 7447 port [tcp/*] succeeded!
+```
+
+7. In a new terminal on the remote computer, source the generated setup and check that it selected Zenoh and the expected domain.
+Then stop any existing ROS 2 daemon before using command-line tools:
+
+```bash
+source ~/clearpath/setup.bash
+echo "$RMW_IMPLEMENTATION"
+echo "$ROS_DOMAIN_ID"
+echo "$ZENOH_CONFIG_OVERRIDE"
 ros2 daemon stop
 ros2 topic list
 ```
+
+The environment checks should show output similar to:
+
+```text
+rmw_zenoh_cpp
+26
+mode="client";connect/endpoints=["tcp/10.27.15.236:7447"]
+```
+
+`ros2 topic list` should include the robot's topics under its namespace. For example, an A300 with namespace
+`a300_00001` may show:
+
+```text
+/a300_00001/cmd_vel
+/a300_00001/platform/odom/filtered
+/a300_00001/platform/motors/status
+/a300_00001/sensors/imu_0/data
+/parameter_events
+/rosout
+```
+
+The exact topics depend on the robot configuration and running nodes. Use a known active topic with
+`ros2 topic echo` to verify message flow, not just graph discovery. For example, on this A300 configuration,
+`ros2 topic echo /a300_00001/platform/odom/filtered` prints repeated `nav_msgs/msg/Odometry` messages while
+odometry is being published. If switching between wired and wireless connections, update the endpoint IP in
+`robot.yaml` and regenerate `setup.bash`.
+
+:::warning
+The default router listens on all network interfaces and does not enable authentication. For initial testing,
+use a trusted network and restrict access to TCP port `7447`; do not expose the default router to an untrusted network.
+:::
+
+## Multi-Robot Setups
+
+Each robot runs its own Zenoh router (via the `clearpath-zenoh-router` service, listening on TCP port `7447`),
+and the robot's ROS 2 sessions connect to that local router. Routers can be connected to extend communication
+between hosts. Visibility is affected by three independent mechanisms:
+
+- **ROS namespace** (`system.ros2.namespace` in `robot.yaml`): scopes Clearpath-generated ROS names. Use a
+  different namespace per robot to distinguish their topics. Custom nodes, absolute topic names, and remappings
+  may need separate configuration.
+- **ROS domain ID** (`system.ros2.domain_id` in `robot.yaml`): included in `rmw_zenoh_cpp` key expressions.
+  Different domain IDs prevent ROS communication even when the routers are connected; matching domain IDs allow
+  ROS communication, subject to router connectivity and topic names.
+- **Router connectivity**: determines which hosts can exchange Zenoh traffic. Remote ROS sessions can use
+  `ZENOH_CONFIG_OVERRIDE` to connect to one router; routers can connect to other routers using a custom profile
+  set with `system.ros2.middleware.profile`.
+
+The sections below cover the three typical configurations.
+
+### Prerequisite: Unique Namespace per Robot
+
+Regardless of which configuration you use, assign each robot a unique namespace in its `robot.yaml` to distinguish
+its Clearpath-generated topic names. Verify that every robot has a different value:
+
+```yaml
+system:
+    ros2:
+        namespace: a300_0001   # must be unique per robot
+        domain_id: 0
+        middleware:
+            implementation: rmw_zenoh_cpp
+```
+
+Regenerate `setup.bash` after any change (`ros2 run clearpath_generator_common generate_bash -s /etc/clearpath`)
+and restart the `clearpath-robot` service so the new namespace takes effect (`sudo systemctl restart clearpath-robot`).
+
+### Scenario 1: Isolated Robots on a Shared Network
+
+Use this scenario when robots share a Wi-Fi network but should operate independently (for example, one operator
+per robot, each with their own workstation). The robots must not see each other's topics.
+
+Give each robot a different `domain_id` in its `robot.yaml`:
+
+```yaml
+# robot A
+system:
+    ros2:
+        namespace: a300_0001
+        domain_id: 10
+        middleware:
+            implementation: rmw_zenoh_cpp
+```
+
+```yaml
+# robot B
+system:
+    ros2:
+        namespace: a300_0002
+        domain_id: 20
+        middleware:
+            implementation: rmw_zenoh_cpp
+```
+
+Each operator's workstation then sets a matching `ROS_DOMAIN_ID` and connects only to its own robot's router by
+following the [remote computer instructions above](#communicating-with-the-zenoh-router-from-a-remote-computer).
+
+:::note
+`ROS_DOMAIN_ID` is part of the Zenoh key expressions used by `rmw_zenoh_cpp`, so nodes with different domain IDs
+do not exchange ROS topics or services, even through connected routers. Namespaces distinguish names within the
+same domain; they are not an isolation boundary.
+:::
+
+### Scenario 2: Fleet View from a Single Workstation
+
+Use this scenario when one workstation needs to observe or command several robots at once.
+Each robot keeps its own router. The workstation runs a hub router that connects to the
+robot routers, and its ROS sessions connect to the local hub. A client-mode ROS session
+connects to one router only; do not use it to list multiple robot endpoints.
+
+1. Set every robot to the same `domain_id` and give each a unique namespace. The tested
+  A300s use domain `26` with namespaces `a300_00001` and `a300_00002`.
+
+    ```yaml
+    system:
+      ros2:
+        namespace: a300_00001  # use a300_00002 on robot 2
+        domain_id: 26
+        middleware:
+          implementation: rmw_zenoh_cpp
+    ```
+
+2. On the workstation, install `rmw_zenoh_cpp` and copy the default router profile:
+
+    ```bash
+    source /opt/ros/jazzy/setup.bash
+    mkdir -p ~/clearpath
+    ros2_prefix="$(ros2 pkg prefix rmw_zenoh_cpp)"
+    cp "$ros2_prefix/share/rmw_zenoh_cpp/config/DEFAULT_RMW_ZENOH_ROUTER_CONFIG.json5" \
+        ~/clearpath/zenoh-router.json5
+    ```
+
+    Edit the profile's `connect.endpoints` list to include each robot router's reachable IP address:
+
+    ```json5
+    connect: {
+      endpoints: [
+        "tcp/10.27.15.236:7447",
+        "tcp/10.27.205.119:7447",
+      ],
+    },
+    ```
+
+    These are the addresses used in the successful test. Replace them if DHCP or network
+    configuration changes either address. Keep the other default profile settings. Test
+    both router endpoints from the workstation:
+
+    ```bash
+    nc -zv 10.27.15.236 7447
+    nc -zv 10.27.205.119 7447
+    ```
+
+    Both checks should report `Connection to ... 7447 port [tcp/*] succeeded!`. This
+    confirms network reachability, but not that the hub router has connected to the robots.
+
+3. Follow the [offboard setup instructions](../../installation/offboard_pc.mdx#setup-folder)
+  to prepare the workstation's `~/clearpath/robot.yaml`. Configure `rmw_zenoh_cpp` and domain `26`,
+  which must match both robots. Remove any `ZENOH_CONFIG_OVERRIDE` that sets `mode="client"`;
+  it would also affect the hub router. Regenerate and source the setup:
+
+    ```bash
+    source /opt/ros/jazzy/setup.bash
+    ros2 run clearpath_generator_common generate_bash -s ~/clearpath
+    source ~/clearpath/setup.bash
+    unset ZENOH_CONFIG_OVERRIDE
+    ```
+
+    In a separate terminal, start the hub router with the custom profile. Leave it running:
+
+    ```bash
+    source /opt/ros/jazzy/setup.bash
+    source ~/clearpath/setup.bash
+    unset ZENOH_CONFIG_OVERRIDE
+    export ZENOH_ROUTER_CONFIG_URI="$HOME/clearpath/zenoh-router.json5"
+    ros2 run rmw_zenoh_cpp rmw_zenohd
+    ```
+
+    Leave this terminal running while the workstation is acting as the hub. If the router
+    process stops, ROS sessions connected through it lose access to the robots.
+
+4. In another workstation terminal, source the setup and ensure the client override is
+  unset. Stop any existing ROS 2 daemon, then list topics from both namespaces:
+
+    ```bash
+    source ~/clearpath/setup.bash
+    unset ZENOH_CONFIG_OVERRIDE
+    ros2 daemon stop
+    ros2 topic list | grep -E '^/a300_0000[12]/'
+    ```
+
+    The tested A300 setup lists topics under both `/a300_00001/` and `/a300_00002/`.
+    For example:
+
+    ```text
+    /a300_00001/platform/odom/filtered
+    /a300_00002/platform/odom/filtered
+    ```
+
+    Verify data flow by echoing an active topic from each robot. Run one command at a time:
+
+    ```bash
+    ros2 topic echo /a300_00001/platform/odom/filtered
+    ros2 topic echo /a300_00002/platform/odom/filtered
+    ```
+
+    If only one namespace appears, check the missing robot's endpoint and the hub router
+    startup logs. An unreachable robot's topics will not be available through the hub.
+
+### Scenario 3: Robot-to-Robot Communication
+
+Use this scenario when robots must exchange ROS 2 topics or services directly with each other. Use a hub-and-spoke
+router layout: designate one robot as the hub and configure its router to connect to the other robots' routers.
+This avoids configuring a full mesh of redundant router connections.
+
+1. Keep every robot on the **same `domain_id`** and give each a **unique namespace**, as in Scenario 2.
+
+2. On the hub robot, create a custom Zenoh router profile. First source ROS 2, then copy the default profile:
+
+    ```bash
+    source /opt/ros/jazzy/setup.bash
+    sudo cp "$(ros2 pkg prefix rmw_zenoh_cpp)/share/rmw_zenoh_cpp/config/DEFAULT_RMW_ZENOH_ROUTER_CONFIG.json5" \
+        /etc/clearpath/zenoh_router_config.json5
+    ```
+
+    Edit the `connect.endpoints` field to list the other robots' reachable router addresses. For example, if the
+    hub is `192.168.131.11`:
+
+    ```json5
+    {
+      mode: "router",
+      connect: {
+        endpoints: [
+          "tcp/192.168.131.12:7447",
+          "tcp/192.168.131.13:7447",
+        ],
+      },
+      listen: {
+        endpoints: ["tcp/[::]:7447"],
+      },
+    }
+    ```
+
+    Leave the other router settings from the default profile unchanged. The spoke robots can keep their default
+    router profiles; their routers accept the hub's incoming connections.
+
+3. On the hub robot, point `robot.yaml` at the custom router profile so the generator exports
+  `ZENOH_ROUTER_CONFIG_URI`:
+
+    ```yaml
+    system:
+        ros2:
+            middleware:
+                implementation: rmw_zenoh_cpp
+                profile: /etc/clearpath/zenoh_router_config.json5
+    ```
+
+4. Because this change only updates the router profile, regenerate the router start script as user `robot`
+  without restarting the full `clearpath-robot` service. This keeps the existing router available while the
+  other ROS-based generators run:
+
+    ```bash
+    source /opt/ros/jazzy/setup.bash
+    ros2 run clearpath_generator_common generate_zenoh_router
+    sudo systemctl restart clearpath-zenoh-router
+    ```
+
+5. Ensure each spoke robot's router is running and reachable from the hub on TCP port `7447`. Verify from a robot
+    or offboard computer connected to the hub that topics from all robots are visible under their namespaces:
+
+    ```bash
+    ros2 topic list | grep -E '^/a300_000[123]/'
+    ```
+
+:::note
+The hub router must be able to reach each spoke router. The ROS sessions on all robots must use the same
+`ROS_DOMAIN_ID`; unique namespaces distinguish the robots' names within that domain.
+:::
+
+:::warning
+All robots connected through the hub can see ROS topics in the shared domain. Ensure TF frame IDs are unique
+between robots. If `/tf` and `/tf_static` are shared, remap them per robot and configure the ROS 2
+`robot_state_publisher` `frame_prefix` parameter as appropriate; `tf_prefix` is not its parameter name.
+:::
+
+### Troubleshooting
+
+- **Generation fails with `PermissionError` deleting `sensors/config/imu_0.yaml`.** The generator runs as
+  `robot`; generated parameter directories may have been created as `root` by running
+  `sudo clearpath-robot-generate`. Restore ownership of the generated parameter directories, then use the
+  `clearpath-robot` service to regenerate them:
+
+  ```bash
+  sudo chown -R robot:robot /etc/clearpath/sensors/config
+  sudo chown -R robot:robot /etc/clearpath/platform/config
+  sudo chown -R robot:robot /etc/clearpath/manipulators/config
+  sudo systemctl restart clearpath-robot
+  ```
+
+  Do not run `clearpath-robot-generate` with `sudo`; the service runs it as the configured robot user.
+
+- **Restarting `clearpath-robot` logs `Unable to connect to a Zenoh router` followed by a Tokio TLS panic.**
+  Restarting the robot service stops its Zenoh router while the pre-start generator runs. If this procedure only
+  changes the router profile, use `generate_zenoh_router` and restart `clearpath-zenoh-router` instead. If the
+  robot service is already failed, start the router first, then start the robot service so its generators can
+  connect to Zenoh:
+
+  ```bash
+  sudo systemctl start clearpath-zenoh-router
+  sudo systemctl start clearpath-robot
+  ```
+
+- **`RMW_IMPLEMENTATION` is still `rmw_fastrtps_cpp`, or `ZENOH_CONFIG_OVERRIDE` is empty.** The shell may not have sourced the generated offboard setup, or the offboard `robot.yaml` may have duplicate top-level `system:` keys. Duplicate YAML mapping keys can cause one `system:` section to override or hide the other. Put `ros2` and `bash.env` under the same `system:` key, regenerate the setup file, then source it in a new terminal. Check all three values:
+
+  ```bash
+  echo "$RMW_IMPLEMENTATION"
+  echo "$ROS_DOMAIN_ID"
+  echo "$ZENOH_CONFIG_OVERRIDE"
+  ```
+
+  Expect `rmw_zenoh_cpp`, the robot's configured domain ID, and the client endpoint for that robot. Domain ID `0` is valid; it is a problem only if it does not match the robot. If the values revert after sourcing the setup, check whether another shell startup file or workspace overlay changes them.
+
+- **`ros2` fails with `undefined symbol: z_reply_keyexpr_default`.** This indicates a shared-library loading problem, commonly caused by incompatible installed versions of `rmw_zenoh_cpp` and `zenoh_cpp_vendor`. Check and update packages on the computer where the error appears; the robot and offboard computer have separate installations:
+
+  ```bash
+  sudo apt update
+  sudo apt install ros-jazzy-rmw-zenoh-cpp ros-jazzy-zenoh-cpp-vendor
+  dpkg-query -W -f='${Package} ${Version}\n' ros-jazzy-rmw-zenoh-cpp ros-jazzy-zenoh-cpp-vendor
+  ```
+
+  Compare the installed versions and make sure apt has a compatible vendor package available. If apt reports that packages are already current but the error remains, check `apt-cache policy` for both packages and confirm they come from the intended ROS repository. After updating on the robot, restart `clearpath-robot` so the router process reloads the libraries. A router that was already running may continue to use libraries loaded before the update.
+
+- **`ros2 daemon stop` says the daemon is not running.** This is harmless: there was no existing daemon to stop. Continue with `ros2 topic list`; the CLI starts a daemon when needed.
+
+- **Only `/parameter_events` and `/rosout` appear, or no robot topics are visible.** Diagnose the robot and offboard computer separately. On the robot, source `/etc/clearpath/setup.bash`, confirm `RMW_IMPLEMENTATION` is `rmw_zenoh_cpp` and its domain ID, check `systemctl status clearpath-zenoh-router`, and run `ros2 topic list` locally. The robot should have application nodes publishing topics. On the offboard computer, source `~/clearpath/setup.bash` in a new terminal, confirm its middleware and domain match the robot, then check `nc -zv ROBOT_IP 7447`. A successful TCP check only proves the port is reachable; it does not prove the ROS sessions have connected or discovered the graph. If the robot's router is active and its local topic list is populated but the offboard list is not, stop the offboard ROS 2 daemon and retry the list. Check router status on the robot, not the offboard computer; an inactive local router on a single-robot offboard setup can be expected.
+
+- **Topics appear without the expected robot namespace or collide with another robot's topics.** Confirm each robot has a distinct `system.ros2.namespace` and that its nodes use namespaced topic names. After editing the robot configuration, restart `clearpath-robot` to regenerate the robot setup and launch files. Regenerate and source the offboard setup if you changed the copied offboard `robot.yaml`.
+
+- **The fleet workstation sees only some robots in Scenario 2.** Check that the hub router profile lists every robot's reachable IP and port, and verify TCP port `7447` from the hub to each robot. The workstation's ROS session should connect to its local hub router; `mode="client"` is for a remote ROS session connecting to one router, not for listing multiple robot endpoints. Also confirm all participating ROS sessions use the same domain ID.
+
+- **Robots do not discover each other in Scenario 3.** Confirm the hub robot's generated router start script uses the custom profile and that `ZENOH_ROUTER_CONFIG_URI` points to the intended file. Check that its `connect.endpoints` lists the spoke robots' reachable addresses, that every spoke router is active and reachable on TCP port `7447`, and that the ROS sessions share the same domain ID. A robot does not need to list its own router in `connect.endpoints`.
