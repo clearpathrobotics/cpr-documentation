@@ -1,0 +1,145 @@
+---
+title: Using Zenoh with the Simulator
+sidebar_label: Simulate with Zenoh ROS Middleware
+sidebar_position: 4
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+This guide configures the Clearpath simulator to use `rmw_zenoh_cpp` without connecting it to
+physical robots. It assumes the simulator and Zenoh packages are installed. For router design
+and intentional connections to other robots, see the
+[Zenoh ROS middleware guide](../../networking/ros2_networking/zenoh.mdx).
+
+## Configure the simulator
+
+Use a separate setup directory for simulation so its configuration does not overwrite the
+configuration used by a physical robot or another setup. 
+
+```bash
+mkdir -p ~/clearpath_sim
+```
+
+Copy a valid Clearpath `robot.yaml` into the new directory.
+In `~/clearpath_sim/robot.yaml`, configure Zenoh under the existing `system:` key. Use a
+unique namespace and a domain ID separate from the physical fleet. For example, if physical
+robots use domain `26`, use `27` for the simulator:
+
+```yaml
+system:
+  hosts:
+    - hostname: a300-sim # cannot contain characters other than [A-Z][a-z][0-9] and -
+  ros2:
+    namespace: a300_sim
+    domain_id: 27
+    middleware:
+      implementation: rmw_zenoh_cpp
+```
+
+Keep `ros2` and any other settings in the same `system:` mapping. Do not add a custom
+`middleware.profile` for this isolated simulator setup. The default router configuration has no
+outbound connections to the physical robots.
+
+Install the Zenoh RMW package if it is not already installed:
+
+```bash
+sudo apt update
+sudo apt install ros-jazzy-rmw-zenoh-cpp
+```
+
+## Start the router
+
+The simulator launch starts Gazebo and the ROS-Gazebo bridge; start a standalone Zenoh router
+separately and leave it running while using the simulation. Use the default router configuration
+and clear any inherited Zenoh overrides:
+
+```bash
+source /opt/ros/jazzy/setup.bash
+export RMW_IMPLEMENTATION=rmw_zenoh_cpp
+export ROS_DOMAIN_ID=27
+unset ZENOH_CONFIG_OVERRIDE
+unset ZENOH_ROUTER_CONFIG_URI
+ros2 run rmw_zenoh_cpp rmw_zenohd
+```
+
+This router uses the default configuration and does not connect to the physical robots. Router
+configuration and intentional multi-robot connection examples are in the
+[Zenoh ROS middleware guide](../../networking/ros2_networking/zenoh.mdx).
+
+## Launch the simulation
+
+In a second terminal, source ROS and set the same RMW and domain before launching the simulator.
+The simulator launch generates robot launch and parameter files, but does not create
+`~/clearpath_sim/setup.bash`:
+
+```bash
+source /opt/ros/jazzy/setup.bash
+export RMW_IMPLEMENTATION=rmw_zenoh_cpp
+export ROS_DOMAIN_ID=27
+unset ZENOH_CONFIG_OVERRIDE
+unset ZENOH_ROUTER_CONFIG_URI
+echo "$ZENOH_CONFIG_OVERRIDE"
+echo "$ZENOH_ROUTER_CONFIG_URI"
+ros2 launch clearpath_gz simulation.launch.py setup_path:=$HOME/clearpath_sim
+```
+
+Both `echo` commands should print empty lines. This ensures the simulator uses the local default
+Zenoh router and does not inherit a client connection to a physical robot.
+
+Configure `~/clearpath_sim/robot.yaml` with `rmw_zenoh_cpp`, a unique namespace, and a domain ID
+separate from the physical robots. For example, keep the simulator on domain `27` when the
+physical robots use domain `26`; different domains prevent their ROS traffic from mixing. The
+unique namespace, such as `a300_sim`, makes simulator topics easy to distinguish.
+
+## Verify communication
+
+In a third terminal, set the same RMW and domain, then list topics under the simulator namespace:
+
+```bash
+source /opt/ros/jazzy/setup.bash
+export RMW_IMPLEMENTATION=rmw_zenoh_cpp
+export ROS_DOMAIN_ID=27
+unset ZENOH_CONFIG_OVERRIDE
+unset ZENOH_ROUTER_CONFIG_URI
+ros2 daemon stop
+ros2 topic list | grep '^/a300_sim/'
+```
+
+The list should include simulator topics, such as `/a300_sim/platform/odom/filtered`, as well
+as `/parameter_events` and `/rosout`. Verify data is arriving on an active topic:
+
+```bash
+ros2 topic echo /a300_sim/platform/odom/filtered
+```
+
+The exact available topics depend on the selected platform and running simulator plugins.
+
+## Troubleshooting
+
+- **The launch reports `Middleware profile path ... does not exist`.** Remove the custom
+  `system.ros2.middleware.profile` setting from the simulator's `robot.yaml` for this isolated
+  setup. Also unset `ZENOH_ROUTER_CONFIG_URI` before starting the router and simulator.
+- **Only `/parameter_events` and `/rosout` appear.** Confirm the router is still running and
+  that each simulator terminal uses `rmw_zenoh_cpp` and domain `27`, and that both Zenoh
+  overrides are unset. The simulator launch does not generate `~/clearpath_sim/setup.bash`; set
+  the environment in each terminal as shown above.
+- **The simulator discovers physical robot topics.** Stop the simulator and its router, remove
+  custom router profiles and Zenoh overrides, then restart both with domain `27`. Keep physical
+  robots on their separate domain `26`.
+- **Gazebo repeatedly reports it is waiting for `robot_description`, and no robot appears.**
+  Check the launch terminal's Zenoh variables. If `ZENOH_CONFIG_OVERRIDE` points to a physical
+  robot, simulator nodes try to connect there instead of the local router; the robot description
+  publisher can fail before Gazebo spawns the model. Stop the simulator, unset both Zenoh
+  overrides, confirm they print empty, and relaunch with domain `27`:
+
+  ```bash
+  unset ZENOH_CONFIG_OVERRIDE
+  unset ZENOH_ROUTER_CONFIG_URI
+  echo "$ZENOH_CONFIG_OVERRIDE"
+  echo "$ZENOH_ROUTER_CONFIG_URI"
+  export RMW_IMPLEMENTATION=rmw_zenoh_cpp
+  export ROS_DOMAIN_ID=27
+  ros2 launch clearpath_gz simulation.launch.py setup_path:=$HOME/clearpath_sim
+  ```
+- **`ros2` reports an undefined Zenoh symbol.** Check that `ros-jazzy-rmw-zenoh-cpp` and
+  `ros-jazzy-zenoh-cpp-vendor` are compatible and installed from the configured ROS repository.
