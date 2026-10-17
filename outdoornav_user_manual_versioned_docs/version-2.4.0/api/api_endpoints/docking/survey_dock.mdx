@@ -1,0 +1,33 @@
+---
+title: Survey Dock
+sidebar_label: Survey Dock
+sidebar_position: 3
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Survey the location of an existing dock. This is required to accurately position the dock on the map and
+ensure that proper docking is achieved. The dock target must be clearly visible by the docking lidar for
+this survey process to succeed.
+
+- Service Name: **docking/dock_localizer/survey_dock**
+
+- Service Type: [clearpath_dock_msgs/srv/SurveyDock](pathname:///api/html/clearpath_dock_msgs/srv/SurveyDock.html)
+
+<Tabs groupId="docking_survey">
+  <TabItem value="Python" label="Python" default>
+
+```python reference showLineNumbers
+https://github.com/cpr-application/clearpath_outdoornav/blob/ros2/python/endpoints/docking/survey_dock.py
+```
+  </TabItem>
+  <TabItem value="C++" label="C++">
+
+```cpp reference showLineNumbers
+https://github.com/cpr-application/clearpath_outdoornav/blob/ros2/cpp/endpoints/docking/survey_dock.cpp
+```
+  </TabItem>
+
+</Tabs>
