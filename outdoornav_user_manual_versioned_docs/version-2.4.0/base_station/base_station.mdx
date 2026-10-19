@@ -1,0 +1,192 @@
+---
+title: Clearpath Base Station
+sidebar_label: Clearpath Base Station
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+The Base Station is comprised of three main systems: A Power System, a GPS Receiver, and a Cellular +
+Wifi Router. These components are housed in a waterproof enclosure for operation in nearly all weather.
+An integrated surveyor tripod mount allows the base station to be deployed anywhere.
+
+## Power System {#power_system}
+
+The power system includes a 12V 10Ah LiFePO4 battery, an internal intelligent charger, and power
+distribution. An integrated high-accuracy power meter displays the state of charge of the battery even
+when the power is off. The components in the Base Station typically only consume 7-10W, so the battery
+lasts about 12 hours on a full charge. When connected to its DC power source, the base station can
+charge in about 3 hours and may run indefinitely when plugged in.
+
+The charger status can be accessed wirelessly using Bluetooth. While the settings generally do not need
+to be changed, the status of the charger may still be monitored.
+
+Output from the power system is unregulated VBat (generally 10-13.5V depending on state of charge).
+
+## GNSS {#gnss}
+
+A built-in u-blox 9-Series based GPS receiver allows the Base Station to serve RTK corrections to any
+connected robot(s). After a few minutes of survey time, the RTK data is available for use. The generated
+data is in the industry-standard RTCMv3 format.
+
+## Peplink BR1 Cellular Modem + Wifi6 Router
+
+Integrated into the Base Station is one of the most current mobile-ready cellular + Wifi routers available.
+Featuring high-bandwidth Wifi6 plus a 5G-capable cellular modem, the Peplink BR1 Pro 5G radio is ready
+to support modern data rates.
+
+The BR1 is configured for dual-band 2.4GHz + 5GHz operation. It will issue IP addresses by DHCP to any
+connected computer. Note that it features a sub-divided subnet structure, where the bottom half of IP
+addresses are reserved for the Base Station BR1 and any connected BR1 radios installed on robots. The
+upper IP ranges are intended to be used by connected user computer, robots, and sensors. In a multi-
+robot system with robot-mounted BR1s, care should be put into reserving DHCP ranges to avoid overlap.
+
+The built-in cellular modem is capable of connecting to nearly any LTE or 5G network when an activated
+SIM card is installed in one of the SIM card slots.
+
+## Connecting to the Base Station
+
+It is possible to connect to the Base Station via Wifi or its built-in LAN port. In general, the LAN
+connection will provide faster and more reliable data rates to the Base Station.
+
+### Connection via Wifi
+
+Unless otherwise configured, the Base Station will broadcast the SSID `CPR-Base-Station`. The password will
+be `clearpath`. The IP address of the BR1 in the Base Station will be `192.168.130.1`. Use this address
+to access its Web UI. Your delivered Base Station may have different values from these defaults; please
+see the last page for customer-specific configurations.
+
+| Parameter |                   |
+| --------- | ----------------- |
+| SSID      | CPR-Base-Station  |
+| Password  | clearpath         |
+
+:::note
+
+It is recommended to change the default password for the broadcasted SSID of the Base Station. To do so, log in to the
+Peplink BR1's Web UI, navigate to `AP`, click the name of the access point and change the password.
+
+:::
+
+Use caution when changing any default values in the Base Station BR1. Robot-mounted BR1 units that
+are configured to connect to the Base Station rely on these known parameters, so changes could cause
+their connection to be severed.
+
+By default, any devices connecting to the Base Station by Wifi will be given an IP address by DHCP. The
+address will be in the `192.168.130.2 to 192.168.130.126` range.
+
+### Connection via LAN
+
+Connection via the LAN port is simple! Connect an ethernet cable between the LAN port on the side of
+the Base Station and your computer. Your computer will be given an IP address via DHCP.
+
+### Communicating with Robots on the Network
+
+In order to access a robot computer that is connected to the Base Station (either directly with built-in
+Wifi, or via a “client” BR1 installed on the robot), its IP address needs to be known. It is good practice to
+set a `DHCP Reservation` for the robot computer so that it is always connected via a known IP address. In
+the case where a robot is connecting to the Base Station directly using a built-in Wifi card, the DHCP
+address may be permanently reserved by logging in to the `Base Station` BR1. Navigate to `Status`, then to
+`Client List`. A list of connected clients will appear. In the row matching the robot computer, click the small
+"tag" icon to reserve the currently assigned address.
+
+<center>
+  <figure>
+    <img src="/img/outdoornav_images/base_station_peplink.png" />
+    <figcaption>Base Station Peplink</figcaption>
+  </figure>
+</center>
+
+If the robot computer is connected via an `On-Board` BR1, then the DHCP reservation must be done in a
+similar fashion on the on-board BR1, and not the Base Station. A robot given an IP address by an
+onboard BR1 will have an address in the `192.168.130.130 to 192.168.130.254` range.
+
+## Connecting the Base Station to the Internet
+
+There are two ways to add an Internet connection to the Base Station. Using a cellular connection, or by
+connecting the Base Station’s WAN port to a live Internet connection.
+
+### Connecting via Cellular
+
+To enable cellular data on the Base Station, first power down the Base Station. Remove the small SIM
+slot cover from the SIM ports, located next to the array of four cellular antennas. Insert a data-enabled
+SIM card into one the of the SIM card slots. Power on the Base Station. After a number of minutes the
+BR1 will eventually achieve a connection to the cellular network. The status can be checked via the Base
+Station’s web UI, on the Dashboard tab.
+
+### Connecting via WAN
+
+On the side of the Base Station are two Ethernet ports, labeled “LAN” and “WAN”. Simply connect the
+WAN port to a live Internet connection, and the Base Station should be granted an IP address via DHCP. If
+the Base Station is not able to connect to the Internet, or is not granted a WAN IP address, contact your
+network administrator in case additional login credentials are needed.
+
+## GNSS RTK Corrections
+
+The Base Station features a built-in Ardusimple RTK2B GPS receiver, configured to broadcast RTK
+corrections in RTCM format. The receiver is connected to the Peplink BR1 via ethernet. Its IP address is
+statically assigned as 192.168.130.30. The device publishes RTCMv3 messages to TCP port 28785.
+Therefore, any robot on the same network can access the GPS receiver. When configuring a GPS receiver
+on a robot to receive corrections, make sure it is set to receive corrections in the RTCMv3 format.
+
+The GPS receiver is remotely accessible via is IP address, using the u-blox “u-center” application. When
+doing so, simply enter the address "tcp://192.168.130.30:28784" into the communications menu drop-
+down. The u-center application may be downloaded from the u-blox website: [https://www.u-blox.com/en/product/u-center](https://www.u-blox.com/en/product/u-center).
+
+### Setting the Surveyed Position
+
+The Base Station is configured to automatically survey its position on power-up. If the Base Station is
+moved to a new location, even just a meter, you will need to power cycle the Base Station so that it
+surveys the new position.
+
+A full survey takes 20 minutes. During this time, the base station continually logs GPS data from all visible
+satellites to refine its position. Once survey is complete, the Base Station position in the world frame
+should be accurate to about 0.5m. Note that for the survey to be accurate, the Base Station should have
+a clear view of the sky, free from obstructions such as buildings and trees.
+
+## Battery & Power System
+
+The Base Station is designed around a Dakota Lithium 12V, 10Ah LiFePO4 battery. The battery itself has
+some built-in protections, including over-voltage, under-voltage, and short circuit. But most of the
+intelligence comes from a Victron charge controller. This device takes in a range of voltages, from
+about 16V to 75V, and is able to simultaneously charge the battery and control a load output. It is
+configurable via Bluetooth to set various parameters including charge voltage, charge current, load
+on/off thresholds, and more. We do not recommend changing these parameters.
+
+A resettable 10A fuse is connected in-line with the battery's positive terminal. For shipping or for
+storage, this fuse should be switched to the "off" position to prevent the battery from discharging. Prior
+to using the Base Station, you must turn this switch to the “RESET” position.
+
+Separate from the SmartSolar charger is a precision shunt-style battery capacity display. It will indicate
+when the battery is being charged or discharged, in addition to displaying the current battery capacity.
+
+The Base Station will automatically shut itself off when the battery voltage reaches 10V in order to
+protect the battery. If this happens, plug in the battery charger, cycle the resettable fuse, and allow the
+battery to fully charge.
+
+The Base Station is shipped with a 24VDC, 3.75A AC-DC power supply. Please only use this power supply
+for charging your Base Station.
+
+## Technical Specifications
+
+| Specification | Value |
+| --- | --- |
+| Mass (with Antennas) | 7.9kg |
+| DC Input Range | 16VDC-75VDC, minimum 3A |
+| Battery | 12V, 10Ah LiFePO4 |
+| Battery Certifications | UN38, UL1642 certified. Tested per IEC62133. |
+| External DC Charger (Supplied) | Meanwell 24V, 3.75A output. Universal AC input. |
+| Battery Charge Controller | Victron Energy MPPT 75/10 Smart Solar |
+| Fuse | 10A (resettable) |
+| Runtime (Battery Only) | 12 hours |
+| Runtime (With Charger) | Indefinite |
+| Charge Time (With Included Charger) | 3 hours from 0% to 100% while powered on |
+| Battery Charge Level Display | Backlit LCD |
+| GPS Receiver | Ardusimple RTK2B (u-blox 9 series) |
+| GPS RTK Acquisition time | 20 minutes |
+| Wifi/Cellular Router | Peplink MAX BR1 Pro 5G |
+| Wifi Maximum Power Output | 19.9 dBm @ 2.4 GHz, 23 dBm @ 5.8 GHz |
+| Wifi Antenna Gain | 4.5 dBi @ 2.4 GHz, 7 dBi @ 5.8 GHz |
+| Storage Temperature Range | -30C to +60C (ambient, shade) |
+| Operating Temperature Range | -20C to +45C (ambient, shade) |
+| Charging Temperature Range | 0C to +45C (ambient, shade) |
