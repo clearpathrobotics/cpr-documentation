@@ -1,0 +1,102 @@
+---
+title: Command Line Interface
+sidebar_label: Command Line Interface
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+The OutdoorNav command line interface (CLI) provides the `onav` command for navigating to an installed
+OutdoorNav version, starting and stopping its Docker containers, and downloading container images.
+Run these commands in a Bash terminal on the robot, either locally or over SSH.
+
+## Commands
+
+```text
+onav <command> [args]
+```
+
+| Command                    | Description                                                                                                                                                                                |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `onav cd <version>`        | Changes the current shell's directory to `/opt/onav/<version>/app/`. A version is required.                                                                                                |
+| `onav start [version]`     | Changes to the selected version's application directory and starts its OutdoorNav containers in the background. If omitted, the version defaults to the highest installed numeric version. |
+| `onav stop [version]`      | Stops the specified version, or detects and stops running OutdoorNav deployments when no version is supplied.                                                                              |
+| `onav download <version>`  | Changes to the specified version's application directory and pulls Docker images using its Compose configuration. A version is required.                                                   |
+| `onav -h` or `onav --help` | Displays command usage.                                                                                                                                                                    |
+
+### Selecting a Version
+
+A version corresponds to a release directory under `/opt/onav/`. For example, `2.5.0` selects
+`/opt/onav/2.5.0/app/`. The corresponding application directory
+must already exist.
+
+Only `onav start` selects a version automatically. It chooses the highest numeric version with an existing
+`app/` directory using version-number ordering, not installation date.
+
+For example:
+
+```bash
+onav cd 2.5.0
+onav start 2.5.0
+```
+
+These are alternative examples; select the version installed on your robot. If there are no numeric versions,
+`onav start` without an argument reports an error and requires an explicit version.
+
+### Starting OutdoorNav
+
+Start the highest installed numeric version:
+
+```bash
+onav start
+```
+
+Or specify a version explicitly:
+
+```bash
+onav start 2.5.0
+```
+
+OutdoorNav starts in the background. Starting a version does not stop another OutdoorNav deployment first.
+
+### Stopping OutdoorNav
+
+To stop the currently running OutdoorNav deployments:
+
+```bash
+onav stop
+```
+
+Without an argument, the CLI stops running OutdoorNav deployments, regardless of which version is highest.
+If more than one OutdoorNav deployment is running, all detected deployments are stopped.
+
+To stop one specified version instead:
+
+```bash
+onav stop 2.5.0
+```
+
+If no running OutdoorNav deployment is found, the CLI reports an error. Supply a version explicitly if
+the CLI cannot identify the running deployment.
+
+### Downloading Docker Images
+
+To pull images for an existing version:
+
+```bash
+onav download 2.5.0
+```
+
+Downloading does not start or restart containers, or download the OutdoorNav application files.
+
+## Troubleshooting
+
+| Message or symptom                                              | Action                                                                                                                                                                                                                      |
+| --------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `onav: command not found`                                       | Source `~/.bashrc`, or source `~/.onav_functions` directly, in a Bash shell. Confirm the CLI was installed for the current user.                                                                                            |
+| The selected application directory does not exist               | Check the version directory under `/opt/onav/` and provide an installed version.                                                                                                                                            |
+| `onav: no numeric versions found in /opt/onav; pass a version.` | Confirm that an OutdoorNav release is installed under `/opt/onav/` with an `app/` directory.                                                                                                                                |
+| `onav: no running OutdoorNav deployments found.`                | Confirm that OutdoorNav is running. To target a known deployment directly, use `onav stop <version>`.                                                                                                                       |
+| A Docker or Docker Compose error                                | Check that Docker is running, that your user can access it, and that the selected deployment's Compose files and configuration are available. For image-pull errors, also check network access and registry authentication. |
+
+For container output and startup problems, see [Docker Logs](./docker_logs.mdx).
