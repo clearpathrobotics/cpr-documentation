@@ -1,0 +1,260 @@
+---
+title: One 2D Lidar per Platform
+sidebar_label: One 2D Lidar Examples
+sidebar_position: 7
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+These configurations describe one 2D lidar on each platform supported by the Jazzy navigation
+demo: A200, A300, DD100, DD150, DO100, DO150, J100, R100, and W200. They are based on the
+`clearpath_config` platform samples and were checked with `ClearpathConfig`,
+`generate_description`, and `xacro` in the Jazzy simulator image. A300 and J100 were also driven
+to a Nav2 goal in simulation.
+
+For the full configuration schema, see the [robot YAML overview](../overview.mdx), the
+[platform attachments](../platform/overview.mdx), [mounts](../mounts.mdx), and
+[2D lidar](../sensors/lidar2d.mdx) pages. To use a configuration with the Docker simulator,
+see the [Docker Compose simulation example](../../../tutorials/simulator/docker_compose.mdx).
+
+## Common setup
+
+Use a separate directory for each robot. The simulator writes generated files next to
+`robot.yaml`. Set `SETUP_PATH_HOST` to that directory when starting the simulator.
+
+The following system section is shared by the examples. Replace the serial number, hostname,
+and namespace with values for the chosen platform and robot:
+
+```yaml
+serial_number: a200-0000
+version: 0
+system:
+  hosts:
+    - hostname: cpr-a200-0000
+      ip: 192.168.131.1
+  ros2:
+    namespace: a200_0000
+    domain_id: 0
+    middleware:
+      implementation: rmw_cyclonedds_cpp
+```
+
+The example identifiers are:
+
+| Platform | `serial_number` | Namespace |
+|---|---|---|
+| A200 | `a200-0000` | `a200_0000` |
+| A300 | `a300-00000` | `a300_00000` |
+| DD100 | `dd100-0000` | `dd100_0000` |
+| DD150 | `dd150-0000` | `dd150_0000` |
+| DO100 | `do100-0000` | `do100_0000` |
+| DO150 | `do150-0000` | `do150_0000` |
+| J100 | `j100-0000` | `j100_0000` |
+| R100 | `r100-0000` | `r100_0000` |
+| W200 | `w200-0000` | `w200_0000` |
+
+In the fragments below, place `platform`, `links`, `mounts`, and `sensors` at the top level of
+`robot.yaml`. Set `serial_number` and `system.ros2.namespace` for the actual robot. Keep
+`xyz` in metres and `rpy` in radians.
+
+## Husky A200
+
+The A200 example uses a PACS top plate and places a Hokuyo UST on `top_plate_mount_d1`.
+
+```yaml
+platform:
+  attachments:
+    - name: front_bumper
+      type: a200.bumper
+      parent: front_bumper_mount
+    - name: rear_bumper
+      type: a200.bumper
+      parent: rear_bumper_mount
+    - name: top_plate
+      type: a200.top_plate
+      model: pacs
+sensors:
+  lidar2d:
+    - model: hokuyo_ust
+      urdf_enabled: true
+      launch_enabled: true
+      parent: top_plate_mount_d1
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ros_parameters:
+        urg_node:
+          laser_frame_id: lidar2d_0_laser
+          ip_address: 192.168.131.20
+          ip_port: 10940
+          angle_min: -3.141592653589793
+          angle_max: 3.141592653589793
+```
+
+## Husky A300
+
+A300 serials in upstream samples use a five-digit unit. This example adds the standard battery
+configuration, bumpers, top plate, and Proton MCU protocol; the lidar is offset 0.1 m behind the
+`top_plate_front_mount`.
+
+```yaml
+platform:
+  battery:
+    model: S_24V20_U1
+    configuration: S1P2
+  attachments:
+    - name: front_bumper
+      type: a300.bumper
+      parent: front_bumper_mount
+    - name: rear_bumper
+      type: a300.bumper
+      parent: rear_bumper_mount
+    - name: top_plate
+      type: a300.top_plate
+  mcu:
+    protocol: proton
+sensors:
+  lidar2d:
+    - model: hokuyo_ust
+      urdf_enabled: true
+      launch_enabled: true
+      parent: top_plate_front_mount
+      xyz: [-0.1, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ros_parameters:
+        urg_node:
+          laser_frame_id: lidar2d_0_laser
+          ip_address: 192.168.131.20
+          ip_port: 10940
+          angle_min: -3.141592653589793
+          angle_max: 3.141592653589793
+```
+
+## Dingo-D and Dingo-O
+
+The Dingo examples use the Proton MCU protocol and a bracket mount. Driver parameters and
+enable flags use their defaults.
+
+| Platform | Bracket parent | Lidar parent |
+|---|---|---|
+| DD100 | `front_2_mount` | `bracket_0_mount` |
+| DD150 | `front_1_mount` | `bracket_0_mount` |
+| DO100 | `front_2_mount` | `bracket_0_mount` |
+| DO150 | `front_1_mount` | `bracket_0_mount` |
+
+For each platform, use its corresponding serial number and namespace, then add:
+
+```yaml
+platform:
+  mcu:
+    protocol: proton
+mounts:
+  bracket:
+    - parent: front_2_mount # Use front_1_mount for DD150 and DO150
+sensors:
+  lidar2d:
+    - model: hokuyo_ust
+      parent: bracket_0_mount
+```
+
+## Jackal J100
+
+The J100 example adds front and rear fenders. The rear fender is rotated by approximately
+180 degrees, and the lidar is mounted on `front_0_mount`.
+
+```yaml
+platform:
+  attachments:
+    - name: front_fender
+      type: j100.fender
+    - name: rear_fender
+      type: j100.fender
+      rpy: [0.0, 0.0, 3.1415]
+  mcu:
+    protocol: proton
+sensors:
+  lidar2d:
+    - model: hokuyo_ust
+      urdf_enabled: true
+      launch_enabled: true
+      parent: front_0_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ros_parameters:
+        urg_node:
+          laser_frame_id: lidar2d_0_laser
+          ip_address: 192.168.131.20
+          ip_port: 10940
+          angle_min: -3.141592653589793
+          angle_max: 3.141592653589793
+```
+
+## Ridgeback R100
+
+The R100 example uses a SICK LMS1xx directly on `chassis_link`. The sensor is placed at the
+front of the robot and configured with a 2D lidar model that has parameters appropriate to the
+SICK driver.
+
+```yaml
+platform:
+  mcu:
+    protocol: proton
+sensors:
+  lidar2d:
+    - model: sick_lms1xx
+      parent: chassis_link
+      xyz: [0.3455, 0.0, 0.1977]
+```
+
+## Warthog W200
+
+The W200 example creates an extra frame on `left_diff_unit_link`, attaches a vertical bracket,
+and limits the Hokuyo scan to a 180-degree field of view.
+
+```yaml
+platform:
+  mcu:
+    protocol: proton
+links:
+  frame:
+    - name: front_left
+      parent: left_diff_unit_link
+      xyz: [0.68, -0.03, 0.35]
+      rpy: [0.0, 1.5707, 0.0]
+mounts:
+  bracket:
+    - model: vertical
+      parent: front_left_link
+sensors:
+  lidar2d:
+    - model: hokuyo_ust
+      urdf_enabled: true
+      launch_enabled: true
+      parent: bracket_0_vertical_mount
+      xyz: [0.0, 0.0, 0.0]
+      rpy: [0.0, 0.0, 0.0]
+      ros_parameters:
+        urg_node:
+          laser_frame_id: lidar2d_0_laser
+          ip_address: 192.168.131.20
+          ip_port: 10940
+          angle_min: -1.5707
+          angle_max: 1.5707
+```
+
+## Validate a configuration
+
+To check a configuration without starting the simulator, run the configuration parser, the
+description generator, and `xacro` in the Jazzy simulator image. Run this from the directory
+containing `robot.yaml`:
+
+```bash
+d=$(mktemp -d); chmod 755 "$d"; cp robot.yaml "$d/robot.yaml"; chmod 644 "$d/robot.yaml"
+docker run --rm -v "$d:/cfg" --entrypoint bash \
+  ghcr.io/clearpathrobotics/clearpath_docker:jazzy-sim-latest -c '
+  source /opt/ros/jazzy/setup.bash
+  python3 -c "from clearpath_config.clearpath_config import ClearpathConfig as C; c=C(\"/cfg/robot.yaml\"); print(c.system.namespace, c.platform.get_platform_model())"
+  cp -r /cfg /tmp/s && ros2 run clearpath_generator_common generate_description -s /tmp/s && xacro /tmp/s/robot.urdf.xacro | grep -c "<link "'
+```
+
+An invalid `parent` or unknown `model` fails with a Python or `xacro` error that names the
+key. See [generators](../../generators.mdx) for the files generated from `robot.yaml`.

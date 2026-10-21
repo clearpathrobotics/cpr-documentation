@@ -1,0 +1,438 @@
+---
+title: Docker Compose Simulation and Navigation
+sidebar_label: Docker Compose
+sidebar_position: 4
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+This page describes a ROS 2 Jazzy workflow that runs the Clearpath simulator, Nav2 with SLAM,
+and RViz in Docker Compose. It adds a container-oriented workflow to the standard
+[simulator launch instructions](./simulate.mdx) and
+[Nav2 tutorial](../navigation_demos/overview.mdx).
+
+:::note
+
+The workflow described here was validated with the published Jazzy `sim`, `nav2`, and `viz`
+images. It uses Linux host networking and an X11-compatible display. A dedicated GPU and
+`nvidia-container-toolkit` are recommended for Gazebo, but CPU rendering is possible.
+
+:::
+
+## Configuration and project layout
+
+Keep a separate setup directory for each robot. The simulator generates URDF, launch, and
+parameter files next to `robot.yaml`, so do not share the setup directory between concurrently
+running robots.
+
+```text
+cpr_nav2_demo/
+├── docker-compose.yml
+├── docker-compose.nvidia.yaml
+└── config/
+    └── robot.yaml
+```
+
+For a complete, platform-specific starting configuration, use one of the
+[single-lidar robot YAML examples](../../config/yaml/examples/one_lidar_per_platform.mdx).
+Set `SETUP_PATH_HOST` to the directory containing `robot.yaml`. The configuration should
+specify `system.ros2.namespace` explicitly and use a unique namespace.
+
+## Services and startup
+
+The example uses published images from
+[`clearpath_docker`](https://github.com/clearpathrobotics/clearpath_docker):
+
+| Service | Image variant | Purpose |
+|---|---|---|
+| `setup_init` | `alpine:3.20` | Checks for `robot.yaml`, makes the setup directory writable by the image user, and prepares the Gazebo cache volume. |
+| `sim` | `jazzy-sim-latest` | Generates the robot description and launches Gazebo. The setup directory must be writable. |
+| `nav2` | `jazzy-nav2-latest` | Starts SLAM and Nav2 after the simulator is ready. |
+| `viz` | `jazzy-viz-latest` | Starts RViz. The navigation RViz config expects SLAM/Nav2 and the `map` frame. |
+
+All ROS containers use the host network and IPC namespaces, the same ROS domain, and
+`rmw_cyclonedds_cpp`. The example pins CycloneDDS to loopback so this local container stack does
+not depend on a multi-homed host selecting the correct network interface. The container images
+run as user `robot` (UID 1000); the setup directory and Gazebo cache must be writable by that
+user.
+
+The key environment shared by the services is:
+
+```yaml
+ROS_DOMAIN_ID: ${ROS_DOMAIN_ID:-0}
+ROS_AUTOMATIC_DISCOVERY_RANGE: ${ROS_AUTOMATIC_DISCOVERY_RANGE:-LOCALHOST}
+RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
+CYCLONEDDS_URI: '${CYCLONEDDS_URI:-<CycloneDDS><Domain><General><Interfaces><NetworkInterface name="lo"/></Interfaces></General><Discovery><ParticipantIndex>auto</ParticipantIndex><MaxAutoParticipantIndex>512</MaxAutoParticipantIndex></Discovery></Domain></CycloneDDS>}'
+SETUP_PATH: /etc/clearpath
+SETUP_PATH_HOST: ${SETUP_PATH_HOST:-./config}
+```
+
+Use this CycloneDDS profile when running all services on one host. On loopback, multicast is
+unavailable, so participant indices are allocated automatically with a larger upper limit than
+CycloneDDS's default. The expected `selected interface "lo" is not multicast-capable` log
+message is harmless.
+
+```xml
+<CycloneDDS><Domain>
+  <General><Interfaces><NetworkInterface name="lo"/></Interfaces></General>
+  <Discovery>
+    <ParticipantIndex>auto</ParticipantIndex>
+    <MaxAutoParticipantIndex>512</MaxAutoParticipantIndex>
+  </Discovery>
+</Domain></CycloneDDS>
+```
+
+The Compose configuration mounts `SETUP_PATH_HOST` at `/etc/clearpath` in each container.
+Mount it read-write in `sim` because the simulator generates files there; `nav2` and `viz` can
+use read-only mounts. Mount X11 sockets and the host's `$XAUTHORITY` file in `sim` and `viz`.
+Mount a persistent Gazebo cache volume at `/home/robot/.gz` and make it writable by UID 1000;
+mounting only `/home/robot/.gz/fuel` can leave the parent directory root-owned and prevent
+Gazebo from downloading Fuel models.
+
+The following Compose file shows the service relationships and health checks. Save it as
+`docker-compose.yml` alongside `config/robot.yaml`. Mount X11 and the host's `$XAUTHORITY`
+file as shown for both graphical services; configure host display access according to the
+host's X11/Wayland setup.
+
+```yaml
+x-ros-env: &ros-env
+  ROS_DOMAIN_ID: ${ROS_DOMAIN_ID:-0}
+  ROS_AUTOMATIC_DISCOVERY_RANGE: ${ROS_AUTOMATIC_DISCOVERY_RANGE:-LOCALHOST}
+  RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
+  CYCLONEDDS_URI: '${CYCLONEDDS_URI:-<CycloneDDS><Domain><General><Interfaces><NetworkInterface name="lo"/></Interfaces></General><Discovery><ParticipantIndex>auto</ParticipantIndex><MaxAutoParticipantIndex>512</MaxAutoParticipantIndex></Discovery></Domain></CycloneDDS>}'
+  SETUP_PATH: /etc/clearpath
+  SETUP_PATH_HOST: ${SETUP_PATH_HOST:-./config}
+
+services:
+  setup_init:
+    image: alpine:3.20
+    command: >-
+      sh -c "test -f /etc/clearpath/robot.yaml &&
+             chmod -R a+rwX /etc/clearpath &&
+             chown -R 1000:1000 /gz"
+    volumes:
+      - ${SETUP_PATH_HOST:-./config}:/etc/clearpath
+      - gz_cache:/gz
+
+  sim:
+    image: ghcr.io/clearpathrobotics/clearpath_docker:${ROS_DISTRO:-jazzy}-sim-latest
+    command: ["/usr/local/bin/cpr-sim-launch", "world:=${SIM_WORLD:-warehouse}"]
+    user: robot
+    network_mode: host
+    ipc: host
+    environment:
+      <<: *ros-env
+      DISPLAY: ${DISPLAY:-:0}
+      GAZEBO_STARTUP_TIMEOUT: ${GAZEBO_STARTUP_TIMEOUT:-120}
+      GAZEBO_MAX_RESTARTS: ${GAZEBO_MAX_RESTARTS:-3}
+    volumes:
+      - ${SETUP_PATH_HOST:-./config}:/etc/clearpath
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${XAUTHORITY:-$HOME/.Xauthority}:/home/robot/.Xauthority:ro
+      - gz_cache:/home/robot/.gz
+    healthcheck:
+      test:
+        - CMD
+        - bash
+        - -c
+        - >-
+          source /opt/ros/$${ROS_DISTRO}/setup.bash &&
+          timeout 8 ros2 topic echo /clock --once >/dev/null 2>&1 &&
+          ros2 topic list --no-daemon 2>/dev/null | grep -qE '/[^/]+/platform/odom/filtered$$'
+      interval: 10s
+      timeout: 15s
+      retries: 24
+      start_period: 120s
+    depends_on:
+      setup_init:
+        condition: service_completed_successfully
+
+  nav2:
+    image: ghcr.io/clearpathrobotics/clearpath_docker:${ROS_DISTRO:-jazzy}-nav2-latest
+    user: robot
+    network_mode: host
+    ipc: host
+    environment:
+      <<: *ros-env
+      USE_SIM_TIME: "true"
+      WAIT_FOR_SIM: "true"
+      NAV2_ENABLE_SLAM: "true"
+      NAV2_SLAM_SYNC: "false"
+      AUTO_NAV2_STARTUP: "true"
+      SCAN_TOPIC: ${SCAN_TOPIC:-}
+    volumes:
+      - ${SETUP_PATH_HOST:-./config}:/etc/clearpath:ro
+    healthcheck:
+      test:
+        - CMD
+        - bash
+        - -c
+        - >-
+          source /opt/ros/$${ROS_DISTRO}/setup.bash &&
+          ros2 node list --no-daemon 2>/dev/null | grep -qE '/[^/]+/bt_navigator$$' &&
+          ros2 node list --no-daemon 2>/dev/null | grep -q slam_toolbox
+      interval: 10s
+      timeout: 10s
+      retries: 24
+      start_period: 150s
+    depends_on:
+      sim:
+        condition: service_healthy
+
+  viz:
+    image: ghcr.io/clearpathrobotics/clearpath_docker:${ROS_DISTRO:-jazzy}-viz-latest
+    user: robot
+    network_mode: host
+    ipc: host
+    devices:
+      - /dev/dri:/dev/dri
+    environment:
+      <<: *ros-env
+      DISPLAY: ${DISPLAY:-:0}
+      USE_SIM_TIME: "true"
+      CLEARPATH_VIZ_CONFIG: ${CLEARPATH_VIZ_CONFIG:-navigation}
+    volumes:
+      - ${SETUP_PATH_HOST:-./config}:/etc/clearpath:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${XAUTHORITY:-$HOME/.Xauthority}:/home/robot/.Xauthority:ro
+    depends_on:
+      sim:
+        condition: service_healthy
+
+volumes:
+  gz_cache:
+```
+
+Save the following optional GPU overlay as `docker-compose.nvidia.yaml`:
+
+```yaml
+x-nvidia: &nvidia
+  runtime: nvidia
+  environment:
+    NVIDIA_VISIBLE_DEVICES: all
+    NVIDIA_DRIVER_CAPABILITIES: graphics,utility,compute,display
+    __NV_PRIME_RENDER_OFFLOAD: "1"
+    __GLX_VENDOR_LIBRARY_NAME: nvidia
+    __VK_LAYER_NV_optimus: NVIDIA_only
+
+services:
+  sim: *nvidia
+  viz: *nvidia
+```
+
+The PRIME variables are useful on Intel/NVIDIA laptops; remove them if they do not apply to
+the host.
+
+The simulator health check waits for `/clock` and namespaced filtered odometry. Nav2 starts
+after the simulator is healthy, then launches SLAM before Nav2. A healthy Nav2 container only
+means its nodes exist: `bt_navigator` must reach the `active` lifecycle state before it accepts
+goals, and SLAM must publish `/<namespace>/map`.
+
+For the standalone simulator, use the default Cyclone configuration described in
+[Using Cyclone DDS with the Simulator](./cyclone.mdx). That guide intentionally keeps
+simulation traffic isolated from physical robots. The loopback profile here is specific to a
+host-networked Docker demo.
+
+## Run and inspect the demo
+
+From the directory containing the Compose files:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.nvidia.yaml up -d
+docker compose logs -f nav2
+docker compose ps -a
+docker compose down
+```
+
+Omit `-f docker-compose.nvidia.yaml` when running without an NVIDIA GPU. Add `-v` to `down` only
+if you also want to remove the cached Gazebo Fuel models. `SETUP_PATH_HOST` defaults to
+`./config`; it may be set in the shell or in a `.env` file next to the Compose file.
+
+Before sending a goal, confirm `bt_navigator` is active and `/<namespace>/map` has arrived.
+Then use the CLI instructions in
+[Nav2 ROS actions](../navigation_demos/actions.mdx). For example, after substituting your
+robot's namespace:
+
+```bash
+docker compose exec nav2 bash -c \
+  'source /opt/ros/jazzy/setup.bash && ros2 lifecycle get /a300_0000/bt_navigator'
+docker compose exec nav2 bash -c \
+  'source /opt/ros/jazzy/setup.bash && ros2 topic echo --once /a300_0000/map'
+docker compose exec nav2 bash -c \
+  'source /opt/ros/jazzy/setup.bash && ros2 action send_goal /a300_0000/navigate_to_pose nav2_msgs/action/NavigateToPose \
+  "{pose: {header: {frame_id: map}, pose: {position: {x: 4.0, y: 3.0}, orientation: {w: 1.0}}}}" --feedback'
+```
+
+The `map` origin under SLAM is the robot's spawn pose.
+
+The example was verified in the `warehouse` world with A300 and J100 configurations. In the
+test runs, the `map` pose and Gazebo ground truth at the end of the `(4, 3)` goal were:
+
+| Platform | Final `map` pose | Gazebo ground truth |
+|---|---|---|
+| A300 | `(3.97, 2.94)` and `(4.04, 2.96)` on two runs | `(4.00, 2.94)` |
+| J100 | `(4.07, 2.97)` | `(4.05, 2.97)` |
+
+Wheel odometry alone can drift and should not be used as the only measure of final position.
+
+The simulated command path is Nav2's controller through `velocity_smoother` and
+`collision_monitor`, then `/<namespace>/cmd_vel`, `twist_mux`, and the platform velocity
+controller. `twist_mux` gives joystick and interactive-marker commands higher priority than
+Nav2. Emergency and safety-stop locks block motion. The lidar scan feeds SLAM, both costmaps,
+and the collision monitor; the EKF provides filtered odometry and the `odom` to `base_link`
+transform.
+
+The example Nav2 configurations use `TwistStamped`, a 20 m by 20 m rolling global costmap, and
+a platform-specific footprint. A goal well outside that rolling window, or inside an obstacle
+or its inflation radius, can be aborted. With SLAM, goals in `map` are relative to the robot's
+spawn pose. See [navigation configuration](../navigation_demos/configuration.mdx) for changing
+the official per-platform defaults.
+
+The Jazzy demo launch files are `slam.launch.py`, `nav2.launch.py`, and
+`localization.launch.py`. SLAM and Nav2 select configuration under
+`clearpath_nav2_demos/config/<platform>/`; localization uses a saved map instead of SLAM.
+SLAM defaults to synchronous operation in its launch file, but the Compose workflow sets
+`NAV2_SLAM_SYNC=false`. The Nav2 config uses MPPI with `DiffDrive`, a maximum forward speed of
+0.5 m/s, and 0.25 m goal tolerances. The global costmap is rolling, so it is not suitable for
+goals arbitrarily far from the robot. Platform footprint half-extents in the verified
+configuration are: J100 0.18 × 0.15 m, A200/A300 0.55 × 0.45 m, R100 0.48 × 0.40 m, and W200
+0.76 × 0.69 m. The Ridgeback is physically omnidirectional, but the cited Nav2 MPPI config uses
+the `DiffDrive` motion model.
+
+The `generic` platform does not have a matching `clearpath_nav2_demos` platform configuration,
+so the standard Nav2 launch is not available for it.
+
+## Change the robot or simulation
+
+Change `robot.yaml` rather than the Compose file when selecting another Clearpath platform.
+Use a fresh setup directory, then restart the stack so `setup_init` and `sim` regenerate the
+robot files:
+
+```bash
+docker compose down
+SETUP_PATH_HOST="$HOME/clearpath_setups/j100" \
+  docker compose -f docker-compose.yml -f docker-compose.nvidia.yaml up -d
+```
+
+Common changes include:
+
+| Goal | Setting |
+|---|---|
+| Change the world | Set `SIM_WORLD` (`construction`, `office`, `orchard`, `pipeline`, `solar_farm`, or `warehouse`). |
+| Change the spawn pose | Pass `x:=…`, `y:=…`, or `yaw:=…` to `cpr-sim-launch`. |
+| Select a different lidar | Change the first `sensors.lidar2d` entry and its parameters in `robot.yaml`. |
+| Select a different scan topic | Set `SCAN_TOPIC`; by default Nav2 uses `/<namespace>/sensors/lidar2d_0/scan`. |
+| Change a goal | Send different coordinates and orientation to `navigate_to_pose` using the CLI or an action client. |
+| Isolate the demo from other local ROS systems | Set the same non-default `ROS_DOMAIN_ID` for all Compose services. |
+| Run RViz without Nav2 | Set `CLEARPATH_VIZ_CONFIG=robot`; the default `navigation` config uses `map`. |
+
+Other useful Compose variables include `ROS_DISTRO` (image tag prefix),
+`GAZEBO_STARTUP_TIMEOUT` and `GAZEBO_MAX_RESTARTS` (simulator watchdog),
+`NAV2_ENABLE_SLAM`, `NAV2_SLAM_SYNC`, `AUTO_NAV2_STARTUP`, and `WAIT_FOR_SIM`. The Nav2 entry
+script also reads `NAV2_LAUNCH_FILE`, `ROBOT_NAMESPACE`,
+`NAV2_STARTUP_TIMEOUT_S`, `NAV2_ACTIVE_WAIT_TIMEOUT_S`, `NAV2_TOPIC_WAIT_TIMEOUT_S`, and
+`NAV2_SERVICE_CALL_TIMEOUT_S`. The demo fixes `USE_SIM_TIME=true`; real hardware requires it to
+be false. The `jazzy-sim-latest`,
+`jazzy-nav2-latest`, and `jazzy-viz-latest` images use the `robot` account and run
+`cpr-sim-launch`, `cpr-nav2-launch`, and `cpr-viz-launch` respectively after sourcing ROS.
+
+The R100 and DO100/DO150 platforms support sideways motion. For a sim-only run, start only `sim` and
+`viz` with the `robot` RViz config (fixed frame `odom`), then publish a
+`geometry_msgs/msg/TwistStamped` continuously to `/<namespace>/cmd_vel`:
+
+```bash
+export SETUP_PATH_HOST="$HOME/clearpath_setups/r100"
+export CLEARPATH_VIZ_CONFIG=robot
+docker compose up -d sim viz
+docker compose exec sim bash -c \
+  'source /opt/ros/jazzy/setup.bash && ros2 topic pub -r 10 /r100_0000/cmd_vel geometry_msgs/msg/TwistStamped "{twist: {linear: {x: 0.5}, angular: {z: 0.5}}}"'
+```
+
+For an omni base, `linear.y` commands a strafe. The example R100 run traced an approximately
+1 m-radius circle; publishing `linear.y: 0.3` for 5 seconds moved it about 1.2 m sideways with
+little yaw change. `twist_mux` drops a source after approximately 0.5 seconds without another
+message, so keep publishing while driving. Inspect the Gazebo ground-truth pose with
+`gz model -m r100_0000/robot -p`. See the [platform API](../../api/platform_api.mdx) for the
+velocity command interface.
+
+To use a physical robot instead of Gazebo, do not start `sim`. Use that robot's own
+`robot.yaml`, set `USE_SIM_TIME=false` and `WAIT_FOR_SIM=false`, and configure CycloneDDS for
+the network interface that reaches the robot. On Humble hardware, the MCU requires
+`rmw_fastrtps_cpp`.
+
+## Troubleshooting
+
+| Symptom | Likely cause and action |
+|---|---|
+| `setup_init` exits non-zero | Confirm `SETUP_PATH_HOST/robot.yaml` exists. Relative paths are resolved from the Compose project directory. |
+| Simulation cannot generate files | The setup directory is not writable by UID 1000; confirm `setup_init` completed successfully. |
+| Gazebo cannot download Fuel models | The cache volume is not writable by UID 1000. Mount the volume at `/home/robot/.gz` and ensure it is owned by the container user. |
+| RViz opens with no robot or map | The navigation RViz config uses fixed frame `map`; start Nav2/SLAM or select the `robot` RViz config. |
+| Goal is rejected | Check `ros2 lifecycle get /<namespace>/bt_navigator`; wait until it reports `active`. |
+| Goal aborts quickly | Check that the goal is in free space and inside the global costmap. The example uses a rolling 20 m by 20 m costmap. |
+| Robot does not move | Check `/<namespace>/platform/emergency_stop`, `safety_stop`, and higher-priority teleoperation inputs. Send `TwistStamped`, not `Twist`. |
+| ROS graph is incomplete or stale | Ensure every container has the same `ROS_DOMAIN_ID`, RMW, and CycloneDDS environment. Use `--no-daemon` for CLI graph inspection. |
+| Topic exists but no data arrives | Inspect QoS with `ros2 topic info -v`; a Reliable subscriber cannot receive from a Best Effort publisher. |
+| TF tools show no frames | Clearpath TF is namespaced. Remap `/tf` and `/tf_static` to `/<namespace>/tf` and `/<namespace>/tf_static`. |
+| `ros2 topic list` hangs or appears stale | The ROS CLI daemon may have a stale graph. Use `--no-daemon`; for commands that have no such option, bound them with `timeout`. |
+| `Failed to find a free participant index` | The stack has more DDS participants than the default index range allows. Increase `MaxAutoParticipantIndex`. |
+| Gazebo or RViz display does not appear | Check the X11 socket and `XAUTHORITY` mounts. GPU rendering may also require the NVIDIA overlay and `nvidia-container-toolkit`. |
+| Navigation times out or the simulator is very slow | Check whether Gazebo is using CPU rendering; use the GPU overlay when supported. |
+| `unable to find user ros` | The images use the `robot` account; remove an old Compose `user: ros` override. |
+| RViz exits or the simulation stops | Closing the Gazebo or RViz window can stop that process; start the Compose service again. |
+
+For broader configuration, simulator, and Nav2 guidance, use the existing
+[robot YAML documentation](../../config/yaml/overview.mdx),
+[simulator tutorial](./simulate.mdx), [Nav2 documentation](../navigation_demos/overview.mdx),
+[Cyclone DDS documentation](../../networking/ros2_networking/cyclone.mdx), and
+[ROS 2 API reference](../../api/overview.mdx).
+
+## Developer references
+
+When changing behavior in the stack, edit the upstream package rather than files inside a
+running container. Use the repository that owns the behavior:
+
+| Repository | Source of |
+|---|---|
+| [`clearpath_config`](https://github.com/clearpathrobotics/clearpath_config) | `robot.yaml` schema, platform samples, sensor and mount types, and model constants. |
+| [`clearpath_common`](https://github.com/clearpathrobotics/clearpath_common) | Common generators, URDF descriptions, and platform control. |
+| [`clearpath_simulator`](https://github.com/clearpathrobotics/clearpath_simulator) | Gazebo launch files, worlds, and simulator bridges. |
+| [`clearpath_nav2_demos`](https://github.com/clearpathrobotics/clearpath_nav2_demos) | Nav2, SLAM, and localization launch files, per-platform parameters, and maps. |
+| [`clearpath_desktop`](https://github.com/clearpathrobotics/clearpath_desktop) | RViz launch files and configuration. |
+| [`clearpath_robot`](https://github.com/clearpathrobotics/clearpath_robot) | Robot systemd services, hardware bring-up, and sensor drivers. |
+| [`clearpath_msgs`](https://github.com/clearpathrobotics/clearpath_msgs) | Clearpath-specific ROS message definitions. |
+| [`clearpath_docker`](https://github.com/clearpathrobotics/clearpath_docker) | Docker images, Compose examples, and container entry scripts. |
+| [`clearpath_community_demos`](https://github.com/clearpathrobotics/clearpath_community_demos) | Community-level ROS demos. |
+| [`clearpath_generator_tests`](https://github.com/clearpathrobotics/clearpath_generator_tests) | Generator regression tests. |
+
+For a parameter-only change, bind-mount the edited file over the installed file in the
+container that consumes it. For a package change, build a colcon overlay in the matching
+Jazzy image and source its `install/setup.bash` before the image's entry script. The
+[generator documentation](../../config/generators.mdx) describes the generated files and
+their upstream responsibilities.
+
+For example, build a `clearpath_nav2_demos` overlay in its Jazzy image:
+
+```bash
+docker run --rm -v "$HOME/clearpath_ws:/ws" -w /ws --entrypoint bash \
+  ghcr.io/clearpathrobotics/clearpath_docker:jazzy-nav2-latest \
+  -c 'source /opt/ros/jazzy/setup.bash && colcon build --packages-select clearpath_nav2_demos'
+```
+
+Mount the resulting `install` directory into the `nav2` service and source
+`/ws/install/setup.bash` before running `/usr/local/bin/cpr-nav2-launch`. Use the `sim` image
+for simulator packages and the `viz` image for RViz packages.
+
+Run ROS CLI introspection in a container after sourcing the ROS setup:
+
+```bash
+docker compose exec nav2 bash -c \
+  'source /opt/ros/jazzy/setup.bash && ros2 node list --no-daemon'
+docker compose exec nav2 bash -c \
+  'source /opt/ros/jazzy/setup.bash && ros2 topic info /<namespace>/sensors/lidar2d_0/scan --no-daemon'
+```
+
+`ros2 topic echo` and `ros2 topic hz` stream continuously and do not accept `--no-daemon`;
+use `timeout` or `--once` where available. A publisher count only confirms a publisher exists,
+not that it is sending messages. Driver diagnostics and topic QoS are useful when a topic is
+listed but no data arrives.

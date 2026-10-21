@@ -1,0 +1,87 @@
+---
+title: Nav2 and SLAM Interfaces
+sidebar_label: Nav2 and SLAM Interfaces
+sidebar_position: 7
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+This page collects the Nav2 and SLAM interfaces observed in a running Jazzy navigation demo.
+Replace `<ns>` with the namespace set in `system.ros2.namespace`. Clearpath ROS names,
+including TF, are namespaced under `/<ns>/`; the global exceptions include `/clock`,
+`/parameter_events`, and `/rosout`.
+
+For the general platform and sensor API, see the [ROS 2 API reference](../../api/overview.mdx),
+[platform API](../../api/platform_api.mdx), and [sensor API](../../api/sensors_api.mdx).
+For platform-supported launch files and parameters, see [navigation configuration](configuration.mdx).
+
+## Topics
+
+| Topic | Type | Purpose |
+|---|---|---|
+| `/<ns>/map` | `nav_msgs/msg/OccupancyGrid` | Map published by `slam_toolbox`; uses Reliable, Transient Local QoS. |
+| `/<ns>/goal_pose` | `geometry_msgs/msg/PoseStamped` | Fire-and-forget goal topic; a topic publication does not return a result. |
+| `/<ns>/initialpose` | `geometry_msgs/msg/PoseWithCovarianceStamped` | Initial pose for AMCL localization. |
+| `/<ns>/plan`, `plan_smoothed`, `local_plan`, `transformed_global_plan` | `nav_msgs/msg/Path` | Planned and controller paths. |
+| `/<ns>/global_costmap/costmap`, `local_costmap/costmap` | `nav_msgs/msg/OccupancyGrid` | Nav2 costmaps. |
+| `/<ns>/cmd_vel_nav` → `cmd_vel_smoothed` → `cmd_vel` | `geometry_msgs/msg/TwistStamped` | Controller → velocity smoother → collision monitor. `twist_mux` then selects a command source. |
+| `/<ns>/speed_limit` | `nav2_msgs/msg/SpeedLimit` | Speed limit passed to Nav2 controllers. |
+| `/<ns>/collision_monitor_state` | `nav2_msgs/msg/CollisionMonitorState` | Collision monitor state. |
+
+Sensor scans are published under `/<ns>/sensors/lidar2d_<i>/scan`. Nav2 and SLAM use the
+first scan by default; `scan_topic` can select another input.
+
+## Actions
+
+| Action | Type | Purpose |
+|---|---|---|
+| `/<ns>/navigate_to_pose` | `nav2_msgs/action/NavigateToPose` | Plan and navigate to one pose. |
+| `/<ns>/navigate_through_poses` | `nav2_msgs/action/NavigateThroughPoses` | Navigate through multiple poses. |
+| `/<ns>/follow_waypoints` | `nav2_msgs/action/FollowWaypoints` | Stop at each waypoint in a sequence. |
+| `/<ns>/compute_path_to_pose`, `compute_path_through_poses` | `nav2_msgs/action/ComputePath*` | Compute a path without following it. |
+| `/<ns>/follow_path` | `nav2_msgs/action/FollowPath` | Follow a supplied path. |
+| `/<ns>/spin`, `backup`, `drive_on_heading`, `wait`, `assisted_teleop` | `nav2_msgs/action/*` | Nav2 behavior actions. |
+| `/<ns>/dock_robot`, `undock_robot` | `nav2_msgs/action/*` | Docking actions; a configured dock is required. |
+| `/<ns>/compute_route`, `compute_and_track_route` | `nav2_msgs/action/*` | Route actions; a route graph is required. |
+
+The [`navigate_to_pose` guide](actions.mdx) explains goal poses, feedback, and CLI usage.
+Check that `/<ns>/bt_navigator` is active and `/<ns>/map` has data before sending a goal;
+otherwise Nav2 may reject it.
+
+## Services
+
+| Service | Type | Purpose |
+|---|---|---|
+| `/<ns>/lifecycle_manager_navigation/manage_nodes` | `nav2_msgs/srv/ManageLifecycleNodes` | Start, pause, resume, reset, or shut down Nav2 lifecycle nodes. |
+| `/<ns>/<node>/get_state`, `change_state` | `lifecycle_msgs/srv/*` | Inspect or change a lifecycle node state. |
+| `/<ns>/slam_toolbox/save_map` | `slam_toolbox/srv/SaveMap` | Save a map; see the [SLAM map-saving instructions](slam.mdx). |
+| `/<ns>/slam_toolbox/serialize_map`, `deserialize_map` | `slam_toolbox/srv/*PoseGraph` | Save or load a SLAM pose graph. |
+| `/<ns>/slam_toolbox/dynamic_map` | `nav_msgs/srv/GetMap` | Request the current map. |
+| `/<ns>/slam_toolbox/reset`, `pause_new_measurements`, `clear_changes` | `slam_toolbox/srv/*` | Reset or control SLAM measurements and map changes. |
+| `/<ns>/global_costmap/clear_entirely_global_costmap`, `/<ns>/local_costmap/clear_entirely_local_costmap` | `nav2_msgs/srv/ClearEntireCostmap` | Clear Nav2 costmaps. |
+| `/<ns>/collision_monitor/toggle` | `nav2_msgs/srv/Toggle` | Enable or disable the collision monitor. |
+| `/<ns>/set_pose` | `robot_localization/srv/SetPose` | Reset the EKF pose. |
+| `/<ns>/controller_manager/list_controllers`, `switch_controller` | `controller_manager_msgs/srv/*` | Inspect or switch `ros2_control` controllers. |
+
+## TF and introspection
+
+The demo's principal transform chain is `map` → `odom` → `base_link` → sensor frames. SLAM
+publishes `map` → `odom`; the EKF publishes `odom` → `base_link`; the URDF and
+`robot_state_publisher` provide the robot's static and joint transforms. Remap TF when using
+tools that expect global topics:
+
+```bash
+ros2 run tf2_ros tf2_echo map base_link --ros-args \
+  -r /tf:=/<ns>/tf -r /tf_static:=/<ns>/tf_static -p use_sim_time:=true
+```
+
+For a fresh graph view, use `--no-daemon` with supported ROS CLI commands:
+
+```bash
+ros2 node list --no-daemon
+ros2 topic info /<ns>/map --no-daemon
+```
+
+A topic may have a publisher without currently receiving messages. Check QoS with
+`ros2 topic info -v` and inspect driver diagnostics when data is missing. A Reliable subscriber
+cannot receive from a Best Effort publisher.
