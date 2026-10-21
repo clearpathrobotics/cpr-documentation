@@ -16,6 +16,10 @@ When using the simulation, it is important to add `use_sim_time:=true` to the Na
 Localization launch files. When using a physical robot, either omit `use_sim_time` or set it
 to `false`.
 
+When using the simulation, also run Nav2, SLAM, Localization, and RViz with the same
+`ROS_DOMAIN_ID` and `RMW_IMPLEMENTATION` as the simulator. See
+[Launching the simulator](../simulator/simulate.mdx#launching-the-simulator) for details.
+
 :::
 
 :::note
