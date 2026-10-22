@@ -66,7 +66,7 @@ ros2 launch clearpath_nav2_demos slam.launch.py scan_topic:=/a300_0000/sensors/l
 
 **4.** On your laptop, start Rviz to view the map by running
 ```bash
-ros2 launch clearpath_viz view_navigation namespace:=/a300_0000
+ros2 launch clearpath_viz view_navigation.launch.py namespace:=/a300_0000
 ```
 
 **5.** Drive the robot around manually, or by sending it Nav2 goals.
@@ -79,7 +79,7 @@ See [Nav2 Goals](rviz#nav2-goal) for more information about sending navigation g
 
 **1.** Start the simulation by running
 ```bash
-ros2 launch clearpath_gz simulation.launch setup_path:=/path/to/robot_setup
+ros2 launch clearpath_gz simulation.launch.py setup_path:=/path/to/robot_setup
 ```
 The `setup_path` should point to the folder you have your [`robot.yaml`](../../config/yaml/overview) file,
 e.g. `/home/username/clearpath` or `/etc/clearpath`
