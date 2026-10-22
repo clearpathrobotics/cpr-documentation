@@ -24,6 +24,20 @@ The launch file will run all of the necessary [generators](../../config/generato
 files for the simulation before launching Gazebo and spawning the robot. These will be placed under the setup path
 (defaults to `$HOME/clearpath/`).
 
+:::note
+
+The simulator does not generate a `setup.bash` file, so it does not apply the `domain_id` or
+`middleware` settings from the [`system.ros2`](../../config/yaml/system.mdx#ros-2-environment) section of `robot.yaml`.
+The ROS domain and RMW implementation come from each terminal's environment instead. Every
+terminal used with the simulation, including terminals running Nav2, SLAM, RViz, or `ros2`
+commands, must use the same `ROS_DOMAIN_ID` and `RMW_IMPLEMENTATION`.
+
+:::
+
+To use the simulator with Zenoh, see [Using Zenoh with the Simulator](zenoh.mdx).
+For an isolated simulator using Cyclone DDS, see
+[Using Cyclone DDS with the Simulator](cyclone.mdx).
+
 ### Launch arguments
 
 If you are using a different setup path, use the `setup_path` launch argument to change it:

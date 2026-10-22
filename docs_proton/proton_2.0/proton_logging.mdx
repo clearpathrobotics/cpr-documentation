@@ -1,0 +1,142 @@
+---
+title: Proton Logging
+sidebar_label: Proton Logging
+sidebar_position: 7
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+# Proton Logging API
+
+`proton_core` supports a logging API for transmitting specific `Log` protobuf-formatted messages for ease of ergonomics.
+
+Using a Bundle and Signals to create a logging message is not recommended because it introduces several pain points:
+
+- Signals represent shared state and are overwritten on update. This will drop old logs constantly
+- Periodic Bundles are going to re-transmit old logs constantly
+- Updating the logging Signals would require a user to hold a pointer to the Signal Registry, which spreads the registry access to places a user may not want it to belong. Registry locking mutexes can introduce concurrency bugs that are difficult to reproduce.
+
+Using a separate channel (ie, different socket, additional UART) may be prohibitive with certain hardware.
+
+To alleviate this, proton supports a message type specifically for logging.
+
+## Enabling The API
+
+Proton gates sending logs behind the `PROTON_ENABLE_LOGGING` feature flag. This flag is enabled by default in `proton_vendor` for usage in `proton_ros2`, but for users of `proton_core`, the act of logging requires enabling that feature flag.
+
+```sh
+cmake -B proton_build -DPROTON_ENABLE_LOGGING=ON /path/to/proton
+```
+
+:::note
+The feature flag specifically enables _sending_ logs. Logs can _always_ be received from other nodes.
+:::
+
+## Logging Configuration
+
+Proton's logging API requires some configuration before it is fully useful. Namely, `proton_logger_config_t` needs to be filled out
+
+```C
+typedef struct proton_logger_config
+{
+  proton_Log * entries; // An array of user-supplied proton_log structs
+  size_t capacity;  // MUST be the number of elements in entries.
+  proton_log_level_e min_level;  // Logs below this level will be ignored
+  proton_log_now_ms_fn now_ms;  // Function pointer for getting "time". This can be uptime, or actual time.
+  proton_log_lock_fn lock;  // Optional lock/unlock function pointers for entries. Either none or both must be populated
+  proton_log_unlock_fn unlock;
+  void * lock_arg;  // Arguments for the lock/unlock functions
+  const char * name;  // The name of the device. This should probably be the Node name
+} proton_logger_config_t;
+```
+
+A logging control struct is then initialized based on the values of the config, and is then submitted to the logging API as the logging interface
+
+```C
+uint64_t now() { return g_now_ms; }
+
+proton_Log[4] logs = {};
+static const char * node_name = "test_node";
+
+proton_logger_t logger;
+
+proton_logger_config_t config;
+config.entries = logs;
+config.capacity = 4;
+config.min_level = PROTON_LOG_LEVEL_TRACE;
+config.now_ms = now;
+config.name = node_name;
+
+proton_log_init(&logger, &config);
+proton_log_set_logger(&logger);
+```
+
+This creates a ring buffer of logs that are populated when a user calls the various logging macros
+
+## Using the Logging API
+
+Proton supports the usual logging macros with `printf()`-style formatting:
+
+```C
+#define PROTON_LOG_TRACE(FMT_, ...)
+#define PROTON_LOG_DEBUG(FMT_, ...)
+#define PROTON_LOG_INFO(FMT_, ...)
+#define PROTON_LOG_WARN(FMT_, ...)
+#define PROTON_LOG_ERROR(FMT_, ...)
+#define PROTON_LOG_FATAL(FMT_, ...)
+```
+
+However, proton does _not_ immediately transmit the log message when the macro is called. That is left up to the user to transmit when they have the ability to. In order to send logs, a user must call `proton_log_encode_next()` to get the next log message in serialized protobuf format. The log is then framed according to the transport encoding and sent to whichever peer/endpoint you want to send it to.
+
+```C
+// Assuming logs are configured and ready
+PROTON_LOG_INFO("Ladies and gentlemen, this is mambo number %d", 5);
+
+uint8_t buffer[256];
+size_t log_len = 0;
+// This gets the oldest log in the ring buffer and serializes it for sending
+proton_log_encode_next(&logger, buffer, sizeof(buffer), &log_len);
+
+proton_udp4_header_t header;
+proton_udp4_fill_header(&header, 0, 0);
+uint8_t send_buffer[256];
+
+memcpy(send_buffer, &header, sizeof(header));
+memcpy(send_buffer + sizeof(header), buffer, log_len);
+
+// And transmit over your IP stack of choice
+sendto(sockfd, send_buffer, sizeof(header) + log_len, 0, (const struct sockaddr *)&dest, sizeof(dest));
+```
+
+## Receiving Logs
+
+Receiving logs is always enabled, as peers do not know what kind of message is arriving until it is decoded in `proton_node_receive()`
+
+In order to process the logs that are received from a peer, a callback mechanism is available
+
+```C
+// A function that just prints the values in a Log message
+void log_rx_capture(const proton_Log * log, void * arg)
+{
+  printf("(%d) [proton:%s] (%d) %s\r\n", log->timestamp_ms, log->name, log->level, log->text);
+}
+
+// Set the logging callback in the node manager
+proton_node_set_log_receive(&node_, log_rx_capture, NULL);
+
+// When receiving some bytes from a peer, if it decodes as a Log message, log_rx_capture will be called
+proton_node_receive(&node_, buf, out_len);
+```
+
+# C++ Wrapper
+
+As always, more ergonomic, non-allocating C++ wrapper options are available
+
+```C++
+proton_logger_config_t config{};
+// This creates a ring buffer of 4 logs, and automatically populates the logging control struct
+proton::Logger<4> logger(config);
+
+// Registers the logger.
+logger.set_global_logger();
+```
