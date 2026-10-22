@@ -29,6 +29,122 @@ To begin moving the arm, unlock the joints. Then, enable the `FCI` mode to allow
 
 </details>
 
+#### Setting Up Arbitrary Mounting {#franka_arm_arbitrary_mounting}
+<details>
+
+<summary>Setting Up Arbitrary Mounting</summary>
+
+<figure>
+    <img src={require("/components/manipulators/franka/arbitrary_mounting/mounted.png").default} width="750" />
+</figure>
+
+Whenever an arm is mounted on a surface that is not parallel to the ground, it's joints will experience forces and torques which differ from what it's controllers expect. Therefore, the arm's controller must know about the arm's base orientation with respect to the ground plane.
+
+> As of version `5.8.0`, Franka Desk comes with the Arbitrary Mounting feature, no longer needing the extra step required to install the feature. If you are using an older version, it is recommended to upgrade to the latest version available, if possible. Otherwise, you are required to contact Franka to enable the Arbitrary Mounting feature.
+
+**Setting up the Arm(s) in ROS**
+
+In the event that the arm's orientation (in euler angles) cannot be readily obtained, but a URDF of the robot already exists, then, use the TF tools to obtain the transform from the `base_link`, the ground plane, to the `arm_0_fr3_link0`, the arm's base frame.
+
+First, build up the `robot.yaml` to include the arm(s) and place that file in a new folder. Then, use the `view_model.launch.py` to bring up a model of the robot using a robot state publisher and RViz:
+> The `franka_description` must be added to the workspace, built, and sourced.
+```
+ros2 launch clearpath_viz view_model.launch.py setup_path:=/path/to/directory/with/robot.yaml/
+```
+<figure>
+    <img src={require("/components/manipulators/franka/arbitrary_mounting/rviz_arm_base_frame.png").default} width="750" />
+</figure>
+
+As is shown in the figure above, you can use the `TF` and/or `RobotModel` to find the name of the arm's base frame. In the image above, it's the `arm_0_fr3_link0`. Notice, that in the `TF` display, the global `Orientation` (with respect to the `Fixed Frame` in `Global Options`) is displayed in quaternion. Franka's arbitrary mounting requires euler angles.
+
+To obtain the euler angle representation of the orientation use the `tf2_echo` node provided by the `tf2_ros` package. Open a new terminal and run:
+```
+ros2 run tf2_ros tf2_echo base_link arm_0_fr3_link0
+```
+Which, will output the transformation in the following format:
+```
+- Translation: [0.122, 0.051, 0.876]
+- Rotation: in Quaternion (xyzw) [-0.500, 0.500, 0.000, 0.707]
+- Rotation: in RPY (radian) [-1.571, 0.785, -0.785]
+- Rotation: in RPY (degree) [-90.000, 45.001, -45.000]
+- Matrix:
+  0.500 -0.500  0.707  0.122
+ -0.500  0.500  0.707  0.051
+ -0.707 -0.707 -0.000  0.876
+  0.000  0.000  0.000  1.000
+```
+
+Make a note of the `Rotation: in RPY (radian)`, these are the three values needed by Franka Desk.
+
+> If the robot has two arms, make sure that the right and left arm have the corresponding configuration in the `robot.yaml`. In other words, make sure that the IP address of the arm's in the `robot.yaml` correspond to the IP address of the arm's in Franka Desk.
+
+**Setting the RPY in Franka Desk**
+
+At this time, Franka Desk does not have a UI to set the mounting orientation of the arm. Instead, users must make use of the DeskAPI.
+
+Connect to the ethernet port at the arm's base (not the control box) and make sure to have DHCP enabled. Open a browser, and access Franka Desk using `192.168.0.1`.
+
+Open a second tab, and open `192.168.0.1/deskapi`.
+
+Scroll down to find the `SPoC` (Single Point of Control) section.
+
+<figure>
+    <img src={require("/components/manipulators/franka/arbitrary_mounting/deskapi_SPoC.png").default} width="750" />
+</figure>
+
+Expand the `/api/system/control-take:take`, press the `Try it out` button then `Execute` to take control.
+
+<figure>
+    <img src={require("/components/manipulators/franka/arbitrary_mounting/deskapi_take_control.png").default} width="750" />
+</figure>
+
+<figure>
+    <img src={require("/components/manipulators/franka/arbitrary_mounting/deskapi_take_control_execute.png").default} width="750" />
+</figure>
+
+If you had already taken control from Franka Desk, then you will need to return to Franka Desk and grant control.
+<figure>
+    <img src={require("/components/manipulators/franka/arbitrary_mounting/deskapi_grant_control.png").default} width="750" />
+</figure>
+
+Then, copy the token from the result. It is required to set the orientation of the arm.
+
+<figure>
+    <img src={require("/components/manipulators/franka/arbitrary_mounting/deskapi_take_control_copy_token.png").default} width="750" />
+</figure>
+
+Scroll down to the next section of API commands below the `SPoC` section, you will find the `Configuration` API commands:
+
+<figure>
+    <img src={require("/components/manipulators/franka/arbitrary_mounting/deskapi_configuration.png").default} width="750" />
+</figure>
+
+Expand the `PUT /api/configuration/arm-mounting`, click on `Try it out`. Then, paste the token obtained in the previous steps into the `X-Control-Token` input.
+
+<figure>
+    <img src={require("/components/manipulators/franka/arbitrary_mounting/deskapi_arm_mounting_paste_token.png").default} width="750" />
+</figure>
+
+Then, in the `Request Body`, modify the `pitch`, `roll`, and `yaw` values to match the ones obtained previously.
+
+If, for example, the rotation in RPY was:
+```
+Rotation: in RPY (radian) [1.571, 0.785, 0.785]
+```
+
+Then, you would set it as :
+<figure>
+    <img src={require("/components/manipulators/franka/arbitrary_mounting/deskapi_arm_mounting_set_orientation.png").default} width="750" />
+</figure>
+> Note that the Desk API call uses `pitch`, `roll`, `yaw`, in that order instead of `RPY`.
+
+At this point, the mount orientation has been successfuly set. The last step is to relinquish control. Scroll back up to the `SPoC` section, and open the `POST /api/system/control-token:release`, click `Try it out` and paste the control token in the `X-Control-Token` field:
+<figure>
+    <img src={require("/components/manipulators/franka/arbitrary_mounting/deskapi_release_control.png").default} width="750" />
+</figure>
+
+</details>
+
 ### Parameter: Device IP {#franka_param_ip}
 The `robot_ip` must be set to match the networking settings of the arm's control box. By default, we use the `192.168.131.40` address.
 
