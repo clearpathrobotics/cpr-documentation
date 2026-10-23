@@ -71,6 +71,13 @@ To launch Rviz along with the simulation, use the `rviz` launch argument:
 ros2 launch clearpath_gz simulation.launch.py rviz:=true
 ```
 
+To run Gazebo without the GUI (for example on a server or in CI), use the `headless` launch argument.
+This starts the Gazebo server only, with headless rendering so simulated sensors still work without a display:
+
+```
+ros2 launch clearpath_gz simulation.launch.py headless:=true
+```
+
 ## Driving the robot
 
 The simulated robot can be driven in the same ways as the physical robot. Take a look at the [Teleop](../driving.mdx)
