@@ -48,3 +48,19 @@ To save the map, open a new terminal and run
 ros2 run nav2_map_server map_saver_cli -f "map_name"
 --ros-args -p map_subscribe_transient_local:=true -r __ns:=/a300_0000
 ```
+
+### Saving and resuming a pose graph
+
+An occupancy map can't be used to continue mapping. To resume SLAM later, serialize the slam_toolbox
+pose graph while SLAM is running:
+```bash
+ros2 service call /a300_0000/slam_toolbox/serialize_map slam_toolbox/srv/SerializePoseGraph "{filename: '/path/to/posegraph'}"
+```
+
+Then launch SLAM in `resume` mode:
+```bash
+ros2 launch clearpath_nav2_demos slam.launch.py mode:=resume posegraph:=/path/to/posegraph
+```
+
+By default, the robot starts at the first node of the pose graph. To start somewhere else, set the
+`start_pose` argument to the robot's `x,y,yaw` on the map, e.g. `start_pose:=1.0,2.0,0.0`.
