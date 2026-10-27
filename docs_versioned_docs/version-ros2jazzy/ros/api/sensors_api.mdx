@@ -38,6 +38,14 @@ each new sensor of that type that is added. Internal sensors such as IMU's will 
 | sensors/camera\_#/points            | [sensor_msgs/PointCloud2](https://github.com/ros2/common_interfaces/blob/jazzy/sensor_msgs/msg/PointCloud2.msg) | Pointcloud data | [System Default](overview.mdx#system-default) |
 | sensors/camera\_#/imu/data_raw      | [sensor_msgs/Imu](https://github.com/ros2/common_interfaces/blob/jazzy/sensor_msgs/msg/Imu.msg)                 | IMU data        | [System Default](overview.mdx#system-default) |
 
+:::note
+
+Luxonis OAK-D cameras publish depth under `stereo/` instead of `depth/`: `sensors/camera_#/stereo/image`
+and `sensors/camera_#/stereo/camera_info`. See the [camera configuration](../config/yaml/sensors/cameras.mdx)
+for the OAK-D pipeline types that produce depth.
+
+:::
+
 ## IMU topics
 
 | Topic                   | Message type                                                                                                        | Description                                                              | QoS                                           |
