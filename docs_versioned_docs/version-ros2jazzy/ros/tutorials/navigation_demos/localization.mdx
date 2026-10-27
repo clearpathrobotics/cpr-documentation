@@ -23,6 +23,11 @@ Make sure you have installed the simulator before starting this tutorial. Take a
 
 See [Launching Nav2](nav2) for instructions on launching localization
 
+Localization can also be started from the SLAM launch file with `mode:=localization`:
+```bash
+ros2 launch clearpath_nav2_demos slam.launch.py mode:=localization map:=/path/to/map.yaml
+```
+
 :::note
 
 When using the simulation, it is important to add `use_sim_time:=true` to the Nav2, SLAM, and
