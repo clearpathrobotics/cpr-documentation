@@ -83,10 +83,10 @@ The `camera.i_pipeline_type` parameter controls what data the camera produces. T
 #### Point Clouds
 
 When using a depth-capable pipeline type (`RGBD`, `RGBStereo`, `Stereo`, `Depth`, `DepthToF`, or `StereoToF`),
-a `PointCloudXyzNode` from the `depth_image_proc` package is automatically launched alongside the camera driver.
-This node converts the stereo depth image into a `sensor_msgs/msg/PointCloud2` message.
+a `PointCloudXyzrgbNode` from the `depth_image_proc` package is automatically launched alongside the camera driver.
+This node combines the stereo depth image with the RGB image into a colored `sensor_msgs/msg/PointCloud2` message.
 
-The point cloud is generated from the `stereo/image` and `stereo/camera_info` topics and is published
+The point cloud is generated from the `stereo/image`, `color/image`, and `color/camera_info` topics and is published
 on the `points` topic under the camera's namespace.
 
 To enable point clouds, set the pipeline type to `RGBD` (or another depth pipeline) in your robot configuration:
