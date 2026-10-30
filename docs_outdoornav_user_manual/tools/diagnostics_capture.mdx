@@ -1,0 +1,460 @@
+---
+title: Diagnostics Capture
+sidebar_label: Diagnostics Capture
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+The `clearpath_outdoornav_diagnostics` ROS 2 package collects an OutdoorNav snapshot for troubleshooting
+and support. It monitors the ROS graph, topic rates, diagnostics, logs, transforms, navigation goals,
+localization, and the velocity command chain. It also queries lifecycle states and node parameters,
+collects the robot software/configuration fingerprint, and retrieves service and Docker logs.
+
+On the robot, the package provides a ROS 2 action server used by the web UI, as well as a standalone
+CLI for direct local or remote captures. **Running the capture on the robot PC is recommended.**
+Remote CLI capture depends on network visibility, installed ROS interfaces, and separate access to the
+robot's logs.
+
+## Use the Diagnostics Page
+
+Open the robot's web UI, open the main menu, and select **Tools > Diagnostics**. The page sends capture
+goals to the robot and displays their progress and results. The Diagnostics page is also available at
+`/diagnostics` on the web UI.
+
+{/* TODO: Add a screenshot of the Diagnostics page showing the New Capture form and page layout. */}
+
+### Start a Capture
+
+In **New Capture**, set the options for the incident:
+
+- **File name**: Optional archive name without `.tar.gz`. Leave it blank to use
+  `onav_diagnostics_<timestamp>`. Names may contain letters, digits, periods, underscores, and hyphens,
+  and must start with a letter or digit.
+- **Duration (s)**: Monitoring-window length, from 1 to 3600 seconds. The default is 60 seconds.
+- **Include heavy topics (images, point clouds)**: Enable rate monitoring for high-bandwidth image and
+  point-cloud topics. This can increase network usage and archive size.
+- **Record a rosbag**: Save a bag of the monitored topics during the capture window.
+
+Select **START CAPTURE**. While a capture is running, the form options are disabled. **Reset** restores
+the default values when no capture is running.
+
+### Monitor and Stop
+
+The **Current Capture** panel shows the archive name, current phase, progress, status message, and
+elapsed time. Phases are discovery, monitoring, collection, and finalizing.
+
+{/* TODO: Add a screenshot of Current Capture during monitoring, including the progress bar and stop button. */}
+
+During discovery or monitoring, select **STOP EARLY** to end the monitoring window and continue
+collecting results into an archive. During collection or finalizing, the button changes to
+**ABORT CAPTURE**; aborting at this stage can leave partial files instead of a completed archive.
+
+The **Last Result** panel reports whether the capture completed, stopped early, was cancelled, or
+failed. **Completed with error findings** means an archive was written, but its `summary.md` contains
+one or more `ERROR` findings; review the summary rather than treating this status as a capture failure.
+
+### Download or Delete Captures
+
+The **Captures** table lists saved archives with their time, name, and size, newest first. Use the
+refresh button to reload the list. Select the download button on a row to download its `.tar.gz`
+archive. Select the delete button to remove an archive; confirm the deletion in the dialog.
+
+Archives are stored on the robot under `/opt/onav/saved_files/diagnostics`. They may contain network
+addresses, configuration, node parameters, software information, and logs from all Docker containers.
+Review an archive before sharing it, and use an approved support channel.
+
+{/* TODO: Add a screenshot of the Captures table highlighting its download and delete controls. */}
+
+## Direct Capture on the Robot PC
+
+SSH into the robot PC. A script run in an SSH terminal on the robot is a **local capture**; it does not
+need remote-log flags.
+
+1. Keep OutdoorNav running and source the robot's ROS 2 Jazzy and workspace environment in this terminal.
+   The environment must use the robot's middleware and domain ID and provide its ROS message packages.
+   The package requires Python's `yaml` (PyYAML) and `matplotlib` packages. Recording a bag requires `ros2 bag`.
+2. Cache sudo credentials for reading the service journal, then run the capture as your normal user:
+
+```bash
+sudo -v
+ros2 run clearpath_outdoornav_diagnostics nav_diagnostics_capture
+```
+
+The user must also have permission to list Docker containers. Dozzle must be available at
+`http://127.0.0.1:5200/_/logs`, or at the URL supplied with `--dozzle-url`.
+
+3. Capture while the issue is occurring, following the robot's normal safety procedures. The default
+   monitoring window is 60 seconds. Press `Ctrl+C` **during monitoring** to finish the window early
+   and write the results, or use `--duration` to set a specific monitoring window.
+4. Open `summary.md` in the capture directory or extracted archive and attach the `.tar.gz` archive to
+   the support request.
+
+For a longer capture with a bag:
+
+```bash
+ros2 run clearpath_outdoornav_diagnostics nav_diagnostics_capture --duration 120 --bag
+```
+
+The default archive is created in the current directory. Use `--output` to choose another writable
+capture directory.
+
+:::note
+
+The duration is the monitoring window, not the total runtime. Discovery, service queries, fingerprint
+collection, log downloads, plot generation, and archiving add time. Docker logs include all history
+still retained by Docker, not just the monitoring window; the service journal covers the latest start
+of `clearpath-platform-extras.service`.
+
+:::
+
+## Capture from a Remote PC
+
+First, follow the [OutdoorNav middleware connection guide](https://github.com/cpr-application/clearpath_outdoornav/blob/ros2/middleware/README.md)
+to connect the remote PC to the robot using Zenoh or Cyclone DDS.
+
+The robot and remote PC must use the same middleware and ROS domain ID. Keep the script and its YAML
+configuration together on the remote PC, and source any workspace containing the robot's custom message
+and action interfaces. The Python dependencies listed for local capture must also be installed on the remote PC.
+
+For example, after completing the middleware setup, run the following on the remote PC. Replace the
+example address with the robot's reachable address and use its domain ID:
+
+```bash
+export ROS_DOMAIN_ID=0 # Replace with the robot's ROS domain ID if different
+cd ~/onav_ws/src/onav-app
+source api/middleware/connect_robot.sh zenoh 192.168.131.1
+  ros2 run clearpath_outdoornav_diagnostics nav_diagnostics_capture \
+  --remote-service-logs --remote-docker-logs --ssh-host 192.168.131.1
+```
+
+For Cyclone DDS, use the connection guide's `cyclone_dds` command instead. Run the capture in the same
+shell as the connection command. Results are written on the **remote PC**, not the robot.
+
+### Remote Access Requirements and Limitations
+
+- **ROS access and SSH access are separate.** The middleware connection carries ROS data. The
+  `--remote-service-logs` flag retrieves the robot's journal over SSH, and `--remote-docker-logs` lists
+  the robot's containers over SSH before downloading their logs through Dozzle.
+- **SSH is non-interactive.** The script requires a previously verified, trusted host key and key or
+  agent authentication. It cannot prompt for a login password, key passphrase, or host-key confirmation.
+  Establish and verify SSH access separately before capturing; do not disable host-key checking.
+- **The remote journal requires passwordless sudo.** The SSH user must be authorized to read the
+  journal through non-interactive sudo. Running `sudo -v` on your remote PC does not grant sudo access
+  on the robot. Ask your administrator to provision the required access, or capture locally instead.
+- **Remote Docker access requires Docker permissions.** The SSH user must be able to list containers
+  without an interactive sudo prompt.
+- **Dozzle must be reachable separately.** With `--remote-docker-logs`, the default URL is
+  `http://<ssh-host>:5200/_/logs`. A Zenoh SSH tunnel does not automatically forward Dozzle.
+  If needed, arrange a separate port forward and set `--dozzle-url` to its local URL.
+  Setting only `--dozzle-url` does not make container listing remote; retain `--remote-docker-logs`.
+- **SSH ports and jump hosts are not script arguments.** Configure an SSH host alias in `~/.ssh/config`
+  for these settings and pass that alias with `--ssh-host`. If the alias is not directly reachable
+  over HTTP, also provide the separately reachable Dozzle URL.
+- **The default log sources are local.** When running on a remote PC, omitting the remote flags tries
+  to collect that PC's journal and Docker logs, not the robot's.
+- **Remote measurements reflect the network.** Topic rates and TF age can be affected by latency,
+  packet loss, clock synchronization, and bandwidth. Missing message/action packages prevent some
+  subscriptions or action-result retrieval. Avoid `--include-heavy` over bandwidth-limited links.
+  Environment information describes the PC executing the script.
+
+When SSH or Dozzle access is unavailable, capture the ROS data without either log source:
+
+```bash
+ros2 run clearpath_outdoornav_diagnostics nav_diagnostics_capture \
+  --skip-service-logs --skip-docker-logs
+```
+
+This is a partial capture. Collect the missing logs locally on the robot if they are needed.
+Log retrieval failures are reported as warnings and recorded in the results; they do not by themselves
+prevent the ROS capture from being saved.
+
+## Standalone CLI Arguments
+
+Run `ros2 run clearpath_outdoornav_diagnostics nav_diagnostics_capture --help` to view usage. These
+options apply to the standalone CLI, not to the ROS action goal. The action accepts only a capture
+name, duration, heavy-topic setting, and bag-recording setting. Docker logs are collected by default
+for both interfaces; only the standalone CLI exposes `--skip-docker-logs`.
+
+| Argument                        | Default                                                                                                                          | Description                                                                                                                                                           |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `-h`, `--help`                  | Not requested                                                                                                                    | Show usage and exit. ROS dependencies and the diagnostics YAML are loaded before argument parsing.                                                                    |
+| `--namespace NAME`              | `ROBOT_NAMESPACE`, otherwise auto-detected                                                                                       | Robot namespace. Automatic detection selects the most common first namespace component among visible topics, excluding `namespace_exclude` entries.                   |
+| `--duration SECONDS`            | `60.0`                                                                                                                           | Topic, diagnostic, and log monitoring window.                                                                                                                         |
+| `--bag`                         | `false`                                                                                                                          | Also record rate-monitored topics, ROS log topics, and TF topics with `ros2 bag`. This is not a recording of every visible topic.                                     |
+| `--discovery-timeout SECONDS`   | `20.0`                                                                                                                           | Maximum initial wait for the ROS graph.                                                                                                                               |
+| `--service-timeout SECONDS`     | `5.0`                                                                                                                            | Timeout per lifecycle or parameter service call.                                                                                                                      |
+| `--output DIRECTORY`            | `onav_diagnostics_<YYYYMMDD_HHMMSS>` in the current directory                                                                    | Capture directory. The archive is created beside it unless disabled.                                                                                                  |
+| `--include-heavy`               | `false`                                                                                                                          | Include point clouds and images in general rate monitoring. Increases bandwidth and, with `--bag`, recording size.                                                    |
+| `--skip-params`                 | `false`                                                                                                                          | Skip node parameter dumps. By default, parameters are queried for nodes under the robot namespace that expose parameter services.                                     |
+| `--ssh-host HOST`               | `ROBOT_IP`, then `ROBOT_HOST`, otherwise unset                                                                                   | Robot SSH address or configured SSH alias for remote journal, container listing, and fingerprint collection. Also supplies the host in the default remote Dozzle URL. |
+| `--ssh-user USER`               | `robot`                                                                                                                          | User for remote SSH connections.                                                                                                                                      |
+| `--ssh-port PORT`               | SSH configuration default                                                                                                        | SSH port for remote logs and fingerprint collection.                                                                                                                  |
+| `--remote-fingerprint`          | `false`; enabled by either remote-log option                                                                                     | Collect robot software/image provenance and sanitized configuration snapshots over SSH.                                                                               |
+| `--skip-fingerprint`            | `false`                                                                                                                          | Skip software and configuration fingerprint collection. Mutually exclusive with `--remote-fingerprint`.                                                               |
+| `--remote-docker-logs`          | `false`                                                                                                                          | List robot containers through SSH and download their retained logs through Dozzle.                                                                                    |
+| `--skip-docker-logs`            | `false`                                                                                                                          | Skip Docker log collection. Mutually exclusive with `--remote-docker-logs`.                                                                                           |
+| `--dozzle-url URL`              | `DOZZLE_URL` if set; otherwise `http://127.0.0.1:5200/_/logs` locally or `http://<ssh-host>:5200/_/logs` with remote Docker logs | Dozzle base URL used for the log archive download.                                                                                                                    |
+| `--dozzle-host LABEL`           | `DOZZLE_HOSTNAME`, otherwise `localhost`                                                                                         | Dozzle host label used to identify containers. This is not an SSH hostname or a replacement for `--dozzle-url`.                                                       |
+| `--docker-logs-timeout SECONDS` | `600.0`                                                                                                                          | Timeout supplied to the Dozzle archive download request.                                                                                                              |
+| `--remote-service-logs`         | `false`                                                                                                                          | Retrieve the robot's latest `clearpath-platform-extras.service` invocation journal over SSH.                                                                          |
+| `--skip-service-logs`           | `false`                                                                                                                          | Skip this service journal. Mutually exclusive with `--remote-service-logs`.                                                                                           |
+| `--no-archive`                  | `false`                                                                                                                          | Do not create the `.tar.gz`; leave the capture directory in place.                                                                                                    |
+| `--keep-directory`              | `false`                                                                                                                          | Keep the capture directory next to the `.tar.gz`. By default, a newly created directory is removed after archiving.                                                   |
+| `--no-archive`                  | `false`                                                                                                                          | Leave the capture directory without creating the `.tar.gz` archive.                                                                                                   |
+
+## Capture Results
+
+The standalone CLI capture directory, or the extracted action archive, contains:
+
+| Location       | Contents                                                                                                                                                                                                              |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `summary.md`   | Findings and links to supporting evidence. Start here.                                                                                                                                                                |
+| `navigation/`  | Trajectory, goal, localization, and velocity-chain results, including plots. Plots are generated even when data is missing, with annotations explaining the missing data.                                             |
+| `ros/`         | Graph snapshot, topic list and rates, lifecycle states, and diagnostic messages.                                                                                                                                      |
+| `tf/`          | Transform edges, lookup results, and frame information.                                                                                                                                                               |
+| `logs/`        | ROS logs, service journal, Docker log ZIP, and collection status/error files.                                                                                                                                         |
+| `timeline/`    | Unified live-capture event stream and plot, with JSON and CSV event data. Events include goal changes/results, localization threshold crossings, stop/collision states, diagnostic changes, and significant ROS logs. |
+| `environment/` | Execution environment, optional ping results, available middleware config files, the exact diagnostics YAML used, and `fingerprint/` software/image provenance plus sanitized configuration snapshots.                |
+| `parameters/`  | Node parameter dumps and any parameter query errors; omitted with `--skip-params`.                                                                                                                                    |
+| `bag/`         | Optional bag recording.                                                                                                                                                                                               |
+
+For standalone CLI captures, the script exits with status `1` if the summary contains an `ERROR`
+finding, or `0` otherwise. For action captures, `success` indicates whether the archive was written;
+`has_error_findings` separately indicates whether the summary contains `ERROR` findings. An error
+finding therefore does not necessarily mean that capture failed. ROS discovery failure exits before
+producing a normal capture.
+
+Captures may contain network addresses, environment settings, node parameters, robot software/image
+information, sanitized configuration snapshots, and logs from **all** containers on the selected
+Docker host. Sanitization targets recognizable credential keys and values, but cannot catch every
+secret. Review captures before sharing, and use an approved support channel.
+
+## Diagnostics Parameter File
+
+The package loads `nav_diagnostics_config.yaml` from its installed share directory. In a source
+checkout, edit
+`~/onav_ws/src/onav-app/api/clearpath_outdoornav_diagnostics/config/nav_diagnostics_config.yaml`;
+in an installed deployment, the file is under
+`share/clearpath_outdoornav_diagnostics/config/nav_diagnostics_config.yaml` in the package prefix.
+
+There is no `--config` argument. Edit that file before starting the script to adjust capture conventions
+and report thresholds. These are diagnostics-analysis settings, **not** ROS node parameters: changing
+them does not tune navigation or alter robot safety limits. Keep the required keys and YAML types.
+A missing, invalid, or incomplete configuration prevents startup.
+
+### Default Configuration
+
+<details>
+<summary>Complete default nav_diagnostics_config.yaml</summary>
+
+```yaml
+heavy_types:
+  - sensor_msgs/msg/PointCloud2
+  - sensor_msgs/msg/PointCloud
+  - sensor_msgs/msg/Image
+  - sensor_msgs/msg/CompressedImage
+nav_nodes:
+  - controller_server
+  - planner_server
+  - smoother_server
+  - behavior_server
+  - onav_navigator
+  - velocity_smoother
+  - collision_monitor
+  - local_costmap/local_costmap
+  - global_costmap/global_costmap
+  - lifecycle_manager_navigation
+localization_nodes:
+  - localization_node
+  - map_odom_publisher
+scan_candidates:
+  - sensors/lidar2d_0/scan_filtered
+  - sensors/lidar3d_0/nonground_filtered
+key_topics:
+  platform/odom: false
+  localization/odom: false
+  tf: false
+  tf_static: true
+  local_costmap/costmap_raw: false
+  global_costmap/costmap_raw: false
+  plan: true
+  cmd_vel: true
+  diagnostics: false
+localization_topics:
+  localization/odom: false
+tf_lookups:
+  - [map, odom]
+  - [odom, base_link]
+  - [map, base_link]
+log_levels:
+  10: DEBUG
+  20: INFO
+  30: WARN
+  40: ERROR
+  50: FATAL
+diagnostic_levels:
+  0: OK
+  1: WARN
+  2: ERROR
+  3: STALE
+diagnostic_severity:
+  0: 0
+  1: 1
+  3: 2
+  2: 3
+environment_variables:
+  - ROS_DISTRO
+  - RMW_IMPLEMENTATION
+  - ROS_DOMAIN_ID
+  - ROBOT_MIDDLEWARE
+  - ROBOT_IP
+  - ROBOT_HOST
+  - ROBOT_NAMESPACE
+  - ROBOT_LOCAL_IP
+  - ZENOH_SESSION_CONFIG_URI
+  - CYCLONEDDS_URI
+namespace_exclude:
+  - parameter_events
+  - rosout
+  - diagnostics
+  - foxglove_bridge
+  - tf
+  - tf_static
+  - clicked_point
+clock_skew_limit_s: 0.5
+localization_std_xy_limit_m: 0.25
+localization_std_yaw_limit_deg: 10.0
+map_odom_jump_limit_m: 0.25
+map_odom_jump_limit_deg: 10.0
+goal_status:
+  0: UNKNOWN
+  1: ACCEPTED
+  2: EXECUTING
+  3: CANCELING
+  4: SUCCEEDED
+  5: CANCELED
+  6: ABORTED
+terminal_goal_status:
+  - SUCCEEDED
+  - CANCELED
+  - ABORTED
+navigation_actions:
+  - navigate_to_pose
+  - navigate_through_poses
+feedback_actions:
+  - navigate_to_pose
+  - navigate_through_poses
+  - follow_path
+result_request_timeout_s: 5.0
+goal_pose_match_before_s: 2.0
+goal_pose_match_after_s: 0.5
+capture_startup_status_window_s: 2.0
+velocity_chain:
+  - [cmd_vel_nav, Nav2 controller/behavior output]
+  - [cmd_vel_smoothed, velocity_smoother output]
+  - [cmd_vel, collision_monitor output]
+  - [platform/cmd_vel, twist_mux output]
+velocity_stage_checks:
+  cmd_vel_smoothed: velocity_smoother (lifecycle state, deadband and limits)
+  cmd_vel: collision_monitor (see collision monitor events)
+  platform/cmd_vel: twist_mux (stop locks or higher-priority teleop input)
+teleop_inputs:
+  joy_teleop/cmd_vel: Joystick teleop
+  twist_marker_server/cmd_vel: Interactive marker teleop
+  rc_teleop/cmd_vel: RC teleop
+stop_locks:
+  platform/emergency_stop: Emergency stop
+  platform/safety_stop: Safety stop
+  joy_teleop/bt_quality_stop: Bluetooth quality stop
+measured_velocity_topic: platform/odom
+collision_state_topic: navigation/collision_monitor/state
+velocity_extractors:
+  geometry_msgs/msg/TwistStamped: twist
+  geometry_msgs/msg/Twist: self
+  nav_msgs/msg/Odometry: twist.twist
+collision_actions:
+  0: DO_NOTHING
+  1: STOP
+  2: SLOWDOWN
+  3: APPROACH
+  4: LIMIT
+twist_mux_timeout_s: 0.5
+zero_velocity: 0.001
+moving_velocity: 0.05
+stalled_velocity: 0.01
+min_command_samples: 5
+pass_through_limit_percent: 50.0
+velocity_match_tolerance_s: 0.05
+stalled_command_percent: 50.0
+```
+
+</details>
+
+### Graph, Topics, and Diagnostics
+
+The lists and mappings below use the defaults shown above. Topic names in the key-topic and velocity
+configuration are relative to the selected robot namespace.
+
+| Parameter               | Description                                                                                                                                                                  |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `heavy_types`           | Message types excluded from general rate monitoring unless `--include-heavy` is enabled or the topic is explicitly added with `--topics`.                                    |
+| `nav_nodes`             | Navigation node names expected under the robot namespace. Missing nodes produce errors.                                                                                      |
+| `localization_nodes`    | Localization node names expected under the robot namespace. Missing nodes produce errors.                                                                                    |
+| `scan_candidates`       | Ordered candidate filtered-scan topics. The first visible candidate is checked; no candidate produces an error.                                                              |
+| `key_topics`            | Key topic names mapped to whether silence is expected while idle: `true` permits no messages; `false` requires received data. Missing topics or publishers are still errors. |
+| `localization_topics`   | Additional key topics using the same Boolean convention, merged into `key_topics` for summary checks.                                                                        |
+| `tf_lookups`            | Transform lookup pairs in `[target_frame, source_frame]` order. Failed lookups produce errors.                                                                               |
+| `log_levels`            | Numeric ROS log levels mapped to their report labels.                                                                                                                        |
+| `diagnostic_levels`     | Numeric diagnostic status levels mapped to report labels.                                                                                                                    |
+| `diagnostic_severity`   | Ranking used to retain the worst diagnostic status. Larger ranks are more severe; the default places `ERROR` above `STALE`, then `WARN`, then `OK`.                          |
+| `environment_variables` | Environment variable names saved in `environment.json`; values come from the PC running the capture.                                                                         |
+| `namespace_exclude`     | First namespace components ignored during automatic robot namespace selection.                                                                                               |
+
+### Localization and Timing Thresholds
+
+| Parameter                        | Default        | Description                                                                                                 |
+| -------------------------------- | -------------- | ----------------------------------------------------------------------------------------------------------- |
+| `clock_skew_limit_s`             | `0.5` s        | Warn when median TF age is outside plus or minus this limit. This can indicate clock skew or network delay. |
+| `localization_std_xy_limit_m`    | `0.25` m       | Position standard-deviation warning threshold.                                                              |
+| `localization_std_yaw_limit_deg` | `10.0` degrees | Yaw standard-deviation warning threshold.                                                                   |
+| `map_odom_jump_limit_m`          | `0.25` m       | Translation change between successive map-to-odom samples above which a jump is reported.                   |
+| `map_odom_jump_limit_deg`        | `10.0` degrees | Rotation change between successive map-to-odom samples above which a jump is reported.                      |
+
+### Goals and Actions
+
+| Parameter                         | Default                                                     | Description                                                                                                                                                        |
+| --------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `goal_status`                     | Mapping shown above                                         | Numeric ROS action statuses mapped to names.                                                                                                                       |
+| `terminal_goal_status`            | `SUCCEEDED`, `CANCELED`, `ABORTED`                          | Status names treated as completed goals.                                                                                                                           |
+| `navigation_actions`              | `navigate_to_pose`, `navigate_through_poses`                | Action names classified as navigation goals in analysis.                                                                                                           |
+| `feedback_actions`                | `navigate_to_pose`, `navigate_through_poses`, `follow_path` | Action names whose feedback is also monitored.                                                                                                                     |
+| `result_request_timeout_s`        | `5.0` s                                                     | Maximum wait for a queued goal's result service to become available.                                                                                               |
+| `goal_pose_match_before_s`        | `2.0` s                                                     | Time before a goal is first observed in which a matching goal pose may be found.                                                                                   |
+| `goal_pose_match_after_s`         | `0.5` s                                                     | Time after a goal is first observed in which a matching goal pose may be found.                                                                                    |
+| `capture_startup_status_window_s` | `2.0` s                                                     | Startup window used to identify goals already present when the first action-status message arrives. Terminal goals are also classified as starting before capture. |
+
+### Velocity Command Analysis
+
+Linear velocity components are measured in m/s and angular velocity in rad/s. The numeric velocity
+thresholds below are applied to each component; a sample is moving if any component's magnitude exceeds
+the relevant threshold.
+
+| Parameter                    | Default                                     | Description                                                                                                                                                                              |
+| ---------------------------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `velocity_chain`             | Ordered topic/description pairs shown above | Command stages compared in order, from navigation output to platform input.                                                                                                              |
+| `velocity_stage_checks`      | Mapping shown above                         | Troubleshooting hints keyed by downstream stage topic, used when command propagation is low. Keep these aligned with `velocity_chain`.                                                   |
+| `teleop_inputs`              | Topic/label mapping shown above             | Teleoperation velocity topics checked for activity overlapping navigation commands.                                                                                                      |
+| `stop_locks`                 | Topic/label mapping shown above             | Boolean stop topics checked for engaged periods.                                                                                                                                         |
+| `measured_velocity_topic`    | `platform/odom`                             | Topic providing measured velocity for command tracking.                                                                                                                                  |
+| `collision_state_topic`      | `navigation/collision_monitor/state`        | Collision monitor state topic used to report interventions.                                                                                                                              |
+| `velocity_extractors`        | Message-type/field-path mapping shown above | How to extract a Twist from each supported message type. `self` means the message itself; dotted paths traverse nested fields.                                                           |
+| `collision_actions`          | Mapping shown above                         | Numeric collision monitor actions mapped to names.                                                                                                                                       |
+| `twist_mux_timeout_s`        | `0.5` s                                     | Matching window for downstream commands and teleoperation overlap, and maximum command age for measured-velocity comparison. This does not change the robot's twist multiplexer timeout. |
+| `zero_velocity`              | `0.001`                                     | Threshold for counting non-zero velocity samples.                                                                                                                                        |
+| `moving_velocity`            | `0.05`                                      | Threshold selecting moving commands for propagation and tracking analysis.                                                                                                               |
+| `stalled_velocity`           | `0.01`                                      | Measured-velocity threshold below which a moving-command sample is considered stationary.                                                                                                |
+| `min_command_samples`        | `5`                                         | Minimum moving-command sample count for propagation calculations and stall warnings.                                                                                                     |
+| `pass_through_limit_percent` | `50.0`%                                     | Warn if the proportion of moving commands matched at the next stage falls below this percentage.                                                                                         |
+| `velocity_match_tolerance_s` | `0.05` s                                    | Allow a downstream sample this much earlier than an upstream command when matching propagation. The later bound uses `twist_mux_timeout_s`.                                              |
+| `stalled_command_percent`    | `50.0`%                                     | Warn when at least this percentage of matched moving-command samples show no measured motion, provided the minimum sample count is met.                                                  |
