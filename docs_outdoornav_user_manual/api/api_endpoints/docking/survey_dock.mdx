@@ -12,9 +12,20 @@ Survey the location of an existing dock. This is required to accurately position
 ensure that proper docking is achieved. The dock target must be clearly visible by the docking lidar for
 this survey process to succeed.
 
-- Service Name: **docking/dock_localizer/survey_dock**
+The survey collects a fixed number of samples of the dock target. Feedback reports the number of samples
+collected and required, whether the dock is currently visible, and the elapsed time. The survey is aborted if the
+dock is not visible for longer than the goal `timeout` (a value of 0 uses the default of 30 seconds).
+The survey can be cancelled at any time, and only one survey can run at a time.
 
-- Service Type: [clearpath_dock_msgs/srv/SurveyDock](pathname:///api/html/clearpath_dock_msgs/srv/SurveyDock.html)
+- Action Name: **docking/dock_localizer/survey_dock**
+
+- Action Type: [clearpath_dock_msgs/action/SurveyDock](pathname:///api/html/clearpath_dock_msgs/action/SurveyDock.html)
+
+:::note
+
+Prior to OutdoorNav 2.5.0, Survey Dock was a service of type `clearpath_dock_msgs/srv/SurveyDock`.
+
+:::
 
 <Tabs groupId="docking_survey">
   <TabItem value="Python" label="Python" default>

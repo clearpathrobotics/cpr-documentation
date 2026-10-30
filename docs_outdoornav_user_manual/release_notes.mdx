@@ -10,6 +10,23 @@ import Style from '/assets/css/changelog.css';
 
 <div class="changelog">
 
+## 2.5.0
+
+### New Features
+
+
+### API Changes
+
+- **Breaking change:** [Survey Dock](./api/api_endpoints/docking/survey_dock.mdx) (`docking/dock_localizer/survey_dock`) has been converted from a service to an action.
+  The `clearpath_dock_msgs/srv/SurveyDock` service has been removed and replaced by the `clearpath_dock_msgs/action/SurveyDock` action.
+  The action provides feedback on the survey progress and supports cancellation. Clients calling the previous service must be updated to use an action client.
+
+### Bug Fixes
+
+
+### Known Issues 
+
+
 ## 2.4.0
 
 ### New Features
