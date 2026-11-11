@@ -37,7 +37,7 @@
     "@docusaurus/tsconfig": "^3.10.2",
     "@docusaurus/types": "^3.10.2",
     "@types/react": "^18.3.1",
-    "cspell": "^10.4.0",
+    "cspell": "^10.4.1",
     "prettier": "^3.9.10",
     "typescript": "^7.0.2"
   },
