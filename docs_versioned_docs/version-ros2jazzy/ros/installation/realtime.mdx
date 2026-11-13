@@ -1,0 +1,290 @@
+---
+title: Realtime Kernel Installation and Setup
+sidebar_label: Realtime Kernel
+sidebar_position: 9
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+## What is Real-Time?
+
+A real-time system must complete its work within a predictable amount of time; it does not mean that
+this work must happen quickly. For a robot controller, this means reading the robot's state, calculating
+a command, and sending that command before the next control cycle. A missed deadline or variation in the
+time between cycles, known as jitter, can interrupt communication or affect the robot's motion. Whether
+the commands must be sent thousands of times a second or once, it is important that the system is able
+to always meet the deadline.
+
+For example, the [Universal Robots RTDE interface](https://docs.universal-robots.com/tutorials/communication-protocol-tutorials/rtde-guide.html)
+can exchange data at up to 500 Hz on e-Series and ur-Series robots, leaving 2 ms between cycles.
+The [Franka Control Interface](https://frankaemika.github.io/docs/) uses a 1000 Hz control loop, leaving
+1 ms between cycles. External controllers communicating with these manipulators need to respond consistently
+within those time limits.
+
+A standard Linux kernel is designed for general-purpose workloads and does not prioritize predictable
+response times. A real-time kernel using `PREEMPT_RT` allows more of the kernel to be preempted by
+high-priority tasks, reducing scheduling latency. Installing the kernel alone does not guarantee that
+every deadline will be met; the controller, network, and computer configuration must also be suitable
+for real-time operation.
+
+## Install the Real-Time Kernel
+
+The following instructions install Clearpath's pre-built real-time kernel on Ubuntu 24.04. Run them on the
+computer that will control the robot.
+
+:::caution
+
+Installing a kernel requires a reboot. If Secure Boot is enabled, the kernel must be signed with a key
+trusted by the computer before it can boot. Keep a working kernel installed so it can be selected from
+the GRUB menu if necessary.
+
+:::
+
+1. If the Clearpath package server is not already configured, add it and update the package list:
+
+   ```bash
+   wget https://packages.clearpathrobotics.com/public.key -O - | sudo apt-key add -
+   sudo sh -c 'echo "deb https://packages.clearpathrobotics.com/stable/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/clearpath-latest.list'
+   sudo apt-get update
+   ```
+
+   `apt-key` is deprecated and may display a warning.
+
+2. Install the kernel, headers, and Linux development headers:
+
+   ```bash
+   sudo apt-get install linux-image-6.8.0-rt8-rt-cpr linux-headers-6.8.0-rt8-rt-cpr linux-libc-dev
+   ```
+
+3. Reboot the computer:
+
+   ```bash
+   sudo reboot
+   ```
+
+4. After rebooting, check the running kernel:
+
+   ```bash
+   uname -r
+   cat /sys/kernel/realtime
+   ```
+
+   The kernel version should be `6.8.0-rt8-rt-cpr`, and the second command should return `1`.
+   If a different kernel is running, select the real-time kernel from the GRUB menu and check again.
+   If the second command reports that the file is missing, the running kernel is not configured
+   with `PREEMPT_RT`.
+
+<details>
+  <summary>Real-time kernel build details</summary>
+
+The published `6.8.0-rt8-rt-cpr` kernel is an `amd64` kernel. It is configured using a pinned
+Ubuntu 24.04 base configuration. After the `6.8-rt8` real-time patch is applied, Clearpath's
+real-time, timer, isolation, interrupt, and debug overrides are applied to the base configuration.
+The configuration is then normalized with `make olddefconfig` to resolve dependencies and set defaults.
+
+The resulting configuration is checked for overrides that did not take effect. The build fails if
+`CONFIG_PREEMPT_RT` is not enabled or if the trusted or revocation key paths remain non-empty.
+Other overrides that did not take effect are reported as warnings, so the final configuration can
+differ from the requested settings.
+
+The following settings were checked in the `.config` included in the published
+[`linux-headers-6.8.0-rt8-rt-cpr` package](https://packages.clearpathrobotics.com/stable/ubuntu/pool/main/l/linux-upstream/linux-headers-6.8.0-rt8-rt-cpr_6.8.0-1_amd64.deb):
+
+```text
+CONFIG_PREEMPT_RT=y
+# CONFIG_PREEMPT_NONE is not set
+# CONFIG_PREEMPT_VOLUNTARY is not set
+# CONFIG_PREEMPT is not set
+CONFIG_HIGH_RES_TIMERS=y
+CONFIG_HZ_1000=y
+CONFIG_HZ=1000
+CONFIG_NO_HZ_FULL=y
+CONFIG_RCU_NOCB_CPU=y
+CONFIG_CPU_ISOLATION=y
+CONFIG_IRQ_FORCED_THREADING=y
+CONFIG_IRQ_TIME_ACCOUNTING=y
+```
+
+These settings enable real-time preemption, high-resolution timers, and support for CPU isolation
+and interrupt threading. The `1000` Hz kernel timer setting does not set the robot controller's
+update rate. CPU isolation and full tick suppression also require appropriate runtime configuration;
+enabling them in the kernel does not isolate cores by itself.
+
+The published configuration also sets `CONFIG_DEBUG_INFO_NONE=y` and disables `CONFIG_DEBUG_PREEMPT`,
+`CONFIG_LATENCYTOP`, and `CONFIG_PROVE_LOCKING`. Although `CONFIG_DEBUG_KERNEL` is requested to be
+disabled, the published configuration has `CONFIG_DEBUG_KERNEL=y`. It sets
+`CONFIG_SYSTEM_TRUSTED_KEYS=""` and disables `CONFIG_SYSTEM_REVOCATION_LIST`. It also enables
+`CONFIG_MODULE_SIG` and `CONFIG_MODULE_SIG_ALL`, while `CONFIG_MODULE_SIG_FORCE` is disabled.
+These configuration options alone do not establish whether the published kernel image is signed
+by a key trusted by the target computer.
+
+To inspect the complete configuration of the installed kernel, run:
+
+```bash
+less /boot/config-6.8.0-rt8-rt-cpr
+```
+
+</details>
+
+## Configure Real-Time Permissions
+
+Create a `realtime` group and add the user that will run the robot controller:
+
+```bash
+sudo addgroup realtime
+sudo usermod -a -G realtime $(whoami)
+```
+
+If the group already exists, you can skip the `addgroup` command. Run the `usermod` command while
+logged in as the controller user.
+
+Edit `/etc/security/limits.conf`:
+
+```bash
+sudo nano /etc/security/limits.conf
+```
+
+Add the following lines:
+
+```text
+@realtime soft rtprio 99
+@realtime soft memlock 102400
+@realtime hard rtprio 99
+@realtime hard memlock 102400
+```
+
+These settings allow members of the group to request real-time scheduling priorities up to 99 and
+lock up to 102400 KiB of memory, preventing that memory from being swapped out. The controller must
+still request real-time scheduling and lock its memory as needed.
+
+Log out and log back in for the group membership and limits to take effect. Verify them in the new
+session:
+
+```bash
+groups
+ulimit -Sr
+ulimit -Hr
+ulimit -Sl
+ulimit -Hl
+```
+
+The group list should include `realtime`, the real-time priority limits should be `99`, and the
+memory lock limits should be `102400` KiB. These limits apply to login sessions that use
+`pam_limits`. If the controller runs as a systemd service, configure its user and `LimitRTPRIO`
+and `LimitMEMLOCK` settings in the service as well.
+
+### Configure the Manipulators Service
+
+For manipulators launched by `clearpath-manipulators.service`, set the limits in a systemd override.
+The following example uses the `robot` user; if your service runs as a different user, use that
+user instead. Make sure the service user is a member of the `realtime` group.
+
+Open the service override:
+
+```bash
+sudo systemctl edit clearpath-manipulators.service
+```
+
+Add the following lines above the editor's comment marker, then save and exit:
+
+```ini
+[Service]
+User=robot
+LimitRTPRIO=infinity
+LimitMEMLOCK=infinity
+```
+
+The override preserves the rest of the service configuration and applies unlimited real-time
+priority and locked-memory limits to the service, rather than the login limits above.
+
+:::caution
+
+Restarting the service interrupts manipulator control. Make sure the robot is in a safe state
+before restarting it.
+
+:::
+
+Restart the service to apply the changes and check its configured user and limits:
+
+```bash
+sudo systemctl restart clearpath-manipulators.service
+sudo systemctl status clearpath-manipulators.service
+systemctl show clearpath-manipulators.service -p User -p LimitRTPRIO -p LimitMEMLOCK
+```
+
+## Configure CPU Performance
+
+The CPU frequency governor and idle states can also affect the time it takes for a controller to
+respond. A processor that lowers its frequency or enters a deep idle state between control cycles
+may take longer to run the next cycle. This variation is especially important when the controller
+has only 1 or 2 ms to communicate with a manipulator.
+
+:::note
+
+The settings below apply to all CPU cores and can increase power consumption and heat. Monitor
+the computer's temperature and ensure it has adequate cooling. Test the controller under its
+expected workload to confirm that its timing requirements are met.
+
+:::
+
+### Configure the CPU Governor and Idle States
+
+The `performance` governor requests higher CPU performance rather than scaling frequency to save
+power. This can reduce delays caused by frequency changes, although the actual frequency still
+depends on the processor, its driver, and thermal or power limits.
+
+When a CPU core has no work to do, it can enter an idle state, or C-state. Deeper states such as
+C6 save more power, but take longer to exit than the shallow C1 state. Limiting idle states can
+reduce wake-up latency and jitter when a real-time control cycle starts.
+
+The following instructions configure the governor and limit the idle state at boot. The idle-state
+parameter applies to computers using the `intel_idle` driver and limits the driver to its first
+non-polling idle state, which is typically C1.
+
+1. Check the active idle driver:
+
+   ```bash
+   cat /sys/devices/system/cpu/cpuidle/current_driver
+   ```
+
+   If the output is not `intel_idle`, the idle-state parameter below will not configure the driver.
+   Consult the driver's documentation and the computer's firmware settings to limit idle states.
+   You can still configure the governor with the instructions below.
+
+2. Edit the GRUB configuration:
+
+   ```bash
+   sudo nano /etc/default/grub
+   ```
+
+   Add `cpufreq.default_governor=performance` and, if using `intel_idle`, `intel_idle.max_cstate=1`
+   inside the existing `GRUB_CMDLINE_LINUX_DEFAULT` quotes. Keep any existing options. For example:
+
+   ```text
+   GRUB_CMDLINE_LINUX_DEFAULT="quiet splash cpufreq.default_governor=performance intel_idle.max_cstate=1"
+   ```
+
+3. Update GRUB and reboot:
+
+   ```bash
+   sudo update-grub
+   sudo reboot
+   ```
+
+4. After rebooting, check the boot parameters, governor, and idle states exposed for each core:
+
+   ```bash
+   cat /proc/cmdline
+   grep . /sys/devices/system/cpu/cpufreq/policy*/scaling_governor
+   grep . /sys/devices/system/cpu/cpu*/cpuidle/state*/name
+   ```
+
+   Confirm that the command line includes `cpufreq.default_governor=performance` and each CPU
+   frequency policy reports `performance`. If not, confirm that the CPU frequency driver supports
+   the `performance` governor. This parameter sets the initial default; other power management
+   software may change the governor after boot.
+
+   If using `intel_idle`, confirm that the command line also includes `intel_idle.max_cstate=1` and
+   that no deep idle states, such as C6, are exposed. Depending on the processor, a polling state
+   may also be listed. If the exposed states do not match the expected C1 limit, check the processor
+   and firmware configuration before running the controller.
