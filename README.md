@@ -49,6 +49,23 @@ The source files in this repository are built and deployed as docs.clearpathrobo
 
 <br/>
 
+## Run locally with a Dev Container (recommended)
+
+This repository provides a [Dev Container](https://containers.dev/) for a fully configured, reproducible development environment.
+
+1.  Install [Docker](https://www.docker.com/) and the _Dev Containers_ VS Code extension.
+2.  Clone this repository,
+
+        git clone https://github.com/clearpathrobotics/cpr-documentation.git
+
+3.  Open the folder in VS Code and select **Reopen in Container**.
+
+The container automatically provisions Node.js, the recommended extensions, and all project dependencies, then serves the site on port 3000.
+When using the Dev Container, you can skip the manual setup below.
+
+
+<br/>
+
 ## Steps to run this on your computer locally:
 
 1.  System dependencies, common to most web development

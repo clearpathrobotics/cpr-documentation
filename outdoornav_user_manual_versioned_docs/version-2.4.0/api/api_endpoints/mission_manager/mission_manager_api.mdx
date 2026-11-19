@@ -1,0 +1,102 @@
+---
+title: Mission Manager API Endpoints
+sidebar_label: Mission Manager API
+sidebar_position: 5
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+:::note
+
+All nodes, topics, and services are namespace prefixed with the robot serial number.
+
+If your serial number is `cpr-a300-00001`, then your namespace
+will be `a300_00001`. This can be overwritten in the `/etc/clearpath/robot.yaml` file.
+
+:::
+
+&nbsp;
+
+## Publishers {#mission-manager-publishers}
+
+&nbsp;
+
+| Topic                   | Message type                                                                                                 | Description     | QoS                                           |
+| :---------------------- | :----------------------------------------------------------------------------------------------------------- | :-------------- | :-------------------------------------------- |
+| mission_manager/state | [clearpath_mission_manager_msgs/msg/StorageState](pathname:///api/html/clearpath_mission_manager_msgs/msg/StorageState.html) | Database containing all map/mission data | Latched |
+| mission_manager/network_maps_validity | [clearpath_mission_manager_msgs/msg/NetworkMapValidityState](pathname:///api/html/clearpath_mission_manager_msgs/msg/NetworkMapValidityState.html) | Validity state of all maps | Latched  |
+
+&nbsp;
+
+## Services {#mission-manager-services}
+
+&nbsp;
+
+| Service                 | Service type                                                                                                 | Description     |
+| :---------------------- | :----------------------------------------------------------------------------------------------------------- | :-------------- |
+| mission_manager/add_network_edge | [clearpath_mission_manager_msgs/srv/AddNetworkEdge](pathname:///api/html/clearpath_mission_manager_msgs/srv/AddNetworkEdge.html) | Add edge to network map |
+| mission_manager/add_network_path | [clearpath_mission_manager_msgs/srv/AddNetworkPath](pathname:///api/html/clearpath_mission_manager_msgs/srv/AddNetworkPath.html) | Add a path to map |
+| mission_manager/add_network_point | [clearpath_mission_manager_msgs/srv/AddNetworkPoint](pathname:///api/html/clearpath_mission_manager_msgs/srv/AddNetworkPoint.html) | Add a map point |
+| mission_manager/add_tag | [clearpath_mission_manager_msgs/srv/AddRemoveTag](pathname:///api/html/clearpath_mission_manager_msgs/srv/AddRemoveTag.html) | Add tag to map point |
+| mission_manager/add_task_to_start | [clearpath_mission_manager_msgs/srv/AddRemoveById](pathname:///api/html/clearpath_mission_manager_msgs/srv/AddRemoveById.html) | Add task to list of start tasks |
+| mission_manager/add_task_to_stop | [clearpath_mission_manager_msgs/srv/AddRemoveById](pathname:///api/html/clearpath_mission_manager_msgs/srv/AddRemoveById.html) | Add task to list of stop tasks |
+| mission_manager/add_task_to_waypoint | [clearpath_mission_manager_msgs/srv/AddRemoveById](pathname:///api/html/clearpath_mission_manager_msgs/srv/AddRemoveById.html) | Add task to a Goal point |
+| mission_manager/add_waypoint_to_mission | [clearpath_mission_manager_msgs/srv/AddRemoveById](pathname:///api/html/clearpath_mission_manager_msgs/srv/AddRemoveById.html) | Add Goal to mission |
+| mission_manager/clone_mission | [clearpath_mission_manager_msgs/srv/CloneMission](pathname:///api/html/clearpath_mission_manager_msgs/srv/CloneMission.html) | Clone mission |
+| mission_manager/clone_network_map | [clearpath_mission_manager_msgs/srv/CloneNetworkMap](pathname:///api/html/clearpath_mission_manager_msgs/srv/CloneNetworkMap.html) | Clone map |
+| mission_manager/clone_network_mission | [clearpath_mission_manager_msgs/srv/CloneNetworkMission](pathname:///api/html/clearpath_mission_manager_msgs/srv/CloneNetworkMission.html) | Clone mission |
+| mission_manager/clone_point_of_interest | [clearpath_mission_manager_msgs/srv/ClonePointOfInterest](pathname:///api/html/clearpath_mission_manager_msgs/srv/ClonePointOfInterest.html) | Clone point of interest |
+| mission_manager/clone_task | [clearpath_mission_manager_msgs/srv/GetTask](pathname:///api/html/clearpath_mission_manager_msgs/srv/GetTask.html) | Clone task  |
+| mission_manager/clone_waypoint | [clearpath_mission_manager_msgs/srv/GetWaypoint](pathname:///api/html/clearpath_mission_manager_msgs/srv/GetWaypoint.html) | Clone goal |
+| mission_manager/create_network_map | [clearpath_mission_manager_msgs/srv/CreateNetworkMap](pathname:///api/html/clearpath_mission_manager_msgs/srv/CreateNetworkMap.html) | Create map |
+| mission_manager/create_network_mission | [clearpath_mission_manager_msgs/srv/CreateNetworkMission](pathname:///api/html/clearpath_mission_manager_msgs/srv/CreateNetworkMission.html) | Create mission |
+| mission_manager/create_point_of_interest | [clearpath_mission_manager_msgs/srv/CreatePointOfInterest](pathname:///api/html/clearpath_mission_manager_msgs/srv/CreatePointOfInterest.html) | Create point of interest |
+| mission_manager/create_task | [clearpath_mission_manager_msgs/srv/CreateTask](pathname:///api/html/clearpath_mission_manager_msgs/srv/CreateTask.html) | Create task |
+| mission_manager/create_waypoint | [clearpath_mission_manager_msgs/srv/CreateWaypoint](pathname:///api/html/clearpath_mission_manager_msgs/srv/CreateWaypoint.html) | Create Goal |
+| mission_manager/create_waypoint_from_poi | [clearpath_mission_manager_msgs/srv/CreateWaypointFromPoi](pathname:///api/html/clearpath_mission_manager_msgs/srv/CreateWaypointFromPoi.html) | Create Goal from point of interest |
+| mission_manager/delete_all | [clearpath_mission_manager_msgs/srv/DeleteEverything](pathname:///api/html/clearpath_mission_manager_msgs/srv/DeleteEverything.html) | Delete all mission/map/poi data |
+| mission_manager/delete_network_edge | [clearpath_mission_manager_msgs/srv/AddRemoveById](pathname:///api/html/clearpath_mission_manager_msgs/srv/AddRemoveById.html) | Delete map edge |
+| mission_manager/delete_network_edges | [clearpath_mission_manager_msgs/srv/DeleteMultiple](pathname:///api/html/clearpath_mission_manager_msgs/srv/DeleteMultiple.html) | Delete map edges |
+| mission_manager/delete_network_map | [clearpath_mission_manager_msgs/srv/DeleteById](pathname:///api/html/clearpath_mission_manager_msgs/srv/DeleteById.html) | Delete map |
+| mission_manager/delete_network_mission | [clearpath_mission_manager_msgs/srv/DeleteById](pathname:///api/html/clearpath_mission_manager_msgs/srv/DeleteById.html) | Delete mission |
+| mission_manager/delete_network_point | [clearpath_mission_manager_msgs/srv/AddRemoveById](pathname:///api/html/clearpath_mission_manager_msgs/srv/AddRemoveById.html) | Delete map point |
+| mission_manager/delete_network_points | [clearpath_mission_manager_msgs/srv/DeleteMultiple](pathname:///api/html/clearpath_mission_manager_msgs/srv/DeleteMultiple.html) | Delete map points |
+| mission_manager/delete_orphan_objects | [clearpath_mission_manager_msgs/srv/DeleteEverything](pathname:///api/html/clearpath_mission_manager_msgs/srv/DeleteEverything.html) | Delete orphaned objects |
+| mission_manager/delete_point_of_interest | [clearpath_mission_manager_msgs/srv/DeleteById](pathname:///api/html/clearpath_mission_manager_msgs/srv/DeleteById.html) | Delete point of interest |
+| mission_manager/delete_task | [clearpath_mission_manager_msgs/srv/DeleteById](pathname:///api/html/clearpath_mission_manager_msgs/srv/DeleteById.html) | Delete task |
+| mission_manager/delete_tasks | [clearpath_mission_manager_msgs/srv/DeleteMultiple](pathname:///api/html/clearpath_mission_manager_msgs/srv/DeleteMultiple.html) | Delete tasks |
+| mission_manager/delete_waypoint | [clearpath_mission_manager_msgs/srv/DeleteById](pathname:///api/html/clearpath_mission_manager_msgs/srv/DeleteById.html) | Delete Goal |
+| mission_manager/delete_waypoints | [clearpath_mission_manager_msgs/srv/DeleteMultiple](pathname:///api/html/clearpath_mission_manager_msgs/srv/DeleteMultiple.html) | Delete Goals |
+| mission_manager/remove_tag | [clearpath_mission_manager_msgs/srv/AddRemoveTag](pathname:///api/html/clearpath_mission_manager_msgs/srv/AddRemoveTag.html) | Remove tag from item |
+| mission_manager/export | [clearpath_mission_manager_msgs/srv/ExportData](pathname:///api/html/clearpath_mission_manager_msgs/srv/ExportData.html) | Export mission/map/poi database |
+| mission_manager/get_all | [clearpath_mission_manager_msgs/srv/GetEverything](pathname:///api/html/clearpath_mission_manager_msgs/srv/GetEverything.html) | Return all map/mission/poi data |
+| mission_manager/get_all_network_maps | [clearpath_mission_manager_msgs/srv/GetAllNetworkMaps](pathname:///api/html/clearpath_mission_manager_msgs/srv/GetAllNetworkMaps.html) | Return all maps |
+| mission_manager/get_all_network_missions | [clearpath_mission_manager_msgs/srv/GetAllNetworkMissions](pathname:///api/html/clearpath_mission_manager_msgs/srv/GetAllNetworkMissions.html) | Return all missions |
+| mission_manager/get_all_points_of_interest | [clearpath_mission_manager_msgs/srv/GetAllPointsOfInterest](pathname:///api/html/clearpath_mission_manager_msgs/srv/GetAllPointsOfInterest.html) | Return all points of interest |
+| mission_manager/get_all_tasks | [clearpath_mission_manager_msgs/srv/GetAllTasks](pathname:///api/html/clearpath_mission_manager_msgs/srv/GetAllTasks.html) | Return all tasks |
+| mission_manager/get_all_waypoints | [clearpath_mission_manager_msgs/srv/GetAllWaypoints](pathname:///api/html/clearpath_mission_manager_msgs/srv/GetAllWaypoints.html) | Return all goals |
+| mission_manager/get_network_map | [clearpath_mission_manager_msgs/srv/GetNetworkMap](pathname:///api/html/clearpath_mission_manager_msgs/srv/GetNetworkMap.html) | Return specific map |
+| mission_manager/get_network_mission | [clearpath_mission_manager_msgs/srv/GetNetworkMission](pathname:///api/html/clearpath_mission_manager_msgs/srv/GetNetworkMission.html) | Return specific mission |
+| mission_manager/get_point_of_interest | [clearpath_mission_manager_msgs/srv/GetPointOfInterest](pathname:///api/html/clearpath_mission_manager_msgs/srv/GetPointOfInterest.html) | Return specific point of interest |
+| mission_manager/get_task | [clearpath_mission_manager_msgs/srv/GetTask](pathname:///api/html/clearpath_mission_manager_msgs/srv/GetTask.html) | Return specific task |
+| mission_manager/get_waypoint | [clearpath_mission_manager_msgs/srv/GetWaypoint](pathname:///api/html/clearpath_mission_manager_msgs/srv/GetWaypoint.html) | Return specific goal |
+| mission_manager/import | [clearpath_mission_manager_msgs/srv/ImportData](pathname:///api/html/clearpath_mission_manager_msgs/srv/ImportData.html) | Import mission/map/poi data to database |
+| mission_manager/import_mission | [clearpath_mission_manager_msgs/srv/ImportMission](pathname:///api/html/clearpath_mission_manager_msgs/srv/ImportMission.html) | Import mission to database |
+| mission_manager/import_network_map | [clearpath_mission_manager_msgs/srv/ImportNetworkMap](pathname:///api/html/clearpath_mission_manager_msgs/srv/ImportNetworkMap.html) | Import map to database |
+| mission_manager/import_network_mission | [clearpath_mission_manager_msgs/srv/ImportNetworkMission](pathname:///api/html/clearpath_mission_manager_msgs/srv/ImportNetworkMission.html) | Import mission to database |
+| mission_manager/remove_task_from_start | [clearpath_mission_manager_msgs/srv/AddRemoveById](pathname:///api/html/clearpath_mission_manager_msgs/srv/AddRemoveById.html) | Remove task from list of start tasks |
+| mission_manager/remove_task_from_stop | [clearpath_mission_manager_msgs/srv/AddRemoveById](pathname:///api/html/clearpath_mission_manager_msgs/srv/AddRemoveById.html) | Remove  task from list of stop tasks|
+| mission_manager/remove_task_from_waypoint | [clearpath_mission_manager_msgs/srv/AddRemoveById](pathname:///api/html/clearpath_mission_manager_msgs/srv/AddRemoveById.html) | Remove task from goal |
+| mission_manager/remove_waypoint_from_mission | [clearpath_mission_manager_msgs/srv/AddRemoveById](pathname:///api/html/clearpath_mission_manager_msgs/srv/AddRemoveById.html) | Remove goal from mission |
+| mission_manager/restore | [clearpath_mission_manager_msgs/srv/ImportData](pathname:///api/html/clearpath_mission_manager_msgs/srv/ImportData.html) | Restore data from a file |
+| mission_manager/split_network_edge | [clearpath_mission_manager_msgs/srv/SplitNetworkEdge](pathname:///api/html/clearpath_mission_manager_msgs/srv/SplitNetworkEdge.html) | Split a map edge |
+| mission_manager/update_network_edge | [clearpath_mission_manager_msgs/srv/UpdateNetworkEdge](pathname:///api/html/clearpath_mission_manager_msgs/srv/UpdateNetworkEdge.html) | Update map edge |
+| mission_manager/update_network_edges | [clearpath_mission_manager_msgs/srv/UpdateNetworkEdges](pathname:///api/html/clearpath_mission_manager_msgs/srv/UpdateNetworkEdges.html) | Update map edges |
+| mission_manager/update_network_map | [clearpath_mission_manager_msgs/srv/UpdateNetworkMap](pathname:///api/html/clearpath_mission_manager_msgs/srv/UpdateNetworkMap.html) | Update map |
+| mission_manager/update_network_mission | [clearpath_mission_manager_msgs/srv/UpdateNetworkMission](pathname:///api/html/clearpath_mission_manager_msgs/srv/UpdateNetworkMissiond.html) | Update mission |
+| mission_manager/update_network_point | [clearpath_mission_manager_msgs/srv/UpdateNetworkPoint](pathname:///api/html/clearpath_mission_manager_msgs/srv/UpdateNetworkPoint.html) | Update map point |
+| mission_manager/update_network_points | [clearpath_mission_manager_msgs/srv/UpdateNetworkPoints](pathname:///api/html/clearpath_mission_manager_msgs/srv/UpdateNetworkPoints.html) | Update map points |
+| mission_manager/update_point_of_interest | [clearpath_mission_manager_msgs/srv/UpdatePointOfInterest](pathname:///api/html/clearpath_mission_manager_msgs/srv/UpdatePointOfInterest.html) | Update points of interest |
+| mission_manager/update_task | [clearpath_mission_manager_msgs/srv/UpdateTask](pathname:///api/html/clearpath_mission_manager_msgs/srv/UpdateTask.html) | Update task |
+| mission_manager/update_waypoint | [clearpath_mission_manager_msgs/srv/UpdateWaypoint](pathname:///api/html/clearpath_mission_manager_msgs/srv/UpdateWaypoint.html) | Update goal |
+| mission_manager/validate_network_map | [clearpath_mission_manager_msgs/srv/ValidateNetworkMap](pathname:///api/html/clearpath_mission_manager_msgs/srv/ValidateNetworkMap.html) | Check validity of specific map |

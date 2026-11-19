@@ -88,7 +88,9 @@ To re-pair the PS5 controller or pair a new PS5 controller:
 ros2 run clearpath_bt_joy pair_bt_controller
 ```
 
-The script will automatically scan for a nearby DualSense, then pair, trust, and connect it.
+The script will automatically scan for a nearby DualSense that is in pairing mode, then trust, pair, and connect it.
+Previously paired controllers that are not in pairing mode are ignored. If the controller being paired was
+paired to this computer before, its old pairing is removed first so a fresh pairing is created.
 Once paired, the controller will reconnect automatically on every subsequent power-on.
 
 Optionally, if you already know the controller's Bluetooth MAC address, you can skip scanning and pass it directly:
@@ -117,20 +119,24 @@ bluetoothctl
 
 ```
 agent on
+default-agent
 scan on
 ```
 
 4. Put the controller in pairing mode. Press and hold the **PS** and **Create** buttons on your controller until
    the light bar begins rapidly flashing blue.
 5. The Bluetooth scan will display the MAC addresses of nearby devices. Determine which MAC address
-   corresponds to the controller and copy it. In the Bluetooth control application, run:
+   corresponds to the controller and copy it. If the controller was paired to this computer before, first run
+   `remove <MAC Address>` and wait for it to reappear in the scan. Then, in the Bluetooth control application, run:
 
 ```
 scan off
-pair <MAC Address>
 trust <MAC Address>
+pair <MAC Address>
 connect <MAC Address>
 ```
+
+Wait for each command to report success before entering the next one.
 
 :::
 
