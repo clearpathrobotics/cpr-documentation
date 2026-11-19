@@ -66,7 +66,7 @@ drivetrain:
   control: diff_rwd
   wheels:
     front: caster
-    rear: outdoor
+    rear: indoor
 ```
   </TabItem>
 </Tabs>
@@ -83,7 +83,7 @@ Not all configurations are valid. For example, an `omni_4wd` controller must be 
 | Platform |                             Control                             |                Front Wheels                |                Rear Wheels                 |
 | :------: | :-------------------------------------------------------------: | :----------------------------------------: | :----------------------------------------: |
 |   A200   |                          [`diff_4wd`]                           |         [`outdoor`] <br/> `indoor`         |         [`outdoor`] <br/> `indoor`         |
-|   A300   | [`diff_4wd`] <br/> `diff_fwd` <br/> `diff_rwd` <br/> `omni_4wd` | [`outdoor`] <br/> `mecanum` <br/> `caster` | [`outdoor`] <br/> `mecanum` <br/> `caster` |
+|   A300   | [`diff_4wd`] <br/> `diff_fwd` <br/> `diff_rwd` <br/> `omni_4wd` | [`outdoor`] <br/> `indoor` <br/> `mecanum` <br/> `caster` | [`outdoor`] <br/> `indoor` <br/> `mecanum` <br/> `caster` |
 |   J100   |                          [`diff_4wd`]                           |                [`outdoor`]                 |                [`outdoor`]                 |
 |   W200   |                          [`diff_4wd`]                           |         [`outdoor`] <br/> `tracks`         |         [`outdoor`] <br/> `tracks`         |
 |  DD100   |                          [`diff_fwd`]                           |                 [`indoor`]                 |                 [`caster`]                 |
