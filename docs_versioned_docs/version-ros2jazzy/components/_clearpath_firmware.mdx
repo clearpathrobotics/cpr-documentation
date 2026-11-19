@@ -7,7 +7,6 @@ Before flashing firmware, place your robot up on blocks or disengage the drivetr
 
 :::
 
-
 ### Download the Clearpath Firmware package from the Clearpath package server
 
 On an external computer, run the following commands:
@@ -71,6 +70,7 @@ sudo apt install ros-jazzy-clearpath-firmware
 
     Open the lid of the robot to expose the MCU and make sure the mini-USB cable is connected to the robot computer.
     Switch the <code>PWR_MODE</code> switch from <code>NORM</code> to <code>ALT</code>. If the robot is on, press the <code>M_RST</code> button. Otherwise, turn the robot on with the power button.
+
   </TabItem>
   <TabItem
     value="W200"
@@ -110,6 +110,7 @@ sudo apt install ros-jazzy-clearpath-firmware
     **Place the W200 MCU into bootloader mode**
 
     While pressing <code>BT0</code> on the MCU, connect the external computer to Warthog's MCU using a USB cable.
+
   </TabItem>
   <TabItem
     value="R100"
@@ -157,15 +158,17 @@ sudo apt install ros-jazzy-clearpath-firmware
     The Ridgeback's MCU is normally rotated 90 degrees when it is installed in the robot; the `NORM` position is typically towards the top of the robot's chassis and the `AUX` position is normally towards the bottom.
 
     :::
+
   </TabItem>
     <TabItem
     value="DX100"
     label="DX100"
     default
   >
-    :::note
+    :::safety-caution
 
-    ROS 2 Jazzy firmware on DX100 must be flashed via USB. Flashing via Ethernet is not supported at this time.
+    For firmware versions 3.0.6 or greater, ethernet firmware flashing is available.
+    This step is only necessary for flashing ROS 2 Jazzy firmware on DX100 via USB. Flashing via Ethernet does not require these steps.
 
     :::
 
@@ -186,15 +189,17 @@ sudo apt install ros-jazzy-clearpath-firmware
     As is shown in the image above, set the `PWR_MODE` switch to the `ALT` position.
 
     Press the `M_RST` or restart the robot using the HMI panel. Now, the MCU is in bootloader mode, ready to receive new firmware.
+
   </TabItem>
     <TabItem
     value="DX150"
     label="DX150"
     default
   >
-    :::note
+    :::safety-caution
 
-    ROS 2 Jazzy firmware on DX150 must be flashed via USB. Flashing via Ethernet is not supported at this time.
+    For firmware versions 3.0.6 or greater, ethernet firmware flashing is available.
+    This step is only necessary for flashing ROS 2 Jazzy firmware on DX150 via USB. Flashing via Ethernet does not require these steps.
 
     :::
 
@@ -215,9 +220,9 @@ sudo apt install ros-jazzy-clearpath-firmware
     As is shown in the image above, set the `PWR_MODE` switch to the `ALT` position.
 
     Press the `M_RST` or restart the robot using the HMI panel. Now, the MCU is in bootloader mode, ready to receive new firmware.
+
   </TabItem>
 </Tabs>
-
 
 ### Flash the firmware
 
@@ -230,14 +235,14 @@ ros2 run clearpath_firmware flash
 
 Select your platform, then select which method of flashing you would like to use.
 
-| Platform            | Flashing Method |
-| :------------------ | :-------------- |
-| Husky A300          | Ethernet        |
-| Jackal J100         | USB             |
-| Warthog W200        | USB             |
-| Ridgeback R100      | USB             |
-| Dingo DD100 / DO100 | USB             |
-| Dingo DD150 / DO150 | USB             |
+| Platform            | Flashing Method                          |
+| :------------------ | :--------------------------------------- |
+| Husky A300          | Ethernet                                 |
+| Jackal J100         | USB                                      |
+| Warthog W200        | USB                                      |
+| Ridgeback R100      | USB                                      |
+| Dingo DD100 / DO100 | USB or Ethernet (preferred after v3.0.6) |
+| Dingo DD150 / DO150 | USB or Ethernet (preferred after v3.0.6) |
 
 :::caution
 
@@ -254,7 +259,7 @@ flashing, you can attempt to flash again over USB.
     label="A300"
   >
 
-  After flashing, the robot powers off. Power the robot back on by pressing the Power button.
+After flashing, the robot powers off. Power the robot back on by pressing the Power button.
 
   </TabItem>
 
@@ -263,8 +268,8 @@ flashing, you can attempt to flash again over USB.
     label="J100"
   >
 
-  Switch the <code>PWR_MODE</code> switch from <code>ALT</code> back to <code>NORM</code>. The robot will turn off.
-  Power it back on with the power button.
+Switch the <code>PWR_MODE</code> switch from <code>ALT</code> back to <code>NORM</code>. The robot will turn off.
+Power it back on with the power button.
 
   </TabItem>
 
@@ -274,7 +279,7 @@ flashing, you can attempt to flash again over USB.
     default
   >
 
-  Press the <code>RST</code> button. The MCU should enter regular operation.
+Press the <code>RST</code> button. The MCU should enter regular operation.
 
   </TabItem>
 
@@ -283,30 +288,32 @@ flashing, you can attempt to flash again over USB.
     label="R100"
   >
 
-  Switch the <code>PWR_MODE</code> switch from <code>ALT</code> back to <code>NORM</code>. The robot will turn off.
-  Power it back on with the power button.
+Switch the <code>PWR_MODE</code> switch from <code>ALT</code> back to <code>NORM</code>. The robot will turn off.
+Power it back on with the power button.
 
   </TabItem>
-
 
   <TabItem
     value="DX100"
     label="DX100"
   >
 
-  Switch the <code>PWR_MODE</code> switch from <code>ALT</code> back to <code>NORM</code>. The robot will turn off.
-  Power it back on with the power button.
+After flashing via Ethernet, the robot powers off. Power the robot back on by pressing the Power button.
+
+After flashing via USB, switch the <code>PWR_MODE</code> switch from <code>ALT</code> back to <code>NORM</code>. The robot will turn off.
+Power it back on with the power button.
 
   </TabItem>
-
 
   <TabItem
     value="DX150"
     label="DX150"
   >
 
-  Switch the <code>PWR_MODE</code> switch from <code>ALT</code> back to <code>NORM</code>. The robot will turn off.
-  Power it back on with the power button.
+After flashing via Ethernet, the robot powers off. Power the robot back on by pressing the Power button.
+
+After flashing via USB, switch the <code>PWR_MODE</code> switch from <code>ALT</code> back to <code>NORM</code>. The robot will turn off.
+Power it back on with the power button.
 
   </TabItem>
 

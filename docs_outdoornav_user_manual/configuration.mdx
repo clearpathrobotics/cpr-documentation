@@ -1,0 +1,236 @@
+---
+title: Configuration
+sidebar_label: Configuration
+sidebar_position: 6
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+This page describes OutdoorNav's software configuration files. Use `outdoornav.yaml` to control which sensor
+drivers and software components OutdoorNav starts, and see the UI configuration section for settings that
+control which views and cameras are available in the user interface. These files are separate from the
+Clearpath [robot configuration YAML](/docs/ros2jazzy/ros/config/yaml/overview), which describes the robot and its installed hardware.
+
+## OutdoorNav Launch
+
+The file is stored in `/opt/onav/<version>/config/` on the robot, where `<version>` is the installed OutdoorNav
+version. It also accepts optional navigation and docking parameter files.
+
+The reference template for OutdoorNav 2.5.0 is [`outdoornav.yaml.all`](https://gitlab.clearpathrobotics.com/cpr-outdoornav/clearpath_outdoornav_setup/-/blob/ros2/onav/outdoornav.yaml.all?ref_type=heads).
+The values below are the template's example values; your robot's configuration may differ.
+
+### Example
+
+```yaml
+version: 2.5.0
+simulation: false
+sensors:
+  axis_q62:
+    enabled: true
+    throttle_rate: 10
+  flir_boson:
+    enabled: false
+  hokuyo_side:
+    enabled: true
+  microphone:
+    enabled: false
+  oakd_front:
+    enabled: true
+  oakd_rear:
+    enabled: true
+  ouster:
+    enabled: true
+  robin_w:
+    enabled: true
+  xvn:
+    enabled: true
+autonomy:
+  control_selection:
+    enabled: true
+  logger:
+    enabled: true
+  mission_manager:
+    enabled: true
+  path_previewer:
+    enabled: true
+localization:
+  enabled: true
+navigation:
+  enabled: true
+  param_file: ""
+safety:
+  watchdogs:
+    enabled: true
+docking:
+  enabled: false
+  param_file: ""
+```
+
+### Metadata
+
+| Key       | Value / datatype | Description                                                                                                                                                       |
+| --------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `version` | version string   | OutdoorNav release metadata passed to the autonomy components. Keep it consistent with the installed OutdoorNav release; it does not select or install a release. |
+
+### Simulation
+
+| Key          | Value / datatype | Description                                                                                                                                                                            |
+| ------------ | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `simulation` | Boolean          | Selects simulation mode for OutdoorNav navigation. Use `true` only with an OutdoorNav release and simulation setup that support it; this setting does not start a simulator by itself. |
+
+### Sensors
+
+Each sensor entry's `enabled` value controls whether OutdoorNav launches the corresponding sensor integration. The sensor must also be present and configured in `robot.yaml`; enabling it here does not define the hardware connection or driver parameters.
+
+| Key           | Example `enabled` | Description                                       |
+| ------------- | ----------------- | ------------------------------------------------- |
+| `axis_q62`    | `true`            | Axis Q6225-LE PTZ camera.                         |
+| `flir_boson`  | `false`           | FLIR Boson thermal camera.                        |
+| `hokuyo_side` | `true`            | Side-mounted Hokuyo 2D LiDAR.                     |
+| `microphone`  | `false`           | Microphone integration.                           |
+| `oakd_front`  | `true`            | Front Luxonis OAK-D Pro W camera.                 |
+| `oakd_rear`   | `true`            | Rear Luxonis OAK-D Pro W camera.                  |
+| `ouster`      | `true`            | Ouster 3D LiDAR.                                  |
+| `robin_w`     | `true`            | Seyond Robin W 3D LiDAR.                          |
+| `xvn`         | `true`            | Fixposition XVN inertial navigation system (INS). |
+
+#### Axis Q6225-LE image throttling
+
+`sensors.axis_q62.throttle_rate` is a rate in messages per second for the throttled camera image stream. The example value `10` limits that stream to 10 messages per second; it does not change the camera's configured capture frame rate.
+
+### Autonomy Components
+
+The `autonomy` section controls whether these OutdoorNav components are launched:
+
+| Key                 | Example `enabled` | Description                                                                  |
+| ------------------- | ----------------- | ---------------------------------------------------------------------------- |
+| `control_selection` | `true`            | Starts the control-selection component.                                      |
+| `logger`            | `true`            | Starts OutdoorNav's logging and log-analysis components.                     |
+| `mission_manager`   | `true`            | Starts the mission manager, which provides mission management functionality. |
+| `path_previewer`    | `true`            | Starts the autonomy path-preview component.                                  |
+
+### Localization and Navigation
+
+| Key                     | Value / datatype | Description                                                                                                                                                                                                                                                                                  |
+| ----------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `localization.enabled`  | Boolean          | Starts or disables OutdoorNav's localization components.                                                                                                                                                                                                                                     |
+| `navigation.enabled`    | Boolean          | Starts or disables the navigation stack.                                                                                                                                                                                                                                                     |
+| `navigation.param_file` | File path string | Path to the ROS 2 parameter YAML file used by navigation. The template leaves this blank; when setting a custom file, provide a path to a readable YAML file. Check the behavior of an empty value for your installed OutdoorNav release before relying on it to select built-in parameters. |
+
+### Safety
+
+| Key                        | Value / datatype | Description                                                                                                                                                                            |
+| -------------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `safety.watchdogs.enabled` | Boolean          | Starts or disables the OutdoorNav watchdog components that monitor system and robot conditions. Keep watchdogs enabled unless your application has an approved reason to disable them. |
+
+### Docking
+
+| Key                  | Value / datatype | Description                                                                                                                                                                                                                                                                               |
+| -------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `docking.enabled`    | Boolean          | Starts or disables the docking component.                                                                                                                                                                                                                                                 |
+| `docking.param_file` | File path string | Path to the ROS 2 parameter YAML file used by docking. The template leaves this blank; when setting a custom file, provide a path to a readable YAML file. Check the behavior of an empty value for your installed OutdoorNav release before relying on it to select built-in parameters. |
+
+## UI Camera Views
+
+The UI camera configuration defines which camera streams appear in OutdoorNav and, for supported cameras,
+their pan-tilt-zoom (PTZ) controls. It does not enable sensor drivers; configure the hardware in
+`outdoornav.yaml` and the Clearpath robot configuration as well.
+
+On the robot, edit `/opt/onav/<version>/config/ui_camera_config.json`. The UI container reads this mounted
+configuration as `/opt/onav/config/ui_camera_config.json`. A reference template is
+[`ui_camera_config.json.all`](https://gitlab.clearpathrobotics.com/cpr-outdoornav/clearpath_outdoornav_setup/-/blob/ros2/onav/ui_camera_config.json.all?ref_type=heads).
+
+### Camera entries
+
+Each entry under `cameras` describes one camera stream. Use unique numeric IDs as the object keys and in each
+entry's `id`. The `name` must match the camera name used by the OutdoorNav sensor integration.
+
+| Key      | Description                                                                                  |
+| -------- | -------------------------------------------------------------------------------------------- |
+| `id`     | Unique numeric ID for this camera. Use the same number as the `cameras` object key.          |
+| `type`   | UI view type. Use `CAMERA` for camera entries.                                               |
+| `name`   | Camera name used by the UI to connect to the configured stream and services.                 |
+| `camera` | Camera integration type. The UI currently supports `OAKD_PRO`, `AXIS_Q62`, and `FLIR_BOSON`. |
+| `title`  | Display name shown in the UI's camera view selector.                                         |
+| `ptz`    | Optional ID of a matching entry under `ptz_units`. Set this for a PTZ camera.                |
+
+For example, the following defines a fixed OAK-D camera and an Axis Q62 camera linked to PTZ unit `1`:
+
+```json
+{
+  "microphones": {},
+  "ptz_units": {
+    "1": {
+      "name": "camera_2",
+      "id": 1,
+      "type": "AXIS_Q62",
+      "namespace": "/sensors/camera_2",
+      "limits": {
+        "pan": { "min": -170, "max": 170, "default": 0, "isInverted": false },
+        "tilt": { "min": -90, "max": 90, "default": 0, "isInverted": false },
+        "zoom": { "min": 1, "max": 24, "default": 1 }
+      }
+    }
+  },
+  "cameras": {
+    "1": {
+      "id": 1,
+      "type": "CAMERA",
+      "name": "oak_d_pro_w_front",
+      "camera": "OAKD_PRO",
+      "title": "Front"
+    },
+    "2": {
+      "id": 2,
+      "type": "CAMERA",
+      "name": "camera_2",
+      "camera": "AXIS_Q62",
+      "title": "Q62",
+      "ptz": 1
+    }
+  }
+}
+```
+
+### PTZ units
+
+Each entry under `ptz_units` configures the PTZ hardware referenced by a camera's `ptz` field. The `id` must
+match that object key. `name` is the camera node name, and `namespace` identifies its ROS namespace. The
+current UI integration uses the `AXIS_Q62` PTZ type.
+
+Set `limits.pan` and `limits.tilt` to the camera's minimum, maximum, and default angles in degrees.
+`isInverted` reverses the corresponding UI control direction when needed. `limits.zoom` sets the minimum,
+maximum, and default zoom level. These values configure the UI controls and should match the hardware's
+supported range.
+
+If the robot has no PTZ camera, set `ptz_units` to an empty JSON object and remove the optional `ptz` field
+from every entry under `cameras`. Keep the camera entries themselves if those cameras should still appear in
+the UI:
+
+```json
+{
+  "ptz_units": {},
+  "cameras": {
+    "1": {
+      "id": 1,
+      "type": "CAMERA",
+      "name": "oak_d_pro_w_front",
+      "camera": "OAKD_PRO",
+      "title": "Front"
+    }
+  }
+}
+```
+
+### Other entries
+
+The top-level `microphones` object lists microphone devices used by OutdoorNav audio tasks. If there are no
+microphones, set it to an empty JSON object:
+
+```json
+"microphones": {}
+```
+
+Likewise, use `"ptz_units": {}` when there are no PTZ units. These are JSON objects, not arrays or `null`.
+Preserve any configured camera or microphone entries when editing the file. Keep the file valid JSON,
+including commas and quoted property names.

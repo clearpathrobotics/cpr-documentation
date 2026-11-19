@@ -1,0 +1,137 @@
+---
+title: Configuration
+sidebar_label: Configuration
+sidebar_position: 2
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+# Configuration System
+
+proton uses YAML or JSON configuration files to define the communication topology. The configuration defines every participating node in the proton network,
+how nodes in the network can connect to each other, and every Bundle and Signal that can be used. Each node in the network will use the exact same configuration
+file to ensure that everything is synchronized.
+
+## Nodes
+
+The nodes section defines every node in the proton network. Nodes are defined with a name, a list of endpoints where the node can receive bundles, and optionally a heartbeat configuration.
+
+### Endpoints
+
+The endpoint indicates the transport endpoint at which this node can receive Bundles from another peer.
+
+- **id**: Endpoint ID. Used in [Connections](#connections) to pair two nodes.
+- **type**: Endpoint Type. Currently the options are `udp4` or `serial`.
+- **ip**: UDP4 socket IP address. Not used for `serial`.
+- **port**: UDP4 socket port. Not used for `serial`.
+- **device**: Serial device name. Not used for `udp4`.
+
+## Connections
+
+The connections section is used to connect two nodes together by their endpoints. It is a simple list of pairs of nodes and the endpoint ID to be used for this connection.
+
+```yaml
+nodes:
+  - name: producer
+    id: 0
+    endpoints:
+      - id: 0
+        type: udp4
+        ip: 127.0.0.1
+        port: 11416
+      - id: 1
+        type: serial
+        device: /dev/ttyUSB0
+        baud: 115200
+  - name: udp_consumer
+    id: 1
+    endpoints:
+      - id: 0
+        type: udp4
+        ip: 127.0.0.1
+        port: 11417
+  - name: serial_consumer
+    id: 2
+    endpoints:
+      - id: 0
+        type: serial
+        device: /dev/ttyUSB1
+        baud: 115200
+
+connections:
+  - first: {node: producer, id: 0}
+    second: {node: udp_consumer, id: 0}
+  - first: {node: producer, id: 1}
+    second: {node: serial_consumer, id: 0}
+```
+
+:::note
+Each node must define a unique endpoint for each peer it will be communicating with. Two peers cannot connect to a single UDP socket, for example.
+:::
+
+## Bundles
+
+This section defines every Bundle that can be sent in this proton network. A Bundle consists of a unique name and non-zero ID, a producer or list of producers, a consumer or list of consumers, and a list of signals. An empty Bundle without any Signals is also allowed.
+
+```yaml
+bundles:
+  - name: value_test
+    id: 0x100
+    producers: [producer]
+    consumers: [udp_consumer, serial_consumer]
+    signals: [0x1000, 0x1001, 0x1002, 0x1003, 0x1004, 0x1005, 0x1006, 0x1007, 0x1008]
+    period_ms: 1000
+```
+
+Entries:
+- **name**: A unique string representing the bundle name
+- **id**: A unique, non-zero unsigned integer representing the Bundle ID
+- **producers**: A list of node names, indicating the node(s) which can produce this Bundle. The nodes must be defined in the [Nodes](#nodes) section.
+- **consumers**: A list of node names, indicating the node(s) which can consume this Bundle. The nodes must be defined in the [Nodes](#nodes) section.
+- **signals**: A list of Signal ID's that make up this Bundle. Can be empty.
+- **period_ms**: An unsigned 32 bit value representing how frequently a Bundle should be sent.
+
+If a bundle has a period of 0, then it must be manually triggered in the Node Manager API.
+
+## Signals
+
+Each Signal is defined with a unique name and 32-bit identifier, a primitive type, and a capacity if applicable.
+
+The `capacity` attribute applies to any signals that are a repeated type (`bytes`, `string`). It indicates the fixed length of the list. This value must be defined, as dynamically sized lists
+are not allowed.
+
+:::note
+The capacity of a `string` Signal should account for the NULL termination character (`\0`)
+:::
+
+### Default Values
+
+Signals can have a default value of their defined type.
+
+For repeated types, a capacity is required. The capacity is either user-specified or calculated based on the default value, with user-specified capacities taking priority.
+
+```yaml
+signals:
+  - {name: double_value, id: 0x1000, type: double}
+  - {name: float_value, id: 0x1001, type: float}
+  - {name: int32_value, id: 0x1002, type: int32}
+  - {name: int64_value, id: 0x1003, type: int64}
+  - {name: uint32_value, id: 0x1004, type: uint32}
+  - {name: uint64_value, id: 0x1005, type: uint64}
+  - {name: bool_value, id: 0x1006, type: bool}
+  - {name: string_value, id: 0x1007, type: string, capacity: 8}
+  - {name: bytes_value, id: 0x1008, type: bytes, capacity: 8}
+  - {name: default_double, id: 0x1010, type: double, value: 3.14159}
+  - {name: default_string, id: 0x1011, type: string, value: "foo"}  # capacity will be calculated as 4
+  - {name: default_bytes, id: 0x1012, type: bytes, value: [0, 1, 2]}  # capacity will be calculated as 3
+  - {name: really_long_string, id: 0x1013, type: string, value: "ipsumsedolorsitametconsecteturadipiscingelit", capacity: 44}
+  - {name: really_long_bytes, id: 0x1014, type: bytes, value: [0, 1, 2, 3, 4, 5, 6, 7], capacity: 8}
+  - {name: shared_signal, id: 0x1015, type: int32}
+  - {name: unused_signal, id: 0x1111, type: float}
+```
+
+### Signal Tips and Tricks
+
+- **Signals can be used in multiple bundles**: This allows a node to effectively forward signals between peers that do not share a transport type, acting as a bridge.
+- **Signals do not need to be attached to a bundle**: This can be useful for signals to represent "constant" data without having to update actual constants in firmware
+- **Treat Signals as shared state**: Signals are intended to work like tags in a PLC program, shared in a network, rather than components of a message.
