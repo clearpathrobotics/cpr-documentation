@@ -1,0 +1,88 @@
+---
+title: Proton 1.0
+sidebar_label: Proton 1.0
+sidebar_position: 1
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+# Proton 1.0
+
+# Key Concepts
+
+## Signals
+
+The fundamental data unit in Proton. A signal represents a single typed value that can be a:
+
+- **Primitive type**: double, float, int32, int64, uint32, uint64, bool, string, bytes
+- **List type**: Arrays of any primitive type (list_double, list_float, etc.)
+
+Each signal is encoded as a Protocol Buffer message with a oneof field, allowing efficient serialization of different data types.
+
+```protobuf
+message Signal {
+  oneof signal {
+    double double_value = 1;
+    float float_value = 2;
+    int32 int32_value = 3;
+    int64 int64_value = 4;
+    uint32 uint32_value = 5;
+    uint64 uint64_value = 6;
+    bool bool_value = 7;
+    string string_value = 8;
+    bytes bytes_value = 9;
+
+    ListDoubles list_double_value = 10;
+    ListFloats list_float_value = 11;
+    ListInt32s list_int32_value = 12;
+    ListInt64s list_int64_value = 13;
+    ListUint32s list_uint32_value = 14;
+    ListUint64s list_uint64_value = 15;
+    ListBools list_bool_value = 16;
+    ListStrings list_string_value = 17;
+    ListBytes list_bytes_value = 18;
+  }
+}
+```
+
+## Bundles
+
+A bundle is a collection of related signals that are transmitted together. Think of it as a message or packet containing multiple data fields. Each bundle has:
+
+- **Unique ID**: A 32-bit identifier (e.g., 0x100 for logs, 0x101 for status)
+- **Signal list**: An ordered collection of signals
+
+```protobuf
+message Bundle {
+  uint32 id = 1;
+  repeated Signal signals = 2;
+}
+```
+
+The Signal list can vary in length, and each Signal in the list can use a different value type.
+
+### Heartbeat
+
+Proton reserves the Bundle ID 0 for the heartbeat bundle. This is an optional bundle that can be periodically sent out by each node to indicate to other peers in the network that
+this node is active. The heartbeat bundle has a single `uint32` signal which should be incremented on each heartbeat as a sign of liveliness.
+
+## Nodes
+
+A node represents a participant in the communication network. Each node can:
+
+- Produce bundles (send data)
+- Consume bundles (receive data)
+- Communicate with multiple peer nodes
+- Send periodic heartbeats to indicate liveliness
+
+A node is also defined with a list of endpoints at which it can be reached.
+
+Node states:
+
+- `PROTON_NODE_UNCONFIGURED`: Initial state
+- `PROTON_NODE_INACTIVE`: Configured but not actively communicating
+- `PROTON_NODE_ACTIVE`: Fully operational
+
+## Peers
+
+Peers are other nodes in the Proton network that a given node can communicate with. A node is paired with a peer with a pair of endpoints called a *connection*.

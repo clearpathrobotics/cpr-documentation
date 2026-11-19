@@ -1,0 +1,109 @@
+---
+title: Using Cyclone DDS with the Simulator
+sidebar_label: Simulate with Cyclone DDS
+sidebar_position: 5
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
+
+This guide configures the Clearpath simulator to use `rmw_cyclonedds_cpp` without connecting
+the simulated robot to a physical fleet. For custom Cyclone network profiles and remote
+computer communication, see the
+[Cyclone ROS middleware guid
+e](../../networking/ros2_networking/cyclone.mdx).
+
+## Configure the simulator
+
+Use a separate setup directory for simulation so its configuration does not overwrite the
+configuration used by a physical robot or another setup. 
+
+```bash
+mkdir -p ~/clearpath_sim
+```
+
+Copy a valid Clearpath `robot.yaml` into the new directory.
+Edit `~/clearpath_sim/robot.yaml`. Keep the existing `system:` mapping, set a unique host name
+and ROS namespace, and use a domain ID separate from the physical robots. For example, use
+domain `27` for simulation when the physical robots use domain `26`:
+
+```yaml
+system:
+  hosts:
+    - hostname: a300-sim
+  ros2:
+    namespace: a300_sim
+    domain_id: 27
+    middleware:
+      implementation: rmw_cyclonedds_cpp
+```
+
+The host name accepts letters, numbers, and hyphens; the ROS namespace may contain underscores.
+Do not add a custom `profile` or `CYCLONEDDS_URI` for this local simulation setup. Cyclone DDS
+uses its default configuration, and the separate domain keeps simulated ROS traffic isolated
+from the physical fleet.
+
+The [Cyclone profile XML instructions](../../networking/ros2_networking/cyclone.mdx) are for
+intentional communication between a physical robot and a remote computer. Do not copy that
+profile into the simulator setup when you want the simulation isolated from physical robots;
+it can configure network interfaces and peer addresses for that other use case.
+
+Install the Cyclone RMW package if it is not already installed:
+
+```bash
+sudo apt update
+sudo apt install ros-jazzy-rmw-cyclonedds-cpp
+```
+
+## Launch the simulation
+
+In a terminal, source ROS and select Cyclone DDS with the simulator domain. Clear any inherited
+custom profile before launching:
+
+```bash
+source /opt/ros/jazzy/setup.bash
+export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+export ROS_DOMAIN_ID=27
+unset CYCLONEDDS_URI
+ros2 launch clearpath_gz simulation.launch.py setup_path:=$HOME/clearpath_sim
+```
+
+The simulator generates its launch and parameter files under `~/clearpath_sim`; it does not
+create a `setup.bash` file there. The simulator should use domain `27`, separate from the
+physical fleet's domain `26`.
+
+## Verify communication
+
+In a second terminal, set the same environment and inspect topics under the simulator namespace:
+
+```bash
+source /opt/ros/jazzy/setup.bash
+export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+export ROS_DOMAIN_ID=27
+unset CYCLONEDDS_URI
+ros2 daemon stop
+ros2 topic list | grep '^/a300_sim/'
+```
+
+The list should include simulator topics, such as `/a300_sim/platform/odom/filtered`, along
+with `/parameter_events` and `/rosout`. Verify that data is being published:
+
+```bash
+ros2 topic echo /a300_sim/platform/odom/filtered
+```
+
+Available topics depend on the selected platform and running simulator plugins.
+
+## Troubleshooting
+
+- **Only `/parameter_events` and `/rosout` appear.** Confirm both terminals use
+  `rmw_cyclonedds_cpp` and domain `27`. Ensure `CYCLONEDDS_URI` is unset unless you intentionally
+  configured a profile for simulation. The simulator does not generate
+  `~/clearpath_sim/setup.bash`.
+- **The simulator discovers topics from physical robots.** Stop the simulator and restart it
+  with domain `27`; keep the physical robots on domain `26`. Stop any ROS nodes that were started
+  in the wrong domain and restart the ROS 2 daemon after sourcing the corrected environment.
+- **Gazebo waits for `robot_description` and no robot appears.** Check the launch output for
+  errors from `robot_state_publisher` or the simulator spawn process. Confirm the launch terminal
+  has `RMW_IMPLEMENTATION=rmw_cyclonedds_cpp`, domain `27`, and no unintended Cyclone profile.
+- **`ros2` reports that `rmw_cyclonedds_cpp` cannot be loaded.** Install
+  `ros-jazzy-rmw-cyclonedds-cpp` and ensure the ROS 2 Jazzy setup has been sourced.

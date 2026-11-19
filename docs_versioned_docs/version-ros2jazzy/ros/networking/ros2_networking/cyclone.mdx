@@ -7,18 +7,44 @@ import TabItem from "@theme/TabItem";
 
 ## Setting up the Cyclone Profile XML for Remote Computer Communication
 
-If the Clearpath robot has been set to use the Cyclone DDS ROS middleware (see the [middleware documentation on how to modify Clearpath's Configuration YAML](../../config/yaml/system.mdx#middleware)), it will be required to modify the Cyclone Profile XML to establish communication with a remote computer.
+For communication between a Cyclone DDS robot and one remote computer, configure a profile XML
+on each machine. The profiles below disable multicast and use explicit peer addresses. For
+general middleware configuration, see the
+[Clearpath system configuration documentation](../../config/yaml/system.mdx#middleware).
 
-For the robot Cyclone Profile XML, create a file on the robot computer's home directory: `/home/robot/.cyclone/profile.xml` and copy the contents of the sample robot profile below.
+Install the Cyclone DDS ROS middleware package on both the robot and the remote computer:
 
-For the user Cyclone Profile XML, create a file on the remote computer, preferably on the home directory: `$HOME/.cyclone/profile.xml` and copy the contents of the sample remote profile below.
+```bash
+sudo apt update
+sudo apt install ros-jazzy-rmw-cyclonedds-cpp
+```
+
+Create a directory for the profile on each machine:
+
+On the robot:
+
+```bash
+mkdir -p /home/robot/.cyclone
+```
+
+On the remote computer:
+
+```bash
+mkdir -p "$HOME/.cyclone"
+```
+
+Choose the matching wired or wireless instructions in each tab. Replace the interface names and
+peer addresses with values for your network, then save each XML profile to its corresponding
+path: `/home/robot/.cyclone/profile.xml` on the robot and `$HOME/.cyclone/profile.xml` on the
+remote computer.
 
 <Tabs groupId="profile.xml">
 <TabItem value="robot_profile" label="Robot Profile" default>
 
 1. If using a **wired connection** using the robot's ethernet port:
 
-    a. The remote computer must have a static IP assigned in the range `192.168.131.100 - 192.168.131.255`.
+     a. Set the remote computer's static IP in the range
+         `192.168.131.100 - 192.168.131.255`.
 
     b. Replace the `REMOTE_IP` with the static IP assigned in the previous step.
 
@@ -26,11 +52,14 @@ For the user Cyclone Profile XML, create a file on the remote computer, preferab
 
 2. If using a **wireless connection** using a WiFi router:
 
-    a. The robot and remote computer must both be connected to a router and have been assigned an IP address by that router.
+     a. Connect both the robot and remote computer to the router. Confirm each has an
+         assigned IP address.
 
-    b. Replace the `REMOTE_IP` with the static IP assigned by the router to the remote computer. Use the `ip a` command on the remote computer to find the IP address assigned to it.
+    b. Replace `REMOTE_IP` with the remote computer's router-assigned IP. Find it by running
+       `ip a` on the remote computer.
 
-    c. Replace the `ROBOT_INTERFACE` with the robot's WiFi interface, by default it should be `wlp2s0`, but it is recommended to check by using the `ip a` command on the remote computer to find if the interface has been renamed, in certain cases it could have been renamed to `wlp3s0`.
+    c. Replace `ROBOT_INTERFACE` with the robot's Wi-Fi interface. It is often `wlp2s0`, but
+       check the interface name with `ip a` on the robot. It may be named `wlp3s0` instead.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -66,17 +95,21 @@ For the user Cyclone Profile XML, create a file on the remote computer, preferab
 
 1. If using a **wired connection** using the robot's ethernet port:
 
-    a. Replace the `REMOTE_INTERFACE` with the name of the ethernet interface used by the remote computer. Use the `ip a` on the remote computer to find a list of the remote interfaces.
+     a. Replace `REMOTE_INTERFACE` with the remote computer's Ethernet interface. Find its
+         name by running `ip a` on the remote computer.
 
-    b. Replace the `ROBOT_IP` with the robot's static IP. By default, it will be set to `192.168.131.1`.
+     b. Replace `ROBOT_IP` with the robot's static IP. By default, this is `192.168.131.1`.
 
 2. If using a **wireless connection** using a WiFi router:
 
-    a. The robot and remote computer must both be connected to a router and have been assigned an IP address by that router.
+     a. Connect both the robot and the remote computer to the router. Confirm each has an
+         assigned IP address.
 
-    b. Replace the `REMOTE_INTERFACE` with the remote computer's WiFi interface. Use the `ip a` command on the remote computer to get a list of all it's interfaces.
+    b. Replace `REMOTE_INTERFACE` with the remote computer's Wi-Fi interface. Run `ip a` on
+       the remote computer to find its interface name.
 
-    c. Replace the `ROBOT_IP` with the robot's WiFi IP address. Use the `ip a` command on the robot's computer to retrieve a list of all of it's interfaces. The IP address will be found under the wireless interface, by default it is named `wlp2s0`.
+    c. Replace `ROBOT_IP` with the robot's Wi-Fi IP address. Run `ip a` on the robot to find
+       it under the wireless interface, often named `wlp2s0`.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -110,3 +143,204 @@ For the user Cyclone Profile XML, create a file on the remote computer, preferab
 </TabItem>
 
 </Tabs>
+
+## Configure `robot.yaml`
+
+After creating both profile XML files, configure Cyclone DDS in each machine's `robot.yaml`.
+Use the same ROS domain ID on the robot and remote computer. Keep these settings inside each
+file's existing `system:` mapping; do not add a duplicate top-level `system:` key.
+
+Robot `/etc/clearpath/robot.yaml`:
+
+```yaml
+system:
+    ros2:
+        namespace: a300_00001
+        domain_id: 26
+        middleware:
+            implementation: rmw_cyclonedds_cpp
+    bash:
+        env:
+            CYCLONEDDS_URI: /home/robot/.cyclone/profile.xml
+```
+
+Remote computer `~/clearpath/robot.yaml`:
+
+```yaml
+system:
+    ros2:
+        namespace: a300_00001
+        domain_id: 26
+        middleware:
+            implementation: rmw_cyclonedds_cpp
+    bash:
+        env:
+            CYCLONEDDS_URI: /home/USER/.cyclone/profile.xml
+```
+
+Replace `USER` with the remote computer's Linux username. Both `CYCLONEDDS_URI` values must be
+absolute paths to existing profile files. A `~` shortcut is not expanded in a `robot.yaml` value.
+
+Apply the configuration on each machine. On the robot, restart the Clearpath service so it
+regenerates its configuration:
+
+```bash
+sudo systemctl restart clearpath-robot
+```
+
+On the remote computer, regenerate and source the offboard setup:
+
+```bash
+source /opt/ros/jazzy/setup.bash
+ros2 run clearpath_generator_common generate_bash -s ~/clearpath/
+source ~/clearpath/setup.bash
+```
+
+After generation, confirm the profile path is present in the generated setup on each machine:
+
+```bash
+grep CYCLONEDDS_URI /etc/clearpath/setup.bash
+grep CYCLONEDDS_URI ~/clearpath/setup.bash
+```
+
+## Verify communication
+
+On the robot, source the generated setup and confirm that Cyclone DDS is selected and the
+profile path is correct:
+
+```bash
+source /etc/clearpath/setup.bash
+echo "$RMW_IMPLEMENTATION"
+echo "$ROS_DOMAIN_ID"
+echo "$CYCLONEDDS_URI"
+ros2 daemon stop
+ros2 topic list
+```
+
+On the remote computer, source its offboard setup and check the same values:
+
+```bash
+source ~/clearpath/setup.bash
+echo "$RMW_IMPLEMENTATION"
+echo "$ROS_DOMAIN_ID"
+echo "$CYCLONEDDS_URI"
+ros2 daemon stop
+ros2 topic list
+```
+
+Both hosts should report `rmw_cyclonedds_cpp`, the same domain ID, and their own profile path in
+`CYCLONEDDS_URI`. The remote topic list should include the robot's namespace. For example, an A300
+with namespace `a300_00001` may show:
+
+```text
+/a300_00001/platform/odom/filtered
+/a300_00001/platform/motors/status
+/a300_00001/sensors/imu_0/data
+/parameter_events
+/rosout
+```
+
+Verify that data is arriving by echoing a known active topic:
+
+```bash
+ros2 topic echo /a300_00001/platform/odom/filtered
+```
+
+Replace the example namespace and topic with values from your robot. The available topics depend
+on its configuration and running nodes.
+
+## Multi-Robot Setups
+
+Cyclone DDS does not use the Zenoh router model described in the Zenoh guide. With the profiles
+below, multicast discovery is disabled, so each Cyclone DDS participant must have peer entries
+for the other hosts it needs to discover. Participants communicate directly over the network;
+there is no central Cyclone DDS hub.
+
+### Robot-to-Robot Communication
+
+To exchange ROS topics between robots:
+
+1. Set the same `domain_id` on every robot and give each robot a unique ROS namespace.
+2. In each robot's Cyclone profile, list every other robot's reachable IP address in `<Peers>`.
+   Do not list that robot's own address. For three robots, the peer entries are:
+
+   ```xml
+   <!-- Robot 1 profile -->
+   <Peers>
+       <Peer Address="ROBOT_2_IP"/>
+       <Peer Address="ROBOT_3_IP"/>
+       <Peer Address="127.0.0.1"/>
+   </Peers>
+   ```
+
+   Robot 2 and robot 3 profiles should list the other two robots' addresses in the same way.
+   Keep each profile's `<NetworkInterface>` set to that robot's interface, as described in the
+   profile examples above.
+3. Set `CYCLONEDDS_URI` in each robot's `robot.yaml` to its own profile file, as shown in
+   [Configure `robot.yaml`](#configure-robotyaml). Make sure each file exists and the path is
+   absolute.
+4. Restart `clearpath-robot` on each robot so the generated setup uses the new profile.
+
+### Viewing a Fleet from One Computer
+
+An offboard computer can discover multiple robots directly by using one Cyclone profile whose
+`<Peers>` list contains every robot's reachable IP address:
+
+```xml
+<Peers>
+    <Peer Address="ROBOT_1_IP"/>
+    <Peer Address="ROBOT_2_IP"/>
+    <Peer Address="127.0.0.1"/>
+</Peers>
+```
+
+Set the offboard `robot.yaml` to `rmw_cyclonedds_cpp`, the same `domain_id` as the robots, and
+`CYCLONEDDS_URI` pointing to this profile. Generate and source its setup using the offboard
+commands above. Ensure the remote profile's `<NetworkInterface>` names the interface used to
+reach the robots.
+
+Verify the graph from the offboard computer after sourcing its setup:
+
+```bash
+ros2 daemon stop
+ros2 topic list
+```
+
+Topics should appear under each robot's unique namespace, for example `/a300_00001/` and
+`/a300_00002/`. Echo one active topic from each robot to verify data flow:
+
+```bash
+ros2 topic echo /a300_00001/platform/odom/filtered
+ros2 topic echo /a300_00002/platform/odom/filtered
+```
+
+Run one `ros2 topic echo` command at a time. For isolation, use different domain IDs; namespaces
+distinguish names but do not isolate ROS communication. For network interface and peer XML
+examples, refer to the profile tabs at the top of this page.
+
+## Troubleshooting
+
+- **The topic list is stale or only shows built-in topics after changing the Cyclone setup.**
+    Source the generated setup in the current terminal, stop the ROS 2 daemon, then query the graph
+    again. The daemon may have been started earlier with a different middleware or profile:
+
+    ```bash
+    source /etc/clearpath/setup.bash  # use ~/clearpath/setup.bash on the offboard computer
+    ros2 daemon stop
+    ros2 topic list
+    ```
+
+- **Only `/parameter_events` and `/rosout` appear.** Confirm each host reports
+    `RMW_IMPLEMENTATION=rmw_cyclonedds_cpp`, matching `ROS_DOMAIN_ID` values, and a
+    `CYCLONEDDS_URI` path to a profile that exists on that host. Stop and retry the ROS 2 daemon
+    after correcting the environment.
+- **`CYCLONEDDS_URI` is empty after sourcing setup.** Check that `CYCLONEDDS_URI` is under
+    `system.bash.env` in that host's `robot.yaml`, regenerate the setup, and source it again. The
+    profile path must exist and be readable by the user running the ROS processes.
+- **A robot or remote computer is missing from the graph.** Check that each participant's peer
+    list contains the other reachable hosts, each profile names the correct local interface, and
+    all participants use the same domain ID. Confirm IP reachability and firewall rules permit
+    Cyclone DDS traffic. Cyclone DDS does not use Zenoh's TCP port `7447`.
+- **Topics are listed but no messages arrive.** Confirm the selected topic is actively
+    published on the robot, then check its namespace and message type on both hosts. Try another
+    known active topic before changing the discovery profile.
