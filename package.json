@@ -55,5 +55,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "overrides": {
+    "tinypool": "^2.1.2",
+    "serialize-javascript": "^7.1.4",
+    "uuid": "^11.1.1",
+    "katex": "^0.18.2"
   }
 }
